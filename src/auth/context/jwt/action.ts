@@ -8,7 +8,7 @@ import { STORAGE_KEY } from './constant';
 // ----------------------------------------------------------------------
 
 export type SignInParams = {
-  email: string;
+  id: string;
   password: string;
 };
 
@@ -22,19 +22,22 @@ export type SignUpParams = {
 /** **************************************
  * Sign in
  *************************************** */
-export const signInWithPassword = async ({ email, password }: SignInParams): Promise<void> => {
+export const signInWithPassword = async ({ id, password }: SignInParams): Promise<void> => {
   try {
-    const params = { email, password };
+    const params = { id, password };
+    console.log('params', params);
 
-    const res = await axios.post(endpoints.auth.signIn, params);
+    // const res = await axios.post(endpoints.auth.login, params);
 
-    const { accessToken } = res.data;
+    // console.log('res', res);
 
-    if (!accessToken) {
-      throw new Error('Access token not found in response');
-    }
+    // const { accessToken } = res.data;
 
-    setSession(accessToken);
+    // if (!accessToken) {
+    //   throw new Error('Access token not found in response');
+    // }
+
+    setSession(id);
   } catch (error) {
     console.error('Error during sign in:', error);
     throw error;

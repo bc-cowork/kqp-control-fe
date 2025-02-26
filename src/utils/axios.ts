@@ -40,6 +40,7 @@ export const endpoints = {
     me: '/api/auth/me',
     signIn: '/api/auth/sign-in',
     signUp: '/api/auth/sign-up',
+    login: '/apik/login',
   },
   mail: {
     list: '/api/mail/list',
@@ -56,5 +57,10 @@ export const endpoints = {
     list: '/api/product/list',
     details: '/api/product/details',
     search: '/api/product/search',
+  },
+  dashboard: {
+    nodeList: '/apik/node/list',
+    serviceStatus: '/apik/service/status',
+    processList: '/apik/process/list',
   },
 };
