@@ -54,6 +54,7 @@
     "simplebar-react": "^3.2.6",
     "stylis": "^4.3.2",
     "stylis-plugin-rtl": "^2.1.1",
+    "swr": "^2.3.2",
     "zod": "^3.23.8"
   },
   "devDependencies": {
