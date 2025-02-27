@@ -1,7 +1,6 @@
 import type { INodeItem } from 'src/types/dashboard';
 
 import useSWR from 'swr';
-import { useMemo } from 'react';
 
 import { fetcher, endpoints } from 'src/utils/axios';
 
@@ -25,24 +24,56 @@ export type SelectedNodeParams = {
  * Node List
  *************************************** */
 type NodeData = {
-  posts: INodeItem[];
+  nodes: INodeItem[];
 };
 
 export function useGetNodes() {
-  const url = endpoints.post.list;
+  const url = endpoints.dashboard.nodeList;
 
   const { data, isLoading, error, isValidating } = useSWR<NodeData>(url, fetcher, swrOptions);
 
-  const memoizedValue = useMemo(
-    () => ({
-      posts: data?.posts || [],
-      postsLoading: isLoading,
-      postsError: error,
-      postsValidating: isValidating,
-      postsEmpty: !isLoading && !data?.posts.length,
-    }),
-    [data?.posts, error, isLoading, isValidating]
-  );
+  console.log('useGetNodes', data, isLoading, error, isValidating);
 
-  return memoizedValue;
+  // const memoizedValue = useMemo(
+  //   () => ({
+  //     nodes: data?.posts || [],
+  //     nodesLoading: isLoading,
+  //     nodesError: error,
+  //     nodesValidating: isValidating,
+  //     nodesEmpty: !isLoading && !data?.nodes.length,
+  //   }),
+  //   [data?.nodes, error, isLoading, isValidating]
+  // );
+
+  return null;
+}
+
+/** **************************************
+ * Process List of a Node
+ *************************************** */
+type ProcessData = {
+  ok: boolean;
+  msg: string;
+  data: any;
+};
+
+export function useGetProcesses(node: string) {
+  const url = node ? [endpoints.dashboard.processList, { params: { node } }] : '';
+
+  const { data, isLoading, error, isValidating } = useSWR<ProcessData>(url, fetcher, swrOptions);
+
+  console.log('useGetProcesses', data, isLoading, error, isValidating);
+
+  // const memoizedValue = useMemo(
+  //   () => ({
+  //     nodes: data?.posts || [],
+  //     nodesLoading: isLoading,
+  //     nodesError: error,
+  //     nodesValidating: isValidating,
+  //     nodesEmpty: !isLoading && !data?.nodes.length,
+  //   }),
+  //   [data?.nodes, error, isLoading, isValidating]
+  // );
+
+  return null;
 }
