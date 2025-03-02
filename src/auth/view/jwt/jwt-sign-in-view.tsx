@@ -31,10 +31,7 @@ import { FormHead } from '../../components/form-head';
 export type SignInSchemaType = zod.infer<typeof SignInSchema>;
 
 export const SignInSchema = zod.object({
-  email: zod
-    .string()
-    .min(1, { message: 'Email is required!' })
-    .email({ message: 'Email must be a valid email address!' }),
+  email: zod.string().min(1, { message: 'ID is required!' }),
   password: zod
     .string()
     .min(1, { message: 'Password is required!' })
@@ -53,8 +50,8 @@ export function JwtSignInView() {
   const password = useBoolean();
 
   const defaultValues = {
-    email: 'demo@minimals.cc',
-    password: '@demo1',
+    email: 'manthika',
+    password: 'graduated',
   };
 
   const methods = useForm<SignInSchemaType>({
@@ -82,7 +79,7 @@ export function JwtSignInView() {
 
   const renderForm = (
     <Box gap={3} display="flex" flexDirection="column">
-      <Field.Text name="email" label="Email address" InputLabelProps={{ shrink: true }} />
+      <Field.Text name="email" label="ID" InputLabelProps={{ shrink: true }} />
 
       <Box gap={1.5} display="flex" flexDirection="column">
         <Link

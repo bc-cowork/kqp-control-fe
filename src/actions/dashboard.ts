@@ -1,6 +1,5 @@
-import type { INodeItem } from 'src/types/dashboard';
-
 import useSWR from 'swr';
+import { useMemo } from 'react';
 
 import { fetcher, endpoints } from 'src/utils/axios';
 
@@ -24,7 +23,9 @@ export type SelectedNodeParams = {
  * Node List
  *************************************** */
 type NodeData = {
-  nodes: INodeItem[];
+  ok: boolean;
+  msg: string;
+  data: any;
 };
 
 export function useGetNodes() {
@@ -34,18 +35,18 @@ export function useGetNodes() {
 
   console.log('useGetNodes', data, isLoading, error, isValidating);
 
-  // const memoizedValue = useMemo(
-  //   () => ({
-  //     nodes: data?.posts || [],
-  //     nodesLoading: isLoading,
-  //     nodesError: error,
-  //     nodesValidating: isValidating,
-  //     nodesEmpty: !isLoading && !data?.nodes.length,
-  //   }),
-  //   [data?.nodes, error, isLoading, isValidating]
-  // );
+  const memoizedValue = useMemo(
+    () => ({
+      nodes: data?.data?.nodeList || [],
+      nodesLoading: isLoading,
+      nodesError: error,
+      nodesValidating: isValidating,
+      nodesEmpty: !isLoading && !data?.data?.nodeList?.length,
+    }),
+    [data?.data?.nodeList, error, isLoading, isValidating]
+  );
 
-  return null;
+  return memoizedValue;
 }
 
 /** **************************************
@@ -64,16 +65,45 @@ export function useGetProcesses(node: string) {
 
   console.log('useGetProcesses', data, isLoading, error, isValidating);
 
-  // const memoizedValue = useMemo(
-  //   () => ({
-  //     nodes: data?.posts || [],
-  //     nodesLoading: isLoading,
-  //     nodesError: error,
-  //     nodesValidating: isValidating,
-  //     nodesEmpty: !isLoading && !data?.nodes.length,
-  //   }),
-  //   [data?.nodes, error, isLoading, isValidating]
-  // );
+  const memoizedValue = useMemo(
+    () => ({
+      processes: data?.data?.processList || [],
+      processLoading: isLoading,
+      processError: error,
+      processesValidating: isValidating,
+      processesEmpty: !isLoading && !data?.data?.processList?.length,
+    }),
+    [data?.data?.processList, error, isLoading, isValidating]
+  );
 
-  return null;
+  return memoizedValue;
+}
+
+/** **************************************
+ * Process List of a Node
+ *************************************** */
+type StatusData = {
+  ok: boolean;
+  msg: string;
+  data: any;
+};
+
+export function useGetStatus(node: string) {
+  const url = node ? [endpoints.dashboard.serviceStatus, { params: { node } }] : '';
+
+  const { data, isLoading, error, isValidating } = useSWR<StatusData>(url, fetcher, swrOptions);
+
+  console.log('useGetStatus', data, isLoading, error, isValidating);
+
+  const memoizedValue = useMemo(
+    () => ({
+      status: data?.data,
+      statusLoading: isLoading,
+      statusError: error,
+      statusValidating: isValidating,
+    }),
+    [data?.data, error, isLoading, isValidating]
+  );
+
+  return memoizedValue;
 }
