@@ -53,6 +53,8 @@ export function DashboardView({ title = 'Main' }: Props) {
                     <TableCell>{node.id}</TableCell>
                     <TableCell>{node.name}</TableCell>
                     <TableCell>{node.desc}</TableCell>
+                    <TableCell>{node.emittable}</TableCell>
+                    <TableCell>{node.emit_count}</TableCell>
                     <TableCell>
                       <IconButton onClick={() => setSelectedNode(node.id)}>
                         <Iconify icon="eva:arrow-ios-forward" />
@@ -64,7 +66,7 @@ export function DashboardView({ title = 'Main' }: Props) {
             </Table>
           </Grid>
           <Grid md={6} sx={{ minHeight: '200px' }}>
-            Status - API on progress
+            {status?.serviceStatus?.okay ? 'ON' : 'OFF'}
           </Grid>
           <Grid md={12} sx={{ minHeight: '250px', mt: 10 }}>
             <Table>

@@ -10,8 +10,6 @@ import { iconButtonClasses } from '@mui/material/IconButton';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import { _contacts, _notifications } from 'src/_mock';
-
 import { Logo } from 'src/components/logo';
 import { useSettingsContext } from 'src/components/settings';
 
@@ -21,19 +19,12 @@ import { layoutClasses } from '../classes';
 import { NavVertical } from './nav-vertical';
 import { NavHorizontal } from './nav-horizontal';
 import { _account } from '../config-nav-account';
-import { Searchbar } from '../components/searchbar';
-import { _workspaces } from '../config-nav-workspace';
 import { MenuButton } from '../components/menu-button';
 import { LayoutSection } from '../core/layout-section';
 import { HeaderSection } from '../core/header-section';
 import { StyledDivider, useNavColorVars } from './styles';
 import { AccountDrawer } from '../components/account-drawer';
-import { SettingsButton } from '../components/settings-button';
-import { LanguagePopover } from '../components/language-popover';
-import { ContactsPopover } from '../components/contacts-popover';
-import { WorkspacesPopover } from '../components/workspaces-popover';
 import { navData as dashboardNavData } from '../config-nav-dashboard';
-import { NotificationsDrawer } from '../components/notifications-drawer';
 
 // ----------------------------------------------------------------------
 
@@ -141,33 +132,10 @@ export function DashboardLayout({ sx, children, header, data }: DashboardLayoutP
                     sx={{ [theme.breakpoints.up(layoutQuery)]: { display: 'flex' } }}
                   />
                 )}
-                {/* -- Workspace popover -- */}
-                <WorkspacesPopover
-                  data={_workspaces}
-                  sx={{ color: 'var(--layout-nav-text-primary-color)' }}
-                />
               </>
             ),
             rightArea: (
               <Box display="flex" alignItems="center" gap={{ xs: 0, sm: 0.75 }}>
-                {/* -- Searchbar -- */}
-                <Searchbar data={navData} />
-                {/* -- Language popover -- */}
-                <LanguagePopover
-                  data={[
-                    { value: 'en', label: 'English', countryCode: 'GB' },
-                    { value: 'fr', label: 'French', countryCode: 'FR' },
-                    { value: 'vi', label: 'Vietnamese', countryCode: 'VN' },
-                    { value: 'cn', label: 'Chinese', countryCode: 'CN' },
-                    { value: 'ar', label: 'Arabic', countryCode: 'SA' },
-                  ]}
-                />
-                {/* -- Notifications popover -- */}
-                <NotificationsDrawer data={_notifications} />
-                {/* -- Contacts popover -- */}
-                <ContactsPopover data={_contacts} />
-                {/* -- Settings button -- */}
-                <SettingsButton />
                 {/* -- Account drawer -- */}
                 <AccountDrawer data={_account} />
               </Box>
