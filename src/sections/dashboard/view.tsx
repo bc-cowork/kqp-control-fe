@@ -1,5 +1,7 @@
 'use client';
 
+import type { INodeItem, IProcessItem } from 'src/types/dashboard';
+
 import { useState } from 'react';
 
 import Box from '@mui/material/Box';
@@ -22,12 +24,11 @@ export function DashboardView({ title = 'Main' }: Props) {
   const { nodes, nodesLoading } = useGetNodes();
   const { status, statusLoading } = useGetStatus(selectedNode);
   const { processes, processLoading } = useGetProcesses(selectedNode);
-  console.log('nodes', nodes, nodesLoading);
-  console.log('processList', processes, processLoading);
-  console.log('status', status, statusLoading);
 
   const processedProcessList =
-    processes && Array.isArray(processes) ? processes.map((process) => process.data).flat() : [];
+    processes && Array.isArray(processes)
+      ? processes.map((process: { data: any }) => process.data).flat()
+      : [];
 
   return (
     <DashboardContent maxWidth="xl">
@@ -56,7 +57,7 @@ export function DashboardView({ title = 'Main' }: Props) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {nodes.map((node: any) => (
+                {nodes.map((node: INodeItem) => (
                   <TableRow key={node.id}>
                     <TableCell>{node.id}</TableCell>
                     <TableCell>{node.name}</TableCell>
@@ -114,7 +115,7 @@ export function DashboardView({ title = 'Main' }: Props) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {processedProcessList.map((process: any, index: number) => (
+                {processedProcessList.map((process: IProcessItem, index: number) => (
                   <TableRow key={index}>
                     <TableCell>{process.PID}</TableCell>
                     <TableCell>{process.NAME}</TableCell>

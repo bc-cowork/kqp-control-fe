@@ -1,3 +1,5 @@
+import type { IStatus, INodeItem, IProcessResponse } from 'src/types/dashboard';
+
 import useSWR from 'swr';
 import { useMemo } from 'react';
 
@@ -25,7 +27,9 @@ export type SelectedNodeParams = {
 type NodeData = {
   ok: boolean;
   msg: string;
-  data: any;
+  data: {
+    nodeList: INodeItem[];
+  };
 };
 
 export function useGetNodes() {
@@ -55,7 +59,7 @@ export function useGetNodes() {
 type ProcessData = {
   ok: boolean;
   msg: string;
-  data: any;
+  data: IProcessResponse;
 };
 
 export function useGetProcesses(node: string) {
@@ -85,7 +89,7 @@ export function useGetProcesses(node: string) {
 type StatusData = {
   ok: boolean;
   msg: string;
-  data: any;
+  data: IStatus;
 };
 
 export function useGetStatus(node: string) {
