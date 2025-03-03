@@ -5,13 +5,11 @@ import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
-import { Table, TableRow, TableBody, TableCell, IconButton } from '@mui/material';
+import { Table, Button, TableRow, TableBody, TableCell, TableHead } from '@mui/material';
 
 import { varAlpha } from 'src/theme/styles';
 import { DashboardContent } from 'src/layouts/dashboard';
 import { useGetNodes, useGetStatus, useGetProcesses } from 'src/actions/dashboard';
-
-import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
@@ -45,31 +43,76 @@ export function DashboardView({ title = 'Main' }: Props) {
         }}
       >
         <Grid container>
-          <Grid md={6} sx={{ minHeight: '200px' }}>
+          <Grid md={9} sx={{ minHeight: '200px' }}>
             <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>ID</TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Description</TableCell>
+                  <TableCell>Emittable</TableCell>
+                  <TableCell>Emit Count</TableCell>
+                  <TableCell>Actions</TableCell>
+                </TableRow>
+              </TableHead>
               <TableBody>
                 {nodes.map((node: any) => (
                   <TableRow key={node.id}>
                     <TableCell>{node.id}</TableCell>
                     <TableCell>{node.name}</TableCell>
                     <TableCell>{node.desc}</TableCell>
-                    <TableCell>{node.emittable}</TableCell>
+                    <TableCell>{node.emittable ? 'Yes' : 'No'}</TableCell>
                     <TableCell>{node.emit_count}</TableCell>
                     <TableCell>
-                      <IconButton onClick={() => setSelectedNode(node.id)}>
-                        <Iconify icon="eva:arrow-ios-forward" />
-                      </IconButton>
+                      <Button
+                        onClick={() => setSelectedNode(node.id)}
+                        sx={{
+                          backgroundColor: '#F4F6F8',
+                          '&:hover': { backgroundColor: '#637381', color: '#F4F6F8' },
+                        }}
+                      >
+                        Status
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </Grid>
-          <Grid md={6} sx={{ minHeight: '200px' }}>
-            {status?.serviceStatus?.okay ? 'ON' : 'OFF'}
+          <Grid
+            md={3}
+            sx={{
+              minHeight: '200px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                p: 2,
+                backgroundColor: status?.serviceStatus?.okay ? 'blue' : 'red',
+              }}
+            >
+              <Typography>{status?.serviceStatus?.okay ? 'ON' : 'OFF'}</Typography>
+            </Box>
           </Grid>
           <Grid md={12} sx={{ minHeight: '250px', mt: 10 }}>
             <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>PID</TableCell>
+                  <TableCell>NAME</TableCell>
+                  <TableCell>PARAM</TableCell>
+                  <TableCell>CPU</TableCell>
+                  <TableCell>MEM</TableCell>
+                  <TableCell>PPID</TableCell>
+                  <TableCell>COMMAND</TableCell>
+                </TableRow>
+              </TableHead>
               <TableBody>
                 {processedProcessList.map((process: any, index: number) => (
                   <TableRow key={index}>
