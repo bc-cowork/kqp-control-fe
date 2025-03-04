@@ -69,15 +69,20 @@ export function useGetProcesses(node: string) {
 
   console.log('useGetProcesses', data, isLoading, error, isValidating);
 
+  const processedProcessList =
+    data?.data?.processList && Array.isArray(data?.data?.processList)
+      ? data?.data?.processList.map((process: { data: any }) => process.data).flat()
+      : [];
+
   const memoizedValue = useMemo(
     () => ({
       processes: data?.data?.processList || [],
       processLoading: isLoading,
       processError: error,
       processesValidating: isValidating,
-      processesEmpty: !isLoading && !data?.data?.processList?.length,
+      processesEmpty: !isLoading && !processedProcessList?.length,
     }),
-    [data?.data?.processList, error, isLoading, isValidating]
+    [data?.data?.processList, error, isLoading, isValidating, processedProcessList?.length]
   );
 
   return memoizedValue;

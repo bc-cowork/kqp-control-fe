@@ -21,9 +21,9 @@ type Props = {
 
 export function DashboardView({ title = 'Main' }: Props) {
   const [selectedNode, setSelectedNode] = useState('prod1');
-  const { nodes, nodesLoading } = useGetNodes();
-  const { status, statusLoading } = useGetStatus(selectedNode);
-  const { processes, processLoading } = useGetProcesses(selectedNode);
+  const { nodes, nodesLoading, nodesEmpty, nodesError } = useGetNodes();
+  const { status, statusLoading, statusError } = useGetStatus(selectedNode);
+  const { processes, processLoading, processesEmpty, processError } = useGetProcesses(selectedNode);
 
   const processedProcessList =
     processes && Array.isArray(processes)
