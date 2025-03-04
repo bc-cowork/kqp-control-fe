@@ -7,7 +7,15 @@ import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
-import { Table, Button, TableRow, TableBody, TableCell, TableHead } from '@mui/material';
+import {
+  Table,
+  Button,
+  TableRow,
+  TableBody,
+  TableCell,
+  TableHead,
+  CircularProgress,
+} from '@mui/material';
 
 import { varAlpha } from 'src/theme/styles';
 import { DashboardContent } from 'src/layouts/dashboard';
@@ -32,20 +40,24 @@ export function DashboardView({ title = 'Main' }: Props) {
 
   return (
     <DashboardContent maxWidth="xl">
-      <Typography variant="h4"> {title} </Typography>
+      <Typography variant="h3"> {title} </Typography>
       <Box
         sx={{
           mt: 5,
           width: 1,
-          // height: 320,
-          borderRadius: 2,
-          bgcolor: (theme) => varAlpha(theme.vars.palette.grey['500Channel'], 0.04),
-          border: (theme) => `dashed 1px ${theme.vars.palette.divider}`,
         }}
       >
         <Grid container>
           <Grid md={9} sx={{ minHeight: '200px' }}>
-            <Table>
+            <Typography variant="h6">Nodes</Typography>
+            <Table
+              size="small"
+              sx={{
+                borderRadius: 2,
+                bgcolor: (theme) => varAlpha(theme.vars.palette.grey['500Channel'], 0.04),
+                border: (theme) => `solid 1px ${theme.vars.palette.divider}`,
+              }}
+            >
               <TableHead>
                 <TableRow>
                   <TableCell>ID</TableCell>
@@ -57,26 +69,38 @@ export function DashboardView({ title = 'Main' }: Props) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {nodes.map((node: INodeItem) => (
-                  <TableRow key={node.id}>
-                    <TableCell>{node.id}</TableCell>
-                    <TableCell>{node.name}</TableCell>
-                    <TableCell>{node.desc}</TableCell>
-                    <TableCell>{node.emittable ? 'Yes' : 'No'}</TableCell>
-                    <TableCell>{node.emit_count}</TableCell>
-                    <TableCell>
-                      <Button
-                        onClick={() => setSelectedNode(node.id)}
-                        sx={{
-                          backgroundColor: '#F4F6F8',
-                          '&:hover': { backgroundColor: '#637381', color: '#F4F6F8' },
-                        }}
-                      >
-                        Status
-                      </Button>
-                    </TableCell>
+                {nodesLoading ? (
+                  <CircularProgress />
+                ) : nodesEmpty ? (
+                  <TableRow>
+                    <TableCell colSpan={6}>No Nodes Found</TableCell>
                   </TableRow>
-                ))}
+                ) : nodesError ? (
+                  <TableRow>
+                    <TableCell colSpan={6}>Error Fetching Nodes</TableCell>
+                  </TableRow>
+                ) : (
+                  nodes.map((node: INodeItem) => (
+                    <TableRow key={node.id}>
+                      <TableCell>{node.id}</TableCell>
+                      <TableCell>{node.name}</TableCell>
+                      <TableCell>{node.desc}</TableCell>
+                      <TableCell>{node.emittable ? 'Yes' : 'No'}</TableCell>
+                      <TableCell>{node.emit_count}</TableCell>
+                      <TableCell>
+                        <Button
+                          onClick={() => setSelectedNode(node.id)}
+                          sx={{
+                            backgroundColor: '#F4F6F8',
+                            '&:hover': { backgroundColor: '#637381', color: '#F4F6F8' },
+                          }}
+                        >
+                          info
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
               </TableBody>
             </Table>
           </Grid>
@@ -84,6 +108,7 @@ export function DashboardView({ title = 'Main' }: Props) {
             md={3}
             sx={{
               minHeight: '200px',
+              minWidth: '200px',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
@@ -94,15 +119,29 @@ export function DashboardView({ title = 'Main' }: Props) {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                p: 2,
-                backgroundColor: status?.serviceStatus?.okay ? 'blue' : 'red',
+                p: 5,
+                backgroundColor: status?.serviceStatus?.okay ? '#22C55E' : '#FF5630',
               }}
             >
-              <Typography>{status?.serviceStatus?.okay ? 'ON' : 'OFF'}</Typography>
+              {statusLoading ? (
+                <CircularProgress />
+              ) : statusError ? (
+                <Typography>Error Fetching Status</Typography>
+              ) : (
+                <Typography variant="h5">{status?.serviceStatus?.okay ? 'ON' : 'OFF'}</Typography>
+              )}
             </Box>
           </Grid>
-          <Grid md={12} sx={{ minHeight: '250px', mt: 10 }}>
-            <Table>
+          <Grid md={12} sx={{ minHeight: '250px', mt: 5 }}>
+            <Typography variant="h6">Process List</Typography>
+            <Table
+              size="small"
+              sx={{
+                borderRadius: 2,
+                bgcolor: (theme) => varAlpha(theme.vars.palette.grey['500Channel'], 0.04),
+                border: (theme) => `solid 1px ${theme.vars.palette.divider}`,
+              }}
+            >
               <TableHead>
                 <TableRow>
                   <TableCell>PID</TableCell>
@@ -115,17 +154,29 @@ export function DashboardView({ title = 'Main' }: Props) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {processedProcessList.map((process: IProcessItem, index: number) => (
-                  <TableRow key={index}>
-                    <TableCell>{process.PID}</TableCell>
-                    <TableCell>{process.NAME}</TableCell>
-                    <TableCell>{process.PARAM}</TableCell>
-                    <TableCell>{process.CPU}</TableCell>
-                    <TableCell>{process.MEM}</TableCell>
-                    <TableCell>{process.PPID}</TableCell>
-                    <TableCell>{process.COMMAND}</TableCell>
+                {processLoading ? (
+                  <CircularProgress />
+                ) : processesEmpty ? (
+                  <TableRow>
+                    <TableCell colSpan={6}>No Processes Found</TableCell>
                   </TableRow>
-                ))}
+                ) : processError ? (
+                  <TableRow>
+                    <TableCell colSpan={6}>Error Fetching Process List</TableCell>
+                  </TableRow>
+                ) : (
+                  processedProcessList.map((process: IProcessItem, index: number) => (
+                    <TableRow key={index}>
+                      <TableCell>{process.PID}</TableCell>
+                      <TableCell>{process.NAME}</TableCell>
+                      <TableCell>{process.PARAM}</TableCell>
+                      <TableCell>{process.CPU}</TableCell>
+                      <TableCell>{process.MEM}</TableCell>
+                      <TableCell>{process.PPID}</TableCell>
+                      <TableCell>{process.COMMAND}</TableCell>
+                    </TableRow>
+                  ))
+                )}
               </TableBody>
             </Table>
           </Grid>
