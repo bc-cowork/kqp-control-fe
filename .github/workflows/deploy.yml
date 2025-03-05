@@ -1,0 +1,57 @@
+name: Build and Deploy Next.js to RHEL 8
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      # Install Yarn and dependencies
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      # Install dependencies and build
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build Next.js app
+        run: yarn build
+
+      # Deploy to RHEL 8 server
+      - name: Deploy to server
+        env:
+          DEPLOY_SERVER: ${{ secrets.DEPLOY_SERVER }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          # Install SSH key
+          echo "$DEPLOY_KEY" > deploy_key
+          chmod 600 deploy_key
+
+          # Copy build files
+          rsync -avz --delete -e "ssh -i deploy_key -o StrictHostKeyChecking=no" \
+            ./build/ \
+            $DEPLOY_USER@$DEPLOY_SERVER:$DEPLOY_PATH
+
+          # Restart application
+          ssh -i deploy_key -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_SERVER \
+            "cd $DEPLOY_PATH && yarn install && pm2 restart all"
+
+      # Cleanup
+      - name: Cleanup
+        if: always()
+        run: rm -f deploy_key
