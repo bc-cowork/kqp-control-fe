@@ -38,12 +38,12 @@ jobs:
         run: |
           echo "$DEPLOY_KEY" > deploy_key
           chmod 600 deploy_key
-          # Copy .next, package.json, yarn.lock, and public folder
+          # Copy .next folder, package.json, yarn.lock, and public folder
           rsync -avz --delete -e "ssh -i deploy_key -o StrictHostKeyChecking=no" \
-            .next/ package.json yarn.lock public/ \
+            .next package.json yarn.lock public \
             $DEPLOY_USER@$DEPLOY_SERVER:$DEPLOY_PATH/
           ssh -i deploy_key -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_SERVER \
-            "cd $DEPLOY_PATH && yarn install && pm2 restart all"
+            "cd $DEPLOY_PATH && yarn install --production && pm2 restart all"
 
       - name: Cleanup
         if: always()
