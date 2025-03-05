@@ -37,6 +37,7 @@ export function DashboardView({ title = 'Main' }: Props) {
   const { processes, processLoading, processesEmpty, processError } =
     useGetProcesses(selectedNodeId);
 
+  // Processing the list of processes to get needed data
   const processedProcessList =
     processes && Array.isArray(processes)
       ? processes.map((process: { data: any }) => process.data).flat()
