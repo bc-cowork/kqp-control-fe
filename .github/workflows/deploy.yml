@@ -44,7 +44,7 @@ jobs:
 
           # Copy build files
           rsync -avz --delete -e "ssh -i deploy_key -o StrictHostKeyChecking=no" \
-            ./next/ \
+            ./.next/ \
             $DEPLOY_USER@$DEPLOY_SERVER:$DEPLOY_PATH
 
           # Restart application
