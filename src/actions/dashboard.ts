@@ -37,8 +37,6 @@ export function useGetNodes() {
 
   const { data, isLoading, error, isValidating } = useSWR<NodeData>(url, fetcher, swrOptions);
 
-  console.log('useGetNodes', data, isLoading, error, isValidating);
-
   const memoizedValue = useMemo(
     () => ({
       nodes: data?.data?.nodeList || [],
@@ -66,8 +64,6 @@ export function useGetProcesses(node: string) {
   const url = node ? [endpoints.dashboard.processList, { params: { node } }] : '';
 
   const { data, isLoading, error, isValidating } = useSWR<ProcessData>(url, fetcher, swrOptions);
-
-  console.log('useGetProcesses', data, isLoading, error, isValidating);
 
   const processedProcessList =
     data?.data?.processList && Array.isArray(data?.data?.processList)
@@ -101,8 +97,6 @@ export function useGetStatus(node: string) {
   const url = node ? [endpoints.dashboard.serviceStatus, { params: { node } }] : '';
 
   const { data, isLoading, error, isValidating } = useSWR<StatusData>(url, fetcher, swrOptions);
-
-  console.log('useGetStatus', data, isLoading, error, isValidating);
 
   const memoizedValue = useMemo(
     () => ({

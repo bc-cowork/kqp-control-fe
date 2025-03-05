@@ -66,7 +66,6 @@ export function JwtSignInView() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      console.log('data', data);
       await signInWithPassword({ id: data.email, password: data.password });
       await checkUserSession?.();
 
