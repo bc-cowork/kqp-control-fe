@@ -21,7 +21,7 @@ import {
 
 import { varAlpha } from 'src/theme/styles';
 import { DashboardContent } from 'src/layouts/dashboard';
-import { useGetNodes, useGetStatus, useGetProcesses } from 'src/actions/dashboard';
+import { useGetNodes, useGetStatus, useGetIssues, useGetProcesses } from 'src/actions/dashboard';
 
 // ----------------------------------------------------------------------
 
@@ -36,6 +36,8 @@ export function DashboardView({ title = 'Main' }: Props) {
   const { status, statusLoading, statusError } = useGetStatus(selectedNodeId);
   const { processes, processLoading, processesEmpty, processError } =
     useGetProcesses(selectedNodeId);
+
+  const issueData = useGetIssues(selectedNodeId);
 
   // Processing the list of processes to get needed data
   const processedProcessList =

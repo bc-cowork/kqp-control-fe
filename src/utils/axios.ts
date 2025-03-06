@@ -62,5 +62,6 @@ export const endpoints = {
     nodeList: '/apik/node/list',
     serviceStatus: '/apik/service/status',
     processList: '/apik/process/list',
+    issueList: '/apik/issue/list',
   },
 };
