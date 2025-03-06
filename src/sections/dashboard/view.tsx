@@ -137,7 +137,7 @@ export function DashboardView({ title = 'Main' }: Props) {
                 justifyContent: 'center',
                 alignItems: 'center',
                 p: 5,
-                backgroundColor: status?.serviceStatus?.okay ? '#22C55E' : '#FF5630',
+                backgroundColor: status?.service_status?.okay ? '#22C55E' : '#FF5630',
               }}
             > */}
             {selectedNode ? (
@@ -181,11 +181,11 @@ export function DashboardView({ title = 'Main' }: Props) {
                         p: 1,
                         mt: 2,
                         width: '100%',
-                        backgroundColor: status?.serviceStatus?.okay ? '#22C55E' : '#FF5630',
+                        backgroundColor: status?.service_status?.okay ? '#22C55E' : '#FF5630',
                       }}
                     >
                       <Typography variant="h4">
-                        {status?.serviceStatus?.okay ? 'ONLINE' : 'OFFLINE'}
+                        {status?.service_status?.okay ? 'ONLINE' : 'OFFLINE'}
                       </Typography>
                     </Box>
                   </Box>

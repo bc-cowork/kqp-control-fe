@@ -26,7 +26,7 @@ export type IProcessItem = {
 
 export type IStatus = {
   nodeId: string;
-  serviceStatus: any;
+  service_status: any;
 };
 
 // export type IServiceStatus = {
