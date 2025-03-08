@@ -44,6 +44,15 @@ export const paths = {
   // DASHBOARD
   dashboard: {
     root: ROOTS.DASHBOARD,
+    nodes: {
+      root: '/dashboard/nodes',
+      node: (node: string) => `/dashboard/nodes/${node}`,
+      process: (node: string) => `/dashboard/nodes/${node}/process`,
+      memory: (node: string) => `/dashboard/nodes/${node}/memory`,
+      auditLog: (node: string) => `/dashboard/nodes/${node}/audit-log`,
+      channelsInbound: (node: string) => `/dashboard/nodes/${node}/channels-inbound`,
+      channelsOutbound: (node: string) => `/dashboard/nodes/${node}/channels-outbound`,
+    },
     two: `${ROOTS.DASHBOARD}/two`,
     three: `${ROOTS.DASHBOARD}/three`,
     group: {

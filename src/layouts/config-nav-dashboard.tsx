@@ -41,16 +41,44 @@ const ICONS = {
 
 // ----------------------------------------------------------------------
 
-export const navData = [
-  /**
-   * Overview
-   */
-  {
-    subheader: 'Management',
-    items: [
-      { title: 'Dashboard', path: paths.dashboard.root, icon: ICONS.dashboard },
-      // { title: 'Two', path: paths.dashboard.two, icon: ICONS.ecommerce },
-      // { title: 'Three', path: paths.dashboard.three, icon: ICONS.analytics },
-    ],
-  },
-];
+export function getNavData(nodes: string[] = []) {
+  return [
+    {
+      subheader: 'Management',
+      items: [
+        { title: 'Dashboard', path: paths.dashboard.root, icon: ICONS.dashboard },
+        {
+          title: 'Nodes',
+          path: paths.dashboard.nodes.root,
+          icon: ICONS.menuItem,
+          children: nodes.map((node) => ({
+            title: `${node}`,
+            path: paths.dashboard.nodes.node(node),
+            children: [
+              {
+                title: 'Process',
+                path: paths.dashboard.nodes.process(node),
+              },
+              {
+                title: 'Memory',
+                path: paths.dashboard.nodes.memory(node),
+              },
+              {
+                title: 'Audit Log',
+                path: paths.dashboard.nodes.auditLog(node),
+              },
+              {
+                title: 'Channels Inbound',
+                path: paths.dashboard.nodes.channelsInbound(node),
+              },
+              {
+                title: 'Channels Outbound',
+                path: paths.dashboard.nodes.channelsOutbound(node),
+              },
+            ],
+          })),
+        },
+      ],
+    },
+  ];
+}
