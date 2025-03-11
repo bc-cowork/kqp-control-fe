@@ -1,9 +1,11 @@
 import { CONFIG } from 'src/config-global';
 
+import { ChannelInboundView } from 'src/sections/nodes/channels-inbound/view';
+
 // ----------------------------------------------------------------------
 
-export const metadata = { title: `Channels:Outbound - ${CONFIG.appName}` };
+export const metadata = { title: `Channels:Inbound - ${CONFIG.appName}` };
 
 export default function Page({ params }: { params: { node: string } }) {
-  return <div>Channels:Outbound for Node {params.node}</div>;
+  return <ChannelInboundView nodeId={params.node} />;
 }

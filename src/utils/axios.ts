@@ -64,4 +64,9 @@ export const endpoints = {
     processList: '/apik/process/list',
     issueList: '/apik/issue/list',
   },
+  nodes: {
+    channelInbound: {
+      list: '/apik/channel/list',
+    },
+  },
 };
