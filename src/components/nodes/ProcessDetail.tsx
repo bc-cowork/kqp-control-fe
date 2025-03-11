@@ -45,7 +45,11 @@ export function ProcessDetail({ selectedNodeId }: Props) {
       </TableHead>
       <TableBody>
         {processLoading ? (
-          <CircularProgress />
+          <TableRow>
+            <TableCell colSpan={9} align="center">
+              <CircularProgress />
+            </TableCell>
+          </TableRow>
         ) : processesEmpty ? (
           <TableRow>
             <TableCell colSpan={6}>No Processes Found</TableCell>

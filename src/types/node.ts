@@ -6,5 +6,7 @@ export type IChannelItem = {
   mip: string;
   nic: string;
   utype: string;
+  type: string;
+  topic: string;
   is_running: boolean;
 };

@@ -76,7 +76,11 @@ export function DashboardView({ title = 'Main' }: Props) {
               </TableHead>
               <TableBody>
                 {nodesLoading ? (
-                  <CircularProgress />
+                  <TableRow>
+                    <TableCell colSpan={9} align="center">
+                      <CircularProgress />
+                    </TableCell>
+                  </TableRow>
                 ) : nodesEmpty ? (
                   <TableRow>
                     <TableCell colSpan={6}>No Nodes Found</TableCell>
