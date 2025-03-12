@@ -52,6 +52,7 @@ export function useGetChannelList(node: string, kind: string = 'inbound') {
 /** **************************************
  * Audit Log
  *************************************** */
+
 type AuditLogData = {
   ok: boolean;
   msg: string;
@@ -66,8 +67,6 @@ export function useAuditLogList(node: string, kind: string) {
 
   const { data, isLoading, error, isValidating } = useSWR<AuditLogData>(url, fetcher, swrOptions);
 
-  console.log('useAuditLogList', data, isLoading, error, isValidating);
-
   const memoizedValue = useMemo(
     () => ({
       auditLogs: data?.data?.auditLogList || [],
@@ -77,6 +76,40 @@ export function useAuditLogList(node: string, kind: string) {
       auditLogsEmpty: !isLoading && !data?.data?.auditLogList?.length,
     }),
     [data?.data?.auditLogList, error, isLoading, isValidating]
+  );
+
+  return memoizedValue;
+}
+
+type AuditLogFrameData = {
+  ok: boolean;
+  msg: string;
+  data: {
+    nodeId: string;
+    file: string;
+    spec: any;
+  };
+};
+
+export function useGetAuditLogFrame(node: string, file: string, seq: number) {
+  const url = node ? [endpoints.nodes.auditLog.frame, { params: { node, file, seq } }] : '';
+
+  const { data, isLoading, error, isValidating } = useSWR<AuditLogFrameData>(
+    url,
+    fetcher,
+    swrOptions
+  );
+
+  console.log('useGetAuditLogFrame', data, isLoading, error, isValidating);
+
+  const memoizedValue = useMemo(
+    () => ({
+      auditFrame: data?.data?.spec || {},
+      auditFrameLoading: isLoading,
+      auditFrameError: error,
+      auditFrameValidating: isValidating,
+    }),
+    [data?.data, error, isLoading, isValidating]
   );
 
   return memoizedValue;

@@ -18,3 +18,10 @@ export type IAuditLogItem = {
   kind: string;
   fname: string;
 };
+
+export type AuditLogFrameFragItem = {
+  id: number;
+  len: number;
+  data: string;
+  desc: string;
+};

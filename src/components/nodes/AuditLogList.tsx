@@ -8,6 +8,7 @@ import {
   Box,
   Table,
   Select,
+  Button,
   TableRow,
   MenuItem,
   TableBody,
@@ -15,6 +16,8 @@ import {
   TableHead,
   CircularProgress,
 } from '@mui/material';
+
+import { useRouter } from 'src/routes/hooks';
 
 import { varAlpha } from 'src/theme/styles';
 import { useAuditLogList } from 'src/actions/nodes';
@@ -25,6 +28,7 @@ const AUDIT_LOG_TYPES = [
   { value: 'inbound', label: 'Inbound' },
   { value: 'outbound', label: 'Outbound' },
   { value: 'other', label: 'Other' },
+  { value: 'all', label: 'All' },
 ];
 
 // ----------------------------------------------------------------------
@@ -34,6 +38,7 @@ type Props = {
 };
 
 export function AuditLogList({ selectedNodeId }: Props) {
+  const router = useRouter();
   const [type, setType] = useState<string>(AUDIT_LOG_TYPES[0].value);
 
   const { auditLogs, auditLogsEmpty, auditLogsLoading, auditLogsError } = useAuditLogList(
@@ -70,6 +75,7 @@ export function AuditLogList({ selectedNodeId }: Props) {
             <TableCell>Date</TableCell>
             <TableCell>Type</TableCell>
             <TableCell>Size</TableCell>
+            <TableCell>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -94,6 +100,19 @@ export function AuditLogList({ selectedNodeId }: Props) {
                 <TableCell>{auditLog.date}</TableCell>
                 <TableCell>{auditLog.kind}</TableCell>
                 <TableCell>{auditLog.size}</TableCell>
+                <TableCell>
+                  <Button
+                    onClick={() => {
+                      router.push(`/dashboard/nodes/${selectedNodeId}/audit-log/${auditLog.fname}`);
+                    }}
+                    sx={{
+                      backgroundColor: '#F4F6F8',
+                      '&:hover': { backgroundColor: '#637381', color: '#F4F6F8' },
+                    }}
+                  >
+                    Audit Log
+                  </Button>
+                </TableCell>
               </TableRow>
             ))
           )}
