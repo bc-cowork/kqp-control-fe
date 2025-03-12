@@ -68,5 +68,8 @@ export const endpoints = {
     channelInbound: {
       list: '/apik/channel/list',
     },
+    auditLog: {
+      list: '/apik/auditlog/list',
+    },
   },
 };

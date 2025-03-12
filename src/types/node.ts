@@ -10,3 +10,11 @@ export type IChannelItem = {
   topic: string;
   is_running: boolean;
 };
+
+export type IAuditLogItem = {
+  id: number;
+  size: number;
+  date: string;
+  kind: string;
+  fname: string;
+};
