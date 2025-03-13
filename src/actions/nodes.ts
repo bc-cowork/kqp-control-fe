@@ -81,13 +81,56 @@ export function useAuditLogList(node: string, kind: string) {
   return memoizedValue;
 }
 
+// ----------------------------------------------------------------------
+
+type AuditFrameListData = {
+  ok: boolean;
+  msg: string;
+  data: any; // TODO: define type
+};
+
+export function useAuditFrameList(
+  node: string,
+  file: string,
+  limit: number,
+  offset: number,
+  sort: 'asc' | 'desc'
+) {
+  const url = node
+    ? [endpoints.nodes.auditLog.frameList, { params: { node, file, limit, offset, sort } }]
+    : '';
+
+  const { data, isLoading, error, isValidating } = useSWR<AuditFrameListData>(
+    url,
+    fetcher,
+    swrOptions
+  );
+
+  console.log('useAuditFrameList', data);
+
+  const memoizedValue = useMemo(
+    () => ({
+      auditFrameList: data?.data || [],
+      auditFrameListLoading: isLoading,
+      auditFrameListError: error,
+      auditFrameListValidating: isValidating,
+      auditFrameListEmpty: !isLoading && !data?.data?.frame_list?.length,
+    }),
+    [data?.data, error, isLoading, isValidating]
+  );
+
+  return memoizedValue;
+}
+
+// ----------------------------------------------------------------------
+
 type AuditLogFrameData = {
   ok: boolean;
   msg: string;
   data: {
     nodeId: string;
     file: string;
-    spec: any;
+    spec: any; // TODO: define type
   };
 };
 
@@ -99,8 +142,6 @@ export function useGetAuditLogFrame(node: string, file: string, seq: number) {
     fetcher,
     swrOptions
   );
-
-  console.log('useGetAuditLogFrame', data, isLoading, error, isValidating);
 
   const memoizedValue = useMemo(
     () => ({

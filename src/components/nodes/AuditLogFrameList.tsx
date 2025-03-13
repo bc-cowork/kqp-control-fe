@@ -1,6 +1,6 @@
 'use client';
 
-import type { AuditLogFrameFragItem } from 'src/types/node';
+import type { AuditLogFrameItem } from 'src/types/node';
 
 import { useState } from 'react';
 
@@ -9,6 +9,7 @@ import {
   Box,
   Stack,
   Table,
+  Button,
   TableRow,
   TableBody,
   TableCell,
@@ -18,9 +19,11 @@ import {
   CircularProgress,
 } from '@mui/material';
 
+import { useRouter } from 'src/routes/hooks';
+
 import { grey } from 'src/theme/core';
 import { varAlpha } from 'src/theme/styles';
-import { useGetAuditLogFrame } from 'src/actions/nodes';
+import { useAuditFrameList } from 'src/actions/nodes';
 
 // ----------------------------------------------------------------------
 
@@ -38,15 +41,13 @@ type Props = {
   selectedFile: string;
 };
 
-export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
+export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
+  const router = useRouter();
   const [type, setType] = useState<string>(AUDIT_LOG_TYPES[0].value);
   const [seq, setSeq] = useState<number>(0);
 
-  const { auditFrame, auditFrameError, auditFrameLoading } = useGetAuditLogFrame(
-    selectedNodeId,
-    selectedFile,
-    1
-  );
+  const { auditFrameList, auditFrameListError, auditFrameListLoading, auditFrameListEmpty } =
+    useAuditFrameList(selectedNodeId, selectedFile, 40, 0, 'asc');
 
   const handleTypeChange = (event: { target: { value: string } }) => {
     setType(event.target.value);
@@ -72,25 +73,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
                 sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
               >
                 <Typography>File Size: </Typography>
-                <Typography>44,05,931,233</Typography>
-              </Stack>
-            </Box>
-            <Box sx={{ p: 2 }}>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
-              >
-                <Typography>SEQ </Typography>
-                <Typography>{auditFrame?.seq}</Typography>
-              </Stack>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
-              >
-                <Typography>HEAD </Typography>
-                <Typography>{auditFrame?.head}</Typography>
+                <Typography>{auditFrameList.file_size}</Typography>
               </Stack>
             </Box>
           </Grid>
@@ -110,25 +93,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
                 sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
               >
                 <Typography>Date </Typography>
-                <Typography>tbd</Typography>
-              </Stack>
-            </Box>
-            <Box sx={{ p: 2 }}>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
-              >
-                <Typography>Time </Typography>
-                <Typography>{auditFrame?.time}</Typography>
-              </Stack>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
-              >
-                <Typography>RID </Typography>
-                <Typography>{auditFrame?.rid}</Typography>
+                <Typography>{auditFrameList.date}</Typography>
               </Stack>
             </Box>
           </Grid>
@@ -140,17 +105,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
                 sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
               >
                 <Typography>Max Frame </Typography>
-                <Typography>{auditFrame?.time}</Typography>
-              </Stack>
-            </Box>
-            <Box sx={{ p: 2 }}>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
-              >
-                <Typography>Size </Typography>
-                <Typography>{auditFrame?.size}</Typography>
+                <Typography>{auditFrameList.max_frame}</Typography>
               </Stack>
             </Box>
           </Grid>
@@ -166,30 +121,50 @@ export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
       >
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>LEN</TableCell>
-            <TableCell>DATA</TableCell>
-            <TableCell>Desc.</TableCell>
+            <TableCell>Seq</TableCell>
+            <TableCell>HEAD</TableCell>
+            <TableCell>RID</TableCell>
+            <TableCell>Size</TableCell>
+            <TableCell>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {auditFrameLoading ? (
+          {auditFrameListLoading ? (
             <TableRow>
               <TableCell colSpan={9} align="center">
                 <CircularProgress />
               </TableCell>
             </TableRow>
-          ) : auditFrameError ? (
+          ) : auditFrameListEmpty ? (
+            <TableRow>
+              <TableCell colSpan={6}>Error Fetching Audit Logs List</TableCell>
+            </TableRow>
+          ) : auditFrameListError ? (
             <TableRow>
               <TableCell colSpan={6}>Error Fetching Audit Logs List</TableCell>
             </TableRow>
           ) : (
-            auditFrame.frags.map((auditFrameFrag: AuditLogFrameFragItem, index: number) => (
+            auditFrameList.frame_list.map((auditFrame: AuditLogFrameItem, index: number) => (
               <TableRow key={index}>
-                <TableCell>{auditFrameFrag.id}</TableCell>
-                <TableCell>{auditFrameFrag.len}</TableCell>
-                <TableCell>{auditFrameFrag.data}</TableCell>
-                <TableCell>{auditFrameFrag.desc}</TableCell>
+                <TableCell>{auditFrame.seq}</TableCell>
+                <TableCell>{auditFrame.head}</TableCell>
+                <TableCell>{auditFrame.rid}</TableCell>
+                <TableCell>{auditFrame.size}</TableCell>
+                <TableCell>
+                  <Button
+                    onClick={() => {
+                      router.push(
+                        `/dashboard/nodes/${selectedNodeId}/audit-log/${selectedFile}/item`
+                      );
+                    }}
+                    sx={{
+                      backgroundColor: '#F4F6F8',
+                      '&:hover': { backgroundColor: '#637381', color: '#F4F6F8' },
+                    }}
+                  >
+                    Details
+                  </Button>
+                </TableCell>
               </TableRow>
             ))
           )}

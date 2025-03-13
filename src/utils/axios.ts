@@ -70,6 +70,7 @@ export const endpoints = {
     },
     auditLog: {
       list: '/apik/auditlog/list',
+      frameList: '/apik/auditlog/frame-list',
       frame: '/apik/auditlog/frame',
     },
   },

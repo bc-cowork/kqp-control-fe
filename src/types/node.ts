@@ -25,3 +25,10 @@ export type AuditLogFrameFragItem = {
   data: string;
   desc: string;
 };
+
+export type AuditLogFrameItem = {
+  seq: number;
+  head: string;
+  rid: number;
+  size: number;
+};

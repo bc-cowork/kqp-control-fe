@@ -103,14 +103,16 @@ export function AuditLogList({ selectedNodeId }: Props) {
                 <TableCell>
                   <Button
                     onClick={() => {
-                      router.push(`/dashboard/nodes/${selectedNodeId}/audit-log/${auditLog.fname}`);
+                      router.push(
+                        `/dashboard/nodes/${selectedNodeId}/audit-log/${auditLog.fname}/list`
+                      );
                     }}
                     sx={{
                       backgroundColor: '#F4F6F8',
                       '&:hover': { backgroundColor: '#637381', color: '#F4F6F8' },
                     }}
                   >
-                    Audit Log
+                    Details
                   </Button>
                 </TableCell>
               </TableRow>
