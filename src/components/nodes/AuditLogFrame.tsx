@@ -14,7 +14,6 @@ import {
   TableCell,
   TableHead,
   Typography,
-  TablePagination,
   CircularProgress,
 } from '@mui/material';
 
@@ -195,14 +194,6 @@ export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
           )}
         </TableBody>
       </Table>
-      <TablePagination
-        component="div"
-        rowsPerPageOptions={[10, 20, 40, 60, 100]}
-        rowsPerPage={40}
-        page={1}
-        onPageChange={() => console.log('hmm')}
-        count={400}
-      />
     </>
   );
 }
