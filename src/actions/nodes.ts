@@ -134,14 +134,31 @@ type AuditLogFrameData = {
   };
 };
 
-export function useGetAuditLogFrame(node: string, file: string, seq: number) {
-  const url = node ? [endpoints.nodes.auditLog.frame, { params: { node, file, seq } }] : '';
+export function useGetAuditLogFrame(
+  node: string,
+  file: string,
+  seq: number,
+  side?: 'prev' | 'next',
+  count?: number,
+  cond?: string
+) {
+  let url;
+
+  if (side && count) {
+    url = node
+      ? [endpoints.nodes.auditLog.frame, { params: { node, file, seq, side, count, cond } }]
+      : '';
+  } else {
+    url = node ? [endpoints.nodes.auditLog.frame, { params: { node, file, seq } }] : '';
+  }
 
   const { data, isLoading, error, isValidating } = useSWR<AuditLogFrameData>(
     url,
     fetcher,
     swrOptions
   );
+
+  console.log('useGetAuditLogFrame', data);
 
   const memoizedValue = useMemo(
     () => ({

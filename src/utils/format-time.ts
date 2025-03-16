@@ -267,3 +267,14 @@ export function fSub({
 
   return result;
 }
+
+export function formatDateCustom(dateStr?: string) {
+  if (!dateStr) return '';
+
+  const date = dayjs(dateStr);
+  if (date.isValid()) {
+    const formattedDate = date.format('YYYY/MM/DD');
+    return formattedDate;
+  }
+  return '';
+}
