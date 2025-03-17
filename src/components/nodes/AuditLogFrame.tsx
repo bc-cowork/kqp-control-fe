@@ -37,19 +37,14 @@ export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
   const [count, setCount] = useState<number>(40);
   const [side, setSide] = useState<'prev' | 'next' | undefined>(undefined);
   const [cond, setCond] = useState<string | undefined>(undefined);
+  const [condText, setCondText] = useState<string | undefined>(undefined);
 
-  const { auditFrame, auditFrameError, auditFrameLoading } = useGetAuditLogFrame(
-    selectedNodeId,
-    selectedFile,
-    seq,
-    side,
-    count,
-    cond
-  );
+  const { auditFrame, auditFrameError, auditFrameLoading, auditFrameFragsEmpty } =
+    useGetAuditLogFrame(selectedNodeId, selectedFile, seq, side, count, cond);
 
   const handleUpdateCond = useCallback(() => {
-    console.log('handleUpdateCond', cond);
-  }, [cond]);
+    setCond(condText);
+  }, [condText]);
 
   const handleNext = () => {
     setSide('next');
@@ -184,9 +179,9 @@ export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
         <TextField
           size="small"
           placeholder="Enter cond here"
-          value={cond}
+          value={condText}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setCond(event.target.value);
+            setCondText(event.target.value);
           }}
           sx={{ width: 340 }}
         />
@@ -200,12 +195,16 @@ export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
           <Button variant="outlined" onClick={handleFirst} disabled={seq === 0}>
             First
           </Button>
-          <Button variant="outlined" onClick={handleLast}>
+          <Button
+            variant="outlined"
+            onClick={handleLast}
+            disabled={seq === auditFrame.max_frame - count}
+          >
             Last
           </Button>
         </Stack>
         <Stack direction="row" spacing={2}>
-          <Button variant="outlined" onClick={handlePrev}>
+          <Button variant="outlined" onClick={handlePrev} disabled={seq === 0}>
             Prev
           </Button>
           <Button variant="outlined" onClick={handleNext}>
@@ -237,9 +236,15 @@ export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
                 <CircularProgress />
               </TableCell>
             </TableRow>
+          ) : auditFrameFragsEmpty ? (
+            <TableRow>
+              <TableCell colSpan={9} align="center">
+                <TableCell colSpan={6}>No data to show</TableCell>
+              </TableCell>
+            </TableRow>
           ) : auditFrameError ? (
             <TableRow>
-              <TableCell colSpan={6}>Error Fetching Audit Logs List</TableCell>
+              <TableCell colSpan={6}>Error Fetching Audit Frags List</TableCell>
             </TableRow>
           ) : (
             auditFrame.frags.map((auditFrameFrag: AuditLogFrameFragItem, index: number) => (

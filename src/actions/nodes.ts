@@ -152,6 +152,8 @@ export function useGetAuditLogFrame(
     url = node ? [endpoints.nodes.auditLog.frame, { params: { node, file, seq } }] : '';
   }
 
+  console.log('url', url);
+
   const { data, isLoading, error, isValidating } = useSWR<AuditLogFrameData>(
     url,
     fetcher,
@@ -164,6 +166,7 @@ export function useGetAuditLogFrame(
     () => ({
       auditFrame: data?.data?.spec || {},
       auditFrameLoading: isLoading,
+      auditFrameFragsEmpty: !isLoading && !data?.data?.spec?.frags?.length,
       auditFrameError: error,
       auditFrameValidating: isValidating,
     }),
