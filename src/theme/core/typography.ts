@@ -1,6 +1,6 @@
 import type { TypographyOptions } from '@mui/material/styles/createTypography';
 
-import { setFont, pxToRem, responsiveFontSizes } from '../styles/utils';
+import { pxToRem, responsiveFontSizes } from '../styles/utils';
 
 // ----------------------------------------------------------------------
 
@@ -20,11 +20,11 @@ declare module '@mui/material/styles' {
 
 // ----------------------------------------------------------------------
 
-export const defaultFont = 'Public Sans Variable';
+export const defaultFont = 'Roboto';
 
-export const primaryFont = setFont(defaultFont);
+export const primaryFont = defaultFont;
 
-export const secondaryFont = setFont('Barlow');
+export const secondaryFont = defaultFont;
 
 // ----------------------------------------------------------------------
 

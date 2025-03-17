@@ -34,6 +34,7 @@
     "@fontsource-variable/nunito-sans": "^5.0.15",
     "@fontsource-variable/public-sans": "^5.0.19",
     "@fontsource/barlow": "^5.0.14",
+    "@fontsource/roboto": "^5.2.5",
     "@hookform/resolvers": "^3.9.0",
     "@iconify/react": "^5.0.2",
     "@mui/lab": "^5.0.0-alpha.173",

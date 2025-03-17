@@ -98,7 +98,22 @@ const MuiButton: Components<Theme>['MuiButton'] = {
     contained: ({ theme, ownerState }) => {
       const styled = {
         colors: styleColors(ownerState, (color) => ({
-          '&:hover': { boxShadow: theme.customShadows[color] },
+          // Default state
+          backgroundColor: theme.vars.palette.primary.main,
+          color: theme.vars.palette.common.white,
+          // Hover state
+          '&:hover': {
+            backgroundColor: theme.vars.palette.primary.dark,
+          },
+          // Pressed (active) state
+          '&:active': {
+            backgroundColor: theme.vars.palette.primary.darker,
+          },
+          // Disabled state
+          '&.Mui-disabled': {
+            backgroundColor: theme.vars.palette.grey[50],
+            color: theme.vars.palette.grey[400],
+          },
         })),
         inheritColor: {
           ...(ownerState.color === 'inherit' &&

@@ -156,7 +156,8 @@ export function SettingsDrawer({
     <FontOptions
       value={settings.fontFamily}
       onClickOption={(newValue) => settings.onUpdateField('fontFamily', newValue)}
-      options={[defaultFont, 'Inter Variable', 'DM Sans Variable', 'Nunito Sans Variable']}
+      options={[defaultFont]}
+      // options={[defaultFont, 'Inter Variable', 'DM Sans Variable', 'Nunito Sans Variable']}
     />
   );
 
