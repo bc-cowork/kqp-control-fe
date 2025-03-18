@@ -95,25 +95,13 @@ const MuiButton: Components<Theme>['MuiButton'] = {
     /**
      * @variant contained
      */
+    // root: ({ theme }) => ({
+    //   backgroundColor: theme.vars.palette.primary.main,
+    // }),
     contained: ({ theme, ownerState }) => {
       const styled = {
         colors: styleColors(ownerState, (color) => ({
-          // Default state
-          backgroundColor: theme.vars.palette.primary.main,
-          color: theme.vars.palette.common.white,
-          // Hover state
-          '&:hover': {
-            backgroundColor: theme.vars.palette.primary.dark,
-          },
-          // Pressed (active) state
-          '&:active': {
-            backgroundColor: theme.vars.palette.primary.darker,
-          },
-          // Disabled state
-          '&.Mui-disabled': {
-            backgroundColor: theme.vars.palette.grey[50],
-            color: theme.vars.palette.grey[400],
-          },
+          '&:hover': { boxShadow: theme.customShadows[color] },
         })),
         inheritColor: {
           ...(ownerState.color === 'inherit' &&
@@ -131,8 +119,12 @@ const MuiButton: Components<Theme>['MuiButton'] = {
               },
             }),
         },
+        base: {
+          backgroundColor: theme.vars.palette.primary.main,
+          '&:hover': { backgroundColor: theme.vars.palette.primary.dark },
+        },
       };
-      return { ...styled.inheritColor, ...styled.colors };
+      return { ...styled.inheritColor, ...styled.colors, ...styled.base };
     },
     /**
      * @variant outlined
