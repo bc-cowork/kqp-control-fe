@@ -2,7 +2,7 @@
 
 import type { BoxProps } from '@mui/material/Box';
 
-import { useId, forwardRef } from 'react';
+import { forwardRef } from 'react';
 
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
@@ -28,13 +28,6 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
   ) => {
     const theme = useTheme();
 
-    const gradientId = useId();
-
-    const TEXT_PRIMARY = theme.vars.palette.text.primary;
-    const PRIMARY_LIGHT = theme.vars.palette.primary.light;
-    const PRIMARY_MAIN = theme.vars.palette.primary.main;
-    const PRIMARY_DARKER = theme.vars.palette.primary.dark;
-
     const singleLogo = (
       <Box
         alt="Single logo"
@@ -53,7 +46,6 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
         src={`${CONFIG.assetsDir}/logo/logo-full.svg`}
         width="100%"
         height="100%"
-        sx={{ p: 0.5 }}
       />
     );
 

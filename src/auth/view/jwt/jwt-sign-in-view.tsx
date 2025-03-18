@@ -50,8 +50,8 @@ export function JwtSignInView() {
   const password = useBoolean();
 
   const defaultValues = {
-    email: 'manthika',
-    password: 'graduated',
+    email: '',
+    password: '',
   };
 
   const methods = useForm<SignInSchemaType>({
@@ -80,8 +80,8 @@ export function JwtSignInView() {
     <Box gap={3} display="flex" flexDirection="column">
       <Field.Text name="email" label="ID" InputLabelProps={{ shrink: true }} />
 
-      <Box gap={1.5} display="flex" flexDirection="column">
-        <Link
+      <Box gap={1.5} display="flex" flexDirection="column" sx={{ mb: 10 }}>
+        {/* <Link
           component={RouterLink}
           href="#"
           variant="body2"
@@ -89,12 +89,11 @@ export function JwtSignInView() {
           sx={{ alignSelf: 'flex-end' }}
         >
           Forgot password?
-        </Link>
+        </Link> */}
 
         <Field.Text
           name="password"
           label="Password"
-          placeholder="6+ characters"
           type={password.value ? 'text' : 'password'}
           InputLabelProps={{ shrink: true }}
           InputProps={{
@@ -111,7 +110,6 @@ export function JwtSignInView() {
 
       <LoadingButton
         fullWidth
-        color="inherit"
         size="large"
         type="submit"
         variant="contained"
@@ -135,14 +133,8 @@ export function JwtSignInView() {
             </Link>
           </>
         }
-        sx={{ textAlign: { xs: 'center', md: 'left' } }}
+        sx={{ textAlign: { xs: 'center', md: 'left' }, mb: 10 }}
       />
-
-      <Alert severity="info" sx={{ mb: 3 }}>
-        Use <strong>{defaultValues.email}</strong>
-        {' with password '}
-        <strong>{defaultValues.password}</strong>
-      </Alert>
 
       {!!errorMsg && (
         <Alert severity="error" sx={{ mb: 3 }}>
