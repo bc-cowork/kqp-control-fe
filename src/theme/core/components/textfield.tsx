@@ -58,8 +58,10 @@ const MuiOutlinedInput: Components<Theme>['MuiOutlinedInput'] = {
   styleOverrides: {
     root: ({ theme }) => ({
       [`&.${outlinedInputClasses.focused}`]: {
+        color: theme.vars.palette.primary.main,
         [`& .${outlinedInputClasses.notchedOutline}`]: {
-          borderColor: theme.vars.palette.text.primary,
+          borderColor: theme.vars.palette.primary.main,
+          color: theme.vars.palette.primary.main,
         },
       },
       [`&.${outlinedInputClasses.error}`]: {

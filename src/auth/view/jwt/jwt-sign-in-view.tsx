@@ -77,36 +77,24 @@ export function JwtSignInView() {
   });
 
   const renderForm = (
-    <Box gap={3} display="flex" flexDirection="column">
-      <Field.Text name="email" label="ID" InputLabelProps={{ shrink: true }} />
+    <Box display="flex" flexDirection="column">
+      <Field.Text name="email" label="ID" sx={{ mb: 2.5 }} />
 
-      <Box gap={1.5} display="flex" flexDirection="column" sx={{ mb: 10 }}>
-        {/* <Link
-          component={RouterLink}
-          href="#"
-          variant="body2"
-          color="inherit"
-          sx={{ alignSelf: 'flex-end' }}
-        >
-          Forgot password?
-        </Link> */}
-
-        <Field.Text
-          name="password"
-          label="Password"
-          type={password.value ? 'text' : 'password'}
-          InputLabelProps={{ shrink: true }}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={password.onToggle} edge="end">
-                  <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-      </Box>
+      <Field.Text
+        name="password"
+        label="Password"
+        type={password.value ? 'text' : 'password'}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={password.onToggle} edge="end">
+                <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+        sx={{ mb: 7 }}
+      />
 
       <LoadingButton
         fullWidth
@@ -114,7 +102,8 @@ export function JwtSignInView() {
         type="submit"
         variant="contained"
         loading={isSubmitting}
-        loadingIndicator="Sign in..."
+        loadingIndicator="Signing in..."
+        sx={{ backgroundColor: 'primary.main', color: 'primary.contrastText' }}
       >
         Sign in
       </LoadingButton>
@@ -133,7 +122,7 @@ export function JwtSignInView() {
             </Link>
           </>
         }
-        sx={{ textAlign: { xs: 'center', md: 'left' }, mb: 10 }}
+        sx={{ textAlign: { xs: 'center', md: 'left' }, mb: 8 }}
       />
 
       {!!errorMsg && (
