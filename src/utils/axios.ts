@@ -73,5 +73,8 @@ export const endpoints = {
       frameList: '/apik/auditlog/frame-list',
       frame: '/apik/auditlog/frame',
     },
+    issues: {
+      list: '/apik/issue/list',
+    },
   },
 };

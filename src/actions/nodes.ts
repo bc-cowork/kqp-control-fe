@@ -169,3 +169,49 @@ export function useGetAuditLogFrame(
 
   return memoizedValue;
 }
+
+// ----------------------------------------------------------------------
+
+/** **************************************
+ * Issues - Memory page
+ *************************************** */
+
+type IssueData = {
+  ok: boolean;
+  msg: string;
+  data: {
+    nodeId: string;
+    max_issue_count: number;
+    issueList: any; // TODO: define type
+  };
+  meta: {
+    current_page: number;
+    has_next_page: boolean;
+    has_previous_page: boolean;
+    total_pages: number;
+  };
+};
+
+export function useGetIssues(node: string, offset: number, limit: number) {
+  const url =
+    node && offset && limit
+      ? [endpoints.nodes.issues.list, { params: { node, offset, limit } }]
+      : '';
+
+  const { data, isLoading, error, isValidating } = useSWR<IssueData>(url, fetcher, swrOptions);
+
+  console.log('useIssueList', data);
+
+  const memoizedValue = useMemo(
+    () => ({
+      issues: data ? { ...data.data, ...data.meta } : {},
+      issuesLoading: isLoading,
+      issuesError: error,
+      issuesValidating: isValidating,
+      issuesEmpty: !isLoading && !data?.data?.issueList?.length,
+    }),
+    [data, error, isLoading, isValidating]
+  );
+
+  return memoizedValue;
+}

@@ -106,31 +106,3 @@ export function useGetStatus(node: string) {
 }
 
 // ----------------------------------------------------------------------
-
-/** **************************************
- * Issue List
- *************************************** */
-type IssueData = {
-  ok: boolean;
-  msg: string;
-  data: any;
-};
-
-export function useGetIssues(node: string) {
-  const url = node ? [endpoints.dashboard.issueList, { params: { node } }] : '';
-
-  const { data, isLoading, error, isValidating } = useSWR<IssueData>(url, fetcher, swrOptions);
-
-  const memoizedValue = useMemo(
-    () => ({
-      issues: data?.data?.issueList || [],
-      issuesLoading: isLoading,
-      issuesError: error,
-      issuesValidating: isValidating,
-      issuesEmpty: !isLoading && !data?.data?.issueList?.length,
-    }),
-    [data?.data?.issueList, error, isLoading, isValidating]
-  );
-
-  return memoizedValue;
-}
