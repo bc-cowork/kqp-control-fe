@@ -10,6 +10,7 @@ import {
   Stack,
   Table,
   Button,
+  Tooltip,
   TableRow,
   TableBody,
   TableCell,
@@ -25,6 +26,8 @@ import { grey } from 'src/theme/core';
 import { varAlpha } from 'src/theme/styles';
 import { useGetAuditLogFrame } from 'src/actions/nodes';
 
+import { Iconify } from '../iconify';
+
 // ----------------------------------------------------------------------
 
 type Props = {
@@ -38,12 +41,25 @@ export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
   const [side, setSide] = useState<'prev' | 'next' | undefined>(undefined);
   const [cond, setCond] = useState<string | undefined>(undefined);
   const [condText, setCondText] = useState<string | undefined>(undefined);
+  const [seqNum, setSeqNum] = useState<number>(seq);
+  const [countNum, setCountNum] = useState<number>(count);
 
   const { auditFrame, auditFrameError, auditFrameLoading, auditFrameFragsEmpty } =
     useGetAuditLogFrame(selectedNodeId, selectedFile, seq, side, count, cond);
 
+  const handleUpdateSeq = useCallback(() => {
+    setSeq(seqNum);
+    handleFirst();
+  }, [seqNum]);
+
+  const handleUpdateCount = useCallback(() => {
+    setCount(countNum);
+    handleFirst();
+  }, [countNum]);
+
   const handleUpdateCond = useCallback(() => {
     setCond(condText);
+    handleFirst();
   }, [condText]);
 
   const handleNext = () => {
@@ -175,20 +191,74 @@ export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
         </Grid>
       </Box>
 
-      <Box gap={1} display="flex" alignItems="center" sx={{ mb: 2 }}>
-        <TextField
-          size="small"
-          placeholder="Enter cond here"
-          value={condText}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setCondText(event.target.value);
-          }}
-          sx={{ width: 340 }}
-        />
-        <Button variant="contained" onClick={handleUpdateCond}>
-          Apply
-        </Button>
-      </Box>
+      <Stack direction="row" spacing={2} sx={{ mb: 3 }}>
+        <Box gap={1} display="flex" alignItems="center">
+          <TextField
+            label="Cond"
+            size="small"
+            placeholder="Enter cond here"
+            value={condText}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setCondText(event.target.value);
+            }}
+            sx={{ width: 340 }}
+          />
+
+          <Tooltip
+            title={
+              <>
+                Examples: <br />
+                {`- sd[1]:asStr()=='B6'`} <br />
+                {`- sd[1]:asStr()=='B6' and sd[3]:asStr()=='K'`}
+                <br />
+                {`- sd[1]:asStr()=='B6' and sd[3]:asStr()=='K' and
+                sd[7]:asStr()=='KR7035900000'"`}
+              </>
+            }
+            arrow
+            placement="right"
+          >
+            <Iconify icon="eva:info-outline" />
+          </Tooltip>
+          <Button variant="contained" onClick={handleUpdateCond}>
+            Apply
+          </Button>
+        </Box>
+
+        <Box gap={1} display="flex" alignItems="center">
+          <TextField
+            label="SEQ"
+            size="small"
+            placeholder="Enter seq here"
+            value={seqNum}
+            type="number"
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setSeqNum(Number(event.target.value));
+            }}
+            sx={{ width: 140 }}
+          />
+          <Button variant="contained" onClick={handleUpdateSeq}>
+            Apply
+          </Button>
+        </Box>
+
+        <Box gap={1} display="flex" alignItems="center">
+          <TextField
+            label="Count"
+            size="small"
+            placeholder="Enter count here"
+            value={countNum}
+            type="number"
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setCountNum(Number(event.target.value));
+            }}
+            sx={{ width: 140 }}
+          />
+          <Button variant="contained" onClick={handleUpdateCount}>
+            Apply
+          </Button>
+        </Box>
+      </Stack>
 
       <Box gap={1} display="flex" alignItems="center" justifyContent="space-between" sx={{ mb: 2 }}>
         <Stack direction="row" spacing={2}>
@@ -203,10 +273,11 @@ export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
             Last
           </Button>
         </Stack>
-        <Stack direction="row" spacing={2}>
+        <Stack direction="row" spacing={2} alignItems="center">
           <Button variant="outlined" onClick={handlePrev} disabled={seq === 0}>
             Prev
           </Button>
+          <Typography>{seq === 0 ? 1 : seq / count + 1}</Typography>
           <Button variant="outlined" onClick={handleNext}>
             Next
           </Button>

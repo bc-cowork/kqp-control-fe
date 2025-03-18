@@ -132,7 +132,5 @@ export function useGetIssues(node: string) {
     [data?.data?.issueList, error, isLoading, isValidating]
   );
 
-  console.log('useGetIssues', data, memoizedValue);
-
   return memoizedValue;
 }

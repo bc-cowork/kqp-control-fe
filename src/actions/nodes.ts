@@ -106,8 +106,6 @@ export function useAuditFrameList(
     swrOptions
   );
 
-  console.log('useAuditFrameList', data);
-
   const memoizedValue = useMemo(
     () => ({
       auditFrameList: data?.data || [],
@@ -152,15 +150,11 @@ export function useGetAuditLogFrame(
     url = node ? [endpoints.nodes.auditLog.frame, { params: { node, file, seq } }] : '';
   }
 
-  console.log('url', url);
-
   const { data, isLoading, error, isValidating } = useSWR<AuditLogFrameData>(
     url,
     fetcher,
     swrOptions
   );
-
-  console.log('useGetAuditLogFrame', data);
 
   const memoizedValue = useMemo(
     () => ({
