@@ -18,12 +18,23 @@ import { logoClasses } from './classes';
 export type LogoProps = BoxProps & {
   href?: string;
   isSingle?: boolean;
+  isWhite?: boolean;
   disableLink?: boolean;
 };
 
 export const Logo = forwardRef<HTMLDivElement, LogoProps>(
   (
-    { width, href = '/', height, isSingle = true, disableLink = false, className, sx, ...other },
+    {
+      width,
+      href = '/',
+      height,
+      isSingle = true,
+      isWhite = false,
+      disableLink = false,
+      className,
+      sx,
+      ...other
+    },
     ref
   ) => {
     const theme = useTheme();
@@ -32,7 +43,7 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
       <Box
         alt="Single logo"
         component="img"
-        src={`${CONFIG.assetsDir}/logo/logo-single.svg`}
+        src={`${CONFIG.assetsDir}/logo/${isWhite ? 'logo-single-white' : 'logo-single'}.svg`}
         width="100%"
         height="100%"
         sx={{ p: 0.5 }}
@@ -43,7 +54,7 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
       <Box
         alt="Full logo"
         component="img"
-        src={`${CONFIG.assetsDir}/logo/logo-full.svg`}
+        src={`${CONFIG.assetsDir}/logo/${isWhite ? 'logo-full-white' : 'logo-full'}.svg`}
         width="100%"
         height="100%"
       />

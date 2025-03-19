@@ -44,7 +44,6 @@ const ICONS = {
 export function getNavData(nodes: string[] = []) {
   return [
     {
-      subheader: 'Management',
       items: [
         { title: 'Dashboard', path: paths.dashboard.root, icon: ICONS.dashboard },
         {

@@ -71,14 +71,22 @@ export const NavItem = forwardRef<HTMLButtonElement, NavItemProps>(
         {...other}
       >
         {icon && (
-          <Box component="span" className={navSectionClasses.item.icon}>
+          <Box
+            component="span"
+            className={navSectionClasses.item.icon}
+            sx={{ color: (theme) => theme.palette.common.white }}
+          >
             {navItem.renderIcon}
           </Box>
         )}
 
         {title && (
           <Box component="span" className={navSectionClasses.item.texts}>
-            <Box component="span" className={navSectionClasses.item.title}>
+            <Box
+              component="span"
+              className={navSectionClasses.item.title}
+              sx={{ color: (theme) => theme.palette.common.white }}
+            >
               {title}
             </Box>
 
@@ -102,6 +110,7 @@ export const NavItem = forwardRef<HTMLButtonElement, NavItemProps>(
           <Iconify
             icon={open ? 'eva:arrow-ios-downward-fill' : 'eva:arrow-ios-forward-fill'}
             className={navSectionClasses.item.arrow}
+            sx={{ color: (theme) => theme.palette.common.white }}
           />
         )}
       </StyledNavItem>

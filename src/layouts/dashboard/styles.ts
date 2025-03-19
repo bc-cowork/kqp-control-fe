@@ -51,11 +51,11 @@ export function useNavColorVars(
       case 'integrate':
         return {
           layout: {
-            '--layout-nav-bg': palette.background.default,
-            '--layout-nav-horizontal-bg': varAlpha(palette.background.defaultChannel, 0.8),
+            '--layout-nav-bg': palette.grey[600],
+            '--layout-nav-horizontal-bg': palette.grey[600],
             '--layout-nav-border-color': varAlpha(palette.grey['500Channel'], 0.12),
-            '--layout-nav-text-primary-color': palette.text.primary,
-            '--layout-nav-text-secondary-color': palette.text.secondary,
+            '--layout-nav-text-primary-color': palette.common.white,
+            '--layout-nav-text-secondary-color': palette.common.white,
             '--layout-nav-text-disabled-color': palette.text.disabled,
             [stylesMode.dark]: {
               '--layout-nav-border-color': varAlpha(palette.grey['500Channel'], 0.08),
@@ -101,14 +101,11 @@ export function useNavColorVars(
         throw new Error(`Invalid color: ${settings.navColor}`);
     }
   }, [
-    palette.background.default,
     palette.background.defaultChannel,
     palette.common.white,
     palette.grey,
     palette.primary.light,
     palette.text.disabled,
-    palette.text.primary,
-    palette.text.secondary,
     settings.navColor,
     settings.navLayout,
   ]);

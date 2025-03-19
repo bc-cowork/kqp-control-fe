@@ -124,6 +124,8 @@ export function DashboardLayout({ sx, children, header, data }: DashboardLayoutP
                 {/* -- Logo -- */}
                 {isNavHorizontal && (
                   <Logo
+                    id="isNavHorizontal"
+                    isSingle={false}
                     sx={{
                       display: 'none',
                       [theme.breakpoints.up(layoutQuery)]: { display: 'inline-flex' },

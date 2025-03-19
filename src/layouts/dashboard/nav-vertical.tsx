@@ -39,7 +39,7 @@ export function NavVertical({
     <>
       {slots?.topArea ?? (
         <Box sx={{ pl: 3.5, pt: 2.5, pb: 1 }}>
-          <Logo />
+          <Logo id="nav-vertical" isSingle={false} isWhite />
         </Box>
       )}
 
@@ -55,7 +55,7 @@ export function NavVertical({
     <>
       {slots?.topArea ?? (
         <Box sx={{ display: 'flex', justifyContent: 'center', py: 2.5 }}>
-          <Logo />
+          <Logo id="nav-vertical-tops" isWhite height={28} width={28} />
         </Box>
       )}
 
