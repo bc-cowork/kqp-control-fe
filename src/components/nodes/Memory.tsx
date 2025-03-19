@@ -172,7 +172,6 @@ export function Memory({ selectedNodeId }: Props) {
         count={issues.max_issue_count}
         onPageChange={onChangePage}
         onRowsPerPageChange={onChangeRowsPerPage}
-        load
       />
     </>
   );

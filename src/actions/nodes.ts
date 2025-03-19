@@ -202,16 +202,25 @@ export function useGetIssues(node: string, offset: number, limit: number) {
 
   console.log('useIssueList', data);
 
-  const memoizedValue = useMemo(
-    () => ({
-      issues: data ? { ...data.data, ...data.meta } : {},
+  const memoizedValue = useMemo(() => {
+    const defaultIssues = {
+      nodeId: node,
+      max_issue_count: 0,
+      issueList: [],
+      current_page: 1,
+      has_next_page: true,
+      has_previous_page: false,
+      total_pages: 0,
+    };
+
+    return {
+      issues: data ? { ...data.data, ...data.meta } : defaultIssues,
       issuesLoading: isLoading,
       issuesError: error,
       issuesValidating: isValidating,
       issuesEmpty: !isLoading && !data?.data?.issueList?.length,
-    }),
-    [data, error, isLoading, isValidating]
-  );
+    };
+  }, [data, node, error, isLoading, isValidating]);
 
   return memoizedValue;
 }
