@@ -76,6 +76,8 @@ export const endpoints = {
     issues: {
       list: '/apik/issue/list',
       search: '/apik/issue/search',
+      info: '/apik/issue/info',
+      quote: '/apik/issue/quote',
     },
   },
 };

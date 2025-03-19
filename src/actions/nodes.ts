@@ -226,3 +226,70 @@ export function useGetIssues(node: string, offset: number, limit: number, q?: st
 
   return memoizedValue;
 }
+
+// ----------------------------------------------------------------------
+
+type IssueItemInfoData = {
+  ok: boolean;
+  msg: string;
+  data: {
+    nodeId: string;
+    issueInfo: any; // TODO: define type
+  };
+};
+
+export function useGetIssueItemInfo(node: string, code: string) {
+  const url = node && code ? [endpoints.nodes.issues.info, { params: { node, code } }] : '';
+
+  const { data, isLoading, error, isValidating } = useSWR<IssueItemInfoData>(
+    url,
+    fetcher,
+    swrOptions
+  );
+
+  console.log('useGetIssueItemInfo', data);
+
+  const memoizedValue = useMemo(
+    () => ({
+      issueInfo: data?.data?.issueInfo || {},
+      issueInfoLoading: isLoading,
+      issueInfoError: error,
+      issueInfoValidating: isValidating,
+    }),
+    [data, error, isLoading, isValidating]
+  );
+
+  return memoizedValue;
+}
+
+// ----------------------------------------------------------------------
+
+type IssueItemQuoteData = {
+  ok: boolean;
+  msg: string;
+  data: any;
+};
+
+export function useGetIssueItemQuotes(node: string, code: string) {
+  const url = node && code ? [endpoints.nodes.issues.info, { params: { node, code } }] : '';
+
+  const { data, isLoading, error, isValidating } = useSWR<IssueItemQuoteData>(
+    url,
+    fetcher,
+    swrOptions
+  );
+
+  console.log('useGetIssueItemQuotes', data);
+
+  const memoizedValue = useMemo(
+    () => ({
+      issueQuotes: data?.data?.orderbook || {},
+      issueQuotesLoading: isLoading,
+      issueQuotesError: error,
+      issueQuotesValidating: isValidating,
+    }),
+    [data, error, isLoading, isValidating]
+  );
+
+  return memoizedValue;
+}
