@@ -47,7 +47,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
   const [rowsPerPage, setRowsPerPage] = useState<number>(40);
 
   const { auditFrameList, auditFrameListError, auditFrameListLoading, auditFrameListEmpty } =
-    useAuditFrameList(selectedNodeId, selectedFile, rowsPerPage, rowsPerPage * page, 'asc');
+    useAuditFrameList(selectedNodeId, selectedFile, rowsPerPage, rowsPerPage * page, 'desc');
 
   const onChangeRowsPerPage = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setPage(0);
