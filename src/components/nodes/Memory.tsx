@@ -17,11 +17,14 @@ import {
   TableBody,
   Typography,
   TablePagination,
-  CircularProgress,
 } from '@mui/material';
 
 import { varAlpha } from 'src/theme/styles';
 import { useGetIssues } from 'src/actions/nodes';
+
+import { TableEmptyRows } from '../table/table-empty-rows';
+import { TableErrorRows } from '../table/table-error-rows';
+import { TableLoadingRows } from '../table/table-loading-rows';
 
 // ----------------------------------------------------------------------
 
@@ -57,7 +60,6 @@ export function Memory({ selectedNodeId }: Props) {
 
   const onChangePage = useCallback(
     (event: unknown, newPage: number) => {
-      console.log('onChangePage', newPage);
       setOffset(limit * newPage + 1);
     },
     [limit]
@@ -86,12 +88,12 @@ export function Memory({ selectedNodeId }: Props) {
               </Stack>
             </Box>
           </Grid>
-          <Grid md={6}>
+          <Grid md={6} display="flex" alignItems="center" justifyContent="center">
             <Box gap={1} display="flex" alignItems="center">
               <TextField
-                label="SEQ"
+                label="CODE"
                 size="small"
-                placeholder="Enter seq here"
+                placeholder="Enter code here"
                 value={codeText}
                 type="number"
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -126,19 +128,11 @@ export function Memory({ selectedNodeId }: Props) {
         </TableHead>
         <TableBody>
           {issuesLoading ? (
-            <TableRow>
-              <TableCell colSpan={6}>
-                <CircularProgress />
-              </TableCell>
-            </TableRow>
+            <TableLoadingRows height={49} loadingRows={limit} />
           ) : issuesEmpty ? (
-            <TableRow>
-              <TableCell colSpan={6}>Error Fetching Audit Logs List</TableCell>
-            </TableRow>
+            <TableEmptyRows text="No data for memory logs" />
           ) : issuesError ? (
-            <TableRow>
-              <TableCell colSpan={6}>Error Fetching Audit Logs List</TableCell>
-            </TableRow>
+            <TableErrorRows />
           ) : (
             issues.issueList.map(
               (
@@ -148,8 +142,8 @@ export function Memory({ selectedNodeId }: Props) {
                 <TableRow key={index}>
                   <TableCell>{issue.seq}</TableCell>
                   <TableCell>{issue.code}</TableCell>
-                  <TableCell>{issue.kname}</TableCell>
-                  <TableCell>{`[${issue.daily_info_dates.join('/ ')}]`}</TableCell>
+                  <TableCell>{issue.name}</TableCell>
+                  <TableCell>{`[${issue.daily_info_dates.join(' / ')}]`}</TableCell>
                   <TableCell>{issue.compet}</TableCell>
                   <TableCell>
                     <Button
@@ -178,6 +172,7 @@ export function Memory({ selectedNodeId }: Props) {
         count={issues.max_issue_count}
         onPageChange={onChangePage}
         onRowsPerPageChange={onChangeRowsPerPage}
+        load
       />
     </>
   );

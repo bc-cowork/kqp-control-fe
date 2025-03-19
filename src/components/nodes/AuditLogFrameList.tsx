@@ -140,7 +140,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
             <TableBody>
               {auditFrameListEmpty ? (
                 <TableRow>
-                  <TableCell colSpan={6}>Error Fetching Audit Logs List</TableCell>
+                  <TableCell colSpan={6}>Audit Logs List Empty</TableCell>
                 </TableRow>
               ) : auditFrameListError ? (
                 <TableRow>

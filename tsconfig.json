@@ -2,11 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "target": "es5",
-    "lib": [
-      "dom",
-      "esnext",
-      "dom.iterable",
-    ],
+    "lib": ["dom", "esnext", "dom.iterable"],
     "strict": true,
     "noEmit": true,
     "allowJs": true,
@@ -35,9 +31,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "src/components/table/table-errortsx"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
