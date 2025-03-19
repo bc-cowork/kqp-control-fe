@@ -192,10 +192,12 @@ type IssueData = {
   };
 };
 
-export function useGetIssues(node: string, offset: number, limit: number) {
+export function useGetIssues(node: string, offset: number, limit: number, q?: string) {
   const url =
     node && offset && limit
-      ? [endpoints.nodes.issues.list, { params: { node, offset, limit } }]
+      ? q
+        ? [endpoints.nodes.issues.search, { params: { node, offset, limit, q } }]
+        : [endpoints.nodes.issues.list, { params: { node, offset, limit } }]
       : '';
 
   const { data, isLoading, error, isValidating } = useSWR<IssueData>(url, fetcher, swrOptions);

@@ -75,6 +75,7 @@ export const endpoints = {
     },
     issues: {
       list: '/apik/issue/list',
+      search: '/apik/issue/search',
     },
   },
 };

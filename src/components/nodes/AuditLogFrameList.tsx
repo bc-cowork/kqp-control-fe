@@ -27,15 +27,6 @@ import { useAuditFrameList } from 'src/actions/nodes';
 
 // ----------------------------------------------------------------------
 
-const AUDIT_LOG_TYPES = [
-  { value: 'inbound', label: 'Inbound' },
-  { value: 'outbound', label: 'Outbound' },
-  { value: 'other', label: 'Other' },
-  { value: 'all', label: 'All' },
-];
-
-// ----------------------------------------------------------------------
-
 type Props = {
   selectedNodeId: string;
   selectedFile: string;

@@ -34,13 +34,14 @@ type Props = {
 
 export function Memory({ selectedNodeId }: Props) {
   const [codeText, setCodeText] = useState<string>('');
-  const [code, setCode] = useState<string>('');
+  const [code, setCode] = useState<string | undefined>(undefined);
   const [offset, setOffset] = useState<number>(1);
   const [limit, setLimit] = useState<number>(40);
   const { issues, issuesLoading, issuesEmpty, issuesError } = useGetIssues(
     selectedNodeId,
     offset,
-    limit
+    limit,
+    code
   );
 
   const handleUpdateCode = useCallback(() => {
@@ -95,11 +96,10 @@ export function Memory({ selectedNodeId }: Props) {
                 size="small"
                 placeholder="Enter code here"
                 value={codeText}
-                type="number"
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   setCodeText(event.target.value);
                 }}
-                sx={{ width: 140 }}
+                sx={{ width: 200 }}
               />
               <Button variant="contained" onClick={handleUpdateCode}>
                 Apply
