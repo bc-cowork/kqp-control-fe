@@ -11,32 +11,10 @@ const icon = (name: string) => (
 );
 
 const ICONS = {
-  job: icon('ic-job'),
-  blog: icon('ic-blog'),
-  chat: icon('ic-chat'),
-  mail: icon('ic-mail'),
-  user: icon('ic-user'),
-  file: icon('ic-file'),
-  lock: icon('ic-lock'),
-  tour: icon('ic-tour'),
-  order: icon('ic-order'),
-  label: icon('ic-label'),
-  blank: icon('ic-blank'),
-  kanban: icon('ic-kanban'),
-  folder: icon('ic-folder'),
-  course: icon('ic-course'),
-  banking: icon('ic-banking'),
-  booking: icon('ic-booking'),
-  invoice: icon('ic-invoice'),
-  product: icon('ic-product'),
-  calendar: icon('ic-calendar'),
-  disabled: icon('ic-disabled'),
-  external: icon('ic-external'),
-  menuItem: icon('ic-menu-item'),
-  ecommerce: icon('ic-ecommerce'),
-  analytics: icon('ic-analytics'),
-  dashboard: icon('ic-dashboard'),
-  parameter: icon('ic-parameter'),
+  home: icon('ic_home'),
+  nodes: icon('ic_nodes'),
+  notification: icon('ic_notification'),
+  settings: icon('ic_settings'),
 };
 
 // ----------------------------------------------------------------------
@@ -45,11 +23,11 @@ export function getNavData(nodes: string[] = []) {
   return [
     {
       items: [
-        { title: 'Dashboard', path: paths.dashboard.root, icon: ICONS.dashboard },
+        { title: 'Dashboard', path: paths.dashboard.root, icon: ICONS.home },
         {
           title: 'Nodes',
           path: paths.dashboard.nodes.root,
-          icon: ICONS.menuItem,
+          icon: ICONS.nodes,
           children: nodes.map((node) => ({
             title: `${node}`,
             path: paths.dashboard.nodes.node(node),
@@ -77,6 +55,17 @@ export function getNavData(nodes: string[] = []) {
             ],
           })),
         },
+      ],
+    },
+  ];
+}
+
+export function getBottomNavData() {
+  return [
+    {
+      items: [
+        { title: 'Notifications', path: paths.dashboard.root, icon: ICONS.notification },
+        { title: 'Settings', path: paths.dashboard.root, icon: ICONS.settings },
       ],
     },
   ];

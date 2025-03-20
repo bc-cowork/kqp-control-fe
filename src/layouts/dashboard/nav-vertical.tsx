@@ -1,14 +1,20 @@
 import type { Breakpoint } from '@mui/material/styles';
 import type { NavSectionProps } from 'src/components/nav-section';
 
+import { useState } from 'react';
+
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
+import { TextField, InputAdornment } from '@mui/material';
 
 import { varAlpha, hideScrollY } from 'src/theme/styles';
 
 import { Logo } from 'src/components/logo';
+import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
 import { NavSectionMini, NavSectionVertical } from 'src/components/nav-section';
+import { NavSectionMiniBottom } from 'src/components/nav-section/mini/nav-section-mini-bottom';
+import { NavSectionVerticalBottom } from 'src/components/nav-section/vertical/nav-section-vertical-bottom';
 
 import { NavToggleButton } from '../components/nav-toggle-button';
 
@@ -34,6 +40,7 @@ export function NavVertical({
   ...other
 }: NavVerticalProps) {
   const theme = useTheme();
+  const [search, setSearch] = useState('');
 
   const renderNavVertical = (
     <>
@@ -43,10 +50,27 @@ export function NavVertical({
         </Box>
       )}
 
+      <Box sx={{ px: 1, py: 1.5 }}>
+        <TextField
+          autoFocus
+          fullWidth
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
+          placeholder="Search"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="start">
+                <Iconify icon="eva:search-fill" sx={{ color: theme.palette.grey[500] }} />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
+
       <Scrollbar fillContent>
         <NavSectionVertical data={data} sx={{ px: 2, flex: '1 1 auto' }} {...other} />
 
-        {/* {slots?.bottomArea ?? <NavUpgrade />} */}
+        {slots?.bottomArea ?? <NavSectionVerticalBottom sx={{ px: 2 }} {...other} />}
       </Scrollbar>
     </>
   );
@@ -61,11 +85,23 @@ export function NavVertical({
 
       <NavSectionMini
         data={data}
-        sx={{ pb: 2, px: 0.5, ...hideScrollY, flex: '1 1 auto', overflowY: 'auto' }}
+        sx={{
+          pb: 2,
+          px: 0.5,
+          ...hideScrollY,
+          flex: '1 1 auto',
+          overflowY: 'auto',
+          backgroundColor: theme.palette.grey[600],
+        }}
         {...other}
       />
 
-      {slots?.bottomArea}
+      {slots?.bottomArea ?? (
+        <NavSectionMiniBottom
+          sx={{ px: 0.5, backgroundColor: theme.palette.grey[600] }}
+          {...other}
+        />
+      )}
     </>
   );
 

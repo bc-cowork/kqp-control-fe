@@ -3,7 +3,6 @@
 import type { NavSectionProps } from 'src/components/nav-section';
 import type { Theme, SxProps, Breakpoint } from '@mui/material/styles';
 
-import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import { useTheme } from '@mui/material/styles';
 import { iconButtonClasses } from '@mui/material/IconButton';
@@ -20,13 +19,11 @@ import { NavMobile } from './nav-mobile';
 import { layoutClasses } from '../classes';
 import { NavVertical } from './nav-vertical';
 import { NavHorizontal } from './nav-horizontal';
-import { _account } from '../config-nav-account';
 import { getNavData } from '../config-nav-dashboard';
 import { MenuButton } from '../components/menu-button';
 import { LayoutSection } from '../core/layout-section';
 import { HeaderSection } from '../core/header-section';
 import { StyledDivider, useNavColorVars } from './styles';
-import { AccountDrawer } from '../components/account-drawer';
 
 // ----------------------------------------------------------------------
 
@@ -140,12 +137,7 @@ export function DashboardLayout({ sx, children, header, data }: DashboardLayoutP
                 )}
               </>
             ),
-            rightArea: (
-              <Box display="flex" alignItems="center" gap={{ xs: 0, sm: 0.75 }}>
-                {/* -- Account drawer -- */}
-                <AccountDrawer data={_account} />
-              </Box>
-            ),
+            rightArea: null,
           }}
         />
       }
