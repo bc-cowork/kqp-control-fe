@@ -40,11 +40,11 @@ const MuiTableRow: Components<Theme>['MuiTableRow'] = {
   styleOverrides: {
     root: ({ theme }) => ({
       backgroundColor: theme.palette.common.white,
-      '&:hover': { backgroundColor: '#EFF6FF' },
+      '&:hover': { backgroundColor: `${varAlpha(theme.vars.palette.primary.lighter, 0.2)}` },
       [`&.${tableRowClasses.selected}`]: {
-        backgroundColor: '#C7DBFF',
+        backgroundColor: '#EFF6FF',
         border: `2px solid ${theme.palette.primary.main}`,
-        '&:hover': { backgroundColor: '#99BDFF' },
+        '&:hover': { backgroundColor: '#C7DBFF' },
       },
       '&:last-of-type': { [`& .${tableCellClasses.root}`]: { borderColor: 'transparent' } },
     }),
