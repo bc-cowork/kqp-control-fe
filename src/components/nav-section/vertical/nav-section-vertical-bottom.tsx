@@ -1,6 +1,6 @@
 import Stack from '@mui/material/Stack';
 import { useTheme } from '@mui/material/styles';
-import { Box, Avatar, Typography } from '@mui/material';
+import { Box, Avatar, Divider, Typography } from '@mui/material';
 
 import { CONFIG } from 'src/config-global';
 import { getBottomNavData } from 'src/layouts/config-nav-dashboard';
@@ -39,6 +39,7 @@ export function NavSectionVerticalBottom({
       className={navSectionClasses.vertical.root}
       sx={{ ...cssVars, ...sx, mb: 3 }}
     >
+      <Divider sx={{ borderColor: theme.palette.grey[500], mb: 1.5 }} />
       <NavUl sx={{ flex: '1 1 auto', gap: 'var(--nav-item-gap)' }}>
         {data.map((group) => (
           <Group

@@ -1,7 +1,5 @@
 import type { Theme } from '@mui/material/styles';
 
-import { varAlpha } from 'src/theme/styles';
-
 // ----------------------------------------------------------------------
 
 export const bulletColor = {
@@ -16,22 +14,23 @@ function colorVars(theme: Theme, variant?: 'vertical' | 'mini' | 'horizontal') {
 
   return {
     '--nav-item-color': palette.text.secondary,
-    '--nav-item-hover-bg': palette.action.hover,
+    '--nav-item-hover-bg': palette.grey[400],
+    '--nav-item-pressed-bg': palette.grey[600],
     '--nav-item-caption-color': palette.text.disabled,
     // root
     '--nav-item-root-active-color': palette.primary.main,
     '--nav-item-root-active-color-on-dark': palette.primary.light,
-    '--nav-item-root-active-bg': varAlpha(palette.primary.mainChannel, 0.08),
-    '--nav-item-root-active-hover-bg': varAlpha(palette.primary.mainChannel, 0.16),
+    '--nav-item-root-active-bg': palette.primary.light,
+    '--nav-item-root-active-hover-bg': palette.primary.main,
     '--nav-item-root-open-color': palette.text.primary,
     '--nav-item-root-open-bg': palette.action.hover,
     // sub
     '--nav-item-sub-active-color': palette.text.primary,
-    '--nav-item-sub-active-bg': palette.action.selected,
+    '--nav-item-sub-active-bg': palette.primary.light,
     '--nav-item-sub-open-color': palette.text.primary,
     '--nav-item-sub-open-bg': palette.action.hover,
     ...(variant === 'vertical' && {
-      '--nav-item-sub-active-bg': palette.action.hover,
+      '--nav-item-sub-active-bg': palette.primary.light,
       '--nav-subheader-color': palette.text.disabled,
       '--nav-subheader-hover-color': palette.text.primary,
     }),

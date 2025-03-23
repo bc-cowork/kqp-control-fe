@@ -92,12 +92,16 @@ type AuditFrameListData = {
 export function useAuditFrameList(
   node: string,
   file: string,
+  page: number,
   limit: number,
   offset: number,
   sort: 'asc' | 'desc'
 ) {
   const url = node
-    ? [endpoints.nodes.auditLog.frameList, { params: { node, file, limit, offset, sort } }]
+    ? [
+        endpoints.nodes.auditLog.frameList,
+        { params: { node, file, page, limit, sort, 'last-offset': offset } },
+      ]
     : '';
 
   const { data, isLoading, error, isValidating } = useSWR<AuditFrameListData>(

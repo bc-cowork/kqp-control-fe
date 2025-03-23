@@ -18,7 +18,6 @@ export function AuditFrameListView({ nodeId, file }: Props) {
   return (
     <DashboardContent maxWidth="xl">
       <Typography variant="h3">
-        {' '}
         Audit Frame List for {nodeId} - {file}{' '}
       </Typography>
       <Box

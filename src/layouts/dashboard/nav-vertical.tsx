@@ -46,28 +46,12 @@ export function NavVertical({
         </Box>
       )}
 
-      {/* <Box sx={{ px: 1, py: 1.5 }}>
-        <TextField
-          autoFocus
-          fullWidth
-          value={search}
-          onChange={(event) => setSearch(event.target.value)}
-          placeholder="Search"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="start">
-                <Iconify icon="eva:search-fill" sx={{ color: theme.palette.grey[500] }} />
-              </InputAdornment>
-            ),
-          }}
-        />
-      </Box> */}
-
       <Scrollbar fillContent>
         <NavSectionVertical data={data} sx={{ px: 2, flex: '1 1 auto' }} {...other} />
 
-        {slots?.bottomArea ?? <NavSectionVerticalBottom sx={{ px: 2 }} {...other} />}
+        {slots?.bottomArea}
       </Scrollbar>
+      <NavSectionVerticalBottom sx={{ px: 2 }} {...other} />
     </>
   );
 

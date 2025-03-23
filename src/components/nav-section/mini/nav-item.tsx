@@ -131,6 +131,9 @@ const StyledNavItem = styled(ButtonBase, {
       '&:hover': {
         backgroundColor: 'var(--nav-item-hover-bg)',
       },
+      '&:active': {
+        backgroundColor: 'var(--nav-item-pressed-bg)',
+      },
     },
     title: {},
     caption: {
