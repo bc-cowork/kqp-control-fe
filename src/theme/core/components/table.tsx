@@ -39,9 +39,12 @@ const MuiTableRow: Components<Theme>['MuiTableRow'] = {
    *************************************** */
   styleOverrides: {
     root: ({ theme }) => ({
+      backgroundColor: theme.palette.common.white,
+      '&:hover': { backgroundColor: '#EFF6FF' },
       [`&.${tableRowClasses.selected}`]: {
-        backgroundColor: varAlpha(theme.vars.palette.primary.darkChannel, 0.04),
-        '&:hover': { backgroundColor: varAlpha(theme.vars.palette.primary.darkChannel, 0.08) },
+        backgroundColor: '#C7DBFF',
+        border: `2px solid ${theme.palette.primary.main}`,
+        '&:hover': { backgroundColor: '#99BDFF' },
       },
       '&:last-of-type': { [`& .${tableCellClasses.root}`]: { borderColor: 'transparent' } },
     }),
@@ -67,7 +70,7 @@ const MuiTableCell: Components<Theme>['MuiTableCell'] = {
     body: ({ theme }) => ({
       fontSize: 15,
       color: theme.palette.grey[400],
-      backgroundColor: theme.palette.common.white,
+      backgroundColor: 'inherit',
       'tr:last-child &': {
         '&:first-of-type': { borderBottomLeftRadius: 4 },
         '&:last-of-type': { borderBottomRightRadius: 4 },

@@ -111,8 +111,9 @@ export function DashboardView({ title = 'Main' }: Props) {
                   nodes.map((node: INodeItem) => (
                     <TableRow
                       key={node.id}
-                      selected={selectedNodeId === node.id}
+                      selected={selectedNode?.id === node.id}
                       onClick={() => onSelectedNode(node)}
+                      sx={{ cursor: 'pointer' }}
                     >
                       <TableCell>{node.id}</TableCell>
                       <TableCell>{node.name}</TableCell>
