@@ -55,12 +55,23 @@ const MuiTableCell: Components<Theme>['MuiTableCell'] = {
    * STYLE
    *************************************** */
   styleOverrides: {
-    root: { borderBottomStyle: 'dashed' },
+    root: { borderBottomStyle: 'solid' },
     head: ({ theme }) => ({
-      fontSize: 14,
-      color: theme.vars.palette.text.secondary,
-      fontWeight: theme.typography.fontWeightSemiBold,
-      backgroundColor: theme.vars.palette.background.neutral,
+      fontSize: 17,
+      color: theme.palette.grey[50],
+      fontWeight: 400,
+      backgroundColor: theme.palette.primary.darker,
+      '&:first-of-type': { borderTopLeftRadius: 8 },
+      '&:last-of-type': { borderTopRightRadius: 8 },
+    }),
+    body: ({ theme }) => ({
+      fontSize: 15,
+      color: theme.palette.grey[400],
+      backgroundColor: theme.palette.common.white,
+      'tr:last-child &': {
+        '&:first-of-type': { borderBottomLeftRadius: 4 },
+        '&:last-of-type': { borderBottomRightRadius: 4 },
+      },
     }),
     stickyHeader: ({ theme }) => ({
       backgroundColor: theme.vars.palette.background.paper,

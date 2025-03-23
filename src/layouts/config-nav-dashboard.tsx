@@ -63,10 +63,7 @@ export function getNavData(nodes: string[] = []) {
 export function getBottomNavData() {
   return [
     {
-      items: [
-        { title: 'Notifications', path: paths.dashboard.root, icon: ICONS.notification },
-        { title: 'Settings', path: paths.dashboard.root, icon: ICONS.settings },
-      ],
+      items: [{ title: 'Settings', path: '#', icon: ICONS.settings }],
     },
   ];
 }

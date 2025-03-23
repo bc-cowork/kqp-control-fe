@@ -8,9 +8,9 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import {
+  Chip,
   Table,
   Stack,
-  Button,
   Divider,
   TableRow,
   TableBody,
@@ -19,8 +19,8 @@ import {
   CircularProgress,
 } from '@mui/material';
 
-import { varAlpha } from 'src/theme/styles';
 import { DashboardContent } from 'src/layouts/dashboard';
+import { ChipDeleteIcon } from 'src/theme/core/components/chip';
 import { useGetNodes, useGetStatus } from 'src/actions/dashboard';
 
 import { ProcessDetail } from 'src/components/nodes/ProcessDetail';
@@ -44,24 +44,43 @@ export function DashboardView({ title = 'Main' }: Props) {
     }
   }, [nodes, nodesLoading, nodesEmpty, nodesError, selectedNode, selectedNodeId]);
 
+  const onCloseInfo = () => {
+    setSelectedNode(undefined);
+  };
+
+  const onSelectedNode = (node: INodeItem) => {
+    setSelectedNode(node);
+  };
+
   return (
     <DashboardContent maxWidth="xl">
-      <Typography variant="h3"> {title} </Typography>
+      <Typography
+        sx={{ fontSize: 28, fontWeight: 500, color: (theme) => theme.palette.grey[600], mt: 2 }}
+      >
+        {title}
+      </Typography>
       <Box
         sx={{
-          mt: 5,
+          mt: 3,
           width: 1,
         }}
       >
         <Grid container>
-          <Grid md={8} sx={{ minHeight: '200px' }}>
-            <Typography variant="h6">Nodes</Typography>
+          <Grid md={selectedNode ? 8 : 12} sx={{ minHeight: '200px' }}>
+            <Typography
+              sx={{
+                fontSize: 20,
+                fontWeight: 400,
+                color: (theme) => theme.palette.grey[600],
+                mb: 1,
+              }}
+            >
+              Nodes
+            </Typography>
             <Table
               size="small"
               sx={{
-                borderRadius: 2,
-                bgcolor: (theme) => varAlpha(theme.vars.palette.grey['500Channel'], 0.04),
-                border: (theme) => `solid 1px ${theme.vars.palette.divider}`,
+                borderCollapse: 'separate',
               }}
             >
               <TableHead>
@@ -71,7 +90,6 @@ export function DashboardView({ title = 'Main' }: Props) {
                   <TableCell>Description</TableCell>
                   <TableCell>Emittable</TableCell>
                   <TableCell>Emit Count</TableCell>
-                  <TableCell>Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -91,85 +109,110 @@ export function DashboardView({ title = 'Main' }: Props) {
                   </TableRow>
                 ) : (
                   nodes.map((node: INodeItem) => (
-                    <TableRow key={node.id}>
+                    <TableRow
+                      key={node.id}
+                      selected={selectedNodeId === node.id}
+                      onClick={() => onSelectedNode(node)}
+                    >
                       <TableCell>{node.id}</TableCell>
                       <TableCell>{node.name}</TableCell>
                       <TableCell>{node.desc}</TableCell>
-                      <TableCell>{node.emittable ? 'Yes' : 'No'}</TableCell>
-                      <TableCell>{node.emit_count}</TableCell>
                       <TableCell>
-                        <Button
-                          onClick={() => {
-                            setSelectedNodeId(node.id);
-                            setSelectedNode(node);
-                          }}
-                          sx={{
-                            backgroundColor: '#F4F6F8',
-                            '&:hover': { backgroundColor: '#637381', color: '#F4F6F8' },
-                          }}
-                        >
-                          info
-                        </Button>
+                        {node.emittable ? (
+                          <Chip label="Yes" color="success" size="small" variant="soft" />
+                        ) : (
+                          <Chip label="No" color="error" size="small" variant="soft" />
+                        )}
                       </TableCell>
+                      <TableCell>{node.emit_count}</TableCell>
                     </TableRow>
                   ))
                 )}
               </TableBody>
             </Table>
           </Grid>
-          <Grid
-            md={4}
-            sx={{
-              minHeight: '200px',
-              minWidth: '200px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            {/* <Box
+          {selectedNode && (
+            <Grid
+              md={4}
               sx={{
+                minHeight: '200px',
+                minWidth: '200px',
                 display: 'flex',
                 justifyContent: 'center',
-                alignItems: 'center',
-                p: 5,
-                backgroundColor: status?.service_status?.okay ? '#22C55E' : '#FF5630',
+                alignItems: 'flex-start',
               }}
-            > */}
-            {selectedNode ? (
-              <>
-                {statusLoading ? (
-                  <CircularProgress />
-                ) : statusError ? (
-                  <Typography>Error Fetching Status</Typography>
-                ) : (
-                  <Box sx={{ width: '100%', px: 4 }}>
-                    <Stack direction="row" justifyContent="space-between">
-                      <Typography>ID</Typography>
-                      <Typography sx={{ fontWeight: 600 }}>{selectedNode.id}</Typography>
-                    </Stack>
-                    <Divider />
-                    <Stack direction="row" justifyContent="space-between">
-                      <Typography>Name</Typography>
-                      <Typography>{selectedNode.name}</Typography>
-                    </Stack>
-                    <Divider />
-                    <Stack direction="row" justifyContent="space-between">
-                      <Typography>Desc.</Typography>
-                      <Typography>{selectedNode.desc}</Typography>
-                    </Stack>
-                    <Divider />
-                    <Stack direction="row" justifyContent="space-between">
-                      <Typography>Emittable</Typography>
-                      <Typography>{selectedNode.emittable ? 'TRUE' : 'FALSE'}</Typography>
-                    </Stack>
-                    <Divider />
-                    <Stack direction="row" justifyContent="space-between">
-                      <Typography>Emit Count</Typography>
-                      <Typography>{selectedNode.emit_count}</Typography>
-                    </Stack>
+            >
+              {statusLoading ? (
+                <CircularProgress />
+              ) : statusError ? (
+                <Typography>Error Fetching Status</Typography>
+              ) : (
+                <Box sx={{ width: '100%', px: 4 }}>
+                  <Typography
+                    sx={{
+                      fontSize: 20,
+                      fontWeight: 400,
+                      color: (theme) => theme.palette.grey[600],
+                      mb: 1,
+                    }}
+                  >
+                    <Box component="span" sx={{ fontWeight: 300 }}>{`Nodes > `}</Box>
+                    Info
+                  </Typography>
 
+                  <Box>
                     <Box
+                      sx={{
+                        border: 1,
+                        borderColor: '#C7DBFF',
+                        borderRadius: 1,
+                        bgcolor: (theme) => theme.palette.common.white,
+                      }}
+                    >
+                      <Box sx={{ p: 1 }}>
+                        <Stack direction="row" justifyContent="space-between" alignItems="center">
+                          <Chip
+                            label={status?.service_status?.okay ? '• Online' : '• Offline'}
+                            color={status?.service_status?.okay ? 'success' : 'error'}
+                            size="medium"
+                            variant="soft"
+                          />
+                          <ChipDeleteIcon onClick={onCloseInfo} />
+                        </Stack>
+                      </Box>
+                      <Divider sx={{ borderColor: '#C7DBFF' }} />
+                      <Box sx={{ p: 1 }}>
+                        <Stack direction="row" justifyContent="space-between" sx={{ mb: 1 }}>
+                          <Typography variant="subtitle2">ID</Typography>
+                          <Typography variant="body2">{selectedNode.id}</Typography>
+                        </Stack>
+                        <Stack direction="row" justifyContent="space-between" sx={{ mb: 1 }}>
+                          <Typography variant="subtitle2">Name</Typography>
+                          <Typography variant="body2">{selectedNode.name}</Typography>
+                        </Stack>
+                        <Stack direction="row" justifyContent="space-between" sx={{ mb: 1 }}>
+                          <Typography variant="subtitle2">Desc.</Typography>
+                          <Typography variant="body2">{selectedNode.desc}</Typography>
+                        </Stack>
+                        <Stack direction="row" justifyContent="space-between" sx={{ mb: 1 }}>
+                          <Typography variant="subtitle2">Emittable</Typography>
+                          <Typography variant="body2">
+                            {selectedNode.emittable ? (
+                              <Chip label="True" color="success" size="small" variant="soft" />
+                            ) : (
+                              <Chip label="False" color="error" size="small" variant="soft" />
+                            )}
+                          </Typography>
+                        </Stack>
+                        <Stack direction="row" justifyContent="space-between" sx={{ mb: 1 }}>
+                          <Typography variant="subtitle2">Emit Count</Typography>
+                          <Typography variant="body2">{selectedNode.emit_count}</Typography>
+                        </Stack>
+                      </Box>
+                    </Box>
+                  </Box>
+
+                  {/* <Box
                       sx={{
                         display: 'flex',
                         justifyContent: 'center',
@@ -183,17 +226,23 @@ export function DashboardView({ title = 'Main' }: Props) {
                       <Typography variant="h4">
                         {status?.service_status?.okay ? 'ONLINE' : 'OFFLINE'}
                       </Typography>
-                    </Box>
-                  </Box>
-                )}
-              </>
-            ) : (
-              <Typography variant="h5">Select a node to see status</Typography>
-            )}
-            {/* </Box> */}
-          </Grid>
+                    </Box> */}
+                </Box>
+              )}
+            </Grid>
+          )}
+
           <Grid md={12} sx={{ minHeight: '250px', mt: 5 }}>
-            <Typography variant="h6">Process List</Typography>
+            <Typography
+              sx={{
+                fontSize: 20,
+                fontWeight: 400,
+                color: (theme) => theme.palette.grey[600],
+                mb: 1,
+              }}
+            >
+              Process List
+            </Typography>
             {selectedNode ? (
               <ProcessDetail selectedNodeId={selectedNodeId} />
             ) : (

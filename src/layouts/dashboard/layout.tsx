@@ -3,27 +3,20 @@
 import type { NavSectionProps } from 'src/components/nav-section';
 import type { Theme, SxProps, Breakpoint } from '@mui/material/styles';
 
-import Alert from '@mui/material/Alert';
 import { useTheme } from '@mui/material/styles';
-import { iconButtonClasses } from '@mui/material/IconButton';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
 import { useGetNodes } from 'src/actions/dashboard';
 
-import { Logo } from 'src/components/logo';
 import { useSettingsContext } from 'src/components/settings';
 
 import { Main } from './main';
-import { NavMobile } from './nav-mobile';
 import { layoutClasses } from '../classes';
+import { useNavColorVars } from './styles';
 import { NavVertical } from './nav-vertical';
-import { NavHorizontal } from './nav-horizontal';
 import { getNavData } from '../config-nav-dashboard';
-import { MenuButton } from '../components/menu-button';
 import { LayoutSection } from '../core/layout-section';
-import { HeaderSection } from '../core/header-section';
-import { StyledDivider, useNavColorVars } from './styles';
 
 // ----------------------------------------------------------------------
 
@@ -62,85 +55,7 @@ export function DashboardLayout({ sx, children, header, data }: DashboardLayoutP
       /** **************************************
        * Header
        *************************************** */
-      headerSection={
-        <HeaderSection
-          layoutQuery={layoutQuery}
-          disableElevation={isNavVertical}
-          slotProps={{
-            toolbar: {
-              sx: {
-                ...(isNavHorizontal && {
-                  bgcolor: 'var(--layout-nav-bg)',
-                  [`& .${iconButtonClasses.root}`]: {
-                    color: 'var(--layout-nav-text-secondary-color)',
-                  },
-                  [theme.breakpoints.up(layoutQuery)]: {
-                    height: 'var(--layout-nav-horizontal-height)',
-                  },
-                }),
-              },
-            },
-            container: {
-              maxWidth: false,
-              sx: {
-                ...(isNavVertical && { px: { [layoutQuery]: 5 } }),
-              },
-            },
-          }}
-          sx={header?.sx}
-          slots={{
-            topArea: (
-              <Alert severity="info" sx={{ display: 'none', borderRadius: 0 }}>
-                This is an info Alert.
-              </Alert>
-            ),
-            bottomArea: isNavHorizontal ? (
-              <NavHorizontal
-                data={navData}
-                layoutQuery={layoutQuery}
-                cssVars={navColorVars.section}
-              />
-            ) : null,
-            leftArea: (
-              <>
-                {/* -- Nav mobile -- */}
-                <MenuButton
-                  onClick={mobileNavOpen.onTrue}
-                  sx={{
-                    mr: 1,
-                    ml: -1,
-                    [theme.breakpoints.up(layoutQuery)]: { display: 'none' },
-                  }}
-                />
-                <NavMobile
-                  data={navData}
-                  open={mobileNavOpen.value}
-                  onClose={mobileNavOpen.onFalse}
-                  cssVars={navColorVars.section}
-                />
-                {/* -- Logo -- */}
-                {isNavHorizontal && (
-                  <Logo
-                    id="isNavHorizontal"
-                    isSingle={false}
-                    sx={{
-                      display: 'none',
-                      [theme.breakpoints.up(layoutQuery)]: { display: 'inline-flex' },
-                    }}
-                  />
-                )}
-                {/* -- Divider -- */}
-                {isNavHorizontal && (
-                  <StyledDivider
-                    sx={{ [theme.breakpoints.up(layoutQuery)]: { display: 'flex' } }}
-                  />
-                )}
-              </>
-            ),
-            rightArea: null,
-          }}
-        />
-      }
+      headerSection={null}
       /** **************************************
        * Sidebar
        *************************************** */
@@ -188,7 +103,9 @@ export function DashboardLayout({ sx, children, header, data }: DashboardLayoutP
             pl: isNavMini ? 'var(--layout-nav-mini-width)' : 'var(--layout-nav-vertical-width)',
           },
         },
+
         ...sx,
+        backgroundColor: theme.palette.grey[50],
       }}
     >
       <Main isNavHorizontal={isNavHorizontal}>{children}</Main>

@@ -1,16 +1,12 @@
 import type { Breakpoint } from '@mui/material/styles';
 import type { NavSectionProps } from 'src/components/nav-section';
 
-import { useState } from 'react';
-
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
-import { TextField, InputAdornment } from '@mui/material';
 
 import { varAlpha, hideScrollY } from 'src/theme/styles';
 
 import { Logo } from 'src/components/logo';
-import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
 import { NavSectionMini, NavSectionVertical } from 'src/components/nav-section';
 import { NavSectionMiniBottom } from 'src/components/nav-section/mini/nav-section-mini-bottom';
@@ -40,7 +36,7 @@ export function NavVertical({
   ...other
 }: NavVerticalProps) {
   const theme = useTheme();
-  const [search, setSearch] = useState('');
+  // const [search, setSearch] = useState('');
 
   const renderNavVertical = (
     <>
@@ -50,7 +46,7 @@ export function NavVertical({
         </Box>
       )}
 
-      <Box sx={{ px: 1, py: 1.5 }}>
+      {/* <Box sx={{ px: 1, py: 1.5 }}>
         <TextField
           autoFocus
           fullWidth
@@ -65,7 +61,7 @@ export function NavVertical({
             ),
           }}
         />
-      </Box>
+      </Box> */}
 
       <Scrollbar fillContent>
         <NavSectionVertical data={data} sx={{ px: 2, flex: '1 1 auto' }} {...other} />

@@ -4,7 +4,6 @@ import type { IProcessItem } from 'src/types/dashboard';
 
 import { Table, TableRow, TableBody, TableCell, TableHead, CircularProgress } from '@mui/material';
 
-import { varAlpha } from 'src/theme/styles';
 import { useGetProcesses } from 'src/actions/dashboard';
 
 // ----------------------------------------------------------------------
@@ -24,14 +23,7 @@ export function ProcessDetail({ selectedNodeId }: Props) {
       : [];
 
   return (
-    <Table
-      size="small"
-      sx={{
-        borderRadius: 2,
-        bgcolor: (theme) => varAlpha(theme.vars.palette.grey['500Channel'], 0.04),
-        border: (theme) => `solid 1px ${theme.vars.palette.divider}`,
-      }}
-    >
+    <Table size="small">
       <TableHead>
         <TableRow>
           <TableCell>PID</TableCell>
