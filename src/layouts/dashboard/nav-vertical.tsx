@@ -94,7 +94,6 @@ export function NavVertical({
 
   return (
     <Box
-      id="theboxineed"
       sx={{
         top: 0,
         left: 0,
@@ -117,7 +116,6 @@ export function NavVertical({
       }}
     >
       <NavToggleButton
-        id="navtogglebutton"
         isNavMini={isNavMini}
         onClick={onToggleNav}
         sx={{
