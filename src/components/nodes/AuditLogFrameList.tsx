@@ -36,18 +36,24 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
   const router = useRouter();
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(40);
+  const [offset, setOffset] = useState<number>(0);
 
   const { auditFrameList, auditFrameListError, auditFrameListLoading, auditFrameListEmpty } =
-    useAuditFrameList(selectedNodeId, selectedFile, rowsPerPage, rowsPerPage * page, 'desc');
+    useAuditFrameList(selectedNodeId, selectedFile, page + 1, rowsPerPage, offset, 'desc');
 
   const onChangeRowsPerPage = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setPage(0);
+    setOffset(0);
     setRowsPerPage(parseInt(event.target.value, 10));
   }, []);
 
-  const onChangePage = useCallback((event: unknown, newPage: number) => {
-    setPage(newPage);
-  }, []);
+  const onChangePage = useCallback(
+    (event: unknown, newPage: number) => {
+      setPage(newPage);
+      setOffset(auditFrameList.max_frame - newPage * rowsPerPage);
+    },
+    [auditFrameList.max_frame, rowsPerPage]
+  );
 
   return (
     <>
