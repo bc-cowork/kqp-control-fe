@@ -15,7 +15,7 @@ export function NavToggleButton({ isNavMini, sx, ...other }: NavToggleButtonProp
       size="small"
       sx={{
         // p: 0.5,
-        top: 42,
+        top: 51,
         position: 'fixed',
         color: 'action.active',
         bgcolor: (theme) => theme.palette.grey[500],

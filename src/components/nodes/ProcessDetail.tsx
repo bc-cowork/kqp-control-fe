@@ -26,12 +26,12 @@ export function ProcessDetail({ selectedNodeId }: Props) {
     <Table size="small">
       <TableHead>
         <TableRow>
-          <TableCell>PID</TableCell>
+          <TableCell align="right">PID</TableCell>
           <TableCell>NAME</TableCell>
           <TableCell>PARAM</TableCell>
-          <TableCell>CPU</TableCell>
-          <TableCell>MEM</TableCell>
-          <TableCell>PPID</TableCell>
+          <TableCell align="right">CPU</TableCell>
+          <TableCell align="right">MEM</TableCell>
+          <TableCell align="right">PPID</TableCell>
           <TableCell>COMMAND</TableCell>
         </TableRow>
       </TableHead>
@@ -53,12 +53,12 @@ export function ProcessDetail({ selectedNodeId }: Props) {
         ) : (
           processedProcessList.map((process: IProcessItem, index: number) => (
             <TableRow key={index}>
-              <TableCell>{process.PID}</TableCell>
+              <TableCell align="right">{process.PID}</TableCell>
               <TableCell>{process.NAME}</TableCell>
               <TableCell>{process.PARAM}</TableCell>
-              <TableCell>{process.CPU}</TableCell>
-              <TableCell>{process.MEM}</TableCell>
-              <TableCell>{process.PPID}</TableCell>
+              <TableCell align="right">{process.CPU}</TableCell>
+              <TableCell align="right">{process.MEM}</TableCell>
+              <TableCell align="right">{process.PPID}</TableCell>
               <TableCell>{process.COMMAND}</TableCell>
             </TableRow>
           ))

@@ -54,9 +54,7 @@ export function DashboardView({ title = 'Main' }: Props) {
 
   return (
     <DashboardContent maxWidth="xl">
-      <Typography
-        sx={{ fontSize: 28, fontWeight: 500, color: (theme) => theme.palette.grey[600], mt: 2 }}
-      >
+      <Typography sx={{ fontSize: 28, fontWeight: 500, color: (theme) => theme.palette.grey[600] }}>
         {title}
       </Typography>
       <Box
@@ -89,7 +87,7 @@ export function DashboardView({ title = 'Main' }: Props) {
                   <TableCell>Name</TableCell>
                   <TableCell>Description</TableCell>
                   <TableCell>Emittable</TableCell>
-                  <TableCell>Emit Count</TableCell>
+                  <TableCell align="right">Emit Count</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -125,7 +123,7 @@ export function DashboardView({ title = 'Main' }: Props) {
                           <Chip label="No" color="error" size="small" variant="soft" />
                         )}
                       </TableCell>
-                      <TableCell>{node.emit_count}</TableCell>
+                      <TableCell align="right">{node.emit_count}</TableCell>
                     </TableRow>
                   ))
                 )}
@@ -148,7 +146,7 @@ export function DashboardView({ title = 'Main' }: Props) {
               ) : statusError ? (
                 <Typography>Error Fetching Status</Typography>
               ) : (
-                <Box sx={{ width: '100%', px: 4 }}>
+                <Box sx={{ width: '100%', height: '100%', pl: 3 }}>
                   <Typography
                     sx={{
                       fontSize: 20,
@@ -182,7 +180,7 @@ export function DashboardView({ title = 'Main' }: Props) {
                         </Stack>
                       </Box>
                       <Divider sx={{ borderColor: '#C7DBFF' }} />
-                      <Box sx={{ p: 1 }}>
+                      <Box sx={{ p: 1, pb: 2 }}>
                         <Stack direction="row" justifyContent="space-between" sx={{ mb: 1 }}>
                           <Typography variant="subtitle2">ID</Typography>
                           <Typography variant="body2">{selectedNode.id}</Typography>
@@ -212,22 +210,6 @@ export function DashboardView({ title = 'Main' }: Props) {
                       </Box>
                     </Box>
                   </Box>
-
-                  {/* <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        p: 1,
-                        mt: 2,
-                        width: '100%',
-                        backgroundColor: status?.service_status?.okay ? '#22C55E' : '#FF5630',
-                      }}
-                    >
-                      <Typography variant="h4">
-                        {status?.service_status?.okay ? 'ONLINE' : 'OFFLINE'}
-                      </Typography>
-                    </Box> */}
                 </Box>
               )}
             </Grid>
