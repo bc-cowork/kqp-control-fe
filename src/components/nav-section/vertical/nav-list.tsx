@@ -15,6 +15,7 @@ import type { NavListProps, NavSubListProps } from '../types';
 export function NavList({ data, render, depth, slotProps, enabledRootRedirect }: NavListProps) {
   const pathname = usePathname();
 
+  const activeColor = useActiveLink(data.path, false);
   const active = useActiveLink(data.path, !!data.children);
 
   const [openMenu, setOpenMenu] = useState(active);
@@ -48,6 +49,7 @@ export function NavList({ data, render, depth, slotProps, enabledRootRedirect }:
       // state
       depth={depth}
       active={active}
+      activeColor={activeColor}
       disabled={data.disabled}
       hasChild={!!data.children}
       open={data.children && openMenu}

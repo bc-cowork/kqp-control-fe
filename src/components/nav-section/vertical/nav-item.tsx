@@ -29,6 +29,7 @@ export const NavItem = forwardRef<HTMLButtonElement, NavItemProps>(
       depth,
       render,
       active,
+      activeColor,
       disabled,
       hasChild,
       slotProps,
@@ -55,6 +56,7 @@ export const NavItem = forwardRef<HTMLButtonElement, NavItemProps>(
         aria-label={title}
         depth={depth}
         active={active}
+        activeColor={activeColor}
         disabled={disabled}
         open={open && !active}
         sx={{
@@ -123,7 +125,7 @@ export const NavItem = forwardRef<HTMLButtonElement, NavItemProps>(
 const StyledNavItem = styled(ButtonBase, {
   shouldForwardProp: (prop) =>
     prop !== 'active' && prop !== 'open' && prop !== 'disabled' && prop !== 'depth',
-})<NavItemStateProps>(({ active, open, disabled, depth, theme }) => {
+})<NavItemStateProps>(({ active, activeColor, open, disabled, depth, theme }) => {
   const rootItem = depth === 1;
 
   const subItem = !rootItem;
@@ -218,7 +220,7 @@ const StyledNavItem = styled(ButtonBase, {
       [`& .${navSectionClasses.item.arrow}`]: { ...baseStyles.arrow },
       [`& .${navSectionClasses.item.info}`]: { ...baseStyles.info },
       // State
-      ...(active && {
+      ...(activeColor && {
         color: 'var(--nav-item-root-active-color)',
         backgroundColor: 'var(--nav-item-root-active-bg)',
         '&:hover': {
@@ -246,25 +248,26 @@ const StyledNavItem = styled(ButtonBase, {
       [`& .${navSectionClasses.item.arrow}`]: { ...baseStylesSub.arrow },
       [`& .${navSectionClasses.item.info}`]: { ...baseStylesSub.info },
       // Shape
-      '&::before': {
-        left: 0,
-        content: '""',
-        position: 'absolute',
-        width: 'var(--nav-bullet-size)',
-        height: 'var(--nav-bullet-size)',
-        transform:
-          'translate(calc(var(--nav-bullet-size) * -1), calc(var(--nav-bullet-size) * -0.4))',
-        backgroundColor: 'var(--nav-bullet-light-color)',
-        mask: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' viewBox='0 0 14 14'%3E%3Cpath d='M1 1v4a8 8 0 0 0 8 8h4' stroke='%23efefef' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat 50% 50%/100% auto`,
-        WebkitMask: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' viewBox='0 0 14 14'%3E%3Cpath d='M1 1v4a8 8 0 0 0 8 8h4' stroke='%23efefef' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat 50% 50%/100% auto`,
-        [stylesMode.dark]: {
-          backgroundColor: 'var(--nav-bullet-dark-color)',
-        },
-      },
+      // '&::before': {
+      //   left: 0,
+      //   content: '""',
+      //   position: 'absolute',
+      //   width: 'var(--nav-bullet-size)',
+      //   height: 'var(--nav-bullet-size)',
+      //   transform:
+      //     'translate(calc(var(--nav-bullet-size) * -1), calc(var(--nav-bullet-size) * -0.4))',
+      //   backgroundColor: 'var(--nav-bullet-light-color)',
+      //   mask: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' viewBox='0 0 14 14'%3E%3Cpath d='M1 1v4a8 8 0 0 0 8 8h4' stroke='%23efefef' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat 50% 50%/100% auto`,
+      //   WebkitMask: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' viewBox='0 0 14 14'%3E%3Cpath d='M1 1v4a8 8 0 0 0 8 8h4' stroke='%23efefef' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat 50% 50%/100% auto`,
+      //   [stylesMode.dark]: {
+      //     backgroundColor: 'var(--nav-bullet-dark-color)',
+      //   },
+      // },
       // State
-      ...(active && {
+      ...(activeColor && {
         color: 'var(--nav-item-sub-active-color)',
         backgroundColor: 'var(--nav-item-sub-active-bg)',
+        zIndex: 99999,
       }),
       ...(open && {
         color: 'var(--nav-item-sub-open-color)',
@@ -275,5 +278,11 @@ const StyledNavItem = styled(ButtonBase, {
      * Disabled
      */
     ...(disabled && sharedStyles.disabled),
+    ...((open || active) &&
+      depth === 2 && {
+        backgroundColor: theme.palette.grey[500],
+        borderBottomLeftRadius: '0px',
+        borderBottomRightRadius: '0px',
+      }),
   };
 });

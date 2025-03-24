@@ -6,8 +6,6 @@ import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import ListSubheader from '@mui/material/ListSubheader';
 
-import { stylesMode } from 'src/theme/styles';
-
 import { navSectionClasses } from './classes';
 import { svgColorClasses } from '../svg-color';
 import { Iconify, iconifyClasses } from '../iconify';
@@ -144,25 +142,31 @@ export function NavCollapse({
   return (
     <Collapse
       sx={{
-        ...(depth + 1 !== 1 && {
-          pl: 'calc(var(--nav-item-pl) + var(--nav-icon-size) / 2)',
-          [`& .${navSectionClasses.ul}`]: {
-            position: 'relative',
-            pl: 'var(--nav-bullet-size)',
-            '&::before': {
-              top: 0,
-              left: 0,
-              width: '2px',
-              content: '""',
-              position: 'absolute',
-              bottom: 'calc(var(--nav-item-sub-height) - 2px - var(--nav-bullet-size) / 2)',
-              bgcolor: 'var(--nav-bullet-light-color)',
-              [stylesMode.dark]: {
-                bgcolor: 'var(--nav-bullet-dark-color)',
-              },
-            },
-          },
+        pl: depth === 2 ? '0px' : 'calc(var(--nav-item-pl) + var(--nav-icon-size) / 2)',
+        ...(depth === 2 && {
+          backgroundColor: (theme) => theme.palette.grey[500],
+          borderBottomRightRadius: '8px',
+          borderBottomLeftRadius: '8px',
         }),
+        ...(depth + 1 !== 1 &&
+          {
+            // [`& .${navSectionClasses.ul}`]: {
+            //   position: 'relative',
+            //   pl: 'var(--nav-bullet-size)',
+            //   '&::before': {
+            //     top: 0,
+            //     left: 0,
+            //     width: '2px',
+            //     content: '""',
+            //     position: 'absolute',
+            //     bottom: 'calc(var(--nav-item-sub-height) - 2px - var(--nav-bullet-size) / 2)',
+            //     bgcolor: 'var(--nav-bullet-light-color)',
+            //     [stylesMode.dark]: {
+            //       bgcolor: 'var(--nav-bullet-dark-color)',
+            //     },
+            //   },
+            // },
+          }),
         ...sx,
       }}
       {...other}

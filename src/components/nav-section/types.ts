@@ -30,6 +30,7 @@ export type NavItemStateProps = {
   depth?: number;
   open?: boolean;
   active?: boolean;
+  activeColor?: boolean;
   hasChild?: boolean;
   externalLink?: boolean;
   enabledRootRedirect?: boolean;
@@ -46,6 +47,7 @@ export type NavItemBaseProps = {
   slotProps?: NavItemSlotProps;
   icon?: string | React.ReactNode;
   info?: string[] | React.ReactNode;
+  activeColor?: boolean;
 };
 
 export type NavItemProps = ButtonBaseProps & NavItemStateProps & NavItemBaseProps;
