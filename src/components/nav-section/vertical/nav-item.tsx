@@ -131,10 +131,10 @@ const StyledNavItem = styled(ButtonBase, {
   const baseStyles = {
     item: {
       width: '100%',
-      paddingTop: 'var(--nav-item-pt)',
+      paddingTop: '4px',
       paddingLeft: 'var(--nav-item-pl)',
       paddingRight: 'var(--nav-item-pr)',
-      paddingBottom: 'var(--nav-item-pb)',
+      paddingBottom: '4px',
       borderRadius: 'var(--nav-item-radius)',
       color: 'var(--nav-item-color)',
       '&:hover': {
@@ -148,7 +148,46 @@ const StyledNavItem = styled(ButtonBase, {
     title: {
       ...sharedStyles.noWrap,
       ...theme.typography.body2,
-      fontWeight: active ? theme.typography.fontWeightSemiBold : theme.typography.fontWeightMedium,
+      fontWeight: 400,
+      fontSize: 17,
+    },
+    caption: {
+      ...sharedStyles.noWrap,
+      ...theme.typography.caption,
+      color: 'var(--nav-item-caption-color)',
+    },
+    icon: {
+      ...sharedStyles.icon,
+      width: 'var(--nav-icon-size)',
+      height: 'var(--nav-icon-size)',
+      margin: 'var(--nav-icon-margin)',
+    },
+    arrow: { ...sharedStyles.arrow },
+    info: { ...sharedStyles.info },
+  } as const;
+
+  const baseStylesSub = {
+    item: {
+      width: '100%',
+      paddingTop: '2px',
+      paddingLeft: 'var(--nav-item-pl)',
+      paddingRight: 'var(--nav-item-pr)',
+      paddingBottom: '2px',
+      borderRadius: 'var(--nav-item-radius)',
+      color: 'var(--nav-item-color)',
+      '&:hover': {
+        backgroundColor: 'var(--nav-item-hover-bg)',
+      },
+      '&:active': {
+        backgroundColor: 'var(--nav-item-pressed-bg)',
+      },
+    },
+    texts: { minWidth: 0, flex: '1 1 auto' },
+    title: {
+      ...sharedStyles.noWrap,
+      ...theme.typography.body2,
+      fontWeight: 400,
+      fontSize: 15,
     },
     caption: {
       ...sharedStyles.noWrap,
@@ -198,14 +237,14 @@ const StyledNavItem = styled(ButtonBase, {
      * Sub item
      */
     ...(subItem && {
-      ...baseStyles.item,
+      ...baseStylesSub.item,
       minHeight: 'var(--nav-item-sub-height)',
-      [`& .${navSectionClasses.item.icon}`]: { ...baseStyles.icon },
-      [`& .${navSectionClasses.item.texts}`]: { ...baseStyles.texts },
-      [`& .${navSectionClasses.item.title}`]: { ...baseStyles.title },
-      [`& .${navSectionClasses.item.caption}`]: { ...baseStyles.caption },
-      [`& .${navSectionClasses.item.arrow}`]: { ...baseStyles.arrow },
-      [`& .${navSectionClasses.item.info}`]: { ...baseStyles.info },
+      [`& .${navSectionClasses.item.icon}`]: { ...baseStylesSub.icon },
+      [`& .${navSectionClasses.item.texts}`]: { ...baseStylesSub.texts },
+      [`& .${navSectionClasses.item.title}`]: { ...baseStylesSub.title },
+      [`& .${navSectionClasses.item.caption}`]: { ...baseStylesSub.caption },
+      [`& .${navSectionClasses.item.arrow}`]: { ...baseStylesSub.arrow },
+      [`& .${navSectionClasses.item.info}`]: { ...baseStylesSub.info },
       // Shape
       '&::before': {
         left: 0,

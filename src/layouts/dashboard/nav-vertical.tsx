@@ -41,13 +41,13 @@ export function NavVertical({
   const renderNavVertical = (
     <>
       {slots?.topArea ?? (
-        <Box sx={{ pl: 3.5, pt: 2.5, pb: 1, mb: 2.5 }}>
-          <Logo id="nav-vertical" isSingle={false} isWhite />
+        <Box sx={{ pl: 3.5, py: 5, mb: 0.5, mt: 1 }}>
+          <Logo id="nav-vertical" isSingle={false} isWhite width={118} height={18} />
         </Box>
       )}
 
       <Scrollbar fillContent>
-        <NavSectionVertical data={data} sx={{ px: 2, flex: '1 1 auto' }} {...other} />
+        <NavSectionVertical data={data} sx={{ pl: 3, pr: 2, flex: '1 1 auto' }} {...other} />
 
         {slots?.bottomArea}
       </Scrollbar>
@@ -58,7 +58,7 @@ export function NavVertical({
   const renderNavMini = (
     <>
       {slots?.topArea ?? (
-        <Box sx={{ display: 'flex', justifyContent: 'center', py: 2.5, mb: 2.5 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', py: 5, mb: 0.5, mt: 1 }}>
           <Logo id="nav-vertical-tops" isWhite height={28} width={28} />
         </Box>
       )}

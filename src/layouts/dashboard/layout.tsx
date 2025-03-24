@@ -60,20 +60,18 @@ export function DashboardLayout({ sx, children, header, data }: DashboardLayoutP
        * Sidebar
        *************************************** */
       sidebarSection={
-        isNavHorizontal ? null : (
-          <NavVertical
-            data={navData}
-            isNavMini={isNavMini}
-            layoutQuery={layoutQuery}
-            cssVars={navColorVars.section}
-            onToggleNav={() =>
-              settings.onUpdateField(
-                'navLayout',
-                settings.navLayout === 'vertical' ? 'mini' : 'vertical'
-              )
-            }
-          />
-        )
+        <NavVertical
+          data={navData}
+          isNavMini={isNavMini}
+          layoutQuery={layoutQuery}
+          cssVars={navColorVars.section}
+          onToggleNav={() =>
+            settings.onUpdateField(
+              'navLayout',
+              settings.navLayout === 'vertical' ? 'mini' : 'vertical'
+            )
+          }
+        />
       }
       /** **************************************
        * Footer
@@ -87,7 +85,7 @@ export function DashboardLayout({ sx, children, header, data }: DashboardLayoutP
         '--layout-transition-easing': 'linear',
         '--layout-transition-duration': '120ms',
         '--layout-nav-mini-width': '88px',
-        '--layout-nav-vertical-width': '300px',
+        '--layout-nav-vertical-width': '260px',
         '--layout-nav-horizontal-height': '64px',
         '--layout-dashboard-content-pt': theme.spacing(1),
         '--layout-dashboard-content-pb': theme.spacing(8),

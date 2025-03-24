@@ -62,7 +62,7 @@ export function Memory({ selectedNodeId }: Props) {
   );
   return (
     <>
-      <Box sx={{ mb: 2 }}>
+      <Box sx={{ mb: 3 }}>
         <Grid container>
           <Grid md={3}>
             <Grid
@@ -87,16 +87,20 @@ export function Memory({ selectedNodeId }: Props) {
                 <Typography variant="subtitle1">TBD</Typography>
               </Grid>
             </Grid>
-            <Box gap={1} display="flex" alignItems="center">
+            <Box display="flex" alignItems="center">
               <TextField
-                label="CODE"
                 size="small"
-                placeholder="Enter code here"
+                placeholder="CODE"
                 value={code}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   setCode(event.target.value);
                 }}
-                sx={{ width: 200 }}
+                sx={{
+                  width: '100%',
+                  '& .MuiOutlinedInput-root': {
+                    backgroundColor: (theme) => theme.palette.common.white,
+                  },
+                }}
               />
             </Box>
           </Grid>

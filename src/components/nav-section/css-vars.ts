@@ -44,7 +44,7 @@ function verticalVars(theme: Theme) {
 
   return {
     ...colorVars(theme, 'vertical'),
-    '--nav-item-gap': spacing(0.5),
+    '--nav-item-gap': '8px',
     '--nav-item-radius': `${shape.borderRadius}px`,
     '--nav-item-pt': spacing(0.5),
     '--nav-item-pr': spacing(1),
@@ -53,7 +53,7 @@ function verticalVars(theme: Theme) {
     // root
     '--nav-item-root-height': '44px',
     // sub
-    '--nav-item-sub-height': '36px',
+    '--nav-item-sub-height': '40px',
     // icon
     '--nav-icon-size': '24px',
     '--nav-icon-margin': spacing(0, 1.5, 0, 0),
@@ -71,13 +71,13 @@ function miniVars(theme: Theme) {
 
   return {
     ...colorVars(theme, 'mini'),
-    '--nav-item-gap': spacing(0.5),
+    '--nav-item-gap': '8px',
     '--nav-item-radius': `${shape.borderRadius}px`,
     // root
-    '--nav-item-root-height': '56px',
+    '--nav-item-root-height': '44px',
     '--nav-item-root-padding': spacing(1, 0.5, 0.75, 0.5),
     // sub
-    '--nav-item-sub-height': '34px',
+    '--nav-item-sub-height': '40px',
     '--nav-item-sub-padding': spacing(0, 1),
     // icon
     '--nav-icon-size': '22px',
