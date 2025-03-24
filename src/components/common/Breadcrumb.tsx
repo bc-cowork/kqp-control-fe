@@ -12,7 +12,7 @@ type Props = {
 export function Breadcrumb({ node, page }: Props) {
   return (
     <Box sx={{ mt: 2 }}>
-      <Typography variant="h3" display="inline">
+      <Typography variant="h3" display="inline" sx={{ color: (theme) => theme.palette.grey[400] }}>
         {`Nodes > `}
       </Typography>
       <Typography
@@ -25,11 +25,12 @@ export function Breadcrumb({ node, page }: Props) {
           border: 1,
           borderRadius: 1,
           borderColor: (theme) => theme.palette.grey[300],
+          color: (theme) => theme.palette.grey[400],
         }}
       >
         {node}
       </Typography>
-      <Typography variant="h3" display="inline">
+      <Typography variant="h3" display="inline" sx={{ color: (theme) => theme.palette.grey[400] }}>
         {` > `}
       </Typography>
       <Typography variant="h2" display="inline">

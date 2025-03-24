@@ -3,11 +3,9 @@
 import router from 'next/router';
 import { useState, useCallback } from 'react';
 
-import { grey } from '@mui/material/colors';
 import {
   Box,
   Grid,
-  Stack,
   Table,
   Button,
   TableRow,
@@ -18,6 +16,8 @@ import {
   Typography,
   TablePagination,
 } from '@mui/material';
+
+import { useDebounce } from 'src/hooks/use-debounce';
 
 import { varAlpha } from 'src/theme/styles';
 import { useGetIssues } from 'src/actions/nodes';
@@ -33,21 +33,16 @@ type Props = {
 };
 
 export function Memory({ selectedNodeId }: Props) {
-  const [codeText, setCodeText] = useState<string>('');
-  const [code, setCode] = useState<string | undefined>(undefined);
+  const [code, setCode] = useState<string>('');
+  const debouncedCode = useDebounce(code);
   const [offset, setOffset] = useState<number>(1);
   const [limit, setLimit] = useState<number>(40);
   const { issues, issuesLoading, issuesEmpty, issuesError } = useGetIssues(
     selectedNodeId,
     offset,
     limit,
-    code
+    debouncedCode
   );
-
-  const handleUpdateCode = useCallback(() => {
-    setCode(codeText);
-    handleFirst();
-  }, [codeText]);
 
   const handleFirst = () => {
     setOffset(1);
@@ -69,41 +64,40 @@ export function Memory({ selectedNodeId }: Props) {
     <>
       <Box sx={{ mb: 2 }}>
         <Grid container>
-          <Grid md={6}>
-            <Box sx={{ p: 2 }}>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
+          <Grid md={3}>
+            <Grid
+              container
+              sx={{
+                mb: 3,
+                backgroundColor: (theme) => theme.palette.common.white,
+
+                borderRadius: 2,
+                border: (theme) => `solid 1px ${theme.palette.divider}`,
+              }}
+            >
+              <Grid
+                md={6}
+                sx={{ borderRight: (theme) => `solid 1px ${theme.palette.divider}`, py: 3, px: 1 }}
               >
-                <Typography>Issues: </Typography>
-                <Typography>{issues?.max_issue_count}</Typography>
-              </Stack>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
-              >
-                <Typography>Compet: </Typography>
-                <Typography>tbd</Typography>
-              </Stack>
-            </Box>
-          </Grid>
-          <Grid md={6} display="flex" alignItems="center" justifyContent="center">
+                <Typography variant="body2">Issues</Typography>
+                <Typography variant="subtitle1">{issues?.max_issue_count}</Typography>
+              </Grid>
+              <Grid md={6} sx={{ py: 3, px: 1 }}>
+                <Typography variant="body2">Compet</Typography>
+                <Typography variant="subtitle1">TBD</Typography>
+              </Grid>
+            </Grid>
             <Box gap={1} display="flex" alignItems="center">
               <TextField
                 label="CODE"
                 size="small"
                 placeholder="Enter code here"
-                value={codeText}
+                value={code}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setCodeText(event.target.value);
+                  setCode(event.target.value);
                 }}
                 sx={{ width: 200 }}
               />
-              <Button variant="contained" onClick={handleUpdateCode}>
-                Apply
-              </Button>
             </Box>
           </Grid>
         </Grid>
