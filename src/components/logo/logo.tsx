@@ -46,7 +46,6 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
         src={`${CONFIG.assetsDir}/logo/${isWhite ? 'logo-single-white' : 'logo-single'}.svg`}
         width="100%"
         height="100%"
-        sx={{ p: 0.5 }}
       />
     );
 

@@ -42,7 +42,14 @@ export function NavVertical({
     <>
       {slots?.topArea ?? (
         <Box sx={{ pl: 3.5, py: 5, mb: 0.5, mt: 1 }}>
-          <Logo id="nav-vertical" isSingle={false} isWhite width={118} height={18} />
+          <Logo
+            id="nav-vertical"
+            isSingle={false}
+            isWhite
+            width={126}
+            height={24}
+            sx={{ p: 0.2 }}
+          />
         </Box>
       )}
 
@@ -59,7 +66,7 @@ export function NavVertical({
     <>
       {slots?.topArea ?? (
         <Box sx={{ display: 'flex', justifyContent: 'center', py: 5, mb: 0.5, mt: 1 }}>
-          <Logo id="nav-vertical-tops" isWhite height={28} width={28} />
+          <Logo id="nav-vertical-tops" isWhite height={24} width={24} sx={{ p: 0.4 }} />
         </Box>
       )}
 
@@ -87,6 +94,7 @@ export function NavVertical({
 
   return (
     <Box
+      id="theboxineed"
       sx={{
         top: 0,
         left: 0,
@@ -109,6 +117,7 @@ export function NavVertical({
       }}
     >
       <NavToggleButton
+        id="navtogglebutton"
         isNavMini={isNavMini}
         onClick={onToggleNav}
         sx={{

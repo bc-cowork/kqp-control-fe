@@ -69,7 +69,7 @@ function Group({ items, render, subheader, slotProps, enabledRootRedirect }: Nav
             enabledRootRedirect={enabledRootRedirect}
           />
           {index !== items.length - 1 && (
-            <Divider sx={{ borderColor: (theme) => theme.palette.grey[500] }} />
+            <Divider sx={{ borderColor: (theme) => theme.palette.grey[500], my: 0.5 }} />
           )}
         </>
       ))}

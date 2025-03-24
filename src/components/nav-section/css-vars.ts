@@ -44,7 +44,8 @@ function verticalVars(theme: Theme) {
 
   return {
     ...colorVars(theme, 'vertical'),
-    '--nav-item-gap': '8px',
+    '--nav-item-gap': '4px',
+    '--nav-item-gap-sub': '4px',
     '--nav-item-radius': `${shape.borderRadius}px`,
     '--nav-item-pt': spacing(0.5),
     '--nav-item-pr': spacing(1),
