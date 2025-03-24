@@ -17,6 +17,14 @@ const MuiTypography: Components<Theme>['MuiTypography'] = {
       props: { variant: 'h1' },
       style: {
         fontSize: 28,
+        fontWeight: 600,
+        color: grey[600],
+      },
+    },
+    {
+      props: { variant: 'h2' },
+      style: {
+        fontSize: 22,
         fontWeight: 500,
         color: grey[600],
       },

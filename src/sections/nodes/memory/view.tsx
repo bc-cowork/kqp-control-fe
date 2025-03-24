@@ -1,11 +1,11 @@
 'use client';
 
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 
 import { DashboardContent } from 'src/layouts/dashboard';
 
 import { Memory } from 'src/components/nodes/Memory';
+import { Breadcrumb } from 'src/components/common/Breadcrumb';
 
 // ----------------------------------------------------------------------
 
@@ -16,7 +16,7 @@ type Props = {
 export function MemoryView({ nodeId }: Props) {
   return (
     <DashboardContent maxWidth="xl">
-      <Typography variant="h3"> Memory for {nodeId} </Typography>
+      <Breadcrumb node={nodeId} page="Memory" />
       <Box
         sx={{
           mt: 5,

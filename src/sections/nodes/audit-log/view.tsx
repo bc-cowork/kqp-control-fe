@@ -1,10 +1,10 @@
 'use client';
 
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 
 import { DashboardContent } from 'src/layouts/dashboard';
 
+import { Breadcrumb } from 'src/components/common/Breadcrumb';
 import { AuditLogList } from 'src/components/nodes/AuditLogList';
 
 // ----------------------------------------------------------------------
@@ -16,7 +16,7 @@ type Props = {
 export function AuditLogView({ nodeId }: Props) {
   return (
     <DashboardContent maxWidth="xl">
-      <Typography variant="h3"> Audit Logs for {nodeId} </Typography>
+      <Breadcrumb node={nodeId} page="Audit Logs" />
       <Box
         sx={{
           mt: 5,

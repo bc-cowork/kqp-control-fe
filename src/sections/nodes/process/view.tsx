@@ -1,10 +1,10 @@
 'use client';
 
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 
 import { DashboardContent } from 'src/layouts/dashboard';
 
+import { Breadcrumb } from 'src/components/common/Breadcrumb';
 import { ProcessDetail } from 'src/components/nodes/ProcessDetail';
 
 // ----------------------------------------------------------------------
@@ -16,7 +16,7 @@ type Props = {
 export function ProcessView({ nodeId }: Props) {
   return (
     <DashboardContent maxWidth="xl">
-      <Typography variant="h3"> Process Details for {nodeId} </Typography>
+      <Breadcrumb node={nodeId} page="Process" />
       <Box
         sx={{
           mt: 5,
