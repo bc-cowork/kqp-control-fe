@@ -12,7 +12,6 @@ import {
   TableCell,
   TableBody,
   Typography,
-  TablePagination,
 } from '@mui/material';
 
 import { useRouter } from 'src/routes/hooks';
@@ -24,6 +23,7 @@ import { useGetIssues } from 'src/actions/nodes';
 import { TableEmptyRows } from '../table/table-empty-rows';
 import { TableErrorRows } from '../table/table-error-rows';
 import { TableLoadingRows } from '../table/table-loading-rows';
+import TablePaginationCustom from '../common/TablePaginationCustom';
 
 // ----------------------------------------------------------------------
 
@@ -79,7 +79,7 @@ export function Memory({ selectedNodeId }: Props) {
               </Grid>
               <Grid md={6} sx={{ py: 2, px: 1 }}>
                 <Typography variant="body2">Compet</Typography>
-                <Typography variant="subtitle1">TBD</Typography>
+                <Typography variant="subtitle1">{issues?.compet_count}</Typography>
               </Grid>
             </Grid>
             <Box display="flex" alignItems="center">
@@ -101,6 +101,13 @@ export function Memory({ selectedNodeId }: Props) {
           </Grid>
         </Grid>
       </Box>
+      <TablePaginationCustom
+        rowsPerPage={limit}
+        page={issues.current_page - 1}
+        count={issues.max_issue_count}
+        onPageChange={onChangePage}
+        onRowsPerPageChange={onChangeRowsPerPage}
+      />
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -113,7 +120,7 @@ export function Memory({ selectedNodeId }: Props) {
         </TableHead>
         <TableBody>
           {issuesLoading ? (
-            <TableLoadingRows height={49} loadingRows={limit} />
+            <TableLoadingRows height={49} loadingRows={10} />
           ) : issuesEmpty ? (
             <TableEmptyRows text="No data for memory logs" />
           ) : issuesError ? (
@@ -141,15 +148,6 @@ export function Memory({ selectedNodeId }: Props) {
           )}
         </TableBody>
       </Table>
-      <TablePagination
-        component="div"
-        rowsPerPageOptions={[10, 20, 40, 60, 100]}
-        rowsPerPage={limit}
-        page={issues.current_page - 1}
-        count={issues.max_issue_count}
-        onPageChange={onChangePage}
-        onRowsPerPageChange={onChangeRowsPerPage}
-      />
     </>
   );
 }

@@ -4,6 +4,7 @@ export type INodeItem = {
   desc: string;
   emittable: boolean;
   emit_count: number;
+  online_status: boolean;
 };
 
 export type IProcessResponse = {

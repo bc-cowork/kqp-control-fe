@@ -6,12 +6,14 @@ import { useState, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
+import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import {
   Chip,
   Table,
   Stack,
   Divider,
+  SvgIcon,
   TableRow,
   TableBody,
   TableCell,
@@ -37,6 +39,8 @@ export function DashboardView({ title = 'Main' }: Props) {
   const { nodes, nodesLoading, nodesEmpty, nodesError } = useGetNodes();
   const { status, statusLoading, statusError } = useGetStatus(selectedNodeId);
 
+  const theme = useTheme();
+
   useEffect(() => {
     if (!nodesLoading && !nodesEmpty && !nodesError && !selectedNode && !selectedNodeId) {
       setSelectedNodeId(nodes[0].id);
@@ -54,7 +58,7 @@ export function DashboardView({ title = 'Main' }: Props) {
 
   return (
     <DashboardContent maxWidth="xl">
-      <Typography sx={{ fontSize: 28, fontWeight: 500, color: (theme) => theme.palette.grey[600] }}>
+      <Typography sx={{ fontSize: 28, fontWeight: 500, color: theme.palette.grey[600] }}>
         {title}
       </Typography>
       <Box
@@ -69,7 +73,7 @@ export function DashboardView({ title = 'Main' }: Props) {
               sx={{
                 fontSize: 20,
                 fontWeight: 400,
-                color: (theme) => theme.palette.grey[600],
+                color: theme.palette.grey[600],
                 mb: 1,
               }}
             >
@@ -83,6 +87,7 @@ export function DashboardView({ title = 'Main' }: Props) {
             >
               <TableHead>
                 <TableRow>
+                  <TableCell>State</TableCell>
                   <TableCell>ID</TableCell>
                   <TableCell>Name</TableCell>
                   <TableCell>Description</TableCell>
@@ -113,6 +118,36 @@ export function DashboardView({ title = 'Main' }: Props) {
                       onClick={() => onSelectedNode(node)}
                       sx={{ cursor: 'pointer' }}
                     >
+                      <TableCell>
+                        <Chip
+                          label={node.online_status ? 'Online' : 'Offline'}
+                          color="success"
+                          size="small"
+                          variant="status"
+                          icon={
+                            <SvgIcon>
+                              <svg
+                                width="12"
+                                height="13"
+                                viewBox="0 0 12 13"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <circle
+                                  cx="6"
+                                  cy="6.30078"
+                                  r="4"
+                                  fill={
+                                    node.online_status
+                                      ? theme.palette.success.main
+                                      : theme.palette.error.main
+                                  }
+                                />
+                              </svg>
+                            </SvgIcon>
+                          }
+                        />
+                      </TableCell>
                       <TableCell>{node.id}</TableCell>
                       <TableCell>{node.name}</TableCell>
                       <TableCell>{node.desc}</TableCell>
@@ -151,7 +186,7 @@ export function DashboardView({ title = 'Main' }: Props) {
                     sx={{
                       fontSize: 20,
                       fontWeight: 400,
-                      color: (theme) => theme.palette.grey[600],
+                      color: theme.palette.grey[600],
                       mb: 1,
                     }}
                   >
@@ -165,16 +200,39 @@ export function DashboardView({ title = 'Main' }: Props) {
                         border: 1,
                         borderColor: '#C7DBFF',
                         borderRadius: 1,
-                        bgcolor: (theme) => theme.palette.common.white,
+                        bgcolor: theme.palette.common.white,
                       }}
                     >
                       <Box sx={{ p: 1 }}>
                         <Stack direction="row" justifyContent="space-between" alignItems="center">
                           <Chip
-                            label={status?.service_status?.okay ? '• Online' : '• Offline'}
-                            color={status?.service_status?.okay ? 'success' : 'error'}
-                            size="medium"
-                            variant="soft"
+                            label={status?.service_status?.okay ? 'Online' : 'Offline'}
+                            color="success"
+                            size="small"
+                            variant="status"
+                            sx={{ fontSize: 17, border: `1px solid ${theme.palette.success.main}` }}
+                            icon={
+                              <SvgIcon>
+                                <svg
+                                  width="12"
+                                  height="13"
+                                  viewBox="0 0 12 13"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <circle
+                                    cx="6"
+                                    cy="6.30078"
+                                    r="4"
+                                    fill={
+                                      status?.service_status?.okay
+                                        ? theme.palette.success.main
+                                        : theme.palette.error.main
+                                    }
+                                  />
+                                </svg>
+                              </SvgIcon>
+                            }
                           />
                           <ChipDeleteIcon onClick={onCloseInfo} />
                         </Stack>
@@ -220,7 +278,7 @@ export function DashboardView({ title = 'Main' }: Props) {
               sx={{
                 fontSize: 20,
                 fontWeight: 400,
-                color: (theme) => theme.palette.grey[600],
+                color: theme.palette.grey[600],
                 mb: 1,
               }}
             >

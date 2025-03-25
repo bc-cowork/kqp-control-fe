@@ -30,6 +30,7 @@ export const ChipDeleteIcon = (props: SvgIconProps) => (
 declare module '@mui/material/Chip' {
   interface ChipPropsVariantOverrides {
     soft: true;
+    status: true;
   }
 }
 
@@ -57,13 +58,38 @@ const softVariant: Record<string, ComponentsVariants<Theme>['MuiChip']> = {
     style: ({ theme }) => ({
       color: theme.vars.palette[color].dark,
       backgroundColor: varAlpha(theme.vars.palette[color].mainChannel, 0.16),
-      '&:hover': { backgroundColor: varAlpha(theme.vars.palette[color].mainChannel, 0.32) },
+      // '&:hover': { backgroundColor: varAlpha(theme.vars.palette[color].mainChannel, 0.32) },
       [stylesMode.dark]: { color: theme.vars.palette[color].light },
     }),
   })),
   inheritColor: [
     {
       props: ({ ownerState }) => ownerState.variant === 'soft' && ownerState.color === 'default',
+      style: ({ theme }) => ({
+        backgroundColor: varAlpha(theme.vars.palette.grey['500Channel'], 0.16),
+        '&:hover': { backgroundColor: varAlpha(theme.vars.palette.grey['500Channel'], 0.32) },
+      }),
+    },
+  ],
+};
+
+const statusVariant: Record<string, ComponentsVariants<Theme>['MuiChip']> = {
+  colors: COLORS.map((color) => ({
+    props: ({ ownerState }) =>
+      !ownerState.disabled && ownerState.variant === 'status' && ownerState.color === color,
+    style: ({ theme }) => ({
+      color: theme.vars.palette[color].dark,
+      backgroundColor: varAlpha(theme.vars.palette[color].mainChannel, 0.16),
+      fontSize: 15,
+      borderRadius: '16px',
+      border: 1,
+      borderColor: theme.vars.palette[color].dark,
+      [stylesMode.dark]: { color: theme.vars.palette[color].light },
+    }),
+  })),
+  inheritColor: [
+    {
+      props: ({ ownerState }) => ownerState.variant === 'status' && ownerState.color === 'default',
       style: ({ theme }) => ({
         backgroundColor: varAlpha(theme.vars.palette.grey['500Channel'], 0.16),
         '&:hover': { backgroundColor: varAlpha(theme.vars.palette.grey['500Channel'], 0.32) },
@@ -87,7 +113,12 @@ const MuiChip: Components<Theme>['MuiChip'] = {
     /**
      * @variant soft
      */
-    ...[...softVariant.inheritColor!, ...softVariant.colors!],
+    ...[
+      ...softVariant.inheritColor!,
+      ...softVariant.colors!,
+      ...statusVariant.inheritColor!,
+      ...statusVariant.colors!,
+    ],
   ],
 
   /** **************************************
