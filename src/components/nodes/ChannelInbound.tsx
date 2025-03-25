@@ -4,7 +4,6 @@ import type { IChannelItem } from 'src/types/node';
 
 import { Table, TableRow, TableBody, TableCell, TableHead, CircularProgress } from '@mui/material';
 
-import { varAlpha } from 'src/theme/styles';
 import { useGetChannelList } from 'src/actions/nodes';
 
 // ----------------------------------------------------------------------
@@ -18,25 +17,18 @@ export function ChannelInbound({ selectedNodeId }: Props) {
     useGetChannelList(selectedNodeId);
 
   return (
-    <Table
-      size="small"
-      sx={{
-        borderRadius: 2,
-        bgcolor: (theme) => varAlpha(theme.vars.palette.grey['500Channel'], 0.04),
-        border: (theme) => `solid 1px ${theme.vars.palette.divider}`,
-      }}
-    >
+    <Table size="small">
       <TableHead>
         <TableRow>
-          <TableCell>ID</TableCell>
+          <TableCell align="right">ID</TableCell>
           <TableCell>NAME</TableCell>
           <TableCell>Topic</TableCell>
           <TableCell>TYPE</TableCell>
           <TableCell>UTYPE</TableCell>
-          <TableCell>PORT</TableCell>
-          <TableCell>IP</TableCell>
-          <TableCell>NIC</TableCell>
-          <TableCell>Count</TableCell>
+          <TableCell align="right">PORT</TableCell>
+          <TableCell align="right">IP</TableCell>
+          <TableCell align="right">NIC</TableCell>
+          <TableCell align="right">Count</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -57,15 +49,15 @@ export function ChannelInbound({ selectedNodeId }: Props) {
         ) : (
           channels.map((channel: IChannelItem, index: number) => (
             <TableRow key={index}>
-              <TableCell>{channel.id}</TableCell>
+              <TableCell align="right">{channel.id}</TableCell>
               <TableCell>{channel.name}</TableCell>
               <TableCell>{channel.topic}</TableCell>
               <TableCell>{channel.type}</TableCell>
               <TableCell>{channel.utype}</TableCell>
-              <TableCell>{channel.port}</TableCell>
-              <TableCell>{channel.mip}</TableCell>
-              <TableCell>{channel.nic}</TableCell>
-              <TableCell>{channel.count}</TableCell>
+              <TableCell align="right">{channel.port}</TableCell>
+              <TableCell align="right">{channel.mip}</TableCell>
+              <TableCell align="right">{channel.nic}</TableCell>
+              <TableCell align="right">{channel.count}</TableCell>
             </TableRow>
           ))
         )}

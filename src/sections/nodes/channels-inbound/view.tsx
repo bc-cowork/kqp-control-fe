@@ -1,10 +1,10 @@
 'use client';
 
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 
 import { DashboardContent } from 'src/layouts/dashboard';
 
+import { Breadcrumb } from 'src/components/common/Breadcrumb';
 import { ChannelInbound } from 'src/components/nodes/ChannelInbound';
 
 // ----------------------------------------------------------------------
@@ -16,7 +16,7 @@ type Props = {
 export function ChannelInboundView({ nodeId }: Props) {
   return (
     <DashboardContent maxWidth="xl">
-      <Typography variant="h3"> Channel Inbound for {nodeId} </Typography>
+      <Breadcrumb node={nodeId} page="Channels Inbound" />
       <Box
         sx={{
           mt: 5,
