@@ -12,6 +12,7 @@ import {
   TableCell,
   TableBody,
   Typography,
+  CircularProgress,
 } from '@mui/material';
 
 import { useRouter } from 'src/routes/hooks';
@@ -44,13 +45,13 @@ export function Memory({ selectedNodeId }: Props) {
     debouncedCode
   );
 
-  const onChangeRowsPerPage = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeRowsPerPage = useCallback((newRowsPerPage: number) => {
     setOffset(1);
-    setLimit(parseInt(event.target.value, 10));
+    setLimit(newRowsPerPage);
   }, []);
 
   const onChangePage = useCallback(
-    (event: unknown, newPage: number) => {
+    (newPage: number) => {
       setOffset(limit * newPage + 1);
     },
     [limit]
@@ -65,24 +66,36 @@ export function Memory({ selectedNodeId }: Props) {
               sx={{
                 mb: 2,
                 backgroundColor: (theme) => theme.palette.common.white,
-
                 borderRadius: 2,
                 border: (theme) => `solid 1px ${theme.palette.divider}`,
+                minHeight: '100px',
               }}
             >
-              <Grid
-                md={6}
-                sx={{ borderRight: (theme) => `solid 1px ${theme.palette.divider}`, py: 2, px: 1 }}
-              >
-                <Typography variant="body2">Issues</Typography>
-                <Typography variant="subtitle1">{issues?.max_issue_count}</Typography>
-              </Grid>
-              <Grid md={6} sx={{ py: 2, px: 1 }}>
-                <Typography variant="body2">Compet</Typography>
-                <Typography variant="subtitle1">{issues?.compet_count}</Typography>
-              </Grid>
+              {issuesLoading ? (
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 5 }}>
+                  <CircularProgress />
+                </Box>
+              ) : (
+                <>
+                  <Grid
+                    md={6}
+                    sx={{
+                      borderRight: (theme) => `solid 1px ${theme.palette.divider}`,
+                      py: 2,
+                      px: 1,
+                    }}
+                  >
+                    <Typography variant="body2">Issues</Typography>
+                    <Typography variant="subtitle1">{issues?.max_issue_count}</Typography>
+                  </Grid>
+                  <Grid md={6} sx={{ py: 2, px: 1 }}>
+                    <Typography variant="body2">Compet</Typography>
+                    <Typography variant="subtitle1">{issues?.compet_count}</Typography>
+                  </Grid>
+                </>
+              )}
             </Grid>
-            <Box display="flex" alignItems="center">
+            <Box>
               <TextField
                 size="small"
                 placeholder="CODE"
@@ -99,15 +112,17 @@ export function Memory({ selectedNodeId }: Props) {
               />
             </Box>
           </Grid>
+          <Grid md={9} alignContent="flex-end">
+            <TablePaginationCustom
+              rowsPerPage={limit}
+              page={issues.current_page - 1}
+              count={issues.max_issue_count}
+              onPageChange={onChangePage}
+              onRowsPerPageChange={onChangeRowsPerPage}
+            />
+          </Grid>
         </Grid>
       </Box>
-      <TablePaginationCustom
-        rowsPerPage={limit}
-        page={issues.current_page - 1}
-        count={issues.max_issue_count}
-        onPageChange={onChangePage}
-        onRowsPerPageChange={onChangeRowsPerPage}
-      />
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -120,7 +135,7 @@ export function Memory({ selectedNodeId }: Props) {
         </TableHead>
         <TableBody>
           {issuesLoading ? (
-            <TableLoadingRows height={49} loadingRows={10} />
+            <TableLoadingRows height={20} loadingRows={10} />
           ) : issuesEmpty ? (
             <TableEmptyRows text="No data for memory logs" />
           ) : issuesError ? (

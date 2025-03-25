@@ -3,7 +3,7 @@
 import React from 'react';
 
 import { styled } from '@mui/material/styles';
-import { Box, Stack, Select, MenuItem, IconButton, Typography } from '@mui/material';
+import { Box, Stack, Select, MenuItem, useTheme, IconButton, Typography } from '@mui/material';
 
 import { Iconify } from '../iconify';
 
@@ -19,36 +19,58 @@ const CustomSelect = styled(Select)(({ theme }) => ({
   '& .MuiOutlinedInput-notchedOutline': {
     border: 'none',
   },
+  '& .MuiSelect-icon': {
+    color: theme.palette.grey[400],
+  },
 }));
 
 const CustomIconButton = styled(IconButton)(({ theme }) => ({
-  backgroundColor: '#f5f7fa',
+  backgroundColor: theme.palette.common.white,
   borderRadius: 4,
   padding: 4,
   margin: '0 4px',
   '&:hover': {
-    backgroundColor: '#e0e0e0',
+    backgroundColor: theme.palette.grey[100],
   },
 }));
 
 const CustomTypography = styled(Typography)(({ theme }) => ({
-  fontSize: '0.875rem',
-  color: theme.palette.text.primary,
+  fontSize: 15,
+  color: theme.palette.grey[400],
   margin: '0 8px',
 }));
 
-const TablePaginationCustom = ({ onPageChange, page, count, rowsPerPage, onRowsPerPageChange }) => {
+type Props = {
+  onPageChange: (newPage: number) => void;
+  page: number;
+  count: number;
+  rowsPerPage: number;
+  onRowsPerPageChange: (newRowsPerPage: number) => void;
+};
+
+const TablePaginationCustom = ({
+  onPageChange,
+  page,
+  count,
+  rowsPerPage,
+  onRowsPerPageChange,
+}: Props) => {
+  const theme = useTheme();
+
   // Calculate the range (e.g., "1-10")
   const start = page * rowsPerPage + 1;
   const end = Math.min((page + 1) * rowsPerPage, count);
 
   // Handle page change
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    newPage: number
+  ) => {
     onPageChange(newPage);
   };
 
   // Handle rows per page change
-  const handleChangeRowsPerPage = (event) => {
+  const handleChangeRowsPerPage = (event: { target: { value: any } }) => {
     onRowsPerPageChange(Number(event.target.value));
   };
 
@@ -58,14 +80,17 @@ const TablePaginationCustom = ({ onPageChange, page, count, rowsPerPage, onRowsP
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-end',
-        padding: '8px 16px',
-        borderTop: '1px solid #e0e0e0',
       }}
     >
       {/* Rows per page label and dropdown */}
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
         <CustomTypography>Rows per page:</CustomTypography>
-        <CustomSelect value={rowsPerPage} onChange={handleChangeRowsPerPage} displayEmpty>
+        <CustomSelect
+          value={rowsPerPage}
+          onChange={handleChangeRowsPerPage}
+          displayEmpty
+          inputProps={{ sx: { color: theme.palette.grey[400] } }}
+        >
           {[10, 20, 40, 60].map((option) => (
             <MenuItem key={option} value={option}>
               {option}
@@ -85,8 +110,8 @@ const TablePaginationCustom = ({ onPageChange, page, count, rowsPerPage, onRowsP
 
         {/* Range label (e.g., "1-10 of 9356951") */}
         <CustomTypography>
-          <Box component="span" sx={{ fontWeight: 500 }}>
-            {start}-{end}{' '}
+          <Box component="span" sx={{ fontWeight: 500, color: theme.palette.common.black }}>
+            {start}-{end}
           </Box>{' '}
           of {count.toLocaleString()}
         </CustomTypography>

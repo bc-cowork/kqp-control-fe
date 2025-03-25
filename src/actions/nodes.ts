@@ -186,6 +186,7 @@ type IssueData = {
   data: {
     nodeId: string;
     max_issue_count: number;
+    compet_count: number;
     issueList: any; // TODO: define type
   };
   meta: {
@@ -212,6 +213,7 @@ export function useGetIssues(node: string, offset: number, limit: number, q?: st
     const defaultIssues = {
       nodeId: node,
       max_issue_count: 0,
+      compet_count: 0,
       issueList: [],
       current_page: 1,
       has_next_page: true,

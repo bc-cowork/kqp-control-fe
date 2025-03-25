@@ -12,16 +12,13 @@ export type TableLoadingRowsProps = {
 
 export function TableLoadingRows({
   height = 49,
-  columns = 9,
+  columns = 12,
   loadingRows = 40,
 }: TableLoadingRowsProps) {
   return (
     <TableRow
       sx={{
         ...(height && { height: height * loadingRows }),
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
       }}
     >
       <TableCell colSpan={columns} sx={{ border: 'none' }}>
@@ -32,6 +29,7 @@ export function TableLoadingRows({
             justifyContent: 'center',
             alignItems: 'center',
             height: '100%',
+            width: '100%',
           }}
         >
           <CircularProgress />
