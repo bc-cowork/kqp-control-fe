@@ -251,7 +251,7 @@ export function useGetIssueItemInfo(node: string, code: string) {
     swrOptions
   );
 
-  console.log('useGetIssueItemInfo', data);
+  // console.log('useGetIssueItemInfo', data);
 
   const memoizedValue = useMemo(
     () => ({
@@ -275,7 +275,7 @@ type IssueItemQuoteData = {
 };
 
 export function useGetIssueItemQuotes(node: string, code: string) {
-  const url = node && code ? [endpoints.nodes.issues.info, { params: { node, code } }] : '';
+  const url = node && code ? [endpoints.nodes.issues.quote, { params: { node, code } }] : '';
 
   const { data, isLoading, error, isValidating } = useSWR<IssueItemQuoteData>(
     url,
@@ -283,11 +283,12 @@ export function useGetIssueItemQuotes(node: string, code: string) {
     swrOptions
   );
 
-  console.log('useGetIssueItemQuotes', data);
+  // console.log('useGetIssueItemQuotes', data);
 
   const memoizedValue = useMemo(
     () => ({
-      issueQuotes: data?.data?.orderbook || {},
+      issueQuotesAsk: data?.data?.issueQuote?.order_book?.ask || {},
+      issueQuotesBid: data?.data?.issueQuote?.order_book?.bid || {},
       issueQuotesLoading: isLoading,
       issueQuotesError: error,
       issueQuotesValidating: isValidating,
