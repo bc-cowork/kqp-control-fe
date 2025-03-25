@@ -32,7 +32,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
 
   const rowKeysAsk = Object.keys(issueQuotesAsk)
     .filter((key) => key !== 'sum')
-    .sort((a, b) => b - a);
+    .sort((a, b) => Number(b) - Number(a));
   const sumDataAsk = issueQuotesAsk.sum;
 
   return (
