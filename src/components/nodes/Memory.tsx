@@ -6,7 +6,9 @@ import {
   Box,
   Grid,
   Table,
+  Tooltip,
   TableRow,
+  useTheme,
   TextField,
   TableHead,
   TableCell,
@@ -21,6 +23,7 @@ import { useDebounce } from 'src/hooks/use-debounce';
 
 import { useGetIssues } from 'src/actions/nodes';
 
+import { Iconify } from '../iconify';
 import { TableEmptyRows } from '../table/table-empty-rows';
 import { TableErrorRows } from '../table/table-error-rows';
 import { TableLoadingRows } from '../table/table-loading-rows';
@@ -34,6 +37,7 @@ type Props = {
 
 export function Memory({ selectedNodeId }: Props) {
   const router = useRouter();
+  const theme = useTheme();
   const [code, setCode] = useState<string>('');
   const debouncedCode = useDebounce(code);
   const [offset, setOffset] = useState<number>(1);
@@ -65,9 +69,9 @@ export function Memory({ selectedNodeId }: Props) {
               container
               sx={{
                 mb: 2,
-                backgroundColor: (theme) => theme.palette.common.white,
+                backgroundColor: theme.palette.common.white,
                 borderRadius: 2,
-                border: (theme) => `solid 1px ${theme.palette.divider}`,
+                border: `solid 1px ${theme.palette.divider}`,
                 minHeight: '100px',
               }}
             >
@@ -80,7 +84,7 @@ export function Memory({ selectedNodeId }: Props) {
                   <Grid
                     md={6}
                     sx={{
-                      borderRight: (theme) => `solid 1px ${theme.palette.divider}`,
+                      borderRight: `solid 1px ${theme.palette.divider}`,
                       py: 2,
                       px: 1,
                     }}
@@ -106,13 +110,32 @@ export function Memory({ selectedNodeId }: Props) {
                 sx={{
                   width: '100%',
                   '& .MuiOutlinedInput-root': {
-                    backgroundColor: (theme) => theme.palette.common.white,
+                    backgroundColor: theme.palette.common.white,
                   },
                 }}
               />
             </Box>
           </Grid>
-          <Grid md={9} alignContent="flex-end">
+          <Grid md={1} alignContent="flex-end" sx={{ pl: 0.5 }}>
+            <Tooltip
+              title={
+                <>
+                  Please enter the 12-digit ISIN code you wish to search for. <br />
+                  ex: KR7005930003
+                </>
+              }
+              arrow
+              placement="right"
+            >
+              <Iconify
+                icon="eva:info-outline"
+                color={theme.palette.grey[400]}
+                width={24}
+                height={24}
+              />
+            </Tooltip>
+          </Grid>
+          <Grid md={8} alignContent="flex-end">
             <TablePaginationCustom
               rowsPerPage={limit}
               page={issues.current_page - 1}
@@ -143,14 +166,15 @@ export function Memory({ selectedNodeId }: Props) {
           ) : (
             issues.issueList.map(
               (
-                issue: any,
-                index: number // TODO: Fix type
+                issue: any, // TODO: Fix type
+                index: number
               ) => (
                 <TableRow
                   key={index}
                   onClick={() =>
                     router.push(`/dashboard/nodes/${selectedNodeId}/memory/${issue.code}`)
                   }
+                  sx={{ cursor: 'pointer' }}
                 >
                   <TableCell align="right">{issue.seq}</TableCell>
                   <TableCell>{issue.code}</TableCell>

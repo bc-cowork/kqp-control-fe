@@ -60,24 +60,24 @@ export const endpoints = {
   },
   dashboard: {
     nodeList: '/apik/node/list',
-    serviceStatus: '/apik/service/status',
-    processList: '/apik/process/list',
-    issueList: '/apik/issue/list',
+    serviceStatus: (node: string) => `/apik/${node}/service/status`,
+    processList: (node: string) => `/apik/${node}/process/list`,
+    issueList: (node: string) => `/apik/${node}/issue/list`,
   },
   nodes: {
     channelInbound: {
-      list: '/apik/channel/list',
+      list: (node: string) => `/apik/${node}/channel/list`,
     },
     auditLog: {
-      list: '/apik/auditlog/list',
-      frameList: '/apik/auditlog/frame-list',
-      frame: '/apik/auditlog/frame',
+      list: (node: string) => `/apik/${node}/auditlog/list`,
+      frameList: (node: string) => `/apik/${node}/auditlog/frame-list`,
+      frame: (node: string) => `/apik/${node}/auditlog/frame`,
     },
     issues: {
-      list: '/apik/issue/list',
-      search: '/apik/issue/search',
-      info: '/apik/issue/info',
-      quote: '/apik/issue/quote',
+      list: (node: string) => `/apik/${node}/issue/list`,
+      search: (node: string) => `/apik/${node}/issue/search`,
+      info: (node: string) => `/apik/${node}/issue/info`,
+      quote: (node: string) => `/apik/${node}/issue/quote`,
     },
   },
 };

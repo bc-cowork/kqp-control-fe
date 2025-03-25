@@ -29,7 +29,7 @@ type ChannelData = {
 };
 
 export function useGetChannelList(node: string, kind: string = 'inbound') {
-  const url = node ? [endpoints.nodes.channelInbound.list, { params: { node, kind } }] : '';
+  const url = kind ? [endpoints.nodes.channelInbound.list(node), { params: { kind } }] : '';
 
   const { data, isLoading, error, isValidating } = useSWR<ChannelData>(url, fetcher, swrOptions);
 
@@ -63,7 +63,7 @@ type AuditLogData = {
 };
 
 export function useAuditLogList(node: string, kind: string) {
-  const url = node ? [endpoints.nodes.auditLog.list, { params: { node, kind } }] : '';
+  const url = kind ? [endpoints.nodes.auditLog.list(node), { params: { kind } }] : '';
 
   const { data, isLoading, error, isValidating } = useSWR<AuditLogData>(url, fetcher, swrOptions);
 
@@ -97,10 +97,10 @@ export function useAuditFrameList(
   offset: number,
   sort: 'asc' | 'desc'
 ) {
-  const url = node
+  const url = file
     ? [
-        endpoints.nodes.auditLog.frameList,
-        { params: { node, file, page, limit, 'last-offset': offset, sort } },
+        endpoints.nodes.auditLog.frameList(node),
+        { params: { file, page, limit, 'last-offset': offset, sort } },
       ]
     : '';
 
@@ -147,11 +147,11 @@ export function useGetAuditLogFrame(
   let url;
 
   if (side && count) {
-    url = node
-      ? [endpoints.nodes.auditLog.frame, { params: { node, file, seq, side, count, cond } }]
+    url = file
+      ? [endpoints.nodes.auditLog.frame(node), { params: { file, seq, side, count, cond } }]
       : '';
   } else {
-    url = node ? [endpoints.nodes.auditLog.frame, { params: { node, file, seq } }] : '';
+    url = file ? [endpoints.nodes.auditLog.frame(node), { params: { file, seq } }] : '';
   }
 
   const { data, isLoading, error, isValidating } = useSWR<AuditLogFrameData>(
@@ -201,8 +201,8 @@ export function useGetIssues(node: string, offset: number, limit: number, q?: st
   const url =
     node && offset && limit
       ? q
-        ? [endpoints.nodes.issues.search, { params: { node, offset, limit, q } }]
-        : [endpoints.nodes.issues.list, { params: { node, offset, limit } }]
+        ? [endpoints.nodes.issues.search(node), { params: { offset, limit, q } }]
+        : [endpoints.nodes.issues.list(node), { params: { offset, limit } }]
       : '';
 
   const { data, isLoading, error, isValidating } = useSWR<IssueData>(url, fetcher, swrOptions);
@@ -245,7 +245,7 @@ type IssueItemInfoData = {
 };
 
 export function useGetIssueItemInfo(node: string, code: string) {
-  const url = node && code ? [endpoints.nodes.issues.info, { params: { node, code } }] : '';
+  const url = node && code ? [endpoints.nodes.issues.info(node), { params: { code } }] : '';
 
   const { data, isLoading, error, isValidating } = useSWR<IssueItemInfoData>(
     url,
@@ -277,7 +277,7 @@ type IssueItemQuoteData = {
 };
 
 export function useGetIssueItemQuotes(node: string, code: string) {
-  const url = node && code ? [endpoints.nodes.issues.quote, { params: { node, code } }] : '';
+  const url = node && code ? [endpoints.nodes.issues.quote(node), { params: { code } }] : '';
 
   const { data, isLoading, error, isValidating } = useSWR<IssueItemQuoteData>(
     url,

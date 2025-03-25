@@ -55,7 +55,7 @@ type ProcessData = {
 };
 
 export function useGetProcesses(node: string) {
-  const url = node ? [endpoints.dashboard.processList, { params: { node } }] : '';
+  const url = endpoints.dashboard.processList(node);
 
   const { data, isLoading, error, isValidating } = useSWR<ProcessData>(url, fetcher, swrOptions);
 
@@ -88,7 +88,7 @@ type StatusData = {
 };
 
 export function useGetStatus(node: string) {
-  const url = node ? [endpoints.dashboard.serviceStatus, { params: { node } }] : '';
+  const url = endpoints.dashboard.serviceStatus(node);
 
   const { data, isLoading, error, isValidating } = useSWR<StatusData>(url, fetcher, swrOptions);
 
