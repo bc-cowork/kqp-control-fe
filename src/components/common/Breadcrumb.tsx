@@ -7,11 +7,14 @@ import { Box, Typography } from '@mui/material';
 type Props = {
   node: string;
   page: string;
+  levels?: number;
+  itemPage?: string;
 };
 
-export function Breadcrumb({ node, page }: Props) {
+export function Breadcrumb({ node, page, levels = 3, itemPage }: Props) {
+  const fourLevels = levels === 4;
   return (
-    <Box sx={{ mt: 2 }}>
+    <Box>
       <Typography variant="h3" display="inline" sx={{ color: (theme) => theme.palette.grey[400] }}>
         {`Nodes > `}
       </Typography>
@@ -33,9 +36,29 @@ export function Breadcrumb({ node, page }: Props) {
       <Typography variant="h3" display="inline" sx={{ color: (theme) => theme.palette.grey[400] }}>
         {` > `}
       </Typography>
-      <Typography variant="h2" display="inline">
+      <Typography
+        variant={fourLevels ? 'h3' : 'h2'}
+        display="inline"
+        sx={{
+          color: (theme) => (fourLevels ? theme.palette.grey[400] : theme.palette.common.black),
+        }}
+      >
         {page}
       </Typography>
+      {fourLevels && itemPage && (
+        <>
+          <Typography
+            variant="h3"
+            display="inline"
+            sx={{ color: (theme) => theme.palette.grey[400] }}
+          >
+            {` > `}
+          </Typography>
+          <Typography variant="h2" display="inline">
+            {itemPage}
+          </Typography>
+        </>
+      )}
     </Box>
   );
 }

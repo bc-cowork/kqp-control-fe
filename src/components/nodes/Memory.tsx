@@ -1,13 +1,11 @@
 'use client';
 
-import router from 'next/router';
 import { useState, useCallback } from 'react';
 
 import {
   Box,
   Grid,
   Table,
-  Button,
   TableRow,
   TextField,
   TableHead,
@@ -17,9 +15,10 @@ import {
   TablePagination,
 } from '@mui/material';
 
+import { useRouter } from 'src/routes/hooks';
+
 import { useDebounce } from 'src/hooks/use-debounce';
 
-import { varAlpha } from 'src/theme/styles';
 import { useGetIssues } from 'src/actions/nodes';
 
 import { TableEmptyRows } from '../table/table-empty-rows';
@@ -33,6 +32,7 @@ type Props = {
 };
 
 export function Memory({ selectedNodeId }: Props) {
+  const router = useRouter();
   const [code, setCode] = useState<string>('');
   const debouncedCode = useDebounce(code);
   const [offset, setOffset] = useState<number>(1);
@@ -43,11 +43,6 @@ export function Memory({ selectedNodeId }: Props) {
     limit,
     debouncedCode
   );
-
-  const handleFirst = () => {
-    setOffset(1);
-    setLimit(40);
-  };
 
   const onChangeRowsPerPage = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setOffset(1);
@@ -62,13 +57,13 @@ export function Memory({ selectedNodeId }: Props) {
   );
   return (
     <>
-      <Box sx={{ mb: 3 }}>
+      <Box sx={{ mb: 2 }}>
         <Grid container>
           <Grid md={3}>
             <Grid
               container
               sx={{
-                mb: 3,
+                mb: 2,
                 backgroundColor: (theme) => theme.palette.common.white,
 
                 borderRadius: 2,
@@ -77,12 +72,12 @@ export function Memory({ selectedNodeId }: Props) {
             >
               <Grid
                 md={6}
-                sx={{ borderRight: (theme) => `solid 1px ${theme.palette.divider}`, py: 3, px: 1 }}
+                sx={{ borderRight: (theme) => `solid 1px ${theme.palette.divider}`, py: 2, px: 1 }}
               >
                 <Typography variant="body2">Issues</Typography>
                 <Typography variant="subtitle1">{issues?.max_issue_count}</Typography>
               </Grid>
-              <Grid md={6} sx={{ py: 3, px: 1 }}>
+              <Grid md={6} sx={{ py: 2, px: 1 }}>
                 <Typography variant="body2">Compet</Typography>
                 <Typography variant="subtitle1">TBD</Typography>
               </Grid>
@@ -106,22 +101,14 @@ export function Memory({ selectedNodeId }: Props) {
           </Grid>
         </Grid>
       </Box>
-      <Table
-        size="small"
-        sx={{
-          borderRadius: 2,
-          bgcolor: (theme) => varAlpha(theme.vars.palette.grey['500Channel'], 0.04),
-          border: (theme) => `solid 1px ${theme.vars.palette.divider}`,
-        }}
-      >
+      <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>SEQ</TableCell>
+            <TableCell align="right">SEQ</TableCell>
             <TableCell>CODE</TableCell>
             <TableCell>K. Name</TableCell>
             <TableCell>Daily Info</TableCell>
-            <TableCell>Compet</TableCell>
-            <TableCell>Actions</TableCell>
+            <TableCell align="right">Compet</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -137,25 +124,17 @@ export function Memory({ selectedNodeId }: Props) {
                 issue: any,
                 index: number // TODO: Fix type
               ) => (
-                <TableRow key={index}>
-                  <TableCell>{issue.seq}</TableCell>
+                <TableRow
+                  key={index}
+                  onClick={() =>
+                    router.push(`/dashboard/nodes/${selectedNodeId}/memory/${issue.code}`)
+                  }
+                >
+                  <TableCell align="right">{issue.seq}</TableCell>
                   <TableCell>{issue.code}</TableCell>
                   <TableCell>{issue.name}</TableCell>
                   <TableCell>{`[${issue.daily_info_dates.join(' / ')}]`}</TableCell>
-                  <TableCell>{issue.compet}</TableCell>
-                  <TableCell>
-                    <Button
-                      onClick={() => {
-                        router.push(`#`);
-                      }}
-                      sx={{
-                        backgroundColor: '#F4F6F8',
-                        '&:hover': { backgroundColor: '#637381', color: '#F4F6F8' },
-                      }}
-                    >
-                      Details
-                    </Button>
-                  </TableCell>
+                  <TableCell align="right">{issue.compet}</TableCell>
                 </TableRow>
               )
             )

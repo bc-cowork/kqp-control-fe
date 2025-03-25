@@ -17,7 +17,7 @@ type Props = {
 export function MemoryItemView({ nodeId, code }: Props) {
   return (
     <DashboardContent maxWidth="xl">
-      <Breadcrumb node={nodeId} page="Memory Item" />
+      <Breadcrumb node={nodeId} page="Memory" itemPage="Issue Item" levels={4} />
       <Box
         sx={{
           mt: 5,
