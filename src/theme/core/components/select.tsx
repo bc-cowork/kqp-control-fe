@@ -30,12 +30,22 @@ const MuiSelect: Components<Theme>['MuiSelect'] = {
    * STYLE
    *************************************** */
   styleOverrides: {
-    icon: {
+    select: ({ theme }: { theme: Theme }) => ({
+      padding: '8px 16px 8px 16px',
+      fontSize: 17,
+      '&.MuiInputLabel-root': {
+        color: theme.palette.grey[400],
+      },
+      backgroundColor: theme.palette.common.white,
+      borderRadius: '8px',
+    }),
+    icon: ({ theme }: { theme: Theme }) => ({
       right: 10,
       width: 18,
       height: 18,
       top: 'calc(50% - 9px)',
-    },
+      color: theme.palette.grey[400],
+    }),
   },
 };
 

@@ -35,6 +35,11 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
     .sort((a, b) => Number(b) - Number(a));
   const sumDataAsk = issueQuotesAsk.sum;
 
+  const rowKeysBid = Object.keys(issueQuotesBid)
+    .filter((key) => key !== 'sum')
+    .sort((a, b) => Number(a) - Number(b));
+  const sumDataBid = issueQuotesBid.sum;
+
   return (
     <>
       <Grid container>
@@ -373,7 +378,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
         </Grid>
       </Grid>
       <Grid container sx={{ mt: 2 }}>
-        <Grid md={6}>
+        <Grid md={12}>
           <Table size="small">
             <TableHead>
               <TableRow>
@@ -386,7 +391,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
             </TableHead>
             <TableBody>
               {issueQuotesLoading ? (
-                <TableLoadingRows height={49} loadingRows={10} />
+                <TableLoadingRows height={20} loadingRows={10} />
               ) : issueQuotesError ? (
                 <TableErrorRows />
               ) : (
@@ -438,6 +443,53 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                       <TableCell align="right">{issueQuotesAsk[key].nxt}</TableCell>
                     </TableRow>
                   ))}
+                  {rowKeysBid.map((key: string) => (
+                    <TableRow key={key}>
+                      <TableCell align="right">{key}</TableCell>
+                      <TableCell align="right">
+                        <Box
+                          component="span"
+                          sx={{
+                            color: (theme) => theme.palette.error.main,
+                            backgroundColor: '#FFF2F4',
+                          }}
+                        >
+                          {issueQuotesAsk[key].price}
+                        </Box>
+                      </TableCell>
+                      <TableCell align="right">{issueQuotesAsk[key].uni}</TableCell>
+                      <TableCell align="right">{issueQuotesAsk[key].krx}</TableCell>
+                      <TableCell align="right">{issueQuotesAsk[key].nxt}</TableCell>
+                    </TableRow>
+                  ))}
+                  <TableRow>
+                    <TableCell />
+                    <TableCell />
+                    <TableCell align="right">
+                      <Box
+                        component="span"
+                        sx={{ fontWeight: 500, color: (theme) => theme.palette.error.main }}
+                      >
+                        {sumDataBid.uni}
+                      </Box>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Box
+                        component="span"
+                        sx={{ fontWeight: 500, color: (theme) => theme.palette.error.main }}
+                      >
+                        {sumDataBid.krx}
+                      </Box>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Box
+                        component="span"
+                        sx={{ fontWeight: 500, color: (theme) => theme.palette.error.main }}
+                      >
+                        {sumDataBid.nxt}
+                      </Box>
+                    </TableCell>
+                  </TableRow>
                 </>
               )}
             </TableBody>

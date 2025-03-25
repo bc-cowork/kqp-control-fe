@@ -8,19 +8,20 @@ import {
   Box,
   Table,
   Select,
-  Button,
   TableRow,
   MenuItem,
   TableBody,
   TableCell,
   TableHead,
-  CircularProgress,
 } from '@mui/material';
 
 import { useRouter } from 'src/routes/hooks';
 
-import { varAlpha } from 'src/theme/styles';
 import { useAuditLogList } from 'src/actions/nodes';
+
+import { TableEmptyRows } from '../table/table-empty-rows';
+import { TableErrorRows } from '../table/table-error-rows';
+import { TableLoadingRows } from '../table/table-loading-rows';
 
 // ----------------------------------------------------------------------
 
@@ -61,60 +62,48 @@ export function AuditLogList({ selectedNodeId }: Props) {
           ))}
         </Select>
       </Box>
-      <Table
-        size="small"
-        sx={{
-          borderRadius: 2,
-          bgcolor: (theme) => varAlpha(theme.vars.palette.grey['500Channel'], 0.04),
-          border: (theme) => `solid 1px ${theme.vars.palette.divider}`,
-        }}
-      >
+      <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>No</TableCell>
-            <TableCell>Date</TableCell>
+            <TableCell align="right">No</TableCell>
+            <TableCell align="right">Date</TableCell>
             <TableCell>Type</TableCell>
-            <TableCell>Size</TableCell>
-            <TableCell>Actions</TableCell>
+            <TableCell align="right">Size</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {auditLogsLoading ? (
-            <TableRow>
-              <TableCell colSpan={9} align="center">
-                <CircularProgress />
-              </TableCell>
-            </TableRow>
+            <TableLoadingRows height={20} loadingRows={10} />
           ) : auditLogsEmpty ? (
-            <TableRow>
-              <TableCell colSpan={6}>No Audit Logs Found</TableCell>
-            </TableRow>
+            <TableEmptyRows />
           ) : auditLogsError ? (
-            <TableRow>
-              <TableCell colSpan={6}>Error Fetching Audit Logs List</TableCell>
-            </TableRow>
+            <TableErrorRows />
           ) : (
             auditLogs.map((auditLog: IAuditLogItem, index: number) => (
-              <TableRow key={index}>
-                <TableCell>{auditLog.id}</TableCell>
-                <TableCell>{auditLog.date}</TableCell>
-                <TableCell>{auditLog.kind}</TableCell>
-                <TableCell>{auditLog.size}</TableCell>
-                <TableCell>
-                  <Button
-                    onClick={() => {
-                      router.push(
-                        `/dashboard/nodes/${selectedNodeId}/audit-log/${auditLog.fname}/list`
-                      );
-                    }}
+              <TableRow
+                key={index}
+                onClick={() => {
+                  router.push(
+                    `/dashboard/nodes/${selectedNodeId}/audit-log/${auditLog.fname}/list`
+                  );
+                }}
+              >
+                <TableCell align="right">
+                  <Box
+                    component="span"
                     sx={{
-                      backgroundColor: '#F4F6F8',
-                      '&:hover': { backgroundColor: '#637381', color: '#F4F6F8' },
+                      backgroundColor: (theme) => theme.palette.grey[400],
+                      color: (theme) => theme.palette.common.white,
+                      p: 0.5,
+                      borderRadius: '4px',
                     }}
                   >
-                    Details
-                  </Button>
+                    {auditLog.id}
+                  </Box>
                 </TableCell>
+                <TableCell align="right">{auditLog.date}</TableCell>
+                <TableCell>{auditLog.kind}</TableCell>
+                <TableCell align="right">{auditLog.size}</TableCell>
               </TableRow>
             ))
           )}
