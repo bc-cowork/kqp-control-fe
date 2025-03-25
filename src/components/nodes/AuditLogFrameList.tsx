@@ -2,7 +2,7 @@
 
 import type { AuditLogFrameItem } from 'src/types/node';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 import Grid from '@mui/material/Unstable_Grid2';
 import {
@@ -47,14 +47,17 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
     setRowsPerPage(parseInt(event.target.value, 10));
   }, []);
 
-  const onChangePage = useCallback((event: unknown, newPage: number) => {
-    setPage(newPage);
-  }, []);
-
-  useEffect(() => {
-    setOffset(auditFrameList.max_frame);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const onChangePage = useCallback(
+    (event: unknown, newPage: number) => {
+      setPage(newPage);
+      if (newPage === 0) {
+        setOffset(0);
+      } else {
+        setOffset(auditFrameList.max_frame);
+      }
+    },
+    [auditFrameList.max_frame]
+  );
 
   return (
     <>

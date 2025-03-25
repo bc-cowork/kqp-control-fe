@@ -17,6 +17,7 @@ import {
 
 import { useRouter } from 'src/routes/hooks';
 
+import { grey } from 'src/theme/core/palette';
 import { useAuditLogList } from 'src/actions/nodes';
 
 import { TableEmptyRows } from '../table/table-empty-rows';
@@ -54,7 +55,12 @@ export function AuditLogList({ selectedNodeId }: Props) {
   return (
     <>
       <Box sx={{ mb: 2 }}>
-        <Select value={type} label="Type" onChange={handleTypeChange}>
+        <Select
+          value={type}
+          label="Type"
+          onChange={handleTypeChange}
+          inputProps={{ sx: { color: grey[400] } }}
+        >
           {AUDIT_LOG_TYPES.map((logType) => (
             <MenuItem key={logType.value} value={logType.value}>
               {logType.label}
@@ -87,6 +93,7 @@ export function AuditLogList({ selectedNodeId }: Props) {
                     `/dashboard/nodes/${selectedNodeId}/audit-log/${auditLog.fname}/list`
                   );
                 }}
+                sx={{ cursor: 'pointer' }}
               >
                 <TableCell align="right">
                   <Box

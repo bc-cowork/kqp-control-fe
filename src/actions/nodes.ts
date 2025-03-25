@@ -97,6 +97,7 @@ export function useAuditFrameList(
   offset: number,
   sort: 'asc' | 'desc'
 ) {
+  console.log('useAuditFrameList', node, file, page, limit, offset, sort);
   const url = file
     ? [
         endpoints.nodes.auditLog.frameList(node),
