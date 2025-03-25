@@ -37,7 +37,7 @@ export function DashboardView({ title = 'Main' }: Props) {
   const [selectedNodeId, setSelectedNodeId] = useState<string>('');
   const [selectedNode, setSelectedNode] = useState<INodeItem | undefined>(undefined);
   const { nodes, nodesLoading, nodesEmpty, nodesError } = useGetNodes();
-  const { status, statusLoading, statusError } = useGetStatus(selectedNodeId);
+  const { status, statusLoading, statusError } = useGetStatus(selectedNode?.id || selectedNodeId);
 
   const theme = useTheme();
 
@@ -285,7 +285,7 @@ export function DashboardView({ title = 'Main' }: Props) {
               Process List
             </Typography>
             {selectedNode ? (
-              <ProcessDetail selectedNodeId={selectedNodeId} />
+              <ProcessDetail selectedNodeId={selectedNode?.id || selectedNodeId} />
             ) : (
               <Typography variant="h5">Select a node to see process list</Typography>
             )}
