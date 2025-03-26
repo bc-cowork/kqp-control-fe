@@ -72,15 +72,30 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                 md={2}
                 sx={{
                   mr: 2,
-                  py: 2,
-                  px: 1,
-                  backgroundColor: theme.palette.common.white,
-                  borderRadius: '8px',
-                  border: `solid 1px ${theme.palette.divider}`,
                 }}
               >
-                <Typography variant="caption">Filename</Typography>
-                <Typography variant="subtitle1">{selectedFile}</Typography>
+                <Box
+                  sx={{
+                    backgroundColor: theme.palette.common.white,
+                    borderTopRightRadius: '8px',
+                    borderTopLeftRadius: '16px',
+                    height: '8px',
+                    width: '96px',
+                  }}
+                />
+                <Box
+                  sx={{
+                    pt: 1,
+                    pb: 2,
+                    px: 1,
+                    backgroundColor: theme.palette.common.white,
+                    borderBottomLeftRadius: '8px',
+                    borderBottomRightRadius: '8px',
+                  }}
+                >
+                  <Typography variant="caption">Filename</Typography>
+                  <Typography variant="subtitle1">{selectedFile}</Typography>
+                </Box>
               </Grid>
               <Grid
                 md={1.3}
@@ -90,7 +105,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                   backgroundColor: theme.palette.common.white,
                   borderTopLeftRadius: '8px',
                   borderBottomLeftRadius: '8px',
-                  border: `solid 1px ${theme.palette.divider}`,
+                  borderRight: `solid 1px ${theme.palette.divider}`,
                 }}
               >
                 <Typography variant="caption">Desc</Typography>
@@ -102,8 +117,6 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                   py: 2,
                   px: 1,
                   backgroundColor: theme.palette.common.white,
-                  borderTop: `solid 1px ${theme.palette.divider}`,
-                  borderBottom: `solid 1px ${theme.palette.divider}`,
                   borderRight: `solid 1px ${theme.palette.divider}`,
                 }}
               >
@@ -116,8 +129,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                   py: 2,
                   px: 1,
                   backgroundColor: theme.palette.common.white,
-                  borderTop: `solid 1px ${theme.palette.divider}`,
-                  borderBottom: `solid 1px ${theme.palette.divider}`,
+                  borderRight: `solid 1px ${theme.palette.divider}`,
                 }}
               >
                 <Typography variant="caption">File Size</Typography>
@@ -133,7 +145,6 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                   backgroundColor: theme.palette.common.white,
                   borderTopRightRadius: '8px',
                   borderBottomRightRadius: '8px',
-                  border: `solid 1px ${theme.palette.divider}`,
                 }}
               >
                 <Typography variant="caption">Date</Typography>
