@@ -40,6 +40,15 @@ const MuiTableRow: Components<Theme>['MuiTableRow'] = {
   styleOverrides: {
     root: ({ theme }) => ({
       backgroundColor: theme.palette.common.white,
+      border: 'none',
+      // Odd rows
+      '&:nth-child(odd)': {
+        backgroundColor: theme.palette.common.white,
+      },
+      // Even rows
+      '&:nth-child(even)': {
+        backgroundColor: '#F9FAFB',
+      },
       '&:hover': { backgroundColor: `${varAlpha(theme.vars.palette.primary.lighter, 0.2)}` },
       [`&.${tableRowClasses.selected}`]: {
         backgroundColor: '#EFF6FF',
@@ -58,7 +67,9 @@ const MuiTableCell: Components<Theme>['MuiTableCell'] = {
    * STYLE
    *************************************** */
   styleOverrides: {
-    root: { borderBottomStyle: 'solid' },
+    root: {
+      border: 'none',
+    },
     head: ({ theme }) => ({
       fontSize: 17,
       color: theme.palette.grey[50],

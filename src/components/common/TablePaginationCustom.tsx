@@ -1,5 +1,8 @@
 'use client';
 
+import type { SxProps } from '@mui/material';
+import type { Theme } from 'src/theme/types';
+
 import React from 'react';
 
 import { styled } from '@mui/material/styles';
@@ -9,12 +12,15 @@ import { Iconify } from '../iconify';
 
 // Styled components for custom styling
 const CustomSelect = styled(Select)(({ theme }) => ({
-  height: 32,
-  backgroundColor: '#f5f7fa',
+  height: 18,
+  backgroundColor: theme.palette.common.white,
+  border: `1px solid ${theme.palette.grey[200]} `,
   borderRadius: 4,
   '& .MuiSelect-select': {
-    padding: '4px 24px 4px 8px',
-    fontSize: '0.875rem',
+    padding: '3px !important',
+    paddingLeft: '8px !important',
+    paddingRight: '30px !important',
+    fontSize: 15,
   },
   '& .MuiOutlinedInput-notchedOutline': {
     border: 'none',
@@ -29,8 +35,9 @@ const CustomIconButton = styled(IconButton)(({ theme }) => ({
   borderRadius: 4,
   padding: 4,
   margin: '0 4px',
+  cursor: 'pointer',
   '&:hover': {
-    backgroundColor: theme.palette.grey[100],
+    backgroundColor: theme.palette.grey[200],
   },
 }));
 
@@ -46,6 +53,7 @@ type Props = {
   count: number;
   rowsPerPage: number;
   onRowsPerPageChange: (newRowsPerPage: number) => void;
+  sx?: SxProps<Theme>;
 };
 
 const TablePaginationCustom = ({
@@ -54,6 +62,7 @@ const TablePaginationCustom = ({
   count,
   rowsPerPage,
   onRowsPerPageChange,
+  sx,
 }: Props) => {
   const theme = useTheme();
 
@@ -80,6 +89,7 @@ const TablePaginationCustom = ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-end',
+        ...sx,
       }}
     >
       {/* Rows per page label and dropdown */}
@@ -113,7 +123,7 @@ const TablePaginationCustom = ({
           <Box component="span" sx={{ fontWeight: 500, color: theme.palette.common.black }}>
             {start}-{end}
           </Box>{' '}
-          of {count.toLocaleString()}
+          of {count?.toLocaleString()}
         </CustomTypography>
         <CustomIconButton
           onClick={(event) => handleChangePage(event, page + 1)}

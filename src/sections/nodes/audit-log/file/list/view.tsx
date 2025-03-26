@@ -1,10 +1,10 @@
 'use client';
 
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 
 import { DashboardContent } from 'src/layouts/dashboard';
 
+import { Breadcrumb } from 'src/components/common/Breadcrumb';
 import { AuditLogFrameList } from 'src/components/nodes/AuditLogFrameList';
 
 // ----------------------------------------------------------------------
@@ -17,9 +17,7 @@ type Props = {
 export function AuditFrameListView({ nodeId, file }: Props) {
   return (
     <DashboardContent maxWidth="xl">
-      <Typography variant="h3">
-        Audit Frame List for {nodeId} - {file}{' '}
-      </Typography>
+      <Breadcrumb node={nodeId} levels={4} page="Audit Log" itemPage="List" />
       <Box
         sx={{
           mt: 5,

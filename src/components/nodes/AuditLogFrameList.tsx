@@ -7,23 +7,23 @@ import { useState, useCallback } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
 import {
   Box,
-  Stack,
   Table,
-  Button,
   TableRow,
+  useTheme,
   TableBody,
   TableCell,
   TableHead,
   Typography,
-  TablePagination,
   CircularProgress,
 } from '@mui/material';
 
 import { useRouter } from 'src/routes/hooks';
 
-import { grey } from 'src/theme/core';
-import { varAlpha } from 'src/theme/styles';
+import { formatDateCustom } from 'src/utils/format-time';
+
 import { useAuditFrameList } from 'src/actions/nodes';
+
+import TablePaginationCustom from '../common/TablePaginationCustom';
 
 // ----------------------------------------------------------------------
 
@@ -33,6 +33,7 @@ type Props = {
 };
 
 export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
+  const theme = useTheme();
   const router = useRouter();
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(40);
@@ -41,14 +42,14 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
   const { auditFrameList, auditFrameListError, auditFrameListLoading, auditFrameListEmpty } =
     useAuditFrameList(selectedNodeId, selectedFile, page + 1, rowsPerPage, offset, 'desc');
 
-  const onChangeRowsPerPage = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeRowsPerPage = useCallback((value: number) => {
     setPage(0);
     setOffset(0);
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(value);
   }, []);
 
   const onChangePage = useCallback(
-    (event: unknown, newPage: number) => {
+    (newPage: number) => {
       setPage(newPage);
       if (newPage === 0) {
         setOffset(0);
@@ -65,77 +66,98 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
         <CircularProgress />
       ) : (
         <>
-          <Box sx={{ mb: 2 }}>
+          <Box>
             <Grid container>
-              <Grid md={4}>
-                <Box sx={{ p: 2 }}>
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
-                  >
-                    <Typography>Filename: </Typography>
-                    <Typography>{selectedFile}</Typography>
-                  </Stack>
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
-                  >
-                    <Typography>File Size: </Typography>
-                    <Typography>{auditFrameList.file_size}</Typography>
-                  </Stack>
-                </Box>
+              <Grid
+                md={2}
+                sx={{
+                  mr: 2,
+                  py: 2,
+                  px: 1,
+                  backgroundColor: theme.palette.common.white,
+                  borderRadius: '8px',
+                  border: `solid 1px ${theme.palette.divider}`,
+                }}
+              >
+                <Typography variant="body2">Filename</Typography>
+                <Typography variant="subtitle1">{selectedFile}</Typography>
               </Grid>
-              <Grid md={4}>
-                <Box sx={{ p: 2 }}>
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
-                  >
-                    <Typography>Desc </Typography>
-                    <Typography>Inbound</Typography>
-                  </Stack>
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
-                  >
-                    <Typography>Date </Typography>
-                    <Typography>{auditFrameList.date}</Typography>
-                  </Stack>
-                </Box>
+              <Grid
+                md={1.3}
+                sx={{
+                  py: 2,
+                  px: 1,
+                  backgroundColor: theme.palette.common.white,
+                  borderTopLeftRadius: '8px',
+                  borderBottomLeftRadius: '8px',
+                  border: `solid 1px ${theme.palette.divider}`,
+                }}
+              >
+                <Typography variant="body2">Desc</Typography>
+                <Typography variant="subtitle1">Inbound</Typography>
               </Grid>
-              <Grid md={4}>
-                <Box sx={{ p: 2 }}>
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
-                  >
-                    <Typography>Max Frame </Typography>
-                    <Typography>{auditFrameList.max_frame}</Typography>
-                  </Stack>
-                </Box>
+              <Grid
+                md={1.3}
+                sx={{
+                  py: 2,
+                  px: 1,
+                  backgroundColor: theme.palette.common.white,
+                  borderTop: `solid 1px ${theme.palette.divider}`,
+                  borderBottom: `solid 1px ${theme.palette.divider}`,
+                  borderRight: `solid 1px ${theme.palette.divider}`,
+                }}
+              >
+                <Typography variant="body2">Max Frame</Typography>
+                <Typography variant="subtitle1">{auditFrameList?.max_frame}</Typography>
+              </Grid>
+              <Grid
+                md={1.3}
+                sx={{
+                  py: 2,
+                  px: 1,
+                  backgroundColor: theme.palette.common.white,
+                  borderTop: `solid 1px ${theme.palette.divider}`,
+                  borderBottom: `solid 1px ${theme.palette.divider}`,
+                }}
+              >
+                <Typography variant="body2">File Size</Typography>
+                <Typography variant="subtitle1">
+                  {auditFrameList?.file_size?.toLocaleString()}
+                </Typography>
+              </Grid>
+              <Grid
+                md={1.3}
+                sx={{
+                  py: 2,
+                  px: 1,
+                  backgroundColor: theme.palette.common.white,
+                  borderTopRightRadius: '8px',
+                  borderBottomRightRadius: '8px',
+                  border: `solid 1px ${theme.palette.divider}`,
+                }}
+              >
+                <Typography variant="body2">Date</Typography>
+                <Typography variant="subtitle1">
+                  {formatDateCustom(auditFrameList?.date?.toString())}
+                </Typography>
               </Grid>
             </Grid>
           </Box>
-          <Table
-            size="small"
-            sx={{
-              borderRadius: 2,
-              bgcolor: (theme) => varAlpha(theme.vars.palette.grey['500Channel'], 0.04),
-              border: (theme) => `solid 1px ${theme.vars.palette.divider}`,
-            }}
-          >
+          <TablePaginationCustom
+            rowsPerPage={rowsPerPage}
+            page={page}
+            count={auditFrameList.max_frame}
+            onPageChange={onChangePage}
+            onRowsPerPageChange={onChangeRowsPerPage}
+            sx={{ mb: 1 }}
+          />
+          <Table size="small">
             <TableHead>
               <TableRow>
-                <TableCell>Seq</TableCell>
-                <TableCell>HEAD</TableCell>
-                <TableCell>RID</TableCell>
-                <TableCell>Size</TableCell>
-                <TableCell>Actions</TableCell>
+                <TableCell align="right">Seq</TableCell>
+                <TableCell align="right">HEAD</TableCell>
+                <TableCell align="right">RID</TableCell>
+                <TableCell align="right">Size</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -149,40 +171,24 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                 </TableRow>
               ) : (
                 auditFrameList.frame_list.map((auditFrame: AuditLogFrameItem, index: number) => (
-                  <TableRow key={index}>
-                    <TableCell>{auditFrame.seq}</TableCell>
-                    <TableCell>{auditFrame.head}</TableCell>
-                    <TableCell>{auditFrame.rid}</TableCell>
-                    <TableCell>{auditFrame.size}</TableCell>
-                    <TableCell>
-                      <Button
-                        onClick={() => {
-                          router.push(
-                            `/dashboard/nodes/${selectedNodeId}/audit-log/${selectedFile}/frame`
-                          );
-                        }}
-                        sx={{
-                          backgroundColor: '#F4F6F8',
-                          '&:hover': { backgroundColor: '#637381', color: '#F4F6F8' },
-                        }}
-                      >
-                        Details
-                      </Button>
-                    </TableCell>
+                  <TableRow
+                    key={index}
+                    onClick={() => {
+                      router.push(
+                        `/dashboard/nodes/${selectedNodeId}/audit-log/${selectedFile}/frame`
+                      );
+                    }}
+                    sx={{ cursor: 'pointer' }}
+                  >
+                    <TableCell align="right">{auditFrame.seq}</TableCell>
+                    <TableCell align="right">{auditFrame.head}</TableCell>
+                    <TableCell align="right">{auditFrame.rid}</TableCell>
+                    <TableCell align="right">{auditFrame.size}</TableCell>
                   </TableRow>
                 ))
               )}
             </TableBody>
           </Table>
-          <TablePagination
-            component="div"
-            rowsPerPageOptions={[10, 20, 40, 60, 100]}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            count={auditFrameList.max_frame}
-            onPageChange={onChangePage}
-            onRowsPerPageChange={onChangeRowsPerPage}
-          />
         </>
       )}
     </>
