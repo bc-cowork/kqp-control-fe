@@ -47,7 +47,6 @@ export function Breadcrumb({ node, pages }: Props) {
       {/* Pages array */}
       {pages.map((page, index) => {
         const isLast = index === pages.length - 1;
-        const hasLink = !isLast && page.link; // Link only if not last and link exists
 
         return (
           <Box component="span" key={index}>
@@ -58,7 +57,7 @@ export function Breadcrumb({ node, pages }: Props) {
             >
               {` > `}
             </Typography>
-            {hasLink ? (
+            {!isLast && page?.link ? (
               <Link
                 component={NextLink}
                 href={page.link}

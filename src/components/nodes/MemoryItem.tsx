@@ -16,6 +16,9 @@ import { useGetIssueItemInfo, useGetIssueItemQuotes } from 'src/actions/nodes';
 
 import { TableErrorRows } from '../table/table-error-rows';
 import { TableLoadingRows } from '../table/table-loading-rows';
+import { MemoryItemInfo } from '../memory-page/MemoryItemInfo';
+import { MemoryStockItem } from '../memory-page/MemoryStockItem';
+import { MemoryStockHead } from '../memory-page/MemoryStockHead';
 
 // ----------------------------------------------------------------------
 
@@ -42,341 +45,70 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
 
   return (
     <>
-      <Grid container>
-        <Grid md={4} sx={{ pr: 2.5 }}>
-          <Box
-            sx={{
-              backgroundColor: (theme) => theme.palette.common.white,
-              borderRadius: '8px',
-              px: 1,
-              py: 2,
-            }}
-          >
-            {issueInfoLoading ? (
-              <CircularProgress />
-            ) : (
-              <Grid container>
-                <Grid md={3}>
-                  <Typography
-                    variant="body2"
-                    sx={{ color: (theme) => theme.palette.grey[400], mb: 1 }}
-                  >
-                    Seq
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ color: (theme) => theme.palette.grey[400], mb: 1 }}
-                  >
-                    Code
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ color: (theme) => theme.palette.grey[400], mb: 1 }}
-                  >
-                    Name
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ color: (theme) => theme.palette.grey[400], mb: 1 }}
-                  >
-                    G1.SSN-ID
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ color: (theme) => theme.palette.grey[400], mb: 1 }}
-                  >
-                    Compet
-                  </Typography>
-                </Grid>
-                <Grid md={9}>
-                  <Typography variant="body2" sx={{ mb: 1 }}>
-                    {issueInfo?.seq}
-                  </Typography>
-                  <Typography variant="body2" sx={{ mb: 1 }}>
-                    {issueInfo?.code}
-                  </Typography>
-                  <Typography variant="body2" sx={{ mb: 1 }}>
-                    {issueInfo?.name}
-                  </Typography>
-                  <Typography variant="body2" sx={{ mb: 1 }}>
-                    {issueInfo?.g1_ssn_id}
-                  </Typography>
-                  <Typography variant="body2" sx={{ mb: 1 }}>
-                    {issueInfo?.compet}
-                  </Typography>
-                </Grid>
+      {issueInfoLoading ? (
+        <Box>
+          <CircularProgress />
+        </Box>
+      ) : issueInfoError ? (
+        <Box>
+          <Typography color="error">Error fetching issue item infomation</Typography>
+        </Box>
+      ) : (
+        <Grid
+          container
+          sx={{
+            display: 'flex',
+            alignItems: 'stretch',
+          }}
+        >
+          <Grid md={4} sx={{ pr: 2.5 }}>
+            <MemoryItemInfo issueInfo={issueInfo} />
+          </Grid>
+          <Grid md={1}>
+            <MemoryStockHead />
+          </Grid>
+          <Grid md={7}>
+            <Grid container>
+              <Grid md={4}>
+                <MemoryStockItem
+                  name="UNI"
+                  lastPrice={issueInfo.last_price.uni}
+                  lastVolume={issueInfo.last_vol.uni}
+                  volumeAccum={issueInfo.vol_accum.uni}
+                  amountAccum={issueInfo.amt_accum.uni}
+                  high={issueInfo.high.uni}
+                  low={issueInfo.low.uni}
+                  open={issueInfo.open.uni}
+                />
               </Grid>
-            )}
-          </Box>
-        </Grid>
-        <Grid md={1}>
-          <Box
-            sx={{
-              backgroundColor: (theme) => theme.palette.primary.darker,
-              borderRadius: '8px',
-              px: 1,
-              py: 2,
-            }}
-          >
-            <Box
-              sx={{
-                // backgroundColor: (theme) => theme.palette.primary.light,
-                mb: 1,
-                pb: 1.5,
-              }}
-            >
-              <Typography
-                variant="body2"
-                sx={{ mb: 0.5, color: (theme) => theme.palette.grey[300] }}
-              >
-                Last. Price
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{ mb: 0.5, color: (theme) => theme.palette.grey[300] }}
-              >
-                Last. Vol
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{ mb: 0.5, color: (theme) => theme.palette.grey[300] }}
-              >
-                Vol. Accum
-              </Typography>
-              <Typography variant="body2" sx={{ color: (theme) => theme.palette.grey[300] }}>
-                Amt. Accum
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                // backgroundColor: (theme) => theme.palette.primary.light,
-                pt: 1.5,
-              }}
-            >
-              <Typography
-                variant="body2"
-                sx={{ mb: 0.5, color: (theme) => theme.palette.grey[300] }}
-              >
-                Open
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{ mb: 0.5, color: (theme) => theme.palette.grey[300] }}
-              >
-                High
-              </Typography>
-              <Typography variant="body2" sx={{ color: (theme) => theme.palette.grey[300] }}>
-                Low
-              </Typography>
-            </Box>
-          </Box>
-        </Grid>
-        <Grid md={7}>
-          <Grid container>
-            <Grid md={4}>
-              <Box>
-                <Box
-                  sx={{
-                    backgroundColor: (theme) => theme.palette.common.white,
-                    mb: 1,
-                    pb: 1.5,
-                    pt: 2,
-                    pr: 1,
-                    textAlign: 'right',
-                  }}
-                >
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
-                  >
-                    Last. Price
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
-                  >
-                    Last. Vol
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
-                  >
-                    Vol. Accum
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
-                  >
-                    Amt. Accum
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    backgroundColor: (theme) => theme.palette.common.white,
-                    pt: 1.5,
-                    pb: 2,
-                    pr: 1,
-                    textAlign: 'right',
-                  }}
-                >
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
-                  >
-                    Open
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
-                  >
-                    High
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
-                  >
-                    Low
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
-            <Grid md={4}>
-              <Box>
-                <Box
-                  sx={{
-                    backgroundColor: (theme) => theme.palette.common.white,
-                    mb: 1,
-                    pb: 1.5,
-                    pt: 2,
-                    pr: 1,
-                    textAlign: 'right',
-                  }}
-                >
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
-                  >
-                    Last. Price
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
-                  >
-                    Last. Vol
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
-                  >
-                    Vol. Accum
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
-                  >
-                    Amt. Accum
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    backgroundColor: (theme) => theme.palette.common.white,
-                    pt: 1.5,
-                    pb: 2,
-                    pr: 1,
-                    textAlign: 'right',
-                  }}
-                >
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
-                  >
-                    Open
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
-                  >
-                    High
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
-                  >
-                    Low
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
-            <Grid md={4}>
-              <Box>
-                <Box
-                  sx={{
-                    backgroundColor: (theme) => theme.palette.common.white,
-                    mb: 1,
-                    pb: 1.5,
-                    pt: 2,
-                    pr: 1,
-                    textAlign: 'right',
-                  }}
-                >
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
-                  >
-                    Last. Price
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
-                  >
-                    Last. Vol
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
-                  >
-                    Vol. Accum
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
-                  >
-                    Amt. Accum
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    backgroundColor: (theme) => theme.palette.common.white,
-                    pt: 1.5,
-                    pb: 2,
-                    pr: 1,
-                    textAlign: 'right',
-                  }}
-                >
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
-                  >
-                    Open
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
-                  >
-                    High
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
-                  >
-                    Low
-                  </Typography>
-                </Box>
-              </Box>
+              <Grid md={4} sx={{ pl: 1 }}>
+                <MemoryStockItem
+                  name="KRX"
+                  lastPrice={issueInfo.last_price.krx}
+                  lastVolume={issueInfo.last_vol.krx}
+                  volumeAccum={issueInfo.vol_accum.krx}
+                  amountAccum={issueInfo.amt_accum.krx}
+                  high={issueInfo.high.krx}
+                  low={issueInfo.low.krx}
+                  open={issueInfo.open.krx}
+                />
+              </Grid>
+              <Grid md={4} sx={{ pl: 1 }}>
+                <MemoryStockItem
+                  name="NXT"
+                  lastPrice={issueInfo.last_price.nxt}
+                  lastVolume={issueInfo.last_vol.nxt}
+                  volumeAccum={issueInfo.vol_accum.nxt}
+                  amountAccum={issueInfo.amt_accum.nxt}
+                  high={issueInfo.high.nxt}
+                  low={issueInfo.low.nxt}
+                  open={issueInfo.open.nxt}
+                />
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      )}
       <Grid container sx={{ mt: 2 }}>
         <Grid md={12}>
           <Table size="small">

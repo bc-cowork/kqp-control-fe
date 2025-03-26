@@ -107,7 +107,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
             <Typography variant="subtitle1">{selectedFile}</Typography>
           </Grid>
           <Grid
-            md={1}
+            md={0.9}
             sx={{
               py: 2,
               px: 1,
@@ -149,7 +149,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
           </Grid>
           <Grid
             mr={2}
-            md={1}
+            md={1.1}
             sx={{
               py: 2,
               px: 1,
