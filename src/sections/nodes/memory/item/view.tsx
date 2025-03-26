@@ -17,7 +17,13 @@ type Props = {
 export function MemoryItemView({ nodeId, code }: Props) {
   return (
     <DashboardContent maxWidth="xl">
-      <Breadcrumb node={nodeId} pages={['Memory', 'Issue Item']} />
+      <Breadcrumb
+        node={nodeId}
+        pages={[
+          { pageName: 'Memory', link: `/dashboard/nodes/${nodeId}/memory` },
+          { pageName: 'Issue Item' },
+        ]}
+      />
       <Box
         sx={{
           mt: 5,

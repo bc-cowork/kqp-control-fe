@@ -16,7 +16,7 @@ type Props = {
 export function ProcessView({ nodeId }: Props) {
   return (
     <DashboardContent maxWidth="xl">
-      <Breadcrumb node={nodeId} pages={['Process']} />
+      <Breadcrumb node={nodeId} pages={[{ pageName: 'Process' }]} />
       <Box
         sx={{
           mt: 5,

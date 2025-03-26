@@ -207,8 +207,6 @@ export function useGetIssues(node: string, offset: number, limit: number, q?: st
 
   const { data, isLoading, error, isValidating } = useSWR<IssueData>(url, fetcher, swrOptions);
 
-  console.log('useIssueList', data);
-
   const memoizedValue = useMemo(() => {
     const defaultIssues = {
       nodeId: node,
@@ -252,8 +250,6 @@ export function useGetIssueItemInfo(node: string, code: string) {
     fetcher,
     swrOptions
   );
-
-  // console.log('useGetIssueItemInfo', data);
 
   const memoizedValue = useMemo(
     () => ({

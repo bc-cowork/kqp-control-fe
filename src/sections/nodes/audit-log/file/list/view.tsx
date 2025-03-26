@@ -17,7 +17,13 @@ type Props = {
 export function AuditFrameListView({ nodeId, file }: Props) {
   return (
     <DashboardContent maxWidth="xl">
-      <Breadcrumb node={nodeId} pages={['Audit Log', 'List']} />
+      <Breadcrumb
+        node={nodeId}
+        pages={[
+          { pageName: 'Audit Log', link: `/dashboard/nodes/${nodeId}/audit-log` },
+          { pageName: 'List' },
+        ]}
+      />
       <Box
         sx={{
           mt: 5,

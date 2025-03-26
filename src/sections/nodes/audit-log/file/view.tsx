@@ -17,7 +17,14 @@ type Props = {
 export function AuditLogFileView({ nodeId, file }: Props) {
   return (
     <DashboardContent maxWidth="xl">
-      <Breadcrumb node={nodeId} pages={['Audit Log', 'List', 'Frame Detail']} />
+      <Breadcrumb
+        node={nodeId}
+        pages={[
+          { pageName: 'Audit Log', link: `/dashboard/nodes/${nodeId}/audit-log` },
+          { pageName: 'List', link: `/dashboard/nodes/${nodeId}/audit-log/${file}/list` },
+          { pageName: 'Frame Detail' },
+        ]}
+      />
       <Box
         sx={{
           mt: 5,
