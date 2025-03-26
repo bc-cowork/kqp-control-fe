@@ -16,7 +16,7 @@ type Props = {
 export function AuditLogView({ nodeId }: Props) {
   return (
     <DashboardContent maxWidth="xl">
-      <Breadcrumb node={nodeId} page="Audit Logs" />
+      <Breadcrumb node={nodeId} pages={['Audit Logs']} />
       <Box
         sx={{
           mt: 5,

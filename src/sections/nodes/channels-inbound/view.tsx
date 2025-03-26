@@ -16,7 +16,7 @@ type Props = {
 export function ChannelInboundView({ nodeId }: Props) {
   return (
     <DashboardContent maxWidth="xl">
-      <Breadcrumb node={nodeId} page="Channels Inbound" />
+      <Breadcrumb node={nodeId} pages={['Channels Inbound']} />
       <Box
         sx={{
           mt: 5,

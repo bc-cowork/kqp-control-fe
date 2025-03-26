@@ -79,7 +79,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                   border: `solid 1px ${theme.palette.divider}`,
                 }}
               >
-                <Typography variant="body2">Filename</Typography>
+                <Typography variant="caption">Filename</Typography>
                 <Typography variant="subtitle1">{selectedFile}</Typography>
               </Grid>
               <Grid
@@ -93,7 +93,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                   border: `solid 1px ${theme.palette.divider}`,
                 }}
               >
-                <Typography variant="body2">Desc</Typography>
+                <Typography variant="caption">Desc</Typography>
                 <Typography variant="subtitle1">Inbound</Typography>
               </Grid>
               <Grid
@@ -107,7 +107,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                   borderRight: `solid 1px ${theme.palette.divider}`,
                 }}
               >
-                <Typography variant="body2">Max Frame</Typography>
+                <Typography variant="caption">Max Frame</Typography>
                 <Typography variant="subtitle1">{auditFrameList?.max_frame}</Typography>
               </Grid>
               <Grid
@@ -120,7 +120,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                   borderBottom: `solid 1px ${theme.palette.divider}`,
                 }}
               >
-                <Typography variant="body2">File Size</Typography>
+                <Typography variant="caption">File Size</Typography>
                 <Typography variant="subtitle1">
                   {auditFrameList?.file_size?.toLocaleString()}
                 </Typography>
@@ -136,7 +136,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                   border: `solid 1px ${theme.palette.divider}`,
                 }}
               >
-                <Typography variant="body2">Date</Typography>
+                <Typography variant="caption">Date</Typography>
                 <Typography variant="subtitle1">
                   {formatDateCustom(auditFrameList?.date?.toString())}
                 </Typography>

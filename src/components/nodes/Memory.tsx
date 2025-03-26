@@ -89,11 +89,11 @@ export function Memory({ selectedNodeId }: Props) {
                       px: 1,
                     }}
                   >
-                    <Typography variant="body2">Issues</Typography>
+                    <Typography variant="caption">Issues</Typography>
                     <Typography variant="subtitle1">{issues?.max_issue_count}</Typography>
                   </Grid>
                   <Grid md={6} sx={{ py: 2, px: 1 }}>
-                    <Typography variant="body2">Compet</Typography>
+                    <Typography variant="caption">Compet</Typography>
                     <Typography variant="subtitle1">{issues?.compet_count}</Typography>
                   </Grid>
                 </>

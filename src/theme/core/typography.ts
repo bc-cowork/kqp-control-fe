@@ -1,5 +1,6 @@
 import type { TypographyOptions } from '@mui/material/styles/createTypography';
 
+import { grey } from './palette';
 import { pxToRem, responsiveFontSizes } from '../styles/utils';
 
 // ----------------------------------------------------------------------
@@ -92,10 +93,12 @@ export const typography: TypographyOptions = {
   body2: {
     lineHeight: 22 / 14,
     fontSize: pxToRem(14),
+    color: grey[200],
   },
   caption: {
     lineHeight: 1.5,
-    fontSize: pxToRem(12),
+    fontSize: pxToRem(15),
+    color: grey[400],
   },
   overline: {
     fontWeight: 700,

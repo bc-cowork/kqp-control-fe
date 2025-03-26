@@ -278,3 +278,20 @@ export function formatDateCustom(dateStr?: string) {
   }
   return '';
 }
+
+export function secondsToTimeString(seconds: number) {
+  // Extract hours, minutes, and remaining seconds
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+
+  // Pad hours, minutes, and seconds with leading zeros if needed
+  const paddedHours = String(hours).padStart(2, '0');
+  const paddedMinutes = String(minutes).padStart(2, '0');
+
+  // Format seconds with microseconds (6 decimal places)
+  const paddedSeconds = secs.toFixed(6).padStart(9, '0'); // 9 = 2 digits + '.' + 6 decimals
+
+  // Combine into final string
+  return `${paddedHours}:${paddedMinutes}:${paddedSeconds}`;
+}

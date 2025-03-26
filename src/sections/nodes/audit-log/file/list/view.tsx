@@ -17,7 +17,7 @@ type Props = {
 export function AuditFrameListView({ nodeId, file }: Props) {
   return (
     <DashboardContent maxWidth="xl">
-      <Breadcrumb node={nodeId} levels={4} page="Audit Log" itemPage="List" />
+      <Breadcrumb node={nodeId} pages={['Audit Log', 'List']} />
       <Box
         sx={{
           mt: 5,

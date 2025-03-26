@@ -12,21 +12,22 @@ import {
   Button,
   Tooltip,
   TableRow,
+  useTheme,
   TableBody,
   TableCell,
   TableHead,
   TextField,
   Typography,
-  CircularProgress,
 } from '@mui/material';
 
-import { formatDateCustom } from 'src/utils/format-time';
+import { formatDateCustom, secondsToTimeString } from 'src/utils/format-time';
 
-import { grey } from 'src/theme/core';
-import { varAlpha } from 'src/theme/styles';
 import { useGetAuditLogFrame } from 'src/actions/nodes';
 
 import { Iconify } from '../iconify';
+import { TableEmptyRows } from '../table/table-empty-rows';
+import { TableErrorRows } from '../table/table-error-rows';
+import { TableLoadingRows } from '../table/table-loading-rows';
 
 // ----------------------------------------------------------------------
 
@@ -36,6 +37,7 @@ type Props = {
 };
 
 export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
+  const theme = useTheme();
   const [seq, setSeq] = useState<number>(0);
   const [count, setCount] = useState<number>(40);
   const [side, setSide] = useState<'prev' | 'next' | undefined>(undefined);
@@ -88,105 +90,150 @@ export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
 
   return (
     <>
-      <Box sx={{ mb: 2 }}>
-        <Grid container>
-          <Grid md={4}>
-            <Box sx={{ p: 2 }}>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
-              >
-                <Typography>Filename: </Typography>
-                <Typography>{selectedFile}</Typography>
-              </Stack>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
-              >
-                <Typography>File Size: </Typography>
-                <Typography>{auditFrame?.file_size?.toLocaleString()}</Typography>
-              </Stack>
-            </Box>
-            <Box sx={{ p: 2 }}>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
-              >
-                <Typography>SEQ </Typography>
-                <Typography>{auditFrame?.seq}</Typography>
-              </Stack>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
-              >
-                <Typography>HEAD </Typography>
-                <Typography>{auditFrame?.head}</Typography>
-              </Stack>
-            </Box>
+      <Box>
+        <Grid container sx={{ mb: 2 }}>
+          <Grid
+            md={2}
+            sx={{
+              mr: 2,
+              py: 2,
+              px: 1,
+              backgroundColor: theme.palette.common.white,
+              borderRadius: '8px',
+              border: `solid 1px ${theme.palette.divider}`,
+            }}
+          >
+            <Typography variant="caption">Filename</Typography>
+            <Typography variant="subtitle1">{selectedFile}</Typography>
           </Grid>
-          <Grid md={4}>
-            <Box sx={{ p: 2 }}>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
-              >
-                <Typography>Desc </Typography>
-                <Typography>Inbound</Typography>
-              </Stack>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
-              >
-                <Typography>Date </Typography>
-                <Typography>{formatDateCustom(auditFrame?.date?.toString())}</Typography>
-              </Stack>
-            </Box>
-            <Box sx={{ p: 2 }}>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
-              >
-                <Typography>Time </Typography>
-                <Typography>{auditFrame?.time}</Typography>
-              </Stack>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
-              >
-                <Typography>RID </Typography>
-                <Typography>{auditFrame?.rid}</Typography>
-              </Stack>
-            </Box>
+          <Grid
+            md={1}
+            sx={{
+              py: 2,
+              px: 1,
+              backgroundColor: theme.palette.common.white,
+              borderTopLeftRadius: '8px',
+              borderBottomLeftRadius: '8px',
+              border: `solid 1px ${theme.palette.divider}`,
+            }}
+          >
+            <Typography variant="caption">Desc</Typography>
+            <Typography variant="subtitle1">Inbound</Typography>
           </Grid>
-          <Grid md={4}>
-            <Box sx={{ p: 2 }}>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
-              >
-                <Typography>Max Frame </Typography>
-                <Typography>{auditFrame?.max_frame?.toLocaleString()}</Typography>
-              </Stack>
-            </Box>
-            <Box sx={{ p: 2 }}>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ border: '1px solid', borderColor: grey[500], backgroundColor: grey[200] }}
-              >
-                <Typography>Size </Typography>
-                <Typography>{auditFrame?.size}</Typography>
-              </Stack>
-            </Box>
+          <Grid
+            md={1}
+            sx={{
+              py: 2,
+              px: 1,
+              backgroundColor: theme.palette.common.white,
+              borderTop: `solid 1px ${theme.palette.divider}`,
+              borderBottom: `solid 1px ${theme.palette.divider}`,
+              borderRight: `solid 1px ${theme.palette.divider}`,
+            }}
+          >
+            <Typography variant="caption">Max Frame</Typography>
+            <Typography variant="subtitle1">{auditFrame?.max_frame}</Typography>
+          </Grid>
+          <Grid
+            md={1.3}
+            sx={{
+              py: 2,
+              px: 1,
+              backgroundColor: theme.palette.common.white,
+              borderTop: `solid 1px ${theme.palette.divider}`,
+              borderBottom: `solid 1px ${theme.palette.divider}`,
+            }}
+          >
+            <Typography variant="caption">File Size</Typography>
+            <Typography variant="subtitle1">{auditFrame?.file_size?.toLocaleString()}</Typography>
+          </Grid>
+          <Grid
+            mr={2}
+            md={1}
+            sx={{
+              py: 2,
+              px: 1,
+              backgroundColor: theme.palette.common.white,
+              borderTopRightRadius: '8px',
+              borderBottomRightRadius: '8px',
+              border: `solid 1px ${theme.palette.divider}`,
+            }}
+          >
+            <Typography variant="caption">Date</Typography>
+            <Typography variant="subtitle1">
+              {formatDateCustom(auditFrame?.date?.toString())}
+            </Typography>
+          </Grid>
+          <Grid
+            md={1}
+            sx={{
+              py: 2,
+              px: 1,
+              backgroundColor: theme.palette.common.white,
+              borderTopLeftRadius: '8px',
+              borderBottomLeftRadius: '8px',
+              border: `solid 1px ${theme.palette.divider}`,
+            }}
+          >
+            <Typography variant="caption">Seq</Typography>
+            <Typography variant="subtitle1">{auditFrame?.seq}</Typography>
+          </Grid>
+          <Grid
+            md={1.6}
+            sx={{
+              py: 2,
+              px: 1,
+              backgroundColor: theme.palette.common.white,
+              borderTop: `solid 1px ${theme.palette.divider}`,
+              borderBottom: `solid 1px ${theme.palette.divider}`,
+              borderRight: `solid 1px ${theme.palette.divider}`,
+            }}
+          >
+            <Typography variant="caption">Time</Typography>
+            <Typography variant="subtitle1">
+              {secondsToTimeString(auditFrame?.time || 0)}
+            </Typography>
+          </Grid>
+          <Grid
+            md={0.7}
+            sx={{
+              py: 2,
+              px: 1,
+              backgroundColor: theme.palette.common.white,
+              borderTop: `solid 1px ${theme.palette.divider}`,
+              borderBottom: `solid 1px ${theme.palette.divider}`,
+              borderRight: `solid 1px ${theme.palette.divider}`,
+            }}
+          >
+            <Typography variant="caption">Size</Typography>
+            <Typography variant="subtitle1">{auditFrame?.size}</Typography>
+          </Grid>
+          <Grid
+            md={1}
+            sx={{
+              py: 2,
+              px: 1,
+              backgroundColor: theme.palette.common.white,
+              borderTop: `solid 1px ${theme.palette.divider}`,
+              borderBottom: `solid 1px ${theme.palette.divider}`,
+            }}
+          >
+            <Typography variant="caption">Head</Typography>
+            <Typography variant="subtitle1">{auditFrame?.head}</Typography>
+          </Grid>
+          <Grid
+            md={0.7}
+            sx={{
+              py: 2,
+              px: 1,
+              backgroundColor: theme.palette.common.white,
+              borderTopRightRadius: '8px',
+              borderBottomRightRadius: '8px',
+              border: `solid 1px ${theme.palette.divider}`,
+            }}
+          >
+            <Typography variant="caption">RID</Typography>
+            <Typography variant="subtitle1">{auditFrame?.rid}</Typography>
           </Grid>
         </Grid>
       </Box>
@@ -284,44 +331,27 @@ export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
         </Stack>
       </Box>
 
-      <Table
-        size="small"
-        sx={{
-          borderRadius: 2,
-          bgcolor: (theme) => varAlpha(theme.vars.palette.grey['500Channel'], 0.04),
-          border: (theme) => `solid 1px ${theme.vars.palette.divider}`,
-        }}
-      >
+      <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>LEN</TableCell>
+            <TableCell align="right">ID</TableCell>
+            <TableCell align="right">LEN</TableCell>
             <TableCell>DATA</TableCell>
             <TableCell>Desc.</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {auditFrameLoading ? (
-            <TableRow>
-              <TableCell colSpan={9} align="center">
-                <CircularProgress />
-              </TableCell>
-            </TableRow>
+            <TableLoadingRows height={20} loadingRows={10} />
           ) : auditFrameFragsEmpty ? (
-            <TableRow>
-              <TableCell colSpan={9} align="center">
-                <TableCell colSpan={6}>No data to show</TableCell>
-              </TableCell>
-            </TableRow>
+            <TableEmptyRows />
           ) : auditFrameError ? (
-            <TableRow>
-              <TableCell colSpan={6}>Error Fetching Audit Frags List</TableCell>
-            </TableRow>
+            <TableErrorRows />
           ) : (
             auditFrame.frags.map((auditFrameFrag: AuditLogFrameFragItem, index: number) => (
               <TableRow key={index}>
-                <TableCell>{auditFrameFrag.id}</TableCell>
-                <TableCell>{auditFrameFrag.len}</TableCell>
+                <TableCell align="right">{auditFrameFrag.id}</TableCell>
+                <TableCell align="right">{auditFrameFrag.len}</TableCell>
                 <TableCell>{auditFrameFrag.data}</TableCell>
                 <TableCell>{auditFrameFrag.desc}</TableCell>
               </TableRow>

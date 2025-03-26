@@ -6,13 +6,10 @@ import { Box, Typography } from '@mui/material';
 
 type Props = {
   node: string;
-  page: string;
-  levels?: number;
-  itemPage?: string;
+  pages: string[];
 };
 
-export function Breadcrumb({ node, page, levels = 3, itemPage }: Props) {
-  const fourLevels = levels === 4;
+export function Breadcrumb({ node, pages }: Props) {
   return (
     <Box>
       <Typography variant="h3" display="inline" sx={{ color: (theme) => theme.palette.grey[400] }}>
@@ -33,20 +30,9 @@ export function Breadcrumb({ node, page, levels = 3, itemPage }: Props) {
       >
         {node}
       </Typography>
-      <Typography variant="h3" display="inline" sx={{ color: (theme) => theme.palette.grey[400] }}>
-        {` > `}
-      </Typography>
-      <Typography
-        variant={fourLevels ? 'h3' : 'h2'}
-        display="inline"
-        sx={{
-          color: (theme) => (fourLevels ? theme.palette.grey[400] : theme.palette.common.black),
-        }}
-      >
-        {page}
-      </Typography>
-      {fourLevels && itemPage && (
-        <>
+
+      {pages.map((page, index) => (
+        <Box component="span" key={index}>
           <Typography
             variant="h3"
             display="inline"
@@ -54,11 +40,18 @@ export function Breadcrumb({ node, page, levels = 3, itemPage }: Props) {
           >
             {` > `}
           </Typography>
-          <Typography variant="h2" display="inline">
-            {itemPage}
+          <Typography
+            variant={index === pages.length - 1 ? 'h2' : 'h3'}
+            display="inline"
+            sx={{
+              color: (theme) =>
+                index === pages.length - 1 ? theme.palette.common.black : theme.palette.grey[400],
+            }}
+          >
+            {page}
           </Typography>
-        </>
-      )}
+        </Box>
+      ))}
     </Box>
   );
 }
