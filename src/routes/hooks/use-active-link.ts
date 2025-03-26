@@ -53,3 +53,29 @@ export function useActiveLink(itemPath: string, deep: boolean = true): boolean {
    */
   return pathname === itemPath;
 }
+
+export function useActiveLinkColor(itemPath: string): boolean {
+  const pathname = removeLastSlash(usePathname());
+
+  const ShortenedPathname = extractUpToFourthSegment(pathname);
+
+  /* Start check */
+  const notValid = itemPath.startsWith('#') || isExternalLink(itemPath);
+
+  if (notValid) {
+    return false;
+  }
+  /**
+   * [1] Normal: active
+   * @itemPath 			 = '/dashboard/calendar'
+   * @match pathname = '/dashboard/calendar'
+   */
+
+  return ShortenedPathname === itemPath;
+}
+
+function extractUpToFourthSegment(path: string): string {
+  const segments = path.split('/');
+  const upToFourth = segments.slice(0, 5);
+  return upToFourth.join('/');
+}

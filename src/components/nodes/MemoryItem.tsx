@@ -58,50 +58,50 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
               <Grid container>
                 <Grid md={3}>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ color: (theme) => theme.palette.grey[400], mb: 1 }}
                   >
                     Seq
                   </Typography>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ color: (theme) => theme.palette.grey[400], mb: 1 }}
                   >
                     Code
                   </Typography>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ color: (theme) => theme.palette.grey[400], mb: 1 }}
                   >
                     Name
                   </Typography>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ color: (theme) => theme.palette.grey[400], mb: 1 }}
                   >
                     G1.SSN-ID
                   </Typography>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ color: (theme) => theme.palette.grey[400], mb: 1 }}
                   >
                     Compet
                   </Typography>
                 </Grid>
                 <Grid md={9}>
-                  <Typography variant="caption" sx={{ mb: 1 }}>
+                  <Typography variant="body2" sx={{ mb: 1 }}>
                     {issueInfo?.seq}
                   </Typography>
-                  <Typography variant="caption" sx={{ mb: 1 }}>
+                  <Typography variant="body2" sx={{ mb: 1 }}>
                     {issueInfo?.code}
                   </Typography>
-                  <Typography variant="caption" sx={{ mb: 1 }}>
+                  <Typography variant="body2" sx={{ mb: 1 }}>
                     {issueInfo?.name}
                   </Typography>
-                  <Typography variant="caption" sx={{ mb: 1 }}>
+                  <Typography variant="body2" sx={{ mb: 1 }}>
                     {issueInfo?.g1_ssn_id}
                   </Typography>
-                  <Typography variant="caption" sx={{ mb: 1 }}>
+                  <Typography variant="body2" sx={{ mb: 1 }}>
                     {issueInfo?.compet}
                   </Typography>
                 </Grid>
@@ -126,24 +126,24 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
               }}
             >
               <Typography
-                variant="caption"
+                variant="body2"
                 sx={{ mb: 0.5, color: (theme) => theme.palette.grey[300] }}
               >
                 Last. Price
               </Typography>
               <Typography
-                variant="caption"
+                variant="body2"
                 sx={{ mb: 0.5, color: (theme) => theme.palette.grey[300] }}
               >
                 Last. Vol
               </Typography>
               <Typography
-                variant="caption"
+                variant="body2"
                 sx={{ mb: 0.5, color: (theme) => theme.palette.grey[300] }}
               >
                 Vol. Accum
               </Typography>
-              <Typography variant="caption" sx={{ color: (theme) => theme.palette.grey[300] }}>
+              <Typography variant="body2" sx={{ color: (theme) => theme.palette.grey[300] }}>
                 Amt. Accum
               </Typography>
             </Box>
@@ -154,18 +154,18 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
               }}
             >
               <Typography
-                variant="caption"
+                variant="body2"
                 sx={{ mb: 0.5, color: (theme) => theme.palette.grey[300] }}
               >
                 Open
               </Typography>
               <Typography
-                variant="caption"
+                variant="body2"
                 sx={{ mb: 0.5, color: (theme) => theme.palette.grey[300] }}
               >
                 High
               </Typography>
-              <Typography variant="caption" sx={{ color: (theme) => theme.palette.grey[300] }}>
+              <Typography variant="body2" sx={{ color: (theme) => theme.palette.grey[300] }}>
                 Low
               </Typography>
             </Box>
@@ -186,25 +186,25 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                   }}
                 >
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
                   >
                     Last. Price
                   </Typography>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
                   >
                     Last. Vol
                   </Typography>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
                   >
                     Vol. Accum
                   </Typography>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
                   >
                     Amt. Accum
@@ -220,19 +220,19 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                   }}
                 >
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
                   >
                     Open
                   </Typography>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
                   >
                     High
                   </Typography>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
                   >
                     Low
@@ -253,25 +253,25 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                   }}
                 >
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
                   >
                     Last. Price
                   </Typography>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
                   >
                     Last. Vol
                   </Typography>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
                   >
                     Vol. Accum
                   </Typography>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
                   >
                     Amt. Accum
@@ -287,19 +287,19 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                   }}
                 >
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
                   >
                     Open
                   </Typography>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
                   >
                     High
                   </Typography>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
                   >
                     Low
@@ -320,25 +320,25 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                   }}
                 >
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
                   >
                     Last. Price
                   </Typography>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
                   >
                     Last. Vol
                   </Typography>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
                   >
                     Vol. Accum
                   </Typography>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
                   >
                     Amt. Accum
@@ -354,19 +354,19 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                   }}
                 >
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
                   >
                     Open
                   </Typography>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
                   >
                     High
                   </Typography>
                   <Typography
-                    variant="caption"
+                    variant="body2"
                     sx={{ color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
                   >
                     Low
@@ -396,7 +396,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                 <TableErrorRows />
               ) : (
                 <>
-                  <TableRow>
+                  <TableRow sx={{ backgroundColor: '#EFF6FF !important' }}>
                     <TableCell />
                     <TableCell />
                     <TableCell align="right">
@@ -462,7 +462,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                       <TableCell align="right">{issueQuotesAsk[key].nxt}</TableCell>
                     </TableRow>
                   ))}
-                  <TableRow>
+                  <TableRow sx={{ backgroundColor: '#FFF2F4 !important' }}>
                     <TableCell />
                     <TableCell />
                     <TableCell align="right">
@@ -495,7 +495,6 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
             </TableBody>
           </Table>
         </Grid>
-        <Grid md={6}>other table</Grid>
       </Grid>
     </>
   );
