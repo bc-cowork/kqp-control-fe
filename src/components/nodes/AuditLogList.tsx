@@ -95,19 +95,7 @@ export function AuditLogList({ selectedNodeId }: Props) {
                 }}
                 sx={{ cursor: 'pointer' }}
               >
-                <TableCell align="right">
-                  <Box
-                    component="span"
-                    sx={{
-                      backgroundColor: (theme) => theme.palette.grey[400],
-                      color: (theme) => theme.palette.common.white,
-                      p: 0.5,
-                      borderRadius: '4px',
-                    }}
-                  >
-                    {auditLog.id}
-                  </Box>
-                </TableCell>
+                <TableCell align="right">{auditLog.id}</TableCell>
                 <TableCell align="right">{auditLog.date}</TableCell>
                 <TableCell>{auditLog.kind}</TableCell>
                 <TableCell align="right">{auditLog.size}</TableCell>

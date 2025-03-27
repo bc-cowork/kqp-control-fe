@@ -21,6 +21,7 @@ import { useRouter } from 'src/routes/hooks';
 
 import { useDebounce } from 'src/hooks/use-debounce';
 
+import { grey } from 'src/theme/core';
 import { useGetIssues } from 'src/actions/nodes';
 
 import { Iconify } from '../iconify';
@@ -71,8 +72,8 @@ export function Memory({ selectedNodeId }: Props) {
                 mb: 2,
                 backgroundColor: theme.palette.common.white,
                 borderRadius: 2,
-                border: `solid 1px ${theme.palette.divider}`,
-                minHeight: '100px',
+                border: `solid 1px ${grey[100]}`,
+                minHeight: '50px',
               }}
             >
               {issuesLoading ? (
@@ -90,11 +91,15 @@ export function Memory({ selectedNodeId }: Props) {
                     }}
                   >
                     <Typography variant="caption">Issues</Typography>
-                    <Typography variant="subtitle1">{issues?.max_issue_count}</Typography>
+                    <Typography variant="subtitle1" sx={{ color: grey[600], fontSize: 17 }}>
+                      {issues?.max_issue_count}
+                    </Typography>
                   </Grid>
                   <Grid md={6} sx={{ py: 2, px: 1 }}>
                     <Typography variant="caption">Compet</Typography>
-                    <Typography variant="subtitle1">{issues?.compet_count}</Typography>
+                    <Typography variant="subtitle1" sx={{ color: grey[600], fontSize: 17 }}>
+                      {issues?.compet_count}
+                    </Typography>
                   </Grid>
                 </>
               )}
