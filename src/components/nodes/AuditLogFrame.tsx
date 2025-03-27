@@ -341,7 +341,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
           <TableRow>
             <TableCell align="right">ID</TableCell>
             <TableCell align="right">LEN</TableCell>
-            <TableCell>DATA</TableCell>
+            <TableCell align="right">DATA</TableCell>
             <TableCell>Desc.</TableCell>
           </TableRow>
         </TableHead>
@@ -357,7 +357,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
               <TableRow key={index}>
                 <TableCell align="right">{auditFrameFrag.id}</TableCell>
                 <TableCell align="right">{auditFrameFrag.len}</TableCell>
-                <TableCell>{auditFrameFrag.data}</TableCell>
+                <TableCell align="right">{auditFrameFrag.data}</TableCell>
                 <TableCell>{auditFrameFrag.desc}</TableCell>
               </TableRow>
             ))

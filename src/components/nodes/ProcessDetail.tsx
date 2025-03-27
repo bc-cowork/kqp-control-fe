@@ -16,12 +16,6 @@ export function ProcessDetail({ selectedNodeId }: Props) {
   const { processes, processLoading, processesEmpty, processError } =
     useGetProcesses(selectedNodeId);
 
-  // Processing the list of processes to get needed data
-  const processedProcessList =
-    processes && Array.isArray(processes)
-      ? processes.map((process: { data: any }) => process.data).flat()
-      : [];
-
   return (
     <Table size="small">
       <TableHead>
@@ -51,13 +45,13 @@ export function ProcessDetail({ selectedNodeId }: Props) {
             <TableCell colSpan={6}>Error Fetching Process List</TableCell>
           </TableRow>
         ) : (
-          processedProcessList.map((process: IProcessItem, index: number) => (
+          processes.map((process: IProcessItem, index: number) => (
             <TableRow key={index}>
               <TableCell align="right">{process.PID}</TableCell>
               <TableCell>{process.NAME}</TableCell>
               <TableCell>{process.PARAM}</TableCell>
               <TableCell align="right">{process.CPU}</TableCell>
-              <TableCell align="right">{process.MEM}</TableCell>
+              <TableCell align="right">{Number(process?.MEM)?.toLocaleString()}</TableCell>
               <TableCell align="right">{process.PPID}</TableCell>
               <TableCell>{process.COMMAND}</TableCell>
             </TableRow>

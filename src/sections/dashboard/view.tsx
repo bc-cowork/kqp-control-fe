@@ -21,6 +21,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 
+import { grey } from 'src/theme/core';
 import { DashboardContent } from 'src/layouts/dashboard';
 import { ChipDeleteIcon } from 'src/theme/core/components/chip';
 import { useGetNodes, useGetStatus } from 'src/actions/dashboard';
@@ -158,7 +159,7 @@ export function DashboardView({ title = 'Main' }: Props) {
                           <Chip label="No" color="error" size="small" variant="soft" />
                         )}
                       </TableCell>
-                      <TableCell align="right">{node.emit_count}</TableCell>
+                      <TableCell align="right">{node.emit_count.toLocaleString()}</TableCell>
                     </TableRow>
                   ))
                 )}
@@ -239,20 +240,34 @@ export function DashboardView({ title = 'Main' }: Props) {
                       </Box>
                       <Divider sx={{ borderColor: '#C7DBFF' }} />
                       <Box sx={{ p: 1, pb: 2 }}>
-                        <Stack direction="row" justifyContent="space-between" sx={{ mb: 1 }}>
-                          <Typography variant="subtitle2">ID</Typography>
-                          <Typography variant="body2">{selectedNode.id}</Typography>
+                        <Stack direction="row" sx={{ mb: 1 }}>
+                          <Typography variant="subtitle2" sx={{ width: '120px' }}>
+                            ID
+                          </Typography>
+                          <Typography variant="body2" sx={{ color: grey[400] }}>
+                            {selectedNode.id}
+                          </Typography>
                         </Stack>
-                        <Stack direction="row" justifyContent="space-between" sx={{ mb: 1 }}>
-                          <Typography variant="subtitle2">Name</Typography>
-                          <Typography variant="body2">{selectedNode.name}</Typography>
+                        <Stack direction="row" sx={{ mb: 1 }}>
+                          <Typography variant="subtitle2" sx={{ width: '120px' }}>
+                            Name
+                          </Typography>
+                          <Typography variant="body2" sx={{ color: grey[400] }}>
+                            {selectedNode.name}
+                          </Typography>
                         </Stack>
-                        <Stack direction="row" justifyContent="space-between" sx={{ mb: 1 }}>
-                          <Typography variant="subtitle2">Desc.</Typography>
-                          <Typography variant="body2">{selectedNode.desc}</Typography>
+                        <Stack direction="row" sx={{ mb: 1 }}>
+                          <Typography variant="subtitle2" sx={{ width: '120px' }}>
+                            Desc.
+                          </Typography>
+                          <Typography variant="body2" sx={{ color: grey[400] }}>
+                            {selectedNode.desc}
+                          </Typography>
                         </Stack>
-                        <Stack direction="row" justifyContent="space-between" sx={{ mb: 1 }}>
-                          <Typography variant="subtitle2">Emittable</Typography>
+                        <Stack direction="row" sx={{ mb: 1 }}>
+                          <Typography variant="subtitle2" sx={{ width: '120px' }}>
+                            Emittable
+                          </Typography>
                           <Typography variant="body2">
                             {selectedNode.emittable ? (
                               <Chip label="True" color="success" size="small" variant="soft" />
@@ -261,9 +276,13 @@ export function DashboardView({ title = 'Main' }: Props) {
                             )}
                           </Typography>
                         </Stack>
-                        <Stack direction="row" justifyContent="space-between" sx={{ mb: 1 }}>
-                          <Typography variant="subtitle2">Emit Count</Typography>
-                          <Typography variant="body2">{selectedNode.emit_count}</Typography>
+                        <Stack direction="row" sx={{ mb: 1 }}>
+                          <Typography variant="subtitle2" sx={{ width: '120px' }}>
+                            Emit Count
+                          </Typography>
+                          <Typography variant="body2" sx={{ color: grey[400] }}>
+                            {selectedNode.emit_count.toLocaleString()}
+                          </Typography>
                         </Stack>
                       </Box>
                     </Box>

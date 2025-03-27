@@ -59,20 +59,28 @@ export function useGetProcesses(node: string) {
 
   const { data, isLoading, error, isValidating } = useSWR<ProcessData>(url, fetcher, swrOptions);
 
-  const processedProcessList =
-    data?.data?.processList && Array.isArray(data?.data?.processList)
-      ? data?.data?.processList.map((process: { data: any }) => process.data).flat()
-      : [];
+  const processedProcessList = useMemo(
+    () =>
+      data?.data?.processList && Array.isArray(data?.data?.processList)
+        ? data.data.processList
+            .filter(
+              (process: { data: any }) => process.data && Object.keys(process.data).length > 0
+            )
+            .map((process: { data: any }) => process.data)
+            .flat()
+        : [],
+    [data?.data?.processList]
+  );
 
   const memoizedValue = useMemo(
     () => ({
-      processes: data?.data?.processList || [],
+      processes: processedProcessList || [],
       processLoading: isLoading,
       processError: error,
       processesValidating: isValidating,
       processesEmpty: !isLoading && !processedProcessList?.length,
     }),
-    [data?.data?.processList, error, isLoading, isValidating, processedProcessList?.length]
+    [error, isLoading, isValidating, processedProcessList]
   );
 
   return memoizedValue;
