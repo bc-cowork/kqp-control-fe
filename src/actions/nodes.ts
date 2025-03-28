@@ -146,7 +146,7 @@ export function useGetAuditLogFrame(
 ) {
   let url;
 
-  if (side && count) {
+  if (side || cond || count) {
     url = file
       ? [endpoints.nodes.auditLog.frame(node), { params: { file, seq, side, count, cond } }]
       : '';

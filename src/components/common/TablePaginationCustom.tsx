@@ -177,13 +177,14 @@ const TablePaginationCustom = ({
         <CustomIconButton
           onClick={(event) => handleChangePage(event, page + 1)}
           disabled={page >= lastPage}
+          sx={{ ...(!last && { mr: 0 }) }}
         >
           <Iconify icon="eva:arrow-ios-forward-fill" />
         </CustomIconButton>
 
         {/* Last Page Button (optional) */}
         {last && (
-          <CustomIconButton onClick={handleLastPage} disabled={page >= lastPage}>
+          <CustomIconButton onClick={handleLastPage} disabled={page >= lastPage} sx={{ mr: 0 }}>
             <Iconify icon="eva:arrowhead-right-outline" />
           </CustomIconButton>
         )}

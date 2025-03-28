@@ -70,12 +70,16 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
     setPage(newPage);
   }, []);
 
+  const onApply = () => {
+    throw new Error('Function not implemented.');
+  };
+
   return (
     <>
       <Box>
         <Grid container sx={{ mb: 2 }}>
           <Grid
-            md={2}
+            md={1.9}
             sx={{
               mr: 2,
             }}
@@ -193,7 +197,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
             <Typography variant="subtitle1">{auditFrame?.seq}</Typography>
           </Grid>
           <Grid
-            md={1.4}
+            md={2}
             sx={{
               py: 2,
               px: 1,
@@ -202,10 +206,26 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
             }}
           >
             <Typography variant="caption">Time</Typography>
-            <Typography variant="subtitle1">{auditFrame?.time}</Typography>
+            <br />
+            <Typography
+              variant="subtitle1"
+              display="inline"
+            >{`${auditFrame?.time} ${auditFrame?.time_ms}`}</Typography>
+            <Typography
+              variant="caption"
+              display="inline"
+              sx={{ fontSize: 12, ml: 0.3 }}
+            >{`ms `}</Typography>
+            <Typography
+              variant="subtitle1"
+              display="inline"
+            >{` ${auditFrame?.time_us}`}</Typography>
+            <Typography variant="caption" display="inline" sx={{ fontSize: 12, ml: 0.3 }}>
+              us
+            </Typography>
           </Grid>
           <Grid
-            md={0.7}
+            md={0.6}
             sx={{
               py: 2,
               px: 1,
@@ -217,7 +237,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
             <Typography variant="subtitle1">{auditFrame?.size}</Typography>
           </Grid>
           <Grid
-            md={1}
+            md={0.8}
             sx={{
               py: 2,
               px: 1,
@@ -229,7 +249,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
             <Typography variant="subtitle1">{auditFrame?.head}</Typography>
           </Grid>
           <Grid
-            md={0.7}
+            md={0.5}
             sx={{
               py: 2,
               px: 1,
@@ -287,7 +307,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
             }}
             sx={{ width: 140 }}
           />
-          <Button variant="contained" onClick={() => setCount(countNum)}>
+          <Button variant="contained" onClick={onApply}>
             Apply
           </Button>
         </Box>

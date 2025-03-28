@@ -191,7 +191,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
             onRowsPerPageChange={onChangeRowsPerPage}
             first
             last
-            sx={{ mb: 1 }}
+            sx={{ mb: 1, mt: 2 }}
           />
           <Table size="small">
             <TableHead>
