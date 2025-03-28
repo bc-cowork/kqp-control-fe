@@ -214,7 +214,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                     key={index}
                     onClick={() => {
                       router.push(
-                        `/dashboard/nodes/${selectedNodeId}/audit-log/${selectedFile}/frame`
+                        `/dashboard/nodes/${selectedNodeId}/audit-log/${selectedFile}/${auditFrame.seq}`
                       );
                     }}
                     sx={{ cursor: 'pointer' }}

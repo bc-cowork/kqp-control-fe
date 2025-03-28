@@ -89,9 +89,7 @@ export function AuditLogList({ selectedNodeId }: Props) {
               <TableRow
                 key={index}
                 onClick={() => {
-                  router.push(
-                    `/dashboard/nodes/${selectedNodeId}/audit-log/${auditLog.fname}/list`
-                  );
+                  router.push(`/dashboard/nodes/${selectedNodeId}/audit-log/${auditLog.fname}`);
                 }}
                 sx={{ cursor: 'pointer' }}
               >

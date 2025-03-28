@@ -24,6 +24,7 @@ import {
 import { formatDateCustom } from 'src/utils/format-time';
 
 import { useGetAuditLogFrame } from 'src/actions/nodes';
+import { primary, success, warning } from 'src/theme/core';
 
 import { Iconify } from '../iconify';
 import { TableEmptyRows } from '../table/table-empty-rows';
@@ -36,11 +37,12 @@ import TablePaginationCustom from '../common/TablePaginationCustom';
 type Props = {
   selectedNodeId: string;
   selectedFile: string;
+  selectedSeq: string;
 };
 
-export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
+export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Props) {
   const theme = useTheme();
-  const [seq, setSeq] = useState<number>(0);
+  const [seq, setSeq] = useState<number>(Number(selectedSeq));
   const [count, setCount] = useState<number | undefined>(undefined);
   const [side, setSide] = useState<'prev' | 'next' | undefined>(undefined);
   const [cond, setCond] = useState<string | undefined>(undefined);
@@ -332,9 +334,48 @@ export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
           ) : (
             auditFrame.frags.map((auditFrameFrag: AuditLogFrameFragItem, index: number) => (
               <TableRow key={index}>
-                <TableCell align="right">{auditFrameFrag.id}</TableCell>
-                <TableCell align="right">{auditFrameFrag.len}</TableCell>
-                <TableCell align="right">{auditFrameFrag.data}</TableCell>
+                <TableCell align="right">
+                  <Box
+                    component="span"
+                    sx={{
+                      backgroundColor: '#EBFBE9',
+                      color: success.dark,
+                      border: `1px solid #DDF4DA`,
+                      borderRadius: '4px',
+                      px: 0.5,
+                    }}
+                  >
+                    {auditFrameFrag.id}
+                  </Box>
+                </TableCell>
+                <TableCell align="right">
+                  <Box
+                    component="span"
+                    sx={{
+                      backgroundColor: '#EFF6FF',
+                      color: primary.dark,
+                      border: `1px solid #DFEAFF`,
+                      borderRadius: '4px',
+                      px: 0.5,
+                    }}
+                  >
+                    {auditFrameFrag.len}
+                  </Box>
+                </TableCell>
+                <TableCell align="right">
+                  <Box
+                    component="span"
+                    sx={{
+                      backgroundColor: '#FFF9EC',
+                      color: warning.dark,
+                      border: `1px solid #FFEFBD`,
+                      borderRadius: '4px',
+                      px: 0.5,
+                    }}
+                  >
+                    {auditFrameFrag.data}
+                  </Box>
+                </TableCell>
                 <TableCell>{auditFrameFrag.desc}</TableCell>
               </TableRow>
             ))

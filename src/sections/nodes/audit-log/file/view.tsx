@@ -12,9 +12,10 @@ import { AuditLogFrame } from 'src/components/nodes/AuditLogFrame';
 type Props = {
   nodeId: string;
   file: string;
+  seq: string;
 };
 
-export function AuditLogFileView({ nodeId, file }: Props) {
+export function AuditLogFileView({ nodeId, file, seq }: Props) {
   return (
     <DashboardContent maxWidth="xl">
       <Breadcrumb
@@ -31,7 +32,7 @@ export function AuditLogFileView({ nodeId, file }: Props) {
           width: 1,
         }}
       >
-        <AuditLogFrame selectedNodeId={nodeId} selectedFile={file} />
+        <AuditLogFrame selectedNodeId={nodeId} selectedFile={file} selectedSeq={seq} />
       </Box>
     </DashboardContent>
   );
