@@ -26,7 +26,7 @@ function colorVars(theme: Theme, variant?: 'vertical' | 'mini' | 'horizontal') {
     '--nav-item-root-open-bg': palette.action.hover,
     // sub
     '--nav-item-sub-active-color': palette.text.primary,
-    '--nav-item-sub-active-bg': palette.primary.main,
+    '--nav-item-sub-active-bg': palette.primary.light,
     '--nav-item-sub-open-color': palette.text.primary,
     '--nav-item-sub-open-bg': palette.action.hover,
     ...(variant === 'vertical' && {

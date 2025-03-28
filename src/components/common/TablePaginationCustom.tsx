@@ -13,8 +13,8 @@ import { Iconify } from '../iconify';
 // Styled components for custom styling
 const CustomSelect = styled(Select)(({ theme }) => ({
   height: 18,
-  backgroundColor: theme.palette.common.white,
-  border: `1px solid ${theme.palette.grey[200]} `,
+  backgroundColor: theme.palette.common.white, // Default background (white)
+  border: `1px solid ${theme.palette.grey[200]}`, // Subtle border
   borderRadius: 4,
   '& .MuiSelect-select': {
     padding: '3px !important',
@@ -26,7 +26,34 @@ const CustomSelect = styled(Select)(({ theme }) => ({
     border: 'none',
   },
   '& .MuiSelect-icon': {
-    color: theme.palette.grey[400],
+    color: theme.palette.grey[400], // Icon color
+  },
+  // Ensure the dropdown menu has the same border radius
+  '& .MuiPaper-root': {
+    borderRadius: 4,
+    marginTop: 4,
+  },
+}));
+
+const CustomMenuItem = styled(MenuItem)(({ theme }) => ({
+  // Default state
+  backgroundColor: theme.palette.common.white, // White background
+  color: theme.palette.text.primary, // Default text color
+  '&:hover': {
+    // Hover state
+    backgroundColor: theme.palette.grey[100], // Light gray background
+  },
+  '&:active': {
+    // Pressed state (when clicked but not yet released)
+    backgroundColor: theme.palette.grey[300], // Slightly darker gray
+  },
+  '&.Mui-selected': {
+    // Selected state
+    backgroundColor: theme.palette.primary.main, // Blue background
+    color: theme.palette.common.white, // White text
+    '&:hover': {
+      backgroundColor: theme.palette.primary.dark, // Slightly darker blue on hover
+    },
   },
 }));
 
@@ -102,9 +129,9 @@ const TablePaginationCustom = ({
           inputProps={{ sx: { color: theme.palette.grey[400] } }}
         >
           {[10, 20, 40, 60].map((option) => (
-            <MenuItem key={option} value={option}>
+            <CustomMenuItem key={option} value={option}>
               {option}
-            </MenuItem>
+            </CustomMenuItem>
           ))}
         </CustomSelect>
       </Box>

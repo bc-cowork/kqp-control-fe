@@ -41,12 +41,12 @@ type Props = {
 export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
   const theme = useTheme();
   const [seq, setSeq] = useState<number>(0);
-  const [count, setCount] = useState<number>(40);
+  const [count, setCount] = useState<number | undefined>(undefined);
   const [side, setSide] = useState<'prev' | 'next' | undefined>(undefined);
   const [cond, setCond] = useState<string | undefined>(undefined);
   const [condText, setCondText] = useState<string | undefined>(undefined);
   const [seqNum, setSeqNum] = useState<number>(seq);
-  const [countNum, setCountNum] = useState<number>(count);
+  const [countNum, setCountNum] = useState<number | undefined>(count);
 
   const [page, setPage] = useState<number>(0);
 
@@ -54,7 +54,10 @@ export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
     useGetAuditLogFrame(selectedNodeId, selectedFile, seq, side, count, cond);
 
   const onMaxFrameRefresh = useCallback((): void => {
-    throw new Error('Function not implemented.');
+    setSeq(0);
+    setSide(undefined);
+    setCond(undefined);
+    setCount(undefined);
   }, []);
 
   const onChangeRowsPerPage = useCallback((value: number) => {
@@ -302,7 +305,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile }: Props) {
         </Box>
 
         <TablePaginationCustom
-          rowsPerPage={count}
+          rowsPerPage={count || 40}
           page={page}
           count={auditFrame.max_frame}
           onPageChange={onChangePage}

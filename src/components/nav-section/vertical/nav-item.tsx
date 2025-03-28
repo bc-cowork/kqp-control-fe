@@ -278,11 +278,18 @@ const StyledNavItem = styled(ButtonBase, {
      * Disabled
      */
     ...(disabled && sharedStyles.disabled),
+    /**
+     * Custom
+     */
     ...((open || active) &&
       depth === 2 && {
-        backgroundColor: theme.palette.grey[500],
+        backgroundColor: theme.palette.grey[400],
         borderBottomLeftRadius: '0px',
         borderBottomRightRadius: '0px',
+        fontWeight: '500 !important',
       }),
+    ...(depth === 3 && {
+      borderRadius: '0px',
+    }),
   };
 });
