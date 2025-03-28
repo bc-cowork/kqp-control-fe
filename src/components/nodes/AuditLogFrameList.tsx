@@ -63,6 +63,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
 
   const onMaxFrameRefresh = useCallback((): void => {
     setOffset(0);
+    setPage(0);
   }, []);
 
   return (
@@ -188,6 +189,8 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
             count={auditFrameList.max_frame}
             onPageChange={onChangePage}
             onRowsPerPageChange={onChangeRowsPerPage}
+            first
+            last
             sx={{ mb: 1 }}
           />
           <Table size="small">

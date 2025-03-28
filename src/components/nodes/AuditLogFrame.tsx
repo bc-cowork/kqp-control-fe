@@ -47,7 +47,6 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
   const [side, setSide] = useState<'prev' | 'next' | undefined>(undefined);
   const [cond, setCond] = useState<string | undefined>(undefined);
   const [condText, setCondText] = useState<string | undefined>(undefined);
-  const [seqNum, setSeqNum] = useState<number>(seq);
   const [countNum, setCountNum] = useState<number | undefined>(count);
 
   const [page, setPage] = useState<number>(0);
@@ -60,6 +59,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
     setSide(undefined);
     setCond(undefined);
     setCount(undefined);
+    setPage(0);
   }, []);
 
   const onChangeRowsPerPage = useCallback((value: number) => {
@@ -273,20 +273,6 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
           >
             <Iconify icon="eva:info-outline" />
           </Tooltip>
-        </Box>
-
-        <Box gap={1} display="flex" alignItems="center">
-          <TextField
-            label="SEQ"
-            size="small"
-            placeholder="Enter seq here"
-            value={seqNum}
-            type="number"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setSeqNum(Number(event.target.value));
-            }}
-            sx={{ width: 140 }}
-          />
         </Box>
 
         <Box gap={1} display="flex" alignItems="center">

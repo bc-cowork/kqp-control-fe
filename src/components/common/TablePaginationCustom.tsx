@@ -13,8 +13,8 @@ import { Iconify } from '../iconify';
 // Styled components for custom styling
 const CustomSelect = styled(Select)(({ theme }) => ({
   height: 18,
-  backgroundColor: theme.palette.common.white, // Default background (white)
-  border: `1px solid ${theme.palette.grey[200]}`, // Subtle border
+  backgroundColor: theme.palette.common.white,
+  border: `1px solid ${theme.palette.grey[200]}`,
   borderRadius: 4,
   '& .MuiSelect-select': {
     padding: '3px !important',
@@ -26,9 +26,8 @@ const CustomSelect = styled(Select)(({ theme }) => ({
     border: 'none',
   },
   '& .MuiSelect-icon': {
-    color: theme.palette.grey[400], // Icon color
+    color: theme.palette.grey[400],
   },
-  // Ensure the dropdown menu has the same border radius
   '& .MuiPaper-root': {
     borderRadius: 4,
     marginTop: 4,
@@ -36,23 +35,19 @@ const CustomSelect = styled(Select)(({ theme }) => ({
 }));
 
 const CustomMenuItem = styled(MenuItem)(({ theme }) => ({
-  // Default state
-  backgroundColor: theme.palette.common.white, // White background
-  color: theme.palette.text.primary, // Default text color
+  backgroundColor: theme.palette.common.white,
+  color: theme.palette.text.primary,
   '&:hover': {
-    // Hover state
-    backgroundColor: theme.palette.grey[100], // Light gray background
+    backgroundColor: theme.palette.grey[100],
   },
   '&:active': {
-    // Pressed state (when clicked but not yet released)
-    backgroundColor: theme.palette.grey[300], // Slightly darker gray
+    backgroundColor: theme.palette.grey[300],
   },
   '&.Mui-selected': {
-    // Selected state
-    backgroundColor: theme.palette.primary.main, // Blue background
-    color: theme.palette.common.white, // White text
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
     '&:hover': {
-      backgroundColor: theme.palette.primary.dark, // Slightly darker blue on hover
+      backgroundColor: theme.palette.primary.dark,
     },
   },
 }));
@@ -80,6 +75,8 @@ type Props = {
   count: number;
   rowsPerPage: number;
   onRowsPerPageChange: (newRowsPerPage: number) => void;
+  first?: boolean;
+  last?: boolean;
   sx?: SxProps<Theme>;
 };
 
@@ -89,6 +86,8 @@ const TablePaginationCustom = ({
   count,
   rowsPerPage,
   onRowsPerPageChange,
+  first = false,
+  last = false,
   sx,
 }: Props) => {
   const theme = useTheme();
@@ -96,6 +95,9 @@ const TablePaginationCustom = ({
   // Calculate the range (e.g., "1-10")
   const start = page * rowsPerPage + 1;
   const end = Math.min((page + 1) * rowsPerPage, count);
+
+  // Calculate the last page index
+  const lastPage = Math.ceil(count / rowsPerPage) - 1;
 
   // Handle page change
   const handleChangePage = (
@@ -108,6 +110,16 @@ const TablePaginationCustom = ({
   // Handle rows per page change
   const handleChangeRowsPerPage = (event: { target: { value: any } }) => {
     onRowsPerPageChange(Number(event.target.value));
+  };
+
+  // Handle "First" button click
+  const handleFirstPage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    onPageChange(0); // Default behavior: go to the first page
+  };
+
+  // Handle "Last" button click
+  const handleLastPage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    onPageChange(lastPage); // Default behavior: go to the last page
   };
 
   return (
@@ -138,6 +150,14 @@ const TablePaginationCustom = ({
 
       {/* Navigation buttons */}
       <Stack direction="row" alignItems="center">
+        {/* First Page Button (optional) */}
+        {first && (
+          <CustomIconButton onClick={handleFirstPage} disabled={page === 0}>
+            <Iconify icon="eva:arrowhead-left-outline" />
+          </CustomIconButton>
+        )}
+
+        {/* Previous Page Button */}
         <CustomIconButton
           onClick={(event) => handleChangePage(event, page - 1)}
           disabled={page === 0}
@@ -152,12 +172,21 @@ const TablePaginationCustom = ({
           </Box>{' '}
           of {count?.toLocaleString()}
         </CustomTypography>
+
+        {/* Next Page Button */}
         <CustomIconButton
           onClick={(event) => handleChangePage(event, page + 1)}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+          disabled={page >= lastPage}
         >
           <Iconify icon="eva:arrow-ios-forward-fill" />
         </CustomIconButton>
+
+        {/* Last Page Button (optional) */}
+        {last && (
+          <CustomIconButton onClick={handleLastPage} disabled={page >= lastPage}>
+            <Iconify icon="eva:arrowhead-right-outline" />
+          </CustomIconButton>
+        )}
       </Stack>
     </Box>
   );
