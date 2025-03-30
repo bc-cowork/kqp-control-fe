@@ -21,7 +21,7 @@ import { useRouter } from 'src/routes/hooks';
 
 import { useDebounce } from 'src/hooks/use-debounce';
 
-import { grey } from 'src/theme/core';
+import { grey, common } from 'src/theme/core';
 import { useGetIssues } from 'src/actions/nodes';
 
 import { Iconify } from '../iconify';
@@ -131,6 +131,14 @@ export function Memory({ selectedNodeId }: Props) {
               }
               arrow
               placement="right"
+              slotProps={{
+                tooltip: {
+                  sx: {
+                    color: common.white,
+                    backgroundColor: grey[500],
+                  },
+                },
+              }}
             >
               <Iconify
                 icon="eva:info-outline"

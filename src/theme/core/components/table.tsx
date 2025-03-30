@@ -8,9 +8,6 @@ import { varAlpha } from '../../styles';
 // ----------------------------------------------------------------------
 
 const MuiTableContainer: Components<Theme>['MuiTableContainer'] = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ theme }) => ({
       position: 'relative',
@@ -23,9 +20,6 @@ const MuiTableContainer: Components<Theme>['MuiTableContainer'] = {
 // ----------------------------------------------------------------------
 
 const MuiTable: Components<Theme>['MuiTable'] = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ theme }) => ({ '--palette-TableCell-border': theme.vars.palette.divider }),
   },
@@ -34,18 +28,13 @@ const MuiTable: Components<Theme>['MuiTable'] = {
 // ----------------------------------------------------------------------
 
 const MuiTableRow: Components<Theme>['MuiTableRow'] = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: ({ theme }) => ({
       backgroundColor: theme.palette.common.white,
       border: 'none',
-      // Odd rows
       '&:nth-child(odd)': {
         backgroundColor: theme.palette.common.white,
       },
-      // Even rows
       '&:nth-child(even)': {
         backgroundColor: '#F9FAFB',
       },
@@ -63,9 +52,6 @@ const MuiTableRow: Components<Theme>['MuiTableRow'] = {
 // ----------------------------------------------------------------------
 
 const MuiTableCell: Components<Theme>['MuiTableCell'] = {
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: {
       border: 'none',
@@ -77,6 +63,10 @@ const MuiTableCell: Components<Theme>['MuiTableCell'] = {
       backgroundColor: theme.palette.primary.darker,
       '&:first-of-type': { borderTopLeftRadius: 8 },
       '&:last-of-type': { borderTopRightRadius: 8 },
+      // Ensure sticky header cells keep these styles
+      position: 'sticky',
+      top: 0,
+      zIndex: 1,
     }),
     body: ({ theme }) => ({
       fontSize: 15,
@@ -87,9 +77,12 @@ const MuiTableCell: Components<Theme>['MuiTableCell'] = {
         '&:last-of-type': { borderBottomRightRadius: 4 },
       },
     }),
+    // Remove or override the default stickyHeader styles
     stickyHeader: ({ theme }) => ({
-      backgroundColor: theme.vars.palette.background.paper,
-      backgroundImage: `linear-gradient(to bottom, ${theme.vars.palette.background.neutral}, ${theme.vars.palette.background.neutral})`,
+      backgroundColor: theme.palette.primary.darker,
+      color: theme.palette.grey[50],
+      fontSize: 17,
+      fontWeight: 400,
     }),
     paddingCheckbox: ({ theme }) => ({ paddingLeft: theme.spacing(1) }),
   },
@@ -98,18 +91,11 @@ const MuiTableCell: Components<Theme>['MuiTableCell'] = {
 // ----------------------------------------------------------------------
 
 const MuiTablePagination: Components<Theme>['MuiTablePagination'] = {
-  /** **************************************
-   * DEFAULT PROPS
-   *************************************** */
   defaultProps: {
     backIconButtonProps: { size: 'small' },
     nextIconButtonProps: { size: 'small' },
     slotProps: { select: { name: 'table-pagination-select' } },
   },
-
-  /** **************************************
-   * STYLE
-   *************************************** */
   styleOverrides: {
     root: { width: '100%' },
     toolbar: { height: 64 },

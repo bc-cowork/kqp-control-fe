@@ -130,6 +130,7 @@ type AuditLogFrameData = {
   ok: boolean;
   msg: string;
   data: {
+    desc: string;
     nodeId: string;
     file: string;
     spec: any; // TODO: define type
@@ -160,16 +161,16 @@ export function useGetAuditLogFrame(
     swrOptions
   );
 
-  const memoizedValue = useMemo(
-    () => ({
-      auditFrame: data?.data?.spec || {},
+  const memoizedValue = useMemo(() => {
+    const processedData = { desc: data?.data?.desc, ...data?.data?.spec };
+    return {
+      auditFrame: processedData,
       auditFrameLoading: isLoading,
       auditFrameFragsEmpty: !isLoading && !data?.data?.spec?.frags?.length,
       auditFrameError: error,
       auditFrameValidating: isValidating,
-    }),
-    [data?.data, error, isLoading, isValidating]
-  );
+    };
+  }, [data?.data?.desc, data?.data?.spec, error, isLoading, isValidating]);
 
   return memoizedValue;
 }

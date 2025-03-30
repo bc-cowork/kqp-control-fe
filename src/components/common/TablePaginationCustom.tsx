@@ -77,6 +77,7 @@ type Props = {
   onRowsPerPageChange: (newRowsPerPage: number) => void;
   first?: boolean;
   last?: boolean;
+  noWord?: boolean;
   sx?: SxProps<Theme>;
 };
 
@@ -88,6 +89,7 @@ const TablePaginationCustom = ({
   onRowsPerPageChange,
   first = false,
   last = false,
+  noWord = false,
   sx,
 }: Props) => {
   const theme = useTheme();
@@ -132,21 +134,23 @@ const TablePaginationCustom = ({
       }}
     >
       {/* Rows per page label and dropdown */}
-      <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
-        <CustomTypography>Rows per page:</CustomTypography>
-        <CustomSelect
-          value={rowsPerPage}
-          onChange={handleChangeRowsPerPage}
-          displayEmpty
-          inputProps={{ sx: { color: theme.palette.grey[400] } }}
-        >
-          {[10, 20, 40, 60].map((option) => (
-            <CustomMenuItem key={option} value={option}>
-              {option}
-            </CustomMenuItem>
-          ))}
-        </CustomSelect>
-      </Box>
+      {!noWord && (
+        <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
+          <CustomTypography>Rows per page:</CustomTypography>
+          <CustomSelect
+            value={rowsPerPage}
+            onChange={handleChangeRowsPerPage}
+            displayEmpty
+            inputProps={{ sx: { color: theme.palette.grey[400] } }}
+          >
+            {[10, 20, 40, 60].map((option) => (
+              <CustomMenuItem key={option} value={option}>
+                {option}
+              </CustomMenuItem>
+            ))}
+          </CustomSelect>
+        </Box>
+      )}
 
       {/* Navigation buttons */}
       <Stack direction="row" alignItems="center">
@@ -166,12 +170,14 @@ const TablePaginationCustom = ({
         </CustomIconButton>
 
         {/* Range label (e.g., "1-10 of 9356951") */}
-        <CustomTypography>
-          <Box component="span" sx={{ fontWeight: 500, color: theme.palette.common.black }}>
-            {start}-{end}
-          </Box>{' '}
-          of {count?.toLocaleString()}
-        </CustomTypography>
+        {!noWord && (
+          <CustomTypography>
+            <Box component="span" sx={{ fontWeight: 500, color: theme.palette.common.black }}>
+              {start}-{end}
+            </Box>{' '}
+            of {count?.toLocaleString()}
+          </CustomTypography>
+        )}
 
         {/* Next Page Button */}
         <CustomIconButton
