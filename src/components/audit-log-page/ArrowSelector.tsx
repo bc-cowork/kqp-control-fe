@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Box, SvgIcon, IconButton } from '@mui/material';
 
-import { grey } from 'src/theme/core';
+import { grey, common } from 'src/theme/core';
 
 type ArrowSelectorProps = {
   label: string;
@@ -12,11 +12,18 @@ type ArrowSelectorProps = {
 
 const ArrowSelector = ({ label, value, setValue }: ArrowSelectorProps) => {
   // Colors for different states
+  const bgColors = {
+    default: common.white,
+    hover: grey[50],
+    pressed: grey[300],
+    selected: grey[400],
+  };
+
   const colors = {
-    default: grey[500], // Default color for arrows
-    hover: grey[700], // Color on hover
-    pressed: grey[900], // Color when pressed (clicked)
-    selected: '#1976d2', // Color when selected (MUI primary color)
+    default: grey[400],
+    hover: grey[400],
+    pressed: grey[400],
+    selected: common.white,
   };
 
   const handlePrevClick = () => {
@@ -54,8 +61,8 @@ const ArrowSelector = ({ label, value, setValue }: ArrowSelectorProps) => {
         component="div"
         sx={{
           width: '1px',
-          height: '24px',
-          backgroundColor: '#E0E0E0', // Divider color
+          height: '12px',
+          backgroundColor: grey[200],
           marginRight: '8px',
         }}
       />
@@ -66,11 +73,14 @@ const ArrowSelector = ({ label, value, setValue }: ArrowSelectorProps) => {
         sx={{
           padding: '4px',
           color: value === 'prev' ? colors.selected : colors.default,
+          backgroundColor: value === 'prev' ? bgColors.selected : bgColors.default,
           '&:hover': {
-            color: value === 'prev' ? colors.selected : colors.hover,
+            color: value === 'prev' ? colors.selected : colors.default,
+            backgroundColor: value === 'prev' ? bgColors.selected : bgColors.default,
           },
           '&:active': {
             color: colors.pressed,
+            backgroundColor: bgColors.pressed,
           },
         }}
       >
@@ -83,11 +93,10 @@ const ArrowSelector = ({ label, value, setValue }: ArrowSelectorProps) => {
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M12.5 5L7.5 10L12.5 15"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M1.66699 10.0013C1.66699 10.1826 1.74087 10.3562 1.87159 10.4819L6.20492 14.6485C6.47032 14.9037 6.89235 14.8954 7.14755 14.63C7.40274 14.3646 7.39447 13.9426 7.12907 13.6874L3.98884 10.668L17.6663 10.668C18.0345 10.668 18.333 10.3695 18.333 10.0013C18.333 9.63311 18.0345 9.33464 17.6663 9.33464L3.98884 9.33464L7.12907 6.31519C7.39447 6.06 7.40274 5.63797 7.14755 5.37256C6.89235 5.10716 6.47032 5.09889 6.20492 5.35408L1.87159 9.52075C1.74087 9.64644 1.66699 9.81996 1.66699 10.0013Z"
+              fill={value === 'prev' ? colors.selected : colors.default}
             />
           </svg>
         </SvgIcon>
@@ -99,11 +108,14 @@ const ArrowSelector = ({ label, value, setValue }: ArrowSelectorProps) => {
         sx={{
           padding: '4px',
           color: value === 'next' ? colors.selected : colors.default,
+          backgroundColor: value === 'next' ? bgColors.selected : bgColors.default,
           '&:hover': {
-            color: value === 'next' ? colors.selected : colors.hover,
+            color: value === 'next' ? colors.selected : colors.default,
+            backgroundColor: value === 'next' ? bgColors.selected : bgColors.default,
           },
           '&:active': {
             color: colors.pressed,
+            backgroundColor: bgColors.pressed,
           },
         }}
       >
@@ -116,11 +128,10 @@ const ArrowSelector = ({ label, value, setValue }: ArrowSelectorProps) => {
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M7.5 5L12.5 10L7.5 15"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M18.333 10.0013C18.333 10.1826 18.2591 10.3562 18.1284 10.4819L13.7951 14.6485C13.5297 14.9037 13.1076 14.8954 12.8525 14.63C12.5973 14.3646 12.6055 13.9426 12.8709 13.6874L16.0112 10.668L2.33366 10.668C1.96547 10.668 1.66699 10.3695 1.66699 10.0013C1.66699 9.63311 1.96547 9.33464 2.33366 9.33464L16.0112 9.33464L12.8709 6.31519C12.6055 6.06 12.5973 5.63797 12.8525 5.37256C13.1076 5.10716 13.5297 5.09889 13.7951 5.35408L18.1284 9.52075C18.2591 9.64644 18.333 9.81996 18.333 10.0013Z"
+              fill={value === 'next' ? colors.selected : colors.default}
             />
           </svg>
         </SvgIcon>

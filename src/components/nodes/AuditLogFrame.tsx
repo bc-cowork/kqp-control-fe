@@ -70,7 +70,9 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
   }, []);
 
   const onApply = () => {
-    throw new Error('Function not implemented.');
+    setCond(condText);
+    setCount(countNum);
+    setSide(sideText);
   };
 
   return (
@@ -182,8 +184,12 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
             <Tooltip
               title={
                 <>
-                  Please enter the 12-digit ISIN code you wish to search for. <br />
-                  e.g. KR7005930003
+                  Examples: <br />
+                  {`- sd[1]:asStr()=='B6'`} <br />
+                  {`- sd[1]:asStr()=='B6' and sd[3]:asStr()=='K'`}
+                  <br />
+                  {`- sd[1]:asStr()=='B6' and sd[3]:asStr()=='K' and
+                  sd[7]:asStr()=='KR7035900000'"`}
                 </>
               }
               arrow

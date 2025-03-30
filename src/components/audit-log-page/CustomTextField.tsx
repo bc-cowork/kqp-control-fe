@@ -56,8 +56,8 @@ export const CustomTextField = ({ label, value, setValue, ...other }: CustomText
               component="div"
               sx={{
                 width: '1px',
-                height: '24px',
-                backgroundColor: '#E0E0E0', // Divider color
+                height: '12px',
+                backgroundColor: grey[200],
                 marginRight: '8px',
               }}
             />
