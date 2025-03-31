@@ -22,7 +22,7 @@ export function AuditLogFileView({ nodeId, file, seq }: Props) {
         node={nodeId}
         pages={[
           { pageName: 'Audit Log', link: `/dashboard/nodes/${nodeId}/audit-log` },
-          { pageName: 'List', link: `/dashboard/nodes/${nodeId}/audit-log/${file}/list` },
+          { pageName: 'List', link: `/dashboard/nodes/${nodeId}/audit-log/${file}` },
           { pageName: 'Frame Detail' },
         ]}
       />
