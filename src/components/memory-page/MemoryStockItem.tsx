@@ -73,25 +73,25 @@ export function MemoryStockItem({
           variant="body2"
           sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
         >
-          {lastPrice}
+          {lastPrice.toLocaleString()}
         </Typography>
         <Typography
           variant="body2"
           sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
         >
-          {lastVolume}
+          {lastVolume.toLocaleString()}
         </Typography>
         <Typography
           variant="body2"
           sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
         >
-          {volumeAccum}
+          {volumeAccum.toLocaleString()}
         </Typography>
         <Typography
           variant="body2"
           sx={{ color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
         >
-          {amountAccum}
+          {amountAccum.toLocaleString()}
         </Typography>
       </Box>
       <Box
@@ -109,7 +109,7 @@ export function MemoryStockItem({
           variant="body2"
           sx={{ mb: 0.5, color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
         >
-          {open}
+          {open.toLocaleString()}
         </Typography>
 
         <Box
@@ -139,7 +139,7 @@ export function MemoryStockItem({
             variant="body2"
             sx={{ color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
           >
-            {high}
+            {high.toLocaleString()}
           </Typography>
         </Box>
 
@@ -162,7 +162,7 @@ export function MemoryStockItem({
             variant="body2"
             sx={{ color: (theme) => theme.palette.grey[600], fontWeight: 500 }}
           >
-            {low}
+            {low.toLocaleString()}
           </Typography>
         </Box>
       </Box>

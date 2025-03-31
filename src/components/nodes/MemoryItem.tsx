@@ -51,7 +51,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
         </Box>
       ) : issueInfoError ? (
         <Box>
-          <Typography color="error">Error fetching issue item infomation</Typography>
+          <Typography color="error">Error fetching issue item information</Typography>
         </Box>
       ) : (
         <Grid
@@ -136,7 +136,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                         component="span"
                         sx={{ fontWeight: 500, color: (theme) => theme.palette.primary.main }}
                       >
-                        {sumDataAsk.uni}
+                        {sumDataAsk.uni.toLocaleString()}
                       </Box>
                     </TableCell>
                     <TableCell align="right">
@@ -144,7 +144,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                         component="span"
                         sx={{ fontWeight: 500, color: (theme) => theme.palette.primary.main }}
                       >
-                        {sumDataAsk.krx}
+                        {sumDataAsk.krx.toLocaleString()}
                       </Box>
                     </TableCell>
                     <TableCell align="right">
@@ -152,7 +152,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                         component="span"
                         sx={{ fontWeight: 500, color: (theme) => theme.palette.primary.main }}
                       >
-                        {sumDataAsk.nxt}
+                        {sumDataAsk.nxt.toLocaleString()}
                       </Box>
                     </TableCell>
                   </TableRow>
@@ -167,12 +167,18 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                             backgroundColor: '#EFF6FF',
                           }}
                         >
-                          {issueQuotesAsk[key].price}
+                          {issueQuotesAsk[key].price.toLocaleString()}
                         </Box>
                       </TableCell>
-                      <TableCell align="right">{issueQuotesAsk[key].uni}</TableCell>
-                      <TableCell align="right">{issueQuotesAsk[key].krx}</TableCell>
-                      <TableCell align="right">{issueQuotesAsk[key].nxt}</TableCell>
+                      <TableCell align="right">
+                        {issueQuotesAsk[key].uni.toLocaleString()}
+                      </TableCell>
+                      <TableCell align="right">
+                        {issueQuotesAsk[key].krx.toLocaleString()}
+                      </TableCell>
+                      <TableCell align="right">
+                        {issueQuotesAsk[key].nxt.toLocaleString()}
+                      </TableCell>
                     </TableRow>
                   ))}
                   {rowKeysBid.map((key: string) => (
@@ -186,12 +192,18 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                             backgroundColor: '#FFF2F4',
                           }}
                         >
-                          {issueQuotesAsk[key].price}
+                          {issueQuotesAsk[key].price.toLocaleString()}
                         </Box>
                       </TableCell>
-                      <TableCell align="right">{issueQuotesAsk[key].uni}</TableCell>
-                      <TableCell align="right">{issueQuotesAsk[key].krx}</TableCell>
-                      <TableCell align="right">{issueQuotesAsk[key].nxt}</TableCell>
+                      <TableCell align="right">
+                        {issueQuotesAsk[key].uni.toLocaleString()}
+                      </TableCell>
+                      <TableCell align="right">
+                        {issueQuotesAsk[key].krx.toLocaleString()}
+                      </TableCell>
+                      <TableCell align="right">
+                        {issueQuotesAsk[key].nxt.toLocaleString()}
+                      </TableCell>
                     </TableRow>
                   ))}
                   <TableRow sx={{ backgroundColor: '#FFF2F4 !important' }}>
@@ -202,7 +214,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                         component="span"
                         sx={{ fontWeight: 500, color: (theme) => theme.palette.error.main }}
                       >
-                        {sumDataBid.uni}
+                        {sumDataBid.uni.toLocaleString()}
                       </Box>
                     </TableCell>
                     <TableCell align="right">
@@ -210,7 +222,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                         component="span"
                         sx={{ fontWeight: 500, color: (theme) => theme.palette.error.main }}
                       >
-                        {sumDataBid.krx}
+                        {sumDataBid.krx.toLocaleString()}
                       </Box>
                     </TableCell>
                     <TableCell align="right">
@@ -218,7 +230,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                         component="span"
                         sx={{ fontWeight: 500, color: (theme) => theme.palette.error.main }}
                       >
-                        {sumDataBid.nxt}
+                        {sumDataBid.nxt.toLocaleString()}
                       </Box>
                     </TableCell>
                   </TableRow>
