@@ -77,6 +77,14 @@ type Props = {
   onRowsPerPageChange: (newRowsPerPage: number) => void;
   first?: boolean;
   last?: boolean;
+  onFirst?: () => void;
+  onLast?: () => void;
+  onPrev?: () => void;
+  onNext?: () => void;
+  firstDisabled?: boolean;
+  lastDisabled?: boolean;
+  prevDisabled?: boolean;
+  nextDisabled?: boolean;
   noWord?: boolean;
   sx?: SxProps<Theme>;
 };
@@ -90,6 +98,14 @@ const TablePaginationCustom = ({
   first = false,
   last = false,
   noWord = false,
+  onFirst,
+  onLast,
+  onPrev,
+  onNext,
+  firstDisabled = false,
+  lastDisabled = false,
+  prevDisabled = false,
+  nextDisabled = false,
   sx,
 }: Props) => {
   const theme = useTheme();
@@ -104,9 +120,16 @@ const TablePaginationCustom = ({
   // Handle page change
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    newPage: number
+    newPage: number,
+    direction: 'prev' | 'next'
   ) => {
-    onPageChange(newPage);
+    if (direction === 'prev' && onPrev) {
+      onPrev();
+    } else if (direction === 'next' && onNext) {
+      onNext();
+    } else {
+      onPageChange(newPage);
+    }
   };
 
   // Handle rows per page change
@@ -116,12 +139,20 @@ const TablePaginationCustom = ({
 
   // Handle "First" button click
   const handleFirstPage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    onPageChange(0); // Default behavior: go to the first page
+    if (onFirst) {
+      onFirst();
+    } else {
+      onPageChange(0); // Default behavior: go to the first page
+    }
   };
 
   // Handle "Last" button click
   const handleLastPage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    onPageChange(lastPage); // Default behavior: go to the last page
+    if (onLast) {
+      onLast();
+    } else {
+      onPageChange(lastPage); // Default behavior: go to the last page
+    }
   };
 
   return (
@@ -156,15 +187,15 @@ const TablePaginationCustom = ({
       <Stack direction="row" alignItems="center">
         {/* First Page Button (optional) */}
         {first && (
-          <CustomIconButton onClick={handleFirstPage} disabled={page === 0}>
+          <CustomIconButton onClick={handleFirstPage} disabled={firstDisabled || page === 0}>
             <Iconify icon="eva:arrowhead-left-outline" />
           </CustomIconButton>
         )}
 
         {/* Previous Page Button */}
         <CustomIconButton
-          onClick={(event) => handleChangePage(event, page - 1)}
-          disabled={page === 0}
+          onClick={(event) => handleChangePage(event, page - 1, 'prev')}
+          disabled={prevDisabled || page === 0}
         >
           <Iconify icon="eva:arrow-ios-back-fill" />
         </CustomIconButton>
@@ -181,8 +212,8 @@ const TablePaginationCustom = ({
 
         {/* Next Page Button */}
         <CustomIconButton
-          onClick={(event) => handleChangePage(event, page + 1)}
-          disabled={page >= lastPage}
+          onClick={(event) => handleChangePage(event, page + 1, 'next')}
+          disabled={nextDisabled || page >= lastPage}
           sx={{ ...(!last && { mr: 0 }) }}
         >
           <Iconify icon="eva:arrow-ios-forward-fill" />
@@ -190,7 +221,11 @@ const TablePaginationCustom = ({
 
         {/* Last Page Button (optional) */}
         {last && (
-          <CustomIconButton onClick={handleLastPage} disabled={page >= lastPage} sx={{ mr: 0 }}>
+          <CustomIconButton
+            onClick={handleLastPage}
+            disabled={lastDisabled || page >= lastPage}
+            sx={{ mr: 0 }}
+          >
             <Iconify icon="eva:arrowhead-right-outline" />
           </CustomIconButton>
         )}

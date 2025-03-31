@@ -17,6 +17,7 @@ import {
   TableHead,
   Typography,
   TableContainer,
+  CircularProgress,
 } from '@mui/material';
 
 import { useGetAuditLogFrame } from 'src/actions/nodes';
@@ -54,11 +55,10 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
     useGetAuditLogFrame(selectedNodeId, selectedFile, seq, side, count, cond);
 
   const onMaxFrameRefresh = useCallback((): void => {
-    setSeq(0);
+    setSeq(1);
     setSide(undefined);
     setCond(undefined);
     setCount(undefined);
-    setPage(0);
   }, []);
 
   const onChangeRowsPerPage = useCallback((value: number) => {
@@ -69,6 +69,22 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
     setPage(newPage);
   }, []);
 
+  const onNext = () => {
+    setSeq(seq + 1);
+  };
+
+  const onPrev = () => {
+    setSeq(seq - 1);
+  };
+
+  const onFirst = () => {
+    setSeq(1);
+  };
+
+  const onLast = () => {
+    setSeq(0);
+  };
+
   const onApply = () => {
     setCond(condText);
     setCount(countNum);
@@ -77,20 +93,32 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
 
   return (
     <>
-      <AuditLogFrameTop
-        selectedFile={selectedFile}
-        auditFrame={auditFrame}
-        onMaxFrameRefresh={onMaxFrameRefresh}
-      />
+      {auditFrameLoading ? (
+        <CircularProgress />
+      ) : (
+        <AuditLogFrameTop
+          selectedFile={selectedFile}
+          auditFrame={auditFrame}
+          onMaxFrameRefresh={onMaxFrameRefresh}
+        />
+      )}
 
       <TablePaginationCustom
         rowsPerPage={count || 40}
-        page={page}
+        page={5} // doesn't matter in this case
         count={auditFrame.max_frame}
         onPageChange={onChangePage}
         onRowsPerPageChange={onChangeRowsPerPage}
         last
         first
+        onPrev={onPrev}
+        onNext={onNext}
+        onFirst={onFirst}
+        onLast={onLast}
+        firstDisabled={seq === 1}
+        lastDisabled={seq === 0}
+        prevDisabled={seq === 0 || seq === 1}
+        nextDisabled={seq === 0 || seq === auditFrame.max_frame}
         noWord
         sx={{ mb: 1 }}
       />
@@ -173,7 +201,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
         <Grid md={2} direction="row" display="flex" alignItems="center">
           <Typography sx={{ ml: 1.5, fontSize: 15, color: grey[400] }}>Seq</Typography>
           <Typography sx={{ ml: 2, fontSize: 17, color: grey[600], fontWeight: 500 }}>
-            {selectedSeq}
+            {seq}
           </Typography>
         </Grid>
 
