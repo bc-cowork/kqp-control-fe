@@ -2,7 +2,7 @@
 
 import type { AuditLogFrameFragItem } from 'src/types/node';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import Grid from '@mui/material/Unstable_Grid2';
 import {
@@ -41,7 +41,8 @@ type Props = {
 };
 
 export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Props) {
-  const [seq, setSeq] = useState<number>(Number(selectedSeq));
+  const [seq, setSeq] = useState<number>(Number(selectedSeq)); // Display and future API value
+  const [apiSeq, setApiSeq] = useState<number>(Number(selectedSeq)); // Value sent to API
   const [count, setCount] = useState<number | undefined>(undefined);
   const [side, setSide] = useState<'prev' | 'next' | undefined>(undefined);
   const [cond, setCond] = useState<string | undefined>(undefined);
@@ -52,10 +53,17 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
   const [page, setPage] = useState<number>(0);
 
   const { auditFrame, auditFrameError, auditFrameLoading, auditFrameFragsEmpty } =
-    useGetAuditLogFrame(selectedNodeId, selectedFile, seq, side, count, cond);
+    useGetAuditLogFrame(selectedNodeId, selectedFile, apiSeq, side, count, cond);
+
+  useEffect(() => {
+    if (auditFrame?.seq !== undefined && auditFrame.seq !== seq) {
+      setSeq(auditFrame.seq);
+    }
+  }, [auditFrame, seq]);
 
   const onMaxFrameRefresh = useCallback((): void => {
     setSeq(1);
+    setApiSeq(1);
     setSide(undefined);
     setCond(undefined);
     setCount(undefined);
@@ -70,25 +78,32 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
   }, []);
 
   const onNext = () => {
-    setSeq(seq + 1);
+    const newSeq = seq + 1;
+    setSeq(newSeq);
+    setApiSeq(newSeq);
   };
 
   const onPrev = () => {
-    setSeq(seq - 1);
+    const newSeq = seq - 1;
+    setSeq(newSeq);
+    setApiSeq(newSeq);
   };
 
   const onFirst = () => {
     setSeq(1);
+    setApiSeq(1);
   };
 
   const onLast = () => {
     setSeq(0);
+    setApiSeq(0);
   };
 
   const onApply = () => {
     setCond(condText);
     setCount(countNum);
     setSide(sideText);
+    setApiSeq(seq);
   };
 
   return (
