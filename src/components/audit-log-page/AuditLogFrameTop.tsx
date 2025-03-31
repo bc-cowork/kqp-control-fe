@@ -23,7 +23,7 @@ export function AuditLogFrameTop({ selectedFile, auditFrame, onMaxFrameRefresh }
   return (
     <Box>
       <Grid container sx={{ mb: 2 }}>
-        <Grid md={2}>
+        <Grid md={2.2}>
           <Box
             sx={{
               backgroundColor: theme.palette.common.white,
@@ -50,7 +50,7 @@ export function AuditLogFrameTop({ selectedFile, auditFrame, onMaxFrameRefresh }
         </Grid>
         <Grid md={0.2} />
         <Grid
-          md={0.9}
+          md={1}
           sx={{
             py: 2,
             px: 1,
@@ -109,7 +109,7 @@ export function AuditLogFrameTop({ selectedFile, auditFrame, onMaxFrameRefresh }
           <Typography variant="subtitle1">{auditFrame?.file_size?.toLocaleString()}</Typography>
         </Grid>
         <Grid
-          md={1.1}
+          md={1.2}
           sx={{
             py: 2,
             px: 1,
@@ -125,25 +125,13 @@ export function AuditLogFrameTop({ selectedFile, auditFrame, onMaxFrameRefresh }
         </Grid>
         <Grid md={0.2} />
         <Grid
-          md={1}
+          md={2.1}
           sx={{
             py: 2,
             px: 1,
             backgroundColor: theme.palette.common.white,
             borderTopLeftRadius: '8px',
             borderBottomLeftRadius: '8px',
-            borderRight: `solid 1px ${theme.palette.divider}`,
-          }}
-        >
-          <Typography variant="caption">Seq</Typography>
-          <Typography variant="subtitle1">{auditFrame?.seq}</Typography>
-        </Grid>
-        <Grid
-          md={2}
-          sx={{
-            py: 2,
-            px: 1,
-            backgroundColor: theme.palette.common.white,
             borderRight: `solid 1px ${theme.palette.divider}`,
           }}
         >
@@ -164,7 +152,7 @@ export function AuditLogFrameTop({ selectedFile, auditFrame, onMaxFrameRefresh }
           </Typography>
         </Grid>
         <Grid
-          md={0.6}
+          md={0.8}
           sx={{
             py: 2,
             px: 1,
@@ -188,7 +176,7 @@ export function AuditLogFrameTop({ selectedFile, auditFrame, onMaxFrameRefresh }
           <Typography variant="subtitle1">{auditFrame?.head}</Typography>
         </Grid>
         <Grid
-          md={0.5}
+          md={0.8}
           sx={{
             py: 2,
             px: 1,
