@@ -71,7 +71,7 @@ export function Memory({ selectedNodeId }: Props) {
               sx={{
                 mb: 2,
                 backgroundColor: theme.palette.common.white,
-                borderRadius: 2,
+                borderRadius: '8px',
                 border: `solid 1px ${grey[100]}`,
                 minHeight: '50px',
               }}
@@ -136,6 +136,8 @@ export function Memory({ selectedNodeId }: Props) {
                   sx: {
                     color: common.white,
                     backgroundColor: grey[500],
+                    py: 2,
+                    px: 1.5,
                   },
                 },
               }}

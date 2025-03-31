@@ -4,6 +4,7 @@ import {
   Box,
   Grid,
   Table,
+  Divider,
   TableRow,
   TableBody,
   TableCell,
@@ -12,6 +13,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 
+import { grey } from 'src/theme/core';
 import { useGetIssueItemInfo, useGetIssueItemQuotes } from 'src/actions/nodes';
 
 import { TableErrorRows } from '../table/table-error-rows';
@@ -181,6 +183,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                       </TableCell>
                     </TableRow>
                   ))}
+                  <Divider sx={{ border: `4px solid ${grey[100]}` }} />
                   {rowKeysBid.map((key: string) => (
                     <TableRow key={key}>
                       <TableCell align="right">{key}</TableCell>

@@ -22,6 +22,7 @@ import { useRouter } from 'src/routes/hooks';
 
 import { formatDateCustom } from 'src/utils/format-time';
 
+import { grey } from 'src/theme/core';
 import { useAuditFrameList } from 'src/actions/nodes';
 
 import TablePaginationCustom from '../common/TablePaginationCustom';
@@ -97,6 +98,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                     backgroundColor: theme.palette.common.white,
                     borderBottomLeftRadius: '8px',
                     borderBottomRightRadius: '8px',
+                    borderTopRightRadius: '8px',
                   }}
                 >
                   <Typography variant="caption">Filename</Typography>
@@ -131,7 +133,15 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                 >
                   <Typography variant="caption">Max Frame</Typography>
                   <SvgIcon
-                    sx={{ height: 13, width: 13, cursor: 'pointer' }}
+                    sx={{
+                      height: 24,
+                      width: 24,
+                      cursor: 'pointer',
+                      p: 0.5,
+                      borderRadius: '4px',
+                      '&:hover': { backgroundColor: grey[50] },
+                      '&:active': { backgroundColor: '#D1D6D0', border: '1px solid #667085' },
+                    }}
                     onClick={onMaxFrameRefresh}
                   >
                     <svg

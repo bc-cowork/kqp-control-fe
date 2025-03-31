@@ -5,6 +5,8 @@ import { Box, SvgIcon, useTheme, Typography } from '@mui/material';
 
 import { formatDateCustom } from 'src/utils/format-time';
 
+import { grey } from 'src/theme/core';
+
 // ----------------------------------------------------------------------
 
 type Props = {
@@ -23,7 +25,7 @@ export function AuditLogFrameTop({ selectedFile, auditFrame, onMaxFrameRefresh }
   return (
     <Box>
       <Grid container sx={{ mb: 2 }}>
-        <Grid md={2.2}>
+        <Grid md={2.1}>
           <Box
             sx={{
               backgroundColor: theme.palette.common.white,
@@ -64,7 +66,7 @@ export function AuditLogFrameTop({ selectedFile, auditFrame, onMaxFrameRefresh }
           <Typography variant="subtitle1">{auditFrame?.desc}</Typography>
         </Grid>
         <Grid
-          md={1.3}
+          md={1.4}
           sx={{
             py: 2,
             px: 1,
@@ -75,7 +77,15 @@ export function AuditLogFrameTop({ selectedFile, auditFrame, onMaxFrameRefresh }
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Typography variant="caption">Max Frame</Typography>
             <SvgIcon
-              sx={{ height: 13, width: 13, cursor: 'pointer', mr: 1 }}
+              sx={{
+                height: 24,
+                width: 24,
+                cursor: 'pointer',
+                p: 0.5,
+                borderRadius: '4px',
+                '&:hover': { backgroundColor: grey[50] },
+                '&:active': { backgroundColor: '#D1D6D0', border: '1px solid #667085' },
+              }}
               onClick={onClickMaxFrameRefresh}
             >
               <svg
