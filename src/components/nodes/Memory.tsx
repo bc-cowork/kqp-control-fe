@@ -136,6 +136,7 @@ export function Memory({ selectedNodeId }: Props) {
                   sx: {
                     color: common.white,
                     backgroundColor: grey[500],
+                    boxShadow: '0px 4px 20px 0px rgba(10, 14, 21, 0.20)',
                     py: 2,
                     px: 1.5,
                   },

@@ -242,6 +242,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
                   sx: {
                     color: common.white,
                     backgroundColor: grey[500],
+                    boxShadow: '0px 4px 20px 0px rgba(10, 14, 21, 0.20)',
                   },
                 },
               }}
