@@ -39,10 +39,10 @@ const ArrowSelector = ({ label, value, setValue }: ArrowSelectorProps) => {
       sx={{
         display: 'flex',
         alignItems: 'center',
-        border: '1px solid #E0E0E0', // Light gray border
-        borderRadius: '8px', // Rounded corners
-        backgroundColor: '#fff', // White background
-        height: '40px', // Match the height in the image
+        border: '1px solid #E0E0E0',
+        borderRadius: '8px',
+        backgroundColor: common.white,
+        height: '40px',
         padding: '0 8px',
       }}
     >
@@ -72,11 +72,15 @@ const ArrowSelector = ({ label, value, setValue }: ArrowSelectorProps) => {
         onClick={handlePrevClick}
         sx={{
           padding: '4px',
+          width: 32,
+          height: 32,
+          borderRadius: '4px',
+          mr: 0.5,
           color: value === 'prev' ? colors.selected : colors.default,
           backgroundColor: value === 'prev' ? bgColors.selected : bgColors.default,
           '&:hover': {
-            color: value === 'prev' ? colors.selected : colors.default,
-            backgroundColor: value === 'prev' ? bgColors.selected : bgColors.default,
+            color: value === 'prev' ? colors.selected : colors.hover,
+            backgroundColor: value === 'prev' ? bgColors.selected : bgColors.hover,
           },
           '&:active': {
             color: colors.pressed,
@@ -107,11 +111,14 @@ const ArrowSelector = ({ label, value, setValue }: ArrowSelectorProps) => {
         onClick={handleNextClick}
         sx={{
           padding: '4px',
+          width: 32,
+          height: 32,
+          borderRadius: '4px',
           color: value === 'next' ? colors.selected : colors.default,
           backgroundColor: value === 'next' ? bgColors.selected : bgColors.default,
           '&:hover': {
-            color: value === 'next' ? colors.selected : colors.default,
-            backgroundColor: value === 'next' ? bgColors.selected : bgColors.default,
+            color: value === 'next' ? colors.selected : colors.hover,
+            backgroundColor: value === 'next' ? bgColors.selected : bgColors.hover,
           },
           '&:active': {
             color: colors.pressed,
