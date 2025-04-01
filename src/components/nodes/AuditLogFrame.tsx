@@ -130,10 +130,10 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
         onNext={onNext}
         onFirst={onFirst}
         onLast={onLast}
-        firstDisabled={seq === 1}
-        lastDisabled={seq === 0}
-        prevDisabled={seq === 1}
-        nextDisabled={seq === 0 || seq === auditFrame.max_frame}
+        firstDisabled={apiSeq === 1}
+        lastDisabled={apiSeq === 0}
+        prevDisabled={apiSeq === 1}
+        nextDisabled={apiSeq === 0 || apiSeq === auditFrame.max_frame}
         noWord
         sx={{ mb: 1 }}
       />
