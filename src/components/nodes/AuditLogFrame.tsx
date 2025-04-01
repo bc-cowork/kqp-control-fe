@@ -61,12 +61,16 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
     }
   }, [auditFrame, seq]);
 
-  const onMaxFrameRefresh = useCallback((): void => {
-    setSeq(1);
-    setApiSeq(1);
+  const resetSearch = () => {
     setSide(undefined);
     setCond(undefined);
     setCount(undefined);
+  };
+
+  const onMaxFrameRefresh = useCallback((): void => {
+    setSeq(0);
+    setApiSeq(0);
+    resetSearch();
   }, []);
 
   const onChangeRowsPerPage = useCallback((value: number) => {
@@ -78,23 +82,27 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
   }, []);
 
   const onNext = () => {
+    resetSearch();
     const newSeq = seq + 1;
     setSeq(newSeq);
     setApiSeq(newSeq);
   };
 
   const onPrev = () => {
+    resetSearch();
     const newSeq = seq - 1;
     setSeq(newSeq);
     setApiSeq(newSeq);
   };
 
   const onFirst = () => {
+    resetSearch();
     setSeq(1);
     setApiSeq(1);
   };
 
   const onLast = () => {
+    resetSearch();
     setSeq(0);
     setApiSeq(0);
   };
@@ -131,7 +139,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
         onFirst={onFirst}
         onLast={onLast}
         firstDisabled={apiSeq === 1}
-        lastDisabled={apiSeq === 0}
+        lastDisabled={false}
         prevDisabled={apiSeq === 1}
         nextDisabled={apiSeq === 0 || apiSeq === auditFrame.max_frame}
         noWord

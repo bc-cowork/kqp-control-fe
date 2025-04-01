@@ -160,17 +160,15 @@ export function useGetAuditLogFrame(
     fetcher,
     swrOptions
   );
+  const processedData = { desc: data?.data?.desc, ...data?.data?.spec };
 
-  const memoizedValue = useMemo(() => {
-    const processedData = { desc: data?.data?.desc, ...data?.data?.spec };
-    return {
-      auditFrame: processedData,
-      auditFrameLoading: isLoading,
-      auditFrameFragsEmpty: !isLoading && !data?.data?.spec?.frags?.length,
-      auditFrameError: error,
-      auditFrameValidating: isValidating,
-    };
-  }, [data?.data?.desc, data?.data?.spec, error, isLoading, isValidating]);
+  const memoizedValue = {
+    auditFrame: processedData,
+    auditFrameLoading: isLoading,
+    auditFrameFragsEmpty: !isLoading && !data?.data?.spec?.frags?.length,
+    auditFrameError: error,
+    auditFrameValidating: isValidating,
+  };
 
   return memoizedValue;
 }
