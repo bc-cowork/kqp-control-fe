@@ -115,9 +115,10 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
 
   const onApply = () => {
     setCond(condText);
-    setCount(countNum);
-    setSide(sideText);
+    setCount(countNum || 10000);
+    setSide(sideText || 'next');
     setApiSeq(seq);
+    resetCache();
   };
 
   return (
