@@ -143,16 +143,20 @@ export function useGetAuditLogFrame(
   seq: number,
   side?: 'prev' | 'next',
   count?: number,
-  cond?: string
+  cond?: string,
+  refreshKey?: number
 ) {
   let url;
 
   if (side || cond || count) {
     url = file
-      ? [endpoints.nodes.auditLog.frame(node), { params: { file, seq, side, count, cond } }]
+      ? [
+          endpoints.nodes.auditLog.frame(node),
+          { params: { file, seq, side, count, cond, refreshKey } },
+        ]
       : '';
   } else {
-    url = file ? [endpoints.nodes.auditLog.frame(node), { params: { file, seq } }] : '';
+    url = file ? [endpoints.nodes.auditLog.frame(node), { params: { file, seq, refreshKey } }] : '';
   }
 
   const { data, isLoading, error, isValidating } = useSWR<AuditLogFrameData>(
@@ -162,15 +166,13 @@ export function useGetAuditLogFrame(
   );
   const processedData = { desc: data?.data?.desc, ...data?.data?.spec };
 
-  const memoizedValue = {
+  return {
     auditFrame: processedData,
     auditFrameLoading: isLoading,
     auditFrameFragsEmpty: !isLoading && !data?.data?.spec?.frags?.length,
     auditFrameError: error,
     auditFrameValidating: isValidating,
   };
-
-  return memoizedValue;
 }
 
 // ----------------------------------------------------------------------

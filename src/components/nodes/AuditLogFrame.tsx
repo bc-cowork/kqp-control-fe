@@ -41,19 +41,19 @@ type Props = {
 };
 
 export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Props) {
-  const [seq, setSeq] = useState<number>(Number(selectedSeq)); // Display and future API value
-  const [apiSeq, setApiSeq] = useState<number>(Number(selectedSeq)); // Value sent to API
+  const [seq, setSeq] = useState<number>(Number(selectedSeq));
+  const [apiSeq, setApiSeq] = useState<number>(Number(selectedSeq));
   const [count, setCount] = useState<number | undefined>(undefined);
   const [side, setSide] = useState<'prev' | 'next' | undefined>(undefined);
   const [cond, setCond] = useState<string | undefined>(undefined);
   const [condText, setCondText] = useState<string | undefined>(undefined);
   const [countNum, setCountNum] = useState<number | undefined>(count);
   const [sideText, setSideText] = useState<'prev' | 'next' | undefined>(side);
-
+  const [refreshKey, setRefreshKey] = useState<number>(0);
   const [page, setPage] = useState<number>(0);
 
   const { auditFrame, auditFrameError, auditFrameLoading, auditFrameFragsEmpty } =
-    useGetAuditLogFrame(selectedNodeId, selectedFile, apiSeq, side, count, cond);
+    useGetAuditLogFrame(selectedNodeId, selectedFile, apiSeq, side, count, cond, refreshKey);
 
   useEffect(() => {
     if (auditFrame?.seq !== undefined && auditFrame.seq !== seq) {
@@ -61,10 +61,15 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
     }
   }, [auditFrame, seq]);
 
+  const resetCache = () => {
+    setRefreshKey((prev) => prev + 1);
+  };
+
   const resetSearch = () => {
     setSide(undefined);
     setCond(undefined);
     setCount(undefined);
+    resetCache();
   };
 
   const onMaxFrameRefresh = () => {
@@ -86,6 +91,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
     const newSeq = seq + 1;
     setSeq(newSeq);
     setApiSeq(newSeq);
+    resetCache();
   };
 
   const onPrev = () => {
