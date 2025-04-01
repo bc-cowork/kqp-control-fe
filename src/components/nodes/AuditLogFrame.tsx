@@ -67,11 +67,11 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
     setCount(undefined);
   };
 
-  const onMaxFrameRefresh = useCallback((): void => {
+  const onMaxFrameRefresh = () => {
     setSeq(0);
     setApiSeq(0);
     resetSearch();
-  }, []);
+  };
 
   const onChangeRowsPerPage = useCallback((value: number) => {
     setPage(0);
