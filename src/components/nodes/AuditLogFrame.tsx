@@ -10,12 +10,16 @@ import {
   Table,
   Paper,
   Button,
+  Dialog,
   Tooltip,
   TableRow,
   TableBody,
   TableCell,
   TableHead,
   Typography,
+  DialogTitle,
+  DialogActions,
+  DialogContent,
   TableContainer,
   CircularProgress,
 } from '@mui/material';
@@ -47,10 +51,12 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
   const [side, setSide] = useState<'prev' | 'next' | undefined>(undefined);
   const [cond, setCond] = useState<string | undefined>(undefined);
   const [condText, setCondText] = useState<string | undefined>(undefined);
-  const [countNum, setCountNum] = useState<number | undefined>(count);
-  const [sideText, setSideText] = useState<'prev' | 'next' | undefined>(side);
+  const [countNum, setCountNum] = useState<number | undefined>(10000);
+  const [sideText, setSideText] = useState<'prev' | 'next' | undefined>('next');
   const [refreshKey, setRefreshKey] = useState<number>(0);
   const [page, setPage] = useState<number>(0);
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const [dialogMessage, setDialogMessage] = useState<string>('');
 
   const { auditFrame, auditFrameError, auditFrameLoading, auditFrameFragsEmpty } =
     useGetAuditLogFrame(selectedNodeId, selectedFile, apiSeq, side, count, cond, refreshKey);
@@ -114,11 +120,31 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
   };
 
   const onApply = () => {
+    // Validation logic
+    let errorMessage = '';
+
+    if (countNum === undefined || countNum <= 0) {
+      errorMessage = 'Count is required and must be a positive number.';
+    } else if (!sideText) {
+      errorMessage = 'Scan direction (prev/next) is required.';
+    }
+
+    if (errorMessage) {
+      setDialogMessage(errorMessage);
+      setDialogOpen(true);
+      return;
+    }
+
     setCond(condText);
-    setCount(countNum || 10000);
-    setSide(sideText || 'next');
+    setCount(countNum);
+    setSide(sideText);
     setApiSeq(seq);
     resetCache();
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+    setDialogMessage('');
   };
 
   return (
@@ -281,6 +307,18 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
           </Button>
         </Grid>
       </Grid>
+
+      <Dialog open={dialogOpen} onClose={handleDialogClose}>
+        <DialogTitle>Validation Error</DialogTitle>
+        <DialogContent>
+          <Typography>{dialogMessage}</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} variant="contained" color="primary">
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
