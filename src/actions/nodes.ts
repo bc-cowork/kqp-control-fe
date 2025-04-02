@@ -95,12 +95,13 @@ export function useAuditFrameList(
   page: number,
   limit: number,
   offset: number,
-  sort: 'asc' | 'desc'
+  sort: 'asc' | 'desc',
+  refreshKey: number
 ) {
   const url = file
     ? [
         endpoints.nodes.auditLog.frameList(node),
-        { params: { file, page, limit, 'last-offset': offset, sort } },
+        { params: { file, page, limit, 'last-offset': offset, sort, refreshKey } },
       ]
     : '';
 
@@ -127,7 +128,7 @@ export function useAuditFrameList(
 // ----------------------------------------------------------------------
 
 type AuditLogFrameData = {
-  ok: boolean;
+  okay: boolean;
   msg: string;
   data: {
     desc: string;
@@ -170,7 +171,7 @@ export function useGetAuditLogFrame(
     auditFrame: processedData,
     auditFrameLoading: isLoading,
     auditFrameFragsEmpty: !isLoading && !data?.data?.spec?.frags?.length,
-    auditFrameError: error,
+    auditFrameError: data?.okay === false || error,
     auditFrameValidating: isValidating,
   };
 }

@@ -40,9 +40,22 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(40);
   const [offset, setOffset] = useState<number>(0);
+  const [refreshKey, setRefreshKey] = useState<number>(0);
 
   const { auditFrameList, auditFrameListError, auditFrameListLoading, auditFrameListEmpty } =
-    useAuditFrameList(selectedNodeId, selectedFile, page + 1, rowsPerPage, offset, 'desc');
+    useAuditFrameList(
+      selectedNodeId,
+      selectedFile,
+      page + 1,
+      rowsPerPage,
+      offset,
+      'desc',
+      refreshKey
+    );
+
+  const resetCache = () => {
+    setRefreshKey((prev) => prev + 1);
+  };
 
   const onChangeRowsPerPage = useCallback((value: number) => {
     setPage(0);
@@ -62,10 +75,11 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
     [auditFrameList.max_frame]
   );
 
-  const onMaxFrameRefresh = useCallback((): void => {
+  const onMaxFrameRefresh = () => {
+    resetCache();
     setOffset(0);
     setPage(0);
-  }, []);
+  };
 
   return (
     <>
