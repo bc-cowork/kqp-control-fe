@@ -77,13 +77,13 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
     setSide(undefined);
     setCond(undefined);
     setCount(undefined);
-    resetCache();
   };
 
   const onMaxFrameRefresh = () => {
     setSeq(0);
     setApiSeq(0);
     resetSearch();
+    resetCache();
   };
 
   const onChangeRowsPerPage = useCallback((value: number) => {
@@ -99,7 +99,6 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
     const newSeq = seq + 1;
     setSeq(newSeq);
     setApiSeq(newSeq);
-    resetCache();
   };
 
   const onPrev = () => {
@@ -119,6 +118,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
     resetSearch();
     setSeq(0);
     setApiSeq(0);
+    resetCache();
   };
 
   const onApply = () => {
@@ -141,7 +141,6 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
     setCount(countNum);
     setSide(sideText);
     setApiSeq(seq);
-    resetCache();
   };
 
   const handleDialogClose = () => {
