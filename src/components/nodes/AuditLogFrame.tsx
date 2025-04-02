@@ -149,6 +149,13 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
     setDialogMessage('');
   };
 
+  function onKeyDownHandler(event: any) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      onApply();
+    }
+  }
+
   return (
     <>
       {auditFrameLoading ? (
@@ -265,7 +272,12 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
 
         <Grid md={5.5}>
           <Box display="flex" alignItems="center" sx={{ pr: 1 }}>
-            <CustomTextField value={condText} setValue={setCondText} label="Cond" />
+            <CustomTextField
+              value={condText}
+              setValue={setCondText}
+              label="Cond"
+              onKeyDown={(e) => onKeyDownHandler(e)}
+            />
 
             <Tooltip
               title={
@@ -296,7 +308,13 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
         </Grid>
 
         <Grid md={2} sx={{ pr: 1 }}>
-          <CustomTextField value={countNum} setValue={setCountNum} label="Count" type="number" />
+          <CustomTextField
+            value={countNum}
+            setValue={setCountNum}
+            label="Count"
+            type="number"
+            onKeyDown={(e) => onKeyDownHandler(e)}
+          />
         </Grid>
 
         <Grid md={1.5} sx={{ pr: 1 }}>
