@@ -9,23 +9,25 @@ import {
   Box,
   Table,
   Paper,
+  Stack,
   Button,
   Dialog,
   Tooltip,
+  SvgIcon,
   TableRow,
   TableBody,
   TableCell,
   TableHead,
   Typography,
+  IconButton,
   DialogTitle,
-  DialogActions,
   DialogContent,
   TableContainer,
   CircularProgress,
 } from '@mui/material';
 
 import { useGetAuditLogFrame } from 'src/actions/nodes';
-import { grey, common, primary, success, warning } from 'src/theme/core';
+import { grey, error, common, primary, success, warning } from 'src/theme/core';
 
 import { Iconify } from '../iconify';
 import { TableEmptyRows } from '../table/table-empty-rows';
@@ -308,16 +310,60 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
         </Grid>
       </Grid>
 
-      <Dialog open={dialogOpen} onClose={handleDialogClose}>
-        <DialogTitle>Validation Error</DialogTitle>
-        <DialogContent>
-          <Typography>{dialogMessage}</Typography>
+      <Dialog
+        open={dialogOpen}
+        onClose={handleDialogClose}
+        sx={{
+          '& .MuiPaper-root': {
+            background: '#FFF2F4',
+            py: 3,
+            px: 1.5,
+            border: `1px solid #FFD8D8`,
+            borderRadius: '8px',
+          },
+        }}
+      >
+        <DialogTitle sx={{ p: 0 }}>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            sx={{ width: '100%' }}
+          >
+            <Stack direction="row" alignItems="center">
+              <SvgIcon height="20" width="20" sx={{ mr: 0.5 }}>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.30865 2.07922C9.61592 1.53088 10.3841 1.53088 10.6913 2.07922L18.6419 16.2675C18.9491 16.8159 18.565 17.5013 17.9505 17.5013H2.04949C1.43496 17.5013 1.05088 16.8159 1.35814 16.2675L9.30865 2.07922Z"
+                    fill="#FF3D4A"
+                  />
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M9.66699 6.66797C9.39085 6.66797 9.16699 6.89183 9.16699 7.16797V12.0013C9.16699 12.2774 9.39085 12.5013 9.66699 12.5013H10.3337C10.6098 12.5013 10.8337 12.2774 10.8337 12.0013V7.16797C10.8337 6.89183 10.6098 6.66797 10.3337 6.66797H9.66699ZM9.66699 13.3346C9.39085 13.3346 9.16699 13.5585 9.16699 13.8346V14.5013C9.16699 14.7774 9.39085 15.0013 9.66699 15.0013H10.3337C10.6098 15.0013 10.8337 14.7774 10.8337 14.5013V13.8346C10.8337 13.5585 10.6098 13.3346 10.3337 13.3346H9.66699Z"
+                    fill="white"
+                  />
+                </svg>
+              </SvgIcon>
+              <Typography sx={{ color: error.dark, fontSize: 15, fontWeight: 500 }}>
+                Validation Error
+              </Typography>
+            </Stack>
+
+            <IconButton onClick={handleDialogClose}>
+              <Iconify color="#FFBABA" icon="mingcute:close-line" />
+            </IconButton>
+          </Stack>
+        </DialogTitle>
+        <DialogContent sx={{ p: 0 }}>
+          <Typography sx={{ color: error.dark, fontSize: 19, mt: 1 }}>{dialogMessage}</Typography>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDialogClose} variant="contained" color="primary">
-            OK
-          </Button>
-        </DialogActions>
       </Dialog>
     </>
   );
