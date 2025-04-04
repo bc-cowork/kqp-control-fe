@@ -40,7 +40,7 @@ const MuiTableRow: Components<Theme>['MuiTableRow'] = {
       },
       '&:hover': { backgroundColor: `${varAlpha(theme.vars.palette.primary.lighter, 0.2)}` },
       [`&.${tableRowClasses.selected}`]: {
-        backgroundColor: '#EFF6FF',
+        backgroundColor: theme.palette.grey[200],
         border: `2px solid ${theme.palette.primary.main}`,
         '&:hover': { backgroundColor: '#C7DBFF' },
       },
@@ -75,6 +75,10 @@ const MuiTableCell: Components<Theme>['MuiTableCell'] = {
       'tr:last-child &': {
         '&:first-of-type': { borderBottomLeftRadius: 4 },
         '&:last-of-type': { borderBottomRightRadius: 4 },
+      },
+      [`tr.${tableRowClasses.selected} &`]: {
+        fontWeight: 500,
+        color: theme.palette.grey[600],
       },
     }),
     // Remove or override the default stickyHeader styles
