@@ -33,7 +33,7 @@ type Props = {
 
 export function DashboardView({ title = 'Main' }: Props) {
   const [selectedNodeId, setSelectedNodeId] = useState<string>('');
-  const [refreshKey, setRefreshKey] = useState<number>(0);
+  const [refreshKey, setRefreshKey] = useState<number>(1);
   const viewTabs = useTabs(VIEW_TABS[0].value);
   const [selectedNode, setSelectedNode] = useState<INodeItem | undefined>(undefined);
   const selectedNodeParam = selectedNode?.id || selectedNodeId;
@@ -124,7 +124,6 @@ export function DashboardView({ title = 'Main' }: Props) {
                   <Grid md={8}>
                     <NodeGraphs
                       selectedNodeParam={selectedNodeParam}
-                      selectedNode={selectedNode}
                       selectedTab={viewTabs.value}
                       refreshKey={refreshKey}
                     />
