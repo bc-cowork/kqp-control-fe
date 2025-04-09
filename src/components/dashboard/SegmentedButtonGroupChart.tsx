@@ -2,6 +2,14 @@ import { styled } from '@mui/material/styles';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
+type SegmentedButtonGroupProps = {
+  tabs: { label: string; value: string }[];
+  value: string;
+  onChange: (value: string) => void;
+  metric: string; // Add metric prop to determine if it's a percentage
+};
+
+// Conditionally style the ToggleButtonGroup based on the metric
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   borderRadius: '6px',
   backgroundColor: theme.palette.grey[200],
@@ -16,34 +24,38 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   },
 }));
 
-const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
-  fontSize: 11,
-  fontWeight: 400,
-  color: theme.palette.grey[400],
-  padding: '2px 8px',
-  '&.Mui-selected': {
-    backgroundColor: theme.palette.common.white,
-    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
-    color: theme.palette.text.primary,
-    '&:hover': {
-      backgroundColor: theme.palette.common.white,
+const StyledToggleButton = styled(ToggleButton, {
+  shouldForwardProp: (prop) => prop !== 'metric', // Prevent metric prop from being passed to DOM
+})<{ metric: string }>(({ theme, metric }) => {
+  const isPercentageMetric = ['cpu', 'memory'].includes(metric);
+  return {
+    fontSize: 11,
+    fontWeight: 400,
+    color: theme.palette.grey[400],
+    padding: '2px 8px',
+    '&.Mui-selected': {
+      backgroundColor: isPercentageMetric ? theme.palette.grey[50] : theme.palette.common.white,
+      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+      color: theme.palette.text.primary,
+      '&:hover': {
+        backgroundColor: theme.palette.common.white,
+      },
     },
-  },
-  '&:not(.Mui-selected)': {
-    backgroundColor: theme.palette.grey[200],
-    '&:hover': {
-      backgroundColor: theme.palette.grey[300],
+    '&:not(.Mui-selected)': {
+      backgroundColor: theme.palette.grey[200],
+      '&:hover': {
+        backgroundColor: theme.palette.grey[300],
+      },
     },
-  },
-}));
+  };
+});
 
-type SegmentedButtonGroupProps = {
-  tabs: { label: string; value: string }[];
-  value: string;
-  onChange: (value: string) => void;
-};
-
-export function SegmentedButtonGroupChart({ tabs, value, onChange }: SegmentedButtonGroupProps) {
+export function SegmentedButtonGroupChart({
+  tabs,
+  value,
+  onChange,
+  metric,
+}: SegmentedButtonGroupProps) {
   const handleChange = (event: any, newValue: any) => {
     if (newValue !== null) {
       onChange(newValue); // Pass the selected value to the parent
@@ -58,7 +70,12 @@ export function SegmentedButtonGroupChart({ tabs, value, onChange }: SegmentedBu
       aria-label="segmented button group"
     >
       {tabs.map((tab) => (
-        <StyledToggleButton key={tab.value} value={tab.value} aria-label={`${tab.value} option`}>
+        <StyledToggleButton
+          key={tab.value}
+          value={tab.value}
+          aria-label={`${tab.value} option`}
+          metric={metric}
+        >
           {tab.label}
         </StyledToggleButton>
       ))}

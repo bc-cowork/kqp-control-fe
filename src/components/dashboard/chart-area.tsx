@@ -169,7 +169,12 @@ export function ChartArea({
         sx={{ my: 1, mx: 1 }}
       >
         <Typography sx={{ fontSize: 15, color: theme.palette.grey[400] }}>{title}</Typography>
-        <SegmentedButtonGroupChart tabs={tabs} value={tabValue} onChange={onTabChange} />
+        <SegmentedButtonGroupChart
+          tabs={tabs}
+          value={tabValue}
+          onChange={onTabChange}
+          metric={metric}
+        />
       </Stack>
 
       {/* Chart */}

@@ -48,7 +48,7 @@ export interface ServiceStatus {
 export interface GraphDataResponse {
   data: {
     nodeId: string;
-    service_status: ServiceStatus[];
+    time_series: ServiceStatus[];
     msg: string;
     okay: boolean;
   };

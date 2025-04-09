@@ -124,7 +124,7 @@ type GraphData = {
   msg: string;
   data: {
     nodeId: string;
-    service_status: {
+    time_series: {
       cpu: number;
       hhmmss: string; // Time in "HHMMSS" format (e.g., "160000")
       inbound_bytes: number;

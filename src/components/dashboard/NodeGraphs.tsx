@@ -43,8 +43,8 @@ export function NodeGraphs({ selectedNodeParam, selectedNode, selectedTab }: Pro
   const { graphData } = useGetGraphData(selectedNodeParam);
 
   // Process the data for the charts
-  const chartData: ChartDataPoint[] = graphData?.service_status
-    ? processChartData(graphData.service_status)
+  const chartData: ChartDataPoint[] = graphData?.time_series
+    ? processChartData(graphData.time_series)
     : [];
 
   // Calculate the vertical spacing adjustment
