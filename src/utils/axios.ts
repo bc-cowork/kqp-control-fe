@@ -63,6 +63,7 @@ export const endpoints = {
     serviceStatus: (node: string) => `/apik/${node}/service/status`,
     processList: (node: string) => `/apik/${node}/process/list`,
     issueList: (node: string) => `/apik/${node}/issue/list`,
+    graph: (node: string) => `/apik/${node}/node/performance/time-series`,
   },
   nodes: {
     channelInbound: {

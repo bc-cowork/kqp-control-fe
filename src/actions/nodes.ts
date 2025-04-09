@@ -20,7 +20,7 @@ const swrOptions = {
  * Channel Inbound
  *************************************** */
 type ChannelData = {
-  ok: boolean;
+  okay: boolean;
   msg: string;
   data: {
     nodeId: string;
@@ -55,7 +55,7 @@ export function useGetChannelList(node: string, kind: string = 'inbound') {
  *************************************** */
 
 type AuditLogData = {
-  ok: boolean;
+  okay: boolean;
   msg: string;
   data: {
     nodeId: string;
@@ -85,7 +85,7 @@ export function useAuditLogList(node: string, kind: string) {
 // ----------------------------------------------------------------------
 
 type AuditFrameListData = {
-  ok: boolean;
+  okay: boolean;
   msg: string;
   data: any; // TODO: define type
 };
@@ -184,7 +184,7 @@ export function useGetAuditLogFrame(
  *************************************** */
 
 type IssueData = {
-  ok: boolean;
+  okay: boolean;
   msg: string;
   data: {
     nodeId: string;
@@ -237,7 +237,7 @@ export function useGetIssues(node: string, offset: number, limit: number, q?: st
 // ----------------------------------------------------------------------
 
 type IssueItemInfoData = {
-  ok: boolean;
+  okay: boolean;
   msg: string;
   data: {
     nodeId: string;
@@ -270,7 +270,7 @@ export function useGetIssueItemInfo(node: string, code: string) {
 // ----------------------------------------------------------------------
 
 type IssueItemQuoteData = {
-  ok: boolean;
+  okay: boolean;
   msg: string;
   data: any;
 };

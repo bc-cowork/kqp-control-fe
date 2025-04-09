@@ -20,7 +20,7 @@ const swrOptions = {
  * Node List
  *************************************** */
 type NodeData = {
-  ok: boolean;
+  okay: boolean;
   msg: string;
   data: {
     nodeList: INodeItem[];
@@ -50,7 +50,7 @@ export function useGetNodes() {
  * Process List of a Node
  *************************************** */
 type ProcessData = {
-  ok: boolean;
+  okay: boolean;
   msg: string;
   data: IProcessResponse;
 };
@@ -91,7 +91,7 @@ export function useGetProcesses(node: string) {
  * Process List of a Node
  *************************************** */
 type StatusData = {
-  ok: boolean;
+  okay: boolean;
   msg: string;
   data: IStatus;
 };
@@ -107,6 +107,49 @@ export function useGetStatus(node: string) {
       statusLoading: isLoading,
       statusError: error,
       statusValidating: isValidating,
+    }),
+    [data?.data, error, isLoading, isValidating]
+  );
+
+  return memoizedValue;
+}
+
+// ----------------------------------------------------------------------
+
+/** **************************************
+ * Graph data
+ *************************************** */
+type GraphData = {
+  okay: boolean;
+  msg: string;
+  data: {
+    nodeId: string;
+    service_status: {
+      cpu: number;
+      hhmmss: string; // Time in "HHMMSS" format (e.g., "160000")
+      inbound_bytes: number;
+      inbound_count: number;
+      memory: number;
+      name: string;
+      outbound_bytes: number;
+      outbound_count: number;
+    }[];
+  };
+};
+
+export function useGetGraphData(node: string) {
+  const url = endpoints.dashboard.graph(node);
+
+  const { data, isLoading, error, isValidating } = useSWR<GraphData>(url, fetcher, swrOptions);
+
+  console.log('useGet', data);
+
+  const memoizedValue = useMemo(
+    () => ({
+      graphData: data?.data,
+      graphDataLoading: isLoading,
+      graphDataError: error,
+      graphDataValidating: isValidating,
     }),
     [data?.data, error, isLoading, isValidating]
   );

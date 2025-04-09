@@ -61,8 +61,8 @@ const MuiTableCell: Components<Theme>['MuiTableCell'] = {
       color: theme.palette.grey[50],
       fontWeight: 400,
       backgroundColor: theme.palette.primary.darker,
-      '&:first-of-type': { borderTopLeftRadius: 8 },
-      '&:last-of-type': { borderTopRightRadius: 8 },
+      '&:first-of-type': { borderTopLeftRadius: '8px', borderBottomLeftRadius: '8px' },
+      '&:last-of-type': { borderTopRightRadius: '8px', borderBottomRightRadius: '8px' },
       // Ensure sticky header cells keep these styles
       position: 'sticky',
       top: 0,
@@ -72,9 +72,13 @@ const MuiTableCell: Components<Theme>['MuiTableCell'] = {
       fontSize: 15,
       color: theme.palette.grey[400],
       backgroundColor: 'inherit',
+      'tr:first-child &': {
+        '&:first-of-type': { borderTopLeftRadius: '8px' },
+        '&:last-of-type': { borderTopRightRadius: '8px' },
+      },
       'tr:last-child &': {
-        '&:first-of-type': { borderBottomLeftRadius: 4 },
-        '&:last-of-type': { borderBottomRightRadius: 4 },
+        '&:first-of-type': { borderBottomLeftRadius: '8px' },
+        '&:last-of-type': { borderBottomRightRadius: '8px' },
       },
       [`tr.${tableRowClasses.selected} &`]: {
         fontWeight: 500,
