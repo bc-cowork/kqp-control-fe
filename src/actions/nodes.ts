@@ -284,8 +284,6 @@ export function useGetIssueItemQuotes(node: string, code: string) {
     swrOptions
   );
 
-  // console.log('useGetIssueItemQuotes', data);
-
   const memoizedValue = useMemo(
     () => ({
       issueQuotesAsk: data?.data?.issueQuote?.order_book?.ask || {},

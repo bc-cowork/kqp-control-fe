@@ -11,6 +11,7 @@ import {
   AreaChart,
   CartesianGrid,
   ReferenceArea,
+  ReferenceLine,
   ResponsiveContainer,
 } from 'recharts';
 
@@ -114,29 +115,6 @@ export function ChartArea({
   // Only apply threshold highlighting for the CPU chart
   const applyThreshold = title === 'CPU' && threshold !== undefined;
 
-  // For the CPU chart, find the range where the value exceeds the threshold
-  const thresholdExceedPoints = applyThreshold
-    ? data.map((point, index) => ({ ...point, index })).filter((point) => point[metric] > threshold)
-    : [];
-
-  // Find continuous ranges where the metric exceeds the threshold
-  const thresholdRanges: { x1: number; x2: number }[] = [];
-  let startIndex: number | null = null;
-
-  thresholdExceedPoints.forEach((point, i) => {
-    if (startIndex === null) {
-      startIndex = point.index;
-    }
-    // If this is the last point or the next point is not consecutive
-    if (
-      i === thresholdExceedPoints.length - 1 ||
-      (thresholdExceedPoints[i + 1] && thresholdExceedPoints[i + 1].index !== point.index + 1)
-    ) {
-      thresholdRanges.push({ x1: startIndex, x2: point.index });
-      startIndex = null;
-    }
-  });
-
   const formatLargeNumber = (value: number): string => {
     if (value >= 1_000_000) {
       return `${Math.round(value / 1_000_000)}M`; // e.g., 3,456,789 -> 3M
@@ -147,7 +125,8 @@ export function ChartArea({
     return value.toString();
   };
 
-  const minValue = Math.min(...data.map((point) => point[metric]));
+  const minValue = data.length > 0 ? Math.min(...data.map((point) => point[metric])) : 0;
+  const maxValue = data.length > 0 ? Math.max(...data.map((point) => point[metric])) : 100;
 
   return (
     <Box
@@ -217,20 +196,6 @@ export function ChartArea({
               itemStyle={{ color: theme.palette.text.secondary }}
             />
 
-            {/* Highlight areas where the metric exceeds the threshold */}
-            {applyThreshold &&
-              thresholdExceedPoints.map((point) => (
-                <ReferenceArea
-                  key={point.index}
-                  x1={point.timestamp}
-                  x2={point.timestamp}
-                  y1={threshold}
-                  y2={point[metric]}
-                  fill={theme.palette.error.main}
-                  fillOpacity={0.3}
-                />
-              ))}
-
             {/* Main Area Chart */}
             <Area
               type="monotone"
@@ -238,7 +203,26 @@ export function ChartArea({
               stroke={stroke}
               fill={fill}
               fillOpacity={fillOpacity}
+              strokeLinecap="butt"
             />
+
+            {/* Highlight the entire area above the threshold for CPU with a gradient */}
+            {applyThreshold && (
+              <ReferenceArea
+                y1={threshold} // Start at the threshold (50)
+                y2="auto" // Extend to the top of the chart
+                fill="url(#thresholdGradient)" // Apply the gradient
+              />
+            )}
+
+            {/* Draw a straight solid line at the threshold for CPU */}
+            {applyThreshold && (
+              <ReferenceLine
+                y={threshold} // Line at the threshold (50)
+                stroke="#FF5B5B" // Red color for the line
+                strokeWidth={1}
+              />
+            )}
           </AreaChart>
         )}
       </ResponsiveContainer>

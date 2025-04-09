@@ -79,7 +79,6 @@ function Group({ items, render, slotProps, enabledRootRedirect, cssVars }: NavGr
   }, [checkUserSession, router]);
 
   const handleClick = (event: any) => {
-    console.log(event.currentTarget);
     setAnchorEl(event.currentTarget);
   };
 
