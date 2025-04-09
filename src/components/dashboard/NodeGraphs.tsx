@@ -8,6 +8,8 @@ import Box from '@mui/material/Box';
 import { Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
+import { useTabs } from 'src/routes/hooks';
+
 import { processChartData } from 'src/utils/process-chart-data';
 
 import { useGetGraphData } from 'src/actions/dashboard';
@@ -22,8 +24,20 @@ interface Props {
   selectedTab: string;
 }
 
+const CPU_MEMORY_TABS = [{ value: '%', label: '%' }];
+
+const BOUND_TABS = [
+  { value: 'count', label: 'count' },
+  { value: 'byte', label: 'byte' },
+];
+
 export function NodeGraphs({ selectedNodeParam, selectedNode, selectedTab }: Props) {
   const theme = useTheme();
+
+  const cpuTabs = useTabs(CPU_MEMORY_TABS[0].value);
+  const memoryTabs = useTabs(CPU_MEMORY_TABS[0].value);
+  const inboundTabs = useTabs(BOUND_TABS[0].value);
+  const outboundTabs = useTabs(BOUND_TABS[0].value);
 
   // Fetch graph data
   const { graphData } = useGetGraphData(selectedNodeParam);
@@ -35,32 +49,37 @@ export function NodeGraphs({ selectedNodeParam, selectedNode, selectedTab }: Pro
 
   // Calculate the vertical spacing adjustment
   const spacingPx = 1.5 * 8; // 12px (spacing={1.5} * 8px)
-  const verticalSpacingAdjustment = selectedTab === '1x4' ? spacingPx * 3 : spacingPx; // 36px for '1x4', 12px for '2x2'
+  const verticalSpacingAdjustment = 605;
 
   return (
     <Box
       sx={{
-        border: 1,
-        borderColor: theme.palette.grey[200],
-        borderRadius: 1,
+        // border: 1,
+        // borderColor: theme.palette.grey[200],
+        // borderRadius: 1,
         bgcolor: theme.palette.common.white,
         height: 'calc(100vh - 390px)',
-        p: 1.5,
+        px: 0.5,
+        pb: 1,
         boxSizing: 'border-box',
       }}
     >
-      <Grid container spacing={1.5}>
+      <Grid container spacing={0.5}>
         <Grid item md={selectedTab === '1x4' ? 12 : 6}>
           <ChartArea
             title="CPU"
             data={chartData}
             metric="cpu"
-            threshold={80} // Highlight when CPU > 80
+            threshold={50}
             height={
               selectedTab === '1x4'
-                ? `calc(((50vh - 244px) - ${verticalSpacingAdjustment}px) / 2)`
-                : `calc((50vh - 244px) - ${verticalSpacingAdjustment}px)`
+                ? `calc((100vh - ${verticalSpacingAdjustment}px) / 2)`
+                : `calc(100vh - ${verticalSpacingAdjustment}px)`
             }
+            tabs={CPU_MEMORY_TABS}
+            tabValue={cpuTabs.value}
+            onTabChange={cpuTabs.onChange}
+            layout={selectedTab}
           />
         </Grid>
         <Grid item md={selectedTab === '1x4' ? 12 : 6}>
@@ -70,33 +89,45 @@ export function NodeGraphs({ selectedNodeParam, selectedNode, selectedTab }: Pro
             metric="memory"
             height={
               selectedTab === '1x4'
-                ? `calc(((50vh - 244px) - ${verticalSpacingAdjustment}px) / 2)`
-                : `calc((50vh - 244px) - ${verticalSpacingAdjustment}px)`
+                ? `calc((100vh - ${verticalSpacingAdjustment}px) / 2)`
+                : `calc(100vh - ${verticalSpacingAdjustment}px)`
             }
+            tabs={CPU_MEMORY_TABS}
+            tabValue={memoryTabs.value}
+            onTabChange={memoryTabs.onChange}
+            layout={selectedTab}
           />
         </Grid>
         <Grid item md={selectedTab === '1x4' ? 12 : 6}>
           <ChartArea
             title="Inbound"
             data={chartData}
-            metric="inbound_bytes"
+            metric={inboundTabs.value === 'count' ? 'inbound_count' : 'inbound_bytes'}
             height={
               selectedTab === '1x4'
-                ? `calc(((50vh - 244px) - ${verticalSpacingAdjustment}px) / 2)`
-                : `calc((50vh - 244px) - ${verticalSpacingAdjustment}px)`
+                ? `calc((100vh - ${verticalSpacingAdjustment}px) / 2)`
+                : `calc(100vh - ${verticalSpacingAdjustment}px)`
             }
+            tabs={BOUND_TABS}
+            tabValue={inboundTabs.value}
+            onTabChange={inboundTabs.onChange}
+            layout={selectedTab}
           />
         </Grid>
         <Grid item md={selectedTab === '1x4' ? 12 : 6}>
           <ChartArea
             title="Outbound"
             data={chartData}
-            metric="outbound_bytes"
+            metric={outboundTabs.value === 'count' ? 'outbound_count' : 'outbound_bytes'}
             height={
               selectedTab === '1x4'
-                ? `calc(((50vh - 244px) - ${verticalSpacingAdjustment}px) / 2)`
-                : `calc((50vh - 244px) - ${verticalSpacingAdjustment}px)`
+                ? `calc((100vh - ${verticalSpacingAdjustment}px) / 2)`
+                : `calc(100vh - ${verticalSpacingAdjustment}px)`
             }
+            tabs={BOUND_TABS}
+            tabValue={outboundTabs.value}
+            onTabChange={outboundTabs.onChange}
+            layout={selectedTab}
           />
         </Grid>
       </Grid>

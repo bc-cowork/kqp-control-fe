@@ -13,6 +13,8 @@ export function processChartData(serviceStatus: ServiceStatus[]): ChartDataPoint
       memory: entry.memory,
       inbound_bytes: entry.inbound_bytes,
       outbound_bytes: entry.outbound_bytes,
+      inbound_count: entry.inbound_count,
+      outbound_count: entry.outbound_count,
     };
   });
 }

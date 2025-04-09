@@ -19,14 +19,20 @@ import { useGetProcesses } from 'src/actions/dashboard';
 
 type Props = {
   selectedNodeId: string;
+  page?: string;
 };
 
-export function ProcessDetail({ selectedNodeId }: Props) {
+export function ProcessDetail({ selectedNodeId, page = 'process' }: Props) {
   const { processes, processLoading, processesEmpty, processError } =
     useGetProcesses(selectedNodeId);
 
+  const isDashboardPage = page === 'dashboard';
+
   return (
-    <TableContainer component={Paper} sx={{ height: 'calc(100vh - 380px)' }}>
+    <TableContainer
+      component={Paper}
+      sx={{ ...(isDashboardPage && { height: 'calc(100vh - 380px)' }) }}
+    >
       <Table size="small">
         <TableHead>
           <TableRow>

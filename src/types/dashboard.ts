@@ -60,4 +60,6 @@ export interface ChartDataPoint {
   memory: number;
   inbound_bytes: number;
   outbound_bytes: number;
+  inbound_count: number;
+  outbound_count: number;
 }

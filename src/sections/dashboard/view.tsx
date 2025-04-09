@@ -153,7 +153,7 @@ export function DashboardView({ title = 'Main' }: Props) {
                 Process List
               </Typography>
               {selectedNode ? (
-                <ProcessDetail selectedNodeId={selectedNodeParam} />
+                <ProcessDetail selectedNodeId={selectedNodeParam} page="dashboard" />
               ) : (
                 <Typography variant="h5">Select a node to see process list</Typography>
               )}
