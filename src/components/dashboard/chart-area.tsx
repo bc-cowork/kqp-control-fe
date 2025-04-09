@@ -158,6 +158,7 @@ export function ChartArea({
         display: 'flex',
         flexDirection: 'column',
         mr: 1,
+        ...(layout === '1x4' && { pb: 4 }),
       }}
     >
       {/* Chart Header */}
@@ -165,7 +166,7 @@ export function ChartArea({
         direction="row"
         justifyContent="space-between"
         alignItems="center"
-        sx={{ my: 1, ml: 1 }}
+        sx={{ my: 1, mx: 1 }}
       >
         <Typography sx={{ fontSize: 15, color: theme.palette.grey[400] }}>{title}</Typography>
         <SegmentedButtonGroupChart tabs={tabs} value={tabValue} onChange={onTabChange} />
@@ -173,7 +174,10 @@ export function ChartArea({
 
       {/* Chart */}
       <ResponsiveContainer width="100%">
-        <AreaChart data={data} margin={{ top: 0, right: 5, left: -20, bottom: 0 }}>
+        <AreaChart
+          data={data}
+          margin={{ top: 0, right: 5, left: -20, bottom: layout === '1x4' ? 10 : 0 }}
+        >
           <CartesianGrid stroke={theme.palette.grey[200]} strokeDasharray="3 3" />
           <XAxis
             dataKey="timestamp"
