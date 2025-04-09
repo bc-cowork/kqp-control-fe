@@ -137,12 +137,10 @@ type GraphData = {
   };
 };
 
-export function useGetGraphData(node: string) {
-  const url = endpoints.dashboard.graph(node);
+export function useGetGraphData(node: string, refreshKey: number) {
+  const url = refreshKey ? [endpoints.dashboard.graph(node), { params: { refreshKey } }] : '';
 
   const { data, isLoading, error, isValidating } = useSWR<GraphData>(url, fetcher, swrOptions);
-
-  console.log('useGet', data);
 
   const memoizedValue = useMemo(
     () => ({

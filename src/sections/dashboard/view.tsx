@@ -33,11 +33,16 @@ type Props = {
 
 export function DashboardView({ title = 'Main' }: Props) {
   const [selectedNodeId, setSelectedNodeId] = useState<string>('');
+  const [refreshKey, setRefreshKey] = useState<number>(0);
   const viewTabs = useTabs(VIEW_TABS[0].value);
   const [selectedNode, setSelectedNode] = useState<INodeItem | undefined>(undefined);
   const selectedNodeParam = selectedNode?.id || selectedNodeId;
 
   const theme = useTheme();
+
+  const handleRefresh = () => {
+    setRefreshKey((prevKey) => prevKey + 1);
+  };
 
   return (
     <DashboardContent maxWidth="xl">
@@ -107,6 +112,7 @@ export function DashboardView({ title = 'Main' }: Props) {
                     tabs={VIEW_TABS}
                     value={viewTabs.value}
                     onChange={viewTabs.onChange}
+                    onRefresh={handleRefresh}
                   />
                 </Box>
               </Stack>
@@ -120,6 +126,7 @@ export function DashboardView({ title = 'Main' }: Props) {
                       selectedNodeParam={selectedNodeParam}
                       selectedNode={selectedNode}
                       selectedTab={viewTabs.value}
+                      refreshKey={refreshKey}
                     />
                   </Grid>
                 </Grid>

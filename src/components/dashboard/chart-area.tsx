@@ -15,7 +15,7 @@ import {
 } from 'recharts';
 
 import { useTheme } from '@mui/material/styles';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography, CircularProgress } from '@mui/material';
 
 import { SegmentedButtonGroupChart } from './SegmentedButtonGroupChart';
 
@@ -34,6 +34,7 @@ interface ChartAreaProps {
   tabValue: string;
   onTabChange: (value: string) => void;
   layout: string;
+  loading: boolean;
   threshold?: number;
 }
 
@@ -46,6 +47,7 @@ export function ChartArea({
   tabValue,
   onTabChange,
   layout,
+  loading,
   threshold,
 }: ChartAreaProps) {
   const theme = useTheme();
@@ -179,62 +181,66 @@ export function ChartArea({
 
       {/* Chart */}
       <ResponsiveContainer width="100%">
-        <AreaChart
-          data={data}
-          margin={{ top: 0, right: 5, left: -20, bottom: layout === '1x4' ? 10 : 0 }}
-        >
-          <CartesianGrid stroke={theme.palette.grey[200]} strokeDasharray="3 3" />
-          <XAxis
-            dataKey="timestamp"
-            tick={{ fontSize: 12, fill: theme.palette.text.secondary }}
-            tickLine={false}
-            axisLine={{ stroke: theme.palette.grey[200] }}
-          />
-          <YAxis
-            tick={{ fontSize: 12, fill: theme.palette.text.secondary }}
-            tickLine={false}
-            axisLine={{ stroke: theme.palette.grey[200] }}
-            domain={[minValue, 'auto']}
-            tickFormatter={
-              metric === 'inbound_bytes' || metric === 'outbound_bytes'
-                ? formatLargeNumber
-                : undefined
-            }
-          />
-          <Tooltip
-            contentStyle={{
-              backgroundColor: theme.palette.common.white,
-              borderColor: theme.palette.grey[200],
-              borderRadius: 4,
-              boxShadow: theme.shadows[1],
-            }}
-            labelStyle={{ color: theme.palette.text.primary }}
-            itemStyle={{ color: theme.palette.text.secondary }}
-          />
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <AreaChart
+            data={data}
+            margin={{ top: 0, right: 5, left: -20, bottom: layout === '1x4' ? 10 : 0 }}
+          >
+            <CartesianGrid stroke={theme.palette.grey[200]} strokeDasharray="3 3" />
+            <XAxis
+              dataKey="timestamp"
+              tick={{ fontSize: 12, fill: theme.palette.text.secondary }}
+              tickLine={false}
+              axisLine={{ stroke: theme.palette.grey[200] }}
+            />
+            <YAxis
+              tick={{ fontSize: 12, fill: theme.palette.text.secondary }}
+              tickLine={false}
+              axisLine={{ stroke: theme.palette.grey[200] }}
+              domain={[minValue, 'auto']}
+              tickFormatter={
+                metric === 'inbound_bytes' || metric === 'outbound_bytes'
+                  ? formatLargeNumber
+                  : undefined
+              }
+            />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: theme.palette.common.white,
+                borderColor: theme.palette.grey[200],
+                borderRadius: 4,
+                boxShadow: theme.shadows[1],
+              }}
+              labelStyle={{ color: theme.palette.text.primary }}
+              itemStyle={{ color: theme.palette.text.secondary }}
+            />
 
-          {/* Highlight areas where the metric exceeds the threshold */}
-          {applyThreshold &&
-            thresholdExceedPoints.map((point) => (
-              <ReferenceArea
-                key={point.index}
-                x1={point.timestamp}
-                x2={point.timestamp}
-                y1={threshold}
-                y2={point[metric]}
-                fill={theme.palette.error.main}
-                fillOpacity={0.3}
-              />
-            ))}
+            {/* Highlight areas where the metric exceeds the threshold */}
+            {applyThreshold &&
+              thresholdExceedPoints.map((point) => (
+                <ReferenceArea
+                  key={point.index}
+                  x1={point.timestamp}
+                  x2={point.timestamp}
+                  y1={threshold}
+                  y2={point[metric]}
+                  fill={theme.palette.error.main}
+                  fillOpacity={0.3}
+                />
+              ))}
 
-          {/* Main Area Chart */}
-          <Area
-            type="monotone"
-            dataKey={metric}
-            stroke={stroke}
-            fill={fill}
-            fillOpacity={fillOpacity}
-          />
-        </AreaChart>
+            {/* Main Area Chart */}
+            <Area
+              type="monotone"
+              dataKey={metric}
+              stroke={stroke}
+              fill={fill}
+              fillOpacity={fillOpacity}
+            />
+          </AreaChart>
+        )}
       </ResponsiveContainer>
     </Box>
   );

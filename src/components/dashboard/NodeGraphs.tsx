@@ -2,7 +2,7 @@
 
 'use client';
 
-import type { INodeItem, ChartDataPoint } from 'src/types/dashboard';
+import type { ChartDataPoint } from 'src/types/dashboard';
 
 import Box from '@mui/material/Box';
 import { Grid } from '@mui/material';
@@ -20,7 +20,7 @@ import { ChartArea } from './chart-area';
 
 interface Props {
   selectedNodeParam: string;
-  selectedNode: INodeItem;
+  refreshKey: number;
   selectedTab: string;
 }
 
@@ -31,7 +31,7 @@ const BOUND_TABS = [
   { value: 'byte', label: 'byte' },
 ];
 
-export function NodeGraphs({ selectedNodeParam, selectedNode, selectedTab }: Props) {
+export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props) {
   const theme = useTheme();
 
   const cpuTabs = useTabs(CPU_MEMORY_TABS[0].value);
@@ -40,16 +40,12 @@ export function NodeGraphs({ selectedNodeParam, selectedNode, selectedTab }: Pro
   const outboundTabs = useTabs(BOUND_TABS[0].value);
 
   // Fetch graph data
-  const { graphData } = useGetGraphData(selectedNodeParam);
+  const { graphData, graphDataLoading } = useGetGraphData(selectedNodeParam, refreshKey);
 
   // Process the data for the charts
   const chartData: ChartDataPoint[] = graphData?.time_series
     ? processChartData(graphData.time_series)
     : [];
-
-  // Calculate the vertical spacing adjustment
-  const spacingPx = 1.5 * 8; // 12px (spacing={1.5} * 8px)
-  const verticalSpacingAdjustment = 605;
 
   return (
     <Box
@@ -79,6 +75,7 @@ export function NodeGraphs({ selectedNodeParam, selectedNode, selectedTab }: Pro
             tabValue={cpuTabs.value}
             onTabChange={cpuTabs.onChange}
             layout={selectedTab}
+            loading={graphDataLoading}
           />
         </Grid>
         <Grid
@@ -95,6 +92,7 @@ export function NodeGraphs({ selectedNodeParam, selectedNode, selectedTab }: Pro
             tabValue={memoryTabs.value}
             onTabChange={memoryTabs.onChange}
             layout={selectedTab}
+            loading={graphDataLoading}
           />
         </Grid>
         <Grid
@@ -111,6 +109,7 @@ export function NodeGraphs({ selectedNodeParam, selectedNode, selectedTab }: Pro
             tabValue={inboundTabs.value}
             onTabChange={inboundTabs.onChange}
             layout={selectedTab}
+            loading={graphDataLoading}
           />
         </Grid>
         <Grid
@@ -127,6 +126,7 @@ export function NodeGraphs({ selectedNodeParam, selectedNode, selectedTab }: Pro
             tabValue={outboundTabs.value}
             onTabChange={outboundTabs.onChange}
             layout={selectedTab}
+            loading={graphDataLoading}
           />
         </Grid>
       </Grid>
