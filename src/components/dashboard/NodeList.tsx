@@ -100,7 +100,7 @@ export function NodeList({
               <TableCell>
                 <Chip
                   label={node.online_status ? 'Online' : 'Offline'}
-                  color="success"
+                  color={node.online_status ? 'success' : 'error'}
                   size="small"
                   variant="status"
                   icon={

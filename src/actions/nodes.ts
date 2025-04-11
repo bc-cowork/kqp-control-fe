@@ -1,4 +1,13 @@
 import type { IChannelItem, IAuditLogItem } from 'src/types/node';
+import type {
+  GetIssuesResponse,
+  GetChannelListResponse,
+  GetAuditLogListResponse,
+  GetAuditLogFrameResponse,
+  GetIssueItemInfoResponse,
+  GetAuditFrameListResponse,
+  GetIssueItemQuotesResponse,
+} from 'src/types/api';
 
 import useSWR from 'swr';
 import { useMemo } from 'react';
@@ -19,24 +28,20 @@ const swrOptions = {
 /** **************************************
  * Channel Inbound
  *************************************** */
-type ChannelData = {
-  okay: boolean;
-  msg: string;
-  data: {
-    nodeId: string;
-    kind: string;
-    list: IChannelItem[];
-  };
-};
-
 export function useGetChannelList(node: string, kind: string = 'inbound') {
   const url = kind ? [endpoints.nodes.channelInbound.list(node), { params: { kind } }] : '';
 
-  const { data, isLoading, error, isValidating } = useSWR<ChannelData>(url, fetcher, swrOptions);
+  const { data, isLoading, error, isValidating } = useSWR<GetChannelListResponse>(
+    url,
+    fetcher,
+    swrOptions
+  );
+
+  // if (data) console.log('useGetChannelList Response:', JSON.stringify(data, null, 2));
 
   const memoizedValue = useMemo(
     () => ({
-      channels: data?.data?.list || [],
+      channels: (data?.data?.list || []) as IChannelItem[],
       channelsLoading: isLoading,
       channelsError: error,
       channelsValidating: isValidating,
@@ -53,24 +58,20 @@ export function useGetChannelList(node: string, kind: string = 'inbound') {
 /** **************************************
  * Audit Log
  *************************************** */
-
-type AuditLogData = {
-  okay: boolean;
-  msg: string;
-  data: {
-    nodeId: string;
-    auditLogList: IAuditLogItem[];
-  };
-};
-
 export function useAuditLogList(node: string, kind: string) {
   const url = kind ? [endpoints.nodes.auditLog.list(node), { params: { kind } }] : '';
 
-  const { data, isLoading, error, isValidating } = useSWR<AuditLogData>(url, fetcher, swrOptions);
+  const { data, isLoading, error, isValidating } = useSWR<GetAuditLogListResponse>(
+    url,
+    fetcher,
+    swrOptions
+  );
+
+  // if (data) console.log('useAuditLogList Response:', JSON.stringify(data, null, 2));
 
   const memoizedValue = useMemo(
     () => ({
-      auditLogs: data?.data?.auditLogList || [],
+      auditLogs: (data?.data?.auditLogList || []) as IAuditLogItem[],
       auditLogsLoading: isLoading,
       auditLogsError: error,
       auditLogsValidating: isValidating,
@@ -83,12 +84,6 @@ export function useAuditLogList(node: string, kind: string) {
 }
 
 // ----------------------------------------------------------------------
-
-type AuditFrameListData = {
-  okay: boolean;
-  msg: string;
-  data: any; // TODO: define type
-};
 
 export function useAuditFrameList(
   node: string,
@@ -106,15 +101,17 @@ export function useAuditFrameList(
       ]
     : '';
 
-  const { data, isLoading, error, isValidating } = useSWR<AuditFrameListData>(
+  const { data, isLoading, error, isValidating } = useSWR<GetAuditFrameListResponse>(
     url,
     fetcher,
     swrOptions
   );
 
+  // if (data) console.log('useAuditFrameList Response:', JSON.stringify(data, null, 2));
+
   const memoizedValue = useMemo(
     () => ({
-      auditFrameList: data?.data || [],
+      auditFrameList: data?.data || null,
       auditFrameListLoading: isLoading,
       auditFrameListError: error,
       auditFrameListValidating: isValidating,
@@ -127,17 +124,6 @@ export function useAuditFrameList(
 }
 
 // ----------------------------------------------------------------------
-
-type AuditLogFrameData = {
-  okay: boolean;
-  msg: string;
-  data: {
-    desc: string;
-    nodeId: string;
-    file: string;
-    spec: any; // TODO: define type
-  };
-};
 
 export function useGetAuditLogFrame(
   node: string,
@@ -161,11 +147,14 @@ export function useGetAuditLogFrame(
     url = file ? [endpoints.nodes.auditLog.frame(node), { params: { file, seq, refreshKey } }] : '';
   }
 
-  const { data, isLoading, error, isValidating } = useSWR<AuditLogFrameData>(
+  const { data, isLoading, error, isValidating } = useSWR<GetAuditLogFrameResponse>(
     url,
     fetcher,
     swrOptions
   );
+
+  // if (data) console.log('useGetAuditLogFrame Response:', JSON.stringify(data, null, 2));
+
   const processedData = { desc: data?.data?.desc, ...data?.data?.spec };
 
   return {
@@ -182,24 +171,6 @@ export function useGetAuditLogFrame(
 /** **************************************
  * Issues - Memory page
  *************************************** */
-
-type IssueData = {
-  okay: boolean;
-  msg: string;
-  data: {
-    nodeId: string;
-    max_issue_count: number;
-    compet_count: number;
-    issueList: any; // TODO: define type
-  };
-  meta: {
-    current_page: number;
-    has_next_page: boolean;
-    has_previous_page: boolean;
-    total_pages: number;
-  };
-};
-
 export function useGetIssues(node: string, offset: number, limit: number, q?: string) {
   const url =
     node && offset && limit
@@ -208,7 +179,13 @@ export function useGetIssues(node: string, offset: number, limit: number, q?: st
         : [endpoints.nodes.issues.list(node), { params: { offset, limit } }]
       : '';
 
-  const { data, isLoading, error, isValidating } = useSWR<IssueData>(url, fetcher, swrOptions);
+  const { data, isLoading, error, isValidating } = useSWR<GetIssuesResponse>(
+    url,
+    fetcher,
+    swrOptions
+  );
+
+  // if (data) console.log('useGetIssues Response:', JSON.stringify(data, null, 2));
 
   const memoizedValue = useMemo(() => {
     const defaultIssues = {
@@ -236,23 +213,16 @@ export function useGetIssues(node: string, offset: number, limit: number, q?: st
 
 // ----------------------------------------------------------------------
 
-type IssueItemInfoData = {
-  okay: boolean;
-  msg: string;
-  data: {
-    nodeId: string;
-    issueInfo: any; // TODO: define type
-  };
-};
-
 export function useGetIssueItemInfo(node: string, code: string) {
   const url = node && code ? [endpoints.nodes.issues.info(node), { params: { code } }] : '';
 
-  const { data, isLoading, error, isValidating } = useSWR<IssueItemInfoData>(
+  const { data, isLoading, error, isValidating } = useSWR<GetIssueItemInfoResponse>(
     url,
     fetcher,
     swrOptions
   );
+
+  // if (data) console.log('useGetIssueItemInfo Response:', JSON.stringify(data, null, 2));
 
   const memoizedValue = useMemo(
     () => ({
@@ -261,7 +231,7 @@ export function useGetIssueItemInfo(node: string, code: string) {
       issueInfoError: error,
       issueInfoValidating: isValidating,
     }),
-    [data, error, isLoading, isValidating]
+    [data?.data?.issueInfo, error, isLoading, isValidating]
   );
 
   return memoizedValue;
@@ -269,20 +239,16 @@ export function useGetIssueItemInfo(node: string, code: string) {
 
 // ----------------------------------------------------------------------
 
-type IssueItemQuoteData = {
-  okay: boolean;
-  msg: string;
-  data: any;
-};
-
 export function useGetIssueItemQuotes(node: string, code: string) {
   const url = node && code ? [endpoints.nodes.issues.quote(node), { params: { code } }] : '';
 
-  const { data, isLoading, error, isValidating } = useSWR<IssueItemQuoteData>(
+  const { data, isLoading, error, isValidating } = useSWR<GetIssueItemQuotesResponse>(
     url,
     fetcher,
     swrOptions
   );
+
+  // if (data) console.log('useGetIssueItemQuotes Response:', JSON.stringify(data, null, 2));
 
   const memoizedValue = useMemo(
     () => ({
@@ -292,7 +258,7 @@ export function useGetIssueItemQuotes(node: string, code: string) {
       issueQuotesError: error,
       issueQuotesValidating: isValidating,
     }),
-    [data, error, isLoading, isValidating]
+    [data?.data?.issueQuote?.order_book, error, isLoading, isValidating]
   );
 
   return memoizedValue;

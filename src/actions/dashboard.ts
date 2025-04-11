@@ -1,4 +1,10 @@
-import type { IStatus, INodeItem, IProcessResponse } from 'src/types/dashboard';
+import type { IStatus, INodeItem } from 'src/types/dashboard';
+import type {
+  GetNodesResponse,
+  GetStatusResponse,
+  GetProcessesResponse,
+  GetGraphDataResponse,
+} from 'src/types/api';
 
 import useSWR from 'swr';
 import { useMemo } from 'react';
@@ -19,22 +25,20 @@ const swrOptions = {
 /** **************************************
  * Node List
  *************************************** */
-type NodeData = {
-  okay: boolean;
-  msg: string;
-  data: {
-    nodeList: INodeItem[];
-  };
-};
-
 export function useGetNodes() {
   const url = endpoints.dashboard.nodeList;
 
-  const { data, isLoading, error, isValidating } = useSWR<NodeData>(url, fetcher, swrOptions);
+  const { data, isLoading, error, isValidating } = useSWR<GetNodesResponse>(
+    url,
+    fetcher,
+    swrOptions
+  );
+
+  // if (data) console.log('useGetNodes Response:', JSON.stringify(data, null, 2));
 
   const memoizedValue = useMemo(
     () => ({
-      nodes: data?.data?.nodeList || [],
+      nodes: (data?.data?.nodeList || []) as INodeItem[],
       nodesLoading: isLoading,
       nodesError: error,
       nodesValidating: isValidating,
@@ -49,25 +53,23 @@ export function useGetNodes() {
 /** **************************************
  * Process List of a Node
  *************************************** */
-type ProcessData = {
-  okay: boolean;
-  msg: string;
-  data: IProcessResponse;
-};
-
 export function useGetProcesses(node: string) {
   const url = endpoints.dashboard.processList(node);
 
-  const { data, isLoading, error, isValidating } = useSWR<ProcessData>(url, fetcher, swrOptions);
+  const { data, isLoading, error, isValidating } = useSWR<GetProcessesResponse>(
+    url,
+    fetcher,
+    swrOptions
+  );
+
+  // if (data) console.log('useGetProcesses Response:', JSON.stringify(data, null, 2));
 
   const processedProcessList = useMemo(
     () =>
       data?.data?.processList && Array.isArray(data?.data?.processList)
         ? data.data.processList
-            .filter(
-              (process: { data: any }) => process.data && Object.keys(process.data).length > 0
-            )
-            .map((process: { data: any }) => process.data)
+            .filter((process) => process.data && Object.keys(process.data).length > 0)
+            .map((process) => process.data)
             .flat()
         : [],
     [data?.data?.processList]
@@ -75,7 +77,7 @@ export function useGetProcesses(node: string) {
 
   const memoizedValue = useMemo(
     () => ({
-      processes: processedProcessList || [],
+      processes: processedProcessList,
       processLoading: isLoading,
       processError: error,
       processesValidating: isValidating,
@@ -88,22 +90,22 @@ export function useGetProcesses(node: string) {
 }
 
 /** **************************************
- * Process List of a Node
+ * Service Status of a Node
  *************************************** */
-type StatusData = {
-  okay: boolean;
-  msg: string;
-  data: IStatus;
-};
-
 export function useGetStatus(node: string) {
   const url = endpoints.dashboard.serviceStatus(node);
 
-  const { data, isLoading, error, isValidating } = useSWR<StatusData>(url, fetcher, swrOptions);
+  const { data, isLoading, error, isValidating } = useSWR<GetStatusResponse>(
+    url,
+    fetcher,
+    swrOptions
+  );
+
+  // if (data) console.log('useGetStatus Response:', JSON.stringify(data, null, 2));
 
   const memoizedValue = useMemo(
     () => ({
-      status: data?.data,
+      status: (data?.data || null) as IStatus | null,
       statusLoading: isLoading,
       statusError: error,
       statusValidating: isValidating,
@@ -119,32 +121,20 @@ export function useGetStatus(node: string) {
 /** **************************************
  * Graph data
  *************************************** */
-type GraphData = {
-  okay: boolean;
-  msg: string;
-  data: {
-    nodeId: string;
-    time_series: {
-      cpu: number;
-      hhmmss: string; // Time in "HHMMSS" format (e.g., "160000")
-      inbound_bytes: number;
-      inbound_count: number;
-      memory: number;
-      name: string;
-      outbound_bytes: number;
-      outbound_count: number;
-    }[];
-  };
-};
-
 export function useGetGraphData(node: string, refreshKey: number) {
   const url = refreshKey ? [endpoints.dashboard.graph(node), { params: { refreshKey } }] : '';
 
-  const { data, isLoading, error, isValidating } = useSWR<GraphData>(url, fetcher, swrOptions);
+  const { data, isLoading, error, isValidating } = useSWR<GetGraphDataResponse>(
+    url,
+    fetcher,
+    swrOptions
+  );
+
+  // if (data) console.log('useGetGraphData Response:', JSON.stringify(data, null, 2));
 
   const memoizedValue = useMemo(
     () => ({
-      graphData: data?.data,
+      graphData: data?.data || null,
       graphDataLoading: isLoading,
       graphDataError: error,
       graphDataValidating: isValidating,
@@ -154,5 +144,3 @@ export function useGetGraphData(node: string, refreshKey: number) {
 
   return memoizedValue;
 }
-
-// ----------------------------------------------------------------------

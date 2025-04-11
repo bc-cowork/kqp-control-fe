@@ -170,7 +170,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
       <TablePaginationCustom
         rowsPerPage={count || 40}
         page={5} // doesn't matter in this case
-        count={auditFrame.max_frame}
+        count={auditFrame?.max_frame || 0}
         onPageChange={onChangePage}
         onRowsPerPageChange={onChangeRowsPerPage}
         last
@@ -205,7 +205,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
             ) : auditFrameError ? (
               <TableErrorRows />
             ) : (
-              auditFrame.frags.map((auditFrameFrag: AuditLogFrameFragItem, index: number) => (
+              auditFrame?.frags?.map((auditFrameFrag: AuditLogFrameFragItem, index: number) => (
                 <TableRow key={index}>
                   <TableCell align="right">
                     <Box

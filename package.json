@@ -1,8 +1,8 @@
 {
-  "name": "@minimal-kit/starter-next-ts",
-  "author": "Minimals",
-  "version": "6.1.0",
-  "description": "Next Starter & TypeScript",
+  "name": "@billy-crew/kunta-admin",
+  "author": "Manthika Tharumudu",
+  "version": "1.0.0",
+  "description": "Kuanta control admin panel",
   "private": true,
   "scripts": {
     "dev": "next dev -p 8083",

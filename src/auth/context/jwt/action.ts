@@ -2,6 +2,8 @@
 
 import axios, { endpoints } from 'src/utils/axios';
 
+import { CONFIG } from 'src/config-global';
+
 import { setSession } from './utils';
 import { STORAGE_KEY } from './constant';
 
@@ -24,6 +26,12 @@ export type SignUpParams = {
  *************************************** */
 export const signInWithPassword = async ({ id, password }: SignInParams): Promise<void> => {
   try {
+    if (CONFIG.apiDataType === 'dummy') {
+      console.log('Bypassing authentication checks in dummy mode');
+      setSession('dummy');
+      return;
+    }
+
     const params = { id, password };
 
     const { data } = await axios.post(endpoints.auth.login, params);

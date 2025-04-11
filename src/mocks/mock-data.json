@@ -1,0 +1,1344 @@
+{
+  "/apik/login": {
+    "msg": "Welcome",
+    "data": {
+      "id": "manthika"
+    },
+    "okay": true
+  },
+  "/apik/node/list": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeList": [
+        {
+          "id": "prod1",
+          "name": "Production Node 1",
+          "desc": "Main production server",
+          "emittable": true,
+          "emit_count": 150,
+          "online_status": true
+        },
+        {
+          "id": "prod2",
+          "name": "Production Node 2",
+          "desc": "Backup production server",
+          "emittable": false,
+          "emit_count": 0,
+          "online_status": false
+        }
+      ]
+    }
+  },
+  "/apik/prod1/process/list": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod1",
+      "processList": [
+        {
+          "data": [
+            {
+              "PARAM": "1",
+              "PPID": "1",
+              "MEM": "13116",
+              "NAME": "beacon",
+              "PID": "2865332",
+              "CPU": "0.0",
+              "COMMAND": "./beacon 1"
+            }
+          ],
+          "target": "beacon"
+        },
+        {
+          "data": [
+            {
+              "PARAM": "1",
+              "PPID": "1",
+              "MEM": "52864",
+              "NAME": "sweeper",
+              "PID": "2865333",
+              "CPU": "0.0",
+              "COMMAND": "./vapp -n sweeper 1"
+            }
+          ],
+          "target": "sweeper"
+        },
+        {
+          "data": {},
+          "target": "recv"
+        },
+        {
+          "data": [
+            {
+              "PARAM": "dist",
+              "PPID": "1",
+              "MEM": "22240",
+              "NAME": "subsequent",
+              "PID": "2865334",
+              "CPU": "0.4",
+              "COMMAND": "./subsequent dist"
+            },
+            {
+              "PARAM": "qos",
+              "PPID": "1",
+              "MEM": "16136",
+              "NAME": "subsequent",
+              "PID": "2865335",
+              "CPU": "0.2",
+              "COMMAND": "./subsequent qos"
+            },
+            {
+              "PARAM": "rcv",
+              "PPID": "1",
+              "MEM": "20676",
+              "NAME": "subsequent",
+              "PID": "2865336",
+              "CPU": "0.5",
+              "COMMAND": "./subsequent rcv"
+            }
+          ],
+          "target": "subsequent"
+        },
+        {
+          "data": [
+            {
+              "PARAM": "recovery",
+              "PPID": "1",
+              "MEM": "15348",
+              "NAME": "kqp",
+              "PID": "2210976",
+              "CPU": "0.0",
+              "COMMAND": "./kqp recovery"
+            },
+            {
+              "PARAM": "dp",
+              "PPID": "1",
+              "MEM": "36304",
+              "NAME": "kqp",
+              "PID": "2865337",
+              "CPU": "0.0",
+              "COMMAND": "./kqp dp"
+            },
+            {
+              "PARAM": "1",
+              "PPID": "1",
+              "MEM": "174412",
+              "NAME": "kqp",
+              "PID": "2865338",
+              "CPU": "0.9",
+              "COMMAND": "./kqp 1"
+            },
+            {
+              "PARAM": "ksp_q",
+              "PPID": "1",
+              "MEM": "57972",
+              "NAME": "kqp",
+              "PID": "2865339",
+              "CPU": "0.5",
+              "COMMAND": "./kqp ksp_q"
+            },
+            {
+              "PARAM": "ksp_f",
+              "PPID": "1",
+              "MEM": "41832",
+              "NAME": "kqp",
+              "PID": "2865340",
+              "CPU": "0.3",
+              "COMMAND": "./kqp ksp_f"
+            },
+            {
+              "PARAM": "ksq_q",
+              "PPID": "1",
+              "MEM": "70188",
+              "NAME": "kqp",
+              "PID": "2865341",
+              "CPU": "0.5",
+              "COMMAND": "./kqp ksq_q"
+            },
+            {
+              "PARAM": "ksq_f",
+              "PPID": "1",
+              "MEM": "43752",
+              "NAME": "kqp",
+              "PID": "2865342",
+              "CPU": "0.3",
+              "COMMAND": "./kqp ksq_f"
+            }
+          ],
+          "target": "kqp"
+        }
+      ]
+    }
+  },
+  "/apik/prod1/service/status": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod1",
+      "service_status": {
+        "idate": 20250410,
+        "okay": true,
+        "date": "2025-04-10",
+        "time": 161500,
+        "log": {},
+        "verify": {
+          "master_receive": true,
+          "cacheclear": false,
+          "process": true,
+          "dailyclear": true
+        },
+        "emittable": true,
+        "wday": "Thursday",
+        "audit": {
+          "masters": {
+            "distributable_issues": ["KR5701000055"],
+            "krx_count": 10,
+            "nxt_count": 5,
+            "common_count": 3
+          },
+          "process": {
+            "kqp": {
+              "1": {
+                "cmd": "/usr/bin/kqp",
+                "mem": 512,
+                "owner": "root",
+                "id": "kqp.1",
+                "pname": "kqp",
+                "inst": "1",
+                "cpur": 0.8,
+                "pid": 5678
+              }
+            }
+          },
+          "tasks": [
+            {
+              "msg": "Task completed",
+              "date": 20250410,
+              "time": "16:15:00"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "/apik/prod1/node/performance/time-series": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod1",
+      "time_series": [
+        {
+          "name": "prod1",
+          "outbound_bytes": 1956234,
+          "outbound_count": 3219,
+          "hhmmss": "160000",
+          "inbound_count": 3121,
+          "cpu": 45.3,
+          "memory": 19.3,
+          "inbound_bytes": 2456234
+        },
+        {
+          "name": "prod1",
+          "outbound_bytes": 2012345,
+          "outbound_count": 3187,
+          "hhmmss": "160100",
+          "inbound_count": 3245,
+          "cpu": 60,
+          "memory": 21,
+          "inbound_bytes": 2567123
+        },
+        {
+          "name": "prod1",
+          "outbound_bytes": 2134567,
+          "outbound_count": 3298,
+          "hhmmss": "160200",
+          "inbound_count": 3432,
+          "cpu": 20,
+          "memory": 22,
+          "inbound_bytes": 2876543
+        },
+        {
+          "name": "prod1",
+          "outbound_bytes": 2087654,
+          "outbound_count": 3265,
+          "hhmmss": "160300",
+          "inbound_count": 3356,
+          "cpu": 5.4,
+          "memory": 24.5,
+          "inbound_bytes": 2765432
+        },
+        {
+          "name": "prod1",
+          "outbound_bytes": 2234567,
+          "outbound_count": 3456,
+          "hhmmss": "160400",
+          "inbound_count": 3587,
+          "cpu": 15.3,
+          "memory": 23.8,
+          "inbound_bytes": 3012345
+        },
+        {
+          "name": "prod1",
+          "outbound_bytes": 2198765,
+          "outbound_count": 3423,
+          "hhmmss": "160500",
+          "inbound_count": 3521,
+          "cpu": 87,
+          "memory": 21.3,
+          "inbound_bytes": 2987654
+        },
+        {
+          "name": "prod1",
+          "outbound_bytes": 2176543,
+          "outbound_count": 3398,
+          "hhmmss": "160600",
+          "inbound_count": 3478,
+          "cpu": 79,
+          "memory": 20,
+          "inbound_bytes": 2876543
+        },
+        {
+          "name": "prod1",
+          "outbound_bytes": 2209876,
+          "outbound_count": 3432,
+          "hhmmss": "160700",
+          "inbound_count": 3532,
+          "cpu": 85,
+          "memory": 12.5,
+          "inbound_bytes": 2965432
+        },
+        {
+          "name": "prod1",
+          "outbound_bytes": 2165432,
+          "outbound_count": 3387,
+          "hhmmss": "160800",
+          "inbound_count": 3476,
+          "cpu": 7.6,
+          "memory": 15,
+          "inbound_bytes": 2832165
+        },
+        {
+          "name": "prod1",
+          "outbound_bytes": 2187654,
+          "outbound_count": 3421,
+          "hhmmss": "160900",
+          "inbound_count": 3512,
+          "cpu": 8.2,
+          "memory": 14,
+          "inbound_bytes": 2945678
+        }
+      ]
+    }
+  },
+  "/apik/prod1/issue/list?offset=0&limit=2": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod1",
+      "max_issue_count": 100,
+      "compet_count": 2,
+      "issueList": [
+        {
+          "compet": 0,
+          "name": "한투글로벌AI빅테크1호(A)",
+          "code": "KR5701000055",
+          "seq": 1,
+          "daily_info_dates": [20250410, 20250410, 0]
+        },
+        {
+          "compet": 0,
+          "name": "이스트아시아홀딩스",
+          "code": "HK0000057197",
+          "seq": 2,
+          "daily_info_dates": [20250410, 20250410, 20250410]
+        },
+        {
+          "compet": 0,
+          "name": "한투글로벌AI빅테크1호(A-e)",
+          "code": "KR5701000063",
+          "seq": 3,
+          "daily_info_dates": [20250410, 20250410, 0]
+        },
+        {
+          "compet": 0,
+          "name": "헝셩그룹",
+          "code": "HK0000214814",
+          "seq": 4,
+          "daily_info_dates": [20250410, 20250410, 20250410]
+        },
+        {
+          "compet": 0,
+          "name": "한투글로벌AI빅테크2호(A)",
+          "code": "KR5701000071",
+          "seq": 5,
+          "daily_info_dates": [20250410, 20250410, 0]
+        },
+        {
+          "compet": 0,
+          "name": "로스웰",
+          "code": "HK0000295359",
+          "seq": 6,
+          "daily_info_dates": [20250410, 20250410, 20250410]
+        },
+        {
+          "compet": 0,
+          "name": "한투글로벌AI빅테크2호(A-e)",
+          "code": "KR5701000089",
+          "seq": 7,
+          "daily_info_dates": [20250410, 20250410, 0]
+        },
+        {
+          "compet": 0,
+          "name": "GRT",
+          "code": "HK0000307485",
+          "seq": 8,
+          "daily_info_dates": [20250410, 20250410, 20250410]
+        },
+        {
+          "compet": 0,
+          "name": "한투삼성그룹성장테마1호(A)",
+          "code": "KR5701000097",
+          "seq": 9,
+          "daily_info_dates": [20250410, 20250410, 0]
+        },
+        {
+          "compet": 0,
+          "name": "오가닉티코스메틱",
+          "code": "HK0000312568",
+          "seq": 10,
+          "daily_info_dates": [20250410, 20250410, 20250410]
+        },
+        {
+          "compet": 0,
+          "name": "한투삼성그룹성장테마1호(A-e)",
+          "code": "KR5701000105",
+          "seq": 11,
+          "daily_info_dates": [20250410, 20250410, 0]
+        },
+        {
+          "compet": 0,
+          "name": "컬러레이",
+          "code": "HK0000341732",
+          "seq": 12,
+          "daily_info_dates": [20250410, 20250410, 20250410]
+        },
+        {
+          "compet": 0,
+          "name": "한투삼성그룹성장테마2호(A)",
+          "code": "KR5701000113",
+          "seq": 13,
+          "daily_info_dates": [20250410, 20250410, 0]
+        },
+        {
+          "compet": 0,
+          "name": "윙입푸드",
+          "code": "HK0000449303",
+          "seq": 14,
+          "daily_info_dates": [20250410, 20250410, 20250410]
+        },
+        {
+          "compet": 0,
+          "name": "한투삼성그룹성장테마2호(A-e)",
+          "code": "KR5701000121",
+          "seq": 15,
+          "daily_info_dates": [20250410, 20250410, 0]
+        },
+        {
+          "compet": 20250410,
+          "name": "삼천당제약",
+          "code": "KR7000250001",
+          "seq": 16,
+          "daily_info_dates": [20250410, 20250410, 20250410]
+        },
+        {
+          "compet": 0,
+          "name": "한투삼성그룹&글로벌성장1(A)",
+          "code": "KR5701000139",
+          "seq": 17,
+          "daily_info_dates": [20250410, 20250410, 0]
+        },
+        {
+          "compet": 0,
+          "name": "중앙에너비스",
+          "code": "KR7000440008",
+          "seq": 18,
+          "daily_info_dates": [20250410, 20250410, 20250410]
+        },
+        {
+          "compet": 0,
+          "name": "한투삼성그룹&글로벌성장1(A1)",
+          "code": "KR5701000147",
+          "seq": 19,
+          "daily_info_dates": [20250410, 20250410, 0]
+        },
+        {
+          "compet": 0,
+          "name": "신라섬유",
+          "code": "KR7001000009",
+          "seq": 20,
+          "daily_info_dates": [20250410, 20250410, 20250410]
+        },
+        {
+          "compet": 0,
+          "name": "한투삼성그룹&글로벌성장1(A1-e)",
+          "code": "KR5701000154",
+          "seq": 21,
+          "daily_info_dates": [20250410, 20250410, 0]
+        },
+        {
+          "compet": 0,
+          "name": "안국약품",
+          "code": "KR7001540004",
+          "seq": 22,
+          "daily_info_dates": [20250410, 20250410, 20250410]
+        },
+        {
+          "compet": 0,
+          "name": "한투삼성그룹&글로벌성장2(A)",
+          "code": "KR5701000162",
+          "seq": 23,
+          "daily_info_dates": [20250410, 20250410, 0]
+        },
+        {
+          "compet": 0,
+          "name": "무림SP",
+          "code": "KR7001810001",
+          "seq": 24,
+          "daily_info_dates": [20250410, 20250410, 20250410]
+        },
+        {
+          "compet": 0,
+          "name": "한투삼성그룹&글로벌성장2(A1)",
+          "code": "KR5701000170",
+          "seq": 25,
+          "daily_info_dates": [20250410, 20250410, 0]
+        },
+        {
+          "compet": 0,
+          "name": "이화공영",
+          "code": "KR7001840008",
+          "seq": 26,
+          "daily_info_dates": [20250410, 20250410, 20250410]
+        },
+        {
+          "compet": 0,
+          "name": "한투삼성그룹&글로벌성장2(A1-e)",
+          "code": "KR5701000188",
+          "seq": 27,
+          "daily_info_dates": [20250410, 20250410, 0]
+        },
+        {
+          "compet": 0,
+          "name": "피에스텍",
+          "code": "KR7002230001",
+          "seq": 28,
+          "daily_info_dates": [20250410, 20250410, 20250410]
+        },
+        {
+          "compet": 0,
+          "name": "한투삼성그룹&글로벌성장3(A)",
+          "code": "KR5701000196",
+          "seq": 29,
+          "daily_info_dates": [20250410, 20250410, 0]
+        },
+        {
+          "compet": 0,
+          "name": "삼일기업공사",
+          "code": "KR7002290005",
+          "seq": 30,
+          "daily_info_dates": [20250410, 20250410, 20250410]
+        },
+        {
+          "compet": 0,
+          "name": "한투삼성그룹&글로벌성장3(A1)",
+          "code": "KR5701000204",
+          "seq": 31,
+          "daily_info_dates": [20250410, 20250410, 0]
+        },
+        {
+          "compet": 0,
+          "name": "한탑",
+          "code": "KR7002680007",
+          "seq": 32,
+          "daily_info_dates": [20250410, 20250410, 20250410]
+        },
+        {
+          "compet": 0,
+          "name": "한투삼성그룹&글로벌성장3(A1-e)",
+          "code": "KR5701000212",
+          "seq": 33,
+          "daily_info_dates": [20250410, 20250410, 0]
+        },
+        {
+          "compet": 0,
+          "name": "신신제약",
+          "code": "KR7002800001",
+          "seq": 34,
+          "daily_info_dates": [20250410, 20250410, 20250410]
+        },
+        {
+          "compet": 0,
+          "name": "밀라노부동산",
+          "code": "KR570101B954",
+          "seq": 35,
+          "daily_info_dates": [20250410, 20250410, 0]
+        },
+        {
+          "compet": 0,
+          "name": "선광",
+          "code": "KR7003100005",
+          "seq": 36,
+          "daily_info_dates": [20250410, 20250410, 20250410]
+        },
+        {
+          "compet": 0,
+          "name": "벨기에코어오피스2호",
+          "code": "KR570101B962",
+          "seq": 37,
+          "daily_info_dates": [20250410, 20250410, 0]
+        },
+        {
+          "compet": 0,
+          "name": "대주산업",
+          "code": "KR7003310000",
+          "seq": 38,
+          "daily_info_dates": [20250410, 20250410, 20250410]
+        },
+        {
+          "compet": 0,
+          "name": "한국투자뉴욕오피스1호",
+          "code": "KR570101B9A2",
+          "seq": 39,
+          "daily_info_dates": [20250410, 20250410, 0]
+        },
+        {
+          "compet": 20250410,
+          "name": "하림지주",
+          "code": "KR7003380003",
+          "seq": 40,
+          "daily_info_dates": [20250410, 20250410, 20250410]
+        }
+      ]
+    },
+    "meta": {
+      "has_previous_page": false,
+      "has_next_page": true,
+      "current_page": 1,
+      "total_pages": 5
+    }
+  },
+  "/apik/prod1/issue/info?code=KR5701000055": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod1",
+      "issueInfo": {
+        "code": "KR5701000055",
+        "vol_accum": {
+          "nxt": 0,
+          "uni": 0,
+          "krx": 0
+        },
+        "amt_accum": {
+          "nxt": 0,
+          "uni": 0,
+          "krx": 0
+        },
+        "seq": 1,
+        "high": {
+          "nxt": 0,
+          "uni": 0,
+          "krx": 0
+        },
+        "compet": 0,
+        "last_price": {
+          "nxt": 0,
+          "uni": 0,
+          "krx": 0
+        },
+        "last_vol": {
+          "nxt": 0,
+          "uni": 0,
+          "krx": 0
+        },
+        "g1_ssn_id": [null, "99", ""],
+        "open": {
+          "nxt": 0,
+          "uni": 0,
+          "krx": 0
+        },
+        "name": "한투글로벌AI빅테크1호(A)",
+        "low": {
+          "nxt": 0,
+          "uni": 0,
+          "krx": 0
+        }
+      }
+    }
+  },
+  "/apik/prod1/issue/quote?code=KR5701000055": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod1",
+      "issueQuote": {
+        "name": "Issue 1",
+        "code": "KR5701000055",
+        "order_book": {
+          "bid": {
+            "1": {
+              "uni": 0,
+              "price": 0,
+              "nxt": 0,
+              "krx": 0
+            },
+            "2": {
+              "uni": 0,
+              "price": 0,
+              "nxt": 0,
+              "krx": 0
+            },
+            "3": {
+              "uni": 0,
+              "price": 0,
+              "nxt": 0,
+              "krx": 0
+            },
+            "4": {
+              "uni": 0,
+              "price": 0,
+              "nxt": 0,
+              "krx": 0
+            },
+            "5": {
+              "uni": 0,
+              "price": 0,
+              "nxt": 0,
+              "krx": 0
+            },
+            "6": {
+              "uni": 0,
+              "price": 0,
+              "nxt": 0,
+              "krx": 0
+            },
+            "7": {
+              "uni": 0,
+              "price": 0,
+              "nxt": 0,
+              "krx": 0
+            },
+            "8": {
+              "uni": 0,
+              "price": 0,
+              "nxt": 0,
+              "krx": 0
+            },
+            "9": {
+              "uni": 0,
+              "price": 0,
+              "nxt": 0,
+              "krx": 0
+            },
+            "10": {
+              "uni": 0,
+              "price": 0,
+              "nxt": 0,
+              "krx": 0
+            },
+            "sum": {
+              "uni": 0,
+              "price": 0,
+              "nxt": 0,
+              "krx": 0
+            }
+          },
+          "ask": {
+            "1": {
+              "uni": 0,
+              "price": 0,
+              "nxt": 0,
+              "krx": 0
+            },
+            "2": {
+              "uni": 0,
+              "price": 0,
+              "nxt": 0,
+              "krx": 0
+            },
+            "3": {
+              "uni": 0,
+              "price": 0,
+              "nxt": 0,
+              "krx": 0
+            },
+            "4": {
+              "uni": 0,
+              "price": 0,
+              "nxt": 0,
+              "krx": 0
+            },
+            "5": {
+              "uni": 0,
+              "price": 0,
+              "nxt": 0,
+              "krx": 0
+            },
+            "6": {
+              "uni": 0,
+              "price": 0,
+              "nxt": 0,
+              "krx": 0
+            },
+            "7": {
+              "uni": 0,
+              "price": 0,
+              "nxt": 0,
+              "krx": 0
+            },
+            "8": {
+              "uni": 0,
+              "price": 0,
+              "nxt": 0,
+              "krx": 0
+            },
+            "9": {
+              "uni": 0,
+              "price": 0,
+              "nxt": 0,
+              "krx": 0
+            },
+            "10": {
+              "uni": 0,
+              "price": 0,
+              "nxt": 0,
+              "krx": 0
+            },
+            "sum": {
+              "uni": 0,
+              "price": 0,
+              "nxt": 0,
+              "krx": 0
+            }
+          }
+        }
+      }
+    }
+  },
+  "/apik/prod1/auditlog/list?kind=rcv": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod1",
+      "auditLogList": [
+        {
+          "kind": "rcv",
+          "date": "2025-04-10",
+          "size": 1024,
+          "id": 1,
+          "fname": "audit_20250410.log"
+        },
+        {
+          "kind": "rcv",
+          "date": "2025-04-10",
+          "size": 512,
+          "id": 2,
+          "fname": "audit_snd_20250410.log"
+        }
+      ]
+    }
+  },
+  "/apik/prod1/auditlog/frame-list?file=audit_20250410.log&page=1&limit=2&last-offset=0&sort=asc&refreshKey=1": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "file_size": 2048,
+      "max_frame": 100,
+      "file": "audit_20250410.log",
+      "nodeId": "prod1",
+      "desc": "Audit log frames",
+      "date": 20250410,
+      "frame_list": [
+        {
+          "size": 400,
+          "rid": 1,
+          "head": "C351Q",
+          "seq": 9097884
+        },
+        {
+          "size": 685,
+          "rid": 1,
+          "head": "B201S",
+          "seq": 9097883
+        },
+        {
+          "size": 590,
+          "rid": 1,
+          "head": "B651Q",
+          "seq": 9097882
+        },
+        {
+          "size": 685,
+          "rid": 1,
+          "head": "B251S",
+          "seq": 9097881
+        },
+        {
+          "size": 590,
+          "rid": 1,
+          "head": "B651Q",
+          "seq": 9097880
+        },
+        {
+          "size": 105,
+          "rid": 1,
+          "head": "C051Q",
+          "seq": 9097879
+        },
+        {
+          "size": 685,
+          "rid": 1,
+          "head": "B201S",
+          "seq": 9097878
+        },
+        {
+          "size": 685,
+          "rid": 1,
+          "head": "B201Q",
+          "seq": 9097877
+        },
+        {
+          "size": 590,
+          "rid": 1,
+          "head": "B651Q",
+          "seq": 9097876
+        },
+        {
+          "size": 590,
+          "rid": 1,
+          "head": "B651S",
+          "seq": 9097875
+        },
+        {
+          "size": 186,
+          "rid": 1,
+          "head": "A351S",
+          "seq": 9097874
+        },
+        {
+          "size": 186,
+          "rid": 1,
+          "head": "A351S",
+          "seq": 9097873
+        },
+        {
+          "size": 590,
+          "rid": 1,
+          "head": "B651S",
+          "seq": 9097872
+        },
+        {
+          "size": 685,
+          "rid": 1,
+          "head": "B201S",
+          "seq": 9097871
+        },
+        {
+          "size": 685,
+          "rid": 1,
+          "head": "B251Q",
+          "seq": 9097870
+        },
+        {
+          "size": 590,
+          "rid": 1,
+          "head": "B651S",
+          "seq": 9097869
+        },
+        {
+          "size": 105,
+          "rid": 1,
+          "head": "C051Q",
+          "seq": 9097868
+        },
+        {
+          "size": 685,
+          "rid": 1,
+          "head": "B201S",
+          "seq": 9097867
+        },
+        {
+          "size": 685,
+          "rid": 1,
+          "head": "B201Q",
+          "seq": 9097866
+        },
+        {
+          "size": 590,
+          "rid": 1,
+          "head": "B651S",
+          "seq": 9097865
+        },
+        {
+          "size": 186,
+          "rid": 1,
+          "head": "A351S",
+          "seq": 9097864
+        },
+        {
+          "size": 414,
+          "rid": 1,
+          "head": "B951S",
+          "seq": 9097863
+        },
+        {
+          "size": 186,
+          "rid": 1,
+          "head": "A351Q",
+          "seq": 9097862
+        },
+        {
+          "size": 186,
+          "rid": 1,
+          "head": "A351Q",
+          "seq": 9097861
+        },
+        {
+          "size": 590,
+          "rid": 1,
+          "head": "B651Q",
+          "seq": 9097860
+        },
+        {
+          "size": 685,
+          "rid": 1,
+          "head": "B201S",
+          "seq": 9097859
+        },
+        {
+          "size": 685,
+          "rid": 1,
+          "head": "B251S",
+          "seq": 9097858
+        },
+        {
+          "size": 105,
+          "rid": 1,
+          "head": "C051Q",
+          "seq": 9097857
+        },
+        {
+          "size": 685,
+          "rid": 1,
+          "head": "B201S",
+          "seq": 9097856
+        },
+        {
+          "size": 590,
+          "rid": 1,
+          "head": "B651S",
+          "seq": 9097855
+        },
+        {
+          "size": 685,
+          "rid": 1,
+          "head": "B201Q",
+          "seq": 9097854
+        },
+        {
+          "size": 414,
+          "rid": 1,
+          "head": "B951Q",
+          "seq": 9097853
+        },
+        {
+          "size": 590,
+          "rid": 1,
+          "head": "B651Q",
+          "seq": 9097852
+        },
+        {
+          "size": 685,
+          "rid": 1,
+          "head": "B201S",
+          "seq": 9097851
+        },
+        {
+          "size": 685,
+          "rid": 1,
+          "head": "B251Q",
+          "seq": 9097850
+        },
+        {
+          "size": 105,
+          "rid": 1,
+          "head": "C051Q",
+          "seq": 9097849
+        },
+        {
+          "size": 685,
+          "rid": 1,
+          "head": "B201S",
+          "seq": 9097848
+        },
+        {
+          "size": 685,
+          "rid": 1,
+          "head": "B201Q",
+          "seq": 9097847
+        },
+        {
+          "size": 186,
+          "rid": 1,
+          "head": "A351S",
+          "seq": 9097846
+        },
+        {
+          "size": 186,
+          "rid": 1,
+          "head": "A351S",
+          "seq": 9097845
+        }
+      ]
+    },
+    "meta": {
+      "has_previous_page": false,
+      "has_next_page": true,
+      "current_page": 1,
+      "total_pages": 3
+    }
+  },
+  "/apik/prod1/auditlog/frame?file=audit_20250410.log&seq=1&refreshKey=1": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "file": "rcv_20250410",
+      "nodeId": "prod1",
+      "desc": "inbound",
+      "spec": {
+        "date": 20250410,
+        "seq": 9097884,
+        "head": "C351Q",
+        "time_ms": "991",
+        "rid": 1,
+        "time_us": "145",
+        "file_size": 4372288756,
+        "max_frame": 9101616,
+        "time": "17:13:11",
+        "frags": [
+          {
+            "data": "C3",
+            "len": 2,
+            "desc": "데이터구분값 (C3)    ",
+            "id": 1
+          },
+          {
+            "data": "51Q",
+            "len": 3,
+            "desc": "정보구분값             ",
+            "id": 2
+          },
+          {
+            "data": "KR7095340006",
+            "len": 12,
+            "desc": "종목코드             ",
+            "id": 3
+          },
+          {
+            "data": "000748",
+            "len": 6,
+            "desc": "종목인덱스번호             ",
+            "id": 4
+          },
+          {
+            "data": "000000000085545",
+            "len": 15,
+            "desc": "매도차익잔량합산",
+            "id": 5
+          },
+          {
+            "data": "000000000164995",
+            "len": 15,
+            "desc": "매수차익잔량합산",
+            "id": 6
+          },
+          {
+            "data": "000000000092168",
+            "len": 15,
+            "desc": "매도비차익잔량합산",
+            "id": 7
+          },
+          {
+            "data": "000000000171949",
+            "len": 15,
+            "desc": "매수비차익잔량합산",
+            "id": 8
+          },
+          {
+            "data": "000000000369576",
+            "len": 15,
+            "desc": "매도차익수량합산",
+            "id": 9
+          },
+          {
+            "data": "000000000463177",
+            "len": 15,
+            "desc": "매수차익수량합산",
+            "id": 10
+          },
+          {
+            "data": "000000000307413",
+            "len": 15,
+            "desc": "매도비차익수량합산",
+            "id": 11
+          },
+          {
+            "data": "000000000458976",
+            "len": 15,
+            "desc": "매수비차익수량합산 ",
+            "id": 12
+          },
+          {
+            "data": "0000284031",
+            "len": 10,
+            "desc": "위탁매도차익체결수량합산",
+            "id": 13
+          },
+          {
+            "data": "0000000000",
+            "len": 10,
+            "desc": "자기매도차익체결수량합산",
+            "id": 14
+          },
+          {
+            "data": "0000298182",
+            "len": 10,
+            "desc": "위탁매수차익체결수량합산",
+            "id": 15
+          },
+          {
+            "data": "0000000000",
+            "len": 10,
+            "desc": "자기매수차익체결수량합산",
+            "id": 16
+          },
+          {
+            "data": "0000215245",
+            "len": 10,
+            "desc": "위탁매도비차익체결수량합산",
+            "id": 17
+          },
+          {
+            "data": "0000000000",
+            "len": 10,
+            "desc": "자기매도비차익체결수량합산",
+            "id": 18
+          },
+          {
+            "data": "0000287027",
+            "len": 10,
+            "desc": "위탁매수비차익체결수량합산",
+            "id": 19
+          },
+          {
+            "data": "0000000000",
+            "len": 10,
+            "desc": "자기매수비차익체결수량합산",
+            "id": 20
+          },
+          {
+            "data": "000000014494977900.000",
+            "len": 22,
+            "desc": "위탁매도차익거래대금합산",
+            "id": 21
+          },
+          {
+            "data": "000000000000000000.000",
+            "len": 22,
+            "desc": "자기매도차익거래대금합산",
+            "id": 22
+          },
+          {
+            "data": "000000015220173400.000",
+            "len": 22,
+            "desc": "위탁매수차익거래대금합산",
+            "id": 23
+          },
+          {
+            "data": "000000000000000000.000",
+            "len": 22,
+            "desc": "자기매수차익거래대금합산 ",
+            "id": 24
+          },
+          {
+            "data": "000000010990941300.000",
+            "len": 22,
+            "desc": "위탁매도비차익거래대금합산",
+            "id": 25
+          },
+          {
+            "data": "000000000000000000.000",
+            "len": 22,
+            "desc": "자기매도비차익거래대금합산",
+            "id": 26
+          },
+          {
+            "data": "000000014649277100.000",
+            "len": 22,
+            "desc": "위탁매수비차익거래대금합산",
+            "id": 27
+          },
+          {
+            "data": "000000000000000000.000",
+            "len": 22,
+            "desc": "자기매수비차익거래대금합산",
+            "id": 28
+          },
+          {
+            "data": "�",
+            "len": 1,
+            "desc": "종료자(0xff)",
+            "id": 29
+          }
+        ],
+        "data": "C351QKR709534000600074800000000008554500000000016499500000000009216800000000017194900000000036957600000000046317700000000030741300000000045897600002840310000000000000029818200000000000000215245000000000000002870270000000000000000014494977900.000000000000000000000.000000000015220173400.000000000000000000000.000000000010990941300.000000000000000000000.000000000014649277100.000000000000000000000.000�",
+        "size": 400
+      }
+    }
+  },
+  "/apik/prod1/channel/list?kind=inbound": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod1",
+      "kind": "inbound",
+      "list": [
+        {
+          "name": "channel1",
+          "utype": "multicast",
+          "port": 5000,
+          "is_running": true,
+          "mip": "224.0.0.1",
+          "id": 1,
+          "count": 50,
+          "type": "UDP",
+          "topic": "topic1",
+          "nic": "eth0"
+        },
+        {
+          "name": "channel2",
+          "utype": "unicast",
+          "port": 5001,
+          "is_running": false,
+          "mip": "192.168.1.10",
+          "id": 2,
+          "count": 0,
+          "type": "UDP",
+          "topic": "topic2",
+          "nic": "eth1"
+        }
+      ]
+    }
+  }
+}

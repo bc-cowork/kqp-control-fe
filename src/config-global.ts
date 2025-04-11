@@ -7,6 +7,7 @@ import packageJson from '../package.json';
 export type ConfigValue = {
   appName: string;
   appVersion: string;
+  apiDataType: string;
   serverUrl: string;
   assetsDir: string;
   isStaticExport: boolean;
@@ -35,6 +36,7 @@ export type ConfigValue = {
 export const CONFIG: ConfigValue = {
   appName: 'KQP Admin',
   appVersion: packageJson.version,
+  apiDataType: 'dummy',
   serverUrl: process.env.NEXT_PUBLIC_SERVER_URL ?? '',
   assetsDir: process.env.NEXT_PUBLIC_ASSETS_DIR ?? '',
   isStaticExport: JSON.parse(`${process.env.BUILD_STATIC_EXPORT}`),

@@ -69,10 +69,10 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
       if (newPage === 0) {
         setOffset(0);
       } else {
-        setOffset(auditFrameList.max_frame);
+        setOffset(auditFrameList?.max_frame || 0);
       }
     },
-    [auditFrameList.max_frame]
+    [auditFrameList?.max_frame]
   );
 
   const onMaxFrameRefresh = () => {
@@ -210,7 +210,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
           <TablePaginationCustom
             rowsPerPage={rowsPerPage}
             page={page}
-            count={auditFrameList.max_frame}
+            count={auditFrameList?.max_frame || 0}
             onPageChange={onChangePage}
             onRowsPerPageChange={onChangeRowsPerPage}
             first
@@ -236,7 +236,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                   <TableCell colSpan={6}>Error Fetching Audit Logs List</TableCell>
                 </TableRow>
               ) : (
-                auditFrameList.frame_list.map((auditFrame: AuditLogFrameItem, index: number) => (
+                auditFrameList?.frame_list.map((auditFrame: AuditLogFrameItem, index: number) => (
                   <TableRow
                     key={index}
                     onClick={() => {
