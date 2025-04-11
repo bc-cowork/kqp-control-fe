@@ -154,7 +154,7 @@ export function Memory({ selectedNodeId }: Props) {
           <Grid md={8} alignContent="flex-end">
             <TablePaginationCustom
               rowsPerPage={limit}
-              page={issues.current_page - 1}
+              page={(issues?.current_page || 1) - 1}
               count={issues.max_issue_count}
               onPageChange={onChangePage}
               onRowsPerPageChange={onChangeRowsPerPage}
