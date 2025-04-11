@@ -38,7 +38,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
   const rowKeysAsk = Object.keys(issueQuotesAsk)
     .filter((key) => key !== 'sum')
     .sort((a, b) => Number(b) - Number(a));
-  const sumDataAsk = issueQuotesAsk.sum;
+  const sumDataAsk = issueQuotesAsk?.sum || 0;
 
   const rowKeysBid = Object.keys(issueQuotesBid)
     .filter((key) => key !== 'sum')
@@ -169,17 +169,25 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                             backgroundColor: '#EFF6FF',
                           }}
                         >
-                          {issueQuotesAsk[key].price.toLocaleString()}
+                          {(issueQuotesAsk as Record<string, { price: number }>)[
+                            key
+                          ]?.price.toLocaleString()}
                         </Box>
                       </TableCell>
                       <TableCell align="right">
-                        {issueQuotesAsk[key].uni.toLocaleString()}
+                        {(issueQuotesAsk as Record<string, { uni: number }>)[
+                          key
+                        ]?.uni.toLocaleString()}
                       </TableCell>
                       <TableCell align="right">
-                        {issueQuotesAsk[key].krx.toLocaleString()}
+                        {(issueQuotesAsk as Record<string, { krx: number }>)[
+                          key
+                        ]?.krx.toLocaleString()}
                       </TableCell>
                       <TableCell align="right">
-                        {issueQuotesAsk[key].nxt.toLocaleString()}
+                        {(issueQuotesAsk as Record<string, { nxt: number }>)[
+                          key
+                        ]?.nxt.toLocaleString()}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -195,17 +203,25 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                             backgroundColor: '#FFF2F4',
                           }}
                         >
-                          {issueQuotesAsk[key].price.toLocaleString()}
+                          {(issueQuotesAsk as Record<string, { price: number }>)[
+                            key
+                          ]?.price.toLocaleString()}
                         </Box>
                       </TableCell>
                       <TableCell align="right">
-                        {issueQuotesAsk[key].uni.toLocaleString()}
+                        {(issueQuotesAsk as Record<string, { uni: number }>)[
+                          key
+                        ]?.uni.toLocaleString()}
                       </TableCell>
                       <TableCell align="right">
-                        {issueQuotesAsk[key].krx.toLocaleString()}
+                        {(issueQuotesAsk as Record<string, { krx: number }>)[
+                          key
+                        ]?.krx.toLocaleString()}
                       </TableCell>
                       <TableCell align="right">
-                        {issueQuotesAsk[key].nxt.toLocaleString()}
+                        {(issueQuotesAsk as Record<string, { nxt: number }>)[
+                          key
+                        ]?.nxt.toLocaleString()}
                       </TableCell>
                     </TableRow>
                   ))}

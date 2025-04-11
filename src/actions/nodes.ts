@@ -213,6 +213,21 @@ export function useGetIssues(node: string, offset: number, limit: number, q?: st
 
 // ----------------------------------------------------------------------
 
+const DEFAULT_ISSUE_INFO = {
+  code: '',
+  vol_accum: { nxt: 0, uni: 0, krx: 0 },
+  amt_accum: { nxt: 0, uni: 0, krx: 0 },
+  seq: 0,
+  high: { nxt: 0, uni: 0, krx: 0 },
+  compet: 0,
+  last_price: { nxt: 0, uni: 0, krx: 0 },
+  last_vol: { nxt: 0, uni: 0, krx: 0 },
+  g1_ssn_id: [null, null, null],
+  open: { nxt: 0, uni: 0, krx: 0 },
+  name: '',
+  low: { nxt: 0, uni: 0, krx: 0 },
+};
+
 export function useGetIssueItemInfo(node: string, code: string) {
   const url = node && code ? [endpoints.nodes.issues.info(node), { params: { code } }] : '';
 
@@ -226,7 +241,7 @@ export function useGetIssueItemInfo(node: string, code: string) {
 
   const memoizedValue = useMemo(
     () => ({
-      issueInfo: data?.data?.issueInfo || {},
+      issueInfo: data?.data?.issueInfo || DEFAULT_ISSUE_INFO,
       issueInfoLoading: isLoading,
       issueInfoError: error,
       issueInfoValidating: isValidating,
@@ -238,6 +253,16 @@ export function useGetIssueItemInfo(node: string, code: string) {
 }
 
 // ----------------------------------------------------------------------
+
+const DEFAULT_ISSUE_QUOTES_ASK = {
+  '1': { uni: 0, price: 0, nxt: 0, krx: 0 },
+  sum: { uni: 0, price: 0, nxt: 0, krx: 0 },
+};
+
+const DEFAULT_ISSUE_QUOTES_BID = {
+  '1': { uni: 0, price: 0, nxt: 0, krx: 0 },
+  sum: { uni: 0, price: 0, nxt: 0, krx: 0 },
+};
 
 export function useGetIssueItemQuotes(node: string, code: string) {
   const url = node && code ? [endpoints.nodes.issues.quote(node), { params: { code } }] : '';
@@ -252,8 +277,8 @@ export function useGetIssueItemQuotes(node: string, code: string) {
 
   const memoizedValue = useMemo(
     () => ({
-      issueQuotesAsk: data?.data?.issueQuote?.order_book?.ask || {},
-      issueQuotesBid: data?.data?.issueQuote?.order_book?.bid || {},
+      issueQuotesAsk: data?.data?.issueQuote?.order_book?.ask || DEFAULT_ISSUE_QUOTES_ASK,
+      issueQuotesBid: data?.data?.issueQuote?.order_book?.bid || DEFAULT_ISSUE_QUOTES_BID,
       issueQuotesLoading: isLoading,
       issueQuotesError: error,
       issueQuotesValidating: isValidating,

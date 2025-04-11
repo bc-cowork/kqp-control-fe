@@ -23,8 +23,14 @@ type Props = {
 };
 
 export function ProcessDetail({ selectedNodeId, page = 'process' }: Props) {
-  const { processes, processLoading, processesEmpty, processError } =
-    useGetProcesses(selectedNodeId);
+  const { processes, processLoading, processesEmpty, processError } = useGetProcesses(
+    selectedNodeId
+  ) as {
+    processes: IProcessItem[];
+    processLoading: boolean;
+    processesEmpty: boolean;
+    processError: boolean;
+  };
 
   const isDashboardPage = page === 'dashboard';
 
