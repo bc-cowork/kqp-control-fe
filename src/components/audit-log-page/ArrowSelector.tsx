@@ -6,8 +6,8 @@ import { grey, common } from 'src/theme/core';
 
 type ArrowSelectorProps = {
   label: string;
-  value: 'next' | 'prev' | undefined;
-  setValue: (value: 'next' | 'prev' | undefined) => void;
+  value: any;
+  setValue: (value: any) => void;
 };
 
 const ArrowSelector = ({ label, value, setValue }: ArrowSelectorProps) => {

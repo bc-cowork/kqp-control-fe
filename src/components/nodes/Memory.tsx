@@ -1,19 +1,20 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import {
   Box,
   Grid,
   Table,
-  Tooltip,
+  Paper,
+  styled,
+  Divider,
   TableRow,
-  useTheme,
-  TextField,
   TableHead,
   TableCell,
   TableBody,
   Typography,
+  TableContainer,
   CircularProgress,
 } from '@mui/material';
 
@@ -24,11 +25,25 @@ import { useDebounce } from 'src/hooks/use-debounce';
 import { grey, common } from 'src/theme/core';
 import { useGetIssues } from 'src/actions/nodes';
 
-import { Iconify } from '../iconify';
+import AddFilter from '../common/AddFilter';
 import { TableEmptyRows } from '../table/table-empty-rows';
 import { TableErrorRows } from '../table/table-error-rows';
 import { TableLoadingRows } from '../table/table-loading-rows';
 import TablePaginationCustom from '../common/TablePaginationCustom';
+
+import type { Filter } from '../common/AddFilter';
+
+// ----------------------------------------------------------------------
+
+const FadingDivider = styled(Divider)(({ theme }) => ({
+  height: '1px',
+  background: `linear-gradient(to right, transparent, ${theme.palette.grey[400]}, transparent)`,
+  border: 'none',
+  margin: '16px 0',
+  '&:before, &:after': {
+    display: 'none',
+  },
+}));
 
 // ----------------------------------------------------------------------
 
@@ -38,7 +53,6 @@ type Props = {
 
 export function Memory({ selectedNodeId }: Props) {
   const router = useRouter();
-  const theme = useTheme();
   const [code, setCode] = useState<string>('');
   const debouncedCode = useDebounce(code);
   const [offset, setOffset] = useState<number>(1);
@@ -49,6 +63,27 @@ export function Memory({ selectedNodeId }: Props) {
     limit,
     debouncedCode
   );
+
+  const [filters, setFilters] = useState<Filter | null>(null);
+
+  useEffect(() => {
+    if (filters) {
+      const filterCode = Array.isArray(filters)
+        ? filters.find((filter: { code: any }) => filter.code)?.code
+        : null;
+      if (!filterCode) {
+        setCode('');
+      }
+    } else {
+      setCode('');
+    }
+  }, [filters]);
+
+  const handleSearch = (filter: any) => {
+    if (filter?.code) {
+      setCode(filter.code);
+    }
+  };
 
   const onChangeRowsPerPage = useCallback((newRowsPerPage: number) => {
     setOffset(1);
@@ -61,97 +96,121 @@ export function Memory({ selectedNodeId }: Props) {
     },
     [limit]
   );
+
   return (
-    <>
-      <Box sx={{ mb: 2 }}>
-        <Grid container>
-          <Grid md={3}>
-            <Grid
-              container
-              sx={{
-                mb: 2,
-                backgroundColor: theme.palette.common.white,
-                borderRadius: '8px',
-                border: `solid 1px ${grey[100]}`,
-                minHeight: '50px',
-              }}
-            >
-              {issuesLoading ? (
-                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 5 }}>
-                  <CircularProgress />
-                </Box>
-              ) : (
-                <>
-                  <Grid
-                    md={6}
+    <Grid container>
+      <Grid md={3} sx={{ pr: 1.25 }}>
+        <Box sx={{ p: 1.5, backgroundColor: '#202838', borderRadius: 1.5 }}>
+          <Grid
+            container
+            sx={{
+              mb: 2,
+              minHeight: '50px',
+            }}
+          >
+            {issuesLoading ? (
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 5 }}>
+                <CircularProgress />
+              </Box>
+            ) : (
+              <>
+                <Grid md={6} sx={{ pr: 0.5 }}>
+                  <Box
                     sx={{
-                      borderRight: `solid 1px ${theme.palette.divider}`,
-                      py: 2,
-                      px: 1,
+                      backgroundColor: grey[600],
+                      borderRadius: '8px',
+                      border: `1px solid ${grey[500]}`,
+                      p: 1.5,
                     }}
                   >
-                    <Typography variant="caption">Issues</Typography>
-                    <Typography variant="subtitle1" sx={{ color: grey[600], fontSize: 17 }}>
+                    <Typography sx={{ fontSize: 15, fontWeight: 500, color: common.white }}>
+                      Issues
+                    </Typography>
+                    <FadingDivider />
+                    <Typography
+                      sx={{
+                        fontSize: 28,
+                        fontWeight: 400,
+                        color: common.white,
+                        textAlign: 'right',
+                      }}
+                    >
                       {issues?.max_issue_count}
                     </Typography>
-                  </Grid>
-                  <Grid md={6} sx={{ py: 2, px: 1 }}>
-                    <Typography variant="caption">Compet</Typography>
-                    <Typography variant="subtitle1" sx={{ color: grey[600], fontSize: 17 }}>
+                  </Box>
+                </Grid>
+                <Grid md={6} sx={{ pl: 0.5 }}>
+                  <Box
+                    sx={{
+                      backgroundColor: grey[600],
+                      borderRadius: '8px',
+                      border: `1px solid ${grey[500]}`,
+                      p: 1.5,
+                    }}
+                  >
+                    <Typography sx={{ fontSize: 15, fontWeight: 500, color: common.white }}>
+                      Compet
+                    </Typography>
+                    <FadingDivider />
+                    <Typography
+                      sx={{
+                        fontSize: 28,
+                        fontWeight: 400,
+                        color: common.white,
+                        textAlign: 'right',
+                      }}
+                    >
                       {issues?.compet_count}
                     </Typography>
-                  </Grid>
-                </>
-              )}
-            </Grid>
-            <Box>
-              <TextField
-                size="small"
-                placeholder="CODE"
-                value={code}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setCode(event.target.value);
-                }}
-                sx={{
-                  width: '100%',
-                  '& .MuiOutlinedInput-root': {
-                    backgroundColor: theme.palette.common.white,
-                  },
-                }}
-              />
-            </Box>
+                  </Box>
+                </Grid>
+                <Grid md={12}>
+                  <Box
+                    sx={{
+                      borderRadius: '8px',
+                      border: `1px solid ${grey[500]}`,
+                      p: 1.5,
+                      mt: 1,
+                    }}
+                  >
+                    graph 1
+                  </Box>
+                </Grid>
+                <Grid md={12}>
+                  <Box
+                    sx={{
+                      borderRadius: '8px',
+                      border: `1px solid ${grey[500]}`,
+                      p: 1.5,
+                      mt: 1,
+                    }}
+                  >
+                    graph 2
+                  </Box>
+                </Grid>
+              </>
+            )}
           </Grid>
-          <Grid md={1} alignContent="flex-end" sx={{ pl: 0.5 }}>
-            <Tooltip
-              title={
-                <>
-                  Please enter the 12-digit ISIN code you wish to search for. <br />
-                  ex: KR7005930003
-                </>
-              }
-              arrow
-              placement="right"
-              slotProps={{
-                tooltip: {
-                  sx: {
-                    color: common.white,
-                    backgroundColor: grey[500],
-                    boxShadow: '0px 4px 20px 0px rgba(10, 14, 21, 0.20)',
-                    py: 2,
-                    px: 1.5,
-                  },
-                },
-              }}
-            >
-              <Iconify
-                icon="eva:info-outline"
-                color={theme.palette.grey[400]}
-                width={24}
-                height={24}
-              />
-            </Tooltip>
-          </Grid>
-          <Grid md={8} alignContent="flex-end">
+        </Box>
+      </Grid>
+      <Grid md={9} sx={{ pl: 1.25 }}>
+        <AddFilter
+          filters={filters}
+          setFilters={setFilters}
+          page="Memory"
+          onApply={handleSearch}
+          count={issues.max_issue_count}
+        />
+        <Box
+          sx={{
+            pb: 1.5,
+            px: 1.5,
+            backgroundColor: common.white,
+            borderBottomLeftRadius: 1.5,
+            borderBottomRightRadius: 1.5,
+          }}
+        >
+          <Box sx={{ py: 1 }}>
             <TablePaginationCustom
               rowsPerPage={limit}
               page={(issues?.current_page || 1) - 1}
@@ -159,50 +218,52 @@ export function Memory({ selectedNodeId }: Props) {
               onPageChange={onChangePage}
               onRowsPerPageChange={onChangeRowsPerPage}
             />
-          </Grid>
-        </Grid>
-      </Box>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell align="right">SEQ</TableCell>
-            <TableCell>CODE</TableCell>
-            <TableCell>K. Name</TableCell>
-            <TableCell>Daily Info</TableCell>
-            <TableCell align="right">Compet</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {issuesLoading ? (
-            <TableLoadingRows height={20} loadingRows={10} />
-          ) : issuesEmpty ? (
-            <TableEmptyRows text="No data for memory logs" />
-          ) : issuesError ? (
-            <TableErrorRows />
-          ) : (
-            issues.issueList.map(
-              (
-                issue: any, // TODO: Fix type
-                index: number
-              ) => (
-                <TableRow
-                  key={index}
-                  onClick={() =>
-                    router.push(`/dashboard/nodes/${selectedNodeId}/memory/${issue.code}`)
-                  }
-                  sx={{ cursor: 'pointer' }}
-                >
-                  <TableCell align="right">{issue.seq}</TableCell>
-                  <TableCell>{issue.code}</TableCell>
-                  <TableCell>{issue.name}</TableCell>
-                  <TableCell>{`[${issue.daily_info_dates.join(' / ')}]`}</TableCell>
-                  <TableCell align="right">{issue.compet}</TableCell>
+          </Box>
+          <TableContainer component={Paper} sx={{ height: 'calc(100vh - 310px)' }}>
+            <Table size="small">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="right">SEQ</TableCell>
+                  <TableCell>CODE</TableCell>
+                  <TableCell>K. Name</TableCell>
+                  <TableCell>Daily Info</TableCell>
+                  <TableCell align="right">Compet</TableCell>
                 </TableRow>
-              )
-            )
-          )}
-        </TableBody>
-      </Table>
-    </>
+              </TableHead>
+              <TableBody>
+                {issuesLoading ? (
+                  <TableLoadingRows height={20} loadingRows={10} />
+                ) : issuesEmpty ? (
+                  <TableEmptyRows text="No data for memory logs" />
+                ) : issuesError ? (
+                  <TableErrorRows />
+                ) : (
+                  issues.issueList.map(
+                    (
+                      issue: any, // TODO: Fix type
+                      index: number
+                    ) => (
+                      <TableRow
+                        key={index}
+                        onClick={() =>
+                          router.push(`/dashboard/nodes/${selectedNodeId}/memory/${issue.code}`)
+                        }
+                        sx={{ cursor: 'pointer' }}
+                      >
+                        <TableCell align="right">{issue.seq}</TableCell>
+                        <TableCell>{issue.code}</TableCell>
+                        <TableCell>{issue.name}</TableCell>
+                        <TableCell>{`[${issue.daily_info_dates.join(' / ')}]`}</TableCell>
+                        <TableCell align="right">{issue.compet}</TableCell>
+                      </TableRow>
+                    )
+                  )
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      </Grid>
+    </Grid>
   );
 }

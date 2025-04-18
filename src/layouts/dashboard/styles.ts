@@ -51,7 +51,7 @@ export function useNavColorVars(
       case 'integrate':
         return {
           layout: {
-            '--layout-nav-bg': palette.grey[600],
+            '--layout-nav-bg': '#202838',
             '--layout-nav-horizontal-bg': palette.grey[600],
             '--layout-nav-border-color': varAlpha(palette.grey['500Channel'], 0.12),
             '--layout-nav-text-primary-color': palette.common.white,
@@ -67,7 +67,7 @@ export function useNavColorVars(
       case 'apparent':
         return {
           layout: {
-            '--layout-nav-bg': palette.grey[600],
+            '--layout-nav-bg': '#202838',
             '--layout-nav-horizontal-bg': palette.grey[600],
             '--layout-nav-border-color': 'transparent',
             '--layout-nav-text-primary-color': palette.common.white,

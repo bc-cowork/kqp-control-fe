@@ -54,9 +54,9 @@ export const typography: TypographyOptions = {
   h3: {
     fontWeight: 400,
     lineHeight: 1.5,
-    fontSize: pxToRem(20),
+    fontSize: pxToRem(17),
     fontFamily: secondaryFont,
-    ...responsiveFontSizes({ sm: 26, md: 20, lg: 20 }),
+    ...responsiveFontSizes({ sm: 26, md: 17, lg: 18 }),
   },
   h4: {
     fontWeight: 400,

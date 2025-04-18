@@ -4,13 +4,13 @@ import {
   Box,
   Grid,
   Table,
+  Paper,
   Divider,
   TableRow,
   TableBody,
   TableCell,
   TableHead,
-  Typography,
-  CircularProgress,
+  TableContainer,
 } from '@mui/material';
 
 import { grey } from 'src/theme/core';
@@ -19,8 +19,7 @@ import { useGetIssueItemInfo, useGetIssueItemQuotes } from 'src/actions/nodes';
 import { TableErrorRows } from '../table/table-error-rows';
 import { TableLoadingRows } from '../table/table-loading-rows';
 import { MemoryItemInfo } from '../memory-page/MemoryItemInfo';
-import { MemoryStockItem } from '../memory-page/MemoryStockItem';
-import { MemoryStockHead } from '../memory-page/MemoryStockHead';
+import { MemoryIssueInfoTable } from '../memory-page/MemoryIssueInfoTable';
 
 // ----------------------------------------------------------------------
 
@@ -46,73 +45,13 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
   const sumDataBid = issueQuotesBid.sum;
 
   return (
-    <>
-      {issueInfoLoading ? (
-        <Box>
-          <CircularProgress />
-        </Box>
-      ) : issueInfoError ? (
-        <Box>
-          <Typography color="error">Error fetching issue item information</Typography>
-        </Box>
-      ) : (
-        <Grid
-          container
-          sx={{
-            display: 'flex',
-            alignItems: 'stretch',
-          }}
-        >
-          <Grid md={4} sx={{ pr: 2.5 }}>
-            <MemoryItemInfo issueInfo={issueInfo} />
-          </Grid>
-          <Grid md={1}>
-            <MemoryStockHead />
-          </Grid>
-          <Grid md={7}>
-            <Grid container>
-              <Grid md={4}>
-                <MemoryStockItem
-                  name="UNI"
-                  lastPrice={issueInfo.last_price.uni}
-                  lastVolume={issueInfo.last_vol.uni}
-                  volumeAccum={issueInfo.vol_accum.uni}
-                  amountAccum={issueInfo.amt_accum.uni}
-                  high={issueInfo.high.uni}
-                  low={issueInfo.low.uni}
-                  open={issueInfo.open.uni}
-                />
-              </Grid>
-              <Grid md={4} sx={{ pl: 1 }}>
-                <MemoryStockItem
-                  name="KRX"
-                  lastPrice={issueInfo.last_price.krx}
-                  lastVolume={issueInfo.last_vol.krx}
-                  volumeAccum={issueInfo.vol_accum.krx}
-                  amountAccum={issueInfo.amt_accum.krx}
-                  high={issueInfo.high.krx}
-                  low={issueInfo.low.krx}
-                  open={issueInfo.open.krx}
-                />
-              </Grid>
-              <Grid md={4} sx={{ pl: 1 }}>
-                <MemoryStockItem
-                  name="NXT"
-                  lastPrice={issueInfo.last_price.nxt}
-                  lastVolume={issueInfo.last_vol.nxt}
-                  volumeAccum={issueInfo.vol_accum.nxt}
-                  amountAccum={issueInfo.amt_accum.nxt}
-                  high={issueInfo.high.nxt}
-                  low={issueInfo.low.nxt}
-                  open={issueInfo.open.nxt}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      )}
-      <Grid container sx={{ mt: 2 }}>
-        <Grid md={12}>
+    <Grid container>
+      <Grid md={5} sx={{ pr: '10px' }}>
+        <MemoryItemInfo issueInfo={issueInfo} />
+        <MemoryIssueInfoTable issueInfo={issueInfo} />
+      </Grid>
+      <Grid md={7} sx={{ pl: '10px' }}>
+        <TableContainer component={Paper} sx={{ height: { md: 'calc(100vh - 200px)' } }}>
           <Table size="small">
             <TableHead>
               <TableRow>
@@ -257,8 +196,8 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
               )}
             </TableBody>
           </Table>
-        </Grid>
+        </TableContainer>
       </Grid>
-    </>
+    </Grid>
   );
 }

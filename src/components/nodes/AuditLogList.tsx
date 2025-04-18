@@ -17,8 +17,8 @@ import {
 
 import { useRouter } from 'src/routes/hooks';
 
-import { grey } from 'src/theme/core/palette';
 import { useAuditLogList } from 'src/actions/nodes';
+import { grey, common } from 'src/theme/core/palette';
 
 import { TableEmptyRows } from '../table/table-empty-rows';
 import { TableErrorRows } from '../table/table-error-rows';
@@ -53,7 +53,7 @@ export function AuditLogList({ selectedNodeId }: Props) {
   };
 
   return (
-    <>
+    <Box sx={{ backgroundColor: common.white, borderRadius: 1.5, p: 1.5 }}>
       <Box sx={{ mb: 2 }}>
         <Select
           value={type}
@@ -102,6 +102,6 @@ export function AuditLogList({ selectedNodeId }: Props) {
           )}
         </TableBody>
       </Table>
-    </>
+    </Box>
   );
 }

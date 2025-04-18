@@ -1,6 +1,24 @@
 'use client';
 
-import { Box, Grid, Typography } from '@mui/material'; // Import Next.js Link for routing
+import { Box, Stack, Typography } from '@mui/material';
+
+// ----------------------------------------------------------------------
+
+type LabelValueRowProps = {
+  label: string;
+  value: string | number | undefined;
+};
+
+const LabelValueRow = ({ label, value }: LabelValueRowProps) => (
+  <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 1 }}>
+    <Typography sx={{ color: (theme) => theme.palette.grey[300], fontSize: 15, width: '150px' }}>
+      {label}
+    </Typography>
+    <Typography sx={{ color: (theme) => theme.palette.grey[50], fontSize: 17, fontWeight: 500 }}>
+      {value}
+    </Typography>
+  </Stack>
+);
 
 // ----------------------------------------------------------------------
 
@@ -12,81 +30,25 @@ export function MemoryItemInfo({ issueInfo }: Props) {
   return (
     <Box
       sx={{
-        backgroundColor: (theme) => theme.palette.common.white,
+        backgroundColor: '#202838',
         borderRadius: '8px',
         px: 3,
-        py: 3.5,
-        height: '100%',
+        pt: 3,
+        pb: 2,
       }}
     >
-      <Grid container>
-        <Grid md={4}>
-          <Typography
-            variant="body2"
-            sx={{ color: (theme) => theme.palette.grey[400], mb: 2, fontSize: 15 }}
-          >
-            Seq
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={{ color: (theme) => theme.palette.grey[400], mb: 2, fontSize: 15 }}
-          >
-            Code
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={{ color: (theme) => theme.palette.grey[400], mb: 2, fontSize: 15 }}
-          >
-            Name
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={{ color: (theme) => theme.palette.grey[400], mb: 2, fontSize: 15 }}
-          >
-            G1.SSN-ID
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={{ color: (theme) => theme.palette.grey[400], fontSize: 15 }}
-          >
-            Compet
-          </Typography>
-        </Grid>
-        <Grid md={8}>
-          <Typography
-            variant="body2"
-            sx={{ color: (theme) => theme.palette.grey[600], mb: 2, fontSize: 15 }}
-          >
-            {issueInfo?.seq}
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={{ color: (theme) => theme.palette.grey[600], mb: 2, fontSize: 15 }}
-          >
-            {issueInfo.code}
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={{ color: (theme) => theme.palette.grey[600], mb: 2, fontSize: 15 }}
-          >
-            {issueInfo.name}
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={{ color: (theme) => theme.palette.grey[600], mb: 2, fontSize: 15 }}
-          >
-            {Array.isArray(issueInfo.g1_ssn_id)
-              ? `[${issueInfo.g1_ssn_id.join(' / ')}]`
-              : issueInfo.g1_ssn_id}
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={{ color: (theme) => theme.palette.grey[600], fontSize: 15 }}
-          >
-            {issueInfo.compet}
-          </Typography>
-        </Grid>
-      </Grid>
+      <LabelValueRow label="Seq" value={issueInfo?.seq} />
+      <LabelValueRow label="Code" value={issueInfo.code} />
+      <LabelValueRow label="Name" value={issueInfo.name} />
+      <LabelValueRow
+        label="G1.SSN-ID"
+        value={
+          Array.isArray(issueInfo.g1_ssn_id)
+            ? `[${issueInfo.g1_ssn_id.join(' / ')}]`
+            : issueInfo.g1_ssn_id
+        }
+      />
+      <LabelValueRow label="Compet" value={issueInfo.compet} />
     </Box>
   );
 }
