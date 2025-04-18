@@ -22,6 +22,8 @@ import { useTabs, useRouter } from 'src/routes/hooks';
 
 import { useDebounce } from 'src/hooks/use-debounce';
 
+import { processMemoryChartData } from 'src/utils/process-chart-data';
+
 import { grey, common } from 'src/theme/core';
 import { useGetIssues, useGetIssueGraph } from 'src/actions/nodes';
 
@@ -104,6 +106,10 @@ export function Memory({ selectedNodeId }: Props) {
 
   const chartHeight = `calc((100vh - 360px)/2)`;
 
+  const chartData = processMemoryChartData(issueGraphData);
+
+  console.log('chartData', chartData);
+
   return (
     <Grid container>
       <Grid md={3} sx={{ pr: 1.25 }}>
@@ -180,7 +186,7 @@ export function Memory({ selectedNodeId }: Props) {
                     }}
                   >
                     <ChartAreaDark
-                      data={issueGraphData}
+                      data={chartData}
                       height="100%"
                       tabs={[{ value: '%', label: '%' }]}
                       tabValue={graphTabs.value}

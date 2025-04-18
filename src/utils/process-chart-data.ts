@@ -1,4 +1,4 @@
-import type { ServiceStatus, ChartDataPoint } from 'src/types/dashboard';
+import type { ServiceStatus, MemoryMetrics, ChartDataPoint } from 'src/types/dashboard';
 
 export function processChartData(serviceStatus: ServiceStatus[]): ChartDataPoint[] {
   return serviceStatus.map((entry) => {
@@ -15,6 +15,19 @@ export function processChartData(serviceStatus: ServiceStatus[]): ChartDataPoint
       outbound_bytes: entry.outbound_bytes,
       inbound_count: entry.inbound_count,
       outbound_count: entry.outbound_count,
+    };
+  });
+}
+
+export function processMemoryChartData(metrics: MemoryMetrics[]) {
+  return metrics.map((entry) => {
+    const hours = entry.hhmmss.slice(0, 2);
+    const minutes = entry.hhmmss.slice(2, 4);
+    const timestamp = `${hours}:${minutes}`;
+
+    return {
+      timestamp,
+      memory: entry.memory,
     };
   });
 }

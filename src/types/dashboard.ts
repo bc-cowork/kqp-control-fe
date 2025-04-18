@@ -97,3 +97,9 @@ export interface ChartDataPoint {
   inbound_count: number;
   outbound_count: number;
 }
+
+export interface MemoryMetrics {
+  name: string;
+  hhmmss: string;
+  memory: number;
+}

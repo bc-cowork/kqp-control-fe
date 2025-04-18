@@ -15,7 +15,7 @@ import { Box, Stack, Typography, CircularProgress } from '@mui/material';
 import { SegmentedButtonGroupChart } from './SegmentedButtonGroupChart';
 
 interface ChartAreaProps {
-  data: { hhmmss: string; memory: number }[];
+  data: { timestamp: string; memory: number }[];
   height: string;
   tabs: {
     value: string;
@@ -100,15 +100,12 @@ export function ChartAreaDark({
             </Box>
           ) : (
             <AreaChart data={data} margin={{ top: 10, right: 5, left: -20, bottom: 0 }}>
-              <CartesianGrid stroke={theme.palette.grey[600]} strokeDasharray="3 3" />
+              <CartesianGrid stroke={theme.palette.grey[500]} fill={theme.palette.grey[600]} />
               <XAxis
-                dataKey="hhmmss"
+                dataKey="timestamp"
                 tick={{ fontSize: 12, fill: theme.palette.grey[100] }}
                 tickLine={false}
                 axisLine={{ stroke: theme.palette.grey[600] }}
-                tickFormatter={(value) =>
-                  new Date(value).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                }
               />
               <YAxis
                 tick={{ fontSize: 12, fill: theme.palette.grey[100] }}
