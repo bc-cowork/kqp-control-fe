@@ -1,6 +1,7 @@
 import type { IChannelItem, IAuditLogItem } from 'src/types/node';
 import type {
   GetIssuesResponse,
+  MemoryGraphResponse,
   GetChannelListResponse,
   GetAuditLogListResponse,
   GetAuditLogFrameResponse,
@@ -284,6 +285,32 @@ export function useGetIssueItemQuotes(node: string, code: string) {
       issueQuotesValidating: isValidating,
     }),
     [data?.data?.issueQuote?.order_book, error, isLoading, isValidating]
+  );
+
+  return memoizedValue;
+}
+
+// ----------------------------------------------------------------------------
+
+export function useGetIssueGraph(node: string) {
+  const url = node && endpoints.nodes.issues.graph(node);
+
+  const { data, isLoading, error, isValidating } = useSWR<MemoryGraphResponse>(
+    url,
+    fetcher,
+    swrOptions
+  );
+
+  if (data) console.log('useGetIssueGraph Response:', data);
+
+  const memoizedValue = useMemo(
+    () => ({
+      issueGraphData: data?.data?.metrics,
+      issueGraphDataLoading: isLoading,
+      issueGraphDataError: error,
+      issueGraphDataValidating: isValidating,
+    }),
+    [data?.data?.metrics, error, isLoading, isValidating]
   );
 
   return memoizedValue;

@@ -1,5 +1,3 @@
-// components/ChartArea.tsx
-
 import type { ChartDataPoint } from 'src/types/dashboard';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -198,7 +196,7 @@ export function ChartArea({
 
             {/* Main Area Chart */}
             <Area
-              type="monotone"
+              type="linear"
               dataKey={metric}
               stroke={stroke}
               fill={fill}

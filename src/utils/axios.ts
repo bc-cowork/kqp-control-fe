@@ -95,7 +95,7 @@ export const endpoints = {
     serviceStatus: (node: string) => `/apik/${node}/service/status`,
     processList: (node: string) => `/apik/${node}/process/list`,
     issueList: (node: string) => `/apik/${node}/issue/list`,
-    graph: (node: string) => `/apik/${node}/node/performance/time-series`,
+    graph: (node: string) => `/apik/${node}/node/metrics`,
   },
   nodes: {
     channelInbound: {
@@ -111,6 +111,7 @@ export const endpoints = {
       search: (node: string) => `/apik/${node}/issue/search`,
       info: (node: string) => `/apik/${node}/issue/info`,
       quote: (node: string) => `/apik/${node}/issue/quote`,
+      graph: (node: string) => `/apik/${node}/node/metrics/memory`,
     },
   },
 };

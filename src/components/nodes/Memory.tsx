@@ -18,16 +18,17 @@ import {
   CircularProgress,
 } from '@mui/material';
 
-import { useRouter } from 'src/routes/hooks';
+import { useTabs, useRouter } from 'src/routes/hooks';
 
 import { useDebounce } from 'src/hooks/use-debounce';
 
 import { grey, common } from 'src/theme/core';
-import { useGetIssues } from 'src/actions/nodes';
+import { useGetIssues, useGetIssueGraph } from 'src/actions/nodes';
 
 import AddFilter from '../common/AddFilter';
 import { TableEmptyRows } from '../table/table-empty-rows';
 import { TableErrorRows } from '../table/table-error-rows';
+import { ChartAreaDark } from '../memory-page/ChartAreaDark';
 import { TableLoadingRows } from '../table/table-loading-rows';
 import TablePaginationCustom from '../common/TablePaginationCustom';
 
@@ -64,7 +65,11 @@ export function Memory({ selectedNodeId }: Props) {
     debouncedCode
   );
 
+  const { issueGraphData, issueGraphDataLoading } = useGetIssueGraph(selectedNodeId);
+
   const [filters, setFilters] = useState<Filter | null>(null);
+
+  const graphTabs = useTabs('%');
 
   useEffect(() => {
     if (filters) {
@@ -97,6 +102,8 @@ export function Memory({ selectedNodeId }: Props) {
     [limit]
   );
 
+  const chartHeight = `calc((100vh - 360px)/2)`;
+
   return (
     <Grid container>
       <Grid md={3} sx={{ pr: 1.25 }}>
@@ -104,8 +111,7 @@ export function Memory({ selectedNodeId }: Props) {
           <Grid
             container
             sx={{
-              mb: 2,
-              minHeight: '50px',
+              minHeight: '350px',
             }}
           >
             {issuesLoading ? (
@@ -169,11 +175,18 @@ export function Memory({ selectedNodeId }: Props) {
                     sx={{
                       borderRadius: '8px',
                       border: `1px solid ${grey[500]}`,
-                      p: 1.5,
                       mt: 1,
+                      height: chartHeight,
                     }}
                   >
-                    graph 1
+                    <ChartAreaDark
+                      data={issueGraphData}
+                      height="100%"
+                      tabs={[{ value: '%', label: '%' }]}
+                      tabValue={graphTabs.value}
+                      onTabChange={graphTabs.onChange}
+                      loading={issueGraphDataLoading}
+                    />
                   </Box>
                 </Grid>
                 <Grid md={12}>
@@ -183,9 +196,10 @@ export function Memory({ selectedNodeId }: Props) {
                       border: `1px solid ${grey[500]}`,
                       p: 1.5,
                       mt: 1,
+                      height: chartHeight,
                     }}
                   >
-                    graph 2
+                    <Typography sx={{ color: common.white, textAlign: 'center' }}>TBD</Typography>
                   </Box>
                 </Grid>
               </>
@@ -206,8 +220,8 @@ export function Memory({ selectedNodeId }: Props) {
             pb: 1.5,
             px: 1.5,
             backgroundColor: common.white,
-            borderBottomLeftRadius: 1.5,
-            borderBottomRightRadius: 1.5,
+            borderBottomLeftRadius: '12px',
+            borderBottomRightRadius: '12px',
           }}
         >
           <Box sx={{ py: 1 }}>

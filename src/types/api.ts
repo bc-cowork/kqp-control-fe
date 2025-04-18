@@ -308,12 +308,20 @@ interface LoginData {
 
 type GetLoginResponse = ApiResponse<LoginData>;
 
+interface MemoryGraphData {
+  metrics: any; // TODO: add type
+  nodeId: string;
+}
+
+type MemoryGraphResponse = ApiResponse<MemoryGraphData>;
+
 // Export all types
 export type {
   GetNodesResponse,
   GetLoginResponse,
   GetIssuesResponse,
   GetStatusResponse,
+  MemoryGraphResponse,
   GetGraphDataResponse,
   GetProcessesResponse,
   GetChannelListResponse,

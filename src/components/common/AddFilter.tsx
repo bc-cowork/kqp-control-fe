@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from 'react';
 
-import { Box, Grid, Stack, Button, Popover, SvgIcon, TextField, Typography } from '@mui/material';
+import { Box, Grid, Stack, Button, Popover, SvgIcon, Typography } from '@mui/material';
 
 import { grey, common, primary } from 'src/theme/core';
 
@@ -324,7 +324,7 @@ const AuditFrameFilters: React.FC<FilterProps> = ({ filters, setFilters }) => {
 
   return (
     <>
-      <Box sx={{ mt: 1 }}>
+      {/* <Box sx={{ mt: 1 }}>
         <Typography sx={{ fontSize: 15, color: grey[400] }}>Time</Typography>
         <TextField
           value={filters?.time || ''}
@@ -341,7 +341,7 @@ const AuditFrameFilters: React.FC<FilterProps> = ({ filters, setFilters }) => {
           value={filters?.frameSeq || ''}
           setValue={(e) => handleInputChange('seq', e)}
         />
-      </Box>
+      </Box> */}
       <Box sx={{ mt: 1 }}>
         <Typography sx={{ fontSize: 15, color: grey[400] }}>Cond / Count / Scan</Typography>
 
@@ -386,16 +386,16 @@ const AuditFrameListFilters: React.FC<FilterProps> = ({ filters, setFilters }) =
   return (
     <>
       <Box sx={{ mt: 1 }}>
-        <Typography sx={{ fontSize: 15, color: grey[400] }}>Time</Typography>
-        <TextField
+        <Typography sx={{ fontSize: 15, color: grey[400] }}>TBD</Typography>
+        {/* <TextField
           value={filters?.time || ''}
           onChange={(e) => handleInputChange('time', e.target.value)}
           fullWidth
           size="small"
           sx={{ mt: 0.5 }}
-        />
+        /> */}
       </Box>
-      <Box sx={{ mt: 1 }}>
+      {/* <Box sx={{ mt: 1 }}>
         <Typography sx={{ fontSize: 15, color: grey[400] }}>Frame Seq</Typography>
         <TextField
           value={filters?.frameSeq || ''}
@@ -404,7 +404,7 @@ const AuditFrameListFilters: React.FC<FilterProps> = ({ filters, setFilters }) =
           size="small"
           sx={{ mt: 0.5 }}
         />
-      </Box>
+      </Box> */}
     </>
   );
 };
