@@ -10,10 +10,8 @@ import {
   Table,
   Paper,
   Stack,
-  Button,
   Dialog,
   styled,
-  Tooltip,
   SvgIcon,
   Divider,
   TableRow,
@@ -36,9 +34,7 @@ import { Iconify } from '../iconify';
 import AddFilter from '../common/AddFilter';
 import { TableEmptyRows } from '../table/table-empty-rows';
 import { TableErrorRows } from '../table/table-error-rows';
-import ArrowSelector from '../audit-log-page/ArrowSelector';
 import { TableLoadingRows } from '../table/table-loading-rows';
-import { CustomTextField } from '../audit-log-page/CustomTextField';
 import TablePaginationCustomShort from '../common/TablePaginationCustomShort';
 
 import type { Filter } from '../common/AddFilter';
@@ -162,23 +158,61 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
     }
   }
 
+  useEffect(() => {
+    if (filters) {
+      const filterSeq = Array.isArray(filters)
+        ? filters.find((filter: { seq: any }) => filter.seq)?.seq
+        : null;
+
+      const filterCount = Array.isArray(filters)
+        ? filters.find((filter: { count: any }) => filter.count)?.count
+        : null;
+
+      const filterSide = Array.isArray(filters)
+        ? filters.find((filter: { side: any }) => filter.side)?.side
+        : null;
+
+      const filterCond = Array.isArray(filters)
+        ? filters.find((filter: { cond: any }) => filter.cond)?.cond
+        : null;
+
+      if (!filterCount) {
+        setCount(10000);
+      }
+
+      if (!filterSide) {
+        setSide('next');
+      }
+
+      if (!filterCond) {
+        setCond(undefined);
+      }
+    } else {
+      setCount(10000);
+      setSide('next');
+      setCond(undefined);
+      resetCache();
+    }
+  }, [filters]);
+
   const handleSearch = (filter: any) => {
-    console.log('Applying filter:', filter);
-    // Implement search logic here
+    if (filter?.seq) {
+      setSeq(filter.seq);
+      setApiSeq(filter.seq);
+    }
+    if (filter?.count) {
+      setCount(filter.count);
+    }
+    if (filter?.side) {
+      setSide(filter.side);
+    }
+    if (filter?.cond) {
+      setCond(filter.cond);
+    }
   };
 
   return (
     <>
-      {/* {auditFrameLoading ? (
-        <CircularProgress />
-      ) : (
-        <AuditLogFrameTop
-          selectedFile={selectedFile}
-          auditFrame={auditFrame}
-          onMaxFrameRefresh={onMaxFrameRefresh}
-        />
-      )} */}
-
       <Grid container>
         <Grid md={9} sx={{ pr: 1.5 }}>
           <AddFilter
@@ -524,7 +558,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
         </Grid>
       </Grid>
 
-      <Grid
+      {/* <Grid
         container
         direction="row"
         sx={{ mt: 2, p: 0.5, backgroundColor: common.white, borderRadius: '12px' }}
@@ -592,7 +626,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
             Apply
           </Button>
         </Grid>
-      </Grid>
+      </Grid> */}
 
       <Dialog
         open={dialogOpen}

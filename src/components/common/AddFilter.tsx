@@ -10,7 +10,7 @@ import ArrowSelector from '../audit-log-page/ArrowSelector';
 import { CustomTextField } from '../audit-log-page/CustomTextField';
 
 export type Filter = {
-  [key: string]: string | boolean; // e.g., { time: "16m 03s", frameSeq: "808823", cond: "sd[+]str->A3", count: "10,000", scanRight: true }
+  [key: string]: string | boolean;
 };
 
 type AddFilterProps = {
