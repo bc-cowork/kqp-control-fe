@@ -42,7 +42,7 @@ export function ChartAreaDark({
     fillOpacity: 0.2,
   };
 
-  const minValue = data.length > 0 ? Math.min(...data.map((point) => point.memory)) : 0;
+  const minValue = data?.length > 0 ? Math.min(...data.map((point) => point.memory)) : 0;
 
   return (
     <Box

@@ -54,16 +54,21 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
 
   const [filters, setFilters] = useState<Filter | null>(null);
 
-  const { auditFrameList, auditFrameListError, auditFrameListLoading, auditFrameListEmpty } =
-    useAuditFrameList(
-      selectedNodeId,
-      selectedFile,
-      page + 1,
-      rowsPerPage,
-      offset,
-      'desc',
-      refreshKey
-    );
+  const {
+    auditFrameList,
+    auditFrameListPagination,
+    auditFrameListError,
+    auditFrameListLoading,
+    auditFrameListEmpty,
+  } = useAuditFrameList(
+    selectedNodeId,
+    selectedFile,
+    page + 1,
+    rowsPerPage,
+    offset,
+    'desc',
+    refreshKey
+  );
 
   const resetCache = () => {
     setRefreshKey((prev) => prev + 1);
@@ -95,7 +100,6 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
 
   const handleSearch = (filter: any) => {
     console.log('Applying filter:', filter);
-    // Implement search logic here
   };
 
   return (
@@ -122,8 +126,10 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
             >
               <TablePaginationCustom
                 rowsPerPage={rowsPerPage}
-                page={page}
-                count={auditFrameList?.max_frame || 0}
+                currentPage={auditFrameListPagination?.current_page || 1}
+                totalPages={auditFrameListPagination?.total_pages || 1}
+                hasNextPage={auditFrameListPagination?.has_next_page || false}
+                hasPreviousPage={auditFrameListPagination?.has_previous_page || false}
                 onPageChange={onChangePage}
                 onRowsPerPageChange={onChangeRowsPerPage}
                 sx={{ mb: 1, mt: 2 }}

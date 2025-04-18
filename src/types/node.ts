@@ -69,3 +69,11 @@ export interface OrderBookEntry {
   nxt: number;
   krx: number;
 }
+
+// Audit Log Item (matches GetAuditLogListResponse['data']['auditLogList'])
+export interface IPaginationMeta {
+  current_page: number;
+  has_next_page: boolean;
+  has_previous_page: boolean;
+  total_pages: number;
+}

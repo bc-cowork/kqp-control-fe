@@ -21,7 +21,7 @@ import {
 
 import { grey } from 'src/theme/core';
 
-// Styled components for custom styling
+// Styled components (unchanged)
 const CustomSelect = styled(Select)(({ theme }) => ({
   backgroundColor: theme.palette.common.white,
   border: `1px solid ${theme.palette.grey[200]}`,
@@ -134,8 +134,10 @@ const GoToPageTextField = styled(TextField)(({ theme }) => ({
 
 type Props = {
   onPageChange: (newPage: number) => void;
-  page: number;
-  count: number;
+  currentPage: number; // Renamed from page to match API
+  totalPages: number; // New prop from API
+  hasNextPage: boolean; // New prop from API
+  hasPreviousPage: boolean; // New prop from API
   rowsPerPage: number;
   onRowsPerPageChange: (newRowsPerPage: number) => void;
   sx?: SxProps<Theme>;
@@ -143,8 +145,10 @@ type Props = {
 
 const TablePaginationCustom = ({
   onPageChange,
-  page,
-  count,
+  currentPage,
+  totalPages,
+  hasNextPage,
+  hasPreviousPage,
   rowsPerPage,
   onRowsPerPageChange,
   sx,
@@ -153,8 +157,9 @@ const TablePaginationCustom = ({
   const [goToPage, setGoToPage] = useState('');
   const [isInvalid, setIsInvalid] = useState(false);
 
-  // Calculate the last page index
-  const lastPage = Math.ceil(count / rowsPerPage) - 1;
+  // Use API-provided values (zero-based index adjustment)
+  const page = currentPage - 1; // Convert to zero-based index for internal logic
+  const lastPage = totalPages - 1; // Zero-based last page
 
   // Handle page change
   const handleChangePage = (
@@ -191,7 +196,8 @@ const TablePaginationCustom = ({
   const handleGoToPageSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       const pageNum = parseInt(goToPage, 10) - 1; // Convert to zero-based index
-      if (!Number(pageNum) && pageNum >= 0 && pageNum <= lastPage) {
+      console.log('Page number:', pageNum);
+      if (pageNum >= 0 && pageNum <= lastPage) {
         onPageChange(pageNum);
         setGoToPage(''); // Clear input after successful navigation
       } else {
@@ -204,9 +210,6 @@ const TablePaginationCustom = ({
   const pageNumbers: (number | string)[] = [];
   const maxPagesToShow = 5;
   const ellipsis = '...';
-
-  // Calculate total pages
-  const totalPages = lastPage + 1;
 
   let startPage = Math.max(0, page - Math.floor(maxPagesToShow / 2));
   let endPage = Math.min(lastPage, startPage + maxPagesToShow - 1);
@@ -297,7 +300,7 @@ const TablePaginationCustom = ({
           {/* Previous Page Button */}
           <CustomIconButton
             onClick={(event) => handleChangePage(event, page - 1, 'prev')}
-            disabled={page === 0}
+            disabled={!hasPreviousPage}
           >
             <SvgIcon sx={{ height: 16, width: 16 }}>
               <svg
@@ -311,7 +314,7 @@ const TablePaginationCustom = ({
                   fillRule="evenodd"
                   clipRule="evenodd"
                   d="M10.8963 13.1582C10.6992 13.3772 10.362 13.3949 10.1431 13.1979L4.80975 8.39773C4.69737 8.29658 4.6332 8.15249 4.6332 8.0013C4.6332 7.85011 4.69737 7.70602 4.80975 7.60488L10.1431 2.80488C10.362 2.60784 10.6992 2.62559 10.8963 2.84453C11.0933 3.06346 11.0756 3.40069 10.8566 3.59773L5.96378 8.00131L10.8567 12.405C11.0756 12.6021 11.0933 12.9393 10.8963 13.1582Z"
-                  fill={page === 0 ? grey[300] : grey[400]}
+                  fill={!hasPreviousPage ? grey[300] : grey[400]}
                 />
               </svg>
             </SvgIcon>
@@ -335,7 +338,7 @@ const TablePaginationCustom = ({
           {/* Next Page Button */}
           <CustomIconButton
             onClick={(event) => handleChangePage(event, page + 1, 'next')}
-            disabled={page >= lastPage}
+            disabled={!hasNextPage}
           >
             <SvgIcon sx={{ height: 16, width: 16 }}>
               <svg
@@ -349,7 +352,7 @@ const TablePaginationCustom = ({
                   fillRule="evenodd"
                   clipRule="evenodd"
                   d="M6.1037 13.1582C6.30074 13.3772 6.63797 13.3949 6.85691 13.1979L12.1902 8.39806C12.3026 8.29692 12.3668 8.15284 12.3668 8.00165C12.3668 7.85046 12.3026 7.70637 12.1903 7.60522L6.85693 2.8049C6.638 2.60784 6.30078 2.62558 6.10372 2.84451C5.90667 3.06344 5.92441 3.40067 6.14334 3.59772L11.0362 8.00161L6.14336 12.405C5.92442 12.602 5.90666 12.9393 6.1037 13.1582Z"
-                  fill={page >= lastPage ? grey[300] : grey[400]}
+                  fill={!hasNextPage ? grey[300] : grey[400]}
                 />
               </svg>
             </SvgIcon>
@@ -380,7 +383,7 @@ const TablePaginationCustom = ({
         <GoToPageTextField
           value={goToPage}
           onChange={handleGoToPageChange}
-          onKeyPress={handleGoToPageSubmit}
+          onKeyDown={handleGoToPageSubmit}
           placeholder="go to page"
           variant="outlined"
           error={isInvalid}

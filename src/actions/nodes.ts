@@ -1,4 +1,4 @@
-import type { IChannelItem, IAuditLogItem } from 'src/types/node';
+import type { IChannelItem, IAuditLogItem, IPaginationMeta } from 'src/types/node';
 import type {
   GetIssuesResponse,
   MemoryGraphResponse,
@@ -22,6 +22,13 @@ const swrOptions = {
   revalidateOnFocus: false,
   revalidateOnReconnect: false,
   dedupingInterval: 0,
+};
+
+const DEFAULT_PAGINATION_META = {
+  current_page: 1,
+  has_next_page: false,
+  has_previous_page: false,
+  total_pages: 0,
 };
 
 // ----------------------------------------------------------------------
@@ -59,8 +66,11 @@ export function useGetChannelList(node: string, kind: string = 'inbound') {
 /** **************************************
  * Audit Log
  *************************************** */
-export function useAuditLogList(node: string, kind: string) {
-  const url = kind ? [endpoints.nodes.auditLog.list(node), { params: { kind } }] : '';
+export function useAuditLogList(node: string, kind: string, page: number, limit: number) {
+  const url =
+    node && kind && page && limit
+      ? [endpoints.nodes.auditLog.list(node), { params: { kind, page, limit } }]
+      : '';
 
   const { data, isLoading, error, isValidating } = useSWR<GetAuditLogListResponse>(
     url,
@@ -68,17 +78,18 @@ export function useAuditLogList(node: string, kind: string) {
     swrOptions
   );
 
-  // if (data) console.log('useAuditLogList Response:', JSON.stringify(data, null, 2));
+  // if (data) console.log('useAuditLogList Response:', data);
 
   const memoizedValue = useMemo(
     () => ({
       auditLogs: (data?.data?.auditLogList || []) as IAuditLogItem[],
+      auditLogPagination: (data?.meta || DEFAULT_PAGINATION_META) as IPaginationMeta,
       auditLogsLoading: isLoading,
       auditLogsError: error,
       auditLogsValidating: isValidating,
       auditLogsEmpty: !isLoading && !data?.data?.auditLogList?.length,
     }),
-    [data?.data?.auditLogList, error, isLoading, isValidating]
+    [data?.data?.auditLogList, data?.meta, error, isLoading, isValidating]
   );
 
   return memoizedValue;
@@ -113,12 +124,13 @@ export function useAuditFrameList(
   const memoizedValue = useMemo(
     () => ({
       auditFrameList: data?.data || null,
+      auditFrameListPagination: data?.meta || DEFAULT_PAGINATION_META,
       auditFrameListLoading: isLoading,
       auditFrameListError: error,
       auditFrameListValidating: isValidating,
       auditFrameListEmpty: !isLoading && !data?.data?.frame_list?.length,
     }),
-    [data?.data, error, isLoading, isValidating]
+    [data?.data, data?.meta, error, isLoading, isValidating]
   );
 
   return memoizedValue;
@@ -194,14 +206,11 @@ export function useGetIssues(node: string, offset: number, limit: number, q?: st
       max_issue_count: 0,
       compet_count: 0,
       issueList: [],
-      current_page: 1,
-      has_next_page: true,
-      has_previous_page: false,
-      total_pages: 0,
     };
 
     return {
-      issues: data ? { ...data.data, ...data.meta } : defaultIssues,
+      issues: data?.data ? data.data : defaultIssues,
+      issuesPagination: data?.meta ? data.meta : DEFAULT_PAGINATION_META,
       issuesLoading: isLoading,
       issuesError: error,
       issuesValidating: isValidating,

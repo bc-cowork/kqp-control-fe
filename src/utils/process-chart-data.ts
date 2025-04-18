@@ -20,7 +20,7 @@ export function processChartData(metrics: ServiceStatus[]): ChartDataPoint[] {
 }
 
 export function processMemoryChartData(metrics: MemoryMetrics[]) {
-  return metrics.map((entry) => {
+  return metrics?.map((entry) => {
     const hours = entry.hhmmss.slice(0, 2);
     const minutes = entry.hhmmss.slice(2, 4);
     const timestamp = `${hours}:${minutes}`;

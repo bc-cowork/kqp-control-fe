@@ -60,7 +60,7 @@ export function Memory({ selectedNodeId }: Props) {
   const debouncedCode = useDebounce(code);
   const [offset, setOffset] = useState<number>(1);
   const [limit, setLimit] = useState<number>(40);
-  const { issues, issuesLoading, issuesEmpty, issuesError } = useGetIssues(
+  const { issues, issuesPagination, issuesLoading, issuesEmpty, issuesError } = useGetIssues(
     selectedNodeId,
     offset,
     limit,
@@ -231,8 +231,10 @@ export function Memory({ selectedNodeId }: Props) {
           <Box sx={{ py: 1 }}>
             <TablePaginationCustom
               rowsPerPage={limit}
-              page={(issues?.current_page || 1) - 1}
-              count={issues.max_issue_count}
+              currentPage={issuesPagination?.current_page || 1}
+              totalPages={issuesPagination?.total_pages || 1}
+              hasNextPage={issuesPagination?.has_next_page || false}
+              hasPreviousPage={issuesPagination?.has_previous_page || false}
               onPageChange={onChangePage}
               onRowsPerPageChange={onChangeRowsPerPage}
             />

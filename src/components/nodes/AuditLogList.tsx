@@ -2,11 +2,12 @@
 
 import type { IAuditLogItem } from 'src/types/node';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 import {
   Box,
   Table,
+  Stack,
   Select,
   TableRow,
   MenuItem,
@@ -23,6 +24,7 @@ import { grey, common } from 'src/theme/core/palette';
 import { TableEmptyRows } from '../table/table-empty-rows';
 import { TableErrorRows } from '../table/table-error-rows';
 import { TableLoadingRows } from '../table/table-loading-rows';
+import TablePaginationCustom from '../common/TablePaginationCustom';
 
 // ----------------------------------------------------------------------
 
@@ -42,11 +44,20 @@ type Props = {
 export function AuditLogList({ selectedNodeId }: Props) {
   const router = useRouter();
   const [type, setType] = useState<string>(AUDIT_LOG_TYPES[0].value);
+  const [page, setPage] = useState<number>(0);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(40);
 
-  const { auditLogs, auditLogsEmpty, auditLogsLoading, auditLogsError } = useAuditLogList(
-    selectedNodeId,
-    type
-  );
+  const { auditLogs, auditLogPagination, auditLogsEmpty, auditLogsLoading, auditLogsError } =
+    useAuditLogList(selectedNodeId, type, page + 1, rowsPerPage);
+
+  const onChangeRowsPerPage = useCallback((value: number) => {
+    setPage(0);
+    setRowsPerPage(value);
+  }, []);
+
+  const onChangePage = useCallback((newPage: number) => {
+    setPage(newPage);
+  }, []);
 
   const handleTypeChange = (event: { target: { value: string } }) => {
     setType(event.target.value);
@@ -54,12 +65,13 @@ export function AuditLogList({ selectedNodeId }: Props) {
 
   return (
     <Box sx={{ backgroundColor: common.white, borderRadius: 1.5, p: 1.5 }}>
-      <Box sx={{ mb: 2 }}>
+      <Stack direction="row" alignItems="center" sx={{ mb: 1 }}>
         <Select
           value={type}
           label="Type"
           onChange={handleTypeChange}
           inputProps={{ sx: { color: grey[400] } }}
+          sx={{ height: '32px', borderRadius: '4px' }}
         >
           {AUDIT_LOG_TYPES.map((logType) => (
             <MenuItem key={logType.value} value={logType.value}>
@@ -67,7 +79,18 @@ export function AuditLogList({ selectedNodeId }: Props) {
             </MenuItem>
           ))}
         </Select>
-      </Box>
+
+        <TablePaginationCustom
+          rowsPerPage={rowsPerPage}
+          currentPage={auditLogPagination?.current_page || 1}
+          totalPages={auditLogPagination?.total_pages || 1}
+          hasNextPage={auditLogPagination?.has_next_page || false}
+          hasPreviousPage={auditLogPagination?.has_previous_page || false}
+          onPageChange={onChangePage}
+          onRowsPerPageChange={onChangeRowsPerPage}
+          sx={{ pl: 2, pr: 0.5 }}
+        />
+      </Stack>
       <Table size="small">
         <TableHead>
           <TableRow>
