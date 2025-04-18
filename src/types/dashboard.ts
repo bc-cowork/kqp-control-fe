@@ -75,7 +75,7 @@ export interface IStatus {
   };
 }
 
-// Graph Data Time Series Entry (matches GetGraphDataResponse['data']['time_series'])
+// Graph Data Time Series Entry (matches GetGraphDataResponse['data']['metrics'])
 export interface ServiceStatus {
   name: string;
   hhmmss: string; // e.g., "160000"

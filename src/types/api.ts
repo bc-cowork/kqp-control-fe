@@ -195,7 +195,7 @@ interface TimeSeriesEntry {
 
 interface GraphData {
   nodeId: string;
-  time_series: TimeSeriesEntry[];
+  metrics: TimeSeriesEntry[];
 }
 
 type GetGraphDataResponse = ApiResponse<GraphData>;

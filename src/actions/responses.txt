@@ -2609,7 +2609,7 @@ useGetAuditLogFrame Response: {
 
 useGetGraphData Response: {
   "data": {
-    "time_series": [
+    "metrics": [
       {
         "name": "prod1",
         "outbound_bytes": 1956234,

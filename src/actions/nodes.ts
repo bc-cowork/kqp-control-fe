@@ -301,8 +301,6 @@ export function useGetIssueGraph(node: string) {
     swrOptions
   );
 
-  if (data) console.log('useGetIssueGraph Response:', data);
-
   const memoizedValue = useMemo(
     () => ({
       issueGraphData: data?.data?.metrics,

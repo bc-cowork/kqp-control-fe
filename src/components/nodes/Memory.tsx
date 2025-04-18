@@ -108,8 +108,6 @@ export function Memory({ selectedNodeId }: Props) {
 
   const chartData = processMemoryChartData(issueGraphData);
 
-  console.log('chartData', chartData);
-
   return (
     <Grid container>
       <Grid md={3} sx={{ pr: 1.25 }}>

@@ -130,8 +130,6 @@ export function useGetGraphData(node: string, refreshKey: number) {
     swrOptions
   );
 
-  // if (data) console.log('useGetGraphData Response:', JSON.stringify(data, null, 2));
-
   const memoizedValue = useMemo(
     () => ({
       graphData: data?.data || null,

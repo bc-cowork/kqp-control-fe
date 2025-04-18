@@ -43,9 +43,7 @@ export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props
   const { graphData, graphDataLoading } = useGetGraphData(selectedNodeParam, refreshKey);
 
   // Process the data for the charts
-  const chartData: ChartDataPoint[] = graphData?.time_series
-    ? processChartData(graphData.time_series)
-    : [];
+  const chartData: ChartDataPoint[] = graphData?.metrics ? processChartData(graphData.metrics) : [];
 
   return (
     <Box

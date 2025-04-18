@@ -1,7 +1,7 @@
 import type { ServiceStatus, MemoryMetrics, ChartDataPoint } from 'src/types/dashboard';
 
-export function processChartData(serviceStatus: ServiceStatus[]): ChartDataPoint[] {
-  return serviceStatus.map((entry) => {
+export function processChartData(metrics: ServiceStatus[]): ChartDataPoint[] {
+  return metrics.map((entry) => {
     // Convert "HHMMSS" (e.g., "160000") to "HH:MM" (e.g., "16:00")
     const hours = entry.hhmmss.slice(0, 2);
     const minutes = entry.hhmmss.slice(2, 4);
