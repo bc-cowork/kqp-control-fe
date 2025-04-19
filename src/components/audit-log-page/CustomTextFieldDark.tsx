@@ -1,44 +1,81 @@
-import { Box, SvgIcon, TextField, IconButton, InputAdornment } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import {
+  Box,
+  SvgIcon,
+  TextField,
+  IconButton,
+  InputAdornment,
+  filledInputClasses,
+} from '@mui/material';
 
 import { grey, primary } from 'src/theme/core';
+
+// Styled component for TextField
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  width: '100%',
+  [`&.${filledInputClasses.focused}`]: {
+    color: 'red',
+  },
+  // Style the outlined input root
+  '& .MuiOutlinedInput-root': {
+    border: `1px solid ${theme.palette.grey[500]}`,
+    borderRadius: '8px',
+    backgroundColor: '#202838 !important',
+    padding: '0 8px',
+    height: '40px',
+    display: 'flex',
+    alignItems: 'center',
+    '&:before, &:after': {
+      borderBottom: 'none',
+    },
+    '&:hover:not(.Mui-disabled):before': {
+      borderBottom: 'none',
+    },
+  },
+  // Input text styling
+  '& .MuiOutlinedInput-input': {
+    padding: '8px 0', // Override default padding
+    fontSize: '15px',
+    color: grey[200], // Lighter text for dark background
+    textAlign: 'left',
+  },
+}));
 
 type CustomTextFieldProps = {
   label: string;
   value: any;
   setValue: (value: any) => void;
+  onKeyDownHandler: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 } & React.ComponentProps<typeof TextField>;
 
-export const CustomTextFieldDark = ({ label, value, setValue, ...other }: CustomTextFieldProps) => {
-  const displayValue = value ?? '';
+export const CustomTextFieldDark = ({
+  label,
+  value,
+  setValue,
+  onKeyDownHandler,
+  ...other
+}: CustomTextFieldProps) => {
+  const displayValue = String(value ?? ''); // Ensure value is always a string
 
   const handleClear = () => {
     setValue(undefined);
+    console.log('Cleared value, new value:', undefined); // Debug clear
   };
 
   return (
-    <TextField
+    <StyledTextField
+      variant="outlined"
       value={displayValue}
-      onChange={(e) => setValue(e.target.value || undefined)}
-      sx={{
-        width: '100%',
-        // Root input container
-        '& .MuiOutlinedInput-root': {
-          borderRadius: '8px',
-          backgroundColor: '#fff !important',
-          padding: '0 8px',
-          height: '40px',
-          display: 'flex',
-          alignItems: 'center',
-        },
-        // Input text styling
-        '& .MuiInputBase-input': {
-          padding: '8px 0',
-          fontSize: '15px',
-          color: grey[400],
-          textAlign: 'left',
-        },
+      onChange={(e) => {
+        const newValue = e.target.value || undefined;
+        setValue(newValue);
+        console.log('New value set:', newValue, 'Display value:', displayValue); // Debug value updates
+      }}
+      onKeyDown={(event) => {
+        onKeyDownHandler(event);
       }}
       InputProps={{
+        disableUnderline: true,
         // Custom start adornment for "Count" label and divider
         startAdornment: (
           <InputAdornment position="start" sx={{ marginRight: 0 }}>
@@ -64,7 +101,7 @@ export const CustomTextFieldDark = ({ label, value, setValue, ...other }: Custom
           </InputAdornment>
         ),
         // Custom end adornment for the clear button
-        endAdornment: value && (
+        endAdornment: displayValue && (
           <InputAdornment position="end">
             <IconButton
               onClick={handleClear}

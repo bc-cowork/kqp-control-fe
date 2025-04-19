@@ -196,7 +196,7 @@ const TablePaginationCustom = ({
   const handleGoToPageSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       const pageNum = parseInt(goToPage, 10) - 1; // Convert to zero-based index
-      console.log('Page number:', pageNum);
+
       if (pageNum >= 0 && pageNum <= lastPage) {
         onPageChange(pageNum);
         setGoToPage(''); // Clear input after successful navigation

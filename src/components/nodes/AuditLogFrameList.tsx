@@ -102,6 +102,14 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
     console.log('Applying filter:', filter);
   };
 
+  function handleMoveToFrame(event: React.KeyboardEvent<HTMLDivElement>): void {
+    if (event.key === 'Enter') {
+      if (frameSeq) {
+        router.push(`/dashboard/nodes/${selectedNodeId}/audit-log/${selectedFile}/${frameSeq}`);
+      }
+    }
+  }
+
   return (
     <>
       {auditFrameListLoading ? (
@@ -336,6 +344,8 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                   value={frameSeq}
                   setValue={setFrameSeq}
                   type="number"
+                  // eslint-disable-next-line react/jsx-no-bind
+                  onKeyDownHandler={handleMoveToFrame}
                   sx={{ mt: 1 }}
                 />
               </Box>
