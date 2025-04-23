@@ -26,9 +26,9 @@ function colorVars(theme: Theme, variant?: 'vertical' | 'mini' | 'horizontal') {
     '--nav-item-root-open-bg': palette.action.hover,
     // sub
     '--nav-item-sub-active-color': palette.text.primary,
-    '--nav-item-sub-active-bg': palette.primary.light,
+    '--nav-item-sub-active-bg': palette.primary.main,
     '--nav-item-sub-open-color': palette.text.primary,
-    '--nav-item-sub-open-bg': palette.action.hover,
+    '--nav-item-sub-open-bg': palette.grey[400],
     ...(variant === 'vertical' && {
       '--nav-item-sub-active-bg': palette.primary.main,
       '--nav-subheader-color': palette.text.disabled,

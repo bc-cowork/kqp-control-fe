@@ -79,7 +79,10 @@ export function Breadcrumb({ node, pages }: Props) {
                   fontWeight: 400,
                   fontSize: 17,
                   textDecoration: 'none',
-                  '&:hover': { textDecoration: 'underline' },
+                  padding: '0px 4px',
+                  borderRadius: '8px',
+                  // height: '28px',
+                  '&:hover': { backgroundColor: grey[200], textDecoration: 'none' },
                 }}
               >
                 {page.pageName}
@@ -91,6 +94,7 @@ export function Breadcrumb({ node, pages }: Props) {
                   color: (theme) => theme.palette.grey[400],
                   fontWeight: 400,
                   fontSize: 17,
+                  padding: '0px 4px',
                 }}
               >
                 {page.pageName}

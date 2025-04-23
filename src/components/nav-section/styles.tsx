@@ -144,7 +144,7 @@ export function NavCollapse({
       sx={{
         pl: depth === 2 ? '0px' : 'calc(var(--nav-item-pl) + var(--nav-icon-size) / 2)',
         ...(depth === 2 && {
-          backgroundColor: (theme) => theme.palette.grey[500],
+          backgroundColor: 'transparent',
           borderBottomRightRadius: '8px',
           borderBottomLeftRadius: '8px',
         }),

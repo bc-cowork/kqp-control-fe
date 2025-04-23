@@ -18,11 +18,11 @@ export function NavToggleButton({ isNavMini, sx, ...other }: NavToggleButtonProp
         top: 51,
         position: 'fixed',
         color: 'action.active',
-        bgcolor: (theme) => theme.palette.grey[500],
+        bgcolor: '#202838',
         transform: 'translateX(-50%)',
         zIndex: 'var(--layout-nav-zIndex)',
         left: isNavMini ? 'var(--layout-nav-mini-width)' : '230px',
-        border: (theme) => `1px solid ${theme.palette.grey[400]}`,
+        border: (theme) => `1px solid ${theme.palette.grey[600]}`,
         borderRadius: '8px',
         transition: (theme) =>
           theme.transitions.create(['left'], {
@@ -31,7 +31,7 @@ export function NavToggleButton({ isNavMini, sx, ...other }: NavToggleButtonProp
           }),
         '&:hover': {
           color: 'text.primary',
-          bgcolor: 'background.neutral',
+          bgcolor: (theme) => theme.palette.grey[600],
         },
         ...sx,
       }}

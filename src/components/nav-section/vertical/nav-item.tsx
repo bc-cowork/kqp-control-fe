@@ -243,7 +243,10 @@ const StyledNavItem = styled(ButtonBase, {
       minHeight: 'var(--nav-item-sub-height)',
       [`& .${navSectionClasses.item.icon}`]: { ...baseStylesSub.icon },
       [`& .${navSectionClasses.item.texts}`]: { ...baseStylesSub.texts },
-      [`& .${navSectionClasses.item.title}`]: { ...baseStylesSub.title },
+      [`& .${navSectionClasses.item.title}`]: {
+        ...baseStylesSub.title,
+        ...((open || active) && { fontWeight: 500 }),
+      },
       [`& .${navSectionClasses.item.caption}`]: { ...baseStylesSub.caption },
       [`& .${navSectionClasses.item.arrow}`]: { ...baseStylesSub.arrow },
       [`& .${navSectionClasses.item.info}`]: { ...baseStylesSub.info },
@@ -284,9 +287,6 @@ const StyledNavItem = styled(ButtonBase, {
     ...((open || active) &&
       depth === 2 && {
         backgroundColor: theme.palette.grey[400],
-        borderBottomLeftRadius: '0px',
-        borderBottomRightRadius: '0px',
-        fontWeight: '500 !important',
       }),
     ...(depth === 3 && {
       borderRadius: '0px',

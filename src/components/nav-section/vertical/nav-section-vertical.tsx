@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 
 import Stack from '@mui/material/Stack';
-import { Divider } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import Collapse from '@mui/material/Collapse';
 import { useTheme } from '@mui/material/styles';
 
@@ -59,7 +59,7 @@ function Group({ items, render, subheader, slotProps, enabledRootRedirect }: Nav
   const renderContent = (
     <NavUl sx={{ gap: 'var(--nav-item-gap)' }}>
       {items.map((list, index) => (
-        <>
+        <Box component="span" key={list.title}>
           <NavList
             key={list.title}
             data={list}
@@ -71,7 +71,7 @@ function Group({ items, render, subheader, slotProps, enabledRootRedirect }: Nav
           {index !== items.length - 1 && (
             <Divider sx={{ borderColor: (theme) => theme.palette.grey[500], my: 0.5 }} />
           )}
-        </>
+        </Box>
       ))}
     </NavUl>
   );

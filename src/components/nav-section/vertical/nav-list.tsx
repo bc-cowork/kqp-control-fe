@@ -78,6 +78,12 @@ export function NavList({ data, render, depth, slotProps, enabledRootRedirect }:
           [`& .${navSectionClasses.li}`]: {
             '&:first-of-type': { mt: 'var(--nav-item-gap)' },
           },
+          ...(depth === 2 &&
+            data.children &&
+            openMenu && {
+              backgroundColor: (theme) => theme.palette.grey[600],
+              borderRadius: '8px',
+            }),
         }}
       >
         {renderNavItem}
