@@ -114,8 +114,8 @@ export function ChartBar({ data = dummyData, loading = false }: ChartBarProps) {
             {/* Bar Chart with Custom Shape */}
             <Bar
               dataKey="count"
-              fill="#E8EDFF" // Light blue fill
-              barSize={10} // Adjust bar width to match screenshot
+              fill="#DFEAFF" // Light blue fill
+              barSize={20}
               shape={<CustomBar />}
             />
           </BarChart>
@@ -149,6 +149,8 @@ const CustomBar = (props: any) => {
         y2={y}
         stroke="#5E66FF" // Dark blue
         strokeWidth={2}
+        rx={2} // Rounded top corners
+        ry={2}
       />
     </g>
   );

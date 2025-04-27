@@ -45,8 +45,7 @@ export function RuleDetail({ selectedNodeId, selectedRuleId }: Props) {
               <Box sx={{ p: 0.5 }}>
                 <Box
                   sx={{
-                    pt: 1,
-                    px: 1,
+                    p: 2,
                     backgroundColor: theme.palette.primary.light,
                     borderRadius: '8px',
                     mb: 0.5,
@@ -56,15 +55,14 @@ export function RuleDetail({ selectedNodeId, selectedRuleId }: Props) {
                     Head
                   </Typography>
                   <Typography
-                    sx={{ color: theme.palette.common.white, fontSize: 20, fontWeight: 500 }}
+                    sx={{ color: theme.palette.common.white, fontSize: 28, fontWeight: 500 }}
                   >
-                    {selectedRuleId}
+                    B601s
                   </Typography>
                 </Box>
                 <Box
                   sx={{
-                    py: 1,
-                    px: 1,
+                    p: 1.5,
                     backgroundColor: theme.palette.grey[600],
                     borderRadius: '8px',
                     mb: 0.5,
@@ -81,8 +79,7 @@ export function RuleDetail({ selectedNodeId, selectedRuleId }: Props) {
                 </Box>
                 <Box
                   sx={{
-                    py: 1,
-                    px: 1,
+                    p: 1.5,
                     backgroundColor: theme.palette.grey[600],
                     borderRadius: '8px',
                     mb: 0.5,
@@ -99,8 +96,7 @@ export function RuleDetail({ selectedNodeId, selectedRuleId }: Props) {
                 </Box>
                 <Box
                   sx={{
-                    py: 1,
-                    px: 1,
+                    p: 1.5,
                     backgroundColor: theme.palette.grey[600],
                     borderRadius: '8px',
                     mb: 0.5,
@@ -117,8 +113,7 @@ export function RuleDetail({ selectedNodeId, selectedRuleId }: Props) {
                 </Box>
                 <Box
                   sx={{
-                    py: 1,
-                    px: 1,
+                    p: 1.5,
                     backgroundColor: theme.palette.common.white,
                     borderRadius: '8px',
                   }}
@@ -132,7 +127,7 @@ export function RuleDetail({ selectedNodeId, selectedRuleId }: Props) {
                       color: theme.palette.grey[600],
                       fontSize: 15,
                       fontWeight: 400,
-                      height: 'calc(100vh - 520px)',
+                      height: 'calc(100vh - 586px)',
                       overflowY: 'auto',
                       whiteSpace: 'pre-wrap',
                     }}
