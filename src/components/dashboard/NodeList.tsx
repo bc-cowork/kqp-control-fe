@@ -16,8 +16,6 @@ import {
   CircularProgress,
 } from '@mui/material';
 
-import { useGetNodes } from 'src/actions/dashboard';
-
 // ----------------------------------------------------------------------
 
 type Props = {
@@ -25,6 +23,10 @@ type Props = {
   selectedNode: INodeItem | undefined;
   setSelectedNodeId: (id: string) => void;
   setSelectedNode: (node: INodeItem | undefined) => void;
+  nodes: INodeItem[];
+  nodesLoading: boolean;
+  nodesEmpty: boolean;
+  nodesError: any;
 };
 
 export function NodeList({
@@ -32,9 +34,11 @@ export function NodeList({
   selectedNode,
   setSelectedNodeId,
   setSelectedNode,
+  nodes,
+  nodesLoading,
+  nodesEmpty,
+  nodesError,
 }: Props) {
-  const { nodes, nodesLoading, nodesEmpty, nodesError } = useGetNodes();
-
   const theme = useTheme();
 
   useEffect(() => {

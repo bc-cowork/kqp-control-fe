@@ -25,25 +25,24 @@ const FadingDivider = styled(Divider)(({ theme }) => ({
 type Props = {
   selectedNodeParam: string;
   selectedNode: INodeItem;
-  height?: string;
 };
 
-export function NodeStatus({
-  selectedNodeParam,
-  selectedNode,
-  height = 'calc(100vh - 460px)',
-}: Props) {
+export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
   const { status, statusLoading, statusError } = useGetStatus(selectedNodeParam);
 
   const theme = useTheme();
 
   const isOnline = status?.service_status?.okay;
 
+  const usedSpace = 300; // in GB
+  const totalSpace = 566; // in GB
+  const percentage = (usedSpace / totalSpace) * 100; // 21%
+
   return (
     <Box
       sx={{
-        borderRadius: 1,
-        backgroundColor: theme.palette.grey[50],
+        borderRadius: '12px',
+        backgroundColor: theme.palette.grey[900],
         p: 0.5,
       }}
     >
@@ -124,7 +123,7 @@ export function NodeStatus({
               mb: 0.5,
               borderRadius: '8px',
               backgroundColor: theme.palette.common.white,
-              height: 'calc(100vh - 728px)',
+              height: 'calc(100vh - 455px)',
             }}
           >
             <Stack direction="row" sx={{ mb: 1.5 }}>
@@ -164,7 +163,7 @@ export function NodeStatus({
               {/* Main Progress Bar */}
               <LinearProgress
                 variant="determinate"
-                value={21}
+                value={percentage}
                 sx={{
                   height: 10,
                   borderRadius: 5,

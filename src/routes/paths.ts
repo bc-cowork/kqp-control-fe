@@ -47,11 +47,13 @@ export const paths = {
     nodes: {
       root: '/dashboard/nodes',
       node: (node: string) => `/dashboard/nodes/${node}`,
+      dashboard: (node: string) => `/dashboard/nodes/${node}/node-dashboard`,
       process: (node: string) => `/dashboard/nodes/${node}/process`,
       memory: (node: string) => `/dashboard/nodes/${node}/memory`,
       auditLog: (node: string) => `/dashboard/nodes/${node}/audit-log`,
       channelsInbound: (node: string) => `/dashboard/nodes/${node}/channels-inbound`,
       channelsOutbound: (node: string) => `/dashboard/nodes/${node}/channels-outbound`,
+      rules: (node: string) => `/dashboard/nodes/${node}/rules`,
     },
     two: `${ROOTS.DASHBOARD}/two`,
     three: `${ROOTS.DASHBOARD}/three`,

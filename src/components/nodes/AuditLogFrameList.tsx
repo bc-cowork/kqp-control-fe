@@ -235,6 +235,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                   <Typography sx={{ color: theme.palette.grey[200], fontSize: 15 }}>
                     Desc
                   </Typography>
+                  {/* TODO: CHANGE THIS */}
                   <Typography
                     sx={{ color: theme.palette.common.white, fontSize: 17, fontWeight: 500 }}
                   >

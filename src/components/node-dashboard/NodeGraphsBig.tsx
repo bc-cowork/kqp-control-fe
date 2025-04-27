@@ -20,8 +20,6 @@ import { ChartArea } from './chart-area';
 
 interface Props {
   selectedNodeParam: string;
-  refreshKey: number;
-  selectedTab: string;
 }
 
 const CPU_MEMORY_TABS = [{ value: '%', label: '%' }];
@@ -31,16 +29,14 @@ const BOUND_TABS = [
   { value: 'byte', label: 'byte' },
 ];
 
-export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props) {
+export function NodeGraphsBig({ selectedNodeParam }: Props) {
   const theme = useTheme();
 
-  const cpuTabs = useTabs(CPU_MEMORY_TABS[0].value);
-  const memoryTabs = useTabs(CPU_MEMORY_TABS[0].value);
   const inboundTabs = useTabs(BOUND_TABS[0].value);
   const outboundTabs = useTabs(BOUND_TABS[0].value);
 
   // Fetch graph data
-  const { graphData, graphDataLoading } = useGetGraphData(selectedNodeParam, refreshKey);
+  const { graphData, graphDataLoading } = useGetGraphData(selectedNodeParam, 1);
 
   // Process the data for the charts
   const chartData: ChartDataPoint[] = graphData?.metrics ? processChartData(graphData.metrics) : [];
@@ -49,78 +45,58 @@ export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props
     <Box
       sx={{
         bgcolor: theme.palette.common.white,
-        height: 'calc(100vh - 460px)',
-        pl: 0.5,
+        height: 'calc(100vh - 187px)',
+        p: 1.5,
+        pr: '4px',
+        borderRadius: '12px',
         boxSizing: 'border-box',
       }}
     >
       <Grid container sx={{ height: '100%' }}>
-        <Grid
-          item
-          md={selectedTab === '1x4' ? 12 : 6}
-          sx={{ height: selectedTab === '1x4' ? `25%` : `50%`, pb: 1 }}
-        >
+        <Grid item md={6} sx={{ height: `50%`, pb: 1 }}>
           <ChartArea
             title="CPU"
+            subTitle="10% 4.26GHz"
             data={chartData}
             metric="cpu"
             threshold={50}
             height="100%"
-            tabs={CPU_MEMORY_TABS}
-            tabValue={cpuTabs.value}
-            onTabChange={cpuTabs.onChange}
-            layout={selectedTab}
             loading={graphDataLoading}
           />
         </Grid>
-        <Grid
-          item
-          md={selectedTab === '1x4' ? 12 : 6}
-          sx={{ height: selectedTab === '1x4' ? `25%` : `50%`, pb: 1 }}
-        >
+        <Grid item md={6} sx={{ height: `50%`, pb: 1 }}>
           <ChartArea
             title="Memory"
+            subTitle="10% 4.26GHz"
             data={chartData}
             metric="memory"
             height="100%"
-            tabs={CPU_MEMORY_TABS}
-            tabValue={memoryTabs.value}
-            onTabChange={memoryTabs.onChange}
-            layout={selectedTab}
             loading={graphDataLoading}
           />
         </Grid>
-        <Grid
-          item
-          md={selectedTab === '1x4' ? 12 : 6}
-          sx={{ height: selectedTab === '1x4' ? `25%` : `50%`, pb: selectedTab === '1x4' ? 1 : 0 }}
-        >
+        <Grid item md={6} sx={{ height: `50%` }}>
           <ChartArea
             title="Inbound"
+            subTitle="10% 4.26GHz"
             data={chartData}
             metric={inboundTabs.value === 'count' ? 'inbound_count' : 'inbound_bytes'}
             height="100%"
             tabs={BOUND_TABS}
             tabValue={inboundTabs.value}
             onTabChange={inboundTabs.onChange}
-            layout={selectedTab}
             loading={graphDataLoading}
           />
         </Grid>
-        <Grid
-          item
-          md={selectedTab === '1x4' ? 12 : 6}
-          sx={{ height: selectedTab === '1x4' ? `25%` : `50%` }}
-        >
+        <Grid item md={6} sx={{ height: `50%` }}>
           <ChartArea
             title="Outbound"
+            subTitle="10% 4.26GHz"
             data={chartData}
             metric={outboundTabs.value === 'count' ? 'outbound_count' : 'outbound_bytes'}
             height="100%"
             tabs={BOUND_TABS}
             tabValue={outboundTabs.value}
             onTabChange={outboundTabs.onChange}
-            layout={selectedTab}
             loading={graphDataLoading}
           />
         </Grid>

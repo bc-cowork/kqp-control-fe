@@ -69,7 +69,12 @@ export function SegmentedButtonGroup({
         aria-label="segmented button group refresh"
         sx={{ mr: 1 }}
       >
-        <StyledToggleButton value="refresh" aria-label="refresh option" onClick={handleRefresh}>
+        <StyledToggleButton
+          value="refresh"
+          aria-label="refresh option"
+          onClick={handleRefresh}
+          sx={{ px: '5px' }}
+        >
           <SvgIcon
             sx={{
               height: 24,

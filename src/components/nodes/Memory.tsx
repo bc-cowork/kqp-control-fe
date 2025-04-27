@@ -92,6 +92,13 @@ export function Memory({ selectedNodeId }: Props) {
     }
   };
 
+  const onKeyDown = (enteredCode?: string | boolean) => {
+    console.log('onKeyDown', enteredCode);
+    if (enteredCode) {
+      setCode(enteredCode as string);
+    }
+  };
+
   const onChangeRowsPerPage = useCallback((newRowsPerPage: number) => {
     setOffset(1);
     setLimit(newRowsPerPage);
@@ -217,6 +224,7 @@ export function Memory({ selectedNodeId }: Props) {
           setFilters={setFilters}
           page="Memory"
           onApply={handleSearch}
+          onCodeEnter={onKeyDown}
           count={issues.max_issue_count}
         />
         <Box

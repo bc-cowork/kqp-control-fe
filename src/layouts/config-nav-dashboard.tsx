@@ -33,6 +33,10 @@ export function getNavData(nodes: string[] = []) {
             path: paths.dashboard.nodes.node(node),
             children: [
               {
+                title: 'Node Dashboard',
+                path: paths.dashboard.nodes.dashboard(node),
+              },
+              {
                 title: 'Process',
                 path: paths.dashboard.nodes.process(node),
               },
@@ -51,6 +55,10 @@ export function getNavData(nodes: string[] = []) {
               {
                 title: 'Channels Outbound',
                 path: paths.dashboard.nodes.channelsOutbound(node),
+              },
+              {
+                title: 'Rule List',
+                path: paths.dashboard.nodes.rules(node),
               },
             ],
           })),
