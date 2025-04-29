@@ -5,7 +5,6 @@ import {
   Grid,
   Table,
   Paper,
-  Divider,
   TableRow,
   TableBody,
   TableCell,
@@ -132,7 +131,9 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                       </TableCell>
                     </TableRow>
                   ))}
-                  <Divider sx={{ border: `4px solid ${grey[100]}` }} />
+                  <TableRow>
+                    <TableCell sx={{ height: '4px', backgroundColor: grey[100] }} colSpan={12} />
+                  </TableRow>
                   {rowKeysBid.map((key: string) => (
                     <TableRow key={key}>
                       <TableCell align="right">{key}</TableCell>
