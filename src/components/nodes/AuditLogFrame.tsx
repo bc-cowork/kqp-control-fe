@@ -11,9 +11,7 @@ import {
   Paper,
   Stack,
   Dialog,
-  styled,
   SvgIcon,
-  Divider,
   TableRow,
   TableBody,
   TableCell,
@@ -32,6 +30,7 @@ import { grey, error, common, primary, success, warning } from 'src/theme/core';
 
 import { Iconify } from '../iconify';
 import AddFilter from '../common/AddFilter';
+import FadingDivider from '../common/FadingDivider';
 import { TableEmptyRows } from '../table/table-empty-rows';
 import { TableErrorRows } from '../table/table-error-rows';
 import { TableLoadingRows } from '../table/table-loading-rows';
@@ -611,13 +610,3 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
     </>
   );
 }
-
-const FadingDivider = styled(Divider)(({ theme }) => ({
-  height: '1px',
-  background: `linear-gradient(to right, transparent, ${theme.palette.grey[400]}, transparent)`,
-  border: 'none',
-  margin: '16px 0',
-  '&:before, &:after': {
-    display: 'none',
-  },
-}));

@@ -3,24 +3,14 @@
 import type { INodeItem } from 'src/types/dashboard';
 
 import Box from '@mui/material/Box';
+import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import { styled, useTheme } from '@mui/material/styles';
-import { Chip, Stack, Divider, SvgIcon, LinearProgress, CircularProgress } from '@mui/material';
+import { Chip, Stack, SvgIcon, LinearProgress, CircularProgress } from '@mui/material';
 
 import { useGetStatus } from 'src/actions/dashboard';
 import { grey, error, common, success } from 'src/theme/core';
 
 // ----------------------------------------------------------------------
-
-const FadingDivider = styled(Divider)(({ theme }) => ({
-  height: '1px',
-  background: `linear-gradient(to right, transparent, ${theme.palette.grey[200]}, transparent)`,
-  border: 'none',
-  margin: '16px 0',
-  '&:before, &:after': {
-    display: 'none',
-  },
-}));
 
 type Props = {
   selectedNodeParam: string;

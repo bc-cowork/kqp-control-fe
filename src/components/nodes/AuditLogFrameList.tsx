@@ -10,9 +10,7 @@ import {
   Table,
   Paper,
   Stack,
-  styled,
   SvgIcon,
-  Divider,
   TableRow,
   useTheme,
   TableBody,
@@ -31,6 +29,7 @@ import { grey, common } from 'src/theme/core';
 import { useAuditFrameList } from 'src/actions/nodes';
 
 import AddFilter from '../common/AddFilter';
+import FadingDivider from '../common/FadingDivider';
 import TablePaginationCustom from '../common/TablePaginationCustom';
 import { CustomTextFieldDark } from '../audit-log-page/CustomTextFieldDark';
 
@@ -356,13 +355,3 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
     </>
   );
 }
-
-const FadingDivider = styled(Divider)(({ theme }) => ({
-  height: '1px',
-  background: `linear-gradient(to right, transparent, ${theme.palette.grey[400]}, transparent)`,
-  border: 'none',
-  margin: '16px 0',
-  '&:before, &:after': {
-    display: 'none',
-  },
-}));

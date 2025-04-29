@@ -91,6 +91,7 @@ const MuiTableCell: Components<Theme>['MuiTableCell'] = {
     }),
     // Remove or override the default stickyHeader styles
     stickyHeader: ({ theme }) => ({
+      border: 'none !important',
       backgroundColor: theme.palette.primary.darker,
       color: theme.palette.grey[50],
       fontSize: 17,

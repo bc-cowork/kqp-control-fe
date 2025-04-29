@@ -7,8 +7,6 @@ import {
   Grid,
   Table,
   Paper,
-  styled,
-  Divider,
   TableRow,
   TableHead,
   TableCell,
@@ -28,6 +26,7 @@ import { grey, common } from 'src/theme/core';
 import { useGetIssues, useGetIssueGraph } from 'src/actions/nodes';
 
 import AddFilter from '../common/AddFilter';
+import FadingDivider from '../common/FadingDivider';
 import { TableEmptyRows } from '../table/table-empty-rows';
 import { TableErrorRows } from '../table/table-error-rows';
 import { ChartAreaDark } from '../memory-page/ChartAreaDark';
@@ -35,18 +34,6 @@ import { TableLoadingRows } from '../table/table-loading-rows';
 import TablePaginationCustom from '../common/TablePaginationCustom';
 
 import type { Filter } from '../common/AddFilter';
-
-// ----------------------------------------------------------------------
-
-const FadingDivider = styled(Divider)(({ theme }) => ({
-  height: '1px',
-  background: `linear-gradient(to right, transparent, ${theme.palette.grey[400]}, transparent)`,
-  border: 'none',
-  margin: '12px 0',
-  '&:before, &:after': {
-    display: 'none',
-  },
-}));
 
 // ----------------------------------------------------------------------
 
