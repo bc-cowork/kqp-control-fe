@@ -46,7 +46,7 @@ export function RuleDetail({ selectedNodeId, selectedRuleId }: Props) {
                 <Box
                   sx={{
                     p: 2,
-                    backgroundColor: theme.palette.primary.light,
+                    backgroundColor: theme.palette.primary.main,
                     borderRadius: '8px',
                     mb: 0.5,
                   }}

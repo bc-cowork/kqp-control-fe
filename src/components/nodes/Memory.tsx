@@ -42,7 +42,7 @@ const FadingDivider = styled(Divider)(({ theme }) => ({
   height: '1px',
   background: `linear-gradient(to right, transparent, ${theme.palette.grey[400]}, transparent)`,
   border: 'none',
-  margin: '16px 0',
+  margin: '12px 0',
   '&:before, &:after': {
     display: 'none',
   },
@@ -111,14 +111,14 @@ export function Memory({ selectedNodeId }: Props) {
     [limit]
   );
 
-  const chartHeight = `calc((100vh - 360px)/2)`;
+  const chartHeight = `calc((100vh - 326px)/2)`;
 
   const chartData = processMemoryChartData(issueGraphData);
 
   return (
     <Grid container>
       <Grid md={3} sx={{ pr: 1.25 }}>
-        <Box sx={{ p: 1.5, backgroundColor: '#202838', borderRadius: 1.5 }}>
+        <Box sx={{ p: 0.5, backgroundColor: grey[900], borderRadius: 1.5 }}>
           <Grid
             container
             sx={{
@@ -131,10 +131,10 @@ export function Memory({ selectedNodeId }: Props) {
               </Box>
             ) : (
               <>
-                <Grid md={6} sx={{ pr: 0.5 }}>
+                <Grid md={6} sx={{ pr: 0.25 }}>
                   <Box
                     sx={{
-                      backgroundColor: grey[600],
+                      background: 'linear-gradient(180deg, #202838 80%, #373F4E 100%)',
                       borderRadius: '8px',
                       border: `1px solid ${grey[500]}`,
                       p: 1.5,
@@ -156,10 +156,10 @@ export function Memory({ selectedNodeId }: Props) {
                     </Typography>
                   </Box>
                 </Grid>
-                <Grid md={6} sx={{ pl: 0.5 }}>
+                <Grid md={6} sx={{ pl: 0.25 }}>
                   <Box
                     sx={{
-                      backgroundColor: grey[600],
+                      background: 'linear-gradient(180deg, #202838 80%, #373F4E 100%)',
                       borderRadius: '8px',
                       border: `1px solid ${grey[500]}`,
                       p: 1.5,
@@ -186,8 +186,9 @@ export function Memory({ selectedNodeId }: Props) {
                     sx={{
                       borderRadius: '8px',
                       border: `1px solid ${grey[500]}`,
-                      mt: 1,
+                      mt: 0.5,
                       height: chartHeight,
+                      backgroundColor: '#202838',
                     }}
                   >
                     <ChartAreaDark
@@ -206,8 +207,9 @@ export function Memory({ selectedNodeId }: Props) {
                       borderRadius: '8px',
                       border: `1px solid ${grey[500]}`,
                       p: 1.5,
-                      mt: 1,
+                      mt: 0.5,
                       height: chartHeight,
+                      backgroundColor: '#202838',
                     }}
                   >
                     <Typography sx={{ color: common.white, textAlign: 'center' }}>TBD</Typography>

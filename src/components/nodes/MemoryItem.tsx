@@ -47,8 +47,10 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
   return (
     <Grid container>
       <Grid md={5} sx={{ pr: '10px' }}>
-        <MemoryItemInfo issueInfo={issueInfo} />
-        <MemoryIssueInfoTable issueInfo={issueInfo} />
+        <Box sx={{ p: 0.5, backgroundColor: grey[900], borderRadius: 1 }}>
+          <MemoryItemInfo issueInfo={issueInfo} />
+          <MemoryIssueInfoTable issueInfo={issueInfo} />
+        </Box>
       </Grid>
       <Grid md={7} sx={{ pl: '10px' }}>
         <TableContainer component={Paper} sx={{ height: { md: 'calc(100vh - 200px)' } }}>

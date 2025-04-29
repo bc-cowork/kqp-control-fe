@@ -30,7 +30,7 @@ export function MemoryItemInfo({ issueInfo }: Props) {
   return (
     <Box
       sx={{
-        backgroundColor: '#202838',
+        background: 'linear-gradient(180deg, #202838 80%, #373F4E 100%)',
         borderRadius: '8px',
         px: 3,
         pt: 3,

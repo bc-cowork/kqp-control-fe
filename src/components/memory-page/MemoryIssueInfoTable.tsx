@@ -8,7 +8,7 @@ import { grey } from 'src/theme/core';
 // Styled components for custom styling
 const LabelBox = styled(Box)(({ theme }) => ({
   width: '25%',
-  color: theme.palette.grey[300],
+  color: theme.palette.grey[400],
   fontSize: 15,
   fontWeight: 400,
   display: 'flex',
@@ -19,9 +19,9 @@ const LabelBox = styled(Box)(({ theme }) => ({
 
 const ValueBox = styled(Box)(({ theme }) => ({
   width: '25%',
-  color: theme.palette.grey[50],
+  color: theme.palette.grey[600],
   fontSize: 15,
-  fontWeight: 500,
+  fontWeight: 400,
   padding: '0 12px',
   textAlign: 'right',
 }));
@@ -29,20 +29,19 @@ const ValueBox = styled(Box)(({ theme }) => ({
 const HeaderBox = styled(Box)(({ theme }) => ({
   width: '25%',
   color: theme.palette.grey[50],
-
   fontSize: 15,
-  fontWeight: 500,
+  fontWeight: 400,
   padding: '0 12px',
   textAlign: 'right',
 }));
 
 const RowStack = styled(Stack)(({ theme }) => ({
-  height: 'calc(((100vh - 462px) / 2) / 4)',
+  height: 'calc(((100vh - 458px) / 2) / 4)',
   alignItems: 'center',
 }));
 
 const RowStackWide = styled(Stack)(({ theme }) => ({
-  height: 'calc(((100vh - 463px) / 2) / 3)',
+  height: 'calc(((100vh - 458px) / 2) / 3)',
   alignItems: 'center',
 }));
 
@@ -91,8 +90,11 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
     },
   };
 
+  const tableFill1 = '#FFFFFF';
+  const tableFill2 = '#F9FAFB';
+
   return (
-    <Box sx={{ mt: 2 }}>
+    <Box sx={{ mt: 0.5 }}>
       {/* Header Row */}
       <RowStack
         direction="row"
@@ -110,7 +112,7 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
         <RowStack
           direction="row"
           sx={{
-            backgroundColor: '#202838',
+            backgroundColor: tableFill1,
             borderTopLeftRadius: '8px',
             borderTopRightRadius: '8px',
           }}
@@ -122,7 +124,7 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
         </RowStack>
 
         {/* Last.Vol Row */}
-        <RowStack direction="row" sx={{ backgroundColor: '#141C2A' }}>
+        <RowStack direction="row" sx={{ backgroundColor: tableFill2 }}>
           <LabelBox>Last.Vol</LabelBox>
           <ValueBox>{tableData.lastVol.uni}</ValueBox>
           <ValueBox>{tableData.lastVol.krx}</ValueBox>
@@ -130,7 +132,7 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
         </RowStack>
 
         {/* Vol.Accum Row */}
-        <RowStack direction="row" sx={{ backgroundColor: '#202838' }}>
+        <RowStack direction="row" sx={{ backgroundColor: tableFill1 }}>
           <LabelBox>Vol.Accum</LabelBox>
           <ValueBox>{tableData.volAccum.uni}</ValueBox>
           <ValueBox>{tableData.volAccum.krx}</ValueBox>
@@ -138,17 +140,17 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
         </RowStack>
 
         {/* Amt.Accum Row */}
-        <RowStack direction="row" sx={{ backgroundColor: '#141C2A' }}>
+        <RowStack direction="row" sx={{ backgroundColor: tableFill2 }}>
           <LabelBox>Amt.Accum</LabelBox>
           <ValueBox>{tableData.amtAccum.uni}</ValueBox>
           <ValueBox>{tableData.amtAccum.krx}</ValueBox>
           <ValueBox>{tableData.amtAccum.nxt}</ValueBox>
         </RowStack>
 
-        <Box sx={{ backgroundColor: grey[600], height: '8px' }} />
+        <Box sx={{ backgroundColor: grey[100], height: '8px' }} />
 
         {/* Open Row */}
-        <RowStackWide direction="row" sx={{ backgroundColor: '#202838' }}>
+        <RowStackWide direction="row" sx={{ backgroundColor: tableFill1 }}>
           <LabelBox>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
               <SvgIcon sx={{ mr: 0.5, height: 16, width: 16 }}>
@@ -163,7 +165,7 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
                   <circle cx="8" cy="8" r="3" fill="#00A41E" />
                 </svg>
               </SvgIcon>
-              <Typography variant="body2" sx={{ color: (theme) => theme.palette.grey[300] }}>
+              <Typography variant="body2" sx={{ color: (theme) => theme.palette.grey[400] }}>
                 Open
               </Typography>
             </Box>
@@ -174,7 +176,7 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
         </RowStackWide>
 
         {/* High Row */}
-        <RowStackWide direction="row" sx={{ backgroundColor: '#141C2A' }}>
+        <RowStackWide direction="row" sx={{ backgroundColor: tableFill2 }}>
           <LabelBox>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
               <SvgIcon sx={{ mr: 0.5, height: 16, width: 16 }}>
@@ -194,7 +196,7 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
                   />
                 </svg>
               </SvgIcon>
-              <Typography variant="body2" sx={{ color: (theme) => theme.palette.grey[300] }}>
+              <Typography variant="body2" sx={{ color: (theme) => theme.palette.grey[400] }}>
                 High
               </Typography>
             </Box>
@@ -208,7 +210,7 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
         <RowStackWide
           direction="row"
           sx={{
-            backgroundColor: '#202838',
+            backgroundColor: tableFill1,
             borderBottomLeftRadius: '8px',
             borderBottomRightRadius: '8px',
           }}
@@ -232,7 +234,7 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
                   />
                 </svg>
               </SvgIcon>
-              <Typography variant="body2" sx={{ color: (theme) => theme.palette.grey[300] }}>
+              <Typography variant="body2" sx={{ color: (theme) => theme.palette.grey[400] }}>
                 Low
               </Typography>
             </Box>

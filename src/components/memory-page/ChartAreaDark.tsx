@@ -12,6 +12,8 @@ import {
 import { useTheme } from '@mui/material/styles';
 import { Box, Stack, Typography, CircularProgress } from '@mui/material';
 
+import { varAlpha } from 'src/theme/styles';
+
 import { SegmentedButtonGroupChart } from './SegmentedButtonGroupChart';
 
 interface ChartAreaProps {
@@ -100,17 +102,20 @@ export function ChartAreaDark({
             </Box>
           ) : (
             <AreaChart data={data} margin={{ top: 10, right: 5, left: -20, bottom: 0 }}>
-              <CartesianGrid stroke={theme.palette.grey[500]} fill={theme.palette.grey[600]} />
+              <CartesianGrid
+                stroke={theme.palette.grey[500]}
+                fill={varAlpha(theme.vars.palette.grey['600Channel'], 0.4)}
+              />
               <XAxis
                 dataKey="timestamp"
                 tick={{ fontSize: 12, fill: theme.palette.grey[100] }}
                 tickLine={false}
-                axisLine={{ stroke: theme.palette.grey[600] }}
+                axisLine={{ stroke: theme.palette.grey[500] }}
               />
               <YAxis
                 tick={{ fontSize: 12, fill: theme.palette.grey[100] }}
                 tickLine={false}
-                axisLine={{ stroke: theme.palette.grey[600] }}
+                axisLine={{ stroke: theme.palette.grey[500] }}
                 domain={[minValue, 'auto']}
               />
               <Tooltip
