@@ -21,7 +21,7 @@ export const allLangs = [
     },
   },
   {
-    value: 'kr',
+    value: 'ko',
     label: 'Korean',
     countryCode: 'KR',
     adapterLocale: 'kr',

@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 
 import { grey } from 'src/theme/core';
+import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
 
 import { Memory } from 'src/components/nodes/Memory';
@@ -16,11 +17,12 @@ type Props = {
 };
 
 export function MemoryView({ nodeId }: Props) {
+  const { t } = useTranslate('memory');
   return (
     <DashboardContent maxWidth="xl">
       <Breadcrumb node={nodeId} pages={[{ pageName: 'Memory' }]} />
       <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[600], mt: 2 }}>
-        Memory
+        {t('top.memory')}
       </Typography>
       <Box
         sx={{

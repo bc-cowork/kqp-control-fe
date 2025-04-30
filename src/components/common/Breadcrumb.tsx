@@ -1,13 +1,18 @@
 'use client';
 
+import type { LanguageValue } from 'src/locales';
+
 import React from 'react';
 import NextLink from 'next/link';
 
-import { Box, Link, Stack, SvgIcon, Typography, IconButton } from '@mui/material';
+import { Box, Link, Stack, Button, SvgIcon, Typography, IconButton } from '@mui/material';
 
 import { useRouter } from 'src/routes/hooks';
 
+import { useTranslate } from 'src/locales';
 import { grey, common } from 'src/theme/core';
+import { EnFlagIcon } from 'src/assets/icons/en-flag-icon';
+import { KoFlagIcon } from 'src/assets/icons/ko-flag-icon';
 
 // ----------------------------------------------------------------------
 
@@ -17,92 +22,98 @@ type Page = {
 };
 
 type Props = {
-  node: string;
-  pages: Page[];
+  node?: string;
+  pages?: Page[];
 };
 
 export function Breadcrumb({ node, pages }: Props) {
   return (
-    <Stack direction="row" alignItems="center">
-      <ArrowSelector />
-      <Box
-        sx={{
-          backgroundColor: (theme) => theme.palette.primary.main,
-          px: 1,
-          borderRadius: '4px',
-          height: 32,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          ml: 1,
-        }}
-      >
-        <Typography
-          display="inline"
-          sx={{
-            fontSize: 17,
-            color: (theme) => theme.palette.common.white,
-          }}
-        >
-          {node}
-        </Typography>
-      </Box>
+    <Stack direction="row" alignItems="center" justifyContent="space-between">
+      <Stack direction="row" alignItems="center">
+        <ArrowSelector />
+        {node && (
+          <Box
+            sx={{
+              backgroundColor: (theme) => theme.palette.primary.main,
+              px: 1,
+              borderRadius: '4px',
+              height: 32,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              ml: 1,
+            }}
+          >
+            <Typography
+              display="inline"
+              sx={{
+                fontSize: 17,
+                color: (theme) => theme.palette.common.white,
+              }}
+            >
+              {node}
+            </Typography>
+          </Box>
+        )}
 
-      {/* Pages array */}
-      {pages.map((page, index) => {
-        const isLast = index === pages.length - 1;
+        {/* Pages array */}
+        {pages &&
+          pages.map((page, index) => {
+            const isLast = index === pages.length - 1;
 
-        return (
-          <Stack component="span" key={index} direction="row" alignItems="center">
-            <SvgIcon sx={{ width: 16, height: 16, mx: 1 }}>
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M5.6037 13.1563C5.80074 13.3752 6.13797 13.393 6.35691 13.1959L11.6902 8.39611C11.8026 8.29497 11.8668 8.15089 11.8668 7.99969C11.8668 7.8485 11.8026 7.70441 11.6903 7.60327L6.35693 2.80294C6.138 2.60589 5.80078 2.62363 5.60372 2.84256C5.40667 3.06149 5.42441 3.39871 5.64334 3.59577L10.5362 7.99966L5.64336 12.4031C5.42442 12.6001 5.40666 12.9373 5.6037 13.1563Z"
-                  fill="#667085"
-                />
-              </svg>
-            </SvgIcon>
-            {!isLast && page?.link ? (
-              <Link
-                component={NextLink}
-                href={page.link}
-                sx={{
-                  color: (theme) => theme.palette.grey[400],
-                  fontWeight: 400,
-                  fontSize: 17,
-                  textDecoration: 'none',
-                  padding: '0px 4px',
-                  borderRadius: '8px',
-                  // height: '28px',
-                  '&:hover': { backgroundColor: grey[200], textDecoration: 'none' },
-                }}
-              >
-                {page.pageName}
-              </Link>
-            ) : (
-              <Typography
-                display="inline"
-                sx={{
-                  color: (theme) => theme.palette.grey[400],
-                  fontWeight: 400,
-                  fontSize: 17,
-                  padding: '0px 4px',
-                }}
-              >
-                {page.pageName}
-              </Typography>
-            )}
-          </Stack>
-        );
-      })}
+            return (
+              <Stack component="span" key={index} direction="row" alignItems="center">
+                <SvgIcon sx={{ width: 16, height: 16, mx: 1 }}>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M5.6037 13.1563C5.80074 13.3752 6.13797 13.393 6.35691 13.1959L11.6902 8.39611C11.8026 8.29497 11.8668 8.15089 11.8668 7.99969C11.8668 7.8485 11.8026 7.70441 11.6903 7.60327L6.35693 2.80294C6.138 2.60589 5.80078 2.62363 5.60372 2.84256C5.40667 3.06149 5.42441 3.39871 5.64334 3.59577L10.5362 7.99966L5.64336 12.4031C5.42442 12.6001 5.40666 12.9373 5.6037 13.1563Z"
+                      fill="#667085"
+                    />
+                  </svg>
+                </SvgIcon>
+                {!isLast && page?.link ? (
+                  <Link
+                    component={NextLink}
+                    href={page.link}
+                    sx={{
+                      color: (theme) => theme.palette.grey[400],
+                      fontWeight: 400,
+                      fontSize: 17,
+                      textDecoration: 'none',
+                      padding: '0px 4px',
+                      borderRadius: '8px',
+                      // height: '28px',
+                      '&:hover': { backgroundColor: grey[200], textDecoration: 'none' },
+                    }}
+                  >
+                    {page.pageName}
+                  </Link>
+                ) : (
+                  <Typography
+                    display="inline"
+                    sx={{
+                      color: (theme) => theme.palette.grey[400],
+                      fontWeight: 400,
+                      fontSize: 17,
+                      padding: '0px 4px',
+                    }}
+                  >
+                    {page.pageName}
+                  </Typography>
+                )}
+              </Stack>
+            );
+          })}
+      </Stack>
+      <LanguageToggle />
     </Stack>
   );
 }
@@ -212,5 +223,55 @@ const ArrowSelector = () => {
         </SvgIcon>
       </IconButton>
     </Box>
+  );
+};
+
+const LanguageToggle = () => {
+  const { currentLang, onChangeLang } = useTranslate();
+
+  const targetLang = currentLang?.value === 'en' ? 'ko' : 'en';
+  const displayLabel = currentLang?.value === 'en' ? 'ENG' : 'KOR';
+
+  const handleToggle = () => {
+    onChangeLang(targetLang as LanguageValue);
+  };
+
+  return (
+    <Button
+      onClick={handleToggle}
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        borderRadius: '4px',
+        padding: '4px 8px',
+        backgroundColor: '#fff',
+        border: `1px solid ${common.white}`,
+        '&:hover': {
+          backgroundColor: grey[50],
+          border: `1px solid ${grey[200]}`,
+        },
+        '&:active': {
+          backgroundColor: grey[200],
+        },
+      }}
+    >
+      <SvgIcon
+        sx={{
+          width: 24,
+          height: 24,
+          borderRadius: '50%',
+          backgroundColor: '#f0f0f0',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginRight: '8px',
+        }}
+      >
+        {displayLabel === 'ENG' ? <EnFlagIcon /> : <KoFlagIcon />}
+      </SvgIcon>
+      <Typography sx={{ fontSize: 15, fontWeight: 400, color: grey[400] }}>
+        {displayLabel}
+      </Typography>
+    </Button>
   );
 };

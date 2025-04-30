@@ -10,15 +10,16 @@
     "id": "식별자",
     "name": "이름",
     "description": "설명",
-    "emitable": "송출 상태",
+    "emittable": "송출 상태",
     "emit_count": "송출 누적 횟수",
     "yes": "송출 중",
     "no": "송출 안 됨"
   },
   "info": {
+    "info": "Info",
     "online": "기동 중",
     "offline": "중지됨",
-    "emitable": "송출 상태",
+    "emittable": "송출 상태",
     "emit_count": "송출 누적 횟수",
     "true": "송출 중",
     "false": "송출 안 됨"

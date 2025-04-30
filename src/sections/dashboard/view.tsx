@@ -18,6 +18,7 @@ import { useGetNodes } from 'src/actions/dashboard';
 import { DashboardContent } from 'src/layouts/dashboard';
 
 import { NodeList } from 'src/components/dashboard/NodeList';
+import { Breadcrumb } from 'src/components/common/Breadcrumb';
 import { NodeStatus } from 'src/components/dashboard/NodeStatus';
 import { NodeGraphs } from 'src/components/dashboard/NodeGraphs';
 import { SegmentedButtonGroup } from 'src/components/dashboard/SegmentedButtonGroup';
@@ -29,12 +30,8 @@ const VIEW_TABS = [
   { value: '1x4', label: '1x4' },
 ];
 
-type Props = {
-  title?: string;
-};
-
-export function DashboardView({ title = 'Main' }: Props) {
-  const { t } = useTranslate('common');
+export function DashboardView() {
+  const { t } = useTranslate('dashboard');
   const { nodes, nodesLoading, nodesEmpty, nodesError } = useGetNodes();
 
   const [selectedNodeId, setSelectedNodeId] = useState<string>('');
@@ -54,8 +51,9 @@ export function DashboardView({ title = 'Main' }: Props) {
 
   return (
     <DashboardContent maxWidth="xl">
-      <Typography sx={{ fontSize: 28, fontWeight: 500, color: theme.palette.grey[600] }}>
-        {title}
+      <Breadcrumb />
+      <Typography sx={{ fontSize: 28, fontWeight: 500, color: theme.palette.grey[600], mt: 2 }}>
+        {t('top.dashboard')}
       </Typography>
       <Box
         sx={{
@@ -80,7 +78,7 @@ export function DashboardView({ title = 'Main' }: Props) {
                   }}
                 >
                   <Typography sx={{ fontSize: 15, fontWeight: 500, pt: 2, pl: 3 }}>
-                    Total
+                    {t('top.total')}
                   </Typography>
                   <FadingDivider />
                   <Typography
@@ -102,7 +100,7 @@ export function DashboardView({ title = 'Main' }: Props) {
                 >
                   <Box sx={{ pt: 1.8, pl: 2 }}>
                     <Chip
-                      label="ON"
+                      label={t('top.on')}
                       color="success"
                       size="small"
                       variant="status"
@@ -152,7 +150,7 @@ export function DashboardView({ title = 'Main' }: Props) {
                 mb: 1,
               }}
             >
-              Nodes
+              {t('node.node')}
             </Typography>
             <NodeList
               selectedNode={selectedNode}
@@ -194,7 +192,7 @@ export function DashboardView({ title = 'Main' }: Props) {
                     mb: 1,
                   }}
                 >
-                  Info
+                  {t('info.info')}
                 </Typography>
                 <Box>
                   <SegmentedButtonGroup
@@ -225,13 +223,13 @@ export function DashboardView({ title = 'Main' }: Props) {
               <Grid container sx={{ mt: 1 }}>
                 <Grid md={6} sx={{ pr: 0.75 }}>
                   <NavigationBox
-                    title="Process List"
+                    title={t('navigate.process_list')}
                     link={`/dashboard/nodes/${selectedNodeId}/process/`}
                   />
                 </Grid>
                 <Grid md={6} sx={{ pl: 0.75 }}>
                   <NavigationBox
-                    title="Channel Inbound"
+                    title={t('navigate.channel_inbound')}
                     link={`/dashboard/nodes/${selectedNodeId}/channels-inbound/`}
                   />
                 </Grid>

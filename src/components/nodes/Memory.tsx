@@ -22,6 +22,7 @@ import { useDebounce } from 'src/hooks/use-debounce';
 
 import { processMemoryChartData } from 'src/utils/process-chart-data';
 
+import { useTranslate } from 'src/locales';
 import { grey, common } from 'src/theme/core';
 import { useGetIssues, useGetIssueGraph } from 'src/actions/nodes';
 
@@ -42,6 +43,7 @@ type Props = {
 };
 
 export function Memory({ selectedNodeId }: Props) {
+  const { t } = useTranslate('memory');
   const router = useRouter();
   const [code, setCode] = useState<string>('');
   const debouncedCode = useDebounce(code);
@@ -128,7 +130,7 @@ export function Memory({ selectedNodeId }: Props) {
                     }}
                   >
                     <Typography sx={{ fontSize: 15, fontWeight: 500, color: common.white }}>
-                      Issues
+                      {t('left_side.issues')}
                     </Typography>
                     <FadingDivider />
                     <Typography
@@ -153,7 +155,7 @@ export function Memory({ selectedNodeId }: Props) {
                     }}
                   >
                     <Typography sx={{ fontSize: 15, fontWeight: 500, color: common.white }}>
-                      Compet
+                      {t('left_side.compet')}
                     </Typography>
                     <FadingDivider />
                     <Typography
@@ -179,6 +181,7 @@ export function Memory({ selectedNodeId }: Props) {
                     }}
                   >
                     <ChartAreaDark
+                      title={t('graph.memory')}
                       data={chartData}
                       height="100%"
                       tabs={[{ value: '%', label: '%' }]}

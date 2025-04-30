@@ -4,6 +4,7 @@ import React, { useRef, useState } from 'react';
 
 import { Box, Grid, Stack, Button, Popover, SvgIcon, Typography } from '@mui/material';
 
+import { useTranslate } from 'src/locales';
 import { grey, common, primary } from 'src/theme/core';
 
 import ArrowSelector from '../audit-log-page/ArrowSelector';
@@ -32,6 +33,7 @@ const AddFilter: React.FC<AddFilterProps> = ({
   count,
   popoverWidth,
 }) => {
+  const { t } = useTranslate('memory');
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -147,7 +149,7 @@ const AddFilter: React.FC<AddFilterProps> = ({
               </SvgIcon>
             }
           >
-            Add Filter
+            {t('search_ui.add_filter')}
           </Button>
           {filters &&
             Object.entries(filters)
@@ -248,7 +250,7 @@ const AddFilter: React.FC<AddFilterProps> = ({
               </SvgIcon>
             }
           >
-            Reset
+            {t('search_ui.reset')}
           </Button>
         </Stack>
       </Stack>
@@ -329,7 +331,7 @@ const AddFilter: React.FC<AddFilterProps> = ({
             size="small"
             sx={{ borderRadius: '4px', height: '32px' }}
           >
-            Search
+            {t('search_ui.search')}
           </Button>
         </Box>
       </Popover>
@@ -442,6 +444,7 @@ const AuditFrameListFilters: React.FC<FilterProps> = ({ filters, setFilters }) =
 
 // Sub-component for Memory filters
 const MemoryFilters: React.FC<FilterProps> = ({ filters, setFilters, onEnterPress }) => {
+  const { t } = useTranslate('memory');
   const handleInputChange = (key: string, value: string | boolean) => {
     setFilters((prev) => ({
       ...prev,
@@ -451,9 +454,9 @@ const MemoryFilters: React.FC<FilterProps> = ({ filters, setFilters, onEnterPres
 
   return (
     <Box>
-      <Typography sx={{ fontSize: 15, color: grey[400] }}>Code</Typography>
+      <Typography sx={{ fontSize: 15, color: grey[400] }}>{t('search_ui.code')}</Typography>
       <CustomTextField
-        label="Code"
+        label={t('search_ui.code')}
         value={filters?.code || ''}
         setValue={(e) => handleInputChange('code', e)}
         onKeyDown={onEnterPress}

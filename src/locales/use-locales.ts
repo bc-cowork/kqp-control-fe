@@ -40,7 +40,6 @@ export function useTranslate(ns?: string) {
         if (currentLang) {
           dayjs.locale(currentLang.adapterLocale);
         }
-
         router.refresh();
       } catch (error) {
         console.error(error);

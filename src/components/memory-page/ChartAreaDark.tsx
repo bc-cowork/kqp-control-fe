@@ -17,6 +17,7 @@ import { varAlpha } from 'src/theme/styles';
 import { SegmentedButtonGroupChart } from './SegmentedButtonGroupChart';
 
 interface ChartAreaProps {
+  title: string;
   data: { timestamp: string; memory: number }[];
   height: string;
   tabs: {
@@ -29,6 +30,7 @@ interface ChartAreaProps {
 }
 
 export function ChartAreaDark({
+  title,
   data,
   height,
   tabs,
@@ -63,7 +65,7 @@ export function ChartAreaDark({
         alignItems="center"
         sx={{ mt: 1, px: 1 }}
       >
-        <Typography sx={{ fontSize: 15, color: theme.palette.grey[100] }}>Memory</Typography>
+        <Typography sx={{ fontSize: 15, color: theme.palette.grey[100] }}>{title}</Typography>
         <SegmentedButtonGroupChart
           tabs={tabs}
           value={tabValue}

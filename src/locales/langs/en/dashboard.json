@@ -1,24 +1,25 @@
 {
   "top": {
-    "dashboard": "DASHBOARD",
+    "dashboard": "Dashboard",
     "total": "Total",
     "on": "ON"
   },
   "node": {
-    "node": "Node",
+    "node": "Nodes",
     "state": "State",
     "id": "ID",
     "name": "Name",
     "description": "Description",
-    "emitable": "EMITABLE",
+    "emittable": "Emittable",
     "emit_count": "Emit Count",
     "yes": "Yes",
     "no": "No"
   },
   "info": {
+    "info": "Info",
     "online": "Online",
     "offline": "Offline",
-    "emitable": "EMITABLE",
+    "emittable": "Emittable",
     "emit_count": "Emit Count",
     "true": "True",
     "false": "False"

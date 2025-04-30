@@ -12,6 +12,7 @@ import { useTabs } from 'src/routes/hooks';
 
 import { processChartData } from 'src/utils/process-chart-data';
 
+import { useTranslate } from 'src/locales';
 import { useGetGraphData } from 'src/actions/dashboard';
 
 import { ChartArea } from './chart-area';
@@ -32,6 +33,7 @@ const BOUND_TABS = [
 ];
 
 export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props) {
+  const { t } = useTranslate('dashboard');
   const theme = useTheme();
 
   const cpuTabs = useTabs(CPU_MEMORY_TABS[0].value);
@@ -49,7 +51,7 @@ export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props
     <Box
       sx={{
         bgcolor: theme.palette.common.white,
-        height: 'calc(100vh - 460px)',
+        height: 'calc(100vh - 523px)',
         pl: 0.5,
         boxSizing: 'border-box',
       }}
@@ -61,7 +63,7 @@ export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props
           sx={{ height: selectedTab === '1x4' ? `25%` : `50%`, pb: 1 }}
         >
           <ChartArea
-            title="CPU"
+            title={t('graph.cpu')}
             data={chartData}
             metric="cpu"
             threshold={50}
@@ -79,7 +81,7 @@ export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props
           sx={{ height: selectedTab === '1x4' ? `25%` : `50%`, pb: 1 }}
         >
           <ChartArea
-            title="Memory"
+            title={t('graph.memory')}
             data={chartData}
             metric="memory"
             height="100%"
@@ -96,7 +98,7 @@ export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props
           sx={{ height: selectedTab === '1x4' ? `25%` : `50%`, pb: selectedTab === '1x4' ? 1 : 0 }}
         >
           <ChartArea
-            title="Inbound"
+            title={t('graph.inbound')}
             data={chartData}
             metric={inboundTabs.value === 'count' ? 'inbound_count' : 'inbound_bytes'}
             height="100%"
@@ -113,7 +115,7 @@ export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props
           sx={{ height: selectedTab === '1x4' ? `25%` : `50%` }}
         >
           <ChartArea
-            title="Outbound"
+            title={t('graph.outbound')}
             data={chartData}
             metric={outboundTabs.value === 'count' ? 'outbound_count' : 'outbound_bytes'}
             height="100%"

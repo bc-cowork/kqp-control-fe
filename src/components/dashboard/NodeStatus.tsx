@@ -7,6 +7,7 @@ import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import { Chip, Stack, SvgIcon, LinearProgress, CircularProgress } from '@mui/material';
 
+import { useTranslate } from 'src/locales';
 import { useGetStatus } from 'src/actions/dashboard';
 import { grey, error, common, success } from 'src/theme/core';
 
@@ -25,6 +26,7 @@ export function NodeStatus({
 }: Props) {
   const { status, statusLoading, statusError } = useGetStatus(selectedNodeParam);
 
+  const { t } = useTranslate('dashboard');
   const theme = useTheme();
 
   const isOnline = status?.service_status?.okay;
@@ -53,7 +55,7 @@ export function NodeStatus({
           >
             <Stack direction="row" alignItems="center" sx={{ mb: 1 }}>
               <Chip
-                label={isOnline ? 'Online' : 'Offline'}
+                label={isOnline ? t('info.online') : t('info.offline')}
                 color={isOnline ? 'success' : 'error'}
                 size="small"
                 variant="status"
@@ -114,24 +116,24 @@ export function NodeStatus({
               mb: 0.5,
               borderRadius: '8px',
               backgroundColor: theme.palette.common.white,
-              height: 'calc(100vh - 728px)',
+              height: 'calc(100vh - 791px)',
             }}
           >
             <Stack direction="row" sx={{ mb: 1.5 }}>
               <Typography variant="subtitle2" sx={{ width: '60%' }}>
-                Emittable
+                {t('info.emittable')}
               </Typography>
               <Typography variant="body2">
                 {selectedNode.emittable ? (
-                  <Chip label="True" color="success" size="small" variant="soft" />
+                  <Chip label={t('info.true')} color="success" size="small" variant="soft" />
                 ) : (
-                  <Chip label="False" color="error" size="small" variant="soft" />
+                  <Chip label={t('info.false')} color="error" size="small" variant="soft" />
                 )}
               </Typography>
             </Stack>
             <Stack direction="row" sx={{ mb: 1.5 }}>
               <Typography variant="subtitle2" sx={{ width: '60%' }}>
-                Emit Count
+                {t('info.emit_count')}
               </Typography>
               <Typography variant="body2" sx={{ color: grey[400] }}>
                 {selectedNode.emit_count.toLocaleString()}
@@ -140,7 +142,9 @@ export function NodeStatus({
           </Box>
 
           <Box sx={{ p: 2, borderRadius: '8px', backgroundColor: theme.palette.common.white }}>
-            <Typography sx={{ fontSize: 17, fontWeight: 500, color: grey[600] }}>Disk</Typography>
+            <Typography sx={{ fontSize: 17, fontWeight: 500, color: grey[600] }}>
+              {t('disk.disk')}
+            </Typography>
             <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[900] }}>21%</Typography>
             <Typography sx={{ fontSize: 16, fontWeight: 400, color: grey[400] }}>
               <Box component="span" sx={{ color: grey[500], fontWeight: 500 }}>

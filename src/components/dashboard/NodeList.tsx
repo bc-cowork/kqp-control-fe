@@ -8,13 +8,17 @@ import { useTheme } from '@mui/material/styles';
 import {
   Chip,
   Table,
+  Paper,
   SvgIcon,
   TableRow,
   TableBody,
   TableCell,
   TableHead,
+  TableContainer,
   CircularProgress,
 } from '@mui/material';
+
+import { useTranslate } from 'src/locales';
 
 // ----------------------------------------------------------------------
 
@@ -40,6 +44,7 @@ export function NodeList({
   nodesError,
 }: Props) {
   const theme = useTheme();
+  const { t } = useTranslate('dashboard');
 
   useEffect(() => {
     if (!nodesLoading && !nodesEmpty && !nodesError && !selectedNode && !selectedNodeId) {
@@ -62,90 +67,92 @@ export function NodeList({
   };
 
   return (
-    <Table
-      size="small"
-      sx={{
-        borderCollapse: 'separate',
-      }}
-    >
-      <TableHead>
-        <TableRow>
-          <TableCell>State</TableCell>
-          <TableCell>ID</TableCell>
-          <TableCell>Name</TableCell>
-          <TableCell>Description</TableCell>
-          <TableCell>Emittable</TableCell>
-          <TableCell align="right">Emit Count</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {nodesLoading ? (
+    <TableContainer component={Paper} sx={{ height: 'calc(100vh - 400px)' }}>
+      <Table
+        size="small"
+        sx={{
+          borderCollapse: 'separate',
+        }}
+      >
+        <TableHead>
           <TableRow>
-            <TableCell colSpan={9} align="center">
-              <CircularProgress />
-            </TableCell>
+            <TableCell>{t('node.state')}</TableCell>
+            <TableCell>{t('node.id')}</TableCell>
+            <TableCell>{t('node.name')}</TableCell>
+            <TableCell>{t('node.description')}</TableCell>
+            <TableCell>{t('node.emittable')}</TableCell>
+            <TableCell align="right">{t('node.emit_count')}</TableCell>
           </TableRow>
-        ) : nodesEmpty ? (
-          <TableRow>
-            <TableCell colSpan={6}>No Nodes Found</TableCell>
-          </TableRow>
-        ) : nodesError ? (
-          <TableRow>
-            <TableCell colSpan={6}>Error Fetching Nodes</TableCell>
-          </TableRow>
-        ) : (
-          nodes.map((node: INodeItem) => (
-            <TableRow
-              key={node.id}
-              selected={selectedNode?.id === node.id}
-              onClick={() => onSelectedNode(node)}
-              sx={{ cursor: 'pointer' }}
-            >
-              <TableCell>
-                <Chip
-                  label={node.online_status ? 'Online' : 'Offline'}
-                  color={node.online_status ? 'success' : 'error'}
-                  size="small"
-                  variant="status"
-                  icon={
-                    <SvgIcon>
-                      <svg
-                        width="12"
-                        height="13"
-                        viewBox="0 0 12 13"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <circle
-                          cx="6"
-                          cy="6.30078"
-                          r="4"
-                          fill={
-                            node.online_status
-                              ? theme.palette.success.main
-                              : theme.palette.error.main
-                          }
-                        />
-                      </svg>
-                    </SvgIcon>
-                  }
-                />
+        </TableHead>
+        <TableBody>
+          {nodesLoading ? (
+            <TableRow>
+              <TableCell colSpan={9} align="center">
+                <CircularProgress />
               </TableCell>
-              <TableCell>{node.id}</TableCell>
-              <TableCell>{node.name}</TableCell>
-              <TableCell>{node.desc}</TableCell>
-              <TableCell>
-                {node.emittable ? (
-                  <Chip label="Yes" color="success" size="small" variant="soft" />
-                ) : (
-                  <Chip label="No" color="error" size="small" variant="soft" />
-                )}
-              </TableCell>
-              <TableCell align="right">{node.emit_count.toLocaleString()}</TableCell>
             </TableRow>
-          ))
-        )}
-      </TableBody>
-    </Table>
+          ) : nodesEmpty ? (
+            <TableRow>
+              <TableCell colSpan={6}>No Nodes Found</TableCell>
+            </TableRow>
+          ) : nodesError ? (
+            <TableRow>
+              <TableCell colSpan={6}>Error Fetching Nodes</TableCell>
+            </TableRow>
+          ) : (
+            nodes.map((node: INodeItem) => (
+              <TableRow
+                key={node.id}
+                selected={selectedNode?.id === node.id}
+                onClick={() => onSelectedNode(node)}
+                sx={{ cursor: 'pointer' }}
+              >
+                <TableCell>
+                  <Chip
+                    label={node.online_status ? 'Online' : 'Offline'}
+                    color={node.online_status ? 'success' : 'error'}
+                    size="small"
+                    variant="status"
+                    icon={
+                      <SvgIcon>
+                        <svg
+                          width="12"
+                          height="13"
+                          viewBox="0 0 12 13"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <circle
+                            cx="6"
+                            cy="6.30078"
+                            r="4"
+                            fill={
+                              node.online_status
+                                ? theme.palette.success.main
+                                : theme.palette.error.main
+                            }
+                          />
+                        </svg>
+                      </SvgIcon>
+                    }
+                  />
+                </TableCell>
+                <TableCell>{node.id}</TableCell>
+                <TableCell>{node.name}</TableCell>
+                <TableCell>{node.desc}</TableCell>
+                <TableCell>
+                  {node.emittable ? (
+                    <Chip label="Yes" color="success" size="small" variant="soft" />
+                  ) : (
+                    <Chip label="No" color="error" size="small" variant="soft" />
+                  )}
+                </TableCell>
+                <TableCell align="right">{node.emit_count.toLocaleString()}</TableCell>
+              </TableRow>
+            ))
+          )}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }
