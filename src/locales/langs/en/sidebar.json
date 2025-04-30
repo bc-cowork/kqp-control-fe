@@ -1,0 +1,17 @@
+{
+  "side_bar": {
+    "dashboard": "DASHBOARD",
+    "nodes": "NODES",
+    "settings": "SETTINGS",
+    "logout": "LOGOUT"
+  },
+  "tab_option": {
+    "node_dashboard": "NODE DASHBOARD",
+    "process": "PROCESS",
+    "memory": "MEMORY",
+    "audit_log": "AUDIT LOG",
+    "channels_inbound": "CHANNELS INBOUND",
+    "channels_outbound": "CHANNELS OUTBOUND",
+    "rule_list": "RULE LIST"
+  }
+}

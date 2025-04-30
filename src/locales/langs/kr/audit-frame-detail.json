@@ -1,0 +1,36 @@
+{
+  "top": {
+    "audit_logs": "증적 로그 목록"
+  },
+  "search_ui": {
+    "add_filter": "검색 조건 추가",
+    "reset": "초기화",
+    "search": "검색",
+    "go_to_page": "페이지 이동"
+  },
+  "table": {
+    "rows_per_page": "페이지당 프레일 수",
+    "go_to_page": "이동할 페이지"
+  },
+  "table_header": {
+    "frame_seq": "프레일 번호",
+    "head": "전문 유형",
+    "rid": "수신채널 식별자",
+    "size": "크기"
+  },
+  "right_side_audit_log_list": {
+    "filename": "파일이름",
+    "audit_log_list": "증적 로그 목록",
+    "desc": "설명",
+    "max_frame_seq": "가장 큰 프레일 번호",
+    "file_size": "파일 크기",
+    "date": "날짜"
+  },
+  "audit_log_frame_detail": {
+    "seq": "프레일 번호",
+    "time": "시간",
+    "size": "크기",
+    "head": "전문 유형",
+    "rid": "수신채널 식별자"
+  }
+}

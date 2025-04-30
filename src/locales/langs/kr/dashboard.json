@@ -1,0 +1,39 @@
+{
+  "top": {
+    "dashboard": "대시보드",
+    "total": "전체 서버 수",
+    "on": "기동 중"
+  },
+  "node": {
+    "node": "노드",
+    "state": "상태",
+    "id": "식별자",
+    "name": "이름",
+    "description": "설명",
+    "emitable": "송출 상태",
+    "emit_count": "송출 누적 횟수",
+    "yes": "송출 중",
+    "no": "송출 안 됨"
+  },
+  "info": {
+    "online": "기동 중",
+    "offline": "중지됨",
+    "emitable": "송출 상태",
+    "emit_count": "송출 누적 횟수",
+    "true": "송출 중",
+    "false": "송출 안 됨"
+  },
+  "graph": {
+    "cpu": "프로세서 사용률",
+    "memory": "메모리 사용률",
+    "inbound": "수신",
+    "outbound": "송출"
+  },
+  "disk": {
+    "disk": "디스크 사용률"
+  },
+  "navigate": {
+    "process_list": "프로세스 상태 목록",
+    "channel_inbound": "채널 수신"
+  }
+}

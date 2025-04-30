@@ -1,0 +1,21 @@
+{
+  "top": {
+    "audit_logs": "증적 로그"
+  },
+  "table_option": {
+    "inbound": "수신 로그",
+    "outbound": "송신 로그",
+    "other": "기타 로그",
+    "all": "전체 로그"
+  },
+  "table": {
+    "rows_per_page": "페이지당 파일 수",
+    "go_to_page": "이동할 페이지"
+  },
+  "table_header": {
+    "no": "번호",
+    "date": "날짜",
+    "type": "로그 종류",
+    "size": "크기"
+  }
+}

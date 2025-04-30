@@ -1,0 +1,27 @@
+{
+  "top": {
+    "memory": "메모리"
+  },
+  "left_side": {
+    "issues": "종목 수",
+    "compet": "정쟁 종목 수"
+  },
+  "graph": {
+    "memory": "메모리 사용률"
+  },
+  "search_ui": {
+    "add_filter": "검색 조건 추가",
+    "code": "종목 코드",
+    "reset": "초기화",
+    "search": "검색",
+    "go_to_page": "이동할 페이지"
+  },
+  "table": {
+    "rows_per_page": "페이지당 종목 수",
+    "seq": "번호",
+    "code": "종목 코드",
+    "k_name": "한글 종목명",
+    "daily_info": "종목마스터 수신장자",
+    "compet": "정쟁매매"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "side_bar": {
+    "dashboard": "대시보드",
+    "nodes": "노드",
+    "settings": "설정",
+    "logout": "로그아웃"
+  },
+  "tab_option": {
+    "node_dashboard": "노드 대시보드",
+    "process": "프로세스",
+    "memory": "메모리",
+    "audit_log": "증적 로그",
+    "channels_inbound": "채널 수신",
+    "channels_outbound": "채널 송출",
+    "rule_list": "전문 목록"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "top": {
+    "memory": "Memory"
+  },
+  "left_side": {
+    "issues": "Issues",
+    "compet": "Compet"
+  },
+  "graph": {
+    "memory": "Memory"
+  },
+  "search_ui": {
+    "add_filter": "Add Filter",
+    "code": "Code",
+    "reset": "Reset",
+    "search": "Search",
+    "go_to_page": "Go to page"
+  },
+  "table": {
+    "rows_per_page": "Rows per page",
+    "seq": "SEQ",
+    "code": "CODE",
+    "k_name": "K.Name",
+    "daily_info": "Daily INFO",
+    "compet": "Compet"
+  }
+}

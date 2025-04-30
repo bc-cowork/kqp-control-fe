@@ -1,0 +1,19 @@
+{
+  "top": {
+    "node_dashboard": "NODE DASHBOARD"
+  },
+  "left_side": {
+    "online": "Online",
+    "offline": "Offline",
+    "emitable": "EMITABLE",
+    "emit_count": "Emit Count",
+    "true": "True",
+    "false": "False"
+  },
+  "graph": {
+    "cpu": "CPU",
+    "memory": "MEMORY",
+    "inbound": "Inbound",
+    "outbound": "Outbound"
+  }
+}

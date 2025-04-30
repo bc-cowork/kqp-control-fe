@@ -1,0 +1,39 @@
+{
+  "top": {
+    "dashboard": "DASHBOARD",
+    "total": "Total",
+    "on": "ON"
+  },
+  "node": {
+    "node": "Node",
+    "state": "State",
+    "id": "ID",
+    "name": "Name",
+    "description": "Description",
+    "emitable": "EMITABLE",
+    "emit_count": "Emit Count",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "info": {
+    "online": "Online",
+    "offline": "Offline",
+    "emitable": "EMITABLE",
+    "emit_count": "Emit Count",
+    "true": "True",
+    "false": "False"
+  },
+  "graph": {
+    "cpu": "CPU",
+    "memory": "Memory",
+    "inbound": "Inbound",
+    "outbound": "outbound"
+  },
+  "disk": {
+    "disk": "Disk"
+  },
+  "navigate": {
+    "process_list": "Process List",
+    "channel_inbound": "Channel Inbound"
+  }
+}

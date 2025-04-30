@@ -13,6 +13,7 @@ import { Chip, Stack, styled, Divider, SvgIcon } from '@mui/material';
 import { useTabs, useRouter } from 'src/routes/hooks';
 
 import { grey } from 'src/theme/core';
+import { useTranslate } from 'src/locales';
 import { useGetNodes } from 'src/actions/dashboard';
 import { DashboardContent } from 'src/layouts/dashboard';
 
@@ -33,6 +34,7 @@ type Props = {
 };
 
 export function DashboardView({ title = 'Main' }: Props) {
+  const { t } = useTranslate('common');
   const { nodes, nodesLoading, nodesEmpty, nodesError } = useGetNodes();
 
   const [selectedNodeId, setSelectedNodeId] = useState<string>('');

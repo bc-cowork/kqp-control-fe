@@ -1,0 +1,19 @@
+{
+  "top": {
+    "node_dashboard": "노드 대시보드"
+  },
+  "left_side": {
+    "online": "기동 중",
+    "offline": "중지됨",
+    "emitable": "송출 상태",
+    "emit_count": "송출 누적 횟수",
+    "true": "송출 중",
+    "false": "송출 안 됨"
+  },
+  "graph": {
+    "cpu": "프로세서 사용률",
+    "memory": "메모리 사용률",
+    "inbound": "수신",
+    "outbound": "송출"
+  }
+}
