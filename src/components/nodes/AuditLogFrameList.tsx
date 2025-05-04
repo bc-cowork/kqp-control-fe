@@ -25,6 +25,7 @@ import { useRouter } from 'src/routes/hooks';
 
 import { formatDateCustom } from 'src/utils/format-time';
 
+import { useTranslate } from 'src/locales';
 import { grey, common } from 'src/theme/core';
 import { useAuditFrameList } from 'src/actions/nodes';
 
@@ -43,6 +44,7 @@ type Props = {
 };
 
 export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
+  const { t } = useTranslate('audit-frame-list');
   const theme = useTheme();
   const router = useRouter();
   const [page, setPage] = useState<number>(0);
@@ -145,10 +147,10 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                 <Table size="small">
                   <TableHead>
                     <TableRow>
-                      <TableCell align="right">Frame seq</TableCell>
-                      <TableCell align="right">HEAD</TableCell>
-                      <TableCell align="right">RID</TableCell>
-                      <TableCell align="right">Size</TableCell>
+                      <TableCell align="right">{t('table_header.frame_seq')}</TableCell>
+                      <TableCell align="right">{t('table_header.head')}</TableCell>
+                      <TableCell align="right">{t('table_header.rid')}</TableCell>
+                      <TableCell align="right">{t('table_header.size')}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -212,7 +214,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                       </svg>
                     </SvgIcon>
                     <Typography sx={{ color: theme.palette.grey[200], fontSize: 15 }}>
-                      Filename
+                      {t('right_side_audit_log_list.filename')}
                     </Typography>
                   </Stack>
                   <Typography
@@ -232,7 +234,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                   }}
                 >
                   <Typography sx={{ color: theme.palette.grey[200], fontSize: 15 }}>
-                    Desc
+                    {t('right_side_audit_log_list.desc')}
                   </Typography>
                   <Typography
                     sx={{ color: theme.palette.common.white, fontSize: 17, fontWeight: 500 }}
@@ -253,7 +255,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                     sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
                   >
                     <Typography sx={{ color: theme.palette.grey[200], fontSize: 15 }}>
-                      Max Frame Seq
+                      {t('right_side_audit_log_list.max_frame_seq')}
                     </Typography>
                     <SvgIcon
                       sx={{
@@ -300,7 +302,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                   }}
                 >
                   <Typography sx={{ color: theme.palette.grey[200], fontSize: 15 }}>
-                    File Size
+                    {t('right_side_audit_log_list.file_size')}
                   </Typography>
                   <Typography
                     sx={{ color: theme.palette.common.white, fontSize: 17, fontWeight: 500 }}
@@ -318,7 +320,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                   }}
                 >
                   <Typography sx={{ color: theme.palette.grey[200], fontSize: 15 }}>
-                    Date
+                    {t('right_side_audit_log_list.date')}
                   </Typography>
                   <Typography
                     sx={{ color: theme.palette.common.white, fontSize: 17, fontWeight: 500 }}

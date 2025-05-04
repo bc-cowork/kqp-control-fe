@@ -7,6 +7,7 @@ import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import { Chip, Stack, SvgIcon, LinearProgress, CircularProgress } from '@mui/material';
 
+import { useTranslate } from 'src/locales';
 import { useGetStatus } from 'src/actions/dashboard';
 import { grey, error, common, success } from 'src/theme/core';
 
@@ -18,6 +19,7 @@ type Props = {
 };
 
 export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
+  const { t } = useTranslate('node-dashboard');
   const { status, statusLoading, statusError } = useGetStatus(selectedNodeParam);
 
   const theme = useTheme();
@@ -52,7 +54,7 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
           >
             <Stack direction="row" alignItems="center" sx={{ mb: 1 }}>
               <Chip
-                label={isOnline ? 'Online' : 'Offline'}
+                label={isOnline ? t('left_side.online') : t('left_side.offline')}
                 color={isOnline ? 'success' : 'error'}
                 size="small"
                 variant="status"
@@ -118,19 +120,19 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
           >
             <Stack direction="row" sx={{ mb: 1.5 }}>
               <Typography variant="subtitle2" sx={{ width: '60%' }}>
-                Emittable
+                {t('left_side.emitable')}
               </Typography>
               <Typography variant="body2">
                 {selectedNode.emittable ? (
-                  <Chip label="True" color="success" size="small" variant="soft" />
+                  <Chip label={t('left_side.true')} color="success" size="small" variant="soft" />
                 ) : (
-                  <Chip label="False" color="error" size="small" variant="soft" />
+                  <Chip label={t('left_side.false')} color="error" size="small" variant="soft" />
                 )}
               </Typography>
             </Stack>
             <Stack direction="row" sx={{ mb: 1.5 }}>
               <Typography variant="subtitle2" sx={{ width: '60%' }}>
-                Emit Count
+                {t('left_side.emit_count')}
               </Typography>
               <Typography variant="body2" sx={{ color: grey[400] }}>
                 {selectedNode.emit_count.toLocaleString()}

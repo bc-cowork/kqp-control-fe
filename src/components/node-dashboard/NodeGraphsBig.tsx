@@ -12,6 +12,7 @@ import { useTabs } from 'src/routes/hooks';
 
 import { processChartData } from 'src/utils/process-chart-data';
 
+import { useTranslate } from 'src/locales';
 import { useGetGraphData } from 'src/actions/dashboard';
 
 import { ChartArea } from './chart-area';
@@ -30,6 +31,7 @@ const BOUND_TABS = [
 ];
 
 export function NodeGraphsBig({ selectedNodeParam }: Props) {
+  const { t } = useTranslate('node-dashboard');
   const theme = useTheme();
 
   const inboundTabs = useTabs(BOUND_TABS[0].value);
@@ -56,6 +58,7 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
         <Grid item md={6} sx={{ height: `50%`, pb: 1 }}>
           <ChartArea
             title="CPU"
+            titleString={t('graph.cpu')}
             subTitle="10% 4.26GHz"
             data={chartData}
             metric="cpu"
@@ -67,6 +70,7 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
         <Grid item md={6} sx={{ height: `50%`, pb: 1 }}>
           <ChartArea
             title="Memory"
+            titleString={t('graph.memory')}
             subTitle="10% 4.26GHz"
             data={chartData}
             metric="memory"
@@ -77,6 +81,7 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
         <Grid item md={6} sx={{ height: `50%` }}>
           <ChartArea
             title="Inbound"
+            titleString={t('graph.inbound')}
             subTitle="10% 4.26GHz"
             data={chartData}
             metric={inboundTabs.value === 'count' ? 'inbound_count' : 'inbound_bytes'}
@@ -90,6 +95,7 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
         <Grid item md={6} sx={{ height: `50%` }}>
           <ChartArea
             title="Outbound"
+            titleString={t('graph.outbound')}
             subTitle="10% 4.26GHz"
             data={chartData}
             metric={outboundTabs.value === 'count' ? 'outbound_count' : 'outbound_bytes'}

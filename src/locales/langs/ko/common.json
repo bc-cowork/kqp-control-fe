@@ -1,0 +1,12 @@
+{
+  "search_ui": {
+    "add_filter": "검색 조건 추가",
+    "reset": "초기화",
+    "search": "검색",
+    "go_to_page": "페이지 이동"
+  },
+  "table": {
+    "rows_per_page": "페이지당 로레일 수",
+    "go_to_page": "이동할 페이지"
+  }
+}

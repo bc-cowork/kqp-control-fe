@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 
 import { grey } from 'src/theme/core';
+import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
 
 import { Breadcrumb } from 'src/components/common/Breadcrumb';
@@ -16,11 +17,12 @@ type Props = {
 };
 
 export function NodeDashboardView({ nodeId }: Props) {
+  const { t } = useTranslate('node-dashboard');
   return (
     <DashboardContent maxWidth="xl">
-      <Breadcrumb node={nodeId} pages={[{ pageName: 'Node Dashboard' }]} />
+      <Breadcrumb node={nodeId} pages={[{ pageName: t('top.node_dashboard') }]} />
       <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[600], mt: 2 }}>
-        Node Dashboard
+        {t('top.node_dashboard')}
       </Typography>
       <Box
         sx={{

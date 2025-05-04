@@ -20,6 +20,7 @@ import {
 } from '@mui/material';
 
 import { grey } from 'src/theme/core';
+import { useTranslate } from 'src/locales';
 
 // Styled components (unchanged)
 const CustomSelect = styled(Select)(({ theme }) => ({
@@ -153,6 +154,7 @@ const TablePaginationCustom = ({
   onRowsPerPageChange,
   sx,
 }: Props) => {
+  const { t } = useTranslate('common');
   const theme = useTheme();
   const [goToPage, setGoToPage] = useState('');
   const [isInvalid, setIsInvalid] = useState(false);
@@ -260,7 +262,7 @@ const TablePaginationCustom = ({
         sx={{ width: `100%` }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
-          <CustomTypography sx={{ ml: 0 }}>Rows per page:</CustomTypography>
+          <CustomTypography sx={{ ml: 0 }}>{t('table.rows_per_page')}:</CustomTypography>
           <CustomSelect
             value={rowsPerPage}
             onChange={handleChangeRowsPerPage}
@@ -384,7 +386,7 @@ const TablePaginationCustom = ({
           value={goToPage}
           onChange={handleGoToPageChange}
           onKeyDown={handleGoToPageSubmit}
-          placeholder="go to page"
+          placeholder={t('table.go_to_page')}
           variant="outlined"
           error={isInvalid}
           sx={{

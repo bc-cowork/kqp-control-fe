@@ -1,6 +1,7 @@
 {
   "top": {
-    "memory": "Memory"
+    "memory": "Memory",
+    "memory_item": "Issue Item"
   },
   "left_side": {
     "issues": "Issues",

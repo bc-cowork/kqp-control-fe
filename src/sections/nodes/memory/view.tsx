@@ -20,7 +20,7 @@ export function MemoryView({ nodeId }: Props) {
   const { t } = useTranslate('memory');
   return (
     <DashboardContent maxWidth="xl">
-      <Breadcrumb node={nodeId} pages={[{ pageName: 'Memory' }]} />
+      <Breadcrumb node={nodeId} pages={[{ pageName: t('top.memory') }]} />
       <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[600], mt: 2 }}>
         {t('top.memory')}
       </Typography>

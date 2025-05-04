@@ -1,6 +1,7 @@
 {
   "top": {
-    "memory": "메모리"
+    "memory": "메모리",
+    "memory_item": "Issue Item"
   },
   "left_side": {
     "issues": "종목 수",

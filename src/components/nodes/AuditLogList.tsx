@@ -1,5 +1,6 @@
 'use client';
 
+import type { TFunction } from 'i18next';
 import type { IAuditLogItem } from 'src/types/node';
 
 import { useState, useCallback } from 'react';
@@ -18,6 +19,7 @@ import {
 
 import { useRouter } from 'src/routes/hooks';
 
+import { useTranslate } from 'src/locales';
 import { useAuditLogList } from 'src/actions/nodes';
 import { grey, common } from 'src/theme/core/palette';
 
@@ -28,11 +30,11 @@ import TablePaginationCustom from '../common/TablePaginationCustom';
 
 // ----------------------------------------------------------------------
 
-const AUDIT_LOG_TYPES = [
-  { value: 'inbound', label: 'Inbound' },
-  { value: 'outbound', label: 'Outbound' },
-  { value: 'other', label: 'Other' },
-  { value: 'all', label: 'All' },
+const getAuditLogTypes = (t: TFunction) => [
+  { value: 'inbound', label: t('table_option.inbound') },
+  { value: 'outbound', label: t('table_option.outbound') },
+  { value: 'other', label: t('table_option.other') },
+  { value: 'all', label: t('table_option.all') },
 ];
 
 // ----------------------------------------------------------------------
@@ -42,8 +44,9 @@ type Props = {
 };
 
 export function AuditLogList({ selectedNodeId }: Props) {
+  const { t } = useTranslate('audit-list');
   const router = useRouter();
-  const [type, setType] = useState<string>(AUDIT_LOG_TYPES[0].value);
+  const [type, setType] = useState<string>(getAuditLogTypes(t)[0].value);
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(40);
 
@@ -73,7 +76,7 @@ export function AuditLogList({ selectedNodeId }: Props) {
           inputProps={{ sx: { color: grey[400] } }}
           sx={{ height: '32px', borderRadius: '4px' }}
         >
-          {AUDIT_LOG_TYPES.map((logType) => (
+          {getAuditLogTypes(t).map((logType) => (
             <MenuItem key={logType.value} value={logType.value}>
               {logType.label}
             </MenuItem>
@@ -94,10 +97,10 @@ export function AuditLogList({ selectedNodeId }: Props) {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell align="right">No</TableCell>
-            <TableCell align="right">Date</TableCell>
-            <TableCell>Type</TableCell>
-            <TableCell align="right">Size</TableCell>
+            <TableCell align="right">{t('table_header.no')}</TableCell>
+            <TableCell align="right">{t('table_header.date')}</TableCell>
+            <TableCell>{t('table_header.type')}</TableCell>
+            <TableCell align="right">{t('table_header.size')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

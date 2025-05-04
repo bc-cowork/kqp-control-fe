@@ -22,6 +22,7 @@ interface ChartAreaProps {
   data: ChartDataPoint[];
   height: string;
   title: string;
+  titleString: string;
   subTitle: string;
   metric: keyof Pick<
     ChartDataPoint,
@@ -41,6 +42,7 @@ export function ChartArea({
   data,
   height,
   title,
+  titleString,
   subTitle,
   metric,
   loading,
@@ -119,7 +121,7 @@ export function ChartArea({
         alignItems="center"
         sx={{ mt: 1, mx: 1 }}
       >
-        <Typography sx={{ fontSize: 15, color: theme.palette.grey[400] }}>{title}</Typography>
+        <Typography sx={{ fontSize: 15, color: theme.palette.grey[400] }}>{titleString}</Typography>
         {tabs && tabValue && onTabChange && (
           <SegmentedButtonGroupChart
             tabs={tabs}

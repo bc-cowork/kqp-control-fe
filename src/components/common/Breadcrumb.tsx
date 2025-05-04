@@ -260,7 +260,6 @@ const LanguageToggle = () => {
           width: 24,
           height: 24,
           borderRadius: '50%',
-          backgroundColor: '#f0f0f0',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

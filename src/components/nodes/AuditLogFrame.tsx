@@ -25,6 +25,7 @@ import {
 
 import { formatDateCustom } from 'src/utils/format-time';
 
+import { useTranslate } from 'src/locales';
 import { useGetAuditLogFrame } from 'src/actions/nodes';
 import { grey, error, common, primary, success, warning } from 'src/theme/core';
 
@@ -47,6 +48,7 @@ type Props = {
 };
 
 export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Props) {
+  const { t } = useTranslate('audit-frame-detail');
   const [seq, setSeq] = useState<number>(Number(selectedSeq));
   const [apiSeq, setApiSeq] = useState<number>(Number(selectedSeq));
   const [count, setCount] = useState<number | undefined>(undefined);
