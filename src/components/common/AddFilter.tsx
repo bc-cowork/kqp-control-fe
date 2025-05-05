@@ -323,7 +323,7 @@ const AddFilter: React.FC<AddFilterProps> = ({
               </SvgIcon>
             }
           >
-            Reset
+            {t('search_ui.reset')}
           </Button>
           <Button
             onClick={handleApply}

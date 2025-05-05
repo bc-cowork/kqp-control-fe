@@ -1,6 +1,8 @@
 {
   "top": {
-    "audit_logs": "Audit Logs List"
+    "audit_logs": "Audit Logs",
+    "list": "List",
+    "detail": "Frame Detail"
   },
   "search_ui": {
     "add_filter": "Add Filter",

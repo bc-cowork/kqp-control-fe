@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 
 import { grey } from 'src/theme/core';
+import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
 
 import { Breadcrumb } from 'src/components/common/Breadcrumb';
@@ -17,16 +18,19 @@ type Props = {
 };
 
 export function AuditFrameListView({ nodeId, file }: Props) {
+  const { t } = useTranslate('audit-frame-list');
   return (
     <DashboardContent maxWidth="xl">
       <Breadcrumb
         node={nodeId}
         pages={[
-          { pageName: 'Audit Log', link: `/dashboard/nodes/${nodeId}/audit-log` },
-          { pageName: 'List' },
+          { pageName: t('top.audit_logs'), link: `/dashboard/nodes/${nodeId}/audit-log` },
+          { pageName: t('top.list') },
         ]}
       />
-      <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[600], mt: 2 }}>List</Typography>
+      <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[600], mt: 2 }}>
+        {t('top.list')}
+      </Typography>
       <Box
         sx={{
           mt: '28px',

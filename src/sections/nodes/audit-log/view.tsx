@@ -20,7 +20,7 @@ export function AuditLogView({ nodeId }: Props) {
   const { t } = useTranslate('audit-list');
   return (
     <DashboardContent maxWidth="xl">
-      <Breadcrumb node={nodeId} pages={[{ pageName: 'Audit Logs' }]} />
+      <Breadcrumb node={nodeId} pages={[{ pageName: t('top.audit_logs') }]} />
       <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[600], mt: 2 }}>
         {t('top.audit_logs')}
       </Typography>

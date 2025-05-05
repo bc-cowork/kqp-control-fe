@@ -1,6 +1,7 @@
 {
   "top": {
-    "audit_logs": "증적 로그 목록"
+    "audit_logs": "증적 로그 목록",
+    "list": "목록"
   },
   "search_ui": {
     "add_filter": "검색 조건 추가",
