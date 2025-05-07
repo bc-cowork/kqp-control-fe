@@ -10,9 +10,11 @@ import {
   TableCell,
   TableHead,
   TableContainer,
+  CircularProgress,
 } from '@mui/material';
 
 import { grey } from 'src/theme/core';
+import { useTranslate } from 'src/locales';
 import { useGetIssueItemInfo, useGetIssueItemQuotes } from 'src/actions/nodes';
 
 import { TableErrorRows } from '../table/table-error-rows';
@@ -28,6 +30,7 @@ type Props = {
 };
 
 export function MemoryItem({ selectedNodeId, code }: Props) {
+  const { t } = useTranslate('memory');
   const { issueInfo, issueInfoLoading, issueInfoError } = useGetIssueItemInfo(selectedNodeId, code);
 
   const { issueQuotesAsk, issueQuotesBid, issueQuotesLoading, issueQuotesError } =
@@ -46,21 +49,27 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
   return (
     <Grid container>
       <Grid md={5} sx={{ pr: '10px' }}>
-        <Box sx={{ p: 0.5, backgroundColor: grey[900], borderRadius: 1 }}>
-          <MemoryItemInfo issueInfo={issueInfo} />
-          <MemoryIssueInfoTable issueInfo={issueInfo} />
-        </Box>
+        {issueInfoLoading ? (
+          <Box sx={{ p: 0.5, backgroundColor: grey[900], borderRadius: 1 }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <Box sx={{ p: 0.5, backgroundColor: grey[900], borderRadius: 1 }}>
+            <MemoryItemInfo issueInfo={issueInfo} />
+            <MemoryIssueInfoTable issueInfo={issueInfo} />
+          </Box>
+        )}
       </Grid>
       <Grid md={7} sx={{ pl: '10px' }}>
         <TableContainer component={Paper} sx={{ height: { md: 'calc(100vh - 200px)' } }}>
           <Table size="small">
             <TableHead>
               <TableRow>
-                <TableCell align="right">No.</TableCell>
-                <TableCell align="right">Price</TableCell>
-                <TableCell align="right">UNI</TableCell>
-                <TableCell align="right">KRX</TableCell>
-                <TableCell align="right">NXT</TableCell>
+                <TableCell align="right">{t('item.table.no')}</TableCell>
+                <TableCell align="right">{t('item.table.price')}</TableCell>
+                <TableCell align="right">{t('item.table.uni')}</TableCell>
+                <TableCell align="right">{t('item.table.krx')}</TableCell>
+                <TableCell align="right">{t('item.table.nxt')}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

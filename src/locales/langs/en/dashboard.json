@@ -28,7 +28,9 @@
     "cpu": "CPU",
     "memory": "Memory",
     "inbound": "Inbound",
-    "outbound": "outbound"
+    "outbound": "Outbound",
+    "count": "count",
+    "byte": "byte"
   },
   "disk": {
     "disk": "Disk"

@@ -141,7 +141,9 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
           </Box>
 
           <Box sx={{ p: 2, borderRadius: '8px', backgroundColor: theme.palette.common.white }}>
-            <Typography sx={{ fontSize: 17, fontWeight: 500, color: grey[600] }}>Disk</Typography>
+            <Typography sx={{ fontSize: 17, fontWeight: 500, color: grey[600] }}>
+              {t('left_side.disk')}
+            </Typography>
             <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[900] }}>21%</Typography>
             <Typography sx={{ fontSize: 16, fontWeight: 400, color: grey[400] }}>
               <Box component="span" sx={{ color: grey[500], fontWeight: 500 }}>

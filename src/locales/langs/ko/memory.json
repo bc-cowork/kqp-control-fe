@@ -1,7 +1,7 @@
 {
   "top": {
     "memory": "메모리",
-    "memory_item": "Issue Item"
+    "memory_item": "이슈 항목"
   },
   "left_side": {
     "issues": "종목 수",
@@ -24,5 +24,28 @@
     "k_name": "한글 종목명",
     "daily_info": "종목마스터 수신장자",
     "compet": "정쟁매매"
+  },
+  "item": {
+    "table": {
+      "no": "아니요.",
+      "price": "가격",
+      "uni": "UNI",
+      "krx": "KRX",
+      "nxt": "NXT"
+    },
+    "left": {
+      "seq": "순서",
+      "code": "코드",
+      "name": "이름",
+      "g1_ssn_id": "G1.SSN-ID",
+      "compet": "경쟁",
+      "last_price": "최종 가격",
+      "last_vol": "최종 거래량",
+      "vol_accum": "누적 거래량",
+      "amt_accum": "누적 금액",
+      "open": "시가",
+      "high": "고가",
+      "low": "저가"
+    }
   }
 }

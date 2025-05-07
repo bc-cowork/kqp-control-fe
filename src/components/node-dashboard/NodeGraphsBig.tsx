@@ -16,6 +16,7 @@ import { useTranslate } from 'src/locales';
 import { useGetGraphData } from 'src/actions/dashboard';
 
 import { ChartArea } from './chart-area';
+import { getBoundTabs } from '../dashboard/NodeGraphs';
 
 // ----------------------------------------------------------------------
 
@@ -23,19 +24,12 @@ interface Props {
   selectedNodeParam: string;
 }
 
-const CPU_MEMORY_TABS = [{ value: '%', label: '%' }];
-
-const BOUND_TABS = [
-  { value: 'count', label: 'count' },
-  { value: 'byte', label: 'byte' },
-];
-
 export function NodeGraphsBig({ selectedNodeParam }: Props) {
   const { t } = useTranslate('node-dashboard');
   const theme = useTheme();
 
-  const inboundTabs = useTabs(BOUND_TABS[0].value);
-  const outboundTabs = useTabs(BOUND_TABS[0].value);
+  const inboundTabs = useTabs(getBoundTabs(t)[0].value);
+  const outboundTabs = useTabs(getBoundTabs(t)[0].value);
 
   // Fetch graph data
   const { graphData, graphDataLoading } = useGetGraphData(selectedNodeParam, 1);
@@ -86,7 +80,7 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
             data={chartData}
             metric={inboundTabs.value === 'count' ? 'inbound_count' : 'inbound_bytes'}
             height="100%"
-            tabs={BOUND_TABS}
+            tabs={getBoundTabs(t)}
             tabValue={inboundTabs.value}
             onTabChange={inboundTabs.onChange}
             loading={graphDataLoading}
@@ -100,7 +94,7 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
             data={chartData}
             metric={outboundTabs.value === 'count' ? 'outbound_count' : 'outbound_bytes'}
             height="100%"
-            tabs={BOUND_TABS}
+            tabs={getBoundTabs(t)}
             tabValue={outboundTabs.value}
             onTabChange={outboundTabs.onChange}
             loading={graphDataLoading}

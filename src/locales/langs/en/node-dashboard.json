@@ -8,12 +8,15 @@
     "emitable": "EMITABLE",
     "emit_count": "Emit Count",
     "true": "True",
-    "false": "False"
+    "false": "False",
+    "disk": "Disk"
   },
   "graph": {
     "cpu": "CPU",
     "memory": "MEMORY",
     "inbound": "Inbound",
-    "outbound": "Outbound"
+    "outbound": "Outbound",
+    "count": "count",
+    "byte": "byte"
   }
 }

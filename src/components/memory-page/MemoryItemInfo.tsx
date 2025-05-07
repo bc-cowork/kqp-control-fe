@@ -2,6 +2,8 @@
 
 import { Box, Stack, Typography } from '@mui/material';
 
+import { useTranslate } from 'src/locales';
+
 // ----------------------------------------------------------------------
 
 type LabelValueRowProps = {
@@ -27,6 +29,7 @@ type Props = {
 };
 
 export function MemoryItemInfo({ issueInfo }: Props) {
+  const { t } = useTranslate('memory');
   return (
     <Box
       sx={{
@@ -37,18 +40,18 @@ export function MemoryItemInfo({ issueInfo }: Props) {
         pb: 2,
       }}
     >
-      <LabelValueRow label="Seq" value={issueInfo?.seq} />
-      <LabelValueRow label="Code" value={issueInfo.code} />
-      <LabelValueRow label="Name" value={issueInfo.name} />
+      <LabelValueRow label={t('item.left.seq')} value={issueInfo?.seq} />
+      <LabelValueRow label={t('item.left.code')} value={issueInfo.code} />
+      <LabelValueRow label={t('item.left.name')} value={issueInfo.name} />
       <LabelValueRow
-        label="G1.SSN-ID"
+        label={t('item.left.g1_ssn_id')}
         value={
           Array.isArray(issueInfo.g1_ssn_id)
             ? `[${issueInfo.g1_ssn_id.join(' / ')}]`
             : issueInfo.g1_ssn_id
         }
       />
-      <LabelValueRow label="Compet" value={issueInfo.compet} />
+      <LabelValueRow label={t('item.left.compet')} value={issueInfo.compet} />
     </Box>
   );
 }

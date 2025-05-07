@@ -4,6 +4,7 @@ import { styled } from '@mui/material/styles';
 import { Box, Stack, SvgIcon, Typography } from '@mui/material';
 
 import { grey } from 'src/theme/core';
+import { useTranslate } from 'src/locales';
 
 // Styled components for custom styling
 const LabelBox = styled(Box)(({ theme }) => ({
@@ -52,6 +53,7 @@ type Props = {
 };
 
 export function MemoryIssueInfoTable({ issueInfo }: Props) {
+  const { t } = useTranslate('memory');
   const tableData = {
     lastPrice: {
       uni: issueInfo.last_price?.uni?.toLocaleString() || '-',
@@ -101,9 +103,9 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
         sx={{ height: '32px', backgroundColor: grey[400], borderRadius: '8px' }}
       >
         <HeaderBox />
-        <HeaderBox>UNI</HeaderBox>
-        <HeaderBox>KRX</HeaderBox>
-        <HeaderBox>NXT</HeaderBox>
+        <HeaderBox>{t('item.table.uni')}</HeaderBox>
+        <HeaderBox>{t('item.table.krx')}</HeaderBox>
+        <HeaderBox>{t('item.table.nxt')}</HeaderBox>
       </RowStack>
 
       {/* Data Rows */}
@@ -117,7 +119,7 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
             borderTopRightRadius: '8px',
           }}
         >
-          <LabelBox>Last.Price</LabelBox>
+          <LabelBox>{t('item.left.last_price')}</LabelBox>
           <ValueBox>{tableData.lastPrice.uni}</ValueBox>
           <ValueBox>{tableData.lastPrice.krx}</ValueBox>
           <ValueBox>{tableData.lastPrice.nxt}</ValueBox>
@@ -125,7 +127,7 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
 
         {/* Last.Vol Row */}
         <RowStack direction="row" sx={{ backgroundColor: tableFill2 }}>
-          <LabelBox>Last.Vol</LabelBox>
+          <LabelBox>{t('item.left.last_vol')}</LabelBox>
           <ValueBox>{tableData.lastVol.uni}</ValueBox>
           <ValueBox>{tableData.lastVol.krx}</ValueBox>
           <ValueBox>{tableData.lastVol.nxt}</ValueBox>
@@ -133,7 +135,7 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
 
         {/* Vol.Accum Row */}
         <RowStack direction="row" sx={{ backgroundColor: tableFill1 }}>
-          <LabelBox>Vol.Accum</LabelBox>
+          <LabelBox>{t('item.left.vol_accum')}</LabelBox>
           <ValueBox>{tableData.volAccum.uni}</ValueBox>
           <ValueBox>{tableData.volAccum.krx}</ValueBox>
           <ValueBox>{tableData.volAccum.nxt}</ValueBox>
@@ -141,7 +143,7 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
 
         {/* Amt.Accum Row */}
         <RowStack direction="row" sx={{ backgroundColor: tableFill2 }}>
-          <LabelBox>Amt.Accum</LabelBox>
+          <LabelBox>{t('item.left.amt_accum')}</LabelBox>
           <ValueBox>{tableData.amtAccum.uni}</ValueBox>
           <ValueBox>{tableData.amtAccum.krx}</ValueBox>
           <ValueBox>{tableData.amtAccum.nxt}</ValueBox>
@@ -166,7 +168,7 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
                 </svg>
               </SvgIcon>
               <Typography variant="body2" sx={{ color: (theme) => theme.palette.grey[400] }}>
-                Open
+                {t('item.left.open')}
               </Typography>
             </Box>
           </LabelBox>
@@ -197,7 +199,7 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
                 </svg>
               </SvgIcon>
               <Typography variant="body2" sx={{ color: (theme) => theme.palette.grey[400] }}>
-                High
+                {t('item.left.high')}
               </Typography>
             </Box>
           </LabelBox>
@@ -235,7 +237,7 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
                 </svg>
               </SvgIcon>
               <Typography variant="body2" sx={{ color: (theme) => theme.palette.grey[400] }}>
-                Low
+                {t('item.left.low')}
               </Typography>
             </Box>
           </LabelBox>

@@ -2,6 +2,7 @@
 
 'use client';
 
+import type { TFunction } from 'i18next';
 import type { ChartDataPoint } from 'src/types/dashboard';
 
 import Box from '@mui/material/Box';
@@ -27,9 +28,9 @@ interface Props {
 
 const CPU_MEMORY_TABS = [{ value: '%', label: '%' }];
 
-const BOUND_TABS = [
-  { value: 'count', label: 'count' },
-  { value: 'byte', label: 'byte' },
+export const getBoundTabs = (t: TFunction) => [
+  { value: 'count', label: t('graph.count') },
+  { value: 'byte', label: t('graph.byte') },
 ];
 
 export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props) {
@@ -38,8 +39,8 @@ export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props
 
   const cpuTabs = useTabs(CPU_MEMORY_TABS[0].value);
   const memoryTabs = useTabs(CPU_MEMORY_TABS[0].value);
-  const inboundTabs = useTabs(BOUND_TABS[0].value);
-  const outboundTabs = useTabs(BOUND_TABS[0].value);
+  const inboundTabs = useTabs(getBoundTabs(t)[0].value);
+  const outboundTabs = useTabs(getBoundTabs(t)[0].value);
 
   // Fetch graph data
   const { graphData, graphDataLoading } = useGetGraphData(selectedNodeParam, refreshKey);
@@ -102,7 +103,7 @@ export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props
             data={chartData}
             metric={inboundTabs.value === 'count' ? 'inbound_count' : 'inbound_bytes'}
             height="100%"
-            tabs={BOUND_TABS}
+            tabs={getBoundTabs(t)}
             tabValue={inboundTabs.value}
             onTabChange={inboundTabs.onChange}
             layout={selectedTab}
@@ -119,7 +120,7 @@ export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props
             data={chartData}
             metric={outboundTabs.value === 'count' ? 'outbound_count' : 'outbound_bytes'}
             height="100%"
-            tabs={BOUND_TABS}
+            tabs={getBoundTabs(t)}
             tabValue={outboundTabs.value}
             onTabChange={outboundTabs.onChange}
             layout={selectedTab}

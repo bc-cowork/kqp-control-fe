@@ -16,7 +16,7 @@
     "no": "송출 안 됨"
   },
   "info": {
-    "info": "Info",
+    "info": "정보",
     "online": "기동 중",
     "offline": "중지됨",
     "emittable": "송출 상태",
@@ -28,7 +28,9 @@
     "cpu": "프로세서 사용률",
     "memory": "메모리 사용률",
     "inbound": "수신",
-    "outbound": "송출"
+    "outbound": "송출",
+    "count": "카운트",
+    "byte": "바이트"
   },
   "disk": {
     "disk": "디스크 사용률"

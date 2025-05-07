@@ -24,5 +24,28 @@
     "k_name": "K.Name",
     "daily_info": "Daily INFO",
     "compet": "Compet"
+  },
+  "item": {
+    "table": {
+      "no": "No.",
+      "price": "Price",
+      "uni": "UNI",
+      "krx": "KRX",
+      "nxt": "NXT"
+    },
+    "left": {
+      "seq": "Seq",
+      "code": "Code",
+      "name": "Name",
+      "g1_ssn_id": "G1.SSN-ID",
+      "compet": "Compet",
+      "last_price": "Last.Price",
+      "last_vol": "Last.Vol",
+      "vol_accum": "Vol.Accum",
+      "amt_accum": "Amt.Accum",
+      "open": "Open",
+      "high": "High",
+      "low": "Low"
+    }
   }
 }
