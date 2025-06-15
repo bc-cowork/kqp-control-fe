@@ -4,6 +4,7 @@ import type { IChannelItem } from 'src/types/node';
 
 import { Table, TableRow, TableBody, TableCell, TableHead, CircularProgress } from '@mui/material';
 
+import { useTranslate } from 'src/locales';
 import { useGetChannelList } from 'src/actions/nodes';
 
 // ----------------------------------------------------------------------
@@ -13,6 +14,7 @@ type Props = {
 };
 
 export function ChannelOutbound({ selectedNodeId }: Props) {
+  const { t } = useTranslate('channels');
   const { channels, channelsLoading, channelsEmpty, channelsError } = useGetChannelList(
     selectedNodeId,
     'outbound'
@@ -22,15 +24,15 @@ export function ChannelOutbound({ selectedNodeId }: Props) {
     <Table size="small">
       <TableHead>
         <TableRow>
-          <TableCell align="right">ID</TableCell>
-          <TableCell>NAME</TableCell>
-          <TableCell>Topic</TableCell>
-          <TableCell>TYPE</TableCell>
-          <TableCell>UTYPE</TableCell>
-          <TableCell align="right">PORT</TableCell>
-          <TableCell align="right">IP</TableCell>
-          <TableCell align="right">NIC</TableCell>
-          <TableCell align="right">Count</TableCell>
+          <TableCell align="right">{t('table.id')}</TableCell>
+          <TableCell>{t('table.name')}</TableCell>
+          <TableCell>{t('table.topic')}</TableCell>
+          <TableCell>{t('table.type')}</TableCell>
+          <TableCell>{t('table.u_type')}</TableCell>
+          <TableCell align="right">{t('table.port')}</TableCell>
+          <TableCell align="right">{t('table.ip')}</TableCell>
+          <TableCell align="right">{t('table.nic')}</TableCell>
+          <TableCell align="right">{t('table.count')}</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>

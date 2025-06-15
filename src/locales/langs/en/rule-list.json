@@ -1,0 +1,14 @@
+{
+  "top": {
+    "title": "Rule List"
+  },
+  "table_header": {
+    "pid": "PID",
+    "name": "NAME",
+    "param": "PARAM",
+    "cpu": "CPU",
+    "mem": "MEM",
+    "ppid": "PPID",
+    "command": "COMMAND"
+  }
+}

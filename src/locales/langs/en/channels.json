@@ -1,0 +1,13 @@
+{
+  "table": {
+    "id": "ID",
+    "name": "NAME",
+    "topic": "Topic",
+    "type": "TYPE",
+    "u_type": "UTYPE",
+    "port": "PORT",
+    "ip": "IP",
+    "nic": "NIC",
+    "count": "Count"
+  }
+}

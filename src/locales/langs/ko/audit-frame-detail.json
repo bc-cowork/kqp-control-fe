@@ -24,7 +24,7 @@
     "filename": "파일이름",
     "audit_log_list": "증적 로그 목록",
     "desc": "설명",
-    "max_frame_seq": "가장 큰 프레일 번호",
+    "max_frame_seq": "가장 큰 프레임 번호",
     "file_size": "파일 크기",
     "date": "날짜"
   },

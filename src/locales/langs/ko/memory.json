@@ -5,7 +5,7 @@
   },
   "left_side": {
     "issues": "종목 수",
-    "compet": "정쟁 종목 수"
+    "compet": "경쟁 종목 수"
   },
   "graph": {
     "memory": "메모리 사용률"
@@ -20,10 +20,10 @@
   "table": {
     "rows_per_page": "페이지당 종목 수",
     "seq": "번호",
-    "code": "종목 코드",
-    "k_name": "한글 종목명",
-    "daily_info": "종목마스터 수신장자",
-    "compet": "정쟁매매"
+    "code": "종목코드",
+    "k_name": "한글명",
+    "daily_info": "일일정보",
+    "compet": "경쟁일자"
   },
   "item": {
     "table": {

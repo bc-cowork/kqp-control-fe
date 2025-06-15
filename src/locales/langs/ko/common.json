@@ -6,7 +6,7 @@
     "go_to_page": "페이지 이동"
   },
   "table": {
-    "rows_per_page": "페이지당 로레일 수",
+    "rows_per_page": "페이지당 항목 수",
     "go_to_page": "이동할 페이지"
   }
 }

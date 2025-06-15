@@ -15,6 +15,7 @@ import {
 
 import { useRouter } from 'src/routes/hooks';
 
+import { useTranslate } from 'src/locales';
 import { useGetProcesses } from 'src/actions/dashboard';
 
 // ----------------------------------------------------------------------
@@ -24,6 +25,7 @@ type Props = {
 };
 
 export function RuleList({ selectedNodeId }: Props) {
+  const { t } = useTranslate('rule-list');
   const router = useRouter();
   const { processes, processLoading, processesEmpty, processError } = useGetProcesses(
     selectedNodeId
@@ -39,13 +41,13 @@ export function RuleList({ selectedNodeId }: Props) {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell align="right">PID</TableCell>
-            <TableCell>NAME</TableCell>
-            <TableCell>PARAM</TableCell>
-            <TableCell align="right">CPU</TableCell>
-            <TableCell align="right">MEM</TableCell>
-            <TableCell align="right">PPID</TableCell>
-            <TableCell>COMMAND</TableCell>
+            <TableCell align="right">{t('table_header.pid')}</TableCell>
+            <TableCell>{t('table_header.name')}</TableCell>
+            <TableCell>{t('table_header.param')}</TableCell>
+            <TableCell align="right">{t('table_header.cpu')}</TableCell>
+            <TableCell align="right">{t('table_header.mem')}</TableCell>
+            <TableCell align="right">{t('table_header.ppid')}</TableCell>
+            <TableCell>{t('table_header.command')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

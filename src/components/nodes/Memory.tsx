@@ -243,11 +243,11 @@ export function Memory({ selectedNodeId }: Props) {
             <Table size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell align="right">SEQ</TableCell>
-                  <TableCell>CODE</TableCell>
-                  <TableCell>K. Name</TableCell>
-                  <TableCell>Daily Info</TableCell>
-                  <TableCell align="right">Compet</TableCell>
+                  <TableCell align="right">{t('table.seq')}</TableCell>
+                  <TableCell>{t('table.code')}</TableCell>
+                  <TableCell>{t('table.k_name')}</TableCell>
+                  <TableCell>{t('table.daily_info')}</TableCell>
+                  <TableCell align="right">{t('table.compet')}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
