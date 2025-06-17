@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 
 import { grey } from 'src/theme/core';
+import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
 
 import { RuleList } from 'src/components/nodes/RuleList';
@@ -16,11 +17,12 @@ type Props = {
 };
 
 export function RuleListView({ nodeId }: Props) {
+  const { t } = useTranslate('rule-list');
   return (
     <DashboardContent maxWidth="xl">
-      <Breadcrumb node={nodeId} pages={[{ pageName: 'Rule List' }]} />
+      <Breadcrumb node={nodeId} pages={[{ pageName: t('top.title') }]} />
       <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[600], mt: 2 }}>
-        Rule List
+        {t('top.title')}
       </Typography>
       <Box
         sx={{

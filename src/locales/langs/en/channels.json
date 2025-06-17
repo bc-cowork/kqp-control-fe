@@ -1,4 +1,8 @@
 {
+  "title": {
+    "inbound": "Channels Inbound",
+    "outbound": "Channels Outbound"
+  },
   "table": {
     "id": "ID",
     "name": "NAME",

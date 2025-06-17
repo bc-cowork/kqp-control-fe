@@ -1,4 +1,8 @@
 {
+  "title": {
+    "inbound": "채널 입수",
+    "outbound": "채널 송출"
+  },
   "table": {
     "id": "식별자",
     "name": "이름",
