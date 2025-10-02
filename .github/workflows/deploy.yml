@@ -47,8 +47,8 @@ jobs:
           ssh -i deploy_key -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_SERVER "
             cd $DEPLOY_PATH &&
             yarn install --production &&
-            (pm2 describe next-app || pm2 start npm --name "kqp-control-fe" -- start) &&
-            pm2 restart next-app
+            (pm2 describe kqp-control-fe || pm2 start npm --name "kqp-control-fe" -- start) &&
+            pm2 restart kqp-control-fe
           "
 
       - name: Cleanup
