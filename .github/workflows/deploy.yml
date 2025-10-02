@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install Yarn
         run: npm install -g yarn
@@ -44,8 +44,12 @@ jobs:
           rsync -avz --delete -e "ssh -i deploy_key -o StrictHostKeyChecking=no" \
             .next package.json yarn.lock public \
             $DEPLOY_USER@$DEPLOY_SERVER:$DEPLOY_PATH/
-          ssh -i deploy_key -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_SERVER \
-            "cd $DEPLOY_PATH && yarn install --production && pm2 restart all"
+          ssh -i deploy_key -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_SERVER "
+            cd $DEPLOY_PATH &&
+            yarn install --production &&
+            (pm2 describe next-app || pm2 start npm --name "kqp-control-fe" -- start) &&
+            pm2 restart next-app
+          "
 
       - name: Cleanup
         if: always()
