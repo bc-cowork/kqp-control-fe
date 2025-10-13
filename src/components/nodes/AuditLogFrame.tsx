@@ -192,8 +192,8 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
       setCount(undefined);
       setSide(undefined);
       setCond(undefined);
-      resetCache();
     }
+    resetCache();
   }, [filters]);
 
   const handleSearch = (filter: any) => {
