@@ -2,7 +2,7 @@
 
 import type { AuditLogFrameFragItem } from 'src/types/node';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 
 import Grid from '@mui/material/Unstable_Grid2';
 import {
@@ -152,7 +152,14 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
     setDialogMessage('');
   };
 
+  const didMountRef = useRef(false);
+
   useEffect(() => {
+    if (!didMountRef.current) {
+      didMountRef.current = true;
+      return;
+    }
+
     if (filters) {
       const filterSeq = Array.isArray(filters)
         ? filters.find((filter: { seq: any }) => filter.seq)?.seq
@@ -182,8 +189,8 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
         setCond(undefined);
       }
     } else {
-      setCount(10000);
-      setSide('next');
+      setCount(undefined);
+      setSide(undefined);
       setCond(undefined);
       resetCache();
     }
