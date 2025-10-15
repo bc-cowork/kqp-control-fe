@@ -3,8 +3,9 @@ name: Build and Deploy Next.js
 on:
   push:
     branches: [main]
+    # prevent a tar-only commit from retriggering the workflow
     paths-ignore:
-      - "kqp-control-fe-offline.tar.gz" # prevent tar-only commits from retriggering
+      - "kqp-control-fe-offline-npm.tar.gz"
 
 permissions:
   contents: write
@@ -18,21 +19,34 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # ... your existing steps (truncated here) ...
-      # - name: Install dependencies
-      #   run: yarn install --frozen-lockfile
-      # - name: Build Next.js app
-      #   run: yarn build
-      # - name: Deploy to server
-      #   run: |
-      #     # your rsync/pm2 commands etc.
+      - name: Set up Node 20.12.2
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.12.2"
+          cache: "npm"
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies (npm)
+        run: npm ci
+
+      - name: Build Next.js app (npm)
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+        run: |
+          npx --yes next telemetry disable || true
+          npm run build
+
+      # --- your existing deploy-to-server steps here (ssh/rsync/pm2) ---
+      # For npm-only remote install, replace yarn with:
+      #   npm ci --omit=dev --no-audit --no-fund
+      # and rsync package-lock.json instead of yarn.lock
 
       - name: Cleanup
         if: always()
         run: rm -f deploy_key
 
   package_offline:
-    name: Package Offline Bundle
+    name: Package Offline Bundle (npm)
     needs: build-and-deploy
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
@@ -47,56 +61,41 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20.12.2"
-          cache: "yarn"
-          cache-dependency-path: yarn.lock
+          cache: "npm"
+          cache-dependency-path: package-lock.json
 
-      - name: Enable corepack & pin Yarn (optional)
-        run: |
-          corepack enable
-          corepack prepare yarn@stable --activate
-          yarn -v
+      - name: Prepare repo-local npm cache
+        run: mkdir -p .offline-cache/npm
 
-      - name: Prepare repo-local Yarn cache
-        run: |
-          set -euo pipefail
-          mkdir -p .offline-cache/yarn
-          echo "Using Yarn cache at: $(realpath .offline-cache/yarn)"
-
-      - name: Install deps (populate local cache) & build
+      - name: Install deps into local cache & build (npm)
         env:
-          YARN_CACHE_FOLDER: ${{ github.workspace }}/.offline-cache/yarn
+          npm_config_cache: ${{ github.workspace }}/.offline-cache/npm
+          NEXT_TELEMETRY_DISABLED: "1"
         run: |
-          set -euo pipefail
-          yarn install --frozen-lockfile
-          yarn build
-          # Optional sanity check
+          # If you need legacy peer behavior, swap the next line for:
+          # npm install --legacy-peer-deps
+          npm ci
+          npx --yes next telemetry disable || true
+          npm run build
           test -d .next || (echo ".next not found after build" && exit 1)
 
-      - name: Make offline tarball (repo + yarn cache)
+      - name: Create offline tarball (repo + npm cache)
         run: |
-          set -euo pipefail
-          TAR="kqp-control-fe-offline.tar.gz"
+          TAR="kqp-control-fe-offline-npm.tar.gz"
           echo "Creating $TAR ..."
-          # include everything needed for offline use:
-          #  - the full repo (without .git)
-          #  - the populated Yarn cache
-          tar \
-            --exclude-vcs \
-            -czf "$TAR" \
-            . .offline-cache
+          tar --exclude-vcs -czf "$TAR" . .offline-cache
           ls -lh "$TAR"
 
-      - name: Commit tarball back to repo
+      - name: Commit tarball back to main
         env:
           GIT_AUTHOR_NAME: ci-bot
           GIT_AUTHOR_EMAIL: ci-bot@users.noreply.github.com
           GIT_COMMITTER_NAME: ci-bot
           GIT_COMMITTER_EMAIL: ci-bot@users.noreply.github.com
         run: |
-          set -euo pipefail
-          TAR="kqp-control-fe-offline.tar.gz"
+          TAR="kqp-control-fe-offline-npm.tar.gz"
           git add "$TAR"
-          git commit -m "chore: add offline bundle $(date -u +'%Y-%m-%dT%H:%M:%SZ') [skip ci]" || {
+          git commit -m "chore: add npm offline bundle $(date -u +'%Y-%m-%dT%H:%M:%SZ') [skip ci]" || {
             echo "Nothing to commit (tar unchanged)."
             exit 0
           }
@@ -105,6 +104,6 @@ jobs:
       - name: Upload offline package artifact (optional)
         uses: actions/upload-artifact@v4
         with:
-          name: kqp-control-fe-offline
-          path: kqp-control-fe-offline.tar.gz
+          name: kqp-control-fe-offline-npm
+          path: kqp-control-fe-offline-npm.tar.gz
           if-no-files-found: error
