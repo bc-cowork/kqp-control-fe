@@ -203,8 +203,8 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
 
     if (removed.length) {
       if (removed.includes('cond')) setCond(undefined);
-      if (removed.includes('count')) setCount(undefined);
-      if (removed.includes('side')) setSide(undefined);
+      if (removed.includes('count')) setCount(10000);
+      if (removed.includes('side')) setSide('next');
       resetCache();
     }
 
