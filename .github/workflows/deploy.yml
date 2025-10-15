@@ -20,7 +20,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20.12.2"
-          # (Intentionally not enabling 'cache' to avoid path resolution errors)
+
+      # Create .env so build picks it up
+      - name: Create .env for build
+        run: |
+          set -euo pipefail
+          printf "NEXT_PUBLIC_SERVER_URL=http://141.164.63.141\n" > .env
+          echo "Wrote .env:"
+          cat .env
 
       # --- Build with npm (your request) ---
       - name: Install deps (npm, legacy peer deps)
@@ -34,7 +41,7 @@ jobs:
           npm run build
           test -d .next || (echo ".next not found after build" && exit 1)
 
-      # --- KEEP DEPLOYMENT AS-IS (your snippet) ---
+      # --- KEEP DEPLOYMENT AS-IS, but also send .env ---
       - name: Deploy to server
         env:
           DEPLOY_SERVER: ${{ secrets.DEPLOY_SERVER }}
@@ -46,9 +53,9 @@ jobs:
           echo "$DEPLOY_KEY" > deploy_key
           chmod 600 deploy_key
 
-          # Copy .next folder, package.json, package-lock.json, and public folder
+          # Copy .next, package.json, package-lock.json, public, and .env
           rsync -avz --delete -e "ssh -i deploy_key -o StrictHostKeyChecking=no" \
-            .next package.json package-lock.json public \
+            .next package.json package-lock.json public .env \
             "$DEPLOY_USER@$DEPLOY_SERVER:$DEPLOY_PATH/"
 
           ssh -i deploy_key -o StrictHostKeyChecking=no "$DEPLOY_USER@$DEPLOY_SERVER" "
@@ -79,6 +86,14 @@ jobs:
 
       - name: Prepare repo-local npm cache
         run: mkdir -p .offline-cache/npm
+
+      # Create .env so it's included in the offline bundle
+      - name: Create .env for offline package
+        run: |
+          set -euo pipefail
+          printf "NEXT_PUBLIC_SERVER_URL=http://141.164.63.141\n" > .env
+          echo "Wrote .env for packaging:"
+          cat .env
 
       - name: Install deps into local cache & (re)build
         env:
