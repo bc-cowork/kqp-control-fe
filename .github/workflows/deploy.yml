@@ -1,32 +1,29 @@
-name: Build and Deploy Next.js
+name: Build & Deploy + Package Offline (to S3)
 
 on:
   push:
     branches: [main]
-    # If you later re-enable "commit tar" behavior, keep the ignore here.
-    paths-ignore:
-      - "kqp-control-fe-offline-npm.tar.gz"
 
 permissions:
   contents: read
+  id-token: write # needed for AWS OIDC
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    env:
-      NEXT_PUBLIC_SERVER_URL: ${{ secrets.NEXT_PUBLIC_SERVER_URL }}
+
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Set up Node 20.12.2
         uses: actions/setup-node@v4
         with:
           node-version: "20.12.2"
-          cache: "npm"
-          cache-dependency-path: package-lock.json
+          # (Intentionally not enabling 'cache' to avoid path resolution errors)
 
-      - name: Install dependencies (npm, legacy peer deps)
+      # --- Build with npm (your request) ---
+      - name: Install deps (npm, legacy peer deps)
         run: npm install --legacy-peer-deps
 
       - name: Build Next.js app
@@ -37,28 +34,28 @@ jobs:
           npm run build
           test -d .next || (echo ".next not found after build" && exit 1)
 
-      - name: Deploy to server (rsync + pm2, npm on server)
+      # --- KEEP DEPLOYMENT AS-IS (your snippet) ---
+      - name: Deploy to server
         env:
           DEPLOY_SERVER: ${{ secrets.DEPLOY_SERVER }}
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }} # private key contents
-          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }} # e.g. /var/www/kqp-control-fe
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
           set -euo pipefail
           echo "$DEPLOY_KEY" > deploy_key
           chmod 600 deploy_key
 
-          # Sync only what the server needs to run: build output + runtime files
+          # Copy .next folder, package.json, yarn.lock, and public folder
           rsync -avz --delete -e "ssh -i deploy_key -o StrictHostKeyChecking=no" \
-            .next package.json package-lock.json public \
+            .next package.json yarn.lock public \
             "$DEPLOY_USER@$DEPLOY_SERVER:$DEPLOY_PATH/"
 
-          # On the server: install production deps (legacy peers), start/restart with pm2
           ssh -i deploy_key -o StrictHostKeyChecking=no "$DEPLOY_USER@$DEPLOY_SERVER" "
             set -e
-            cd '$DEPLOY_PATH'
-            npm install --omit=dev --no-audit --no-fund --legacy-peer-deps
-            (pm2 describe kqp-control-fe >/dev/null 2>&1 || pm2 start npm --name 'kqp-control-fe' -- start)
+            cd '$DEPLOY_PATH' &&
+            yarn install --production &&
+            (pm2 describe kqp-control-fe || pm2 start npm --name 'kqp-control-fe' -- start) &&
             pm2 restart kqp-control-fe
           "
 
@@ -67,21 +64,18 @@ jobs:
         run: rm -f deploy_key
 
   package_offline:
-    name: Package Offline Bundle (npm) and Upload to Server
+    name: Package Offline Tar (npm) → S3
     needs: build-and-deploy
-    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout (full history not required)
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Set up Node 20.12.2
         uses: actions/setup-node@v4
         with:
           node-version: "20.12.2"
-          cache: "npm"
-          cache-dependency-path: package-lock.json
 
       - name: Prepare repo-local npm cache
         run: mkdir -p .offline-cache/npm
@@ -97,7 +91,7 @@ jobs:
           npm run build
           test -d .next || (echo ".next not found after build" && exit 1)
 
-      # Create a stable snapshot to avoid 'file changed as we read it'
+      # Create a stable snapshot to avoid "file changed as we read it"
       - name: Stage a clean snapshot for tar
         run: |
           set -euo pipefail
@@ -115,7 +109,7 @@ jobs:
           mkdir -p .offline-stage/.offline-cache
           rsync -a .offline-cache/npm .offline-stage/.offline-cache/
 
-      - name: Create offline tarball (snapshot + npm cache)
+      - name: Create offline tarball
         run: |
           set -euo pipefail
           TAR="kqp-control-fe-offline-npm.tar.gz"
@@ -123,37 +117,57 @@ jobs:
           tar -C .offline-stage -czf "$TAR" .
           ls -lh "$TAR"
 
-      - name: Upload tarball as workflow artifact
+      # Optional: keep a copy attached to the workflow for quick download
+      - name: Upload tar as workflow artifact (optional)
         uses: actions/upload-artifact@v4
         with:
           name: kqp-control-fe-offline-npm
           path: kqp-control-fe-offline-npm.tar.gz
           if-no-files-found: error
 
-      - name: Upload tarball to deployment server
+      # --- Upload tar to S3 using your OIDC role + bucket ---
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Upload offline tarball to S3 (versioned + latest)
         env:
-          DEPLOY_SERVER: ${{ secrets.DEPLOY_SERVER }}
-          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }} # same private key
-          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+          BUCKET: ${{ secrets.S3_BUCKET }}
         run: |
           set -euo pipefail
-          echo "$DEPLOY_KEY" > deploy_key
-          chmod 600 deploy_key
-
           TAR="kqp-control-fe-offline-npm.tar.gz"
           DATE="$(date -u +'%Y-%m-%dT%H-%M-%SZ')"
           SHA="${GITHUB_SHA::7}"
-          REMOTE_DIR="$DEPLOY_PATH/offline/${DATE}-${SHA}"
+          PREFIX="kqp-control-fe"   # adjust if you prefer a different prefix
 
-          ssh -i deploy_key -o StrictHostKeyChecking=no "$DEPLOY_USER@$DEPLOY_SERVER" "mkdir -p '$REMOTE_DIR' '$DEPLOY_PATH/offline/latest'"
-          scp -i deploy_key -o StrictHostKeyChecking=no "$TAR" "$DEPLOY_USER@$DEPLOY_SERVER:$REMOTE_DIR/"
+          KEY="${PREFIX}/${DATE}/${SHA}/${TAR}"
+          LATEST_KEY="${PREFIX}/latest/${TAR}"
 
-          # Point a stable symlink to the newest tar for convenience
-          ssh -i deploy_key -o StrictHostKeyChecking=no "$DEPLOY_USER@$DEPLOY_SERVER" "
-            ln -sfn '$REMOTE_DIR/$TAR' '$DEPLOY_PATH/offline/latest/kqp-control-fe-offline-npm.tar.gz'
-          "
+          # Server-side encryption with S3-managed keys
+          ENC_ARGS="--sse AES256"
 
-      - name: Cleanup key
-        if: always()
-        run: rm -f deploy_key
+          echo "Uploading to s3://${BUCKET}/${KEY}"
+          aws s3 cp "$TAR" "s3://${BUCKET}/${KEY}" --only-show-errors $ENC_ARGS --content-type application/gzip
+
+          echo "Updating 'latest'"
+          aws s3 cp "$TAR" "s3://${BUCKET}/${LATEST_KEY}" --only-show-errors $ENC_ARGS --content-type application/gzip
+
+      - name: Output S3 locations + presigned URL (7 days) for latest
+        env:
+          BUCKET: ${{ secrets.S3_BUCKET }}
+        run: |
+          TAR="kqp-control-fe-offline-npm.tar.gz"
+          DATE="$(date -u +'%Y-%m-%dT%H-%M-%SZ')"
+          SHA="${GITHUB_SHA::7}"
+          PREFIX="kqp-control-fe"
+          KEY="${PREFIX}/${DATE}/${SHA}/${TAR}"
+          LATEST_KEY="${PREFIX}/latest/${TAR}"
+
+          echo "Stored:"
+          echo "  s3://${BUCKET}/${KEY}"
+          echo "  s3://${BUCKET}/${LATEST_KEY}"
+
+          echo "Presigned (7 days):"
+          aws s3 presign "s3://${BUCKET}/${LATEST_KEY}" --expires-in 604800
