@@ -1,56 +1,129 @@
-name: Build and Deploy Next.js to RHEL 8
+name: CI / Deploy / Package Offline
 
 on:
   push:
     branches: [main]
+    # Prevent infinite loops when we commit only the tarball
+    paths-ignore:
+      - "kuanta-offline-install-built.tar.gz"
+
+permissions:
+  contents: write # needed to push the tarball commit
+  actions: read
+  checks: read
 
 jobs:
-  build-and-deploy:
+  # --- Keep/rename this to your current deploy job name and steps ---
+  deploy:
+    name: Build & Deploy
     runs-on: ubuntu-latest
-    env:
-      NEXT_PUBLIC_SERVER_URL: ${{ secrets.NEXT_PUBLIC_SERVER_URL }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # If your deploy already sets up Node, keeps caches, etc., keep those steps.
+      # Otherwise, add your actual deploy steps here (e.g., build, docker, vercel, etc.)
+      # - name: Your deploy step
+      #   run: |
+      #     echo "Deploying..."
+
+  package_offline:
+    name: Package Offline Bundle
+    needs: deploy
+    # Avoid recursion if a workflow-run authored by the bot ever triggers
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Checkout (full history for committing back)
+        uses: actions/checkout@v4
         with:
-          node-version: "20"
+          fetch-depth: 0
 
-      - name: Install Yarn
-        run: npm install -g yarn
+      - name: Set up Node 20.12.2 (match VM script)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.12.2"
+          # This speeds up normal npm installs; we also write a repo-local cache for offline use
+          cache: "npm"
+          cache-dependency-path: |
+            kuanta-offline-install/kqp-control-fe/package-lock.json
+            kuanta-offline-install/kqp-control-fe/npm-shrinkwrap.json
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Build Next.js app
-        run: yarn build
-
-      - name: Verify build output
-        run: ls -la .next || echo ".next folder not found"
-
-      - name: Deploy to server
-        env:
-          DEPLOY_SERVER: ${{ secrets.DEPLOY_SERVER }}
-          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+      - name: Prepare npm offline cache path
         run: |
-          echo "$DEPLOY_KEY" > deploy_key
-          chmod 600 deploy_key
-          # Copy .next folder, package.json, yarn.lock, and public folder
-          rsync -avz --delete -e "ssh -i deploy_key -o StrictHostKeyChecking=no" \
-            .next package.json yarn.lock public \
-            $DEPLOY_USER@$DEPLOY_SERVER:$DEPLOY_PATH/
-          ssh -i deploy_key -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_SERVER "
-            cd $DEPLOY_PATH &&
-            yarn install --production &&
-            (pm2 describe kqp-control-fe || pm2 start npm --name "kqp-control-fe" -- start) &&
-            pm2 restart kqp-control-fe
-          "
+          set -euo pipefail
+          echo "Creating repo-local npm cache at kuanta-offline-install/npm-cache"
+          mkdir -p kuanta-offline-install/npm-cache
 
-      - name: Cleanup
-        if: always()
-        run: rm -f deploy_key
+      - name: Install deps (populate local cache) & build
+        working-directory: kuanta-offline-install/kqp-control-fe
+        env:
+          # Point npm at our repo-local cache so it’s included in the tarball
+          npm_config_cache: ${{ github.workspace }}/kuanta-offline-install/npm-cache
+        run: |
+          set -euo pipefail
+
+          if [ -f yarn.lock ]; then
+            echo "Removing yarn.lock to switch to npm..."
+            rm -f yarn.lock
+          fi
+
+          echo "npm version: $(npm --version)"
+
+          # Equivalent to `npm install --legacy-peer-deps`
+          # If you use package-lock, prefer `npm ci --legacy-peer-deps`
+          if [ -f package-lock.json ]; then
+            npm ci --legacy-peer-deps
+          else
+            npm install --legacy-peer-deps
+          fi
+
+          # Quick sanity check similar to your script
+          test -f node_modules/next/dist/server/require-hook.js || (echo "Next.js module not found" && exit 1)
+
+          echo "Building Next app..."
+          npm run build
+
+          echo "Disabling Next telemetry..."
+          npx --yes next telemetry disable || true
+
+      - name: Create offline tarball
+        run: |
+          set -euo pipefail
+          # Two dirs up from kqp-control-fe, just like your script
+          # Tar the entire kuanta-offline-install directory (includes npm-cache + source + .next)
+          TAR_NAME="kuanta-offline-install-built.tar.gz"
+          echo "Creating $TAR_NAME ..."
+          tar -czf "$TAR_NAME" kuanta-offline-install
+          ls -lh "$TAR_NAME"
+
+      - name: Commit tarball back to repo
+        env:
+          GIT_AUTHOR_NAME: ci-bot
+          GIT_AUTHOR_EMAIL: ci-bot@users.noreply.github.com
+          GIT_COMMITTER_NAME: ci-bot
+          GIT_COMMITTER_EMAIL: ci-bot@users.noreply.github.com
+        run: |
+          set -euo pipefail
+          TAR="kuanta-offline-install-built.tar.gz"
+          if [ -f "$TAR" ]; then
+            git add "$TAR"
+            # Use [skip ci] so *other* CI providers won’t run; GitHub filter above already ignores tar-only pushes
+            git commit -m "chore: offline package $(date -u +'%Y-%m-%dT%H:%M:%SZ') [skip ci]" || {
+              echo "Nothing to commit (tar unchanged)."
+              exit 0
+            }
+            git push origin HEAD:main
+          else
+            echo "Tarball not found"
+            exit 1
+          fi
+
+      # (Optional) Also publish as a workflow artifact for easy download from the Actions UI
+      - name: Upload offline package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kuanta-offline-install-built
+          path: kuanta-offline-install-built.tar.gz
+          if-no-files-found: error
