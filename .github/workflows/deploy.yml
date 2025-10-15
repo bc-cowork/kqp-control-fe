@@ -51,6 +51,20 @@ jobs:
             pm2 restart kqp-control-fe
           "
 
+      - name: Package offline bundle
+        run: |
+          chmod +x scripts/package-offline.sh
+          scripts/package-offline.sh
+
+      - name: Upload offline package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kqp-control-fe-offline-${{ github.run_id }}
+          path: |
+            artifacts/kqp-control-fe-offline-*.tar.gz
+            artifacts/kqp-control-fe-offline-*.tar.gz.sha256
+          if-no-files-found: error
+
       - name: Cleanup
         if: always()
         run: rm -f deploy_key

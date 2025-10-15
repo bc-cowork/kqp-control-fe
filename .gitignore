@@ -20,6 +20,7 @@ _static
 out
 dist
 build
+artifacts
 
 # environment variables
 .env
