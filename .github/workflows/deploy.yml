@@ -79,11 +79,27 @@ jobs:
           npm run build
           test -d .next || (echo ".next not found after build" && exit 1)
 
-      - name: Create offline tarball (repo + npm cache)
+      - name: Stage a clean snapshot for tar
         run: |
+          set -euo pipefail
+          rm -rf .offline-stage
+          mkdir -p .offline-stage
+          # Copy repo into a stable folder; include build output and offline cache,
+          # exclude things we don't need or that can mutate.
+          rsync -a --delete \
+            --exclude ".git" \
+            --exclude ".github" \
+            --exclude ".offline-stage" \
+            --exclude "*.tar.gz" \
+            --exclude "node_modules" \
+            ./ .offline-stage/
+
+      - name: Create offline tarball (snapshot + npm cache)
+        run: |
+          set -euo pipefail
           TAR="kqp-control-fe-offline-npm.tar.gz"
-          echo "Creating $TAR ..."
-          tar --exclude-vcs -czf "$TAR" . .offline-cache
+          echo "Creating $TAR from .offline-stage ..."
+          tar -C .offline-stage -czf "$TAR" .
           ls -lh "$TAR"
 
       - name: Commit tarball back to main
