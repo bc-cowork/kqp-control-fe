@@ -27,7 +27,7 @@ jobs:
           cache-dependency-path: package-lock.json
 
       - name: Install dependencies (npm)
-        run: npm ci
+        run: npm install --legacy-peer-deps
 
       - name: Build Next.js app (npm)
         env:
@@ -73,8 +73,8 @@ jobs:
           NEXT_TELEMETRY_DISABLED: "1"
         run: |
           # If you need legacy peer behavior, swap the next line for:
-          # npm install --legacy-peer-deps
-          npm ci
+          npm install --legacy-peer-deps
+          # npm ci
           npx --yes next telemetry disable || true
           npm run build
           test -d .next || (echo ".next not found after build" && exit 1)
