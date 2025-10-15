@@ -48,7 +48,6 @@ jobs:
           cache: "npm"
           cache-dependency-path: |
             kuanta-offline-install/kqp-control-fe/package-lock.json
-            kuanta-offline-install/kqp-control-fe/npm-shrinkwrap.json
 
       - name: Prepare npm offline cache path
         run: |
