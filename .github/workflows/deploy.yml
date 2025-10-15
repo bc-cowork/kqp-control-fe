@@ -46,15 +46,15 @@ jobs:
           echo "$DEPLOY_KEY" > deploy_key
           chmod 600 deploy_key
 
-          # Copy .next folder, package.json, yarn.lock, and public folder
+          # Copy .next folder, package.json, package-lock.json, and public folder
           rsync -avz --delete -e "ssh -i deploy_key -o StrictHostKeyChecking=no" \
-            .next package.json yarn.lock public \
+            .next package.json package-lock.json public \
             "$DEPLOY_USER@$DEPLOY_SERVER:$DEPLOY_PATH/"
 
           ssh -i deploy_key -o StrictHostKeyChecking=no "$DEPLOY_USER@$DEPLOY_SERVER" "
             set -e
             cd '$DEPLOY_PATH' &&
-            yarn install --production &&
+            npm install --legacy-peer-deps &&
             (pm2 describe kqp-control-fe || pm2 start npm --name 'kqp-control-fe' -- start) &&
             pm2 restart kqp-control-fe
           "
