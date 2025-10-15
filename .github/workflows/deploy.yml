@@ -1,36 +1,39 @@
-name: CI / Deploy / Package Offline
+name: Build and Deploy Next.js
 
 on:
   push:
     branches: [main]
-    # Prevent infinite loops when we commit only the tarball
     paths-ignore:
-      - "kuanta-offline-install-built.tar.gz"
+      - "kqp-control-fe-offline.tar.gz" # prevent tar-only commits from retriggering
 
 permissions:
-  contents: write # needed to push the tarball commit
-  actions: read
-  checks: read
+  contents: write
 
 jobs:
-  # --- Keep/rename this to your current deploy job name and steps ---
-  deploy:
-    name: Build & Deploy
+  build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_SERVER_URL: ${{ secrets.NEXT_PUBLIC_SERVER_URL }}
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      # If your deploy already sets up Node, keeps caches, etc., keep those steps.
-      # Otherwise, add your actual deploy steps here (e.g., build, docker, vercel, etc.)
-      # - name: Your deploy step
+      # ... your existing steps (truncated here) ...
+      # - name: Install dependencies
+      #   run: yarn install --frozen-lockfile
+      # - name: Build Next.js app
+      #   run: yarn build
+      # - name: Deploy to server
       #   run: |
-      #     echo "Deploying..."
+      #     # your rsync/pm2 commands etc.
+
+      - name: Cleanup
+        if: always()
+        run: rm -f deploy_key
 
   package_offline:
     name: Package Offline Bundle
-    needs: deploy
-    # Avoid recursion if a workflow-run authored by the bot ever triggers
+    needs: build-and-deploy
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
 
@@ -40,62 +43,48 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Node 20.12.2 (match VM script)
+      - name: Set up Node 20.12.2
         uses: actions/setup-node@v4
         with:
           node-version: "20.12.2"
-          # This speeds up normal npm installs; we also write a repo-local cache for offline use
-          cache: "npm"
-          cache-dependency-path: |
-            kuanta-offline-install/kqp-control-fe/package-lock.json
+          cache: "yarn"
+          cache-dependency-path: yarn.lock
 
-      - name: Prepare npm offline cache path
+      - name: Enable corepack & pin Yarn (optional)
+        run: |
+          corepack enable
+          corepack prepare yarn@stable --activate
+          yarn -v
+
+      - name: Prepare repo-local Yarn cache
         run: |
           set -euo pipefail
-          echo "Creating repo-local npm cache at kuanta-offline-install/npm-cache"
-          mkdir -p kuanta-offline-install/npm-cache
+          mkdir -p .offline-cache/yarn
+          echo "Using Yarn cache at: $(realpath .offline-cache/yarn)"
 
       - name: Install deps (populate local cache) & build
-        working-directory: kuanta-offline-install/kqp-control-fe
         env:
-          # Point npm at our repo-local cache so it’s included in the tarball
-          npm_config_cache: ${{ github.workspace }}/kuanta-offline-install/npm-cache
+          YARN_CACHE_FOLDER: ${{ github.workspace }}/.offline-cache/yarn
         run: |
           set -euo pipefail
+          yarn install --frozen-lockfile
+          yarn build
+          # Optional sanity check
+          test -d .next || (echo ".next not found after build" && exit 1)
 
-          if [ -f yarn.lock ]; then
-            echo "Removing yarn.lock to switch to npm..."
-            rm -f yarn.lock
-          fi
-
-          echo "npm version: $(npm --version)"
-
-          # Equivalent to `npm install --legacy-peer-deps`
-          # If you use package-lock, prefer `npm ci --legacy-peer-deps`
-          if [ -f package-lock.json ]; then
-            npm ci --legacy-peer-deps
-          else
-            npm install --legacy-peer-deps
-          fi
-
-          # Quick sanity check similar to your script
-          test -f node_modules/next/dist/server/require-hook.js || (echo "Next.js module not found" && exit 1)
-
-          echo "Building Next app..."
-          npm run build
-
-          echo "Disabling Next telemetry..."
-          npx --yes next telemetry disable || true
-
-      - name: Create offline tarball
+      - name: Make offline tarball (repo + yarn cache)
         run: |
           set -euo pipefail
-          # Two dirs up from kqp-control-fe, just like your script
-          # Tar the entire kuanta-offline-install directory (includes npm-cache + source + .next)
-          TAR_NAME="kuanta-offline-install-built.tar.gz"
-          echo "Creating $TAR_NAME ..."
-          tar -czf "$TAR_NAME" kuanta-offline-install
-          ls -lh "$TAR_NAME"
+          TAR="kqp-control-fe-offline.tar.gz"
+          echo "Creating $TAR ..."
+          # include everything needed for offline use:
+          #  - the full repo (without .git)
+          #  - the populated Yarn cache
+          tar \
+            --exclude-vcs \
+            -czf "$TAR" \
+            . .offline-cache
+          ls -lh "$TAR"
 
       - name: Commit tarball back to repo
         env:
@@ -105,24 +94,17 @@ jobs:
           GIT_COMMITTER_EMAIL: ci-bot@users.noreply.github.com
         run: |
           set -euo pipefail
-          TAR="kuanta-offline-install-built.tar.gz"
-          if [ -f "$TAR" ]; then
-            git add "$TAR"
-            # Use [skip ci] so *other* CI providers won’t run; GitHub filter above already ignores tar-only pushes
-            git commit -m "chore: offline package $(date -u +'%Y-%m-%dT%H:%M:%SZ') [skip ci]" || {
-              echo "Nothing to commit (tar unchanged)."
-              exit 0
-            }
-            git push origin HEAD:main
-          else
-            echo "Tarball not found"
-            exit 1
-          fi
+          TAR="kqp-control-fe-offline.tar.gz"
+          git add "$TAR"
+          git commit -m "chore: add offline bundle $(date -u +'%Y-%m-%dT%H:%M:%SZ') [skip ci]" || {
+            echo "Nothing to commit (tar unchanged)."
+            exit 0
+          }
+          git push origin HEAD:main
 
-      # (Optional) Also publish as a workflow artifact for easy download from the Actions UI
-      - name: Upload offline package artifact
+      - name: Upload offline package artifact (optional)
         uses: actions/upload-artifact@v4
         with:
-          name: kuanta-offline-install-built
-          path: kuanta-offline-install-built.tar.gz
+          name: kqp-control-fe-offline
+          path: kqp-control-fe-offline.tar.gz
           if-no-files-found: error
