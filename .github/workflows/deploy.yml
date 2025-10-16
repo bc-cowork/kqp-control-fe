@@ -3,6 +3,8 @@ name: Build & Deploy + Package Offline (to S3)
 on:
   push:
     branches: [main]
+  release:
+    types: [published]
 
 permissions:
   contents: read
@@ -10,6 +12,7 @@ permissions:
 
 jobs:
   build-and-deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
@@ -72,12 +75,14 @@ jobs:
 
   package_offline:
     name: Package Offline Tar (npm) → S3
-    needs: build-and-deploy
     runs-on: ubuntu-latest
+    if: github.event_name == 'release' && github.event.action == 'published'
 
     steps:
-      - name: Checkout repo
+      - name: Checkout release tag
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
 
       - name: Set up Node 20.12.2
         uses: actions/setup-node@v4
