@@ -154,23 +154,23 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                             backgroundColor: '#FFF2F4',
                           }}
                         >
-                          {(issueQuotesAsk as Record<string, { price: number }>)[
+                          {(issueQuotesBid as Record<string, { price: number }>)[
                             key
                           ]?.price.toLocaleString()}
                         </Box>
                       </TableCell>
                       <TableCell align="right">
-                        {(issueQuotesAsk as Record<string, { uni: number }>)[
+                        {(issueQuotesBid as Record<string, { uni: number }>)[
                           key
                         ]?.uni.toLocaleString()}
                       </TableCell>
                       <TableCell align="right">
-                        {(issueQuotesAsk as Record<string, { krx: number }>)[
+                        {(issueQuotesBid as Record<string, { krx: number }>)[
                           key
                         ]?.krx.toLocaleString()}
                       </TableCell>
                       <TableCell align="right">
-                        {(issueQuotesAsk as Record<string, { nxt: number }>)[
+                        {(issueQuotesBid as Record<string, { nxt: number }>)[
                           key
                         ]?.nxt.toLocaleString()}
                       </TableCell>
