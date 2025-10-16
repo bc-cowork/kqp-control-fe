@@ -2,7 +2,7 @@
 
 import type { AuditLogFrameFragItem } from 'src/types/node';
 
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import Grid from '@mui/material/Unstable_Grid2';
 import {
@@ -152,75 +152,6 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
     setDialogMessage('');
   };
 
-  // Helper: collapse your filters (array or null) to "which keys are active?"
-  const getActiveFlags = (f: Filter | null) => {
-    const flags = { seq: false, count: false, side: false, cond: false };
-
-    if (!f) return flags;
-
-    if (Array.isArray(f)) {
-      // eslint-disable-next-line no-restricted-syntax
-      for (const item of f as any[]) {
-        if (item?.seq !== undefined && item?.seq !== null) flags.seq = true;
-        if (item?.count !== undefined && item?.count !== null) flags.count = true;
-        if (item?.side !== undefined && item?.side !== null && item?.side !== '') flags.side = true;
-        if (item?.cond !== undefined && item?.cond !== null && item?.cond !== '') flags.cond = true;
-      }
-    } else if (typeof f === 'object') {
-      const item: any = f;
-      if (item?.seq !== undefined && item?.seq !== null) flags.seq = true;
-      if (item?.count !== undefined && item?.count !== null) flags.count = true;
-      if (item?.side !== undefined && item?.side !== null && item?.side !== '') flags.side = true;
-      if (item?.cond !== undefined && item?.cond !== null && item?.cond !== '') flags.cond = true;
-    }
-
-    return flags;
-  };
-
-  // Keep previous flags to diff on each change
-  const prevActiveFlagsRef = useRef<{ seq: boolean; count: boolean; side: boolean; cond: boolean }>(
-    getActiveFlags(null)
-  );
-
-  const didMountRef = useRef(false);
-
-  useEffect(() => {
-    if (!didMountRef.current) {
-      didMountRef.current = true;
-      return;
-    }
-
-    const prevFlags = prevActiveFlagsRef.current;
-    const currFlags = getActiveFlags(filters);
-
-    // === Detect removals (true -> false) ===
-    const removed: string[] = [];
-    (['seq', 'count', 'side', 'cond'] as const).forEach((key) => {
-      if (prevFlags[key] && !currFlags[key]) {
-        removed.push(key);
-      }
-    });
-
-    if (removed.length) {
-      if (removed.includes('cond')) setCond(undefined);
-      if (removed.includes('count')) setCount(10000);
-      if (removed.includes('side')) setSide('next');
-      resetCache();
-    }
-
-    // Your existing "all cleared" behavior (when filters become null or nothing active)
-    const nothingActive = !currFlags.seq && !currFlags.count && !currFlags.side && !currFlags.cond;
-    if (nothingActive) {
-      setCount(undefined);
-      setSide(undefined);
-      setCond(undefined);
-      resetCache();
-    }
-
-    // Save current flags for next diff
-    prevActiveFlagsRef.current = currFlags;
-  }, [filters]);
-
   const onFilterApply = () => {
     if (filters) {
       const filterCount = Array.isArray(filters)
@@ -262,19 +193,41 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
   const handleSearch = (filter: any) => {
     onFilterApply();
 
-    if (filter?.seq) {
-      setSeq(filter.seq);
-      setApiSeq(filter.seq);
+    if (filter?.count !== undefined) setCount(Number(filter.count));
+    if (filter?.side !== undefined) setSide(filter.side);
+    if (filter?.cond !== undefined) setCond(filter.cond);
+
+    // Explicitly fetch:
+    setRefreshKey((k) => k + 1);
+  };
+
+  // NEW: called by Reset button click (from AddFilter)
+  const handleResetClick = () => {
+    onFilterApply();
+    // Clear filter params but DO NOT touch pagination
+    setCount(undefined);
+    setSide(undefined);
+    setCond(undefined);
+    setRefreshKey((k) => k + 1); // fetch
+  };
+
+  // NEW: called by single pill remove (from AddFilter). Keep your prior defaults.
+  const handleRemovePillClick = (key: string) => {
+    onFilterApply();
+    switch (key) {
+      case 'cond':
+        setCond(undefined);
+        break;
+      case 'count':
+        setCount(10000); // your previous convention
+        break;
+      case 'side':
+        setSide('next'); // your previous convention
+        break;
+      default:
+        break;
     }
-    if (filter?.count) {
-      setCount(filter.count);
-    }
-    if (filter?.side) {
-      setSide(filter.side);
-    }
-    if (filter?.cond) {
-      setCond(filter.cond);
-    }
+    setRefreshKey((k) => k + 1); // fetch
   };
 
   return (
@@ -287,6 +240,8 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
             page="Audit Frame"
             onApply={handleSearch}
             count={auditFrame?.max_frame || 0}
+            onResetClick={handleResetClick}
+            onRemovePillClick={handleRemovePillClick}
             popoverWidth="430px"
           />
           <Box

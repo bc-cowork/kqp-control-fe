@@ -22,6 +22,8 @@ type AddFilterProps = {
   onCodeEnter?: (code?: string | boolean) => void;
   count?: number;
   popoverWidth?: string;
+  onResetClick?: () => void;
+  onRemovePillClick?: (key: string) => void;
 };
 
 const AddFilter: React.FC<AddFilterProps> = ({
@@ -32,6 +34,8 @@ const AddFilter: React.FC<AddFilterProps> = ({
   onCodeEnter,
   count,
   popoverWidth,
+  onResetClick,
+  onRemovePillClick,
 }) => {
   const { t } = useTranslate('memory');
   const [open, setOpen] = useState(false);
@@ -49,18 +53,18 @@ const AddFilter: React.FC<AddFilterProps> = ({
 
   const handleReset = () => {
     setFilters(null);
+    onResetClick?.();
     handleClose();
   };
 
   const handleRemoveFilter = (key: string) => () => {
     setFilters((prev) => {
-      if (prev) {
-        const newFilters = { ...prev };
-        delete newFilters[key];
-        return newFilters;
-      }
-      return prev;
+      if (!prev) return prev;
+      const next = { ...prev };
+      delete next[key];
+      return next;
     });
+    onRemovePillClick?.(key);
   };
 
   const onEnter = (event: React.KeyboardEvent) => {
