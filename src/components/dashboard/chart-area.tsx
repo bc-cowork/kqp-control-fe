@@ -54,47 +54,50 @@ export function ChartArea({
   // Define colors for each chart based on tabValue
   const chartColors: Record<
     string,
-    Record<string, { stroke: string; fill: string; fillOpacity: number }>
+    Record<
+      'cpu' | 'memory' | 'inbound' | 'outbound',
+      { stroke: string; fill: string; fillOpacity: number }
+    >
   > = {
     '1x4': {
-      CPU: {
+      cpu: {
         stroke: '#5E66FF', // Blue graph-line
         fill: '#5E66FF', // Blue graph-fill
         fillOpacity: 0.2, // 20% opacity
       },
-      Memory: {
+      memory: {
         stroke: '#804CE6', // Violet graph-line
         fill: '#804CE6', // Violet graph-fill
         fillOpacity: 0.2, // 20% opacity
       },
-      Inbound: {
+      inbound: {
         stroke: '#41B899', // Green graph-line
         fill: '#41B899', // Green graph-fill
         fillOpacity: 0.2, // 20% opacity
       },
-      Outbound: {
+      outbound: {
         stroke: '#FFC711', // Yellow graph-line
         fill: '#FFC711', // Yellow graph-fill
         fillOpacity: 0.2, // 20% opacity
       },
     },
     '2x2': {
-      CPU: {
+      cpu: {
         stroke: '#5E66FF', // Blue graph-line
         fill: '#5E66FF', // Blue graph-fill
         fillOpacity: 0.2, // 20% opacity
       },
-      Memory: {
+      memory: {
         stroke: '#FFC711', // Yellow graph-line
         fill: '#FFC711', // Yellow graph-fill
         fillOpacity: 0.2, // 20% opacity
       },
-      Inbound: {
+      inbound: {
         stroke: '#41B899', // Green graph-line
         fill: '#41B899', // Green graph-fill
         fillOpacity: 0.2, // 20% opacity
       },
-      Outbound: {
+      outbound: {
         stroke: '#059BB8', // Aqua graph-line
         fill: '#059BB8', // Aqua graph-fill
         fillOpacity: 0.2, // 20% opacity
@@ -103,15 +106,32 @@ export function ChartArea({
   };
 
   // Get the colors based on the tabValue and title, default to CPU colors if title doesn't match
-  const { stroke, fill, fillOpacity } = chartColors[layout]?.[title] ||
-    chartColors[layout]?.CPU || {
+  const colorKey = (() => {
+    if (metric === 'cpu') {
+      return 'cpu';
+    }
+    if (metric === 'memory') {
+      return 'memory';
+    }
+    if (metric.startsWith('inbound')) {
+      return 'inbound';
+    }
+    if (metric.startsWith('outbound')) {
+      return 'outbound';
+    }
+    return 'cpu';
+  })();
+
+  // Get the colors based on the layout and metric bucket, default to CPU colors if none match
+  const { stroke, fill, fillOpacity } = chartColors[layout]?.[colorKey] ||
+    chartColors[layout]?.cpu || {
       stroke: '#5E66FF',
       fill: '#5E66FF',
       fillOpacity: 0.2,
     };
 
   // Only apply threshold highlighting for the CPU chart
-  const applyThreshold = title === 'CPU' && threshold !== undefined;
+  const applyThreshold = colorKey === 'cpu' && threshold !== undefined;
 
   const formatLargeNumber = (value: number): string => {
     if (value >= 1_000_000) {
