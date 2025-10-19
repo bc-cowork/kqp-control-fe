@@ -104,16 +104,15 @@ jobs:
       - name: Install deps & build (npm)
         env:
           NEXT_TELEMETRY_DISABLED: "1"
-          # ensure *every* npm sub-command uses legacy peer behavior
-          NPM_CONFIG_LEGACY_PEER_DEPS: "true"
         run: |
           set -euo pipefail
-          npm install --omit=dev
+          npm install --legacy-peer-deps
           npx --yes next telemetry disable || true
           npm run build
           # quick checks
           test -d node_modules || (echo "node_modules missing" && exit 1)
           test -d .next || (echo ".next missing" && exit 1)
+          node -p "process.platform + ' ' + process.arch"
 
       # Create a stable snapshot that INCLUDES node_modules and .next
       - name: Stage a clean snapshot for tar (includes node_modules)
