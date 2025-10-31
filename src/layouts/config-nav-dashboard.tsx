@@ -3,6 +3,7 @@ import { paths } from 'src/routes/paths';
 import { CONFIG } from 'src/config-global';
 
 import { SvgColor } from 'src/components/svg-color';
+import { useTranslate } from 'src/locales';
 
 // ----------------------------------------------------------------------
 
@@ -20,12 +21,13 @@ const ICONS = {
 // ----------------------------------------------------------------------
 
 export function getNavData(nodes: string[] = []) {
+  const { t } = useTranslate('sidebar');
   return [
     {
       items: [
-        { title: 'Dashboard', path: paths.dashboard.root, icon: ICONS.home },
+        { title: t('side_bar.dashboard'), path: paths.dashboard.root, icon: ICONS.home },
         {
-          title: 'Nodes',
+          title: t('side_bar.nodes'),
           path: paths.dashboard.nodes.root,
           icon: ICONS.nodes,
           children: nodes.map((node) => ({
@@ -33,31 +35,31 @@ export function getNavData(nodes: string[] = []) {
             path: paths.dashboard.nodes.node(node),
             children: [
               {
-                title: 'Node Dashboard',
+                title: t('tab_option.node_dashboard'),
                 path: paths.dashboard.nodes.dashboard(node),
               },
               {
-                title: 'Process',
+                title: t('tab_option.process'),
                 path: paths.dashboard.nodes.process(node),
               },
               {
-                title: 'Memory',
+                title: t('tab_option.memory'),
                 path: paths.dashboard.nodes.memory(node),
               },
               {
-                title: 'Audit Log',
+                title: t('tab_option.audit_log'),
                 path: paths.dashboard.nodes.auditLog(node),
               },
               {
-                title: 'Channels Inbound',
+                title: t('tab_option.channels_inbound'),
                 path: paths.dashboard.nodes.channelsInbound(node),
               },
               {
-                title: 'Channels Outbound',
+                title: t('tab_option.channels_outbound'),
                 path: paths.dashboard.nodes.channelsOutbound(node),
               },
               {
-                title: 'Rule List',
+                title: t('tab_option.rule_list'),
                 path: paths.dashboard.nodes.rules(node),
               },
             ],
@@ -69,9 +71,11 @@ export function getNavData(nodes: string[] = []) {
 }
 
 export function getBottomNavData() {
+  const { t } = useTranslate('sidebar');
+
   return [
     {
-      items: [{ title: 'Settings', path: '#', icon: ICONS.settings }],
+      items: [{ title: t('side_bar.settings'), path: '#', icon: ICONS.settings }],
     },
   ];
 }

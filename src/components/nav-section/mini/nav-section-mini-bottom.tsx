@@ -18,6 +18,7 @@ import { navSectionClasses } from '../classes';
 import { navSectionCssVars } from '../css-vars';
 
 import type { NavGroupProps } from '../types';
+import { useTranslate } from 'src/locales';
 
 // ----------------------------------------------------------------------
 
@@ -63,6 +64,7 @@ export function NavSectionMiniBottom({
 
 function Group({ items, render, slotProps, enabledRootRedirect, cssVars }: NavGroupProps) {
   const { checkUserSession } = useAuthContext();
+  const { t } = useTranslate('sidebar');
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const router = useRouter();
 
@@ -167,7 +169,7 @@ function Group({ items, render, slotProps, enabledRootRedirect, cssVars }: NavGr
               </SvgIcon>
             }
           >
-            Logout
+            {`${t('side_bar.logout')}`}
           </Button>
         </Popover>
       </NavUl>
