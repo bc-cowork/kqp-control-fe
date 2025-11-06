@@ -1,0 +1,19 @@
+{
+  "top": {
+    "layout_list": "Layout List"
+  },
+  "table": {
+    "id": "ID",
+    "layout_name": "Layout Name",
+    "path": "Path",
+    "timestamp": "Timestamp",
+    "process": "Process",
+    "channel_in": "Channel.IN",
+    "desc": "Description"
+  },
+  "loading": "Loading...",
+  "error": "Failed to load layouts",
+  "empty": "No layouts found"
+}
+
+

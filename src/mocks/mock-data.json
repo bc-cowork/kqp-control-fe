@@ -1681,6 +1681,132 @@
       "total_pages": 1
     }
   },
+  "/apik/prod1/layout/list": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod1",
+      "layoutList": [
+        {
+          "id": "1",
+          "layoutName": "BASE",
+          "path": "/cfg/layouts/BASE.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "process": 3,
+          "channelIn": 14,
+          "desc": "공통 레이아웃"
+        },
+        {
+          "id": "2",
+          "layoutName": "KOSPI_KOSDAQ",
+          "path": "/cfg/layouts/KOSPI_KOSDAQ.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "process": 5,
+          "channelIn": 10,
+          "desc": "코스피, 코스닥 주식  레이아웃"
+        },
+        {
+          "id": "3",
+          "layoutName": "ETC_STOCK",
+          "path": "/cfg/layouts/ETC_STOCKBASE.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "process": 4,
+          "channelIn": 9,
+          "desc": "기타 주식  레이아웃"
+        },
+        {
+          "id": "4",
+          "layoutName": "ST_STOCK",
+          "path": "/cfg/layouts/ST_STOCK.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "process": 3,
+          "channelIn": 16,
+          "desc": "구조화증권  레이아웃"
+        },
+        {
+          "id": "5",
+          "layoutName": "INDEX",
+          "path": "/cfg/layouts/INDEX.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "process": 3,
+          "channelIn": 4,
+          "desc": "지수  레이아웃"
+        },
+        {
+          "id": "6",
+          "layoutName": "BOND",
+          "path": "/cfg/layouts/BOND.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "process": 3,
+          "channelIn": 5,
+          "desc": "채권  레이아웃"
+        }
+      ]
+    }
+  },
+  "/apik/prod2/layout/list": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod2",
+      "layoutList": [
+        {
+          "id": "1",
+          "layoutName": "BASE",
+          "path": "/cfg/layouts/BASE.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "process": 3,
+          "channelIn": 14,
+          "desc": "공통 레이아웃"
+        },
+        {
+          "id": "2",
+          "layoutName": "KOSPI_KOSDAQ",
+          "path": "/cfg/layouts/KOSPI_KOSDAQ.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "process": 5,
+          "channelIn": 10,
+          "desc": "코스피, 코스닥 주식  레이아웃"
+        },
+        {
+          "id": "3",
+          "layoutName": "ETC_STOCK",
+          "path": "/cfg/layouts/ETC_STOCKBASE.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "process": 4,
+          "channelIn": 9,
+          "desc": "기타 주식  레이아웃"
+        },
+        {
+          "id": "4",
+          "layoutName": "ST_STOCK",
+          "path": "/cfg/layouts/ST_STOCK.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "process": 3,
+          "channelIn": 16,
+          "desc": "구조화증권  레이아웃"
+        },
+        {
+          "id": "5",
+          "layoutName": "INDEX",
+          "path": "/cfg/layouts/INDEX.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "process": 3,
+          "channelIn": 4,
+          "desc": "지수  레이아웃"
+        },
+        {
+          "id": "6",
+          "layoutName": "BOND",
+          "path": "/cfg/layouts/BOND.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "process": 3,
+          "channelIn": 5,
+          "desc": "채권  레이아웃"
+        }
+      ]
+    }
+  },
   "/apik/prod1/action/Restart Service": {
     "okay": true,
     "msg": "Success",

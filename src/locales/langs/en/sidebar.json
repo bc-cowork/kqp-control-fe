@@ -14,6 +14,7 @@
     "channels_outbound": "CHANNELS OUTBOUND",
     "rule_list": "RULE LIST",
     "action_list": "ACTION LIST",
+    "layout_list": "LAYOUT LIST",
     "spec_list": "SPEC LIST",
     "identify_list": "IDENTIFY LIST",
     "daily_report_list": "DAILY REPORT",

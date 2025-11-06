@@ -67,6 +67,10 @@ export function getNavData(nodes: string[] = []) {
                 path: paths.dashboard.nodes.actionList(node),
               },
               {
+                title: t('tab_option.layout_list') || 'Layout List',
+                path: paths.dashboard.nodes.layoutList(node),
+              },
+              {
                 title: t('tab_option.spec_list') || 'SPEC List',
                 path: paths.dashboard.nodes.specList(node),
               },

@@ -55,6 +55,7 @@ export const paths = {
       channelsOutbound: (node: string) => `/dashboard/nodes/${node}/channels-outbound`,
       rules: (node: string) => `/dashboard/nodes/${node}/rules`,
       actionList: (node: string) => `/dashboard/nodes/${node}/action-list`,
+      layoutList: (node: string) => `/dashboard/nodes/${node}/layout-list`,
       actionDetail: (node: string, action: string) => `/dashboard/nodes/${node}/action/${encodeURIComponent(action)}`,
       specList: (node: string) => `/dashboard/nodes/${node}/spec-list`,
       identifyList: (node: string) => `/dashboard/nodes/${node}/identify-list`,
