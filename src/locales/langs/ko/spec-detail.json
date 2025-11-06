@@ -3,17 +3,17 @@
     "spec_list": "SPEC 목록"
   },
   "left": {
-    "no": "No",
+    "no": "번호",
     "identifier": "연관 식별자",
     "ref_count": "참조 빈도",
-    "ref_identifier_with_count": "ref. Identifier {{count}}",
-    "frags_sizes": "Frags {{frags}}, Sizes {{sizes}}"
+    "ref_identifier_with_count": "연관 식별자 {{count}}",
+    "frags_sizes": "조각 {{frags}}, 크기 {{sizes}}"
   },
   "right": {
-    "offset": "offset",
-    "len": "len",
-    "type": "Type",
-    "desc": "Desc"
+    "offset": "오프셋",
+    "len": "길이",
+    "type": "유형",
+    "desc": "설명"
   },
   "loading": "로딩 중...",
   "error": "불러오기 실패.",

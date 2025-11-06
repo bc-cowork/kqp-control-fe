@@ -111,11 +111,11 @@ export default function Page({ params }: Props) {
 
                     {/* Right side - Fragments table with dark background */}
                     <Grid item xs={12} md={7}>
-                        <Paper sx={{ backgroundColor: '#181A20', color: '#D4DCFA' }}>
+                        <Paper sx={{ backgroundColor: '#202838', color: '#D4DCFA' }}>
                             <TableContainer>
                                 <Table size="small">
-                                    <TableHead>
-                                        <TableRow>
+                                    <TableHead >
+                                        <TableRow style={{ backgroundColor: 'red' }} >
                                             <TableCell sx={{ color: '#D4DCFA' }}>{t('right.offset')}</TableCell>
                                             <TableCell sx={{ color: '#D4DCFA' }}>{t('right.len')}</TableCell>
                                             <TableCell sx={{ color: '#D4DCFA' }}>{t('right.type')}</TableCell>
