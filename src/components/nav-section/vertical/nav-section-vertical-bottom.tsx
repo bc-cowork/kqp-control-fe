@@ -18,6 +18,7 @@ import { navSectionClasses } from '../classes';
 import { navSectionCssVars } from '../css-vars';
 
 import type { NavGroupProps } from '../types';
+import { useTranslate } from 'src/locales';
 
 // ----------------------------------------------------------------------
 
@@ -28,6 +29,7 @@ export function NavSectionVerticalBottom({
   enabledRootRedirect,
   cssVars: overridesVars,
 }: any) {
+  const { t } = useTranslate('sidebar');
   const theme = useTheme();
   const { user, checkUserSession } = useAuthContext();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -165,8 +167,9 @@ export function NavSectionVerticalBottom({
                     </svg>
                   </SvgIcon>
                 }
-              >
-                Logout
+              >{
+                  `${t('side_bar.logout')}`
+                }
               </Button>
             </Popover>
           </NavUl>
