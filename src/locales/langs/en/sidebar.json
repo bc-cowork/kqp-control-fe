@@ -1,23 +1,23 @@
 {
   "side_bar": {
-    "dashboard": "DASHBOARD",
-    "nodes": "NODES",
-    "settings": "SETTINGS",
+    "dashboard": "Dashboard",
+    "nodes": "Noes",
+    "settings": "Settings",
     "logout": "LOGOUT"
   },
   "tab_option": {
-    "node_dashboard": "NODE DASHBOARD",
-    "process": "PROCESS",
-    "memory": "MEMORY",
-    "audit_log": "AUDIT LOG",
-    "channels_inbound": "CHANNELS INBOUND",
-    "channels_outbound": "CHANNELS OUTBOUND",
-    "rule_list": "RULE LIST",
-    "action_list": "ACTION LIST",
-    "layout_list": "LAYOUT LIST",
-    "spec_list": "SPEC LIST",
-    "identify_list": "IDENTIFY LIST",
-    "daily_report_list": "DAILY REPORT",
-    "alerts_list": "ALERTS"
+    "node_dashboard": "Node Dashboard",
+    "process": "Process",
+    "memory": "Memory",
+    "audit_log": "Audit Log",
+    "channels_inbound": "Channels Inbound",
+    "channels_outbound": "Channel Outbound",
+    "rule_list": "Rule List",
+    "action_list": "Action List",
+    "layout_list": "Layout List",
+    "spec_list": "SPEC List",
+    "identify_list": "Identify List",
+    "daily_report_list": "Daily Report",
+    "alerts_list": "Alerts"
   }
 }
