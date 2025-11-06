@@ -99,6 +99,7 @@ export const endpoints = {
   },
   actions: {
     list: (node: string) => `/apik/${node}/action/list`,
+    detail: (node: string, action: string) => `/apik/${node}/action/${action}`,
   },
   nodes: {
     channelInbound: {

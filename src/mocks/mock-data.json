@@ -1581,5 +1581,57 @@
       "current_page": 1,
       "total_pages": 1
     }
+  },
+  "/apik/prod1/action/Restart Service": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod1",
+      "layoutList": [
+        {
+          "layout": "layoutA",
+          "refCount": 12
+        },
+        {
+          "layout": "layoutB",
+          "refCount": 5
+        }
+      ],
+      "processList": [
+        {
+          "process": "kqp",
+          "usageCount": 20
+        },
+        {
+          "process": "logger",
+          "usageCount": 3
+        }
+      ],
+      "script": "#!/bin/sh\necho \"Restarting kqp...\"\nsystemctl restart kqp.service\n# end"
+    }
+  },
+  "/apik/prod2/action/Start Service": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod2",
+      "layoutList": [
+        {
+          "layout": "layoutC",
+          "refCount": 7
+        }
+      ],
+      "processList": [
+        {
+          "process": "kqp",
+          "usageCount": 8
+        },
+        {
+          "process": "configsync",
+          "usageCount": 2
+        }
+      ],
+      "script": "#!/bin/sh\necho \"Starting kqp...\"\nsystemctl start kqp.service\n# end"
+    }
   }
 }

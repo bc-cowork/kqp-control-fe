@@ -16,5 +16,14 @@
     "empty": "작업이 없습니다",
     "detail": {
         "placeholder": "작업 상세 내용이 여기에 표시됩니다."
+    },
+    "detail_table": {
+        "layout_no": "No",
+        "layout_name": "연관 레이아웃",
+        "layout_ref_freq": "참조 빈도",
+        "process_no": "No",
+        "process_name": "연관 프로세스",
+        "process_usage_freq": "활용 빈도",
+        "script_title": "함수 정의"
     }
 }
