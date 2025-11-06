@@ -10,9 +10,13 @@
     "ref_specs": "참조 SPEC",
     "explanation": "설명"
   },
+  "detail_table": {
+    "script_title": "전문 정의",
+    "no": "No",
+    "related_spec": "연관 전문",
+    "ref_freq": "참조 빈도"
+  },
   "loading": "로딩 중...",
   "error": "불러오기에 실패했습니다",
   "empty": "아이덴티티가 없습니다"
 }
-
-

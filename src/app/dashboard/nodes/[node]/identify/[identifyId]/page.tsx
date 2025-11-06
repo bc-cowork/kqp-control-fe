@@ -6,6 +6,9 @@ import { Breadcrumb } from 'src/components/common/Breadcrumb';
 import { Typography, Box, Paper, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { useTranslate } from 'src/locales';
 import { paths } from 'src/routes/paths';
+import useSWR from 'swr';
+import { fetcher, endpoints } from 'src/utils/axios';
+import { ChartBar } from 'src/components/node-dashboard/chart-area-bar';
 
 type Props = {
     params: { node: string; identifyId: string };
@@ -14,6 +17,15 @@ type Props = {
 export default function Page({ params }: Props) {
     const { node, identifyId } = params;
     const { t } = useTranslate('identify-list');
+    const decodedId = decodeURIComponent(identifyId);
+
+    const url = endpoints.identify.detail(node, decodedId);
+    const { data, error, isLoading } = useSWR(url, fetcher);
+
+    const detail = data?.data || {};
+    const keys: string[] = Array.isArray(detail.keys) ? detail.keys : [];
+    const specList: Array<{ spec: string; refCount: number }> = detail.specList || [];
+    const script: string = detail.script || '';
 
     return (
         <DashboardContent maxWidth="xl">
@@ -26,7 +38,7 @@ export default function Page({ params }: Props) {
             />
 
             <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>
-                IDENTIFY: {decodeURIComponent(identifyId)}
+                IDENTIFY: {decodedId}
             </Typography>
 
             <Grid container spacing={3} sx={{ mt: 3 }}>
@@ -38,7 +50,7 @@ export default function Page({ params }: Props) {
                             </Typography>
                             <Box sx={{ backgroundColor: '#5E66FF', p: 1, py: 1.5 }}>
                                 <Typography variant="body2" color="text.light">
-                                    {`‘A301S', 'A301Q’`}.
+                                    {isLoading ? t('loading') : error ? t('error') : keys.length ? `‘${keys.join("', '")}’` : t('empty')}
                                 </Typography>
                             </Box>
                         </Box>
@@ -53,22 +65,34 @@ export default function Page({ params }: Props) {
                                                 <Table size='small'>
                                                     <TableHead>
                                                         <TableRow>
-                                                            <TableCell>No</TableCell>
-                                                            <TableCell>연관 전문</TableCell>
-                                                            <TableCell>참조 빈도</TableCell>
+                                                            <TableCell>{t('detail_table.no')}</TableCell>
+                                                            <TableCell>{t('detail_table.related_spec')}</TableCell>
+                                                            <TableCell>{t('detail_table.ref_freq')}</TableCell>
                                                         </TableRow>
                                                     </TableHead>
                                                     <TableBody>
-                                                        <TableRow>
-                                                            <TableCell>1</TableCell>
-                                                            <TableCell>A301S</TableCell>
-                                                            <TableCell>15</TableCell>
-                                                        </TableRow>
-                                                        <TableRow>
-                                                            <TableCell>2</TableCell>
-                                                            <TableCell>A301Q</TableCell>
-                                                            <TableCell>13</TableCell>
-                                                        </TableRow>
+                                                        {isLoading && (
+                                                            <TableRow>
+                                                                <TableCell colSpan={3}>{t('loading')}</TableCell>
+                                                            </TableRow>
+                                                        )}
+                                                        {error && (
+                                                            <TableRow>
+                                                                <TableCell colSpan={3}>{t('error')}</TableCell>
+                                                            </TableRow>
+                                                        )}
+                                                        {!isLoading && !error && specList.length === 0 && (
+                                                            <TableRow>
+                                                                <TableCell colSpan={3}>{t('empty')}</TableCell>
+                                                            </TableRow>
+                                                        )}
+                                                        {specList.map((row, idx) => (
+                                                            <TableRow key={row.spec + idx}>
+                                                                <TableCell>{idx + 1}</TableCell>
+                                                                <TableCell>{row.spec}</TableCell>
+                                                                <TableCell>{row.refCount}</TableCell>
+                                                            </TableRow>
+                                                        ))}
                                                     </TableBody>
                                                 </Table>
                                             </TableContainer>
@@ -77,42 +101,38 @@ export default function Page({ params }: Props) {
                                 </Grid>
                             </Paper>
                         </Box>
+                        <Box sx={{ textAlign: 'right', my: 2 }}>
+                            <Typography color={'grey'} variant="body2">
+                                {isLoading || error ? '' : `ref. SPECs ${specList.length}`}
+                            </Typography>
+                        </Box>
+                        <Box
+                            sx={{
+                                borderRadius: '8px',
+                                height: 'calc(100vh - 195px)',
+                                color: 'red',
+                                backgroundColor: 'white'
+                            }}
+                        >
+                            <ChartBar />
+                        </Box>
                     </Grid>
                 </Grid>
 
 
                 <Grid item xs={12} md={5}>
-                    <Paper sx={{ height: '100%' }}>
-                        <Box sx={{ backgroundColor: '#E0E4EB', p: 2, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
-                            <Typography sx={{ fontWeight: 600 }}>{t('detail_table.script_title')}</Typography>
+                    <Paper sx={{ height: '100%', p: 0.5, backgroundColor: 'black' }}>
+                        <Box sx={{ backgroundColor: '#E0E4EB', p: 1, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
+                            <Typography color={'grey'} variant="body2" sx={{ fontWeight: 600 }}>{t('detail_table.script_title')}</Typography>
                         </Box>
 
                         <Box sx={{ p: 2, bgcolor: '#202838', height: 'calc(100% - 48px)', overflowY: 'auto' }}>
                             <Box component="pre" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: 13, color: '#AFB7C8', m: 0 }}>
-                                {`-- krx_fill.moon
-
-                                return {
-                                    desc:                     '체결 (KRX)'
-                                keys:                     {'A301S', 'A301Q'}
-                                issue_select:       {6}
-                                specs:                   'A3_FILL'
-                                skip_spec_cache:        true
-                                process: {
-                                    lfn:                     'lfn_krx_fill'
-                                param:
-                                mkt:              1
-    }
-                                distribute: {
-                                    format:             'DST_FILL'
-                                lfn_gen:            'gen_fill'
-    }
-}
-                                `}
+                                {isLoading ? t('loading') : error ? t('error') : script || ''}
                             </Box>
                         </Box>
                     </Paper>
                 </Grid>
-
             </Grid>
         </DashboardContent >
     );

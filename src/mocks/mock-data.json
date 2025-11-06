@@ -1934,5 +1934,118 @@
         }
       ]
     }
+  },
+  "/apik/prod1/identify/idf-1001": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "idf-1001",
+      "identityName": "identifyA",
+      "keys": [
+        "A301S",
+        "A301Q"
+      ],
+      "specList": [
+        {
+          "spec": "A301S",
+          "refCount": 15
+        },
+        {
+          "spec": "A301Q",
+          "refCount": 13
+        }
+      ],
+      "script": "-- krx_fill.moon\n\nreturn {\n    desc:                     '체결 (KRX)',\n    keys:                     {'A301S', 'A301Q'},\n    issue_select:             {6},\n    specs:                    'A3_FILL',\n    skip_spec_cache:          true,\n    process: {\n        lfn:                 'lfn_krx_fill',\n        param: {\n            mkt:            1\n        }\n    },\n    distribute: {\n        format:             'DST_FILL',\n        lfn_gen:            'gen_fill'\n    }\n}"
+    }
+  },
+  "/apik/prod1/identify/idf-1002": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "idf-1002",
+      "identityName": "identifyB",
+      "keys": [
+        "B201S"
+      ],
+      "specList": [
+        {
+          "spec": "B201S",
+          "refCount": 9
+        }
+      ],
+      "script": "-- order_detail.moon\nreturn { keys: {'B201S'}, specs: 'B2_DETAIL' }"
+    }
+  },
+  "/apik/prod1/identify/idf-1003": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "idf-1003",
+      "identityName": "identifyC",
+      "keys": [
+        "C051Q"
+      ],
+      "specList": [
+        {
+          "spec": "C051Q",
+          "refCount": 3
+        }
+      ],
+      "script": "-- enrich_code.moon\nreturn { keys: {'C051Q'}, specs: 'ENRICH_CODE' }"
+    }
+  },
+  "/apik/prod1/identify/idf-1004": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "idf-1004",
+      "identityName": "identifyD",
+      "keys": [
+        "A351S"
+      ],
+      "specList": [
+        {
+          "spec": "A351S",
+          "refCount": 4
+        }
+      ],
+      "script": "-- audit_header.moon\nreturn { keys: {'A351S'}, specs: 'A3_HDR' }"
+    }
+  },
+  "/apik/prod1/identify/idf-1005": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "idf-1005",
+      "identityName": "identifyE",
+      "keys": [
+        "B651S"
+      ],
+      "specList": [
+        {
+          "spec": "B651S",
+          "refCount": 2
+        }
+      ],
+      "script": "-- audit_body.moon\nreturn { keys: {'B651S'}, specs: 'A3_BODY' }"
+    }
+  },
+  "/apik/prod2/identify/idf-2001": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "idf-2001",
+      "identityName": "identifyZ",
+      "keys": [
+        "MAGIC"
+      ],
+      "specList": [
+        {
+          "spec": "MAGIC",
+          "refCount": 1
+        }
+      ],
+      "script": "-- config_magic.moon\nreturn { keys: {'MAGIC'}, specs: 'CFG_MAGIC' }"
+    }
   }
 }

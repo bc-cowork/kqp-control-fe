@@ -10,6 +10,12 @@
         "ref_specs": "Ref. SPECs",
         "explanation": "설명"
     },
+    "detail_table": {
+        "script_title": "Professional definition",
+        "no": "No",
+        "related_spec": "Related SPEC",
+        "ref_freq": "Reference frequency"
+    },
     "loading": "Loading...",
     "error": "Failed to load",
     "empty": "No identities"
