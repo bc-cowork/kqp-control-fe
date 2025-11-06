@@ -12,6 +12,11 @@
     "audit_log": "AUDIT LOG",
     "channels_inbound": "CHANNELS INBOUND",
     "channels_outbound": "CHANNELS OUTBOUND",
-    "rule_list": "RULE LIST"
+    "rule_list": "RULE LIST",
+    "action_list": "ACTION LIST",
+    "spec_list": "SPEC LIST",
+    "identify_list": "IDENTIFY LIST",
+    "daily_report_list": "DAILY REPORT",
+    "alerts_list": "ALERTS"
   }
 }

@@ -12,6 +12,11 @@
     "audit_log": "증적 로그",
     "channels_inbound": "채널 수신",
     "channels_outbound": "채널 송출",
-    "rule_list": "전문 목록"
+    "rule_list": "전문 목록",
+    "action_list": "작업 목록",
+    "spec_list": "SPEC 목록",
+    "identify_list": "식별 목록",
+    "daily_report_list": "일일 리포트",
+    "alerts_list": "알림"
   }
 }
