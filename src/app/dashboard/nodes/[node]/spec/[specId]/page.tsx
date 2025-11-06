@@ -18,6 +18,7 @@ import { Breadcrumb } from 'src/components/common/Breadcrumb';
 import { useTranslate } from 'src/locales';
 import { paths } from 'src/routes/paths';
 import { fetcher, endpoints } from 'src/utils/axios';
+import Chip from '@mui/material/Chip';
 
 // ----------------------------------------------------------------------
 
@@ -111,11 +112,14 @@ export default function Page({ params }: Props) {
 
                     {/* Right side - Fragments table with dark background */}
                     <Grid item xs={12} md={7}>
-                        <Paper sx={{ backgroundColor: '#202838', color: '#D4DCFA' }}>
-                            <TableContainer>
+                        <Paper sx={{ backgroundColor: '#202838', p: 0.5, color: '#D4DCFA' }}>
+                            <Box sx={{ backgroundColor: '#E0E4EB', p: 1, mb: 2, borderTopLeftRadius: 8, borderTopRightRadius: 8 }}>
+                                <Typography sx={{ fontWeight: 600, color: '#4E576A' }}>{t('전문 정의')}</Typography>
+                            </Box>
+                            <TableContainer sx={{ p: 0.5 }}>
                                 <Table size="small">
-                                    <TableHead >
-                                        <TableRow style={{ backgroundColor: 'red' }} >
+                                    <TableHead sx={{ '& .MuiTableCell-head': { backgroundColor: '#667085' } }}>
+                                        <TableRow>
                                             <TableCell sx={{ color: '#D4DCFA' }}>{t('right.offset')}</TableCell>
                                             <TableCell sx={{ color: '#D4DCFA' }}>{t('right.len')}</TableCell>
                                             <TableCell sx={{ color: '#D4DCFA' }}>{t('right.type')}</TableCell>
@@ -145,10 +149,16 @@ export default function Page({ params }: Props) {
                                             </TableRow>
                                         )}
                                         {frags?.map((row, idx) => (
-                                            <TableRow key={idx}>
-                                                <TableCell sx={{ color: '#AFB7C8' }}>{row.offset}</TableCell>
-                                                <TableCell sx={{ color: '#AFB7C8' }}>{row.len}</TableCell>
-                                                <TableCell sx={{ color: '#AFB7C8' }}>{row.type}</TableCell>
+                                            <TableRow sx={{ '&:nth-child(odd)': { backgroundColor: '#202838' }, '&:nth-child(even)': { backgroundColor: '#141C2A' } }} key={idx}>
+                                                <TableCell>
+                                                    <Chip label={row.offset} color="success" size="small" variant="outlined" />
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Chip label={row.len} color="primary" size="small" variant="soft" />
+                                                </TableCell>
+                                                <TableCell >
+                                                    <Chip label={row.type} color="warning" size="small" variant="outlined" />
+                                                </TableCell>
                                                 <TableCell sx={{ color: '#AFB7C8' }}>{row.desc}</TableCell>
                                             </TableRow>
                                         ))}

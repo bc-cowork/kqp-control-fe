@@ -1701,8 +1701,44 @@
       "path": "/specs/order/intake",
       "timestamp": "2025-04-10 11:00:00",
       "refIdentifies": "identifyA, identifyB",
-      "frags": 12,
-      "size": 2048,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 2,
+          "type": "HD",
+          "desc": "헤더 구분"
+        },
+        {
+          "offset": 2,
+          "len": 8,
+          "type": "DT",
+          "desc": "거래일자(YYYYMMDD)"
+        },
+        {
+          "offset": 10,
+          "len": 6,
+          "type": "TIME",
+          "desc": "거래시간(HHMMSS)"
+        },
+        {
+          "offset": 16,
+          "len": 12,
+          "type": "ORDER_ID",
+          "desc": "주문번호"
+        }
+      ],
+      "fragsCount": 58,
+      "size": 512,
+      "identifyList": [
+        {
+          "name": "identifyA",
+          "refCount": 5
+        },
+        {
+          "name": "identifyB",
+          "refCount": 2
+        }
+      ],
       "explanation": "Parses inbound order messages"
     }
   },
@@ -1715,8 +1751,34 @@
       "path": "/specs/order/enrich",
       "timestamp": "2025-04-10 11:05:00",
       "refIdentifies": "identifyC",
-      "frags": 8,
-      "size": 1536,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 3,
+          "type": "VER",
+          "desc": "버전"
+        },
+        {
+          "offset": 3,
+          "len": 12,
+          "type": "CODE",
+          "desc": "종목코드"
+        },
+        {
+          "offset": 15,
+          "len": 4,
+          "type": "QTY",
+          "desc": "수량"
+        }
+      ],
+      "fragsCount": 34,
+      "size": 384,
+      "identifyList": [
+        {
+          "name": "identifyC",
+          "refCount": 3
+        }
+      ],
       "explanation": "Adds enrichment fields"
     }
   },
@@ -1782,8 +1844,28 @@
       "path": "/specs/config/sync",
       "timestamp": "2025-04-11 09:10:00",
       "refIdentifies": "identifyZ",
-      "frags": 5,
-      "size": 1024,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 4,
+          "type": "MAGIC",
+          "desc": "매직값"
+        },
+        {
+          "offset": 4,
+          "len": 2,
+          "type": "CMD",
+          "desc": "명령 코드"
+        }
+      ],
+      "fragsCount": 22,
+      "size": 256,
+      "identifyList": [
+        {
+          "name": "identifyZ",
+          "refCount": 1
+        }
+      ],
       "explanation": "Validates and syncs config"
     }
   }
