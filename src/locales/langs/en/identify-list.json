@@ -1,0 +1,16 @@
+{
+    "top": {
+        "identify_list": "Identity List"
+    },
+    "table": {
+        "id": "Id",
+        "identity_name": "Identity Name",
+        "path": "Path",
+        "timestamp": "Timestamp",
+        "ref_specs": "Ref. SPECs",
+        "explanation": "설명"
+    },
+    "loading": "Loading...",
+    "error": "Failed to load",
+    "empty": "No identities"
+}

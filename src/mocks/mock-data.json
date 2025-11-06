@@ -1868,5 +1868,71 @@
       ],
       "explanation": "Validates and syncs config"
     }
+  },
+  "/apik/prod1/identify/list": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod1",
+      "identifyList": [
+        {
+          "id": "idf-1001",
+          "identityName": "identifyA",
+          "path": "/identify/order/header",
+          "timestamp": "2025-04-10 10:45:00",
+          "refSpecs": 2,
+          "explanation": "Matches order header records"
+        },
+        {
+          "id": "idf-1002",
+          "identityName": "identifyB",
+          "path": "/identify/order/detail",
+          "timestamp": "2025-04-10 10:50:00",
+          "refSpecs": 1,
+          "explanation": "Matches order detail rows"
+        },
+        {
+          "id": "idf-1003",
+          "identityName": "identifyC",
+          "path": "/identify/enrich/code",
+          "timestamp": "2025-04-10 11:06:00",
+          "refSpecs": 1,
+          "explanation": "Validates enrichment target code"
+        },
+        {
+          "id": "idf-1004",
+          "identityName": "identifyD",
+          "path": "/identify/audit/header",
+          "timestamp": "2025-04-10 11:11:00",
+          "refSpecs": 1,
+          "explanation": "Audit format header identifier"
+        },
+        {
+          "id": "idf-1005",
+          "identityName": "identifyE",
+          "path": "/identify/audit/body",
+          "timestamp": "2025-04-10 11:12:00",
+          "refSpecs": 1,
+          "explanation": "Audit body section identifier"
+        }
+      ]
+    }
+  },
+  "/apik/prod2/identify/list": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod2",
+      "identifyList": [
+        {
+          "id": "idf-2001",
+          "identityName": "identifyZ",
+          "path": "/identify/config/magic",
+          "timestamp": "2025-04-11 09:12:00",
+          "refSpecs": 1,
+          "explanation": "Config sync magic checker"
+        }
+      ]
+    }
   }
 }
