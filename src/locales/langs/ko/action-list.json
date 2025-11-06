@@ -1,0 +1,17 @@
+{
+    "top": {
+        "action_list": "작업 목록"
+    },
+    "table": {
+        "id": "ID",
+        "action_name": "작업명",
+        "path": "경로",
+        "timestamp": "타임스탬프",
+        "ref_layout": "참조 레이아웃",
+        "ref_process": "참조 프로세스",
+        "desc": "설명"
+    },
+    "loading": "로딩 중...",
+    "error": "작업을 불러오지 못했습니다",
+    "empty": "작업이 없습니다"
+}

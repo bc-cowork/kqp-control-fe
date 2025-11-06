@@ -192,7 +192,9 @@
         "wday": "Thursday",
         "audit": {
           "masters": {
-            "distributable_issues": ["KR5701000055"],
+            "distributable_issues": [
+              "KR5701000055"
+            ],
             "krx_count": 10,
             "nxt_count": 5,
             "common_count": 3
@@ -344,280 +346,440 @@
           "name": "한투글로벌AI빅테크1호(A)",
           "code": "KR5701000055",
           "seq": 1,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "이스트아시아홀딩스",
           "code": "HK0000057197",
           "seq": 2,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투글로벌AI빅테크1호(A-e)",
           "code": "KR5701000063",
           "seq": 3,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "헝셩그룹",
           "code": "HK0000214814",
           "seq": 4,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투글로벌AI빅테크2호(A)",
           "code": "KR5701000071",
           "seq": 5,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "로스웰",
           "code": "HK0000295359",
           "seq": 6,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투글로벌AI빅테크2호(A-e)",
           "code": "KR5701000089",
           "seq": 7,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "GRT",
           "code": "HK0000307485",
           "seq": 8,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹성장테마1호(A)",
           "code": "KR5701000097",
           "seq": 9,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "오가닉티코스메틱",
           "code": "HK0000312568",
           "seq": 10,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹성장테마1호(A-e)",
           "code": "KR5701000105",
           "seq": 11,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "컬러레이",
           "code": "HK0000341732",
           "seq": 12,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹성장테마2호(A)",
           "code": "KR5701000113",
           "seq": 13,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "윙입푸드",
           "code": "HK0000449303",
           "seq": 14,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹성장테마2호(A-e)",
           "code": "KR5701000121",
           "seq": 15,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 20250410,
           "name": "삼천당제약",
           "code": "KR7000250001",
           "seq": 16,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹&글로벌성장1(A)",
           "code": "KR5701000139",
           "seq": 17,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "중앙에너비스",
           "code": "KR7000440008",
           "seq": 18,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹&글로벌성장1(A1)",
           "code": "KR5701000147",
           "seq": 19,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "신라섬유",
           "code": "KR7001000009",
           "seq": 20,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹&글로벌성장1(A1-e)",
           "code": "KR5701000154",
           "seq": 21,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "안국약품",
           "code": "KR7001540004",
           "seq": 22,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹&글로벌성장2(A)",
           "code": "KR5701000162",
           "seq": 23,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "무림SP",
           "code": "KR7001810001",
           "seq": 24,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹&글로벌성장2(A1)",
           "code": "KR5701000170",
           "seq": 25,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "이화공영",
           "code": "KR7001840008",
           "seq": 26,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹&글로벌성장2(A1-e)",
           "code": "KR5701000188",
           "seq": 27,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "피에스텍",
           "code": "KR7002230001",
           "seq": 28,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹&글로벌성장3(A)",
           "code": "KR5701000196",
           "seq": 29,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "삼일기업공사",
           "code": "KR7002290005",
           "seq": 30,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹&글로벌성장3(A1)",
           "code": "KR5701000204",
           "seq": 31,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "한탑",
           "code": "KR7002680007",
           "seq": 32,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹&글로벌성장3(A1-e)",
           "code": "KR5701000212",
           "seq": 33,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "신신제약",
           "code": "KR7002800001",
           "seq": 34,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "밀라노부동산",
           "code": "KR570101B954",
           "seq": 35,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "선광",
           "code": "KR7003100005",
           "seq": 36,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "벨기에코어오피스2호",
           "code": "KR570101B962",
           "seq": 37,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "대주산업",
           "code": "KR7003310000",
           "seq": 38,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한국투자뉴욕오피스1호",
           "code": "KR570101B9A2",
           "seq": 39,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 20250410,
           "name": "하림지주",
           "code": "KR7003380003",
           "seq": 40,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         }
       ]
     },
@@ -662,7 +824,11 @@
           "uni": 0,
           "krx": 0
         },
-        "g1_ssn_id": [null, "99", ""],
+        "g1_ssn_id": [
+          null,
+          "99",
+          ""
+        ],
         "open": {
           "nxt": 0,
           "uni": 0,
@@ -1339,6 +1505,81 @@
           "nic": "eth1"
         }
       ]
+    }
+  },
+  "/apik/prod1/action/list": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod1",
+      "actionList": [
+        {
+          "id": "1001",
+          "actionName": "Restart Service",
+          "path": "/service/restart",
+          "timestamp": "2025-04-10 16:15:00",
+          "refLayout": "layoutA",
+          "refProcess": "kqp",
+          "desc": "Restart the main KQP service"
+        },
+        {
+          "id": "1002",
+          "actionName": "Clear Cache",
+          "path": "/cache/clear",
+          "timestamp": "2025-04-10 16:20:00",
+          "refLayout": "layoutB",
+          "refProcess": "cacheproc",
+          "desc": "Clear in-memory cache"
+        },
+        {
+          "id": "1003",
+          "actionName": "Rotate Logs",
+          "path": "/logs/rotate",
+          "timestamp": "2025-04-10 16:25:00",
+          "refLayout": "layoutA",
+          "refProcess": "logger",
+          "desc": "Rotate audit logs"
+        }
+      ]
+    },
+    "meta": {
+      "has_previous_page": false,
+      "has_next_page": false,
+      "current_page": 1,
+      "total_pages": 1
+    }
+  },
+  "/apik/prod2/action/list": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod2",
+      "actionList": [
+        {
+          "id": "2001",
+          "actionName": "Start Service",
+          "path": "/service/start",
+          "timestamp": "2025-04-11 09:00:00",
+          "refLayout": "layoutC",
+          "refProcess": "kqp",
+          "desc": "Start the standby KQP service"
+        },
+        {
+          "id": "2002",
+          "actionName": "Sync Config",
+          "path": "/config/sync",
+          "timestamp": "2025-04-11 09:05:00",
+          "refLayout": "layoutC",
+          "refProcess": "configsync",
+          "desc": "Pull configuration from master"
+        }
+      ]
+    },
+    "meta": {
+      "has_previous_page": false,
+      "has_next_page": false,
+      "current_page": 1,
+      "total_pages": 1
     }
   }
 }

@@ -97,6 +97,9 @@ export const endpoints = {
     issueList: (node: string) => `/apik/${node}/issue/list`,
     graph: (node: string) => `/apik/${node}/node/metrics`,
   },
+  actions: {
+    list: (node: string) => `/apik/${node}/action/list`,
+  },
   nodes: {
     channelInbound: {
       list: (node: string) => `/apik/${node}/channel/list`,
