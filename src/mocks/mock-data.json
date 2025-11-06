@@ -1514,31 +1514,76 @@
       "nodeId": "prod1",
       "actionList": [
         {
-          "id": "1001",
-          "actionName": "Restart Service",
-          "path": "/service/restart",
-          "timestamp": "2025-04-10 16:15:00",
-          "refLayout": "layoutA",
-          "refProcess": "kqp",
-          "desc": "Restart the main KQP service"
+          "id": "1",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 14,
+          "desc": "증적로그 기록"
         },
         {
-          "id": "1002",
-          "actionName": "Clear Cache",
-          "path": "/cache/clear",
-          "timestamp": "2025-04-10 16:20:00",
-          "refLayout": "layoutB",
-          "refProcess": "cacheproc",
-          "desc": "Clear in-memory cache"
+          "id": "2",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 5,
+          "refProcess": 10,
+          "desc": "증적로그 기록"
         },
         {
-          "id": "1003",
-          "actionName": "Rotate Logs",
-          "path": "/logs/rotate",
-          "timestamp": "2025-04-10 16:25:00",
-          "refLayout": "layoutA",
-          "refProcess": "logger",
-          "desc": "Rotate audit logs"
+          "id": "3",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 4,
+          "refProcess": 9,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "4",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 16,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "5",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 4,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "6",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 5,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "7",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 6,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "8",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 7,
+          "desc": "증적로그 기록"
         }
       ]
     },
@@ -1556,22 +1601,76 @@
       "nodeId": "prod2",
       "actionList": [
         {
-          "id": "2001",
-          "actionName": "Start Service",
-          "path": "/service/start",
-          "timestamp": "2025-04-11 09:00:00",
-          "refLayout": "layoutC",
-          "refProcess": "kqp",
-          "desc": "Start the standby KQP service"
+          "id": "1",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 14,
+          "desc": "증적로그 기록"
         },
         {
-          "id": "2002",
-          "actionName": "Sync Config",
-          "path": "/config/sync",
-          "timestamp": "2025-04-11 09:05:00",
-          "refLayout": "layoutC",
-          "refProcess": "configsync",
-          "desc": "Pull configuration from master"
+          "id": "2",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 5,
+          "refProcess": 10,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "3",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 4,
+          "refProcess": 9,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "4",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 16,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "5",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 4,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "6",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 5,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "7",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 6,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "8",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 7,
+          "desc": "증적로그 기록"
         }
       ]
     },
@@ -1610,6 +1709,34 @@
       "script": "#!/bin/sh\necho \"Restarting kqp...\"\nsystemctl restart kqp.service\n# end"
     }
   },
+  "/apik/prod1/action/action_log": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod1",
+      "layoutList": [
+        {
+          "layout": "layout_log_writer",
+          "refCount": 12
+        },
+        {
+          "layout": "layout_log_rotator",
+          "refCount": 5
+        }
+      ],
+      "processList": [
+        {
+          "process": "logger",
+          "usageCount": 21
+        },
+        {
+          "process": "kqp",
+          "usageCount": 3
+        }
+      ],
+      "script": "-- action_log.moon\nreturn { desc = '증적로그 기록', keys = {'ACTION_LOG'} }"
+    }
+  },
   "/apik/prod2/action/Start Service": {
     "okay": true,
     "msg": "Success",
@@ -1634,6 +1761,26 @@
       "script": "#!/bin/sh\necho \"Starting kqp...\"\nsystemctl start kqp.service\n# end"
     }
   },
+  "/apik/prod2/action/action_log": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod2",
+      "layoutList": [
+        {
+          "layout": "layout_log_writer",
+          "refCount": 6
+        }
+      ],
+      "processList": [
+        {
+          "process": "logger",
+          "usageCount": 8
+        }
+      ],
+      "script": "-- action_log.moon\nreturn { desc = '증적로그 기록', keys = {'ACTION_LOG'} }"
+    }
+  },
   "/apik/prod1/spec/list": {
     "okay": true,
     "msg": "Success",
@@ -1641,34 +1788,54 @@
       "nodeId": "prod1",
       "specList": [
         {
-          "id": "spc-1001",
-          "specName": "Order Intake SPEC",
-          "path": "/specs/order/intake",
-          "timestamp": "2025-04-10 11:00:00",
-          "refIdentifies": "identifyA, identifyB",
-          "frags": 12,
-          "size": 2048,
-          "explanation": "Parses inbound order messages"
+          "id": "1",
+          "specName": "A0_KRX_MASTER",
+          "path": "/cfg/spec_components/A0_master.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refIdentifies": 1,
+          "frags": 109,
+          "size": 632,
+          "explanation": "KRX 종목 마스터"
         },
         {
-          "id": "spc-1002",
-          "specName": "Order Enrich SPEC",
-          "path": "/specs/order/enrich",
-          "timestamp": "2025-04-10 11:05:00",
-          "refIdentifies": "identifyC",
-          "frags": 8,
-          "size": 1536,
-          "explanation": "Adds enrichment fields"
-        },
-        {
-          "id": "spc-1003",
-          "specName": "Audit Format SPEC",
-          "path": "/specs/audit/format",
-          "timestamp": "2025-04-10 11:10:00",
-          "refIdentifies": "identifyD, identifyE, identifyF",
+          "id": "2",
+          "specName": "A1_ISSUE_INFO_ETN",
+          "path": "/cfg/spec_components/A1_ISSUE_INFO_ETN.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refIdentifies": 2,
           "frags": 20,
-          "size": 4096,
-          "explanation": "Formats frames for audit log"
+          "size": 260,
+          "explanation": "KRX 종목 정보 (ETN)"
+        },
+        {
+          "id": "3",
+          "specName": "A3_FILL",
+          "path": "/cfg/spec_components/A3_FILL.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refIdentifies": 4,
+          "frags": 22,
+          "size": 186,
+          "explanation": "KRX 체결"
+        },
+        {
+          "id": "3",
+          "specName": "A0_NXT_MASTER",
+          "path": "/cfg/spec_components/A0_master.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refIdentifies": 1,
+          "frags": 116,
+          "size": 648,
+          "explanation": "NXT 종목 마스터"
+        },
+        {
+          "id": "3",
+          "specName": "B6_QUOTE",
+          "path": "/cfg/spec_components/B6_QUOTE.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refIdentifies": 4,
+          "frags": 56,
+          "size": 590,
+          "explanation": "KRX 호가"
         }
       ]
     }
@@ -1680,23 +1847,63 @@
       "nodeId": "prod2",
       "specList": [
         {
-          "id": "spc-2001",
-          "specName": "Config Sync SPEC",
-          "path": "/specs/config/sync",
-          "timestamp": "2025-04-11 09:10:00",
-          "refIdentifies": "identifyZ",
-          "frags": 5,
-          "size": 1024,
-          "explanation": "Validates and syncs config"
+          "id": "1",
+          "specName": "A0_KRX_MASTER",
+          "path": "/cfg/spec_components/A0_master.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refIdentifies": 1,
+          "frags": 109,
+          "size": 632,
+          "explanation": "KRX 종목 마스터"
+        },
+        {
+          "id": "2",
+          "specName": "A1_ISSUE_INFO_ETN",
+          "path": "/cfg/spec_components/A1_ISSUE_INFO_ETN.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refIdentifies": 2,
+          "frags": 20,
+          "size": 260,
+          "explanation": "KRX 종목 정보 (ETN)"
+        },
+        {
+          "id": "3",
+          "specName": "A3_FILL",
+          "path": "/cfg/spec_components/A3_FILL.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refIdentifies": 4,
+          "frags": 22,
+          "size": 186,
+          "explanation": "KRX 체결"
+        },
+        {
+          "id": "4",
+          "specName": "A0_NXT_MASTER",
+          "path": "/cfg/spec_components/A0_master.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refIdentifies": 1,
+          "frags": 116,
+          "size": 648,
+          "explanation": "NXT 종목 마스터"
+        },
+        {
+          "id": "5",
+          "specName": "B6_QUOTE",
+          "path": "/cfg/spec_components/B6_QUOTE.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refIdentifies": 4,
+          "frags": 56,
+          "size": 590,
+          "explanation": "KRX 호가"
         }
       ]
     }
   },
-  "/apik/prod1/spec/spc-1001": {
+  "/apik/prod1/spec/1": {
     "okay": true,
     "msg": "Success",
     "data": {
-      "id": "spc-1001",
+      "id": "1",
       "specName": "Order Intake SPEC",
       "path": "/specs/order/intake",
       "timestamp": "2025-04-10 11:00:00",
@@ -1742,11 +1949,11 @@
       "explanation": "Parses inbound order messages"
     }
   },
-  "/apik/prod1/spec/spc-1002": {
+  "/apik/prod1/spec/2": {
     "okay": true,
     "msg": "Success",
     "data": {
-      "id": "spc-1002",
+      "id": "2",
       "specName": "Order Enrich SPEC",
       "path": "/specs/order/enrich",
       "timestamp": "2025-04-10 11:05:00",
@@ -1782,11 +1989,11 @@
       "explanation": "Adds enrichment fields"
     }
   },
-  "/apik/prod1/spec/spc-1003": {
+  "/apik/prod1/spec/3": {
     "okay": true,
     "msg": "Success",
     "data": {
-      "id": "spc-1003",
+      "id": "3",
       "specName": "Audit Format SPEC",
       "path": "/specs/audit/format",
       "timestamp": "2025-04-10 11:10:00",
@@ -1835,11 +2042,11 @@
       ]
     }
   },
-  "/apik/prod2/spec/spc-2001": {
+  "/apik/prod2/spec/1": {
     "okay": true,
     "msg": "Success",
     "data": {
-      "id": "spc-2001",
+      "id": "1",
       "specName": "Config Sync SPEC",
       "path": "/specs/config/sync",
       "timestamp": "2025-04-11 09:10:00",
@@ -1876,44 +2083,52 @@
       "nodeId": "prod1",
       "identifyList": [
         {
-          "id": "idf-1001",
-          "identityName": "identifyA",
-          "path": "/identify/order/header",
-          "timestamp": "2025-04-10 10:45:00",
+          "id": "1",
+          "identityName": "krx_master",
+          "path": "/cfg/specifications/krx_master.moon",
+          "timestamp": "2025-10-28 13:05:30",
           "refSpecs": 2,
-          "explanation": "Matches order header records"
+          "explanation": "KRX 종목 마스터"
         },
         {
-          "id": "idf-1002",
-          "identityName": "identifyB",
-          "path": "/identify/order/detail",
-          "timestamp": "2025-04-10 10:50:00",
-          "refSpecs": 1,
-          "explanation": "Matches order detail rows"
+          "id": "2",
+          "identityName": "nxt_master",
+          "path": "/cfg/specifications/nxt_master.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refSpecs": 2,
+          "explanation": "NXT 종목 마스터"
         },
         {
-          "id": "idf-1003",
-          "identityName": "identifyC",
-          "path": "/identify/enrich/code",
-          "timestamp": "2025-04-10 11:06:00",
-          "refSpecs": 1,
-          "explanation": "Validates enrichment target code"
+          "id": "3",
+          "identityName": "krx_fill",
+          "path": "/cfg/specifications/krx_fill.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refSpecs": 2,
+          "explanation": "KRX 체결"
         },
         {
-          "id": "idf-1004",
-          "identityName": "identifyD",
-          "path": "/identify/audit/header",
-          "timestamp": "2025-04-10 11:11:00",
-          "refSpecs": 1,
-          "explanation": "Audit format header identifier"
+          "id": "4",
+          "identityName": "nxt_fill",
+          "path": "/cfg/specifications/nxt_fill.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refSpecs": 2,
+          "explanation": "NXT 체결"
         },
         {
-          "id": "idf-1005",
-          "identityName": "identifyE",
-          "path": "/identify/audit/body",
-          "timestamp": "2025-04-10 11:12:00",
-          "refSpecs": 1,
-          "explanation": "Audit body section identifier"
+          "id": "5",
+          "identityName": "krx_quote",
+          "path": "/cfg/specifications/krx_quote.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refSpecs": 2,
+          "explanation": "KRX 호가"
+        },
+        {
+          "id": "6",
+          "identityName": "nxt_quote",
+          "path": "/cfg/specifications/nxt_quote.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refSpecs": 2,
+          "explanation": "NXT 호가"
         }
       ]
     }
@@ -1925,12 +2140,52 @@
       "nodeId": "prod2",
       "identifyList": [
         {
-          "id": "idf-2001",
-          "identityName": "identifyZ",
-          "path": "/identify/config/magic",
-          "timestamp": "2025-04-11 09:12:00",
-          "refSpecs": 1,
-          "explanation": "Config sync magic checker"
+          "id": "1",
+          "identityName": "krx_master",
+          "path": "/cfg/specifications/krx_master.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refSpecs": 2,
+          "explanation": "KRX 종목 마스터"
+        },
+        {
+          "id": "2",
+          "identityName": "nxt_master",
+          "path": "/cfg/specifications/nxt_master.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refSpecs": 2,
+          "explanation": "NXT 종목 마스터"
+        },
+        {
+          "id": "3",
+          "identityName": "krx_fill",
+          "path": "/cfg/specifications/krx_fill.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refSpecs": 2,
+          "explanation": "KRX 체결"
+        },
+        {
+          "id": "4",
+          "identityName": "nxt_fill",
+          "path": "/cfg/specifications/nxt_fill.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refSpecs": 2,
+          "explanation": "NXT 체결"
+        },
+        {
+          "id": "5",
+          "identityName": "krx_quote",
+          "path": "/cfg/specifications/krx_quote.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refSpecs": 2,
+          "explanation": "KRX 호가"
+        },
+        {
+          "id": "6",
+          "identityName": "nxt_quote",
+          "path": "/cfg/specifications/nxt_quote.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refSpecs": 2,
+          "explanation": "NXT 호가"
         }
       ]
     }
@@ -2046,6 +2301,734 @@
         }
       ],
       "script": "-- config_magic.moon\nreturn { keys: {'MAGIC'}, specs: 'CFG_MAGIC' }"
+    }
+  },
+  "/apik/prod1/identify/krx_master": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "krx_master",
+      "identityName": "krx_master",
+      "keys": [
+        "A0"
+      ],
+      "specList": [
+        {
+          "spec": "A0_KRX_MASTER",
+          "refCount": 2
+        }
+      ],
+      "script": "-- krx_master.moon\nreturn { desc='KRX 종목 마스터', keys={'A0'}, specs='A0_KRX_MASTER' }"
+    }
+  },
+  "/apik/prod1/identify/nxt_master": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "nxt_master",
+      "identityName": "nxt_master",
+      "keys": [
+        "A0"
+      ],
+      "specList": [
+        {
+          "spec": "A0_NXT_MASTER",
+          "refCount": 2
+        }
+      ],
+      "script": "-- nxt_master.moon\nreturn { desc='NXT 종목 마스터', keys={'A0'}, specs='A0_NXT_MASTER' }"
+    }
+  },
+  "/apik/prod1/identify/krx_fill": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "krx_fill",
+      "identityName": "krx_fill",
+      "keys": [
+        "A301S",
+        "A301Q"
+      ],
+      "specList": [
+        {
+          "spec": "A3_FILL",
+          "refCount": 2
+        }
+      ],
+      "script": "-- krx_fill.moon\nreturn { desc='KRX 체결', keys={'A301S','A301Q'}, specs='A3_FILL' }"
+    }
+  },
+  "/apik/prod1/identify/nxt_fill": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "nxt_fill",
+      "identityName": "nxt_fill",
+      "keys": [
+        "N301S",
+        "N301Q"
+      ],
+      "specList": [
+        {
+          "spec": "A3_FILL",
+          "refCount": 2
+        }
+      ],
+      "script": "-- nxt_fill.moon\nreturn { desc='NXT 체결', keys={'N301S','N301Q'}, specs='A3_FILL' }"
+    }
+  },
+  "/apik/prod1/identify/krx_quote": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "krx_quote",
+      "identityName": "krx_quote",
+      "keys": [
+        "B6"
+      ],
+      "specList": [
+        {
+          "spec": "B6_QUOTE",
+          "refCount": 2
+        }
+      ],
+      "script": "-- krx_quote.moon\nreturn { desc='KRX 호가', keys={'B6'}, specs='B6_QUOTE' }"
+    }
+  },
+  "/apik/prod1/identify/nxt_quote": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "nxt_quote",
+      "identityName": "nxt_quote",
+      "keys": [
+        "NB6"
+      ],
+      "specList": [
+        {
+          "spec": "B6_QUOTE",
+          "refCount": 2
+        }
+      ],
+      "script": "-- nxt_quote.moon\nreturn { desc='NXT 호가', keys={'NB6'}, specs='B6_QUOTE' }"
+    }
+  },
+  "/apik/prod2/identify/krx_master": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "krx_master",
+      "identityName": "krx_master",
+      "keys": [
+        "A0"
+      ],
+      "specList": [
+        {
+          "spec": "A0_KRX_MASTER",
+          "refCount": 2
+        }
+      ],
+      "script": "-- krx_master.moon\nreturn { desc='KRX 종목 마스터', keys={'A0'}, specs='A0_KRX_MASTER' }"
+    }
+  },
+  "/apik/prod2/identify/nxt_master": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "nxt_master",
+      "identityName": "nxt_master",
+      "keys": [
+        "A0"
+      ],
+      "specList": [
+        {
+          "spec": "A0_NXT_MASTER",
+          "refCount": 2
+        }
+      ],
+      "script": "-- nxt_master.moon\nreturn { desc='NXT 종목 마스터', keys={'A0'}, specs='A0_NXT_MASTER' }"
+    }
+  },
+  "/apik/prod2/identify/krx_fill": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "krx_fill",
+      "identityName": "krx_fill",
+      "keys": [
+        "A301S",
+        "A301Q"
+      ],
+      "specList": [
+        {
+          "spec": "A3_FILL",
+          "refCount": 2
+        }
+      ],
+      "script": "-- krx_fill.moon\nreturn { desc='KRX 체결', keys={'A301S','A301Q'}, specs='A3_FILL' }"
+    }
+  },
+  "/apik/prod2/identify/nxt_fill": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "nxt_fill",
+      "identityName": "nxt_fill",
+      "keys": [
+        "N301S",
+        "N301Q"
+      ],
+      "specList": [
+        {
+          "spec": "A3_FILL",
+          "refCount": 2
+        }
+      ],
+      "script": "-- nxt_fill.moon\nreturn { desc='NXT 체결', keys={'N301S','N301Q'}, specs='A3_FILL' }"
+    }
+  },
+  "/apik/prod2/identify/krx_quote": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "krx_quote",
+      "identityName": "krx_quote",
+      "keys": [
+        "B6"
+      ],
+      "specList": [
+        {
+          "spec": "B6_QUOTE",
+          "refCount": 2
+        }
+      ],
+      "script": "-- krx_quote.moon\nreturn { desc='KRX 호가', keys={'B6'}, specs='B6_QUOTE' }"
+    }
+  },
+  "/apik/prod2/identify/nxt_quote": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "nxt_quote",
+      "identityName": "nxt_quote",
+      "keys": [
+        "NB6"
+      ],
+      "specList": [
+        {
+          "spec": "B6_QUOTE",
+          "refCount": 2
+        }
+      ],
+      "script": "-- nxt_quote.moon\nreturn { desc='NXT 호가', keys={'NB6'}, specs='B6_QUOTE' }"
+    }
+  },
+  "/apik/prod1/identify/1": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "1",
+      "identityName": "krx_master",
+      "keys": [
+        "A0"
+      ],
+      "specList": [
+        {
+          "spec": "A0_KRX_MASTER",
+          "refCount": 2
+        }
+      ],
+      "script": "-- krx_master.moon\nreturn { desc='KRX 종목 마스터', keys={'A0'}, specs='A0_KRX_MASTER' }"
+    }
+  },
+  "/apik/prod1/identify/2": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "2",
+      "identityName": "nxt_master",
+      "keys": [
+        "A0"
+      ],
+      "specList": [
+        {
+          "spec": "A0_NXT_MASTER",
+          "refCount": 2
+        }
+      ],
+      "script": "-- nxt_master.moon\nreturn { desc='NXT 종목 마스터', keys={'A0'}, specs='A0_NXT_MASTER' }"
+    }
+  },
+  "/apik/prod1/identify/3": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "3",
+      "identityName": "krx_fill",
+      "keys": [
+        "A301S",
+        "A301Q"
+      ],
+      "specList": [
+        {
+          "spec": "A3_FILL",
+          "refCount": 2
+        }
+      ],
+      "script": "-- krx_fill.moon\nreturn { desc='KRX 체결', keys={'A301S','A301Q'}, specs='A3_FILL' }"
+    }
+  },
+  "/apik/prod1/identify/4": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "4",
+      "identityName": "nxt_fill",
+      "keys": [
+        "N301S",
+        "N301Q"
+      ],
+      "specList": [
+        {
+          "spec": "A3_FILL",
+          "refCount": 2
+        }
+      ],
+      "script": "-- nxt_fill.moon\nreturn { desc='NXT 체결', keys={'N301S','N301Q'}, specs='A3_FILL' }"
+    }
+  },
+  "/apik/prod1/identify/5": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "5",
+      "identityName": "krx_quote",
+      "keys": [
+        "B6"
+      ],
+      "specList": [
+        {
+          "spec": "B6_QUOTE",
+          "refCount": 2
+        }
+      ],
+      "script": "-- krx_quote.moon\nreturn { desc='KRX 호가', keys={'B6'}, specs='B6_QUOTE' }"
+    }
+  },
+  "/apik/prod1/identify/6": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "6",
+      "identityName": "nxt_quote",
+      "keys": [
+        "NB6"
+      ],
+      "specList": [
+        {
+          "spec": "B6_QUOTE",
+          "refCount": 2
+        }
+      ],
+      "script": "-- nxt_quote.moon\nreturn { desc='NXT 호가', keys={'NB6'}, specs='B6_QUOTE' }"
+    }
+  },
+  "/apik/prod2/identify/1": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "1",
+      "identityName": "krx_master",
+      "keys": [
+        "A0"
+      ],
+      "specList": [
+        {
+          "spec": "A0_KRX_MASTER",
+          "refCount": 2
+        }
+      ],
+      "script": "-- krx_master.moon\nreturn { desc='KRX 종목 마스터', keys={'A0'}, specs='A0_KRX_MASTER' }"
+    }
+  },
+  "/apik/prod2/identify/2": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "2",
+      "identityName": "nxt_master",
+      "keys": [
+        "A0"
+      ],
+      "specList": [
+        {
+          "spec": "A0_NXT_MASTER",
+          "refCount": 2
+        }
+      ],
+      "script": "-- nxt_master.moon\nreturn { desc='NXT 종목 마스터', keys={'A0'}, specs='A0_NXT_MASTER' }"
+    }
+  },
+  "/apik/prod2/identify/3": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "3",
+      "identityName": "krx_fill",
+      "keys": [
+        "A301S",
+        "A301Q"
+      ],
+      "specList": [
+        {
+          "spec": "A3_FILL",
+          "refCount": 2
+        }
+      ],
+      "script": "-- krx_fill.moon\nreturn { desc='KRX 체결', keys={'A301S','A301Q'}, specs='A3_FILL' }"
+    }
+  },
+  "/apik/prod2/identify/4": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "4",
+      "identityName": "nxt_fill",
+      "keys": [
+        "N301S",
+        "N301Q"
+      ],
+      "specList": [
+        {
+          "spec": "A3_FILL",
+          "refCount": 2
+        }
+      ],
+      "script": "-- nxt_fill.moon\nreturn { desc='NXT 체결', keys={'N301S','N301Q'}, specs='A3_FILL' }"
+    }
+  },
+  "/apik/prod2/identify/5": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "5",
+      "identityName": "krx_quote",
+      "keys": [
+        "B6"
+      ],
+      "specList": [
+        {
+          "spec": "B6_QUOTE",
+          "refCount": 2
+        }
+      ],
+      "script": "-- krx_quote.moon\nreturn { desc='KRX 호가', keys={'B6'}, specs='B6_QUOTE' }"
+    }
+  },
+  "/apik/prod2/identify/6": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "6",
+      "identityName": "nxt_quote",
+      "keys": [
+        "NB6"
+      ],
+      "specList": [
+        {
+          "spec": "B6_QUOTE",
+          "refCount": 2
+        }
+      ],
+      "script": "-- nxt_quote.moon\nreturn { desc='NXT 호가', keys={'NB6'}, specs='B6_QUOTE' }"
+    }
+  },
+  "/apik/prod1/spec/A0_KRX_MASTER": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "A0_KRX_MASTER",
+      "specName": "A0_KRX_MASTER",
+      "path": "/cfg/spec_components/A0_master.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refIdentifies": 1,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 2,
+          "type": "C3",
+          "desc": "데이터구분값 (C3)"
+        }
+      ],
+      "fragsCount": 109,
+      "size": 632,
+      "identifyList": [
+        {
+          "name": "identifyD",
+          "refCount": 1
+        }
+      ],
+      "explanation": "KRX 종목 마스터"
+    }
+  },
+  "/apik/prod1/spec/A1_ISSUE_INFO_ETN": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "A1_ISSUE_INFO_ETN",
+      "specName": "A1_ISSUE_INFO_ETN",
+      "path": "/cfg/spec_components/A1_ISSUE_INFO_ETN.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refIdentifies": 2,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 4,
+          "type": "VER",
+          "desc": "버전"
+        }
+      ],
+      "fragsCount": 20,
+      "size": 260,
+      "identifyList": [
+        {
+          "name": "identifyE",
+          "refCount": 2
+        }
+      ],
+      "explanation": "KRX 종목 정보 (ETN)"
+    }
+  },
+  "/apik/prod1/spec/A3_FILL": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "A3_FILL",
+      "specName": "A3_FILL",
+      "path": "/cfg/spec_components/A3_FILL.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refIdentifies": 4,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 2,
+          "type": "C3",
+          "desc": "데이터구분값 (C3)"
+        }
+      ],
+      "fragsCount": 22,
+      "size": 186,
+      "identifyList": [
+        {
+          "name": "identifyA",
+          "refCount": 2
+        },
+        {
+          "name": "identifyB",
+          "refCount": 2
+        }
+      ],
+      "explanation": "KRX 체결"
+    }
+  },
+  "/apik/prod1/spec/A0_NXT_MASTER": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "A0_NXT_MASTER",
+      "specName": "A0_NXT_MASTER",
+      "path": "/cfg/spec_components/A0_master.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refIdentifies": 1,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 2,
+          "type": "C3",
+          "desc": "데이터구분값 (C3)"
+        }
+      ],
+      "fragsCount": 116,
+      "size": 648,
+      "identifyList": [
+        {
+          "name": "identifyZ",
+          "refCount": 1
+        }
+      ],
+      "explanation": "NXT 종목 마스터"
+    }
+  },
+  "/apik/prod1/spec/B6_QUOTE": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "B6_QUOTE",
+      "specName": "B6_QUOTE",
+      "path": "/cfg/spec_components/B6_QUOTE.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refIdentifies": 4,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 3,
+          "type": "51Q",
+          "desc": "정보구분값"
+        }
+      ],
+      "fragsCount": 56,
+      "size": 590,
+      "identifyList": [
+        {
+          "name": "identifyQ",
+          "refCount": 1
+        }
+      ],
+      "explanation": "KRX 호가"
+    }
+  },
+  "/apik/prod2/spec/A0_KRX_MASTER": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "A0_KRX_MASTER",
+      "specName": "A0_KRX_MASTER",
+      "path": "/cfg/spec_components/A0_master.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refIdentifies": 1,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 2,
+          "type": "C3",
+          "desc": "데이터구분값 (C3)"
+        }
+      ],
+      "fragsCount": 109,
+      "size": 632,
+      "identifyList": [
+        {
+          "name": "identifyD",
+          "refCount": 1
+        }
+      ],
+      "explanation": "KRX 종목 마스터"
+    }
+  },
+  "/apik/prod2/spec/A1_ISSUE_INFO_ETN": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "A1_ISSUE_INFO_ETN",
+      "specName": "A1_ISSUE_INFO_ETN",
+      "path": "/cfg/spec_components/A1_ISSUE_INFO_ETN.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refIdentifies": 2,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 4,
+          "type": "VER",
+          "desc": "버전"
+        }
+      ],
+      "fragsCount": 20,
+      "size": 260,
+      "identifyList": [
+        {
+          "name": "identifyE",
+          "refCount": 2
+        }
+      ],
+      "explanation": "KRX 종목 정보 (ETN)"
+    }
+  },
+  "/apik/prod2/spec/A3_FILL": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "A3_FILL",
+      "specName": "A3_FILL",
+      "path": "/cfg/spec_components/A3_FILL.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refIdentifies": 4,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 2,
+          "type": "C3",
+          "desc": "데이터구분값 (C3)"
+        }
+      ],
+      "fragsCount": 22,
+      "size": 186,
+      "identifyList": [
+        {
+          "name": "identifyA",
+          "refCount": 2
+        },
+        {
+          "name": "identifyB",
+          "refCount": 2
+        }
+      ],
+      "explanation": "KRX 체결"
+    }
+  },
+  "/apik/prod2/spec/A0_NXT_MASTER": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "A0_NXT_MASTER",
+      "specName": "A0_NXT_MASTER",
+      "path": "/cfg/spec_components/A0_master.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refIdentifies": 1,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 2,
+          "type": "C3",
+          "desc": "데이터구분값 (C3)"
+        }
+      ],
+      "fragsCount": 116,
+      "size": 648,
+      "identifyList": [
+        {
+          "name": "identifyZ",
+          "refCount": 1
+        }
+      ],
+      "explanation": "NXT 종목 마스터"
+    }
+  },
+  "/apik/prod2/spec/B6_QUOTE": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "B6_QUOTE",
+      "specName": "B6_QUOTE",
+      "path": "/cfg/spec_components/B6_QUOTE.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refIdentifies": 4,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 3,
+          "type": "51Q",
+          "desc": "정보구분값"
+        }
+      ],
+      "fragsCount": 56,
+      "size": 590,
+      "identifyList": [
+        {
+          "name": "identifyQ",
+          "refCount": 1
+        }
+      ],
+      "explanation": "KRX 호가"
     }
   }
 }
