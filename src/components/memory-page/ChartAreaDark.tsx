@@ -91,7 +91,7 @@ export function ChartAreaDark({
             >
               <CircularProgress />
             </Box>
-          ) : data.length === 0 ? (
+          ) : data?.length === 0 ? (
             <Box
               sx={{
                 display: 'flex',

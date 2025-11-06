@@ -101,6 +101,10 @@ export const endpoints = {
     list: (node: string) => `/apik/${node}/action/list`,
     detail: (node: string, action: string) => `/apik/${node}/action/${action}`,
   },
+  spec: {
+    list: (node: string) => `/apik/${node}/spec/list`,
+    detail: (node: string, specId: string) => `/apik/${node}/spec/${specId}`,
+  },
   nodes: {
     channelInbound: {
       list: (node: string) => `/apik/${node}/channel/list`,

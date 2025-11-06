@@ -60,6 +60,7 @@ export const paths = {
       identifyList: (node: string) => `/dashboard/nodes/${node}/identify-list`,
       dailyReportList: (node: string) => `/dashboard/nodes/${node}/daily-report-list`,
       alertsList: (node: string) => `/dashboard/nodes/${node}/alerts-list`,
+      specDetail: (node: string, specId: string) => `/dashboard/nodes/${node}/spec/${encodeURIComponent(specId)}`,
     },
     two: `${ROOTS.DASHBOARD}/two`,
     three: `${ROOTS.DASHBOARD}/three`,

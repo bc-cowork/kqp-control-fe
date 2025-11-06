@@ -1,0 +1,21 @@
+{
+  "top": {
+    "spec_list": "SPEC 목록"
+  },
+  "left": {
+    "no": "No",
+    "identifier": "연관 식별자",
+    "ref_count": "참조 빈도",
+    "ref_identifier_with_count": "ref. Identifier {{count}}",
+    "frags_sizes": "Frags {{frags}}, Sizes {{sizes}}"
+  },
+  "right": {
+    "offset": "offset",
+    "len": "len",
+    "type": "Type",
+    "desc": "Desc"
+  },
+  "loading": "로딩 중...",
+  "error": "불러오기 실패.",
+  "empty": "데이터 없음."
+}

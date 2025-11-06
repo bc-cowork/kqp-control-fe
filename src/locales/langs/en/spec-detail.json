@@ -1,0 +1,21 @@
+{
+  "top": {
+    "spec_list": "SPEC List"
+  },
+  "left": {
+    "no": "No",
+    "identifier": "Identifier",
+    "ref_count": "Ref. Freq",
+    "ref_identifier_with_count": "ref. Identifier {{count}}",
+    "frags_sizes": "Frags {{frags}}, Sizes {{sizes}}"
+  },
+  "right": {
+    "offset": "offset",
+    "len": "len",
+    "type": "Type",
+    "desc": "Desc"
+  },
+  "loading": "Loading...",
+  "error": "Failed to load.",
+  "empty": "No data."
+}

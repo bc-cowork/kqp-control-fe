@@ -1633,5 +1633,158 @@
       ],
       "script": "#!/bin/sh\necho \"Starting kqp...\"\nsystemctl start kqp.service\n# end"
     }
+  },
+  "/apik/prod1/spec/list": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod1",
+      "specList": [
+        {
+          "id": "spc-1001",
+          "specName": "Order Intake SPEC",
+          "path": "/specs/order/intake",
+          "timestamp": "2025-04-10 11:00:00",
+          "refIdentifies": "identifyA, identifyB",
+          "frags": 12,
+          "size": 2048,
+          "explanation": "Parses inbound order messages"
+        },
+        {
+          "id": "spc-1002",
+          "specName": "Order Enrich SPEC",
+          "path": "/specs/order/enrich",
+          "timestamp": "2025-04-10 11:05:00",
+          "refIdentifies": "identifyC",
+          "frags": 8,
+          "size": 1536,
+          "explanation": "Adds enrichment fields"
+        },
+        {
+          "id": "spc-1003",
+          "specName": "Audit Format SPEC",
+          "path": "/specs/audit/format",
+          "timestamp": "2025-04-10 11:10:00",
+          "refIdentifies": "identifyD, identifyE, identifyF",
+          "frags": 20,
+          "size": 4096,
+          "explanation": "Formats frames for audit log"
+        }
+      ]
+    }
+  },
+  "/apik/prod2/spec/list": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod2",
+      "specList": [
+        {
+          "id": "spc-2001",
+          "specName": "Config Sync SPEC",
+          "path": "/specs/config/sync",
+          "timestamp": "2025-04-11 09:10:00",
+          "refIdentifies": "identifyZ",
+          "frags": 5,
+          "size": 1024,
+          "explanation": "Validates and syncs config"
+        }
+      ]
+    }
+  },
+  "/apik/prod1/spec/spc-1001": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "spc-1001",
+      "specName": "Order Intake SPEC",
+      "path": "/specs/order/intake",
+      "timestamp": "2025-04-10 11:00:00",
+      "refIdentifies": "identifyA, identifyB",
+      "frags": 12,
+      "size": 2048,
+      "explanation": "Parses inbound order messages"
+    }
+  },
+  "/apik/prod1/spec/spc-1002": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "spc-1002",
+      "specName": "Order Enrich SPEC",
+      "path": "/specs/order/enrich",
+      "timestamp": "2025-04-10 11:05:00",
+      "refIdentifies": "identifyC",
+      "frags": 8,
+      "size": 1536,
+      "explanation": "Adds enrichment fields"
+    }
+  },
+  "/apik/prod1/spec/spc-1003": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "spc-1003",
+      "specName": "Audit Format SPEC",
+      "path": "/specs/audit/format",
+      "timestamp": "2025-04-10 11:10:00",
+      "refIdentifies": "identifyD, identifyE, identifyF",
+      "frags": [
+        {
+          "offset": 0,
+          "len": 2,
+          "type": "C3",
+          "desc": "데이터구분값 (C3)"
+        },
+        {
+          "offset": 2,
+          "len": 3,
+          "type": "51Q",
+          "desc": "정보구분값"
+        },
+        {
+          "offset": 5,
+          "len": 12,
+          "type": "CODE",
+          "desc": "종목코드"
+        },
+        {
+          "offset": 17,
+          "len": 6,
+          "type": "IDX",
+          "desc": "종목인덱스번호"
+        }
+      ],
+      "fragsCount": 109,
+      "size": 632,
+      "identifyList": [
+        {
+          "name": "identifyD",
+          "refCount": 4
+        },
+        {
+          "name": "identifyE",
+          "refCount": 2
+        },
+        {
+          "name": "identifyF",
+          "refCount": 1
+        }
+      ]
+    }
+  },
+  "/apik/prod2/spec/spc-2001": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "spc-2001",
+      "specName": "Config Sync SPEC",
+      "path": "/specs/config/sync",
+      "timestamp": "2025-04-11 09:10:00",
+      "refIdentifies": "identifyZ",
+      "frags": 5,
+      "size": 1024,
+      "explanation": "Validates and syncs config"
+    }
   }
 }

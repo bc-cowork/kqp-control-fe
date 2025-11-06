@@ -89,12 +89,16 @@ export function ActionListView({ nodeId }: Props) {
                                 <TableRow
                                     key={row.id}
                                     hover
-                                    onClick={() => router.push(paths.dashboard.nodes.actionDetail(nodeId, String(row.actionName)))}
+                                    onClick={() => router.push(
+                                        `${paths.dashboard.nodes.actionDetail(nodeId, String(row.actionName))}?timestamp=${encodeURIComponent(row.timestamp || '')}&refLayoutCount=${row.refLayout ? 1 : 0}`
+                                    )}
                                     sx={{ cursor: 'pointer' }}
                                     tabIndex={0}
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter' || e.key === ' ') {
-                                            router.push(paths.dashboard.nodes.actionDetail(nodeId, String(row.actionName)));
+                                            router.push(
+                                                `${paths.dashboard.nodes.actionDetail(nodeId, String(row.actionName))}?timestamp=${encodeURIComponent(row.timestamp || '')}&refLayoutCount=${row.refLayout ? 1 : 0}`
+                                            );
                                         }
                                     }}
                                 >

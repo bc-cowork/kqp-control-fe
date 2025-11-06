@@ -1,0 +1,18 @@
+{
+  "top": {
+    "spec_list": "SPEC List"
+  },
+  "table": {
+    "id": "ID",
+    "spec_name": "SPEC Name",
+    "path": "Path",
+    "timestamp": "Timestamp",
+    "ref_identifies": "ref. Identifies",
+    "frags": "Frags",
+    "size": "Size",
+    "explanation": "Explanation"
+  },
+  "loading": "Loading...",
+  "error": "Failed to load.",
+  "empty": "No specs found."
+}
