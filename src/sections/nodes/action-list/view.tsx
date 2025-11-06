@@ -15,6 +15,8 @@ import { grey } from 'src/theme/core';
 import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
 import useSWR from 'swr';
+import { useRouter } from 'src/routes/hooks';
+import { paths } from 'src/routes/paths';
 
 import { Breadcrumb } from 'src/components/common/Breadcrumb';
 import { fetcher, endpoints } from 'src/utils/axios';
@@ -35,6 +37,7 @@ type ActionItem = {
 
 export function ActionListView({ nodeId }: Props) {
     const { t } = useTranslate('action-list');
+    const router = useRouter();
 
     const url = endpoints.actions.list(nodeId);
     const { data, error, isLoading } = useSWR(url, fetcher);
@@ -83,7 +86,18 @@ export function ActionListView({ nodeId }: Props) {
                             )}
 
                             {rows.map((row) => (
-                                <TableRow key={row.id} hover>
+                                <TableRow
+                                    key={row.id}
+                                    hover
+                                    onClick={() => router.push(paths.dashboard.nodes.actionDetail(nodeId, String(row.actionName)))}
+                                    sx={{ cursor: 'pointer' }}
+                                    tabIndex={0}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                            router.push(paths.dashboard.nodes.actionDetail(nodeId, String(row.actionName)));
+                                        }
+                                    }}
+                                >
                                     <TableCell>{row.id}</TableCell>
                                     <TableCell>{row.actionName}</TableCell>
                                     <TableCell>{row.path}</TableCell>

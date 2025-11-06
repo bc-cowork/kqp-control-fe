@@ -13,5 +13,8 @@
     },
     "loading": "Loading...",
     "error": "Failed to load actions",
-    "empty": "No actions found"
+    "empty": "No actions found",
+    "detail": {
+        "placeholder": "Action details will appear here."
+    }
 }
