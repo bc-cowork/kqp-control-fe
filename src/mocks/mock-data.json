@@ -1812,7 +1812,7 @@
     "msg": "Success",
     "data": {
       "nodeId": "prod1",
-      "script": "-- BASE.moon\nreturn { desc = '공통 레이아웃' }"
+      "script": "lunit = require 'lunit'\nlpfrag = lunit.lpfrag\n"
     }
   },
   "/apik/prod1/layout/KOSPI_KOSDAQ": {

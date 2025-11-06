@@ -54,8 +54,8 @@ export default function Page({ params }: Props) {
                     </Grid>
 
                     <Grid item xs={12} md={5}>
-                        <Paper sx={{ height: '100%' }}>
-                            <Box sx={{ backgroundColor: '#E0E4EB', p: 2, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
+                        <Paper sx={{ height: '100%', backgroundColor: 'black', p: 0.5 }} >
+                            <Box sx={{ backgroundColor: '#E0E4EB', p: 1.5, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
                                 <Typography sx={{ fontWeight: 600 }}>{t('detail_table.script_title')}</Typography>
                             </Box>
 
@@ -68,7 +68,7 @@ export default function Page({ params }: Props) {
                     </Grid>
                 </Grid>
             </Box>
-        </DashboardContent>
+        </DashboardContent >
     );
 }
 

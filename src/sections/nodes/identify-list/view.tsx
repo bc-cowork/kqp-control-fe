@@ -53,7 +53,7 @@ export function IdentifyListView({ nodeId }: Props) {
 
             <Box sx={{ mt: 3 }}>
                 <TableContainer component={Paper}>
-                    <Table>
+                    <Table size="small">
                         <TableHead>
                             <TableRow>
                                 <TableCell>{t("table.id")}</TableCell>

@@ -2,7 +2,7 @@
 
 import React from "react";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
+import Paper from '@mui/material/Paper';
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -48,7 +48,7 @@ export function SpecListView({ nodeId }: Props) {
             <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[600], mt: 2 }}>{t("top.spec_list")}</Typography>
             <Box sx={{ mt: 3 }}>
                 <TableContainer component={Paper}>
-                    <Table>
+                    <Table size="small">
                         <TableHead>
                             <TableRow>
                                 <TableCell>{t("table.id")}</TableCell>
