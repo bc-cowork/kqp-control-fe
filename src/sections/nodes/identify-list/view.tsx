@@ -18,6 +18,8 @@ import useSWR from "swr";
 
 import { Breadcrumb } from "src/components/common/Breadcrumb";
 import { fetcher, endpoints } from "src/utils/axios";
+import { useRouter } from 'next/navigation';
+import { paths } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -34,6 +36,7 @@ type IdentifyItem = {
 
 export function IdentifyListView({ nodeId }: Props) {
     const { t } = useTranslate("identify-list");
+    const router = useRouter();
 
     const url = endpoints.identify.list(nodeId);
     const { data, error, isLoading } = useSWR(url, fetcher);
@@ -81,7 +84,18 @@ export function IdentifyListView({ nodeId }: Props) {
                             )}
 
                             {rows.map((row) => (
-                                <TableRow key={row.id} hover>
+                                <TableRow
+                                    key={row.id}
+                                    hover
+                                    sx={{ cursor: 'pointer' }}
+                                    tabIndex={0}
+                                    onClick={() => router.push(paths.dashboard.nodes.identifyDetail(nodeId, String(row.id)))}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                            router.push(paths.dashboard.nodes.identifyDetail(nodeId, String(row.id)));
+                                        }
+                                    }}
+                                >
                                     <TableCell>{row.id}</TableCell>
                                     <TableCell>{row.identityName}</TableCell>
                                     <TableCell>{row.path}</TableCell>

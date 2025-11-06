@@ -58,6 +58,7 @@ export const paths = {
       actionDetail: (node: string, action: string) => `/dashboard/nodes/${node}/action/${encodeURIComponent(action)}`,
       specList: (node: string) => `/dashboard/nodes/${node}/spec-list`,
       identifyList: (node: string) => `/dashboard/nodes/${node}/identify-list`,
+      identifyDetail: (node: string, identifyId: string) => `/dashboard/nodes/${node}/identify/${encodeURIComponent(identifyId)}`,
       dailyReportList: (node: string) => `/dashboard/nodes/${node}/daily-report-list`,
       alertsList: (node: string) => `/dashboard/nodes/${node}/alerts-list`,
       specDetail: (node: string, specId: string) => `/dashboard/nodes/${node}/spec/${encodeURIComponent(specId)}`,
