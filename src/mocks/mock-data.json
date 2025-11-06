@@ -1807,6 +1807,42 @@
       ]
     }
   },
+  "/apik/prod1/layout/BASE": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod1",
+      "script": "-- BASE.moon\nreturn { desc = '공통 레이아웃' }"
+    }
+  },
+  "/apik/prod1/layout/KOSPI_KOSDAQ": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod1",
+      "script": "-- KOSPI_KOSDAQ.moon\nreturn { desc = '코스피, 코스닥 주식 레이아웃' }"
+    }
+  },
+  "/apik/prod2/layout/BASE": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod2",
+      "actionList": [
+        {
+          "action": "action_log",
+          "refCount": 6
+        }
+      ],
+      "processList": [
+        {
+          "process": "kqp",
+          "usageCount": 2
+        }
+      ],
+      "script": "-- BASE.moon\nreturn { desc = '공통 레이아웃' }"
+    }
+  },
   "/apik/prod1/action/Restart Service": {
     "okay": true,
     "msg": "Success",

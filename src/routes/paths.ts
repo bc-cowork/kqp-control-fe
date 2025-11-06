@@ -57,6 +57,7 @@ export const paths = {
       actionList: (node: string) => `/dashboard/nodes/${node}/action-list`,
       layoutList: (node: string) => `/dashboard/nodes/${node}/layout-list`,
       actionDetail: (node: string, action: string) => `/dashboard/nodes/${node}/action/${encodeURIComponent(action)}`,
+      layoutDetail: (node: string, layout: string) => `/dashboard/nodes/${node}/layout/${encodeURIComponent(layout)}`,
       specList: (node: string) => `/dashboard/nodes/${node}/spec-list`,
       identifyList: (node: string) => `/dashboard/nodes/${node}/identify-list`,
       identifyDetail: (node: string, identifyId: string) => `/dashboard/nodes/${node}/identify/${encodeURIComponent(identifyId)}`,

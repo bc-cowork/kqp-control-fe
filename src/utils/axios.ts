@@ -103,6 +103,7 @@ export const endpoints = {
   },
   layouts: {
     list: (node: string) => `/apik/${node}/layout/list`,
+    detail: (node: string, layout: string) => `/apik/${node}/layout/${layout}`,
   },
   identify: {
     list: (node: string) => `/apik/${node}/identify/list`,

@@ -1,6 +1,7 @@
 {
   "top": {
-    "layout_list": "레이아웃 목록"
+    "layout_list": "레이아웃 목록",
+    "layout": "레이아웃 목록"
   },
   "table": {
     "id": "ID",
@@ -13,7 +14,10 @@
   },
   "loading": "로딩 중...",
   "error": "레이아웃을 불러오지 못했습니다",
-  "empty": "레이아웃이 없습니다"
+  "empty": "레이아웃이 없습니다",
+  "detail_table": {
+    "action_title": "연관 작업",
+    "process_title": "연관 프로세스",
+    "script_title": "함수 정의"
+  }
 }
-
-

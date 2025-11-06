@@ -15,6 +15,8 @@ import { grey } from 'src/theme/core';
 import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
 import useSWR from 'swr';
+import { useRouter } from 'src/routes/hooks';
+import { paths } from 'src/routes/paths';
 
 import { Breadcrumb } from 'src/components/common/Breadcrumb';
 import { fetcher, endpoints } from 'src/utils/axios';
@@ -35,6 +37,7 @@ type LayoutItem = {
 
 export function LayoutListView({ nodeId }: Props) {
     const { t } = useTranslate('layout-list');
+    const router = useRouter();
 
     const url = endpoints.layouts.list(nodeId);
     const { data, error, isLoading } = useSWR(url, fetcher);
@@ -83,7 +86,22 @@ export function LayoutListView({ nodeId }: Props) {
                             )}
 
                             {rows.map((row) => (
-                                <TableRow key={row.id} hover>
+                                <TableRow
+                                    key={row.id}
+                                    hover
+                                    onClick={() => router.push(
+                                        `${paths.dashboard.nodes.layoutDetail(nodeId, String(row.layoutName))}?timestamp=${encodeURIComponent(row.timestamp || '')}`
+                                    )}
+                                    sx={{ cursor: 'pointer' }}
+                                    tabIndex={0}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                            router.push(
+                                                `${paths.dashboard.nodes.layoutDetail(nodeId, String(row.layoutName))}?timestamp=${encodeURIComponent(row.timestamp || '')}`
+                                            );
+                                        }
+                                    }}
+                                >
                                     <TableCell>{row.id}</TableCell>
                                     <TableCell>{row.layoutName}</TableCell>
                                     <TableCell>{row.path}</TableCell>

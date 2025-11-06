@@ -1,6 +1,7 @@
 {
   "top": {
-    "layout_list": "Layout List"
+    "layout_list": "Layout List",
+    "layout": "Layout"
   },
   "table": {
     "id": "ID",
@@ -13,7 +14,10 @@
   },
   "loading": "Loading...",
   "error": "Failed to load layouts",
-  "empty": "No layouts found"
+  "empty": "No layouts found",
+  "detail_table": {
+    "action_title": "Related Actions",
+    "process_title": "Related Processes",
+    "script_title": "Function Definition"
+  }
 }
-
-
