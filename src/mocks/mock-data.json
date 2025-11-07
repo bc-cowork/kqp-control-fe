@@ -1509,7 +1509,6 @@
   },
   "/apik/prod1/action/list": {
     "okay": true,
-    "msg": "Success",
     "data": {
       "nodeId": "prod1",
       "actionList": [
@@ -1586,17 +1585,10 @@
           "desc": "증적로그 기록"
         }
       ]
-    },
-    "meta": {
-      "has_previous_page": false,
-      "has_next_page": false,
-      "current_page": 1,
-      "total_pages": 1
     }
   },
   "/apik/prod2/action/list": {
     "okay": true,
-    "msg": "Success",
     "data": {
       "nodeId": "prod2",
       "actionList": [
@@ -1673,17 +1665,10 @@
           "desc": "증적로그 기록"
         }
       ]
-    },
-    "meta": {
-      "has_previous_page": false,
-      "has_next_page": false,
-      "current_page": 1,
-      "total_pages": 1
     }
   },
   "/apik/prod1/layout/list": {
     "okay": true,
-    "msg": "Success",
     "data": {
       "nodeId": "prod1",
       "layoutList": [
@@ -1703,50 +1688,13 @@
           "timestamp": "2025-10-28 13:05:30",
           "process": 5,
           "channelIn": 10,
-          "desc": "코스피, 코스닥 주식  레이아웃"
-        },
-        {
-          "id": "3",
-          "layoutName": "ETC_STOCK",
-          "path": "/cfg/layouts/ETC_STOCKBASE.moon",
-          "timestamp": "2025-10-28 13:05:30",
-          "process": 4,
-          "channelIn": 9,
-          "desc": "기타 주식  레이아웃"
-        },
-        {
-          "id": "4",
-          "layoutName": "ST_STOCK",
-          "path": "/cfg/layouts/ST_STOCK.moon",
-          "timestamp": "2025-10-28 13:05:30",
-          "process": 3,
-          "channelIn": 16,
-          "desc": "구조화증권  레이아웃"
-        },
-        {
-          "id": "5",
-          "layoutName": "INDEX",
-          "path": "/cfg/layouts/INDEX.moon",
-          "timestamp": "2025-10-28 13:05:30",
-          "process": 3,
-          "channelIn": 4,
-          "desc": "지수  레이아웃"
-        },
-        {
-          "id": "6",
-          "layoutName": "BOND",
-          "path": "/cfg/layouts/BOND.moon",
-          "timestamp": "2025-10-28 13:05:30",
-          "process": 3,
-          "channelIn": 5,
-          "desc": "채권  레이아웃"
+          "desc": "코스피, 코스닥 주식 레이아웃"
         }
       ]
     }
   },
   "/apik/prod2/layout/list": {
     "okay": true,
-    "msg": "Success",
     "data": {
       "nodeId": "prod2",
       "layoutList": [
@@ -1766,50 +1714,13 @@
           "timestamp": "2025-10-28 13:05:30",
           "process": 5,
           "channelIn": 10,
-          "desc": "코스피, 코스닥 주식  레이아웃"
-        },
-        {
-          "id": "3",
-          "layoutName": "ETC_STOCK",
-          "path": "/cfg/layouts/ETC_STOCKBASE.moon",
-          "timestamp": "2025-10-28 13:05:30",
-          "process": 4,
-          "channelIn": 9,
-          "desc": "기타 주식  레이아웃"
-        },
-        {
-          "id": "4",
-          "layoutName": "ST_STOCK",
-          "path": "/cfg/layouts/ST_STOCK.moon",
-          "timestamp": "2025-10-28 13:05:30",
-          "process": 3,
-          "channelIn": 16,
-          "desc": "구조화증권  레이아웃"
-        },
-        {
-          "id": "5",
-          "layoutName": "INDEX",
-          "path": "/cfg/layouts/INDEX.moon",
-          "timestamp": "2025-10-28 13:05:30",
-          "process": 3,
-          "channelIn": 4,
-          "desc": "지수  레이아웃"
-        },
-        {
-          "id": "6",
-          "layoutName": "BOND",
-          "path": "/cfg/layouts/BOND.moon",
-          "timestamp": "2025-10-28 13:05:30",
-          "process": 3,
-          "channelIn": 5,
-          "desc": "채권  레이아웃"
+          "desc": "코스피, 코스닥 주식 레이아웃"
         }
       ]
     }
   },
   "/apik/prod1/layout/BASE": {
     "okay": true,
-    "msg": "Success",
     "data": {
       "nodeId": "prod1",
       "script": "lunit = require 'lunit'\nlpfrag = lunit.lpfrag\n"
@@ -1817,30 +1728,23 @@
   },
   "/apik/prod1/layout/KOSPI_KOSDAQ": {
     "okay": true,
-    "msg": "Success",
     "data": {
       "nodeId": "prod1",
-      "script": "-- KOSPI_KOSDAQ.moon\nreturn { desc = '코스피, 코스닥 주식 레이아웃' }"
+      "script": "-- KOSPI_KOSDAQ.moon\n\n--=================================================\n-- KOSPI_KOSDAQ 주식 그룹\n--\n{\n    PMR:\n\n        --==    KOSPI/KOSDAQ 주식 기본\n        KSKQ_def:\n            desc:               '구조화증권 기본/기타 라우터'\n            recv2r: {\n                216,224,225,226,230\n                238,239,261,260\n            }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}           -- 입수 로깅\n                    act 'route',    {to:'1',app:'kqp'}    -- 통합시세로 넘김\n                    act 'route',    {to:'KSKQ_def_emit'}  -- 송출기로 넘김.  => CBR\n                }\n\n        KSKQ_def_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}   -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 호가\n        KS_q:\n            recv2r: { 222,223, 258 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'ksp_q',app:'kqp'} -- 통합시세로 넘김\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KS_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 체결\n        KS_f:\n            recv2r: { 217,218,219,220,221,256 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_f_emit'}\n                }\n\n        KS_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 호가\n        KQ_q:\n            recv2r: { 236,237, 259 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KQ_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 체결\n        KQ_f:\n            recv2r: { 231,232,233,234,235,257 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KQ_f_emit'}\n                }\n\n        KQ_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n}"
     }
   },
   "/apik/prod2/layout/BASE": {
     "okay": true,
-    "msg": "Success",
     "data": {
       "nodeId": "prod2",
-      "actionList": [
-        {
-          "action": "action_log",
-          "refCount": 6
-        }
-      ],
-      "processList": [
-        {
-          "process": "kqp",
-          "usageCount": 2
-        }
-      ],
-      "script": "-- BASE.moon\nreturn { desc = '공통 레이아웃' }"
+      "script": "lunit = require 'lunit'\nlpfrag = lunit.lpfrag\n"
+    }
+  },
+  "/apik/prod2/layout/KOSPI_KOSDAQ": {
+    "okay": true,
+    "data": {
+      "nodeId": "prod2",
+      "script": "-- KOSPI_KOSDAQ.moon\n\n--=================================================\n-- KOSPI_KOSDAQ 주식 그룹\n--\n{\n    PMR:\n\n        --==    KOSPI/KOSDAQ 주식 기본\n        KSKQ_def:\n            desc:               '구조화증권 기본/기타 라우터'\n            recv2r: {\n                216,224,225,226,230\n                238,239,261,260\n            }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}           -- 입수 로깅\n                    act 'route',    {to:'1',app:'kqp'}    -- 통합시세로 넘김\n                    act 'route',    {to:'KSKQ_def_emit'}  -- 송출기로 넘김.  => CBR\n                }\n\n        KSKQ_def_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}   -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 호가\n        KS_q:\n            recv2r: { 222,223, 258 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'ksp_q',app:'kqp'} -- 통합시세로 넘김\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KS_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 체결\n        KS_f:\n            recv2r: { 217,218,219,220,221,256 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_f_emit'}\n                }\n\n        KS_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 호가\n        KQ_q:\n            recv2r: { 236,237, 259 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KQ_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 체결\n        KQ_f:\n            recv2r: { 231,232,233,234,235,257 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KQ_f_emit'}\n                }\n\n        KQ_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n}"
     }
   },
   "/apik/prod1/action/Restart Service": {
@@ -1873,30 +1777,47 @@
   },
   "/apik/prod1/action/action_log": {
     "okay": true,
-    "msg": "Success",
     "data": {
       "nodeId": "prod1",
+      "name": "action_log",
+      "path": "/cfg/actions/action_log.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refLayout": 3,
+      "refProcess": 14,
+      "desc": "증적로그 기록",
       "layoutList": [
         {
-          "layout": "layout_log_writer",
-          "refCount": 12
+          "layout": "KOSPI_KOSDAQ",
+          "refCount": 4
         },
         {
-          "layout": "layout_log_rotator",
+          "layout": "ST_STOCK",
+          "refCount": 5
+        },
+        {
+          "layout": "ETC_STOCK",
           "refCount": 5
         }
       ],
       "processList": [
         {
-          "process": "logger",
-          "usageCount": 21
+          "process": "pmr.KS_f",
+          "usageCount": 1
         },
         {
-          "process": "kqp",
-          "usageCount": 3
+          "process": "pmr.KS_f_emit",
+          "usageCount": 1
+        },
+        {
+          "process": "pmr.KS_f_qos",
+          "usageCount": 1
+        },
+        {
+          "process": "kas.dreplay",
+          "usageCount": 2
         }
       ],
-      "script": "-- action_log.moon\nreturn { desc = '증적로그 기록', keys = {'ACTION_LOG'} }"
+      "script": "-- action_log.moon\nlunit = require 'lunit'\nlpfrag = lunit.lpfrag\n\n{\n  name:     'log'\n  desc:     '증적 LOG 기록 함수'\n  aliases:  {'kpass','증적로그','로그기록','증적로그기록'}\n\n  fn:       (o,opt)->\n            -- print '','action-log:',(to_json opt)\n\n            try_rule o,opt\n\n            o.fnid = opt.fnid  if opt.fnid\n            o.app = opt.app  if opt.app\n            o.instcode = opt.inst  if opt.inst\n\n            TO_AUDITLOG o,opt.to\n            o.app = nil\n            o.fnid = nil\n\n}"
     }
   },
   "/apik/prod2/action/Start Service": {
@@ -1925,22 +1846,47 @@
   },
   "/apik/prod2/action/action_log": {
     "okay": true,
-    "msg": "Success",
     "data": {
       "nodeId": "prod2",
+      "name": "action_log",
+      "path": "/cfg/actions/action_log.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refLayout": 3,
+      "refProcess": 14,
+      "desc": "증적로그 기록",
       "layoutList": [
         {
-          "layout": "layout_log_writer",
-          "refCount": 6
+          "layout": "KOSPI_KOSDAQ",
+          "refCount": 4
+        },
+        {
+          "layout": "ST_STOCK",
+          "refCount": 5
+        },
+        {
+          "layout": "ETC_STOCK",
+          "refCount": 5
         }
       ],
       "processList": [
         {
-          "process": "logger",
-          "usageCount": 8
+          "process": "pmr.KS_f",
+          "usageCount": 1
+        },
+        {
+          "process": "pmr.KS_f_emit",
+          "usageCount": 1
+        },
+        {
+          "process": "pmr.KS_f_qos",
+          "usageCount": 1
+        },
+        {
+          "process": "kas.dreplay",
+          "usageCount": 2
         }
       ],
-      "script": "-- action_log.moon\nreturn { desc = '증적로그 기록', keys = {'ACTION_LOG'} }"
+      "script": "-- action_log.moon\nlunit = require 'lunit'\nlpfrag = lunit.lpfrag\n\n{\n  name:     'log'\n  desc:     '증적 LOG 기록 함수'\n  aliases:  {'kpass','증적로그','로그기록','증적로그기록'}\n\n  fn:       (o,opt)->\n            -- print '','action-log:',(to_json opt)\n\n            try_rule o,opt\n\n            o.fnid = opt.fnid  if opt.fnid\n            o.app = opt.app  if opt.app\n            o.instcode = opt.inst  if opt.inst\n\n            TO_AUDITLOG o,opt.to\n            o.app = nil\n            o.fnid = nil\n\n}"
     }
   },
   "/apik/prod1/spec/list": {

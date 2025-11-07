@@ -28,6 +28,10 @@ export default function Page({ params }: Props) {
     const layoutList = data?.data?.layoutList || [];
     const processList = data?.data?.processList || [];
     const script = data?.data?.script || '';
+    const refLayoutCount = data?.data?.refLayout || '-'
+    const refProcessCount = data?.data?.refProcess || '-'
+    const timeStamp = data?.data?.timestamp || '-'
+
 
     return (
         <DashboardContent maxWidth="xl">
@@ -40,11 +44,15 @@ export default function Page({ params }: Props) {
             />
 
             <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{decodedAction}</Typography>
-
+            <Typography sx={{ textAlign: 'right', color: 'GrayText' }}>
+                {timeStamp}
+            </Typography>
             <Box sx={{ mt: 3 }}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={7}>
                         <StackOfTables
+                            refLayoutCount={refLayoutCount}
+                            refProcessCount={refProcessCount}
                             layoutList={layoutList}
                             processList={processList}
                             t={t}
@@ -72,10 +80,10 @@ export default function Page({ params }: Props) {
     );
 }
 
-function StackOfTables({ layoutList, processList, t, loading, error }: any) {
+function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCount, refProcessCount }: any) {
     return (
         <Box>
-            <TableContainer component={Paper} sx={{ mb: 14 }}>
+            <TableContainer component={Paper} sx={{ mb: 4 }}>
                 <Table size="small">
                     <TableHead>
                         <TableRow>
@@ -110,8 +118,10 @@ function StackOfTables({ layoutList, processList, t, loading, error }: any) {
                     </TableBody>
                 </Table>
             </TableContainer>
-
-            <TableContainer component={Paper}>
+            <Typography sx={{ textAlign: 'right', color: 'GrayText' }}>
+                {t('table.ref_layout')}{' '}{refLayoutCount}
+            </Typography>
+            <TableContainer sx={{ my: 4 }} component={Paper}>
                 <Table size="small">
                     <TableHead>
                         <TableRow>
@@ -146,6 +156,9 @@ function StackOfTables({ layoutList, processList, t, loading, error }: any) {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <Typography sx={{ textAlign: 'right', color: 'GrayText' }}>
+                {t('table.ref_process')}{' '}{refProcessCount}
+            </Typography>
         </Box>
     );
 }
