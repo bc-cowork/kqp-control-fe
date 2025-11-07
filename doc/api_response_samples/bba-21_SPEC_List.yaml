@@ -1,0 +1,17 @@
+# wroted yaml format, but response format is JSON!
+
+
+# BBA-21	SPEC List
+
+okay:     true
+data:
+  node:   prod1
+  list:
+    - name:         'A0_KRX_MASTER'
+      path:         'cfg/spec_components/A0_master.moon'
+      url:          '{URL}'    # 클릭했을때 해당 SPEC Item Detail로 점프할 주소
+      timestamp:    '2025-10-28 13:05:30'
+      ref_identifies:  1
+      frags:         109
+      size:          632
+      desc:          'KRX 종목 마스터'

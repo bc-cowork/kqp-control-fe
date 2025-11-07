@@ -1,0 +1,45 @@
+# wroted yaml format, but response format is JSON!
+
+
+# BBA-30	Status
+
+okay:     true
+data:
+  node:
+    name:         '서버명'
+    desc:         '서버 설명'
+
+  status:
+    - category:    'Queue'
+      total:       106
+      running:     106
+      missed:      '-'
+      desc:        '정상'
+
+    - category:    'Process'
+      total:       121
+      running:     120
+      missed:      1
+      desc:        '오류!!'
+
+    - category:    'Batch'
+      total:       4
+      running:     4
+      missed:      '-'
+      desc:        '정상'
+
+    - category:    'Channels. Inbound'
+      total:       84
+      running:     84
+      missed:      '-'
+      desc:        '정상'
+
+    - category:    'Channels. Outbound'
+      total:       115
+      running:     115
+      missed:      '-'
+      desc:        '정상'
+
+  errors:
+    - name:        'pmr.rec03'
+      desc:        '프로세스가 죽어있습니다.'

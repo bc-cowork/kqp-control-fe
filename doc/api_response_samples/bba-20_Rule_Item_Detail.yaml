@@ -1,0 +1,74 @@
+# wroted yaml format, but response format is JSON!
+
+
+# BBA-20	Rule Item Detail
+
+okay:     true
+data:
+  node:   prod1
+  detail:
+    name:         'rule_route_map'
+    path:         'cfg/rules/route_map.moon'
+    url:          '{URL}'    # 클릭했을때 해당 Rule Item Detail로 점프할 주소
+    timestamp:    '2025-10-28 13:05:30'
+    ref_layout:   3
+    ref_process:  14
+    ref_actions:  2
+    desc:         '입수채널별 송출처 라우팅'
+
+    related_layouts:
+      - name: 'KOSPI_KOSDAQ'
+        ref_count: 4
+      - name: 'ST_STOCK'
+        ref_count: 5
+      - name: 'ETC_STOCK'
+        ref_count: 5
+
+    related_processes:
+      - name: 'pmr.KS_f'
+        usage_count: 1
+      - name: 'pmr.KS_f_emit'
+        usage_count: 1
+      - name: 'pmr.KS_f_qos'
+        usage_count: 1
+      - name: 'kas.dreplay'
+        usage_count: 2
+
+    related_actions:
+      - name: 'action_ipc'
+        usage_count: 1
+      - name: 'action_route'
+        usage_count: 1
+
+    function_def:
+      desc: '라우팅맵'
+      code: |
+        -- route_map
+        {
+          desc:     '라우팅맵'
+          fn:       (o,opt)->
+
+                    -- SET <o.to> = RID/CHID number!
+                    unless GVAR.ROUTEMAP
+                        GVAR.ROUTEMAP = execl_script v17..'/cfg/route_map'
+
+                    return  unless o.rid
+                    dest = RID_DEST[o.rid]                -- 입수채널번호(RID)로 라우팅맵 설정 아이템을 검색한다.
+                    unless dest
+                      print 'no destination', o.rid, o.head5
+                      LOG 'no destination (%d, %s)', o.rid, o.head5
+                      return
+
+                    -- CBR 처리.  (예시: 호가/체결은 포트분산 함수가 필요)
+                    if dest.route_fn
+                      dest.route_fn dest,o
+                    else
+                      if dest.ob_rids
+                        -- o.ob_chid = dest.ob_rids[1]     -- 기본적으로 첫번째 것을 이용
+                        o\setOutboundChannel dest.ob_rids[1]
+                      else
+                        -- o.ob_chid = dest.ob_rid
+                        o\setOutboundChannel dest.ob_rid
+
+                    true
+        }
