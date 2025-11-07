@@ -80,10 +80,10 @@ export function ChartArea({
   // Get the colors based on the tabValue and title, default to CPU colors if title doesn't match
   const { stroke, fill, fillOpacity } = chartColors?.[title as keyof typeof chartColors] ||
     chartColors?.CPU || {
-      stroke: '#5E66FF',
-      fill: '#5E66FF',
-      fillOpacity: 0.2,
-    };
+    stroke: '#5E66FF',
+    fill: '#5E66FF',
+    fillOpacity: 0.2,
+  };
 
   // Only apply threshold highlighting for the CPU chart
   const applyThreshold = title === 'CPU' && threshold !== undefined;
@@ -152,7 +152,7 @@ export function ChartArea({
               tick={{ fontSize: 12, fill: theme.palette.text.secondary }}
               tickLine={false}
               axisLine={{ stroke: theme.palette.grey[200] }}
-              domain={[minValue, 'auto']}
+              domain={[minValue, 100]}
               tickFormatter={
                 metric === 'inbound_bytes' || metric === 'outbound_bytes'
                   ? formatLargeNumber
