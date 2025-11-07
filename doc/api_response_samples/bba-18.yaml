@@ -1,0 +1,65 @@
+# wroted yaml format, but response format is JSON!
+
+
+# BBA-18:   Action Item Detail
+
+okay:     true
+data:
+  node:   prod1
+  name:         'action_log'
+  path:         'cfg/actions/action_log.moon'
+  url:          '{URL}'    # 클릭했을때 해당 Action Item Detail로 점프할 PATH
+  timestamp:    '2025-10-28 13:05:30'
+  ref_layout:   3
+  ref_process:  3
+  desc:         '증적로그 기록'
+  layoues:
+    - name:       KOSPI_KOSDAQ
+      ref_count:  4
+      url:        '{URL}'   # 클릭했을때 해당 Layout Item Detail로 점프할 PATH
+    - name:       ST_STOCK
+      ref_count:  5
+      url:        '{URL}'   # 클릭했을때 해당 Layout Item Detail로 점프할 PATH
+    - name:       ETC_STOCK
+      ref_count:  5
+      url:        '{URL}'   # 클릭했을때 해당 Layout Item Detail로 점프할 PATH
+  processes:
+    - name:       pmr.KS_f
+      ref_count:  1
+      url:        '{URL}'   # 클릭했을때 해당 Process Item Detail로 점프할 PATH
+    - name:       pmr.KS_f_emit
+      ref_count:  1
+      url:        '{URL}'   # 클릭했을때 해당 Process Item Detail로 점프할 PATH
+    - name:       pmr.KS_f_qos
+      ref_count:  1
+      url:        '{URL}'   # 클릭했을때 해당 Process Item Detail로 점프할 PATH
+    - name:       kas.dreplay
+      ref_count:  2
+      url:        '{URL}'   # 클릭했을때 해당 Process Item Detail로 점프할 PATH
+  definition: |
+      -- action_log.moon
+      lunit = require 'lunit'
+      lpfrag = lunit.lpfrag
+
+      {
+        name:     'log'
+        desc:     '증적 LOG 기록 함수'
+        aliases:  {'kpass','증적로그','로그기록','증적로그기록'}
+
+        fn:       (o,opt)->
+                  -- print '','action-log:',(to_json opt)
+
+                  try_rule o,opt
+
+                  o.fnid = opt.fnid  if opt.fnid
+                  o.app = opt.app  if opt.app
+                  o.instcode = opt.inst  if opt.inst
+
+                  TO_AUDITLOG o,opt.to
+                  o.app = nil
+                  o.fnid = nil
+
+      }
+
+    
+
