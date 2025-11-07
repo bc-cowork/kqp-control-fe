@@ -1931,297 +1931,2840 @@
   },
   "/apik/prod1/spec/list": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "nodeId": "prod1",
-      "specList": [
+      "node": "prod1",
+      "list": [
         {
           "id": "1",
-          "specName": "A0_KRX_MASTER",
+          "name": "A0_KRX_MASTER",
           "path": "/cfg/spec_components/A0_master.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
-          "refIdentifies": 1,
+          "ref_identifies": 1,
           "frags": 109,
           "size": 632,
-          "explanation": "KRX 종목 마스터"
+          "desc": "KRX 종목 마스터"
         },
         {
           "id": "2",
-          "specName": "A1_ISSUE_INFO_ETN",
+          "name": "A1_ISSUE_INFO_ETN",
           "path": "/cfg/spec_components/A1_ISSUE_INFO_ETN.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
-          "refIdentifies": 2,
+          "ref_identifies": 2,
           "frags": 20,
           "size": 260,
-          "explanation": "KRX 종목 정보 (ETN)"
+          "desc": "KRX 종목 정보 (ETN)"
         },
         {
           "id": "3",
-          "specName": "A3_FILL",
+          "name": "A3_FILL",
           "path": "/cfg/spec_components/A3_FILL.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
-          "refIdentifies": 4,
+          "ref_identifies": 4,
           "frags": 22,
           "size": 186,
-          "explanation": "KRX 체결"
+          "desc": "KRX 체결"
         },
         {
-          "id": "3",
-          "specName": "A0_NXT_MASTER",
+          "id": "4",
+          "name": "A0_NXT_MASTER",
           "path": "/cfg/spec_components/A0_master.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
-          "refIdentifies": 1,
+          "ref_identifies": 1,
           "frags": 116,
           "size": 648,
-          "explanation": "NXT 종목 마스터"
+          "desc": "NXT 종목 마스터"
         },
         {
-          "id": "3",
-          "specName": "B6_QUOTE",
+          "id": "5",
+          "name": "B6_QUOTE",
           "path": "/cfg/spec_components/B6_QUOTE.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
-          "refIdentifies": 4,
+          "ref_identifies": 4,
           "frags": 56,
           "size": 590,
-          "explanation": "KRX 호가"
+          "desc": "KRX 호가"
         }
       ]
     }
   },
   "/apik/prod2/spec/list": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "nodeId": "prod2",
-      "specList": [
+      "node": "prod2",
+      "list": [
         {
           "id": "1",
-          "specName": "A0_KRX_MASTER",
+          "name": "A0_KRX_MASTER",
           "path": "/cfg/spec_components/A0_master.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
-          "refIdentifies": 1,
+          "ref_identifies": 1,
           "frags": 109,
           "size": 632,
-          "explanation": "KRX 종목 마스터"
+          "desc": "KRX 종목 마스터"
         },
         {
           "id": "2",
-          "specName": "A1_ISSUE_INFO_ETN",
+          "name": "A1_ISSUE_INFO_ETN",
           "path": "/cfg/spec_components/A1_ISSUE_INFO_ETN.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
-          "refIdentifies": 2,
+          "ref_identifies": 2,
           "frags": 20,
           "size": 260,
-          "explanation": "KRX 종목 정보 (ETN)"
+          "desc": "KRX 종목 정보 (ETN)"
         },
         {
           "id": "3",
-          "specName": "A3_FILL",
+          "name": "A3_FILL",
           "path": "/cfg/spec_components/A3_FILL.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
-          "refIdentifies": 4,
+          "ref_identifies": 4,
           "frags": 22,
           "size": 186,
-          "explanation": "KRX 체결"
+          "desc": "KRX 체결"
         },
         {
           "id": "4",
-          "specName": "A0_NXT_MASTER",
+          "name": "A0_NXT_MASTER",
           "path": "/cfg/spec_components/A0_master.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
-          "refIdentifies": 1,
+          "ref_identifies": 1,
           "frags": 116,
           "size": 648,
-          "explanation": "NXT 종목 마스터"
+          "desc": "NXT 종목 마스터"
         },
         {
           "id": "5",
-          "specName": "B6_QUOTE",
+          "name": "B6_QUOTE",
           "path": "/cfg/spec_components/B6_QUOTE.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
-          "refIdentifies": 4,
+          "ref_identifies": 4,
           "frags": 56,
           "size": 590,
-          "explanation": "KRX 호가"
+          "desc": "KRX 호가"
         }
       ]
     }
   },
   "/apik/prod1/spec/1": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "id": "1",
-      "specName": "Order Intake SPEC",
-      "path": "/specs/order/intake",
-      "timestamp": "2025-04-10 11:00:00",
-      "refIdentifies": "identifyA, identifyB",
-      "frags": [
-        {
-          "offset": 0,
-          "len": 2,
-          "type": "HD",
-          "desc": "헤더 구분"
-        },
-        {
-          "offset": 2,
-          "len": 8,
-          "type": "DT",
-          "desc": "거래일자(YYYYMMDD)"
-        },
-        {
-          "offset": 10,
-          "len": 6,
-          "type": "TIME",
-          "desc": "거래시간(HHMMSS)"
-        },
-        {
-          "offset": 16,
-          "len": 12,
-          "type": "ORDER_ID",
-          "desc": "주문번호"
-        }
-      ],
-      "fragsCount": 58,
-      "size": 512,
-      "identifyList": [
-        {
-          "name": "identifyA",
-          "refCount": 5
-        },
-        {
-          "name": "identifyB",
-          "refCount": 2
-        }
-      ],
-      "explanation": "Parses inbound order messages"
+      "node": "prod1",
+      "detail": {
+        "name": "A0_KRX_MASTER",
+        "path": "cfg/spec_components/A0_master.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_identifies": 1,
+        "frags": 109,
+        "size": 632,
+        "desc": "KRX 종목마스터",
+        "related_identifies": [
+          {
+            "name": "krx_master",
+            "ref_count": 4
+          }
+        ],
+        "spec_definition": [
+          {
+            "offset": 1,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "데이터구분값"
+          },
+          {
+            "offset": 2,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "정보구분값"
+          },
+          {
+            "offset": 3,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "정보분배일련번호"
+          },
+          {
+            "offset": 4,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "정보구분총종목수"
+          },
+          {
+            "offset": 5,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "영업일자"
+          },
+          {
+            "offset": 6,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "종목코드"
+          },
+          {
+            "offset": 7,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "정보분배종목인덱스"
+          },
+          {
+            "offset": 8,
+            "length": 9,
+            "type": "CHAR",
+            "desc": "종목단축코드"
+          },
+          {
+            "offset": 9,
+            "length": 40,
+            "type": "CHAR",
+            "desc": "종목약명"
+          },
+          {
+            "offset": 10,
+            "length": 40,
+            "type": "CHAR",
+            "desc": "종목영문약명"
+          },
+          {
+            "offset": 11,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "정보분배그룹번호"
+          },
+          {
+            "offset": 12,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "장운영상품그룹ID"
+          },
+          {
+            "offset": 13,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "증권그룹ID"
+          },
+          {
+            "offset": 14,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "단위매매체결여부"
+          },
+          {
+            "offset": 15,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "락구분코드"
+          },
+          {
+            "offset": 16,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "액면가변경구분코드"
+          },
+          {
+            "offset": 17,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시가기준가격종목여부"
+          },
+          {
+            "offset": 18,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "재평가종목사유코드"
+          },
+          {
+            "offset": 19,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "기준가격변경종목여부"
+          },
+          {
+            "offset": 20,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "임의종료발동조건코드"
+          },
+          {
+            "offset": 21,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시장경보위험예고여부"
+          },
+          {
+            "offset": 22,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "시장경보구분코드"
+          },
+          {
+            "offset": 23,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "지배구조우량여부"
+          },
+          {
+            "offset": 24,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "관리종목여부"
+          },
+          {
+            "offset": 25,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "불성실공시여부"
+          },
+          {
+            "offset": 26,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "우회상장여부"
+          },
+          {
+            "offset": 27,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "거래정지여부"
+          },
+          {
+            "offset": 28,
+            "length": 10,
+            "type": "CHAR",
+            "desc": "업종ID"
+          },
+          {
+            "offset": 29,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "중소기업여부"
+          },
+          {
+            "offset": 30,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "소속부구분코드"
+          },
+          {
+            "offset": 31,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자기구구분코드"
+          },
+          {
+            "offset": 32,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "기준가격"
+          },
+          {
+            "offset": 33,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "전일종가구분코드"
+          },
+          {
+            "offset": 34,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "전일종가"
+          },
+          {
+            "offset": 35,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "전일누적거래량"
+          },
+          {
+            "offset": 36,
+            "length": 22,
+            "type": "CHAR",
+            "desc": "전일누적거래대금"
+          },
+          {
+            "offset": 37,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "상한가"
+          },
+          {
+            "offset": 38,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "하한가"
+          },
+          {
+            "offset": 39,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "대용가격"
+          },
+          {
+            "offset": 40,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "액면가"
+          },
+          {
+            "offset": 41,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "발행가격"
+          },
+          {
+            "offset": 42,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "상장일자"
+          },
+          {
+            "offset": 43,
+            "length": 16,
+            "type": "CHAR",
+            "desc": "상장주식수"
+          },
+          {
+            "offset": 44,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "정리매매여부"
+          },
+          {
+            "offset": 45,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "존립개시일자"
+          },
+          {
+            "offset": 46,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "존립종료일자"
+          },
+          {
+            "offset": 47,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "행사기간개시일자"
+          },
+          {
+            "offset": 48,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "권리행사기간만료일자"
+          },
+          {
+            "offset": 49,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "ELW신주인수권증권행사가격"
+          },
+          {
+            "offset": 50,
+            "length": 22,
+            "type": "CHAR",
+            "desc": "자본금"
+          },
+          {
+            "offset": 51,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "신용주문가능여부"
+          },
+          {
+            "offset": 52,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "지정가호가취소조건코드"
+          },
+          {
+            "offset": 53,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "시장가호가취소조건코드"
+          },
+          {
+            "offset": 54,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "조건부지정가호가취소조건코드"
+          },
+          {
+            "offset": 55,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "최유리지정가호가취소조건코드"
+          },
+          {
+            "offset": 56,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "최우선지정가호가취소조건코드"
+          },
+          {
+            "offset": 57,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "중간가호가취소조건코드"
+          },
+          {
+            "offset": 58,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "스톱지정가호가취소조건코드"
+          },
+          {
+            "offset": 59,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "증자구분코드"
+          },
+          {
+            "offset": 60,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "종류주권구분코드"
+          },
+          {
+            "offset": 61,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "국민주여부"
+          },
+          {
+            "offset": 62,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "평가가격"
+          },
+          {
+            "offset": 63,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "최저호가가격"
+          },
+          {
+            "offset": 64,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "최고호가가격"
+          },
+          {
+            "offset": 65,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "메인보드수량단위"
+          },
+          {
+            "offset": 66,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "장종료후시간외수량단위"
+          },
+          {
+            "offset": 67,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "리츠종류코드"
+          },
+          {
+            "offset": 68,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "목적주권종목코드"
+          },
+          {
+            "offset": 69,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "통화ISO코드"
+          },
+          {
+            "offset": 70,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "국가코드"
+          },
+          {
+            "offset": 71,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시장조성가능여부"
+          },
+          {
+            "offset": 72,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장종료후시간외종가가능여부"
+          },
+          {
+            "offset": 73,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외종가가능여부"
+          },
+          {
+            "offset": 74,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외대량매매가능여부"
+          },
+          {
+            "offset": 75,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외바스켓가능여부"
+          },
+          {
+            "offset": 76,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "예상체결가공개여부"
+          },
+          {
+            "offset": 77,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "공매도가능여부"
+          },
+          {
+            "offset": 78,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "추적수익률배수"
+          },
+          {
+            "offset": 79,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "REGS여부"
+          },
+          {
+            "offset": 80,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "SPAC여부"
+          },
+          {
+            "offset": 81,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "과세유형코드"
+          },
+          {
+            "offset": 82,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "대용가격사정비율"
+          },
+          {
+            "offset": 83,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자주의환기종목여부"
+          },
+          {
+            "offset": 84,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "상장폐지일자"
+          },
+          {
+            "offset": 85,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "단기과열종목구분코드"
+          },
+          {
+            "offset": 86,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "ETF복제방법구분코드"
+          },
+          {
+            "offset": 87,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기일자"
+          },
+          {
+            "offset": 88,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "분배금형태코드"
+          },
+          {
+            "offset": 89,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기상환가격결정시작일자"
+          },
+          {
+            "offset": 90,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기상환가격결정종료일자"
+          },
+          {
+            "offset": 91,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "ETP상품구분코드"
+          },
+          {
+            "offset": 92,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "지수산출기관코드"
+          },
+          {
+            "offset": 93,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수시장분류ID"
+          },
+          {
+            "offset": 94,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "지수일련번호"
+          },
+          {
+            "offset": 95,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "추적지수레버리지인버스구분코드"
+          },
+          {
+            "offset": 96,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "참고지수레버리지인버스구분코드"
+          },
+          {
+            "offset": 97,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수자산분류ID1"
+          },
+          {
+            "offset": 98,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수자산분류ID2"
+          },
+          {
+            "offset": 99,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "상장주선사회원번호"
+          },
+          {
+            "offset": 100,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "LP주문가능여부"
+          },
+          {
+            "offset": 101,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "저유동성여부"
+          },
+          {
+            "offset": 102,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "이상급등여부"
+          },
+          {
+            "offset": 103,
+            "length": 23,
+            "type": "CHAR",
+            "desc": "상한수량"
+          },
+          {
+            "offset": 104,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자유의종목여부"
+          },
+          {
+            "offset": 105,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "상장주식수부족종목여부"
+          },
+          {
+            "offset": 106,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "SPAC소멸합병여부"
+          },
+          {
+            "offset": 107,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "세그먼트구분코드"
+          },
+          {
+            "offset": 108,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장종료후시간외단일가가능여부"
+          },
+          {
+            "offset": 109,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "정보분배메세지종료키워드"
+          }
+        ]
+      }
     }
   },
   "/apik/prod1/spec/2": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "id": "2",
-      "specName": "Order Enrich SPEC",
-      "path": "/specs/order/enrich",
-      "timestamp": "2025-04-10 11:05:00",
-      "refIdentifies": "identifyC",
-      "frags": [
-        {
-          "offset": 0,
-          "len": 3,
-          "type": "VER",
-          "desc": "버전"
-        },
-        {
-          "offset": 3,
-          "len": 12,
-          "type": "CODE",
-          "desc": "종목코드"
-        },
-        {
-          "offset": 15,
-          "len": 4,
-          "type": "QTY",
-          "desc": "수량"
-        }
-      ],
-      "fragsCount": 34,
-      "size": 384,
-      "identifyList": [
-        {
-          "name": "identifyC",
-          "refCount": 3
-        }
-      ],
-      "explanation": "Adds enrichment fields"
+      "node": "prod1",
+      "detail": {
+        "name": "A0_KRX_MASTER",
+        "path": "cfg/spec_components/A0_master.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_identifies": 1,
+        "frags": 109,
+        "size": 632,
+        "desc": "KRX 종목마스터",
+        "related_identifies": [
+          {
+            "name": "krx_master",
+            "ref_count": 4
+          }
+        ],
+        "spec_definition": [
+          {
+            "offset": 1,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "데이터구분값"
+          },
+          {
+            "offset": 2,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "정보구분값"
+          },
+          {
+            "offset": 3,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "정보분배일련번호"
+          },
+          {
+            "offset": 4,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "정보구분총종목수"
+          },
+          {
+            "offset": 5,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "영업일자"
+          },
+          {
+            "offset": 6,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "종목코드"
+          },
+          {
+            "offset": 7,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "정보분배종목인덱스"
+          },
+          {
+            "offset": 8,
+            "length": 9,
+            "type": "CHAR",
+            "desc": "종목단축코드"
+          },
+          {
+            "offset": 9,
+            "length": 40,
+            "type": "CHAR",
+            "desc": "종목약명"
+          },
+          {
+            "offset": 10,
+            "length": 40,
+            "type": "CHAR",
+            "desc": "종목영문약명"
+          },
+          {
+            "offset": 11,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "정보분배그룹번호"
+          },
+          {
+            "offset": 12,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "장운영상품그룹ID"
+          },
+          {
+            "offset": 13,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "증권그룹ID"
+          },
+          {
+            "offset": 14,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "단위매매체결여부"
+          },
+          {
+            "offset": 15,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "락구분코드"
+          },
+          {
+            "offset": 16,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "액면가변경구분코드"
+          },
+          {
+            "offset": 17,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시가기준가격종목여부"
+          },
+          {
+            "offset": 18,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "재평가종목사유코드"
+          },
+          {
+            "offset": 19,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "기준가격변경종목여부"
+          },
+          {
+            "offset": 20,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "임의종료발동조건코드"
+          },
+          {
+            "offset": 21,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시장경보위험예고여부"
+          },
+          {
+            "offset": 22,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "시장경보구분코드"
+          },
+          {
+            "offset": 23,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "지배구조우량여부"
+          },
+          {
+            "offset": 24,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "관리종목여부"
+          },
+          {
+            "offset": 25,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "불성실공시여부"
+          },
+          {
+            "offset": 26,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "우회상장여부"
+          },
+          {
+            "offset": 27,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "거래정지여부"
+          },
+          {
+            "offset": 28,
+            "length": 10,
+            "type": "CHAR",
+            "desc": "업종ID"
+          },
+          {
+            "offset": 29,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "중소기업여부"
+          },
+          {
+            "offset": 30,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "소속부구분코드"
+          },
+          {
+            "offset": 31,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자기구구분코드"
+          },
+          {
+            "offset": 32,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "기준가격"
+          },
+          {
+            "offset": 33,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "전일종가구분코드"
+          },
+          {
+            "offset": 34,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "전일종가"
+          },
+          {
+            "offset": 35,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "전일누적거래량"
+          },
+          {
+            "offset": 36,
+            "length": 22,
+            "type": "CHAR",
+            "desc": "전일누적거래대금"
+          },
+          {
+            "offset": 37,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "상한가"
+          },
+          {
+            "offset": 38,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "하한가"
+          },
+          {
+            "offset": 39,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "대용가격"
+          },
+          {
+            "offset": 40,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "액면가"
+          },
+          {
+            "offset": 41,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "발행가격"
+          },
+          {
+            "offset": 42,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "상장일자"
+          },
+          {
+            "offset": 43,
+            "length": 16,
+            "type": "CHAR",
+            "desc": "상장주식수"
+          },
+          {
+            "offset": 44,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "정리매매여부"
+          },
+          {
+            "offset": 45,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "존립개시일자"
+          },
+          {
+            "offset": 46,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "존립종료일자"
+          },
+          {
+            "offset": 47,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "행사기간개시일자"
+          },
+          {
+            "offset": 48,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "권리행사기간만료일자"
+          },
+          {
+            "offset": 49,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "ELW신주인수권증권행사가격"
+          },
+          {
+            "offset": 50,
+            "length": 22,
+            "type": "CHAR",
+            "desc": "자본금"
+          },
+          {
+            "offset": 51,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "신용주문가능여부"
+          },
+          {
+            "offset": 52,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "지정가호가취소조건코드"
+          },
+          {
+            "offset": 53,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "시장가호가취소조건코드"
+          },
+          {
+            "offset": 54,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "조건부지정가호가취소조건코드"
+          },
+          {
+            "offset": 55,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "최유리지정가호가취소조건코드"
+          },
+          {
+            "offset": 56,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "최우선지정가호가취소조건코드"
+          },
+          {
+            "offset": 57,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "중간가호가취소조건코드"
+          },
+          {
+            "offset": 58,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "스톱지정가호가취소조건코드"
+          },
+          {
+            "offset": 59,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "증자구분코드"
+          },
+          {
+            "offset": 60,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "종류주권구분코드"
+          },
+          {
+            "offset": 61,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "국민주여부"
+          },
+          {
+            "offset": 62,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "평가가격"
+          },
+          {
+            "offset": 63,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "최저호가가격"
+          },
+          {
+            "offset": 64,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "최고호가가격"
+          },
+          {
+            "offset": 65,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "메인보드수량단위"
+          },
+          {
+            "offset": 66,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "장종료후시간외수량단위"
+          },
+          {
+            "offset": 67,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "리츠종류코드"
+          },
+          {
+            "offset": 68,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "목적주권종목코드"
+          },
+          {
+            "offset": 69,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "통화ISO코드"
+          },
+          {
+            "offset": 70,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "국가코드"
+          },
+          {
+            "offset": 71,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시장조성가능여부"
+          },
+          {
+            "offset": 72,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장종료후시간외종가가능여부"
+          },
+          {
+            "offset": 73,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외종가가능여부"
+          },
+          {
+            "offset": 74,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외대량매매가능여부"
+          },
+          {
+            "offset": 75,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외바스켓가능여부"
+          },
+          {
+            "offset": 76,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "예상체결가공개여부"
+          },
+          {
+            "offset": 77,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "공매도가능여부"
+          },
+          {
+            "offset": 78,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "추적수익률배수"
+          },
+          {
+            "offset": 79,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "REGS여부"
+          },
+          {
+            "offset": 80,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "SPAC여부"
+          },
+          {
+            "offset": 81,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "과세유형코드"
+          },
+          {
+            "offset": 82,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "대용가격사정비율"
+          },
+          {
+            "offset": 83,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자주의환기종목여부"
+          },
+          {
+            "offset": 84,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "상장폐지일자"
+          },
+          {
+            "offset": 85,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "단기과열종목구분코드"
+          },
+          {
+            "offset": 86,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "ETF복제방법구분코드"
+          },
+          {
+            "offset": 87,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기일자"
+          },
+          {
+            "offset": 88,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "분배금형태코드"
+          },
+          {
+            "offset": 89,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기상환가격결정시작일자"
+          },
+          {
+            "offset": 90,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기상환가격결정종료일자"
+          },
+          {
+            "offset": 91,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "ETP상품구분코드"
+          },
+          {
+            "offset": 92,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "지수산출기관코드"
+          },
+          {
+            "offset": 93,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수시장분류ID"
+          },
+          {
+            "offset": 94,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "지수일련번호"
+          },
+          {
+            "offset": 95,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "추적지수레버리지인버스구분코드"
+          },
+          {
+            "offset": 96,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "참고지수레버리지인버스구분코드"
+          },
+          {
+            "offset": 97,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수자산분류ID1"
+          },
+          {
+            "offset": 98,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수자산분류ID2"
+          },
+          {
+            "offset": 99,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "상장주선사회원번호"
+          },
+          {
+            "offset": 100,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "LP주문가능여부"
+          },
+          {
+            "offset": 101,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "저유동성여부"
+          },
+          {
+            "offset": 102,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "이상급등여부"
+          },
+          {
+            "offset": 103,
+            "length": 23,
+            "type": "CHAR",
+            "desc": "상한수량"
+          },
+          {
+            "offset": 104,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자유의종목여부"
+          },
+          {
+            "offset": 105,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "상장주식수부족종목여부"
+          },
+          {
+            "offset": 106,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "SPAC소멸합병여부"
+          },
+          {
+            "offset": 107,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "세그먼트구분코드"
+          },
+          {
+            "offset": 108,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장종료후시간외단일가가능여부"
+          },
+          {
+            "offset": 109,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "정보분배메세지종료키워드"
+          }
+        ]
+      }
     }
   },
   "/apik/prod1/spec/3": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "id": "3",
-      "specName": "Audit Format SPEC",
-      "path": "/specs/audit/format",
-      "timestamp": "2025-04-10 11:10:00",
-      "refIdentifies": "identifyD, identifyE, identifyF",
-      "frags": [
-        {
-          "offset": 0,
-          "len": 2,
-          "type": "C3",
-          "desc": "데이터구분값 (C3)"
-        },
-        {
-          "offset": 2,
-          "len": 3,
-          "type": "51Q",
-          "desc": "정보구분값"
-        },
-        {
-          "offset": 5,
-          "len": 12,
-          "type": "CODE",
-          "desc": "종목코드"
-        },
-        {
-          "offset": 17,
-          "len": 6,
-          "type": "IDX",
-          "desc": "종목인덱스번호"
-        }
-      ],
-      "fragsCount": 109,
-      "size": 632,
-      "identifyList": [
-        {
-          "name": "identifyD",
-          "refCount": 4
-        },
-        {
-          "name": "identifyE",
-          "refCount": 2
-        },
-        {
-          "name": "identifyF",
-          "refCount": 1
-        }
-      ]
+      "node": "prod1",
+      "detail": {
+        "name": "A0_KRX_MASTER",
+        "path": "cfg/spec_components/A0_master.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_identifies": 1,
+        "frags": 109,
+        "size": 632,
+        "desc": "KRX 종목마스터",
+        "related_identifies": [
+          {
+            "name": "krx_master",
+            "ref_count": 4
+          }
+        ],
+        "spec_definition": [
+          {
+            "offset": 1,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "데이터구분값"
+          },
+          {
+            "offset": 2,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "정보구분값"
+          },
+          {
+            "offset": 3,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "정보분배일련번호"
+          },
+          {
+            "offset": 4,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "정보구분총종목수"
+          },
+          {
+            "offset": 5,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "영업일자"
+          },
+          {
+            "offset": 6,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "종목코드"
+          },
+          {
+            "offset": 7,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "정보분배종목인덱스"
+          },
+          {
+            "offset": 8,
+            "length": 9,
+            "type": "CHAR",
+            "desc": "종목단축코드"
+          },
+          {
+            "offset": 9,
+            "length": 40,
+            "type": "CHAR",
+            "desc": "종목약명"
+          },
+          {
+            "offset": 10,
+            "length": 40,
+            "type": "CHAR",
+            "desc": "종목영문약명"
+          },
+          {
+            "offset": 11,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "정보분배그룹번호"
+          },
+          {
+            "offset": 12,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "장운영상품그룹ID"
+          },
+          {
+            "offset": 13,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "증권그룹ID"
+          },
+          {
+            "offset": 14,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "단위매매체결여부"
+          },
+          {
+            "offset": 15,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "락구분코드"
+          },
+          {
+            "offset": 16,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "액면가변경구분코드"
+          },
+          {
+            "offset": 17,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시가기준가격종목여부"
+          },
+          {
+            "offset": 18,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "재평가종목사유코드"
+          },
+          {
+            "offset": 19,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "기준가격변경종목여부"
+          },
+          {
+            "offset": 20,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "임의종료발동조건코드"
+          },
+          {
+            "offset": 21,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시장경보위험예고여부"
+          },
+          {
+            "offset": 22,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "시장경보구분코드"
+          },
+          {
+            "offset": 23,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "지배구조우량여부"
+          },
+          {
+            "offset": 24,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "관리종목여부"
+          },
+          {
+            "offset": 25,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "불성실공시여부"
+          },
+          {
+            "offset": 26,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "우회상장여부"
+          },
+          {
+            "offset": 27,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "거래정지여부"
+          },
+          {
+            "offset": 28,
+            "length": 10,
+            "type": "CHAR",
+            "desc": "업종ID"
+          },
+          {
+            "offset": 29,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "중소기업여부"
+          },
+          {
+            "offset": 30,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "소속부구분코드"
+          },
+          {
+            "offset": 31,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자기구구분코드"
+          },
+          {
+            "offset": 32,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "기준가격"
+          },
+          {
+            "offset": 33,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "전일종가구분코드"
+          },
+          {
+            "offset": 34,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "전일종가"
+          },
+          {
+            "offset": 35,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "전일누적거래량"
+          },
+          {
+            "offset": 36,
+            "length": 22,
+            "type": "CHAR",
+            "desc": "전일누적거래대금"
+          },
+          {
+            "offset": 37,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "상한가"
+          },
+          {
+            "offset": 38,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "하한가"
+          },
+          {
+            "offset": 39,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "대용가격"
+          },
+          {
+            "offset": 40,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "액면가"
+          },
+          {
+            "offset": 41,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "발행가격"
+          },
+          {
+            "offset": 42,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "상장일자"
+          },
+          {
+            "offset": 43,
+            "length": 16,
+            "type": "CHAR",
+            "desc": "상장주식수"
+          },
+          {
+            "offset": 44,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "정리매매여부"
+          },
+          {
+            "offset": 45,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "존립개시일자"
+          },
+          {
+            "offset": 46,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "존립종료일자"
+          },
+          {
+            "offset": 47,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "행사기간개시일자"
+          },
+          {
+            "offset": 48,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "권리행사기간만료일자"
+          },
+          {
+            "offset": 49,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "ELW신주인수권증권행사가격"
+          },
+          {
+            "offset": 50,
+            "length": 22,
+            "type": "CHAR",
+            "desc": "자본금"
+          },
+          {
+            "offset": 51,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "신용주문가능여부"
+          },
+          {
+            "offset": 52,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "지정가호가취소조건코드"
+          },
+          {
+            "offset": 53,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "시장가호가취소조건코드"
+          },
+          {
+            "offset": 54,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "조건부지정가호가취소조건코드"
+          },
+          {
+            "offset": 55,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "최유리지정가호가취소조건코드"
+          },
+          {
+            "offset": 56,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "최우선지정가호가취소조건코드"
+          },
+          {
+            "offset": 57,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "중간가호가취소조건코드"
+          },
+          {
+            "offset": 58,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "스톱지정가호가취소조건코드"
+          },
+          {
+            "offset": 59,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "증자구분코드"
+          },
+          {
+            "offset": 60,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "종류주권구분코드"
+          },
+          {
+            "offset": 61,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "국민주여부"
+          },
+          {
+            "offset": 62,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "평가가격"
+          },
+          {
+            "offset": 63,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "최저호가가격"
+          },
+          {
+            "offset": 64,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "최고호가가격"
+          },
+          {
+            "offset": 65,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "메인보드수량단위"
+          },
+          {
+            "offset": 66,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "장종료후시간외수량단위"
+          },
+          {
+            "offset": 67,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "리츠종류코드"
+          },
+          {
+            "offset": 68,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "목적주권종목코드"
+          },
+          {
+            "offset": 69,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "통화ISO코드"
+          },
+          {
+            "offset": 70,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "국가코드"
+          },
+          {
+            "offset": 71,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시장조성가능여부"
+          },
+          {
+            "offset": 72,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장종료후시간외종가가능여부"
+          },
+          {
+            "offset": 73,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외종가가능여부"
+          },
+          {
+            "offset": 74,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외대량매매가능여부"
+          },
+          {
+            "offset": 75,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외바스켓가능여부"
+          },
+          {
+            "offset": 76,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "예상체결가공개여부"
+          },
+          {
+            "offset": 77,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "공매도가능여부"
+          },
+          {
+            "offset": 78,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "추적수익률배수"
+          },
+          {
+            "offset": 79,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "REGS여부"
+          },
+          {
+            "offset": 80,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "SPAC여부"
+          },
+          {
+            "offset": 81,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "과세유형코드"
+          },
+          {
+            "offset": 82,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "대용가격사정비율"
+          },
+          {
+            "offset": 83,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자주의환기종목여부"
+          },
+          {
+            "offset": 84,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "상장폐지일자"
+          },
+          {
+            "offset": 85,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "단기과열종목구분코드"
+          },
+          {
+            "offset": 86,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "ETF복제방법구분코드"
+          },
+          {
+            "offset": 87,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기일자"
+          },
+          {
+            "offset": 88,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "분배금형태코드"
+          },
+          {
+            "offset": 89,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기상환가격결정시작일자"
+          },
+          {
+            "offset": 90,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기상환가격결정종료일자"
+          },
+          {
+            "offset": 91,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "ETP상품구분코드"
+          },
+          {
+            "offset": 92,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "지수산출기관코드"
+          },
+          {
+            "offset": 93,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수시장분류ID"
+          },
+          {
+            "offset": 94,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "지수일련번호"
+          },
+          {
+            "offset": 95,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "추적지수레버리지인버스구분코드"
+          },
+          {
+            "offset": 96,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "참고지수레버리지인버스구분코드"
+          },
+          {
+            "offset": 97,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수자산분류ID1"
+          },
+          {
+            "offset": 98,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수자산분류ID2"
+          },
+          {
+            "offset": 99,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "상장주선사회원번호"
+          },
+          {
+            "offset": 100,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "LP주문가능여부"
+          },
+          {
+            "offset": 101,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "저유동성여부"
+          },
+          {
+            "offset": 102,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "이상급등여부"
+          },
+          {
+            "offset": 103,
+            "length": 23,
+            "type": "CHAR",
+            "desc": "상한수량"
+          },
+          {
+            "offset": 104,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자유의종목여부"
+          },
+          {
+            "offset": 105,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "상장주식수부족종목여부"
+          },
+          {
+            "offset": 106,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "SPAC소멸합병여부"
+          },
+          {
+            "offset": 107,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "세그먼트구분코드"
+          },
+          {
+            "offset": 108,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장종료후시간외단일가가능여부"
+          },
+          {
+            "offset": 109,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "정보분배메세지종료키워드"
+          }
+        ]
+      }
     }
   },
   "/apik/prod2/spec/1": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "id": "1",
-      "specName": "Config Sync SPEC",
-      "path": "/specs/config/sync",
-      "timestamp": "2025-04-11 09:10:00",
-      "refIdentifies": "identifyZ",
-      "frags": [
-        {
-          "offset": 0,
-          "len": 4,
-          "type": "MAGIC",
-          "desc": "매직값"
-        },
-        {
-          "offset": 4,
-          "len": 2,
-          "type": "CMD",
-          "desc": "명령 코드"
-        }
-      ],
-      "fragsCount": 22,
-      "size": 256,
-      "identifyList": [
-        {
-          "name": "identifyZ",
-          "refCount": 1
-        }
-      ],
-      "explanation": "Validates and syncs config"
+      "node": "prod1",
+      "detail": {
+        "name": "A0_KRX_MASTER",
+        "path": "cfg/spec_components/A0_master.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_identifies": 1,
+        "frags": 109,
+        "size": 632,
+        "desc": "KRX 종목마스터",
+        "related_identifies": [
+          {
+            "name": "krx_master",
+            "ref_count": 4
+          }
+        ],
+        "spec_definition": [
+          {
+            "offset": 1,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "데이터구분값"
+          },
+          {
+            "offset": 2,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "정보구분값"
+          },
+          {
+            "offset": 3,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "정보분배일련번호"
+          },
+          {
+            "offset": 4,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "정보구분총종목수"
+          },
+          {
+            "offset": 5,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "영업일자"
+          },
+          {
+            "offset": 6,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "종목코드"
+          },
+          {
+            "offset": 7,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "정보분배종목인덱스"
+          },
+          {
+            "offset": 8,
+            "length": 9,
+            "type": "CHAR",
+            "desc": "종목단축코드"
+          },
+          {
+            "offset": 9,
+            "length": 40,
+            "type": "CHAR",
+            "desc": "종목약명"
+          },
+          {
+            "offset": 10,
+            "length": 40,
+            "type": "CHAR",
+            "desc": "종목영문약명"
+          },
+          {
+            "offset": 11,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "정보분배그룹번호"
+          },
+          {
+            "offset": 12,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "장운영상품그룹ID"
+          },
+          {
+            "offset": 13,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "증권그룹ID"
+          },
+          {
+            "offset": 14,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "단위매매체결여부"
+          },
+          {
+            "offset": 15,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "락구분코드"
+          },
+          {
+            "offset": 16,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "액면가변경구분코드"
+          },
+          {
+            "offset": 17,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시가기준가격종목여부"
+          },
+          {
+            "offset": 18,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "재평가종목사유코드"
+          },
+          {
+            "offset": 19,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "기준가격변경종목여부"
+          },
+          {
+            "offset": 20,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "임의종료발동조건코드"
+          },
+          {
+            "offset": 21,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시장경보위험예고여부"
+          },
+          {
+            "offset": 22,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "시장경보구분코드"
+          },
+          {
+            "offset": 23,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "지배구조우량여부"
+          },
+          {
+            "offset": 24,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "관리종목여부"
+          },
+          {
+            "offset": 25,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "불성실공시여부"
+          },
+          {
+            "offset": 26,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "우회상장여부"
+          },
+          {
+            "offset": 27,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "거래정지여부"
+          },
+          {
+            "offset": 28,
+            "length": 10,
+            "type": "CHAR",
+            "desc": "업종ID"
+          },
+          {
+            "offset": 29,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "중소기업여부"
+          },
+          {
+            "offset": 30,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "소속부구분코드"
+          },
+          {
+            "offset": 31,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자기구구분코드"
+          },
+          {
+            "offset": 32,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "기준가격"
+          },
+          {
+            "offset": 33,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "전일종가구분코드"
+          },
+          {
+            "offset": 34,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "전일종가"
+          },
+          {
+            "offset": 35,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "전일누적거래량"
+          },
+          {
+            "offset": 36,
+            "length": 22,
+            "type": "CHAR",
+            "desc": "전일누적거래대금"
+          },
+          {
+            "offset": 37,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "상한가"
+          },
+          {
+            "offset": 38,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "하한가"
+          },
+          {
+            "offset": 39,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "대용가격"
+          },
+          {
+            "offset": 40,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "액면가"
+          },
+          {
+            "offset": 41,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "발행가격"
+          },
+          {
+            "offset": 42,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "상장일자"
+          },
+          {
+            "offset": 43,
+            "length": 16,
+            "type": "CHAR",
+            "desc": "상장주식수"
+          },
+          {
+            "offset": 44,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "정리매매여부"
+          },
+          {
+            "offset": 45,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "존립개시일자"
+          },
+          {
+            "offset": 46,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "존립종료일자"
+          },
+          {
+            "offset": 47,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "행사기간개시일자"
+          },
+          {
+            "offset": 48,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "권리행사기간만료일자"
+          },
+          {
+            "offset": 49,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "ELW신주인수권증권행사가격"
+          },
+          {
+            "offset": 50,
+            "length": 22,
+            "type": "CHAR",
+            "desc": "자본금"
+          },
+          {
+            "offset": 51,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "신용주문가능여부"
+          },
+          {
+            "offset": 52,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "지정가호가취소조건코드"
+          },
+          {
+            "offset": 53,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "시장가호가취소조건코드"
+          },
+          {
+            "offset": 54,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "조건부지정가호가취소조건코드"
+          },
+          {
+            "offset": 55,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "최유리지정가호가취소조건코드"
+          },
+          {
+            "offset": 56,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "최우선지정가호가취소조건코드"
+          },
+          {
+            "offset": 57,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "중간가호가취소조건코드"
+          },
+          {
+            "offset": 58,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "스톱지정가호가취소조건코드"
+          },
+          {
+            "offset": 59,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "증자구분코드"
+          },
+          {
+            "offset": 60,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "종류주권구분코드"
+          },
+          {
+            "offset": 61,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "국민주여부"
+          },
+          {
+            "offset": 62,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "평가가격"
+          },
+          {
+            "offset": 63,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "최저호가가격"
+          },
+          {
+            "offset": 64,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "최고호가가격"
+          },
+          {
+            "offset": 65,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "메인보드수량단위"
+          },
+          {
+            "offset": 66,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "장종료후시간외수량단위"
+          },
+          {
+            "offset": 67,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "리츠종류코드"
+          },
+          {
+            "offset": 68,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "목적주권종목코드"
+          },
+          {
+            "offset": 69,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "통화ISO코드"
+          },
+          {
+            "offset": 70,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "국가코드"
+          },
+          {
+            "offset": 71,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시장조성가능여부"
+          },
+          {
+            "offset": 72,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장종료후시간외종가가능여부"
+          },
+          {
+            "offset": 73,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외종가가능여부"
+          },
+          {
+            "offset": 74,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외대량매매가능여부"
+          },
+          {
+            "offset": 75,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외바스켓가능여부"
+          },
+          {
+            "offset": 76,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "예상체결가공개여부"
+          },
+          {
+            "offset": 77,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "공매도가능여부"
+          },
+          {
+            "offset": 78,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "추적수익률배수"
+          },
+          {
+            "offset": 79,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "REGS여부"
+          },
+          {
+            "offset": 80,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "SPAC여부"
+          },
+          {
+            "offset": 81,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "과세유형코드"
+          },
+          {
+            "offset": 82,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "대용가격사정비율"
+          },
+          {
+            "offset": 83,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자주의환기종목여부"
+          },
+          {
+            "offset": 84,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "상장폐지일자"
+          },
+          {
+            "offset": 85,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "단기과열종목구분코드"
+          },
+          {
+            "offset": 86,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "ETF복제방법구분코드"
+          },
+          {
+            "offset": 87,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기일자"
+          },
+          {
+            "offset": 88,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "분배금형태코드"
+          },
+          {
+            "offset": 89,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기상환가격결정시작일자"
+          },
+          {
+            "offset": 90,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기상환가격결정종료일자"
+          },
+          {
+            "offset": 91,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "ETP상품구분코드"
+          },
+          {
+            "offset": 92,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "지수산출기관코드"
+          },
+          {
+            "offset": 93,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수시장분류ID"
+          },
+          {
+            "offset": 94,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "지수일련번호"
+          },
+          {
+            "offset": 95,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "추적지수레버리지인버스구분코드"
+          },
+          {
+            "offset": 96,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "참고지수레버리지인버스구분코드"
+          },
+          {
+            "offset": 97,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수자산분류ID1"
+          },
+          {
+            "offset": 98,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수자산분류ID2"
+          },
+          {
+            "offset": 99,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "상장주선사회원번호"
+          },
+          {
+            "offset": 100,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "LP주문가능여부"
+          },
+          {
+            "offset": 101,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "저유동성여부"
+          },
+          {
+            "offset": 102,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "이상급등여부"
+          },
+          {
+            "offset": 103,
+            "length": 23,
+            "type": "CHAR",
+            "desc": "상한수량"
+          },
+          {
+            "offset": 104,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자유의종목여부"
+          },
+          {
+            "offset": 105,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "상장주식수부족종목여부"
+          },
+          {
+            "offset": 106,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "SPAC소멸합병여부"
+          },
+          {
+            "offset": 107,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "세그먼트구분코드"
+          },
+          {
+            "offset": 108,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장종료후시간외단일가가능여부"
+          },
+          {
+            "offset": 109,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "정보분배메세지종료키워드"
+          }
+        ]
+      }
     }
   },
   "/apik/prod1/identify/list": {

@@ -24,13 +24,13 @@ import { paths } from 'src/routes/paths';
 
 type SpecItem = {
     id: string;
-    specName: string;
+    name: string;
     path: string;
     timestamp: string;
-    refIdentifies?: string;
+    ref_identifies?: string;
     frags?: number;
     size?: number;
-    explanation?: string;
+    desc?: string;
 };
 
 type Props = { nodeId: string };
@@ -40,7 +40,8 @@ export function SpecListView({ nodeId }: Props) {
     const router = useRouter();
     const url = endpoints.spec.list(nodeId);
     const { data, error, isLoading } = useSWR(url, fetcher);
-    const rows: SpecItem[] = (data && data.data && data.data.specList) || [];
+    const rows: SpecItem[] = (data && data.data && data.data.list) || [];
+    console.log('rows', rows);
 
     return (
         <DashboardContent maxWidth="xl">
@@ -91,13 +92,13 @@ export function SpecListView({ nodeId }: Props) {
                                     }}
                                 >
                                     <TableCell>{row.id}</TableCell>
-                                    <TableCell>{row.specName}</TableCell>
+                                    <TableCell>{row.name}</TableCell>
                                     <TableCell>{row.path}</TableCell>
                                     <TableCell>{row.timestamp}</TableCell>
-                                    <TableCell>{row.refIdentifies}</TableCell>
+                                    <TableCell>{row.ref_identifies}</TableCell>
                                     <TableCell>{row.frags}</TableCell>
                                     <TableCell>{row.size}</TableCell>
-                                    <TableCell>{row.explanation}</TableCell>
+                                    <TableCell>{row.desc}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

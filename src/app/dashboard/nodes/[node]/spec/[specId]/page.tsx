@@ -29,9 +29,9 @@ type Props = {
     };
 };
 
-type IdentifyRow = { id?: number; name: string; refCount: number };
+type IdentifyRow = { id?: number; name: string; ref_count: number };
 
-type FragRow = { offset: number; len: number; type: string; desc: string };
+type FragRow = { offset: number; length: number; type: string; desc: string };
 
 export default function Page({ params }: Props) {
     const { node, specId } = params;
@@ -40,11 +40,14 @@ export default function Page({ params }: Props) {
     const url = endpoints.spec.detail(node, decodeURIComponent(specId));
     const { data, error, isLoading } = useSWR(url, fetcher);
 
-    const detail = data?.data || {};
-    const identifiers: IdentifyRow[] = detail.identifyList || [];
-    const frags: FragRow[] = Array.isArray(detail.frags) ? detail.frags : [];
-    const fragsCount = detail.fragsCount ?? frags.length ?? 0;
-    const sizeCount = detail.size ?? 0;
+
+    const detail = data?.data?.detail || {};
+    const specName = data?.data?.detail?.name;
+    const identifiers: IdentifyRow[] = detail.related_identifies || [];
+    const frags: FragRow[] = Array.isArray(detail.spec_definition) ? detail.spec_definition : [];
+
+    console.log("data", detail);
+
 
     return (
         <DashboardContent maxWidth="xl">
@@ -52,11 +55,11 @@ export default function Page({ params }: Props) {
                 node={node}
                 pages={[
                     { pageName: t('top.spec_list'), link: paths.dashboard.nodes.specList(node) },
-                    { pageName: decodeURIComponent(specId) },
+                    { pageName: specName },
                 ]}
             />
 
-            <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{detail.specName || decodeURIComponent(specId)}</Typography>
+            <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{"SPEC: "}{specName}</Typography>
 
             <Box sx={{ mt: 3 }}>
                 <Grid container spacing={3}>
@@ -91,7 +94,7 @@ export default function Page({ params }: Props) {
                                         <TableRow key={row.name + idx}>
                                             <TableCell>{idx + 1}</TableCell>
                                             <TableCell>{row.name}</TableCell>
-                                            <TableCell>{row.refCount}</TableCell>
+                                            <TableCell>{row.ref_count}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -101,10 +104,10 @@ export default function Page({ params }: Props) {
                         <Box sx={{ ml: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
                             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
                                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
-                                    {t('left.ref_identifier_with_count', { count: identifiers.length })}
+                                    {t('left.ref_identifier_with_count', { count: detail?.ref_identifies })}
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
-                                    {t('left.frags_sizes', { frags: fragsCount, sizes: sizeCount })}
+                                    {t('left.frags_sizes', { frags: detail?.frags, sizes: detail?.size })}
                                 </Typography>
                             </Box>
                         </Box>
@@ -112,11 +115,11 @@ export default function Page({ params }: Props) {
 
                     {/* Right side - Fragments table with dark background */}
                     <Grid item xs={12} md={7}>
-                        <Paper sx={{ backgroundColor: '#202838', p: 0.5, color: '#D4DCFA' }}>
-                            <Box sx={{ backgroundColor: '#E0E4EB', p: 1, mb: 2, borderTopLeftRadius: 8, borderTopRightRadius: 8 }}>
+                        <Paper sx={{ backgroundColor: '#202838', p: 0.5, color: '#D4DCFA', }}>
+                            <Box sx={{ backgroundColor: '#E0E4EB', p: 1, mb: 2, borderTopLeftRadius: 8, borderTopRightRadius: 8, position: 'sticky' }}>
                                 <Typography sx={{ fontWeight: 600, color: '#4E576A' }}>{t('전문 정의')}</Typography>
                             </Box>
-                            <TableContainer sx={{ p: 0.5 }}>
+                            <TableContainer sx={{ p: 0.5, overflowY: 'auto', maxHeight: 'calc(64vh)' }}>
                                 <Table size="small">
                                     <TableHead sx={{ '& .MuiTableCell-head': { backgroundColor: '#667085' } }}>
                                         <TableRow>
@@ -154,7 +157,7 @@ export default function Page({ params }: Props) {
                                                     <Chip label={row.offset} color="success" size="small" variant="outlined" />
                                                 </TableCell>
                                                 <TableCell>
-                                                    <Chip label={row.len} color="primary" size="small" variant="soft" />
+                                                    <Chip label={row.length} color="primary" size="small" variant="soft" />
                                                 </TableCell>
                                                 <TableCell >
                                                     <Chip label={row.type} color="warning" size="small" variant="outlined" />
