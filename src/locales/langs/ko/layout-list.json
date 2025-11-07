@@ -1,0 +1,23 @@
+{
+  "top": {
+    "layout_list": "레이아웃 목록",
+    "layout": "레이아웃 목록"
+  },
+  "table": {
+    "id": "ID",
+    "layout_name": "레이아웃명",
+    "path": "경로",
+    "timestamp": "타임스탬프",
+    "process": "프로세스",
+    "channel_in": "채널.IN",
+    "desc": "설명"
+  },
+  "loading": "로딩 중...",
+  "error": "레이아웃을 불러오지 못했습니다",
+  "empty": "레이아웃이 없습니다",
+  "detail_table": {
+    "action_title": "연관 작업",
+    "process_title": "연관 프로세스",
+    "script_title": "함수 정의"
+  }
+}

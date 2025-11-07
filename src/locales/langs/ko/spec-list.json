@@ -1,0 +1,18 @@
+{
+  "top": {
+    "spec_list": "SPEC 목록"
+  },
+  "table": {
+    "id": "ID",
+    "spec_name": "SPEC 이름",
+    "path": "경로",
+    "timestamp": "타임스탬프",
+    "ref_identifies": "ref. 식별자",
+    "frags": "조각",
+    "size": "크기",
+    "explanation": "설명"
+  },
+  "loading": "로딩 중...",
+  "error": "불러오기 실패.",
+  "empty": "검색된 SPEC 없음."
+}

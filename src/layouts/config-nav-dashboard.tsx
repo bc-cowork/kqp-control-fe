@@ -59,8 +59,36 @@ export function getNavData(nodes: string[] = []) {
                 path: paths.dashboard.nodes.channelsOutbound(node),
               },
               {
+                title: t('tab_option.layout_list') || 'Layout List',
+                path: paths.dashboard.nodes.layoutList(node),
+              },
+              {
+                title: t('tab_option.action_list') || 'Action List',
+                path: paths.dashboard.nodes.actionList(node),
+              },
+              {
                 title: t('tab_option.rule_list'),
                 path: paths.dashboard.nodes.rules(node),
+              },
+              {
+                title: t('tab_option.spec_list') || 'SPEC List',
+                path: paths.dashboard.nodes.specList(node),
+              },
+              {
+                title: t('tab_option.identify_list') || 'Identify List',
+                path: paths.dashboard.nodes.identifyList(node),
+              },
+              {
+                title: t('tab_option.function_list') || 'Function List',
+                path: paths.dashboard.nodes.functionList(node),
+              },
+              {
+                title: t('tab_option.daily_report_list') || 'Daily Report',
+                path: paths.dashboard.nodes.dailyReportList(node),
+              },
+              {
+                title: t('tab_option.alerts_list') || 'Alerts',
+                path: paths.dashboard.nodes.alertsList(node),
               },
             ],
           })),

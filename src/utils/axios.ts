@@ -97,6 +97,30 @@ export const endpoints = {
     issueList: (node: string) => `/apik/${node}/issue/list`,
     graph: (node: string) => `/apik/${node}/node/metrics`,
   },
+  rules: {
+    list: (node: string) => `/apik/${node}/rule/list`,
+    detail: (node: string, action: string) => `/apik/${node}/rule/${action}`,
+  },
+  actions: {
+    list: (node: string) => `/apik/${node}/action/list`,
+    detail: (node: string, action: string) => `/apik/${node}/action/${action}`,
+  },
+  layouts: {
+    list: (node: string) => `/apik/${node}/layout/list`,
+    detail: (node: string, layout: string) => `/apik/${node}/layout/${layout}`,
+  },
+  identify: {
+    list: (node: string) => `/apik/${node}/identify/list`,
+    detail: (node: string, identifyId: string) => `/apik/${node}/identify/${identifyId}`,
+  },
+  function: {
+    list: (node: string) => `/apik/${node}/function/list`,
+    detail: (node: string, functionName: string) => `/apik/${node}/function/${functionName}`,
+  },
+  spec: {
+    list: (node: string) => `/apik/${node}/spec/list`,
+    detail: (node: string, specId: string) => `/apik/${node}/spec/${specId}`,
+  },
   nodes: {
     channelInbound: {
       list: (node: string) => `/apik/${node}/channel/list`,

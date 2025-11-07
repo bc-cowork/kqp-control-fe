@@ -192,7 +192,9 @@
         "wday": "Thursday",
         "audit": {
           "masters": {
-            "distributable_issues": ["KR5701000055"],
+            "distributable_issues": [
+              "KR5701000055"
+            ],
             "krx_count": 10,
             "nxt_count": 5,
             "common_count": 3
@@ -344,280 +346,440 @@
           "name": "한투글로벌AI빅테크1호(A)",
           "code": "KR5701000055",
           "seq": 1,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "이스트아시아홀딩스",
           "code": "HK0000057197",
           "seq": 2,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투글로벌AI빅테크1호(A-e)",
           "code": "KR5701000063",
           "seq": 3,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "헝셩그룹",
           "code": "HK0000214814",
           "seq": 4,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투글로벌AI빅테크2호(A)",
           "code": "KR5701000071",
           "seq": 5,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "로스웰",
           "code": "HK0000295359",
           "seq": 6,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투글로벌AI빅테크2호(A-e)",
           "code": "KR5701000089",
           "seq": 7,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "GRT",
           "code": "HK0000307485",
           "seq": 8,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹성장테마1호(A)",
           "code": "KR5701000097",
           "seq": 9,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "오가닉티코스메틱",
           "code": "HK0000312568",
           "seq": 10,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹성장테마1호(A-e)",
           "code": "KR5701000105",
           "seq": 11,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "컬러레이",
           "code": "HK0000341732",
           "seq": 12,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹성장테마2호(A)",
           "code": "KR5701000113",
           "seq": 13,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "윙입푸드",
           "code": "HK0000449303",
           "seq": 14,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹성장테마2호(A-e)",
           "code": "KR5701000121",
           "seq": 15,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 20250410,
           "name": "삼천당제약",
           "code": "KR7000250001",
           "seq": 16,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹&글로벌성장1(A)",
           "code": "KR5701000139",
           "seq": 17,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "중앙에너비스",
           "code": "KR7000440008",
           "seq": 18,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹&글로벌성장1(A1)",
           "code": "KR5701000147",
           "seq": 19,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "신라섬유",
           "code": "KR7001000009",
           "seq": 20,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹&글로벌성장1(A1-e)",
           "code": "KR5701000154",
           "seq": 21,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "안국약품",
           "code": "KR7001540004",
           "seq": 22,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹&글로벌성장2(A)",
           "code": "KR5701000162",
           "seq": 23,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "무림SP",
           "code": "KR7001810001",
           "seq": 24,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹&글로벌성장2(A1)",
           "code": "KR5701000170",
           "seq": 25,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "이화공영",
           "code": "KR7001840008",
           "seq": 26,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹&글로벌성장2(A1-e)",
           "code": "KR5701000188",
           "seq": 27,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "피에스텍",
           "code": "KR7002230001",
           "seq": 28,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹&글로벌성장3(A)",
           "code": "KR5701000196",
           "seq": 29,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "삼일기업공사",
           "code": "KR7002290005",
           "seq": 30,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹&글로벌성장3(A1)",
           "code": "KR5701000204",
           "seq": 31,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "한탑",
           "code": "KR7002680007",
           "seq": 32,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한투삼성그룹&글로벌성장3(A1-e)",
           "code": "KR5701000212",
           "seq": 33,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "신신제약",
           "code": "KR7002800001",
           "seq": 34,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "밀라노부동산",
           "code": "KR570101B954",
           "seq": 35,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "선광",
           "code": "KR7003100005",
           "seq": 36,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "벨기에코어오피스2호",
           "code": "KR570101B962",
           "seq": 37,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 0,
           "name": "대주산업",
           "code": "KR7003310000",
           "seq": 38,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         },
         {
           "compet": 0,
           "name": "한국투자뉴욕오피스1호",
           "code": "KR570101B9A2",
           "seq": 39,
-          "daily_info_dates": [20250410, 20250410, 0]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            0
+          ]
         },
         {
           "compet": 20250410,
           "name": "하림지주",
           "code": "KR7003380003",
           "seq": 40,
-          "daily_info_dates": [20250410, 20250410, 20250410]
+          "daily_info_dates": [
+            20250410,
+            20250410,
+            20250410
+          ]
         }
       ]
     },
@@ -662,7 +824,11 @@
           "uni": 0,
           "krx": 0
         },
-        "g1_ssn_id": [null, "99", ""],
+        "g1_ssn_id": [
+          null,
+          "99",
+          ""
+        ],
         "open": {
           "nxt": 0,
           "uni": 0,
@@ -1339,6 +1505,4348 @@
           "nic": "eth1"
         }
       ]
+    }
+  },
+  "/apik/prod1/action/list": {
+    "okay": true,
+    "data": {
+      "nodeId": "prod1",
+      "actionList": [
+        {
+          "id": "1",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 14,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "2",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 5,
+          "refProcess": 10,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "3",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 4,
+          "refProcess": 9,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "4",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 16,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "5",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 4,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "6",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 5,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "7",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 6,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "8",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 7,
+          "desc": "증적로그 기록"
+        }
+      ]
+    }
+  },
+  "/apik/prod2/action/list": {
+    "okay": true,
+    "data": {
+      "nodeId": "prod2",
+      "actionList": [
+        {
+          "id": "1",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 14,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "2",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 5,
+          "refProcess": 10,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "3",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 4,
+          "refProcess": 9,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "4",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 16,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "5",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 4,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "6",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 5,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "7",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 6,
+          "desc": "증적로그 기록"
+        },
+        {
+          "id": "8",
+          "actionName": "action_log",
+          "path": "/cfg/actions/action_log.moon",
+          "timestamp": "2025-10-28 13:05:30",
+          "refLayout": 3,
+          "refProcess": 7,
+          "desc": "증적로그 기록"
+        }
+      ]
+    }
+  },
+  "/apik/prod1/layout/list": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "list": [
+        {
+          "id": "1",
+          "name": "BASE",
+          "path": "cfg/layouts/BASE.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "process": 3,
+          "channel_in": 14,
+          "desc": "공통 레이아웃"
+        },
+        {
+          "id": "2",
+          "name": "KOSPI_KOSDAQ",
+          "path": "cfg/layouts/KOSPI_KOSDAQ.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "process": 5,
+          "channel_in": 10,
+          "desc": "코스피, 코스닥 주식 레이아웃"
+        }
+      ]
+    }
+  },
+  "/apik/prod2/layout/list": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "list": [
+        {
+          "id": "1",
+          "name": "BASE",
+          "path": "cfg/layouts/BASE.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "process": 3,
+          "channel_in": 14,
+          "desc": "공통 레이아웃"
+        },
+        {
+          "id": "2",
+          "name": "KOSPI_KOSDAQ",
+          "path": "cfg/layouts/KOSPI_KOSDAQ.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "process": 5,
+          "channel_in": 10,
+          "desc": "코스피, 코스닥 주식 레이아웃"
+        }
+      ]
+    }
+  },
+  "/apik/prod1/layout/BASE": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "detail": {
+        "name": "BASE",
+        "path": "/cfg/layouts/BASE.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "process": 3,
+        "channel_in": 14,
+        "desc": "코스피, 코스닥 주식 레이아웃"
+      },
+      "layout_definition": "-- BASE.moon\n\n--=================================================\n-- KOSPI_KOSDAQ 주식 그룹\n--\n{\n    PMR:\n\n        --==    KOSPI/KOSDAQ 주식 기본\n        KSKQ_def:\n            desc:               '구조화증권 기본/기타 라우터'\n            recv2r: {\n                216,224,225,226,230\n                238,239,261,260\n            }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}           -- 입수 로깅\n                    act 'route',    {to:'1',app:'kqp'}    -- 통합시세로 넘김\n                    act 'route',    {to:'KSKQ_def_emit'}  -- 송출기로 넘김.  => CBR\n                }\n\n        KSKQ_def_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}   -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 호가\n        KS_q:\n            recv2r: { 222,223, 258 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'ksp_q',app:'kqp'} -- 통합시세로 넘김\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KS_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 체결\n        KS_f:\n            recv2r: { 217,218,219,220,221,256 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_f_emit'}\n                }\n\n        KS_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 호가\n        KQ_q:\n            recv2r: { 236,237, 259 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KQ_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 체결\n        KQ_f:\n            recv2r: { 231,232,233,234,235,257 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KQ_f_emit'}\n                }\n\n        KQ_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n}"
+    }
+  },
+  "/apik/prod1/layout/KOSPI_KOSDAQ": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "detail": {
+        "name": "KOSPI_KOSDAQ",
+        "path": "/cfg/layouts/KOSPI_KOSDAQ.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "process": 3,
+        "channel_in": 14,
+        "desc": "코스피, 코스닥 주식 레이아웃"
+      },
+      "layout_definition": "-- KOSPI_KOSDAQ.moon\n\n--=================================================\n-- KOSPI_KOSDAQ 주식 그룹\n--\n{\n    PMR:\n\n        --==    KOSPI/KOSDAQ 주식 기본\n        KSKQ_def:\n            desc:               '구조화증권 기본/기타 라우터'\n            recv2r: {\n                216,224,225,226,230\n                238,239,261,260\n            }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}           -- 입수 로깅\n                    act 'route',    {to:'1',app:'kqp'}    -- 통합시세로 넘김\n                    act 'route',    {to:'KSKQ_def_emit'}  -- 송출기로 넘김.  => CBR\n                }\n\n        KSKQ_def_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}   -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 호가\n        KS_q:\n            recv2r: { 222,223, 258 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'ksp_q',app:'kqp'} -- 통합시세로 넘김\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KS_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 체결\n        KS_f:\n            recv2r: { 217,218,219,220,221,256 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_f_emit'}\n                }\n\n        KS_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 호가\n        KQ_q:\n            recv2r: { 236,237, 259 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KQ_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 체결\n        KQ_f:\n            recv2r: { 231,232,233,234,235,257 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KQ_f_emit'}\n                }\n\n        KQ_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n}"
+    }
+  },
+  "/apik/prod2/layout/BASE": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "detail": {
+        "name": "BASE",
+        "path": "/cfg/layouts/BASE.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "process": 3,
+        "channel_in": 14,
+        "desc": "코스피, 코스닥 주식 레이아웃"
+      },
+      "layout_definition": "-- BASE.moon\n\n--=================================================\n-- KOSPI_KOSDAQ 주식 그룹\n--\n{\n    PMR:\n\n        --==    KOSPI/KOSDAQ 주식 기본\n        KSKQ_def:\n            desc:               '구조화증권 기본/기타 라우터'\n            recv2r: {\n                216,224,225,226,230\n                238,239,261,260\n            }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}           -- 입수 로깅\n                    act 'route',    {to:'1',app:'kqp'}    -- 통합시세로 넘김\n                    act 'route',    {to:'KSKQ_def_emit'}  -- 송출기로 넘김.  => CBR\n                }\n\n        KSKQ_def_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}   -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 호가\n        KS_q:\n            recv2r: { 222,223, 258 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'ksp_q',app:'kqp'} -- 통합시세로 넘김\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KS_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 체결\n        KS_f:\n            recv2r: { 217,218,219,220,221,256 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_f_emit'}\n                }\n\n        KS_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 호가\n        KQ_q:\n            recv2r: { 236,237, 259 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KQ_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 체결\n        KQ_f:\n            recv2r: { 231,232,233,234,235,257 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KQ_f_emit'}\n                }\n\n        KQ_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n}"
+    }
+  },
+  "/apik/prod2/layout/KOSPI_KOSDAQ": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "detail": {
+        "name": "KOSPI_KOSDAQ",
+        "path": "/cfg/layouts/KOSPI_KOSDAQ.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "process": 3,
+        "channel_in": 14,
+        "desc": "코스피, 코스닥 주식 레이아웃"
+      },
+      "layout_definition": "-- KOSPI_KOSDAQ.moon\n\n--=================================================\n-- KOSPI_KOSDAQ 주식 그룹\n--\n{\n    PMR:\n\n        --==    KOSPI/KOSDAQ 주식 기본\n        KSKQ_def:\n            desc:               '구조화증권 기본/기타 라우터'\n            recv2r: {\n                216,224,225,226,230\n                238,239,261,260\n            }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}           -- 입수 로깅\n                    act 'route',    {to:'1',app:'kqp'}    -- 통합시세로 넘김\n                    act 'route',    {to:'KSKQ_def_emit'}  -- 송출기로 넘김.  => CBR\n                }\n\n        KSKQ_def_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}   -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 호가\n        KS_q:\n            recv2r: { 222,223, 258 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'ksp_q',app:'kqp'} -- 통합시세로 넘김\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KS_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 체결\n        KS_f:\n            recv2r: { 217,218,219,220,221,256 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_f_emit'}\n                }\n\n        KS_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 호가\n        KQ_q:\n            recv2r: { 236,237, 259 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KQ_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 체결\n        KQ_f:\n            recv2r: { 231,232,233,234,235,257 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KQ_f_emit'}\n                }\n\n        KQ_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n}"
+    }
+  },
+  "/apik/prod1/action/Restart Service": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod1",
+      "layoutList": [
+        {
+          "layout": "layoutA",
+          "refCount": 12
+        },
+        {
+          "layout": "layoutB",
+          "refCount": 5
+        }
+      ],
+      "processList": [
+        {
+          "process": "kqp",
+          "usageCount": 20
+        },
+        {
+          "process": "logger",
+          "usageCount": 3
+        }
+      ],
+      "script": "#!/bin/sh\necho \"Restarting kqp...\"\nsystemctl restart kqp.service\n# end"
+    }
+  },
+  "/apik/prod1/action/action_log": {
+    "okay": true,
+    "data": {
+      "nodeId": "prod1",
+      "name": "action_log",
+      "path": "/cfg/actions/action_log.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refLayout": 3,
+      "refProcess": 14,
+      "desc": "증적로그 기록",
+      "layoutList": [
+        {
+          "layout": "KOSPI_KOSDAQ",
+          "refCount": 4
+        },
+        {
+          "layout": "ST_STOCK",
+          "refCount": 5
+        },
+        {
+          "layout": "ETC_STOCK",
+          "refCount": 5
+        }
+      ],
+      "processList": [
+        {
+          "process": "pmr.KS_f",
+          "usageCount": 1
+        },
+        {
+          "process": "pmr.KS_f_emit",
+          "usageCount": 1
+        },
+        {
+          "process": "pmr.KS_f_qos",
+          "usageCount": 1
+        },
+        {
+          "process": "kas.dreplay",
+          "usageCount": 2
+        }
+      ],
+      "script": "-- action_log.moon\nlunit = require 'lunit'\nlpfrag = lunit.lpfrag\n\n{\n  name:     'log'\n  desc:     '증적 LOG 기록 함수'\n  aliases:  {'kpass','증적로그','로그기록','증적로그기록'}\n\n  fn:       (o,opt)->\n            -- print '','action-log:',(to_json opt)\n\n            try_rule o,opt\n\n            o.fnid = opt.fnid  if opt.fnid\n            o.app = opt.app  if opt.app\n            o.instcode = opt.inst  if opt.inst\n\n            TO_AUDITLOG o,opt.to\n            o.app = nil\n            o.fnid = nil\n\n}"
+    }
+  },
+  "/apik/prod2/action/Start Service": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "nodeId": "prod2",
+      "layoutList": [
+        {
+          "layout": "layoutC",
+          "refCount": 7
+        }
+      ],
+      "processList": [
+        {
+          "process": "kqp",
+          "usageCount": 8
+        },
+        {
+          "process": "configsync",
+          "usageCount": 2
+        }
+      ],
+      "script": "#!/bin/sh\necho \"Starting kqp...\"\nsystemctl start kqp.service\n# end"
+    }
+  },
+  "/apik/prod2/action/action_log": {
+    "okay": true,
+    "data": {
+      "nodeId": "prod2",
+      "name": "action_log",
+      "path": "/cfg/actions/action_log.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refLayout": 3,
+      "refProcess": 14,
+      "desc": "증적로그 기록",
+      "layoutList": [
+        {
+          "layout": "KOSPI_KOSDAQ",
+          "refCount": 4
+        },
+        {
+          "layout": "ST_STOCK",
+          "refCount": 5
+        },
+        {
+          "layout": "ETC_STOCK",
+          "refCount": 5
+        }
+      ],
+      "processList": [
+        {
+          "process": "pmr.KS_f",
+          "usageCount": 1
+        },
+        {
+          "process": "pmr.KS_f_emit",
+          "usageCount": 1
+        },
+        {
+          "process": "pmr.KS_f_qos",
+          "usageCount": 1
+        },
+        {
+          "process": "kas.dreplay",
+          "usageCount": 2
+        }
+      ],
+      "script": "-- action_log.moon\nlunit = require 'lunit'\nlpfrag = lunit.lpfrag\n\n{\n  name:     'log'\n  desc:     '증적 LOG 기록 함수'\n  aliases:  {'kpass','증적로그','로그기록','증적로그기록'}\n\n  fn:       (o,opt)->\n            -- print '','action-log:',(to_json opt)\n\n            try_rule o,opt\n\n            o.fnid = opt.fnid  if opt.fnid\n            o.app = opt.app  if opt.app\n            o.instcode = opt.inst  if opt.inst\n\n            TO_AUDITLOG o,opt.to\n            o.app = nil\n            o.fnid = nil\n\n}"
+    }
+  },
+  "/apik/prod1/spec/list": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "list": [
+        {
+          "id": "1",
+          "name": "A0_KRX_MASTER",
+          "path": "/cfg/spec_components/A0_master.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "ref_identifies": 1,
+          "frags": 109,
+          "size": 632,
+          "desc": "KRX 종목 마스터"
+        },
+        {
+          "id": "2",
+          "name": "A1_ISSUE_INFO_ETN",
+          "path": "/cfg/spec_components/A1_ISSUE_INFO_ETN.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "ref_identifies": 2,
+          "frags": 20,
+          "size": 260,
+          "desc": "KRX 종목 정보 (ETN)"
+        },
+        {
+          "id": "3",
+          "name": "A3_FILL",
+          "path": "/cfg/spec_components/A3_FILL.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "ref_identifies": 4,
+          "frags": 22,
+          "size": 186,
+          "desc": "KRX 체결"
+        },
+        {
+          "id": "4",
+          "name": "A0_NXT_MASTER",
+          "path": "/cfg/spec_components/A0_master.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "ref_identifies": 1,
+          "frags": 116,
+          "size": 648,
+          "desc": "NXT 종목 마스터"
+        },
+        {
+          "id": "5",
+          "name": "B6_QUOTE",
+          "path": "/cfg/spec_components/B6_QUOTE.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "ref_identifies": 4,
+          "frags": 56,
+          "size": 590,
+          "desc": "KRX 호가"
+        }
+      ]
+    }
+  },
+  "/apik/prod2/spec/list": {
+    "okay": true,
+    "data": {
+      "node": "prod2",
+      "list": [
+        {
+          "id": "1",
+          "name": "A0_KRX_MASTER",
+          "path": "/cfg/spec_components/A0_master.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "ref_identifies": 1,
+          "frags": 109,
+          "size": 632,
+          "desc": "KRX 종목 마스터"
+        },
+        {
+          "id": "2",
+          "name": "A1_ISSUE_INFO_ETN",
+          "path": "/cfg/spec_components/A1_ISSUE_INFO_ETN.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "ref_identifies": 2,
+          "frags": 20,
+          "size": 260,
+          "desc": "KRX 종목 정보 (ETN)"
+        },
+        {
+          "id": "3",
+          "name": "A3_FILL",
+          "path": "/cfg/spec_components/A3_FILL.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "ref_identifies": 4,
+          "frags": 22,
+          "size": 186,
+          "desc": "KRX 체결"
+        },
+        {
+          "id": "4",
+          "name": "A0_NXT_MASTER",
+          "path": "/cfg/spec_components/A0_master.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "ref_identifies": 1,
+          "frags": 116,
+          "size": 648,
+          "desc": "NXT 종목 마스터"
+        },
+        {
+          "id": "5",
+          "name": "B6_QUOTE",
+          "path": "/cfg/spec_components/B6_QUOTE.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "ref_identifies": 4,
+          "frags": 56,
+          "size": 590,
+          "desc": "KRX 호가"
+        }
+      ]
+    }
+  },
+  "/apik/prod1/spec/1": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "detail": {
+        "name": "A0_KRX_MASTER",
+        "path": "cfg/spec_components/A0_master.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_identifies": 1,
+        "frags": 109,
+        "size": 632,
+        "desc": "KRX 종목마스터",
+        "related_identifies": [
+          {
+            "name": "krx_master",
+            "ref_count": 4
+          }
+        ],
+        "spec_definition": [
+          {
+            "offset": 1,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "데이터구분값"
+          },
+          {
+            "offset": 2,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "정보구분값"
+          },
+          {
+            "offset": 3,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "정보분배일련번호"
+          },
+          {
+            "offset": 4,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "정보구분총종목수"
+          },
+          {
+            "offset": 5,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "영업일자"
+          },
+          {
+            "offset": 6,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "종목코드"
+          },
+          {
+            "offset": 7,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "정보분배종목인덱스"
+          },
+          {
+            "offset": 8,
+            "length": 9,
+            "type": "CHAR",
+            "desc": "종목단축코드"
+          },
+          {
+            "offset": 9,
+            "length": 40,
+            "type": "CHAR",
+            "desc": "종목약명"
+          },
+          {
+            "offset": 10,
+            "length": 40,
+            "type": "CHAR",
+            "desc": "종목영문약명"
+          },
+          {
+            "offset": 11,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "정보분배그룹번호"
+          },
+          {
+            "offset": 12,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "장운영상품그룹ID"
+          },
+          {
+            "offset": 13,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "증권그룹ID"
+          },
+          {
+            "offset": 14,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "단위매매체결여부"
+          },
+          {
+            "offset": 15,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "락구분코드"
+          },
+          {
+            "offset": 16,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "액면가변경구분코드"
+          },
+          {
+            "offset": 17,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시가기준가격종목여부"
+          },
+          {
+            "offset": 18,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "재평가종목사유코드"
+          },
+          {
+            "offset": 19,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "기준가격변경종목여부"
+          },
+          {
+            "offset": 20,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "임의종료발동조건코드"
+          },
+          {
+            "offset": 21,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시장경보위험예고여부"
+          },
+          {
+            "offset": 22,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "시장경보구분코드"
+          },
+          {
+            "offset": 23,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "지배구조우량여부"
+          },
+          {
+            "offset": 24,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "관리종목여부"
+          },
+          {
+            "offset": 25,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "불성실공시여부"
+          },
+          {
+            "offset": 26,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "우회상장여부"
+          },
+          {
+            "offset": 27,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "거래정지여부"
+          },
+          {
+            "offset": 28,
+            "length": 10,
+            "type": "CHAR",
+            "desc": "업종ID"
+          },
+          {
+            "offset": 29,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "중소기업여부"
+          },
+          {
+            "offset": 30,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "소속부구분코드"
+          },
+          {
+            "offset": 31,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자기구구분코드"
+          },
+          {
+            "offset": 32,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "기준가격"
+          },
+          {
+            "offset": 33,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "전일종가구분코드"
+          },
+          {
+            "offset": 34,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "전일종가"
+          },
+          {
+            "offset": 35,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "전일누적거래량"
+          },
+          {
+            "offset": 36,
+            "length": 22,
+            "type": "CHAR",
+            "desc": "전일누적거래대금"
+          },
+          {
+            "offset": 37,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "상한가"
+          },
+          {
+            "offset": 38,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "하한가"
+          },
+          {
+            "offset": 39,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "대용가격"
+          },
+          {
+            "offset": 40,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "액면가"
+          },
+          {
+            "offset": 41,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "발행가격"
+          },
+          {
+            "offset": 42,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "상장일자"
+          },
+          {
+            "offset": 43,
+            "length": 16,
+            "type": "CHAR",
+            "desc": "상장주식수"
+          },
+          {
+            "offset": 44,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "정리매매여부"
+          },
+          {
+            "offset": 45,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "존립개시일자"
+          },
+          {
+            "offset": 46,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "존립종료일자"
+          },
+          {
+            "offset": 47,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "행사기간개시일자"
+          },
+          {
+            "offset": 48,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "권리행사기간만료일자"
+          },
+          {
+            "offset": 49,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "ELW신주인수권증권행사가격"
+          },
+          {
+            "offset": 50,
+            "length": 22,
+            "type": "CHAR",
+            "desc": "자본금"
+          },
+          {
+            "offset": 51,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "신용주문가능여부"
+          },
+          {
+            "offset": 52,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "지정가호가취소조건코드"
+          },
+          {
+            "offset": 53,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "시장가호가취소조건코드"
+          },
+          {
+            "offset": 54,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "조건부지정가호가취소조건코드"
+          },
+          {
+            "offset": 55,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "최유리지정가호가취소조건코드"
+          },
+          {
+            "offset": 56,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "최우선지정가호가취소조건코드"
+          },
+          {
+            "offset": 57,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "중간가호가취소조건코드"
+          },
+          {
+            "offset": 58,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "스톱지정가호가취소조건코드"
+          },
+          {
+            "offset": 59,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "증자구분코드"
+          },
+          {
+            "offset": 60,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "종류주권구분코드"
+          },
+          {
+            "offset": 61,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "국민주여부"
+          },
+          {
+            "offset": 62,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "평가가격"
+          },
+          {
+            "offset": 63,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "최저호가가격"
+          },
+          {
+            "offset": 64,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "최고호가가격"
+          },
+          {
+            "offset": 65,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "메인보드수량단위"
+          },
+          {
+            "offset": 66,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "장종료후시간외수량단위"
+          },
+          {
+            "offset": 67,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "리츠종류코드"
+          },
+          {
+            "offset": 68,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "목적주권종목코드"
+          },
+          {
+            "offset": 69,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "통화ISO코드"
+          },
+          {
+            "offset": 70,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "국가코드"
+          },
+          {
+            "offset": 71,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시장조성가능여부"
+          },
+          {
+            "offset": 72,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장종료후시간외종가가능여부"
+          },
+          {
+            "offset": 73,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외종가가능여부"
+          },
+          {
+            "offset": 74,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외대량매매가능여부"
+          },
+          {
+            "offset": 75,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외바스켓가능여부"
+          },
+          {
+            "offset": 76,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "예상체결가공개여부"
+          },
+          {
+            "offset": 77,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "공매도가능여부"
+          },
+          {
+            "offset": 78,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "추적수익률배수"
+          },
+          {
+            "offset": 79,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "REGS여부"
+          },
+          {
+            "offset": 80,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "SPAC여부"
+          },
+          {
+            "offset": 81,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "과세유형코드"
+          },
+          {
+            "offset": 82,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "대용가격사정비율"
+          },
+          {
+            "offset": 83,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자주의환기종목여부"
+          },
+          {
+            "offset": 84,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "상장폐지일자"
+          },
+          {
+            "offset": 85,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "단기과열종목구분코드"
+          },
+          {
+            "offset": 86,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "ETF복제방법구분코드"
+          },
+          {
+            "offset": 87,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기일자"
+          },
+          {
+            "offset": 88,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "분배금형태코드"
+          },
+          {
+            "offset": 89,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기상환가격결정시작일자"
+          },
+          {
+            "offset": 90,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기상환가격결정종료일자"
+          },
+          {
+            "offset": 91,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "ETP상품구분코드"
+          },
+          {
+            "offset": 92,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "지수산출기관코드"
+          },
+          {
+            "offset": 93,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수시장분류ID"
+          },
+          {
+            "offset": 94,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "지수일련번호"
+          },
+          {
+            "offset": 95,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "추적지수레버리지인버스구분코드"
+          },
+          {
+            "offset": 96,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "참고지수레버리지인버스구분코드"
+          },
+          {
+            "offset": 97,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수자산분류ID1"
+          },
+          {
+            "offset": 98,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수자산분류ID2"
+          },
+          {
+            "offset": 99,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "상장주선사회원번호"
+          },
+          {
+            "offset": 100,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "LP주문가능여부"
+          },
+          {
+            "offset": 101,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "저유동성여부"
+          },
+          {
+            "offset": 102,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "이상급등여부"
+          },
+          {
+            "offset": 103,
+            "length": 23,
+            "type": "CHAR",
+            "desc": "상한수량"
+          },
+          {
+            "offset": 104,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자유의종목여부"
+          },
+          {
+            "offset": 105,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "상장주식수부족종목여부"
+          },
+          {
+            "offset": 106,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "SPAC소멸합병여부"
+          },
+          {
+            "offset": 107,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "세그먼트구분코드"
+          },
+          {
+            "offset": 108,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장종료후시간외단일가가능여부"
+          },
+          {
+            "offset": 109,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "정보분배메세지종료키워드"
+          }
+        ]
+      }
+    }
+  },
+  "/apik/prod1/spec/2": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "detail": {
+        "name": "A0_KRX_MASTER",
+        "path": "cfg/spec_components/A0_master.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_identifies": 1,
+        "frags": 109,
+        "size": 632,
+        "desc": "KRX 종목마스터",
+        "related_identifies": [
+          {
+            "name": "krx_master",
+            "ref_count": 4
+          }
+        ],
+        "spec_definition": [
+          {
+            "offset": 1,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "데이터구분값"
+          },
+          {
+            "offset": 2,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "정보구분값"
+          },
+          {
+            "offset": 3,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "정보분배일련번호"
+          },
+          {
+            "offset": 4,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "정보구분총종목수"
+          },
+          {
+            "offset": 5,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "영업일자"
+          },
+          {
+            "offset": 6,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "종목코드"
+          },
+          {
+            "offset": 7,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "정보분배종목인덱스"
+          },
+          {
+            "offset": 8,
+            "length": 9,
+            "type": "CHAR",
+            "desc": "종목단축코드"
+          },
+          {
+            "offset": 9,
+            "length": 40,
+            "type": "CHAR",
+            "desc": "종목약명"
+          },
+          {
+            "offset": 10,
+            "length": 40,
+            "type": "CHAR",
+            "desc": "종목영문약명"
+          },
+          {
+            "offset": 11,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "정보분배그룹번호"
+          },
+          {
+            "offset": 12,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "장운영상품그룹ID"
+          },
+          {
+            "offset": 13,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "증권그룹ID"
+          },
+          {
+            "offset": 14,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "단위매매체결여부"
+          },
+          {
+            "offset": 15,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "락구분코드"
+          },
+          {
+            "offset": 16,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "액면가변경구분코드"
+          },
+          {
+            "offset": 17,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시가기준가격종목여부"
+          },
+          {
+            "offset": 18,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "재평가종목사유코드"
+          },
+          {
+            "offset": 19,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "기준가격변경종목여부"
+          },
+          {
+            "offset": 20,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "임의종료발동조건코드"
+          },
+          {
+            "offset": 21,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시장경보위험예고여부"
+          },
+          {
+            "offset": 22,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "시장경보구분코드"
+          },
+          {
+            "offset": 23,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "지배구조우량여부"
+          },
+          {
+            "offset": 24,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "관리종목여부"
+          },
+          {
+            "offset": 25,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "불성실공시여부"
+          },
+          {
+            "offset": 26,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "우회상장여부"
+          },
+          {
+            "offset": 27,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "거래정지여부"
+          },
+          {
+            "offset": 28,
+            "length": 10,
+            "type": "CHAR",
+            "desc": "업종ID"
+          },
+          {
+            "offset": 29,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "중소기업여부"
+          },
+          {
+            "offset": 30,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "소속부구분코드"
+          },
+          {
+            "offset": 31,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자기구구분코드"
+          },
+          {
+            "offset": 32,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "기준가격"
+          },
+          {
+            "offset": 33,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "전일종가구분코드"
+          },
+          {
+            "offset": 34,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "전일종가"
+          },
+          {
+            "offset": 35,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "전일누적거래량"
+          },
+          {
+            "offset": 36,
+            "length": 22,
+            "type": "CHAR",
+            "desc": "전일누적거래대금"
+          },
+          {
+            "offset": 37,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "상한가"
+          },
+          {
+            "offset": 38,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "하한가"
+          },
+          {
+            "offset": 39,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "대용가격"
+          },
+          {
+            "offset": 40,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "액면가"
+          },
+          {
+            "offset": 41,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "발행가격"
+          },
+          {
+            "offset": 42,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "상장일자"
+          },
+          {
+            "offset": 43,
+            "length": 16,
+            "type": "CHAR",
+            "desc": "상장주식수"
+          },
+          {
+            "offset": 44,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "정리매매여부"
+          },
+          {
+            "offset": 45,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "존립개시일자"
+          },
+          {
+            "offset": 46,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "존립종료일자"
+          },
+          {
+            "offset": 47,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "행사기간개시일자"
+          },
+          {
+            "offset": 48,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "권리행사기간만료일자"
+          },
+          {
+            "offset": 49,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "ELW신주인수권증권행사가격"
+          },
+          {
+            "offset": 50,
+            "length": 22,
+            "type": "CHAR",
+            "desc": "자본금"
+          },
+          {
+            "offset": 51,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "신용주문가능여부"
+          },
+          {
+            "offset": 52,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "지정가호가취소조건코드"
+          },
+          {
+            "offset": 53,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "시장가호가취소조건코드"
+          },
+          {
+            "offset": 54,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "조건부지정가호가취소조건코드"
+          },
+          {
+            "offset": 55,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "최유리지정가호가취소조건코드"
+          },
+          {
+            "offset": 56,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "최우선지정가호가취소조건코드"
+          },
+          {
+            "offset": 57,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "중간가호가취소조건코드"
+          },
+          {
+            "offset": 58,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "스톱지정가호가취소조건코드"
+          },
+          {
+            "offset": 59,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "증자구분코드"
+          },
+          {
+            "offset": 60,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "종류주권구분코드"
+          },
+          {
+            "offset": 61,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "국민주여부"
+          },
+          {
+            "offset": 62,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "평가가격"
+          },
+          {
+            "offset": 63,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "최저호가가격"
+          },
+          {
+            "offset": 64,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "최고호가가격"
+          },
+          {
+            "offset": 65,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "메인보드수량단위"
+          },
+          {
+            "offset": 66,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "장종료후시간외수량단위"
+          },
+          {
+            "offset": 67,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "리츠종류코드"
+          },
+          {
+            "offset": 68,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "목적주권종목코드"
+          },
+          {
+            "offset": 69,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "통화ISO코드"
+          },
+          {
+            "offset": 70,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "국가코드"
+          },
+          {
+            "offset": 71,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시장조성가능여부"
+          },
+          {
+            "offset": 72,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장종료후시간외종가가능여부"
+          },
+          {
+            "offset": 73,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외종가가능여부"
+          },
+          {
+            "offset": 74,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외대량매매가능여부"
+          },
+          {
+            "offset": 75,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외바스켓가능여부"
+          },
+          {
+            "offset": 76,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "예상체결가공개여부"
+          },
+          {
+            "offset": 77,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "공매도가능여부"
+          },
+          {
+            "offset": 78,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "추적수익률배수"
+          },
+          {
+            "offset": 79,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "REGS여부"
+          },
+          {
+            "offset": 80,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "SPAC여부"
+          },
+          {
+            "offset": 81,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "과세유형코드"
+          },
+          {
+            "offset": 82,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "대용가격사정비율"
+          },
+          {
+            "offset": 83,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자주의환기종목여부"
+          },
+          {
+            "offset": 84,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "상장폐지일자"
+          },
+          {
+            "offset": 85,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "단기과열종목구분코드"
+          },
+          {
+            "offset": 86,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "ETF복제방법구분코드"
+          },
+          {
+            "offset": 87,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기일자"
+          },
+          {
+            "offset": 88,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "분배금형태코드"
+          },
+          {
+            "offset": 89,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기상환가격결정시작일자"
+          },
+          {
+            "offset": 90,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기상환가격결정종료일자"
+          },
+          {
+            "offset": 91,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "ETP상품구분코드"
+          },
+          {
+            "offset": 92,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "지수산출기관코드"
+          },
+          {
+            "offset": 93,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수시장분류ID"
+          },
+          {
+            "offset": 94,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "지수일련번호"
+          },
+          {
+            "offset": 95,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "추적지수레버리지인버스구분코드"
+          },
+          {
+            "offset": 96,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "참고지수레버리지인버스구분코드"
+          },
+          {
+            "offset": 97,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수자산분류ID1"
+          },
+          {
+            "offset": 98,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수자산분류ID2"
+          },
+          {
+            "offset": 99,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "상장주선사회원번호"
+          },
+          {
+            "offset": 100,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "LP주문가능여부"
+          },
+          {
+            "offset": 101,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "저유동성여부"
+          },
+          {
+            "offset": 102,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "이상급등여부"
+          },
+          {
+            "offset": 103,
+            "length": 23,
+            "type": "CHAR",
+            "desc": "상한수량"
+          },
+          {
+            "offset": 104,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자유의종목여부"
+          },
+          {
+            "offset": 105,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "상장주식수부족종목여부"
+          },
+          {
+            "offset": 106,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "SPAC소멸합병여부"
+          },
+          {
+            "offset": 107,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "세그먼트구분코드"
+          },
+          {
+            "offset": 108,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장종료후시간외단일가가능여부"
+          },
+          {
+            "offset": 109,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "정보분배메세지종료키워드"
+          }
+        ]
+      }
+    }
+  },
+  "/apik/prod1/spec/3": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "detail": {
+        "name": "A0_KRX_MASTER",
+        "path": "cfg/spec_components/A0_master.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_identifies": 1,
+        "frags": 109,
+        "size": 632,
+        "desc": "KRX 종목마스터",
+        "related_identifies": [
+          {
+            "name": "krx_master",
+            "ref_count": 4
+          }
+        ],
+        "spec_definition": [
+          {
+            "offset": 1,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "데이터구분값"
+          },
+          {
+            "offset": 2,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "정보구분값"
+          },
+          {
+            "offset": 3,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "정보분배일련번호"
+          },
+          {
+            "offset": 4,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "정보구분총종목수"
+          },
+          {
+            "offset": 5,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "영업일자"
+          },
+          {
+            "offset": 6,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "종목코드"
+          },
+          {
+            "offset": 7,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "정보분배종목인덱스"
+          },
+          {
+            "offset": 8,
+            "length": 9,
+            "type": "CHAR",
+            "desc": "종목단축코드"
+          },
+          {
+            "offset": 9,
+            "length": 40,
+            "type": "CHAR",
+            "desc": "종목약명"
+          },
+          {
+            "offset": 10,
+            "length": 40,
+            "type": "CHAR",
+            "desc": "종목영문약명"
+          },
+          {
+            "offset": 11,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "정보분배그룹번호"
+          },
+          {
+            "offset": 12,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "장운영상품그룹ID"
+          },
+          {
+            "offset": 13,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "증권그룹ID"
+          },
+          {
+            "offset": 14,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "단위매매체결여부"
+          },
+          {
+            "offset": 15,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "락구분코드"
+          },
+          {
+            "offset": 16,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "액면가변경구분코드"
+          },
+          {
+            "offset": 17,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시가기준가격종목여부"
+          },
+          {
+            "offset": 18,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "재평가종목사유코드"
+          },
+          {
+            "offset": 19,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "기준가격변경종목여부"
+          },
+          {
+            "offset": 20,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "임의종료발동조건코드"
+          },
+          {
+            "offset": 21,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시장경보위험예고여부"
+          },
+          {
+            "offset": 22,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "시장경보구분코드"
+          },
+          {
+            "offset": 23,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "지배구조우량여부"
+          },
+          {
+            "offset": 24,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "관리종목여부"
+          },
+          {
+            "offset": 25,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "불성실공시여부"
+          },
+          {
+            "offset": 26,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "우회상장여부"
+          },
+          {
+            "offset": 27,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "거래정지여부"
+          },
+          {
+            "offset": 28,
+            "length": 10,
+            "type": "CHAR",
+            "desc": "업종ID"
+          },
+          {
+            "offset": 29,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "중소기업여부"
+          },
+          {
+            "offset": 30,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "소속부구분코드"
+          },
+          {
+            "offset": 31,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자기구구분코드"
+          },
+          {
+            "offset": 32,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "기준가격"
+          },
+          {
+            "offset": 33,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "전일종가구분코드"
+          },
+          {
+            "offset": 34,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "전일종가"
+          },
+          {
+            "offset": 35,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "전일누적거래량"
+          },
+          {
+            "offset": 36,
+            "length": 22,
+            "type": "CHAR",
+            "desc": "전일누적거래대금"
+          },
+          {
+            "offset": 37,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "상한가"
+          },
+          {
+            "offset": 38,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "하한가"
+          },
+          {
+            "offset": 39,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "대용가격"
+          },
+          {
+            "offset": 40,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "액면가"
+          },
+          {
+            "offset": 41,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "발행가격"
+          },
+          {
+            "offset": 42,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "상장일자"
+          },
+          {
+            "offset": 43,
+            "length": 16,
+            "type": "CHAR",
+            "desc": "상장주식수"
+          },
+          {
+            "offset": 44,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "정리매매여부"
+          },
+          {
+            "offset": 45,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "존립개시일자"
+          },
+          {
+            "offset": 46,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "존립종료일자"
+          },
+          {
+            "offset": 47,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "행사기간개시일자"
+          },
+          {
+            "offset": 48,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "권리행사기간만료일자"
+          },
+          {
+            "offset": 49,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "ELW신주인수권증권행사가격"
+          },
+          {
+            "offset": 50,
+            "length": 22,
+            "type": "CHAR",
+            "desc": "자본금"
+          },
+          {
+            "offset": 51,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "신용주문가능여부"
+          },
+          {
+            "offset": 52,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "지정가호가취소조건코드"
+          },
+          {
+            "offset": 53,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "시장가호가취소조건코드"
+          },
+          {
+            "offset": 54,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "조건부지정가호가취소조건코드"
+          },
+          {
+            "offset": 55,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "최유리지정가호가취소조건코드"
+          },
+          {
+            "offset": 56,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "최우선지정가호가취소조건코드"
+          },
+          {
+            "offset": 57,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "중간가호가취소조건코드"
+          },
+          {
+            "offset": 58,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "스톱지정가호가취소조건코드"
+          },
+          {
+            "offset": 59,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "증자구분코드"
+          },
+          {
+            "offset": 60,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "종류주권구분코드"
+          },
+          {
+            "offset": 61,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "국민주여부"
+          },
+          {
+            "offset": 62,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "평가가격"
+          },
+          {
+            "offset": 63,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "최저호가가격"
+          },
+          {
+            "offset": 64,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "최고호가가격"
+          },
+          {
+            "offset": 65,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "메인보드수량단위"
+          },
+          {
+            "offset": 66,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "장종료후시간외수량단위"
+          },
+          {
+            "offset": 67,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "리츠종류코드"
+          },
+          {
+            "offset": 68,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "목적주권종목코드"
+          },
+          {
+            "offset": 69,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "통화ISO코드"
+          },
+          {
+            "offset": 70,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "국가코드"
+          },
+          {
+            "offset": 71,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시장조성가능여부"
+          },
+          {
+            "offset": 72,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장종료후시간외종가가능여부"
+          },
+          {
+            "offset": 73,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외종가가능여부"
+          },
+          {
+            "offset": 74,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외대량매매가능여부"
+          },
+          {
+            "offset": 75,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외바스켓가능여부"
+          },
+          {
+            "offset": 76,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "예상체결가공개여부"
+          },
+          {
+            "offset": 77,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "공매도가능여부"
+          },
+          {
+            "offset": 78,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "추적수익률배수"
+          },
+          {
+            "offset": 79,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "REGS여부"
+          },
+          {
+            "offset": 80,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "SPAC여부"
+          },
+          {
+            "offset": 81,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "과세유형코드"
+          },
+          {
+            "offset": 82,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "대용가격사정비율"
+          },
+          {
+            "offset": 83,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자주의환기종목여부"
+          },
+          {
+            "offset": 84,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "상장폐지일자"
+          },
+          {
+            "offset": 85,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "단기과열종목구분코드"
+          },
+          {
+            "offset": 86,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "ETF복제방법구분코드"
+          },
+          {
+            "offset": 87,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기일자"
+          },
+          {
+            "offset": 88,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "분배금형태코드"
+          },
+          {
+            "offset": 89,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기상환가격결정시작일자"
+          },
+          {
+            "offset": 90,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기상환가격결정종료일자"
+          },
+          {
+            "offset": 91,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "ETP상품구분코드"
+          },
+          {
+            "offset": 92,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "지수산출기관코드"
+          },
+          {
+            "offset": 93,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수시장분류ID"
+          },
+          {
+            "offset": 94,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "지수일련번호"
+          },
+          {
+            "offset": 95,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "추적지수레버리지인버스구분코드"
+          },
+          {
+            "offset": 96,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "참고지수레버리지인버스구분코드"
+          },
+          {
+            "offset": 97,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수자산분류ID1"
+          },
+          {
+            "offset": 98,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수자산분류ID2"
+          },
+          {
+            "offset": 99,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "상장주선사회원번호"
+          },
+          {
+            "offset": 100,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "LP주문가능여부"
+          },
+          {
+            "offset": 101,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "저유동성여부"
+          },
+          {
+            "offset": 102,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "이상급등여부"
+          },
+          {
+            "offset": 103,
+            "length": 23,
+            "type": "CHAR",
+            "desc": "상한수량"
+          },
+          {
+            "offset": 104,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자유의종목여부"
+          },
+          {
+            "offset": 105,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "상장주식수부족종목여부"
+          },
+          {
+            "offset": 106,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "SPAC소멸합병여부"
+          },
+          {
+            "offset": 107,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "세그먼트구분코드"
+          },
+          {
+            "offset": 108,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장종료후시간외단일가가능여부"
+          },
+          {
+            "offset": 109,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "정보분배메세지종료키워드"
+          }
+        ]
+      }
+    }
+  },
+  "/apik/prod2/spec/1": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "detail": {
+        "name": "A0_KRX_MASTER",
+        "path": "cfg/spec_components/A0_master.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_identifies": 1,
+        "frags": 109,
+        "size": 632,
+        "desc": "KRX 종목마스터",
+        "related_identifies": [
+          {
+            "name": "krx_master",
+            "ref_count": 4
+          }
+        ],
+        "spec_definition": [
+          {
+            "offset": 1,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "데이터구분값"
+          },
+          {
+            "offset": 2,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "정보구분값"
+          },
+          {
+            "offset": 3,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "정보분배일련번호"
+          },
+          {
+            "offset": 4,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "정보구분총종목수"
+          },
+          {
+            "offset": 5,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "영업일자"
+          },
+          {
+            "offset": 6,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "종목코드"
+          },
+          {
+            "offset": 7,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "정보분배종목인덱스"
+          },
+          {
+            "offset": 8,
+            "length": 9,
+            "type": "CHAR",
+            "desc": "종목단축코드"
+          },
+          {
+            "offset": 9,
+            "length": 40,
+            "type": "CHAR",
+            "desc": "종목약명"
+          },
+          {
+            "offset": 10,
+            "length": 40,
+            "type": "CHAR",
+            "desc": "종목영문약명"
+          },
+          {
+            "offset": 11,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "정보분배그룹번호"
+          },
+          {
+            "offset": 12,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "장운영상품그룹ID"
+          },
+          {
+            "offset": 13,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "증권그룹ID"
+          },
+          {
+            "offset": 14,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "단위매매체결여부"
+          },
+          {
+            "offset": 15,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "락구분코드"
+          },
+          {
+            "offset": 16,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "액면가변경구분코드"
+          },
+          {
+            "offset": 17,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시가기준가격종목여부"
+          },
+          {
+            "offset": 18,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "재평가종목사유코드"
+          },
+          {
+            "offset": 19,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "기준가격변경종목여부"
+          },
+          {
+            "offset": 20,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "임의종료발동조건코드"
+          },
+          {
+            "offset": 21,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시장경보위험예고여부"
+          },
+          {
+            "offset": 22,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "시장경보구분코드"
+          },
+          {
+            "offset": 23,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "지배구조우량여부"
+          },
+          {
+            "offset": 24,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "관리종목여부"
+          },
+          {
+            "offset": 25,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "불성실공시여부"
+          },
+          {
+            "offset": 26,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "우회상장여부"
+          },
+          {
+            "offset": 27,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "거래정지여부"
+          },
+          {
+            "offset": 28,
+            "length": 10,
+            "type": "CHAR",
+            "desc": "업종ID"
+          },
+          {
+            "offset": 29,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "중소기업여부"
+          },
+          {
+            "offset": 30,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "소속부구분코드"
+          },
+          {
+            "offset": 31,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자기구구분코드"
+          },
+          {
+            "offset": 32,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "기준가격"
+          },
+          {
+            "offset": 33,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "전일종가구분코드"
+          },
+          {
+            "offset": 34,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "전일종가"
+          },
+          {
+            "offset": 35,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "전일누적거래량"
+          },
+          {
+            "offset": 36,
+            "length": 22,
+            "type": "CHAR",
+            "desc": "전일누적거래대금"
+          },
+          {
+            "offset": 37,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "상한가"
+          },
+          {
+            "offset": 38,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "하한가"
+          },
+          {
+            "offset": 39,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "대용가격"
+          },
+          {
+            "offset": 40,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "액면가"
+          },
+          {
+            "offset": 41,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "발행가격"
+          },
+          {
+            "offset": 42,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "상장일자"
+          },
+          {
+            "offset": 43,
+            "length": 16,
+            "type": "CHAR",
+            "desc": "상장주식수"
+          },
+          {
+            "offset": 44,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "정리매매여부"
+          },
+          {
+            "offset": 45,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "존립개시일자"
+          },
+          {
+            "offset": 46,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "존립종료일자"
+          },
+          {
+            "offset": 47,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "행사기간개시일자"
+          },
+          {
+            "offset": 48,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "권리행사기간만료일자"
+          },
+          {
+            "offset": 49,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "ELW신주인수권증권행사가격"
+          },
+          {
+            "offset": 50,
+            "length": 22,
+            "type": "CHAR",
+            "desc": "자본금"
+          },
+          {
+            "offset": 51,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "신용주문가능여부"
+          },
+          {
+            "offset": 52,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "지정가호가취소조건코드"
+          },
+          {
+            "offset": 53,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "시장가호가취소조건코드"
+          },
+          {
+            "offset": 54,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "조건부지정가호가취소조건코드"
+          },
+          {
+            "offset": 55,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "최유리지정가호가취소조건코드"
+          },
+          {
+            "offset": 56,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "최우선지정가호가취소조건코드"
+          },
+          {
+            "offset": 57,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "중간가호가취소조건코드"
+          },
+          {
+            "offset": 58,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "스톱지정가호가취소조건코드"
+          },
+          {
+            "offset": 59,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "증자구분코드"
+          },
+          {
+            "offset": 60,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "종류주권구분코드"
+          },
+          {
+            "offset": 61,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "국민주여부"
+          },
+          {
+            "offset": 62,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "평가가격"
+          },
+          {
+            "offset": 63,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "최저호가가격"
+          },
+          {
+            "offset": 64,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "최고호가가격"
+          },
+          {
+            "offset": 65,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "메인보드수량단위"
+          },
+          {
+            "offset": 66,
+            "length": 11,
+            "type": "CHAR",
+            "desc": "장종료후시간외수량단위"
+          },
+          {
+            "offset": 67,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "리츠종류코드"
+          },
+          {
+            "offset": 68,
+            "length": 12,
+            "type": "CHAR",
+            "desc": "목적주권종목코드"
+          },
+          {
+            "offset": 69,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "통화ISO코드"
+          },
+          {
+            "offset": 70,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "국가코드"
+          },
+          {
+            "offset": 71,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "시장조성가능여부"
+          },
+          {
+            "offset": 72,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장종료후시간외종가가능여부"
+          },
+          {
+            "offset": 73,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외종가가능여부"
+          },
+          {
+            "offset": 74,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외대량매매가능여부"
+          },
+          {
+            "offset": 75,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장개시전시간외바스켓가능여부"
+          },
+          {
+            "offset": 76,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "예상체결가공개여부"
+          },
+          {
+            "offset": 77,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "공매도가능여부"
+          },
+          {
+            "offset": 78,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "추적수익률배수"
+          },
+          {
+            "offset": 79,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "REGS여부"
+          },
+          {
+            "offset": 80,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "SPAC여부"
+          },
+          {
+            "offset": 81,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "과세유형코드"
+          },
+          {
+            "offset": 82,
+            "length": 13,
+            "type": "CHAR",
+            "desc": "대용가격사정비율"
+          },
+          {
+            "offset": 83,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자주의환기종목여부"
+          },
+          {
+            "offset": 84,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "상장폐지일자"
+          },
+          {
+            "offset": 85,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "단기과열종목구분코드"
+          },
+          {
+            "offset": 86,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "ETF복제방법구분코드"
+          },
+          {
+            "offset": 87,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기일자"
+          },
+          {
+            "offset": 88,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "분배금형태코드"
+          },
+          {
+            "offset": 89,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기상환가격결정시작일자"
+          },
+          {
+            "offset": 90,
+            "length": 8,
+            "type": "CHAR",
+            "desc": "만기상환가격결정종료일자"
+          },
+          {
+            "offset": 91,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "ETP상품구분코드"
+          },
+          {
+            "offset": 92,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "지수산출기관코드"
+          },
+          {
+            "offset": 93,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수시장분류ID"
+          },
+          {
+            "offset": 94,
+            "length": 3,
+            "type": "CHAR",
+            "desc": "지수일련번호"
+          },
+          {
+            "offset": 95,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "추적지수레버리지인버스구분코드"
+          },
+          {
+            "offset": 96,
+            "length": 2,
+            "type": "CHAR",
+            "desc": "참고지수레버리지인버스구분코드"
+          },
+          {
+            "offset": 97,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수자산분류ID1"
+          },
+          {
+            "offset": 98,
+            "length": 6,
+            "type": "CHAR",
+            "desc": "지수자산분류ID2"
+          },
+          {
+            "offset": 99,
+            "length": 5,
+            "type": "CHAR",
+            "desc": "상장주선사회원번호"
+          },
+          {
+            "offset": 100,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "LP주문가능여부"
+          },
+          {
+            "offset": 101,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "저유동성여부"
+          },
+          {
+            "offset": 102,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "이상급등여부"
+          },
+          {
+            "offset": 103,
+            "length": 23,
+            "type": "CHAR",
+            "desc": "상한수량"
+          },
+          {
+            "offset": 104,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "투자유의종목여부"
+          },
+          {
+            "offset": 105,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "상장주식수부족종목여부"
+          },
+          {
+            "offset": 106,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "SPAC소멸합병여부"
+          },
+          {
+            "offset": 107,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "세그먼트구분코드"
+          },
+          {
+            "offset": 108,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "장종료후시간외단일가가능여부"
+          },
+          {
+            "offset": 109,
+            "length": 1,
+            "type": "CHAR",
+            "desc": "정보분배메세지종료키워드"
+          }
+        ]
+      }
+    }
+  },
+  "/apik/prod1/identify/list": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "list": [
+        {
+          "id": 1,
+          "name": "krx_master",
+          "path": "cfg/specifications/krx_master.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "ref_specs": 2,
+          "desc": "KRX 종목 마스터"
+        },
+        {
+          "id": 2,
+          "name": "nxt_master",
+          "path": "cfg/specifications/nxt_master.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "ref_specs": 2,
+          "desc": "NXT 종목 마스터"
+        },
+        {
+          "id": 3,
+          "name": "krx_fill",
+          "path": "cfg/specifications/krx_fill.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "ref_specs": 2,
+          "desc": "KRX 체결"
+        },
+        {
+          "id": 4,
+          "name": "nxt_fill",
+          "path": "cfg/specifications/nxt_fill.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "ref_specs": 2,
+          "desc": "NXT 체결"
+        },
+        {
+          "id": 5,
+          "name": "krx_quote",
+          "path": "cfg/specifications/krx_quote.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "ref_specs": 2,
+          "desc": "KRX 호가"
+        },
+        {
+          "id": 6,
+          "name": "nxt_quote",
+          "path": "cfg/specifications/nxt_quote.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "ref_specs": 2,
+          "desc": "NXT 호가"
+        }
+      ]
+    }
+  },
+  "/apik/prod2/identify/list": {
+    "okay": true,
+    "data": {
+      "node": "prod2",
+      "list": [
+        {
+          "id": 1,
+          "name": "krx_master",
+          "path": "cfg/specifications/krx_master.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "ref_specs": 2,
+          "desc": "KRX 종목 마스터"
+        },
+        {
+          "id": 2,
+          "name": "nxt_master",
+          "path": "cfg/specifications/nxt_master.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "ref_specs": 2,
+          "desc": "NXT 종목 마스터"
+        },
+        {
+          "id": 3,
+          "name": "krx_fill",
+          "path": "cfg/specifications/krx_fill.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "ref_specs": 2,
+          "desc": "KRX 체결"
+        },
+        {
+          "id": 4,
+          "name": "nxt_fill",
+          "path": "cfg/specifications/nxt_fill.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "ref_specs": 2,
+          "desc": "NXT 체결"
+        },
+        {
+          "id": 5,
+          "name": "krx_quote",
+          "path": "cfg/specifications/krx_quote.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "ref_specs": 2,
+          "desc": "KRX 호가"
+        },
+        {
+          "id": 6,
+          "name": "nxt_quote",
+          "path": "cfg/specifications/nxt_quote.moon",
+          "url": "{URL}",
+          "timestamp": "2025-10-28 13:05:30",
+          "ref_specs": 2,
+          "desc": "NXT 호가"
+        }
+      ]
+    }
+  },
+  "/apik/prod1/identify/idf-1001": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
+    }
+  },
+  "/apik/prod1/identify/idf-1002": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
+    }
+  },
+  "/apik/prod1/identify/idf-1003": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
+    }
+  },
+  "/apik/prod1/identify/idf-1004": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
+    }
+  },
+  "/apik/prod1/identify/idf-1005": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
+    }
+  },
+  "/apik/prod2/identify/idf-2001": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
+    }
+  },
+  "/apik/prod1/identify/krx_master": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
+    }
+  },
+  "/apik/prod1/identify/nxt_master": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
+    }
+  },
+  "/apik/prod1/identify/krx_fill": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
+    }
+  },
+  "/apik/prod1/identify/nxt_fill": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
+    }
+  },
+  "/apik/prod1/identify/krx_quote": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
+    }
+  },
+  "/apik/prod1/identify/nxt_quote": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
+    }
+  },
+  "/apik/prod2/identify/krx_master": {
+    "okay": true,
+    "data": {
+      "node": "prod2",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
+    }
+  },
+  "/apik/prod2/identify/nxt_master": {
+    "okay": true,
+    "data": {
+      "node": "prod2",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
+    }
+  },
+  "/apik/prod2/identify/krx_fill": {
+    "okay": true,
+    "data": {
+      "node": "prod2",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
+    }
+  },
+  "/apik/prod2/identify/nxt_fill": {
+    "okay": true,
+    "data": {
+      "node": "prod2",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
+    }
+  },
+  "/apik/prod2/identify/krx_quote": {
+    "okay": true,
+    "data": {
+      "node": "prod2",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
+    }
+  },
+  "/apik/prod2/identify/nxt_quote": {
+    "okay": true,
+    "data": {
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
+    }
+  },
+  "/apik/prod1/identify/1": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "1",
+      "identityName": "krx_master",
+      "keys": [
+        "A0"
+      ],
+      "specList": [
+        {
+          "spec": "A0_KRX_MASTER",
+          "refCount": 2
+        }
+      ],
+      "script": "-- krx_master.moon\nreturn { desc='KRX 종목 마스터', keys={'A0'}, specs='A0_KRX_MASTER' }"
+    }
+  },
+  "/apik/prod1/identify/2": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "2",
+      "identityName": "nxt_master",
+      "keys": [
+        "A0"
+      ],
+      "specList": [
+        {
+          "spec": "A0_NXT_MASTER",
+          "refCount": 2
+        }
+      ],
+      "script": "-- nxt_master.moon\nreturn { desc='NXT 종목 마스터', keys={'A0'}, specs='A0_NXT_MASTER' }"
+    }
+  },
+  "/apik/prod1/identify/3": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "3",
+      "identityName": "krx_fill",
+      "keys": [
+        "A301S",
+        "A301Q"
+      ],
+      "specList": [
+        {
+          "spec": "A3_FILL",
+          "refCount": 2
+        }
+      ],
+      "script": "-- krx_fill.moon\nreturn { desc='KRX 체결', keys={'A301S','A301Q'}, specs='A3_FILL' }"
+    }
+  },
+  "/apik/prod1/identify/4": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "4",
+      "identityName": "nxt_fill",
+      "keys": [
+        "N301S",
+        "N301Q"
+      ],
+      "specList": [
+        {
+          "spec": "A3_FILL",
+          "refCount": 2
+        }
+      ],
+      "script": "-- nxt_fill.moon\nreturn { desc='NXT 체결', keys={'N301S','N301Q'}, specs='A3_FILL' }"
+    }
+  },
+  "/apik/prod1/identify/5": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "5",
+      "identityName": "krx_quote",
+      "keys": [
+        "B6"
+      ],
+      "specList": [
+        {
+          "spec": "B6_QUOTE",
+          "refCount": 2
+        }
+      ],
+      "script": "-- krx_quote.moon\nreturn { desc='KRX 호가', keys={'B6'}, specs='B6_QUOTE' }"
+    }
+  },
+  "/apik/prod1/identify/6": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "6",
+      "identityName": "nxt_quote",
+      "keys": [
+        "NB6"
+      ],
+      "specList": [
+        {
+          "spec": "B6_QUOTE",
+          "refCount": 2
+        }
+      ],
+      "script": "-- nxt_quote.moon\nreturn { desc='NXT 호가', keys={'NB6'}, specs='B6_QUOTE' }"
+    }
+  },
+  "/apik/prod2/identify/1": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "1",
+      "identityName": "krx_master",
+      "keys": [
+        "A0"
+      ],
+      "specList": [
+        {
+          "spec": "A0_KRX_MASTER",
+          "refCount": 2
+        }
+      ],
+      "script": "-- krx_master.moon\nreturn { desc='KRX 종목 마스터', keys={'A0'}, specs='A0_KRX_MASTER' }"
+    }
+  },
+  "/apik/prod2/identify/2": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "2",
+      "identityName": "nxt_master",
+      "keys": [
+        "A0"
+      ],
+      "specList": [
+        {
+          "spec": "A0_NXT_MASTER",
+          "refCount": 2
+        }
+      ],
+      "script": "-- nxt_master.moon\nreturn { desc='NXT 종목 마스터', keys={'A0'}, specs='A0_NXT_MASTER' }"
+    }
+  },
+  "/apik/prod2/identify/3": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "3",
+      "identityName": "krx_fill",
+      "keys": [
+        "A301S",
+        "A301Q"
+      ],
+      "specList": [
+        {
+          "spec": "A3_FILL",
+          "refCount": 2
+        }
+      ],
+      "script": "-- krx_fill.moon\nreturn { desc='KRX 체결', keys={'A301S','A301Q'}, specs='A3_FILL' }"
+    }
+  },
+  "/apik/prod2/identify/4": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "4",
+      "identityName": "nxt_fill",
+      "keys": [
+        "N301S",
+        "N301Q"
+      ],
+      "specList": [
+        {
+          "spec": "A3_FILL",
+          "refCount": 2
+        }
+      ],
+      "script": "-- nxt_fill.moon\nreturn { desc='NXT 체결', keys={'N301S','N301Q'}, specs='A3_FILL' }"
+    }
+  },
+  "/apik/prod2/identify/5": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "5",
+      "identityName": "krx_quote",
+      "keys": [
+        "B6"
+      ],
+      "specList": [
+        {
+          "spec": "B6_QUOTE",
+          "refCount": 2
+        }
+      ],
+      "script": "-- krx_quote.moon\nreturn { desc='KRX 호가', keys={'B6'}, specs='B6_QUOTE' }"
+    }
+  },
+  "/apik/prod2/identify/6": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "6",
+      "identityName": "nxt_quote",
+      "keys": [
+        "NB6"
+      ],
+      "specList": [
+        {
+          "spec": "B6_QUOTE",
+          "refCount": 2
+        }
+      ],
+      "script": "-- nxt_quote.moon\nreturn { desc='NXT 호가', keys={'NB6'}, specs='B6_QUOTE' }"
+    }
+  },
+  "/apik/prod1/spec/A0_KRX_MASTER": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "A0_KRX_MASTER",
+      "specName": "A0_KRX_MASTER",
+      "path": "/cfg/spec_components/A0_master.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refIdentifies": 1,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 2,
+          "type": "C3",
+          "desc": "데이터구분값 (C3)"
+        }
+      ],
+      "fragsCount": 109,
+      "size": 632,
+      "identifyList": [
+        {
+          "name": "identifyD",
+          "refCount": 1
+        }
+      ],
+      "explanation": "KRX 종목 마스터"
+    }
+  },
+  "/apik/prod1/spec/A1_ISSUE_INFO_ETN": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "A1_ISSUE_INFO_ETN",
+      "specName": "A1_ISSUE_INFO_ETN",
+      "path": "/cfg/spec_components/A1_ISSUE_INFO_ETN.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refIdentifies": 2,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 4,
+          "type": "VER",
+          "desc": "버전"
+        }
+      ],
+      "fragsCount": 20,
+      "size": 260,
+      "identifyList": [
+        {
+          "name": "identifyE",
+          "refCount": 2
+        }
+      ],
+      "explanation": "KRX 종목 정보 (ETN)"
+    }
+  },
+  "/apik/prod1/spec/A3_FILL": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "A3_FILL",
+      "specName": "A3_FILL",
+      "path": "/cfg/spec_components/A3_FILL.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refIdentifies": 4,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 2,
+          "type": "C3",
+          "desc": "데이터구분값 (C3)"
+        }
+      ],
+      "fragsCount": 22,
+      "size": 186,
+      "identifyList": [
+        {
+          "name": "identifyA",
+          "refCount": 2
+        },
+        {
+          "name": "identifyB",
+          "refCount": 2
+        }
+      ],
+      "explanation": "KRX 체결"
+    }
+  },
+  "/apik/prod1/spec/A0_NXT_MASTER": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "A0_NXT_MASTER",
+      "specName": "A0_NXT_MASTER",
+      "path": "/cfg/spec_components/A0_master.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refIdentifies": 1,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 2,
+          "type": "C3",
+          "desc": "데이터구분값 (C3)"
+        }
+      ],
+      "fragsCount": 116,
+      "size": 648,
+      "identifyList": [
+        {
+          "name": "identifyZ",
+          "refCount": 1
+        }
+      ],
+      "explanation": "NXT 종목 마스터"
+    }
+  },
+  "/apik/prod1/spec/B6_QUOTE": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "B6_QUOTE",
+      "specName": "B6_QUOTE",
+      "path": "/cfg/spec_components/B6_QUOTE.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refIdentifies": 4,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 3,
+          "type": "51Q",
+          "desc": "정보구분값"
+        }
+      ],
+      "fragsCount": 56,
+      "size": 590,
+      "identifyList": [
+        {
+          "name": "identifyQ",
+          "refCount": 1
+        }
+      ],
+      "explanation": "KRX 호가"
+    }
+  },
+  "/apik/prod2/spec/A0_KRX_MASTER": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "A0_KRX_MASTER",
+      "specName": "A0_KRX_MASTER",
+      "path": "/cfg/spec_components/A0_master.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refIdentifies": 1,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 2,
+          "type": "C3",
+          "desc": "데이터구분값 (C3)"
+        }
+      ],
+      "fragsCount": 109,
+      "size": 632,
+      "identifyList": [
+        {
+          "name": "identifyD",
+          "refCount": 1
+        }
+      ],
+      "explanation": "KRX 종목 마스터"
+    }
+  },
+  "/apik/prod2/spec/A1_ISSUE_INFO_ETN": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "A1_ISSUE_INFO_ETN",
+      "specName": "A1_ISSUE_INFO_ETN",
+      "path": "/cfg/spec_components/A1_ISSUE_INFO_ETN.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refIdentifies": 2,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 4,
+          "type": "VER",
+          "desc": "버전"
+        }
+      ],
+      "fragsCount": 20,
+      "size": 260,
+      "identifyList": [
+        {
+          "name": "identifyE",
+          "refCount": 2
+        }
+      ],
+      "explanation": "KRX 종목 정보 (ETN)"
+    }
+  },
+  "/apik/prod2/spec/A3_FILL": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "A3_FILL",
+      "specName": "A3_FILL",
+      "path": "/cfg/spec_components/A3_FILL.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refIdentifies": 4,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 2,
+          "type": "C3",
+          "desc": "데이터구분값 (C3)"
+        }
+      ],
+      "fragsCount": 22,
+      "size": 186,
+      "identifyList": [
+        {
+          "name": "identifyA",
+          "refCount": 2
+        },
+        {
+          "name": "identifyB",
+          "refCount": 2
+        }
+      ],
+      "explanation": "KRX 체결"
+    }
+  },
+  "/apik/prod2/spec/A0_NXT_MASTER": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "A0_NXT_MASTER",
+      "specName": "A0_NXT_MASTER",
+      "path": "/cfg/spec_components/A0_master.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refIdentifies": 1,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 2,
+          "type": "C3",
+          "desc": "데이터구분값 (C3)"
+        }
+      ],
+      "fragsCount": 116,
+      "size": 648,
+      "identifyList": [
+        {
+          "name": "identifyZ",
+          "refCount": 1
+        }
+      ],
+      "explanation": "NXT 종목 마스터"
+    }
+  },
+  "/apik/prod2/spec/B6_QUOTE": {
+    "okay": true,
+    "msg": "Success",
+    "data": {
+      "id": "B6_QUOTE",
+      "specName": "B6_QUOTE",
+      "path": "/cfg/spec_components/B6_QUOTE.moon",
+      "timestamp": "2025-10-28 13:05:30",
+      "refIdentifies": 4,
+      "frags": [
+        {
+          "offset": 0,
+          "len": 3,
+          "type": "51Q",
+          "desc": "정보구분값"
+        }
+      ],
+      "fragsCount": 56,
+      "size": 590,
+      "identifyList": [
+        {
+          "name": "identifyQ",
+          "refCount": 1
+        }
+      ],
+      "explanation": "KRX 호가"
     }
   }
 }
