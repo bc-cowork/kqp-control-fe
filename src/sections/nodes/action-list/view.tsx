@@ -90,14 +90,14 @@ export function ActionListView({ nodeId }: Props) {
                                     key={index}
                                     hover
                                     onClick={() => router.push(
-                                        `${paths.dashboard.nodes.actionDetail(nodeId, String(row.name))}?timestamp=${encodeURIComponent(row.timestamp || '')}&refLayoutCount=${row.ref_layout ? 1 : 0}`
+                                        `${paths.dashboard.nodes.actionDetail(nodeId, String(row.name))}`
                                     )}
                                     sx={{ cursor: 'pointer' }}
                                     tabIndex={0}
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter' || e.key === ' ') {
                                             router.push(
-                                                `${paths.dashboard.nodes.actionDetail(nodeId, String(row.name))}?timestamp=${encodeURIComponent(row.timestamp || '')}&refLayoutCount=${row.ref_layout ? 1 : 0}`
+                                                `${paths.dashboard.nodes.actionDetail(nodeId, String(row.name))}`
                                             );
                                         }
                                     }}

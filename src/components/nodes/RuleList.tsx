@@ -1,6 +1,5 @@
 'use client';
 
-import type { IProcessItem } from 'src/types/dashboard';
 
 import {
   Table,
@@ -16,7 +15,8 @@ import {
 import { useRouter } from 'src/routes/hooks';
 
 import { useTranslate } from 'src/locales';
-import { useGetProcesses } from 'src/actions/dashboard';
+import { endpoints, fetcher } from 'src/utils/axios';
+import useSWR from 'swr';
 
 // ----------------------------------------------------------------------
 
@@ -27,27 +27,27 @@ type Props = {
 export function RuleList({ selectedNodeId }: Props) {
   const { t } = useTranslate('rule-list');
   const router = useRouter();
-  const { processes, processLoading, processesEmpty, processError } = useGetProcesses(
-    selectedNodeId
-  ) as {
-    processes: IProcessItem[];
-    processLoading: boolean;
-    processesEmpty: boolean;
-    processError: boolean;
-  };
+  const url = endpoints.rules.list(selectedNodeId);
+  const { data, error, isLoading } = useSWR(url, fetcher);
+  const processes: any[] = (data && data.data && data.data.list) || [];
+  const processLoading = isLoading;
+  const processError = error;
+  const processesEmpty = !processLoading && processes.length === 0;
+
 
   return (
     <TableContainer component={Paper} sx={{ height: 'calc(100vh - 380px)' }}>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell align="right">{t('table_header.pid')}</TableCell>
+            <TableCell align="right">{t('table_header.id')}</TableCell>
             <TableCell>{t('table_header.name')}</TableCell>
-            <TableCell>{t('table_header.param')}</TableCell>
-            <TableCell align="right">{t('table_header.cpu')}</TableCell>
-            <TableCell align="right">{t('table_header.mem')}</TableCell>
-            <TableCell align="right">{t('table_header.ppid')}</TableCell>
-            <TableCell>{t('table_header.command')}</TableCell>
+            <TableCell>{t('table_header.path')}</TableCell>
+            <TableCell align="right">{t('table_header.timestamp')}</TableCell>
+            <TableCell align="right">{t('table_header.ref_layout')}</TableCell>
+            <TableCell align="right">{t('table_header.ref_process')}</TableCell>
+            <TableCell align="right">{t('table_header.ref_actions')}</TableCell>
+            <TableCell>{t('table_header.desc')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -66,19 +66,20 @@ export function RuleList({ selectedNodeId }: Props) {
               <TableCell colSpan={6}>Error Fetching Process List</TableCell>
             </TableRow>
           ) : (
-            processes.map((process: IProcessItem, index: number) => (
+            processes.map((process: any, index: number) => (
               <TableRow
                 key={index}
                 onClick={() => router.push(`/dashboard/nodes/${selectedNodeId}/rules/${5}`)}
                 sx={{ cursor: 'pointer' }}
               >
-                <TableCell align="right">{process.PID}</TableCell>
-                <TableCell>{process.NAME}</TableCell>
-                <TableCell>{process.PARAM}</TableCell>
-                <TableCell align="right">{process.CPU}</TableCell>
-                <TableCell align="right">{Number(process?.MEM)?.toLocaleString()}</TableCell>
-                <TableCell align="right">{process.PPID}</TableCell>
-                <TableCell>{process.COMMAND}</TableCell>
+                <TableCell align="right">{process.id}</TableCell>
+                <TableCell>{process.name}</TableCell>
+                <TableCell>{process.path}</TableCell>
+                <TableCell align="right">{process.timestamp}</TableCell>
+                <TableCell align="right">{process.ref_layout}</TableCell>
+                <TableCell align="right">{Number(process?.ref_process)?.toLocaleString()}</TableCell>
+                <TableCell align="right">{process.ref_actions}</TableCell>
+                <TableCell>{process.desc}</TableCell>
               </TableRow>
             ))
           )}

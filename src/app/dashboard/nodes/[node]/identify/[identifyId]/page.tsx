@@ -22,10 +22,10 @@ export default function Page({ params }: Props) {
     const url = endpoints.identify.detail(node, decodedId);
     const { data, error, isLoading } = useSWR(url, fetcher);
 
-    const detail = data?.data || {};
+    const detail = data?.data?.item || {};
     const keys: string[] = Array.isArray(detail.keys) ? detail.keys : [];
-    const specList: Array<{ spec: string; refCount: number }> = detail.specList || [];
-    const script: string = detail.script || '';
+    const specList: Array<{ name: string; ref_count: number }> = detail.related_specs || [];
+    const script: string = detail.spec_def || '';
 
 
     return (
@@ -34,12 +34,12 @@ export default function Page({ params }: Props) {
                 node={node}
                 pages={[
                     { pageName: t('top.identify_list'), link: paths.dashboard.nodes.identifyList(node) },
-                    { pageName: detail?.identityName || '-' },
+                    { pageName: detail?.name || '-' },
                 ]}
             />
 
             <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>
-                IDENTIFY: {detail?.identityName || '-'}
+                IDENTIFY: {detail?.name || '-'}
             </Typography>
 
             <Grid container spacing={3} sx={{ mt: 3 }}>
@@ -88,10 +88,10 @@ export default function Page({ params }: Props) {
                                                             </TableRow>
                                                         )}
                                                         {specList.map((row, idx) => (
-                                                            <TableRow key={row.spec + idx}>
+                                                            <TableRow key={idx + 1}>
                                                                 <TableCell>{idx + 1}</TableCell>
-                                                                <TableCell>{row.spec}</TableCell>
-                                                                <TableCell>{row.refCount}</TableCell>
+                                                                <TableCell>{row.name}</TableCell>
+                                                                <TableCell>{row.ref_count}</TableCell>
                                                             </TableRow>
                                                         ))}
                                                     </TableBody>

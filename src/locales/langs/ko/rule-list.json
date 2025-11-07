@@ -3,12 +3,13 @@
     "title": "전문 목록"
   },
   "table_header": {
-    "pid": "프로세스 식별자",
+    "id": "ID",
     "name": "이름",
-    "param": "파라미터",
-    "cpu": "프로세서 사용률",
-    "mem": "메모리 사용량",
-    "ppid": "부모 프로세스 식별자",
-    "command": "명령어"
+    "path": "경로",
+    "timestamp": "타임스탬프",
+    "ref_layout": "참조 레이아웃",
+    "ref_process": "참조 프로세스",
+    "ref_actions": "참조 작업",
+    "desc": "설명"
   }
 }

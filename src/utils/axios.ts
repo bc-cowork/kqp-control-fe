@@ -97,6 +97,10 @@ export const endpoints = {
     issueList: (node: string) => `/apik/${node}/issue/list`,
     graph: (node: string) => `/apik/${node}/node/metrics`,
   },
+  rules: {
+    list: (node: string) => `/apik/${node}/rule/list`,
+    detail: (node: string, action: string) => `/apik/${node}/rule/${action}`,
+  },
   actions: {
     list: (node: string) => `/apik/${node}/action/list`,
     detail: (node: string, action: string) => `/apik/${node}/action/${action}`,

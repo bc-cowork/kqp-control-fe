@@ -3,12 +3,13 @@
     "title": "Rule List"
   },
   "table_header": {
-    "pid": "PID",
-    "name": "NAME",
-    "param": "PARAM",
-    "cpu": "CPU",
-    "mem": "MEM",
-    "ppid": "PPID",
-    "command": "COMMAND"
+    "id": "ID",
+    "name": "Name",
+    "path": "Path",
+    "timestamp": "timestamp",
+    "ref_layout": "ref. layout",
+    "ref_process": "ref. process",
+    "ref_actions": "ref. actions",
+    "desc": "Description"
   }
 }
