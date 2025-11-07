@@ -25,11 +25,11 @@ export default function Page({ params }: Props) {
     const url = endpoints.actions.detail(node, decodedAction);
     const { data, error, isLoading } = useSWR(url, fetcher);
 
-    const layoutList = data?.data?.layoutList || [];
-    const processList = data?.data?.processList || [];
+    const layoutList = data?.data?.layouts || [];
+    const processList = data?.data?.processes || [];
     const script = data?.data?.script || '';
-    const refLayoutCount = data?.data?.refLayout || '-'
-    const refProcessCount = data?.data?.refProcess || '-'
+    const refLayoutCount = data?.data?.ref_layout || '-'
+    const refProcessCount = data?.data?.ref_process || '-'
     const timeStamp = data?.data?.timestamp || '-'
 
 
@@ -111,8 +111,8 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
                         {layoutList.map((item: any, idx: number) => (
                             <TableRow key={idx}>
                                 <TableCell>{idx + 1}</TableCell>
-                                <TableCell>{item.layout}</TableCell>
-                                <TableCell>{item.refCount}</TableCell>
+                                <TableCell>{item.name}</TableCell>
+                                <TableCell>{item.ref_count}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
@@ -149,8 +149,8 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
                         {processList.map((item: any, idx: number) => (
                             <TableRow key={idx}>
                                 <TableCell>{idx + 1}</TableCell>
-                                <TableCell>{item.process}</TableCell>
-                                <TableCell>{item.usageCount}</TableCell>
+                                <TableCell>{item.name}</TableCell>
+                                <TableCell>{item.ref_count}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

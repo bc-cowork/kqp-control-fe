@@ -27,11 +27,11 @@ type Props = { nodeId: string };
 
 type ActionItem = {
     id: string;
-    actionName: string;
+    name: string;
     path: string;
     timestamp: string;
-    refLayout?: string;
-    refProcess?: string;
+    ref_layout?: string;
+    ref_process?: string;
     desc?: string;
 };
 
@@ -42,7 +42,7 @@ export function ActionListView({ nodeId }: Props) {
     const url = endpoints.actions.list(nodeId);
     const { data, error, isLoading } = useSWR(url, fetcher);
 
-    const rows: ActionItem[] = (data && data.data && data.data.actionList) || [];
+    const rows: ActionItem[] = (data && data.data && data.data.auditLogList) || [];
 
     return (
         <DashboardContent maxWidth="xl">
@@ -85,29 +85,29 @@ export function ActionListView({ nodeId }: Props) {
                                 </TableRow>
                             )}
 
-                            {rows.map((row) => (
+                            {rows.map((row, index) => (
                                 <TableRow
-                                    key={row.id}
+                                    key={index}
                                     hover
                                     onClick={() => router.push(
-                                        `${paths.dashboard.nodes.actionDetail(nodeId, String(row.actionName))}?timestamp=${encodeURIComponent(row.timestamp || '')}&refLayoutCount=${row.refLayout ? 1 : 0}`
+                                        `${paths.dashboard.nodes.actionDetail(nodeId, String(row.name))}?timestamp=${encodeURIComponent(row.timestamp || '')}&refLayoutCount=${row.ref_layout ? 1 : 0}`
                                     )}
                                     sx={{ cursor: 'pointer' }}
                                     tabIndex={0}
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter' || e.key === ' ') {
                                             router.push(
-                                                `${paths.dashboard.nodes.actionDetail(nodeId, String(row.actionName))}?timestamp=${encodeURIComponent(row.timestamp || '')}&refLayoutCount=${row.refLayout ? 1 : 0}`
+                                                `${paths.dashboard.nodes.actionDetail(nodeId, String(row.name))}?timestamp=${encodeURIComponent(row.timestamp || '')}&refLayoutCount=${row.ref_layout ? 1 : 0}`
                                             );
                                         }
                                     }}
                                 >
-                                    <TableCell>{row.id}</TableCell>
-                                    <TableCell>{row.actionName}</TableCell>
+                                    <TableCell>{index + 1}</TableCell>
+                                    <TableCell>{row.name}</TableCell>
                                     <TableCell>{row.path}</TableCell>
                                     <TableCell>{row.timestamp}</TableCell>
-                                    <TableCell>{row.refLayout}</TableCell>
-                                    <TableCell>{row.refProcess}</TableCell>
+                                    <TableCell>{row.ref_layout}</TableCell>
+                                    <TableCell>{row.ref_process}</TableCell>
                                     <TableCell>{row.desc}</TableCell>
                                 </TableRow>
                             ))}
