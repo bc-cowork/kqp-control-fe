@@ -34,8 +34,10 @@ export default function Page({ params }: Props) {
 
   const url = endpoints.layouts.detail(node, decodedLayout);
   const { data } = useSWR(url, fetcher);
+  console.log("data", data);
 
-  const script = data?.data?.script || '';
+  const timeStamp = data?.data?.detail?.timestamp || '-';
+  const layoutDefinition = data?.data?.layout_definition || '';
 
   return (
     <DashboardContent maxWidth="xl">
@@ -48,7 +50,7 @@ export default function Page({ params }: Props) {
       />
 
       <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{t('top.layout')}{" : "}{decodedLayout}</Typography>
-      <Typography sx={{ fontSize: 15, fontWeight: 500, mt: 2, textAlign: 'right', color: '#667085', p: 2 }}>{"2025 - 10 - 28 13:05:30"}</Typography>
+      <Typography sx={{ fontSize: 15, fontWeight: 500, mt: 2, textAlign: 'right', color: '#667085', p: 2 }}>{timeStamp}</Typography>
 
       <Paper sx={{ height: '100%', backgroundColor: 'black', p: 0.5 }} >
 
@@ -56,9 +58,9 @@ export default function Page({ params }: Props) {
           <Typography sx={{ fontWeight: 600 }}>{t('detail_table.script_title')}</Typography>
         </Box>
 
-        <Box sx={{ p: 2, bgcolor: '#202838', height: 'calc(100% - 48px)', overflowY: 'auto' }}>
+        <Box sx={{ p: 2, bgcolor: '#202838', height: 'calc(100vh - 48px)', overflowY: 'auto' }}>
           <Box component="pre" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: 13, color: '#AFB7C8', m: 0 }}>
-            {script}
+            {layoutDefinition}
           </Box>
         </Box>
       </Paper>

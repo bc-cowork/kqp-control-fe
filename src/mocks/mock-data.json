@@ -1670,24 +1670,26 @@
   "/apik/prod1/layout/list": {
     "okay": true,
     "data": {
-      "nodeId": "prod1",
-      "layoutList": [
+      "node": "prod1",
+      "list": [
         {
           "id": "1",
-          "layoutName": "BASE",
-          "path": "/cfg/layouts/BASE.moon",
+          "name": "BASE",
+          "path": "cfg/layouts/BASE.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
           "process": 3,
-          "channelIn": 14,
+          "channel_in": 14,
           "desc": "공통 레이아웃"
         },
         {
           "id": "2",
-          "layoutName": "KOSPI_KOSDAQ",
-          "path": "/cfg/layouts/KOSPI_KOSDAQ.moon",
+          "name": "KOSPI_KOSDAQ",
+          "path": "cfg/layouts/KOSPI_KOSDAQ.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
           "process": 5,
-          "channelIn": 10,
+          "channel_in": 10,
           "desc": "코스피, 코스닥 주식 레이아웃"
         }
       ]
@@ -1696,24 +1698,26 @@
   "/apik/prod2/layout/list": {
     "okay": true,
     "data": {
-      "nodeId": "prod2",
-      "layoutList": [
+      "node": "prod1",
+      "list": [
         {
           "id": "1",
-          "layoutName": "BASE",
-          "path": "/cfg/layouts/BASE.moon",
+          "name": "BASE",
+          "path": "cfg/layouts/BASE.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
           "process": 3,
-          "channelIn": 14,
+          "channel_in": 14,
           "desc": "공통 레이아웃"
         },
         {
           "id": "2",
-          "layoutName": "KOSPI_KOSDAQ",
-          "path": "/cfg/layouts/KOSPI_KOSDAQ.moon",
+          "name": "KOSPI_KOSDAQ",
+          "path": "cfg/layouts/KOSPI_KOSDAQ.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
           "process": 5,
-          "channelIn": 10,
+          "channel_in": 10,
           "desc": "코스피, 코스닥 주식 레이아웃"
         }
       ]
@@ -1722,29 +1726,65 @@
   "/apik/prod1/layout/BASE": {
     "okay": true,
     "data": {
-      "nodeId": "prod1",
-      "script": "lunit = require 'lunit'\nlpfrag = lunit.lpfrag\n"
+      "node": "prod1",
+      "detail": {
+        "name": "BASE",
+        "path": "/cfg/layouts/BASE.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "process": 3,
+        "channel_in": 14,
+        "desc": "코스피, 코스닥 주식 레이아웃"
+      },
+      "layout_definition": "-- BASE.moon\n\n--=================================================\n-- KOSPI_KOSDAQ 주식 그룹\n--\n{\n    PMR:\n\n        --==    KOSPI/KOSDAQ 주식 기본\n        KSKQ_def:\n            desc:               '구조화증권 기본/기타 라우터'\n            recv2r: {\n                216,224,225,226,230\n                238,239,261,260\n            }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}           -- 입수 로깅\n                    act 'route',    {to:'1',app:'kqp'}    -- 통합시세로 넘김\n                    act 'route',    {to:'KSKQ_def_emit'}  -- 송출기로 넘김.  => CBR\n                }\n\n        KSKQ_def_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}   -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 호가\n        KS_q:\n            recv2r: { 222,223, 258 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'ksp_q',app:'kqp'} -- 통합시세로 넘김\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KS_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 체결\n        KS_f:\n            recv2r: { 217,218,219,220,221,256 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_f_emit'}\n                }\n\n        KS_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 호가\n        KQ_q:\n            recv2r: { 236,237, 259 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KQ_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 체결\n        KQ_f:\n            recv2r: { 231,232,233,234,235,257 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KQ_f_emit'}\n                }\n\n        KQ_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n}"
     }
   },
   "/apik/prod1/layout/KOSPI_KOSDAQ": {
     "okay": true,
     "data": {
-      "nodeId": "prod1",
-      "script": "-- KOSPI_KOSDAQ.moon\n\n--=================================================\n-- KOSPI_KOSDAQ 주식 그룹\n--\n{\n    PMR:\n\n        --==    KOSPI/KOSDAQ 주식 기본\n        KSKQ_def:\n            desc:               '구조화증권 기본/기타 라우터'\n            recv2r: {\n                216,224,225,226,230\n                238,239,261,260\n            }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}           -- 입수 로깅\n                    act 'route',    {to:'1',app:'kqp'}    -- 통합시세로 넘김\n                    act 'route',    {to:'KSKQ_def_emit'}  -- 송출기로 넘김.  => CBR\n                }\n\n        KSKQ_def_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}   -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 호가\n        KS_q:\n            recv2r: { 222,223, 258 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'ksp_q',app:'kqp'} -- 통합시세로 넘김\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KS_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 체결\n        KS_f:\n            recv2r: { 217,218,219,220,221,256 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_f_emit'}\n                }\n\n        KS_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 호가\n        KQ_q:\n            recv2r: { 236,237, 259 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KQ_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 체결\n        KQ_f:\n            recv2r: { 231,232,233,234,235,257 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KQ_f_emit'}\n                }\n\n        KQ_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n}"
+      "node": "prod1",
+      "detail": {
+        "name": "KOSPI_KOSDAQ",
+        "path": "/cfg/layouts/KOSPI_KOSDAQ.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "process": 3,
+        "channel_in": 14,
+        "desc": "코스피, 코스닥 주식 레이아웃"
+      },
+      "layout_definition": "-- KOSPI_KOSDAQ.moon\n\n--=================================================\n-- KOSPI_KOSDAQ 주식 그룹\n--\n{\n    PMR:\n\n        --==    KOSPI/KOSDAQ 주식 기본\n        KSKQ_def:\n            desc:               '구조화증권 기본/기타 라우터'\n            recv2r: {\n                216,224,225,226,230\n                238,239,261,260\n            }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}           -- 입수 로깅\n                    act 'route',    {to:'1',app:'kqp'}    -- 통합시세로 넘김\n                    act 'route',    {to:'KSKQ_def_emit'}  -- 송출기로 넘김.  => CBR\n                }\n\n        KSKQ_def_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}   -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 호가\n        KS_q:\n            recv2r: { 222,223, 258 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'ksp_q',app:'kqp'} -- 통합시세로 넘김\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KS_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 체결\n        KS_f:\n            recv2r: { 217,218,219,220,221,256 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_f_emit'}\n                }\n\n        KS_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 호가\n        KQ_q:\n            recv2r: { 236,237, 259 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KQ_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 체결\n        KQ_f:\n            recv2r: { 231,232,233,234,235,257 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KQ_f_emit'}\n                }\n\n        KQ_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n}"
     }
   },
   "/apik/prod2/layout/BASE": {
     "okay": true,
     "data": {
-      "nodeId": "prod2",
-      "script": "lunit = require 'lunit'\nlpfrag = lunit.lpfrag\n"
+      "node": "prod1",
+      "detail": {
+        "name": "BASE",
+        "path": "/cfg/layouts/BASE.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "process": 3,
+        "channel_in": 14,
+        "desc": "코스피, 코스닥 주식 레이아웃"
+      },
+      "layout_definition": "-- BASE.moon\n\n--=================================================\n-- KOSPI_KOSDAQ 주식 그룹\n--\n{\n    PMR:\n\n        --==    KOSPI/KOSDAQ 주식 기본\n        KSKQ_def:\n            desc:               '구조화증권 기본/기타 라우터'\n            recv2r: {\n                216,224,225,226,230\n                238,239,261,260\n            }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}           -- 입수 로깅\n                    act 'route',    {to:'1',app:'kqp'}    -- 통합시세로 넘김\n                    act 'route',    {to:'KSKQ_def_emit'}  -- 송출기로 넘김.  => CBR\n                }\n\n        KSKQ_def_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}   -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 호가\n        KS_q:\n            recv2r: { 222,223, 258 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'ksp_q',app:'kqp'} -- 통합시세로 넘김\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KS_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 체결\n        KS_f:\n            recv2r: { 217,218,219,220,221,256 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_f_emit'}\n                }\n\n        KS_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 호가\n        KQ_q:\n            recv2r: { 236,237, 259 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KQ_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 체결\n        KQ_f:\n            recv2r: { 231,232,233,234,235,257 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KQ_f_emit'}\n                }\n\n        KQ_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n}"
     }
   },
   "/apik/prod2/layout/KOSPI_KOSDAQ": {
     "okay": true,
     "data": {
-      "nodeId": "prod2",
-      "script": "-- KOSPI_KOSDAQ.moon\n\n--=================================================\n-- KOSPI_KOSDAQ 주식 그룹\n--\n{\n    PMR:\n\n        --==    KOSPI/KOSDAQ 주식 기본\n        KSKQ_def:\n            desc:               '구조화증권 기본/기타 라우터'\n            recv2r: {\n                216,224,225,226,230\n                238,239,261,260\n            }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}           -- 입수 로깅\n                    act 'route',    {to:'1',app:'kqp'}    -- 통합시세로 넘김\n                    act 'route',    {to:'KSKQ_def_emit'}  -- 송출기로 넘김.  => CBR\n                }\n\n        KSKQ_def_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}   -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 호가\n        KS_q:\n            recv2r: { 222,223, 258 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'ksp_q',app:'kqp'} -- 통합시세로 넘김\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KS_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 체결\n        KS_f:\n            recv2r: { 217,218,219,220,221,256 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_f_emit'}\n                }\n\n        KS_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 호가\n        KQ_q:\n            recv2r: { 236,237, 259 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KQ_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 체결\n        KQ_f:\n            recv2r: { 231,232,233,234,235,257 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KQ_f_emit'}\n                }\n\n        KQ_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n}"
+      "node": "prod1",
+      "detail": {
+        "name": "KOSPI_KOSDAQ",
+        "path": "/cfg/layouts/KOSPI_KOSDAQ.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "process": 3,
+        "channel_in": 14,
+        "desc": "코스피, 코스닥 주식 레이아웃"
+      },
+      "layout_definition": "-- KOSPI_KOSDAQ.moon\n\n--=================================================\n-- KOSPI_KOSDAQ 주식 그룹\n--\n{\n    PMR:\n\n        --==    KOSPI/KOSDAQ 주식 기본\n        KSKQ_def:\n            desc:               '구조화증권 기본/기타 라우터'\n            recv2r: {\n                216,224,225,226,230\n                238,239,261,260\n            }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}           -- 입수 로깅\n                    act 'route',    {to:'1',app:'kqp'}    -- 통합시세로 넘김\n                    act 'route',    {to:'KSKQ_def_emit'}  -- 송출기로 넘김.  => CBR\n                }\n\n        KSKQ_def_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}   -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 호가\n        KS_q:\n            recv2r: { 222,223, 258 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'ksp_q',app:'kqp'} -- 통합시세로 넘김\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KS_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSPI 주식 체결\n        KS_f:\n            recv2r: { 217,218,219,220,221,256 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_f_emit'}\n                }\n\n        KS_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',         {}\n                    act 'log',          {to:'dist0'}       -- 송출 로깅\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 호가\n        KQ_q:\n            recv2r: { 236,237, 259 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KS_q_emit'}\n                }\n\n        KQ_q_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n\n        --==   ----------------------------------------\n        --==    KOSDAQ 주식 체결\n        KQ_f:\n            recv2r: { 231,232,233,234,235,257 }\n            topics:\n                inbound: {\n                    act 'log',      {to:'rcv0'}\n                    act 'route',    {to:'KQ_f_emit'}\n                }\n\n        KQ_f_emit:\n            topics:\n                inbound: {\n                    act 'destinate',    {rule:'route_map'}\n                    act 'modify',       {rule:'wrsec1'}        -- 헤더 추가\n                    act 'emit',     {}\n                }\n}"
     }
   },
   "/apik/prod1/action/Restart Service": {

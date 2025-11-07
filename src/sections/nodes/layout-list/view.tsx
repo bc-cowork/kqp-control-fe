@@ -27,11 +27,11 @@ type Props = { nodeId: string };
 
 type LayoutItem = {
     id: string;
-    layoutName: string;
+    name: string;
     path: string;
     timestamp: string;
     process?: number;
-    channelIn?: number;
+    channel_in?: number;
     desc?: string;
 };
 
@@ -42,7 +42,7 @@ export function LayoutListView({ nodeId }: Props) {
     const url = endpoints.layouts.list(nodeId);
     const { data, error, isLoading } = useSWR(url, fetcher);
 
-    const rows: LayoutItem[] = (data && data.data && data.data.layoutList) || [];
+    const rows: LayoutItem[] = (data && data.data && data.data.list) || [];
 
     return (
         <DashboardContent maxWidth="xl">
@@ -90,24 +90,24 @@ export function LayoutListView({ nodeId }: Props) {
                                     key={row.id}
                                     hover
                                     onClick={() => router.push(
-                                        `${paths.dashboard.nodes.layoutDetail(nodeId, String(row.layoutName))}?timestamp=${encodeURIComponent(row.timestamp || '')}`
+                                        `${paths.dashboard.nodes.layoutDetail(nodeId, String(row.name))}?timestamp=${encodeURIComponent(row.timestamp || '')}`
                                     )}
                                     sx={{ cursor: 'pointer' }}
                                     tabIndex={0}
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter' || e.key === ' ') {
                                             router.push(
-                                                `${paths.dashboard.nodes.layoutDetail(nodeId, String(row.layoutName))}?timestamp=${encodeURIComponent(row.timestamp || '')}`
+                                                `${paths.dashboard.nodes.layoutDetail(nodeId, String(row.name))}?timestamp=${encodeURIComponent(row.timestamp || '')}`
                                             );
                                         }
                                     }}
                                 >
                                     <TableCell>{row.id}</TableCell>
-                                    <TableCell>{row.layoutName}</TableCell>
+                                    <TableCell>{row.name}</TableCell>
                                     <TableCell>{row.path}</TableCell>
                                     <TableCell>{row.timestamp}</TableCell>
                                     <TableCell>{row.process}</TableCell>
-                                    <TableCell>{row.channelIn}</TableCell>
+                                    <TableCell>{row.channel_in}</TableCell>
                                     <TableCell>{row.desc}</TableCell>
                                 </TableRow>
                             ))}
