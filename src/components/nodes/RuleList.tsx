@@ -69,7 +69,7 @@ export function RuleList({ selectedNodeId }: Props) {
             processes.map((process: any, index: number) => (
               <TableRow
                 key={index}
-                onClick={() => router.push(`/dashboard/nodes/${selectedNodeId}/rules/${5}`)}
+                onClick={() => router.push(`/dashboard/nodes/${selectedNodeId}/rules/${process.name}`)}
                 sx={{ cursor: 'pointer' }}
               >
                 <TableCell align="right">{process.id}</TableCell>

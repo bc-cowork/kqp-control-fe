@@ -1,4 +1,7 @@
 {
+    "rule-list": {
+        "title": "Rule List"
+    },
     "top": {
         "action_list": "Action List"
     },

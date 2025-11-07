@@ -1,4 +1,7 @@
 {
+    "rule-list": {
+        "title": "전문 목록"
+    },
     "top": {
         "action_list": "작업 목록"
     },
