@@ -79,6 +79,10 @@ export function getNavData(nodes: string[] = []) {
                 path: paths.dashboard.nodes.identifyList(node),
               },
               {
+                title: t('tab_option.function_list') || 'Function List',
+                path: paths.dashboard.nodes.functionList(node),
+              },
+              {
                 title: t('tab_option.daily_report_list') || 'Daily Report',
                 path: paths.dashboard.nodes.dailyReportList(node),
               },

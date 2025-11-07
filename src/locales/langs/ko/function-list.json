@@ -1,0 +1,22 @@
+{
+    "top": {
+        "function_list": "함수 목록"
+    },
+    "table": {
+        "id": "ID",
+        "function_name": "함수 이름",
+        "path": "경로",
+        "timestamp": "타임스탬프",
+        "ref_identifies": "참조 식별자",
+        "desc": "설명"
+    },
+    "detail_table": {
+        "script_title": "함수 정의",
+        "no": "번호",
+        "related_spec": "관련 SPEC",
+        "ref_freq": "참조 빈도"
+    },
+    "loading": "로딩 중...",
+    "error": "함수를 불러오지 못했습니다",
+    "empty": "함수가 없습니다"
+}
