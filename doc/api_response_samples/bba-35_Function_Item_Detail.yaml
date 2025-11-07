@@ -1,0 +1,44 @@
+# wroted yaml format, but response format is JSON!
+
+
+# BBA-35	Function Item Detail
+
+okay:     true
+data:
+  function:
+    name:           'lfn_bypass_issue'
+    path:           '/cfg/fn_process/lfn_bypass_issue.moon'
+    timestamp:      '2025-10-28 13:05:30'
+    ref_identifies: 3
+    desc:           '종목별 입수 전문 바이패스'
+
+  related_identifies:
+    - name:         'krx_fill'
+      ref_count:    1
+    - name:         'krx_quote'
+      ref_count:    1
+    - name:         'krx_bypass_issue'
+      ref_count:    1
+
+  definition: |
+    lqph = require 'lqp_header'
+    issue_cache = lqph.issue_cache
+
+    return {
+        lfn_bypass_issue:
+            desc: 'lfn_bypass_issue'
+            fn: (rule, codec, iss, param)->
+                sd  = codec   -- sd as spec.encoder
+
+                dst = iss._dist
+                mkt = param.mkt
+                code = param.code
+                -- 데이터발생 Exchange 임시 기록
+                dst._event_ex[0] = byteK if mkt==1
+                dst._event_ex[0] = byteN if mkt==2
+
+                cache = issue_cache.cacheFromSpecCoder code, sd
+                cached = cache.spec_frags
+                if param.cache_tag
+                    cache[param.cache_tag] = cached
+    }

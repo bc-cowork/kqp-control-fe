@@ -2,16 +2,51 @@
 
 
 # BBA-21	SPEC List
-
 okay:     true
 data:
   node:   prod1
   list:
     - name:         'A0_KRX_MASTER'
-      path:         'cfg/spec_components/A0_master.moon'
-      url:          '{URL}'    # 클릭했을때 해당 SPEC Item Detail로 점프할 주소
+      path:         '/cfg/spec_components/A0_master.moon'
+      url:          '{URL}'
       timestamp:    '2025-10-28 13:05:30'
-      ref_identifies:  1
-      frags:         109
-      size:          632
-      desc:          'KRX 종목 마스터'
+      ref_identifies: 1
+      frags:        109
+      size:         632
+      desc:         'KRX 종목 마스터'
+
+    - name:         'A1_ISSUE_INFO_ETN'
+      path:         '/cfg/spec_components/A1_ISSUE_INFO_ETN.moon'
+      url:          '{URL}'
+      timestamp:    '2025-10-28 13:05:30'
+      ref_identifies: 2
+      frags:        20
+      size:         260
+      desc:         'KRX 종목 정보 (ETN)'
+
+    - name:         'A3_FILL'
+      path:         '/cfg/spec_components/A3_FILL.moon'
+      url:          '{URL}'
+      timestamp:    '2025-10-28 13:05:30'
+      ref_identifies: 4
+      frags:        22
+      size:         186
+      desc:         'KRX 체결'
+
+    - name:         'A0_NXT_MASTER'
+      path:         '/cfg/spec_components/A0_master.moon'
+      url:          '{URL}'
+      timestamp:    '2025-10-28 13:05:30'
+      ref_identifies: 1
+      frags:        116
+      size:         648
+      desc:         'NXT 종목 마스터'
+
+    - name:         'B6_QUOTE'
+      path:         '/cfg/spec_components/B6_QUOTE.moon'
+      url:          '{URL}'
+      timestamp:    '2025-10-28 13:05:30'
+      ref_identifies: 4
+      frags:        56
+      size:         590
+      desc:         'KRX 호가'

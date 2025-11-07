@@ -1,0 +1,36 @@
+# wroted yaml format, but response format is JSON!
+
+
+# BBA-34	Function List
+
+okay:     true
+data:
+  node:   prod1
+  list:
+    - name:         'lfn_master'
+      path:         '/cfg/specifications/krx_master.moon'
+      url:          '{URL}'    # 클릭했을 때 해당 Function Item Detail로 점프할 주소
+      timestamp:    '2025-10-28 13:05:30'
+      ref_identifies: 2
+      desc:         'KRX 종목 마스터'
+
+    - name:         'lfn_fill'
+      path:         '/cfg/specifications/nxt_master.moon'
+      url:          '{URL}'
+      timestamp:    '2025-10-28 13:05:30'
+      ref_identifies: 2
+      desc:         'A3 체결 가공'
+
+    - name:         'lfn_quote'
+      path:         '/cfg/specifications/krx_fill.moon'
+      url:          '{URL}'
+      timestamp:    '2025-10-28 13:05:30'
+      ref_identifies: 2
+      desc:         'B6 호가 가공'
+
+    - name:         'lfn_bypass_issue'
+      path:         '/cfg/specifications/nxt_fill.moon'
+      url:          '{URL}'
+      timestamp:    '2025-10-28 13:05:30'
+      ref_identifies: 2
+      desc:         '전문 바이패스'
