@@ -8,10 +8,10 @@ data:
   node:   prod1
   name:         'action_log'
   path:         'cfg/actions/action_log.moon'
-  url:          '{URL}'    # 클릭했을때 해당 Action Item Detail로 점프할 PATH
+  url:          '/apik/{NODE}/action/[action_name]'    # 클릭했을때 해당 Action Item Detail로 점프할 PATH
   timestamp:    '2025-10-28 13:05:30'
   ref_layout:   3
-  ref_process:  3
+  ref_process:  14
   desc:         '증적로그 기록'
   layoues:
     - name:       KOSPI_KOSDAQ

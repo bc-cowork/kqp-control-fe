@@ -1,0 +1,72 @@
+# wroted yaml format, but response format is JSON!
+
+
+# BBA-17:   Action List
+
+okay:     true
+data:
+  node:   prod1
+  list:
+    - name:         'action_log'
+      path:         '/cfg/actions/action_log.moon'
+      url:          '{URL}'     # 클릭했을때 해당 Action Item Detail로 점프할 주소
+      timestamp:    '2025-10-28 13:05:30'
+      ref_layout:   3
+      ref_process:  14
+      desc:         '증적로그 기록'
+
+    - name:         'action_log'
+      path:         '/cfg/actions/action_log.moon'
+      url:          '{URL}'
+      timestamp:    '2025-10-28 13:05:30'
+      ref_layout:   5
+      ref_process:  10
+      desc:         '증적로그 기록'
+
+    - name:         'action_log'
+      path:         '/cfg/actions/action_log.moon'
+      url:          '{URL}'
+      timestamp:    '2025-10-28 13:05:30'
+      ref_layout:   4
+      ref_process:  9
+      desc:         '증적로그 기록'
+
+    - name:         'action_log'
+      path:         '/cfg/actions/action_log.moon'
+      url:          '{URL}'
+      timestamp:    '2025-10-28 13:05:30'
+      ref_layout:   3
+      ref_process:  16
+      desc:         '증적로그 기록'
+
+    - name:         'action_log'
+      path:         '/cfg/actions/action_log.moon'
+      url:          '{URL}'
+      timestamp:    '2025-10-28 13:05:30'
+      ref_layout:   3
+      ref_process:  4
+      desc:         '증적로그 기록'
+
+    - name:         'action_log'
+      path:         '/cfg/actions/action_log.moon'
+      url:          '{URL}'
+      timestamp:    '2025-10-28 13:05:30'
+      ref_layout:   3
+      ref_process:  5
+      desc:         '증적로그 기록'
+
+    - name:         'action_log'
+      path:         '/cfg/actions/action_log.moon'
+      url:          '{URL}'
+      timestamp:    '2025-10-28 13:05:30'
+      ref_layout:   3
+      ref_process:  6
+      desc:         '증적로그 기록'
+
+    - name:         'action_log'
+      path:         '/cfg/actions/action_log.moon'
+      url:          '{URL}'
+      timestamp:    '2025-10-28 13:05:30'
+      ref_layout:   3
+      ref_process:  7
+      desc:         '증적로그 기록'

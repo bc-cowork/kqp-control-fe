@@ -1,0 +1,41 @@
+# wroted yaml format, but response format is JSON!
+
+
+# BBA-24	Identify Item Detail
+
+okay:     true
+data:
+  node:   prod1
+  item:
+    name:         'krx_fill'
+    path:         'cfg/specifications/krx_fill.moon'
+    url:          '{URL}'    # 클릭했을때 해당 Identify Item Detail로 점프할 주소
+    timestamp:    '2025-10-28 13:05:30'
+    ref_specs:    2
+    desc:         'KRX 체결'
+
+    related_specs:
+      - name:     'A3_FILL'
+        ref_count: 1
+      - name:     'DST_FILL'
+        ref_count: 1
+
+    spec_def: |
+        -- krx_fill.moon
+
+        return {
+            desc:              '체결 (KRX)'
+            keys:              { 'A301S', 'A301Q' }
+            issue_select:      { 6 }
+            specs:             'A3_FILL'
+            skip_spec_cache:   true
+            process: {
+                lfn:           'lfn_krx_fill'
+                param:
+                    mkt:       1
+            }
+            distribute: {
+                format:        'DST_FILL'
+                lfn_gen:       'gen_fill'
+            }
+        }

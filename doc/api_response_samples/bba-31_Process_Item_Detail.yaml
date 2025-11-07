@@ -1,0 +1,22 @@
+# wroted yaml format, but response format is JSON!
+
+
+# BBA-31	Process Item Detail
+
+okay:     true
+data:
+  node:   prod1
+  item:
+    name:         'pmr.KS_f'
+    timestamp:    '2025-10-28 13:05:30'
+    cpu:          '0.2 %'
+    mem:          '0.4 %'
+    desc:         'KRX 체결 라우팅 프로세스'
+    layout_def: |
+        KS_f:
+            recv2r: { 217,218,219,220,221,256 }
+            topics:
+                inbound: {
+                    act 'log',        {to:'rcv0'}
+                    act 'route',      {to:'KS_f_emit'}
+                }

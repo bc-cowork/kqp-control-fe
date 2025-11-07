@@ -1,0 +1,123 @@
+# wroted yaml format, but response format is JSON!
+
+
+# BBA-33	Layout Item Detail
+
+okay:     true
+data:
+  node:   prod1
+  detail:
+    name:         'KOSPI_KOSDAQ'
+    path:         '/cfg/layouts/KOSPI_KOSDAQ.moon'
+    url:          '{URL}'    # 클릭했을 때 해당 Layout Detail로 점프할 주소
+    timestamp:    '2025-10-28 13:05:30'
+    process:      3
+    channel_in:   14
+    desc:         '코스피, 코스닥 주식 레이아웃'
+
+  layout_definition: |
+    -- KOSPI_KOSDAQ.moon
+
+    --=================================================
+    -- KOSPI_KOSDAQ 주식 그룹
+    --
+    {
+        PMR:
+
+            --==    KOSPI/KOSDAQ 주식 기본
+            KSKQ_def:
+                desc:               '구조화증권 기본/기타 라우터'
+                recv2r: {
+                    216,224,225,226,230
+                    238,239,261,260
+                }
+                topics:
+                    inbound: {
+                        act 'log',      {to:'rcv0'}           -- 입수 로깅
+                        act 'route',    {to:'1',app:'kqp'}    -- 통합시세로 넘김
+                        act 'route',    {to:'KSKQ_def_emit'}  -- 송출기로 넘김.  => CBR
+                    }
+
+            KSKQ_def_emit:
+                topics:
+                    inbound: {
+                        act 'destinate',    {rule:'route_map'}
+                        act 'modify',       {rule:'wrsec1'}   -- 헤더 추가
+                        act 'emit',         {}
+                        act 'log',          {to:'dist0'}       -- 송출 로깅
+                    }
+
+            --==   ----------------------------------------
+            --==    KOSPI 주식 호가
+            KS_q:
+                recv2r: { 222,223, 258 }
+                topics:
+                    inbound: {
+                        act 'log',      {to:'rcv0'}
+                        act 'route',    {to:'ksp_q',app:'kqp'} -- 통합시세로 넘김
+                        act 'route',    {to:'KS_q_emit'}
+                    }
+
+            KS_q_emit:
+                topics:
+                    inbound: {
+                        act 'destinate',    {rule:'route_map'}
+                        act 'modify',       {rule:'wrsec1'}        -- 헤더 추가
+                        act 'emit',     {}
+                    }
+
+            --==   ----------------------------------------
+            --==    KOSPI 주식 체결
+            KS_f:
+                recv2r: { 217,218,219,220,221,256 }
+                topics:
+                    inbound: {
+                        act 'log',      {to:'rcv0'}
+                        act 'route',    {to:'KS_f_emit'}
+                    }
+
+            KS_f_emit:
+                topics:
+                    inbound: {
+                        act 'destinate',    {rule:'route_map'}
+                        act 'modify',       {rule:'wrsec1'}        -- 헤더 추가
+                        act 'emit',         {}
+                        act 'log',          {to:'dist0'}       -- 송출 로깅
+                    }
+
+            --==   ----------------------------------------
+            --==    KOSDAQ 주식 호가
+            KQ_q:
+                recv2r: { 236,237, 259 }
+                topics:
+                    inbound: {
+                        act 'log',      {to:'rcv0'}
+                        act 'route',    {to:'KS_q_emit'}
+                    }
+
+            KQ_q_emit:
+                topics:
+                    inbound: {
+                        act 'destinate',    {rule:'route_map'}
+                        act 'modify',       {rule:'wrsec1'}        -- 헤더 추가
+                        act 'emit',     {}
+                    }
+
+            --==   ----------------------------------------
+            --==    KOSDAQ 주식 체결
+            KQ_f:
+                recv2r: { 231,232,233,234,235,257 }
+                topics:
+                    inbound: {
+                        act 'log',      {to:'rcv0'}
+                        act 'route',    {to:'KQ_f_emit'}
+                    }
+
+            KQ_f_emit:
+                topics:
+                    inbound: {
+                        act 'destinate',    {rule:'route_map'}
+                        act 'modify',       {rule:'wrsec1'}        -- 헤더 추가
+                        act 'emit',     {}
+                    }
+    }

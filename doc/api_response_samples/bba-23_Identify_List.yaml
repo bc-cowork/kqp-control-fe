@@ -1,0 +1,50 @@
+# wroted yaml format, but response format is JSON!
+
+
+# BBA-23	Identify List
+
+okay:     true
+data:
+  node:   prod1
+  list:
+    - name:         'krx_master'
+      path:         'cfg/specifications/krx_master.moon'
+      url:          '{URL}'    # 클릭했을때 해당 Identify Item Detail로 점프할 주소
+      timestamp:    '2025-10-28 13:05:30'
+      ref_specs:    2
+      desc:         'KRX 종목 마스터'
+
+    - name:         'nxt_master'
+      path:         'cfg/specifications/nxt_master.moon'
+      url:          '{URL}'
+      timestamp:    '2025-10-28 13:05:30'
+      ref_specs:    2
+      desc:         'NXT 종목 마스터'
+
+    - name:         'krx_fill'
+      path:         'cfg/specifications/krx_fill.moon'
+      url:          '{URL}'
+      timestamp:    '2025-10-28 13:05:30'
+      ref_specs:    2
+      desc:         'KRX 체결'
+
+    - name:         'nxt_fill'
+      path:         'cfg/specifications/nxt_fill.moon'
+      url:          '{URL}'
+      timestamp:    '2025-10-28 13:05:30'
+      ref_specs:    2
+      desc:         'NXT 체결'
+
+    - name:         'krx_quote'
+      path:         'cfg/specifications/krx_quote.moon'
+      url:          '{URL}'
+      timestamp:    '2025-10-28 13:05:30'
+      ref_specs:    2
+      desc:         'KRX 호가'
+
+    - name:         'nxt_quote'
+      path:         'cfg/specifications/nxt_quote.moon'
+      url:          '{URL}'
+      timestamp:    '2025-10-28 13:05:30'
+      ref_specs:    2
+      desc:         'NXT 호가'

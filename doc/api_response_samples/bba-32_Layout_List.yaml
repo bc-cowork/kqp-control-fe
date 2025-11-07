@@ -1,0 +1,24 @@
+# wroted yaml format, but response format is JSON!
+
+
+# BBA-32	Layout List
+
+okay:     true
+data:
+  node:   prod1
+  list:
+    - name:         'BASE'
+      path:         'cfg/layouts/BASE.moon'
+      url:          '{URL}'    # 클릭했을때 해당 Layout Item Detail로 점프할 주소
+      timestamp:    '2025-10-28 13:05:30'
+      process:      3
+      channel_in:   14
+      desc:         '공통 레이아웃'
+
+    - name:         'KOSPI_KOSDAQ'
+      path:         'cfg/layouts/KOSPI_KOSDAQ.moon'
+      url:          '{URL}'
+      timestamp:    '2025-10-28 13:05:30'
+      process:      5
+      channel_in:   10
+      desc:         '코스피, 코스닥 주식 레이아웃'

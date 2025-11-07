@@ -1,0 +1,18 @@
+# wroted yaml format, but response format is JSON!
+
+
+# BBA-19:	Rule List
+
+okay:     true
+data:
+  node:   prod1
+  list:
+    - name:         'rule_route_map'
+      path:         'cfg/rules/route_map.moon'
+      url:          '/apik/prod1/rule/list'    # 클릭했을때 해당 Action Item Detail로 점프할 주소
+      timestamp:    '2025-10-28 13:05:30'
+      ref_layout:   3
+      ref_process:  14
+      ref_actions:  2
+      desc:         '입수채널별 송출처 라우팅'
+
