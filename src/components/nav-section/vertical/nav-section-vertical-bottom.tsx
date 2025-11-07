@@ -11,6 +11,7 @@ import { getBottomNavData } from 'src/layouts/config-nav-dashboard';
 
 import { useAuthContext } from 'src/auth/hooks';
 import { signOut } from 'src/auth/context/jwt/action';
+import { useTranslate } from 'src/locales';
 
 import { NavList } from './nav-list';
 import { NavUl, NavLi } from '../styles';
@@ -18,7 +19,6 @@ import { navSectionClasses } from '../classes';
 import { navSectionCssVars } from '../css-vars';
 
 import type { NavGroupProps } from '../types';
-import { useTranslate } from 'src/locales';
 
 // ----------------------------------------------------------------------
 
@@ -40,7 +40,7 @@ export function NavSectionVerticalBottom({
     ...overridesVars,
   };
 
-  const data = getBottomNavData();
+  const data = getBottomNavData(t);
 
   const handleLogout = useCallback(async () => {
     try {

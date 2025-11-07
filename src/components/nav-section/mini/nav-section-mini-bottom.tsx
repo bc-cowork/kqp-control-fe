@@ -11,6 +11,7 @@ import { getBottomNavData } from 'src/layouts/config-nav-dashboard';
 
 import { signOut } from 'src/auth/context/jwt';
 import { useAuthContext } from 'src/auth/hooks';
+import { useTranslate } from 'src/locales';
 
 import { NavList } from './nav-list';
 import { NavUl, NavLi } from '../styles';
@@ -18,7 +19,6 @@ import { navSectionClasses } from '../classes';
 import { navSectionCssVars } from '../css-vars';
 
 import type { NavGroupProps } from '../types';
-import { useTranslate } from 'src/locales';
 
 // ----------------------------------------------------------------------
 
@@ -30,13 +30,14 @@ export function NavSectionMiniBottom({
   cssVars: overridesVars,
 }: any) {
   const theme = useTheme();
+  const { t } = useTranslate('sidebar');
 
   const cssVars = {
     ...navSectionCssVars.mini(theme),
     ...overridesVars,
   };
 
-  const data = getBottomNavData();
+  const data = getBottomNavData(t);
 
   return (
     <Stack
