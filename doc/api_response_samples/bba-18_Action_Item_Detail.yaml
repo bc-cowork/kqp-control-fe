@@ -13,7 +13,7 @@ data:
   ref_layout:   3
   ref_process:  14
   desc:         '증적로그 기록'
-  layoues:
+  layouts:
     - name:       KOSPI_KOSDAQ
       ref_count:  4
       url:        '{URL}'   # 클릭했을때 해당 Layout Item Detail로 점프할 PATH
