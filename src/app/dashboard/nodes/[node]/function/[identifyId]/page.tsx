@@ -12,13 +12,13 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 type Props = {
-    params: { node: string; functionName: string };
+    params: { node: string; identifyId: string };
 };
 
 export default function Page({ params }: Props) {
-    const { node, functionName } = params;
+    const { node, identifyId } = params;
     const { t } = useTranslate('function-list');
-    const decodedId = decodeURIComponent(functionName);
+    const decodedId = decodeURIComponent(identifyId);
 
     const url = endpoints.function.detail(node, decodedId);
     const { data, error, isLoading } = useSWR(url, fetcher);
