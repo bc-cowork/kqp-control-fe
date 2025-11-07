@@ -27,18 +27,19 @@ export default function Page({ params }: Props) {
     const specList: Array<{ spec: string; refCount: number }> = detail.specList || [];
     const script: string = detail.script || '';
 
+
     return (
         <DashboardContent maxWidth="xl">
             <Breadcrumb
                 node={node}
                 pages={[
                     { pageName: t('top.identify_list'), link: paths.dashboard.nodes.identifyList(node) },
-                    { pageName: decodeURIComponent(identifyId) },
+                    { pageName: detail?.identityName || '-' },
                 ]}
             />
 
             <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>
-                IDENTIFY: {decodedId}
+                IDENTIFY: {detail?.identityName || '-'}
             </Typography>
 
             <Grid container spacing={3} sx={{ mt: 3 }}>

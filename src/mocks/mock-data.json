@@ -4769,449 +4769,576 @@
   },
   "/apik/prod1/identify/list": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "nodeId": "prod1",
-      "identifyList": [
+      "node": "prod1",
+      "list": [
         {
-          "id": "1",
-          "identityName": "krx_master",
-          "path": "/cfg/specifications/krx_master.moon",
+          "id": 1,
+          "name": "krx_master",
+          "path": "cfg/specifications/krx_master.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
-          "refSpecs": 2,
-          "explanation": "KRX 종목 마스터"
+          "ref_specs": 2,
+          "desc": "KRX 종목 마스터"
         },
         {
-          "id": "2",
-          "identityName": "nxt_master",
-          "path": "/cfg/specifications/nxt_master.moon",
+          "id": 2,
+          "name": "nxt_master",
+          "path": "cfg/specifications/nxt_master.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
-          "refSpecs": 2,
-          "explanation": "NXT 종목 마스터"
+          "ref_specs": 2,
+          "desc": "NXT 종목 마스터"
         },
         {
-          "id": "3",
-          "identityName": "krx_fill",
-          "path": "/cfg/specifications/krx_fill.moon",
+          "id": 3,
+          "name": "krx_fill",
+          "path": "cfg/specifications/krx_fill.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
-          "refSpecs": 2,
-          "explanation": "KRX 체결"
+          "ref_specs": 2,
+          "desc": "KRX 체결"
         },
         {
-          "id": "4",
-          "identityName": "nxt_fill",
-          "path": "/cfg/specifications/nxt_fill.moon",
+          "id": 4,
+          "name": "nxt_fill",
+          "path": "cfg/specifications/nxt_fill.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
-          "refSpecs": 2,
-          "explanation": "NXT 체결"
+          "ref_specs": 2,
+          "desc": "NXT 체결"
         },
         {
-          "id": "5",
-          "identityName": "krx_quote",
-          "path": "/cfg/specifications/krx_quote.moon",
+          "id": 5,
+          "name": "krx_quote",
+          "path": "cfg/specifications/krx_quote.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
-          "refSpecs": 2,
-          "explanation": "KRX 호가"
+          "ref_specs": 2,
+          "desc": "KRX 호가"
         },
         {
-          "id": "6",
-          "identityName": "nxt_quote",
-          "path": "/cfg/specifications/nxt_quote.moon",
+          "id": 6,
+          "name": "nxt_quote",
+          "path": "cfg/specifications/nxt_quote.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
-          "refSpecs": 2,
-          "explanation": "NXT 호가"
+          "ref_specs": 2,
+          "desc": "NXT 호가"
         }
       ]
     }
   },
   "/apik/prod2/identify/list": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "nodeId": "prod2",
-      "identifyList": [
+      "node": "prod2",
+      "list": [
         {
-          "id": "1",
-          "identityName": "krx_master",
-          "path": "/cfg/specifications/krx_master.moon",
+          "id": 1,
+          "name": "krx_master",
+          "path": "cfg/specifications/krx_master.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
-          "refSpecs": 2,
-          "explanation": "KRX 종목 마스터"
+          "ref_specs": 2,
+          "desc": "KRX 종목 마스터"
         },
         {
-          "id": "2",
-          "identityName": "nxt_master",
-          "path": "/cfg/specifications/nxt_master.moon",
+          "id": 2,
+          "name": "nxt_master",
+          "path": "cfg/specifications/nxt_master.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
-          "refSpecs": 2,
-          "explanation": "NXT 종목 마스터"
+          "ref_specs": 2,
+          "desc": "NXT 종목 마스터"
         },
         {
-          "id": "3",
-          "identityName": "krx_fill",
-          "path": "/cfg/specifications/krx_fill.moon",
+          "id": 3,
+          "name": "krx_fill",
+          "path": "cfg/specifications/krx_fill.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
-          "refSpecs": 2,
-          "explanation": "KRX 체결"
+          "ref_specs": 2,
+          "desc": "KRX 체결"
         },
         {
-          "id": "4",
-          "identityName": "nxt_fill",
-          "path": "/cfg/specifications/nxt_fill.moon",
+          "id": 4,
+          "name": "nxt_fill",
+          "path": "cfg/specifications/nxt_fill.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
-          "refSpecs": 2,
-          "explanation": "NXT 체결"
+          "ref_specs": 2,
+          "desc": "NXT 체결"
         },
         {
-          "id": "5",
-          "identityName": "krx_quote",
-          "path": "/cfg/specifications/krx_quote.moon",
+          "id": 5,
+          "name": "krx_quote",
+          "path": "cfg/specifications/krx_quote.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
-          "refSpecs": 2,
-          "explanation": "KRX 호가"
+          "ref_specs": 2,
+          "desc": "KRX 호가"
         },
         {
-          "id": "6",
-          "identityName": "nxt_quote",
-          "path": "/cfg/specifications/nxt_quote.moon",
+          "id": 6,
+          "name": "nxt_quote",
+          "path": "cfg/specifications/nxt_quote.moon",
+          "url": "{URL}",
           "timestamp": "2025-10-28 13:05:30",
-          "refSpecs": 2,
-          "explanation": "NXT 호가"
+          "ref_specs": 2,
+          "desc": "NXT 호가"
         }
       ]
     }
   },
   "/apik/prod1/identify/idf-1001": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "id": "idf-1001",
-      "identityName": "identifyA",
-      "keys": [
-        "A301S",
-        "A301Q"
-      ],
-      "specList": [
-        {
-          "spec": "A301S",
-          "refCount": 15
-        },
-        {
-          "spec": "A301Q",
-          "refCount": 13
-        }
-      ],
-      "script": "-- krx_fill.moon\n\nreturn {\n    desc:                     '체결 (KRX)',\n    keys:                     {'A301S', 'A301Q'},\n    issue_select:             {6},\n    specs:                    'A3_FILL',\n    skip_spec_cache:          true,\n    process: {\n        lfn:                 'lfn_krx_fill',\n        param: {\n            mkt:            1\n        }\n    },\n    distribute: {\n        format:             'DST_FILL',\n        lfn_gen:            'gen_fill'\n    }\n}"
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
     }
   },
   "/apik/prod1/identify/idf-1002": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "id": "idf-1002",
-      "identityName": "identifyB",
-      "keys": [
-        "B201S"
-      ],
-      "specList": [
-        {
-          "spec": "B201S",
-          "refCount": 9
-        }
-      ],
-      "script": "-- order_detail.moon\nreturn { keys: {'B201S'}, specs: 'B2_DETAIL' }"
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
     }
   },
   "/apik/prod1/identify/idf-1003": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "id": "idf-1003",
-      "identityName": "identifyC",
-      "keys": [
-        "C051Q"
-      ],
-      "specList": [
-        {
-          "spec": "C051Q",
-          "refCount": 3
-        }
-      ],
-      "script": "-- enrich_code.moon\nreturn { keys: {'C051Q'}, specs: 'ENRICH_CODE' }"
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
     }
   },
   "/apik/prod1/identify/idf-1004": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "id": "idf-1004",
-      "identityName": "identifyD",
-      "keys": [
-        "A351S"
-      ],
-      "specList": [
-        {
-          "spec": "A351S",
-          "refCount": 4
-        }
-      ],
-      "script": "-- audit_header.moon\nreturn { keys: {'A351S'}, specs: 'A3_HDR' }"
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
     }
   },
   "/apik/prod1/identify/idf-1005": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "id": "idf-1005",
-      "identityName": "identifyE",
-      "keys": [
-        "B651S"
-      ],
-      "specList": [
-        {
-          "spec": "B651S",
-          "refCount": 2
-        }
-      ],
-      "script": "-- audit_body.moon\nreturn { keys: {'B651S'}, specs: 'A3_BODY' }"
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
     }
   },
   "/apik/prod2/identify/idf-2001": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "id": "idf-2001",
-      "identityName": "identifyZ",
-      "keys": [
-        "MAGIC"
-      ],
-      "specList": [
-        {
-          "spec": "MAGIC",
-          "refCount": 1
-        }
-      ],
-      "script": "-- config_magic.moon\nreturn { keys: {'MAGIC'}, specs: 'CFG_MAGIC' }"
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
     }
   },
   "/apik/prod1/identify/krx_master": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "id": "krx_master",
-      "identityName": "krx_master",
-      "keys": [
-        "A0"
-      ],
-      "specList": [
-        {
-          "spec": "A0_KRX_MASTER",
-          "refCount": 2
-        }
-      ],
-      "script": "-- krx_master.moon\nreturn { desc='KRX 종목 마스터', keys={'A0'}, specs='A0_KRX_MASTER' }"
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
     }
   },
   "/apik/prod1/identify/nxt_master": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "id": "nxt_master",
-      "identityName": "nxt_master",
-      "keys": [
-        "A0"
-      ],
-      "specList": [
-        {
-          "spec": "A0_NXT_MASTER",
-          "refCount": 2
-        }
-      ],
-      "script": "-- nxt_master.moon\nreturn { desc='NXT 종목 마스터', keys={'A0'}, specs='A0_NXT_MASTER' }"
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
     }
   },
   "/apik/prod1/identify/krx_fill": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "id": "krx_fill",
-      "identityName": "krx_fill",
-      "keys": [
-        "A301S",
-        "A301Q"
-      ],
-      "specList": [
-        {
-          "spec": "A3_FILL",
-          "refCount": 2
-        }
-      ],
-      "script": "-- krx_fill.moon\nreturn { desc='KRX 체결', keys={'A301S','A301Q'}, specs='A3_FILL' }"
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
     }
   },
   "/apik/prod1/identify/nxt_fill": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "id": "nxt_fill",
-      "identityName": "nxt_fill",
-      "keys": [
-        "N301S",
-        "N301Q"
-      ],
-      "specList": [
-        {
-          "spec": "A3_FILL",
-          "refCount": 2
-        }
-      ],
-      "script": "-- nxt_fill.moon\nreturn { desc='NXT 체결', keys={'N301S','N301Q'}, specs='A3_FILL' }"
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
     }
   },
   "/apik/prod1/identify/krx_quote": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "id": "krx_quote",
-      "identityName": "krx_quote",
-      "keys": [
-        "B6"
-      ],
-      "specList": [
-        {
-          "spec": "B6_QUOTE",
-          "refCount": 2
-        }
-      ],
-      "script": "-- krx_quote.moon\nreturn { desc='KRX 호가', keys={'B6'}, specs='B6_QUOTE' }"
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
     }
   },
   "/apik/prod1/identify/nxt_quote": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "id": "nxt_quote",
-      "identityName": "nxt_quote",
-      "keys": [
-        "NB6"
-      ],
-      "specList": [
-        {
-          "spec": "B6_QUOTE",
-          "refCount": 2
-        }
-      ],
-      "script": "-- nxt_quote.moon\nreturn { desc='NXT 호가', keys={'NB6'}, specs='B6_QUOTE' }"
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
     }
   },
   "/apik/prod2/identify/krx_master": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "id": "krx_master",
-      "identityName": "krx_master",
-      "keys": [
-        "A0"
-      ],
-      "specList": [
-        {
-          "spec": "A0_KRX_MASTER",
-          "refCount": 2
-        }
-      ],
-      "script": "-- krx_master.moon\nreturn { desc='KRX 종목 마스터', keys={'A0'}, specs='A0_KRX_MASTER' }"
+      "node": "prod2",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
     }
   },
   "/apik/prod2/identify/nxt_master": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "id": "nxt_master",
-      "identityName": "nxt_master",
-      "keys": [
-        "A0"
-      ],
-      "specList": [
-        {
-          "spec": "A0_NXT_MASTER",
-          "refCount": 2
-        }
-      ],
-      "script": "-- nxt_master.moon\nreturn { desc='NXT 종목 마스터', keys={'A0'}, specs='A0_NXT_MASTER' }"
+      "node": "prod2",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
     }
   },
   "/apik/prod2/identify/krx_fill": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "id": "krx_fill",
-      "identityName": "krx_fill",
-      "keys": [
-        "A301S",
-        "A301Q"
-      ],
-      "specList": [
-        {
-          "spec": "A3_FILL",
-          "refCount": 2
-        }
-      ],
-      "script": "-- krx_fill.moon\nreturn { desc='KRX 체결', keys={'A301S','A301Q'}, specs='A3_FILL' }"
+      "node": "prod2",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
     }
   },
   "/apik/prod2/identify/nxt_fill": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "id": "nxt_fill",
-      "identityName": "nxt_fill",
-      "keys": [
-        "N301S",
-        "N301Q"
-      ],
-      "specList": [
-        {
-          "spec": "A3_FILL",
-          "refCount": 2
-        }
-      ],
-      "script": "-- nxt_fill.moon\nreturn { desc='NXT 체결', keys={'N301S','N301Q'}, specs='A3_FILL' }"
+      "node": "prod2",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
     }
   },
   "/apik/prod2/identify/krx_quote": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "id": "krx_quote",
-      "identityName": "krx_quote",
-      "keys": [
-        "B6"
-      ],
-      "specList": [
-        {
-          "spec": "B6_QUOTE",
-          "refCount": 2
-        }
-      ],
-      "script": "-- krx_quote.moon\nreturn { desc='KRX 호가', keys={'B6'}, specs='B6_QUOTE' }"
+      "node": "prod2",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
     }
   },
   "/apik/prod2/identify/nxt_quote": {
     "okay": true,
-    "msg": "Success",
     "data": {
-      "id": "nxt_quote",
-      "identityName": "nxt_quote",
-      "keys": [
-        "NB6"
-      ],
-      "specList": [
-        {
-          "spec": "B6_QUOTE",
-          "refCount": 2
-        }
-      ],
-      "script": "-- nxt_quote.moon\nreturn { desc='NXT 호가', keys={'NB6'}, specs='B6_QUOTE' }"
+      "node": "prod1",
+      "item": {
+        "name": "krx_fill",
+        "path": "cfg/specifications/krx_fill.moon",
+        "url": "{URL}",
+        "timestamp": "2025-10-28 13:05:30",
+        "ref_specs": 2,
+        "desc": "KRX 체결",
+        "related_specs": [
+          {
+            "name": "A3_FILL",
+            "ref_count": 1
+          },
+          {
+            "name": "DST_FILL",
+            "ref_count": 1
+          }
+        ],
+        "spec_def": "-- krx_fill.moon\n\nreturn {\n    desc:              '체결 (KRX)'\n    keys:              { 'A301S', 'A301Q' }\n    issue_select:      { 6 }\n    specs:             'A3_FILL'\n    skip_spec_cache:   true\n    process: {\n        lfn:           'lfn_krx_fill'\n        param:\n            mkt:       1\n    }\n    distribute: {\n        format:        'DST_FILL'\n        lfn_gen:       'gen_fill'\n    }\n}"
+      }
     }
   },
   "/apik/prod1/identify/1": {

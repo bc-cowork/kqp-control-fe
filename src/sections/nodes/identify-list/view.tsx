@@ -27,11 +27,11 @@ type Props = { nodeId: string };
 
 type IdentifyItem = {
     id: string;
-    identityName: string;
+    name: string;
     path: string;
     timestamp: string;
-    refSpecs?: number | string;
-    explanation?: string;
+    ref_specs?: number | string;
+    desc?: string;
 };
 
 export function IdentifyListView({ nodeId }: Props) {
@@ -41,7 +41,7 @@ export function IdentifyListView({ nodeId }: Props) {
     const url = endpoints.identify.list(nodeId);
     const { data, error, isLoading } = useSWR(url, fetcher);
 
-    const rows: IdentifyItem[] = (data && data.data && data.data.identifyList) || [];
+    const rows: IdentifyItem[] = (data && data.data && data.data.list) || [];
 
     return (
         <DashboardContent maxWidth="xl">
@@ -97,11 +97,11 @@ export function IdentifyListView({ nodeId }: Props) {
                                     }}
                                 >
                                     <TableCell>{row.id}</TableCell>
-                                    <TableCell>{row.identityName}</TableCell>
+                                    <TableCell>{row.name}</TableCell>
                                     <TableCell>{row.path}</TableCell>
                                     <TableCell>{row.timestamp}</TableCell>
-                                    <TableCell>{row.refSpecs}</TableCell>
-                                    <TableCell>{row.explanation}</TableCell>
+                                    <TableCell>{row.ref_specs}</TableCell>
+                                    <TableCell>{row.desc}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
