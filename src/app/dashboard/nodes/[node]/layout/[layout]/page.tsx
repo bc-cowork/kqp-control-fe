@@ -2,14 +2,7 @@
 
 import React from 'react';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import { Typography } from '@mui/material';
 
 import useSWR from 'swr';
@@ -18,6 +11,8 @@ import { DashboardContent } from 'src/layouts/dashboard';
 import { Breadcrumb } from 'src/components/common/Breadcrumb';
 import { fetcher, endpoints } from 'src/utils/axios';
 import { paths } from 'src/routes/paths';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 type Props = {
   params: {
@@ -60,7 +55,17 @@ export default function Page({ params }: Props) {
 
         <Box sx={{ p: 2, bgcolor: '#202838', height: 'calc(100vh - 48px)', overflowY: 'auto' }}>
           <Box component="pre" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: 13, color: '#AFB7C8', m: 0 }}>
-            {layoutDefinition}
+            <SyntaxHighlighter
+              language="moonscript"
+              style={a11yDark}
+              customStyle={{
+                background: "transparent",
+                whiteSpace: "pre-wrap",
+
+              }}
+            >
+              {layoutDefinition}
+            </SyntaxHighlighter>
           </Box>
         </Box>
       </Paper>

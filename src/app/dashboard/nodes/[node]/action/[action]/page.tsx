@@ -10,6 +10,10 @@ import { useTranslate } from 'src/locales';
 import { paths } from 'src/routes/paths';
 import { fetcher, endpoints } from 'src/utils/axios';
 
+
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { a11yDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+
 type Props = {
     params: {
         node: string;
@@ -27,7 +31,7 @@ export default function Page({ params }: Props) {
 
     const layoutList = data?.data?.layouts || [];
     const processList = data?.data?.processes || [];
-    const script = data?.data?.script || '';
+    const script = data?.data?.definition || '';
     const refLayoutCount = data?.data?.ref_layout || '-'
     const refProcessCount = data?.data?.ref_process || '-'
     const timeStamp = data?.data?.timestamp || '-'
@@ -69,7 +73,17 @@ export default function Page({ params }: Props) {
 
                             <Box sx={{ p: 2, bgcolor: '#202838', height: 'calc(100% - 48px)', overflowY: 'auto' }}>
                                 <Box component="pre" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: 13, color: '#AFB7C8', m: 0 }}>
-                                    {isLoading ? t('loading') : error ? t('error') : script || t('detail.placeholder')}
+                                    <SyntaxHighlighter
+                                        language="moonscript"
+                                        style={a11yDark}
+                                        customStyle={{
+                                            background: "transparent",
+                                            whiteSpace: "pre-wrap",
+
+                                        }}
+                                    >
+                                        {script}
+                                    </SyntaxHighlighter>
                                 </Box>
                             </Box>
                         </Paper>
