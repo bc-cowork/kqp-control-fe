@@ -41,7 +41,6 @@ export function SpecListView({ nodeId }: Props) {
     const url = endpoints.spec.list(nodeId);
     const { data, error, isLoading } = useSWR(url, fetcher);
     const rows: SpecItem[] = (data && data.data && data.data.list) || [];
-    console.log('rows', rows);
 
     return (
         <DashboardContent maxWidth="xl">

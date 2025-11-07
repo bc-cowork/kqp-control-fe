@@ -46,8 +46,6 @@ export default function Page({ params }: Props) {
     const identifiers: IdentifyRow[] = detail.related_identifies || [];
     const frags: FragRow[] = Array.isArray(detail.spec_definition) ? detail.spec_definition : [];
 
-    console.log("data", detail);
-
 
     return (
         <DashboardContent maxWidth="xl">
