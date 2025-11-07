@@ -16,14 +16,16 @@ import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 type Props = {
   params: {
     node: string;
-    action: string;
+    id: string;
   };
 };
 
 export default function Page({ params }: Props) {
-  const { node, action } = params;
+  const { node, id } = params;
   const { t } = useTranslate('action-list');
-  const decodedAction = decodeURIComponent(action);
+  const decodedAction = decodeURIComponent(id);
+
+  console.log('Decoded Action:', decodedAction);
 
   const url = endpoints.actions.detail(node, decodedAction);
   const { data, error, isLoading } = useSWR(url, fetcher);
@@ -46,7 +48,7 @@ export default function Page({ params }: Props) {
         ]}
       />
 
-      <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{decodedAction}</Typography>
+      <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{"RULE: "}{decodedAction}</Typography>
       <Typography sx={{ textAlign: 'right', color: 'GrayText' }}>
         {timeStamp}
       </Typography>

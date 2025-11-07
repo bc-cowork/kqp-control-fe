@@ -10,6 +10,7 @@ import { useBoolean } from 'src/hooks/use-boolean';
 import { useGetNodes } from 'src/actions/dashboard';
 
 import { useSettingsContext } from 'src/components/settings';
+import { useTranslate } from 'src/locales';
 
 import { Main } from './main';
 import { layoutClasses } from '../classes';
@@ -33,6 +34,7 @@ export type DashboardLayoutProps = {
 
 export function DashboardLayout({ sx, children, header, data }: DashboardLayoutProps) {
   const theme = useTheme();
+  const { t } = useTranslate('sidebar');
 
   const mobileNavOpen = useBoolean();
 
@@ -44,7 +46,7 @@ export function DashboardLayout({ sx, children, header, data }: DashboardLayoutP
 
   const layoutQuery: Breakpoint = 'lg';
 
-  const navData = data?.nav ?? getNavData(nodes?.map((node: any) => node.id) || []);
+  const navData = data?.nav ?? getNavData(t, nodes?.map((node: any) => node.id) || []);
 
   const isNavMini = settings.navLayout === 'mini';
   const isNavHorizontal = settings.navLayout === 'horizontal';

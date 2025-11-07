@@ -83,9 +83,9 @@ export function FunctionListView({ nodeId }: Props) {
                                 </TableRow>
                             )}
 
-                            {rows.map((row) => (
+                            {rows.map((row, index) => (
                                 <TableRow
-                                    key={row.id}
+                                    key={row.name}
                                     hover
                                     sx={{ cursor: 'pointer' }}
                                     tabIndex={0}
@@ -96,7 +96,7 @@ export function FunctionListView({ nodeId }: Props) {
                                         }
                                     }}
                                 >
-                                    <TableCell>{row.id}</TableCell>
+                                    <TableCell>{index + 1}</TableCell>
                                     <TableCell>{row.name}</TableCell>
                                     <TableCell>{row.path}</TableCell>
                                     <TableCell>{row.timestamp}</TableCell>

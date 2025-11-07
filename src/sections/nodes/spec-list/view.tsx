@@ -77,20 +77,20 @@ export function SpecListView({ nodeId }: Props) {
                                     <TableCell colSpan={8}>{t("empty") || "No specs"}</TableCell>
                                 </TableRow>
                             )}
-                            {rows.map((row) => (
+                            {rows.map((row, index) => (
                                 <TableRow
-                                    key={row.id}
+                                    key={row.name}
                                     hover
                                     tabIndex={0}
                                     sx={{ cursor: 'pointer' }}
-                                    onClick={() => router.push(paths.dashboard.nodes.specDetail(nodeId, String(row.id)))}
+                                    onClick={() => router.push(paths.dashboard.nodes.specDetail(nodeId, String(row.name)))}
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter' || e.key === ' ') {
-                                            router.push(paths.dashboard.nodes.specDetail(nodeId, String(row.id)));
+                                            router.push(paths.dashboard.nodes.specDetail(nodeId, String(row.name)));
                                         }
                                     }}
                                 >
-                                    <TableCell>{row.id}</TableCell>
+                                    <TableCell>{index + 1}</TableCell>
                                     <TableCell>{row.name}</TableCell>
                                     <TableCell>{row.path}</TableCell>
                                     <TableCell>{row.timestamp}</TableCell>

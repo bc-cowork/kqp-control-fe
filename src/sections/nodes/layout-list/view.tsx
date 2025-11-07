@@ -85,7 +85,7 @@ export function LayoutListView({ nodeId }: Props) {
                                 </TableRow>
                             )}
 
-                            {rows.map((row) => (
+                            {rows.map((row, index) => (
                                 <TableRow
                                     key={row.id}
                                     hover
@@ -102,7 +102,7 @@ export function LayoutListView({ nodeId }: Props) {
                                         }
                                     }}
                                 >
-                                    <TableCell>{row.id}</TableCell>
+                                    <TableCell>{index + 1}</TableCell>
                                     <TableCell>{row.name}</TableCell>
                                     <TableCell>{row.path}</TableCell>
                                     <TableCell>{row.timestamp}</TableCell>

@@ -105,7 +105,7 @@ export default function Page({ params }: Props) {
                             </Paper>
                         </Box>
                         <Box sx={{ textAlign: 'right', my: 2 }}>
-                            <Typography color={'grey'} variant="body2">
+                            <Typography color='grey' variant="body2">
                                 {isLoading || error ? '' : `ref. SPECs ${specList.length}`}
                             </Typography>
                         </Box>
@@ -126,7 +126,7 @@ export default function Page({ params }: Props) {
                 <Grid item xs={12} md={5}>
                     <Paper sx={{ height: '100%', p: 0.5, backgroundColor: 'black' }}>
                         <Box sx={{ backgroundColor: '#E0E4EB', p: 1, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
-                            <Typography color={'grey'} variant="body2" sx={{ fontWeight: 600 }}>{t('detail_table.script_title')}</Typography>
+                            <Typography color='grey' variant="body2" sx={{ fontWeight: 600 }}>{t('detail_table.script_title')}</Typography>
                         </Box>
 
                         <Box sx={{ p: 2, bgcolor: '#202838', height: 'calc(100% - 48px)', overflowY: 'auto' }}>

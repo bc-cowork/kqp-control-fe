@@ -83,20 +83,20 @@ export function IdentifyListView({ nodeId }: Props) {
                                 </TableRow>
                             )}
 
-                            {rows.map((row) => (
+                            {rows.map((row, index) => (
                                 <TableRow
-                                    key={row.id}
+                                    key={row.name}
                                     hover
                                     sx={{ cursor: 'pointer' }}
                                     tabIndex={0}
-                                    onClick={() => router.push(paths.dashboard.nodes.identifyDetail(nodeId, String(row.id)))}
+                                    onClick={() => router.push(paths.dashboard.nodes.identifyDetail(nodeId, String(row.name)))}
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter' || e.key === ' ') {
-                                            router.push(paths.dashboard.nodes.identifyDetail(nodeId, String(row.id)));
+                                            router.push(paths.dashboard.nodes.identifyDetail(nodeId, String(row.name)));
                                         }
                                     }}
                                 >
-                                    <TableCell>{row.id}</TableCell>
+                                    <TableCell>{index + 1}</TableCell>
                                     <TableCell>{row.name}</TableCell>
                                     <TableCell>{row.path}</TableCell>
                                     <TableCell>{row.timestamp}</TableCell>

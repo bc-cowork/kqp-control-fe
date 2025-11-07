@@ -38,7 +38,7 @@ export function SignOutButton({ onClose, ...other }: Props) {
 
   return (
     <Button fullWidth variant="soft" size="large" color="error" onClick={handleLogout} {...other}>
-      t('side_bar.logout')
+      {t("side_bar.logout")}
     </Button>
   );
 }

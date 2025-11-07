@@ -4,6 +4,7 @@ import { CONFIG } from 'src/config-global';
 
 import { SvgColor } from 'src/components/svg-color';
 import { useTranslate } from 'src/locales';
+import { use } from 'react';
 
 // ----------------------------------------------------------------------
 
@@ -20,8 +21,8 @@ const ICONS = {
 
 // ----------------------------------------------------------------------
 
-export function getNavData(nodes: string[] = []) {
-  const { t } = useTranslate('sidebar');
+export function getNavData(t: any, nodes: string[] = [],) {
+
   return [
     {
       items: [
@@ -98,9 +99,7 @@ export function getNavData(nodes: string[] = []) {
   ];
 }
 
-export function getBottomNavData() {
-  const { t } = useTranslate('sidebar');
-
+export function getBottomNavData(t: any) {
   return [
     {
       items: [{ title: t('side_bar.settings'), path: '#', icon: ICONS.settings }],
