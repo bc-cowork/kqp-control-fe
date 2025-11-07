@@ -115,7 +115,7 @@ export const endpoints = {
   },
   function: {
     list: (node: string) => `/apik/${node}/function/list`,
-    detail: (node: string, functionName: string) => `/apik/${node}/function/${functionName}`,
+    detail: (node: string, identifyId: string) => `/apik/${node}/function/${identifyId}`,
   },
   spec: {
     list: (node: string) => `/apik/${node}/spec/list`,
