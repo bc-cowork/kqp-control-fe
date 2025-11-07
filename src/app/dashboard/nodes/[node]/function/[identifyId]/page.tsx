@@ -8,6 +8,8 @@ import { useTranslate } from 'src/locales';
 import { paths } from 'src/routes/paths';
 import useSWR from 'swr';
 import { fetcher, endpoints } from 'src/utils/axios';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 type Props = {
     params: { node: string; identifyId: string };
@@ -105,7 +107,17 @@ export default function Page({ params }: Props) {
 
                         <Box sx={{ p: 2, bgcolor: '#202838', height: 'calc(100% - 48px)', overflowY: 'auto' }}>
                             <Box component="pre" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: 13, color: '#AFB7C8', m: 0 }}>
-                                {isLoading ? t('loading') : error ? t('error') : script || ''}
+                                <SyntaxHighlighter
+                                    language="moonscript"
+                                    style={a11yDark}
+                                    customStyle={{
+                                        background: "transparent",
+                                        whiteSpace: "pre-wrap",
+                                    }}
+                                >
+
+                                    {isLoading ? t('loading') : error ? t('error') : script || ''}
+                                </SyntaxHighlighter>
                             </Box>
                         </Box>
                     </Paper>
