@@ -21,7 +21,7 @@ export function RuleListView({ nodeId }: Props) {
   return (
     <DashboardContent maxWidth="xl">
       <Breadcrumb node={nodeId} pages={[{ pageName: t('top.title') }]} />
-      <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[600], mt: 2 }}>
+      <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50], mt: 2 }}>
         {t('top.title')}
       </Typography>
       <Box

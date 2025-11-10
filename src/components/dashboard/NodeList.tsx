@@ -142,9 +142,13 @@ export function NodeList({
                 <TableCell>{node.desc}</TableCell>
                 <TableCell>
                   {node.emittable ? (
-                    <Chip label="Yes" color="success" size="small" variant="soft" />
+                    <Chip label="Yes" color="success" size="small" variant="outlined" sx={{
+                      backgroundColor: '#1D2F20',
+                    }} />
                   ) : (
-                    <Chip label="No" color="error" size="small" variant="soft" />
+                    <Chip label="No" color="error" size="small" variant="outlined" sx={{
+                      backgroundColor: '#331B1E'
+                    }} />
                   )}
                 </TableCell>
                 <TableCell align="right">{node.emit_count.toLocaleString()}</TableCell>

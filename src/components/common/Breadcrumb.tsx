@@ -34,7 +34,7 @@ export function Breadcrumb({ node, pages }: Props) {
         {node && (
           <Box
             sx={{
-              backgroundColor: (theme) => theme.palette.primary.main,
+              backgroundColor: '#212447',
               px: 1,
               borderRadius: '4px',
               height: 32,
@@ -84,7 +84,7 @@ export function Breadcrumb({ node, pages }: Props) {
                     component={NextLink}
                     href={page.link}
                     sx={{
-                      color: (theme) => theme.palette.grey[400],
+                      color: (theme) => theme.palette.grey[50],
                       fontWeight: 400,
                       fontSize: 17,
                       textDecoration: 'none',
@@ -100,7 +100,7 @@ export function Breadcrumb({ node, pages }: Props) {
                   <Typography
                     display="inline"
                     sx={{
-                      color: (theme) => theme.palette.grey[400],
+                      color: (theme) => theme.palette.grey[50],
                       fontWeight: 400,
                       fontSize: 17,
                       padding: '0px 4px',
@@ -155,8 +155,8 @@ const ArrowSelector = () => {
           height: 32,
           borderRadius: '4px',
           mr: 0.5,
-          color: colors.default,
-          backgroundColor: common.white,
+          color: (theme) => theme.palette.grey[50],
+          backgroundColor: (theme) => theme.palette.grey[600],
           '&:hover': {
             color: colors.hover,
             backgroundColor: bgColors.hover,
@@ -179,7 +179,7 @@ const ArrowSelector = () => {
               fillRule="evenodd"
               clipRule="evenodd"
               d="M1.66699 10.0013C1.66699 10.1826 1.74087 10.3562 1.87159 10.4819L6.20492 14.6485C6.47032 14.9037 6.89235 14.8954 7.14755 14.63C7.40274 14.3646 7.39447 13.9426 7.12907 13.6874L3.98884 10.668L17.6663 10.668C18.0345 10.668 18.333 10.3695 18.333 10.0013C18.333 9.63311 18.0345 9.33464 17.6663 9.33464L3.98884 9.33464L7.12907 6.31519C7.39447 6.06 7.40274 5.63797 7.14755 5.37256C6.89235 5.10716 6.47032 5.09889 6.20492 5.35408L1.87159 9.52075C1.74087 9.64644 1.66699 9.81996 1.66699 10.0013Z"
-              fill={colors.default}
+              fill={'white'}
             />
           </svg>
         </SvgIcon>
@@ -194,7 +194,7 @@ const ArrowSelector = () => {
           height: 32,
           borderRadius: '4px',
           color: colors.default,
-          backgroundColor: common.white,
+          backgroundColor: (theme) => theme.palette.grey[600],
           '&:hover': {
             color: colors.hover,
             backgroundColor: bgColors.hover,
@@ -217,7 +217,7 @@ const ArrowSelector = () => {
               fillRule="evenodd"
               clipRule="evenodd"
               d="M18.333 10.0013C18.333 10.1826 18.2591 10.3562 18.1284 10.4819L13.7951 14.6485C13.5297 14.9037 13.1076 14.8954 12.8525 14.63C12.5973 14.3646 12.6055 13.9426 12.8709 13.6874L16.0112 10.668L2.33366 10.668C1.96547 10.668 1.66699 10.3695 1.66699 10.0013C1.66699 9.63311 1.96547 9.33464 2.33366 9.33464L16.0112 9.33464L12.8709 6.31519C12.6055 6.06 12.5973 5.63797 12.8525 5.37256C13.1076 5.10716 13.5297 5.09889 13.7951 5.35408L18.1284 9.52075C18.2591 9.64644 18.333 9.81996 18.333 10.0013Z"
-              fill={colors.default}
+              fill={'white'}
             />
           </svg>
         </SvgIcon>
@@ -244,8 +244,8 @@ const LanguageToggle = () => {
         alignItems: 'center',
         borderRadius: '4px',
         padding: '4px 8px',
-        backgroundColor: '#fff',
-        border: `1px solid ${common.white}`,
+        backgroundColor: (theme) => theme.palette.grey[800],
+        border: (theme) => `1px solid ${theme.palette.grey[700]}`,
         '&:hover': {
           backgroundColor: grey[50],
           border: `1px solid ${grey[200]}`,
@@ -268,7 +268,7 @@ const LanguageToggle = () => {
       >
         {displayLabel === 'ENG' ? <EnFlagIcon /> : <KoFlagIcon />}
       </SvgIcon>
-      <Typography sx={{ fontSize: 15, fontWeight: 400, color: grey[400] }}>
+      <Typography sx={{ fontSize: 15, fontWeight: 400, color: grey[50] }}>
         {displayLabel}
       </Typography>
     </Button>

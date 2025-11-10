@@ -28,7 +28,7 @@ export function AuditFrameListView({ nodeId, file }: Props) {
           { pageName: t('top.list') },
         ]}
       />
-      <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[600], mt: 2 }}>
+      <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50], mt: 2 }}>
         {t('top.list')}
       </Typography>
       <Box

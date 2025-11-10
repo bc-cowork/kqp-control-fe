@@ -45,7 +45,7 @@ export function SpecListView({ nodeId }: Props) {
     return (
         <DashboardContent maxWidth="xl">
             <Breadcrumb node={nodeId} pages={[{ pageName: t("top.spec_list") }]} />
-            <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[600], mt: 2 }}>{t("top.spec_list")}</Typography>
+            <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50], mt: 2 }}>{t("top.spec_list")}</Typography>
             <Box sx={{ mt: 3 }}>
                 <TableContainer component={Paper}>
                     <Table size="small">

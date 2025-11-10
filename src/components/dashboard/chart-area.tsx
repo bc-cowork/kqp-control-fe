@@ -125,10 +125,10 @@ export function ChartArea({
   // Get the colors based on the layout and metric bucket, default to CPU colors if none match
   const { stroke, fill, fillOpacity } = chartColors[layout]?.[colorKey] ||
     chartColors[layout]?.cpu || {
-      stroke: '#5E66FF',
-      fill: '#5E66FF',
-      fillOpacity: 0.2,
-    };
+    stroke: '#5E66FF',
+    fill: '#5E66FF',
+    fillOpacity: 0.2,
+  };
 
   // Only apply threshold highlighting for the CPU chart
   const applyThreshold = colorKey === 'cpu' && threshold !== undefined;
@@ -143,16 +143,16 @@ export function ChartArea({
     return value.toString();
   };
 
-  const minValue = data.length > 0 ? Math.min(...data.map((point) => point[metric])) : 0;
-  const maxValue = data.length > 0 ? Math.max(...data.map((point) => point[metric])) : 100;
+  const minValue = 0;
+  const maxValue = 100;
 
   return (
     <Box
       sx={{
         border: 1,
-        borderColor: theme.palette.grey[200],
+        borderColor: theme.palette.grey[500],
         borderRadius: 1,
-        bgcolor: theme.palette.common.white,
+        bgcolor: '#141C2A',
         height,
         display: 'flex',
         flexDirection: 'column',
@@ -167,7 +167,7 @@ export function ChartArea({
         alignItems="center"
         sx={{ my: 1, mx: 1 }}
       >
-        <Typography sx={{ fontSize: 15, color: theme.palette.grey[400] }}>{title}</Typography>
+        <Typography sx={{ fontSize: 15, color: theme.palette.grey[100] }}>{title}</Typography>
         <SegmentedButtonGroupChart
           tabs={tabs}
           value={tabValue}
@@ -185,18 +185,18 @@ export function ChartArea({
             data={data}
             margin={{ top: 0, right: 5, left: -20, bottom: layout === '1x4' ? 10 : 0 }}
           >
-            <CartesianGrid stroke={theme.palette.grey[200]} strokeDasharray="3 3" />
+            <CartesianGrid stroke={theme.palette.grey[400]} />
             <XAxis
               dataKey="timestamp"
               tick={{ fontSize: 12, fill: theme.palette.text.secondary }}
               tickLine={false}
-              axisLine={{ stroke: theme.palette.grey[200] }}
+              axisLine={{ stroke: theme.palette.grey[400] }}
             />
             <YAxis
               tick={{ fontSize: 12, fill: theme.palette.text.secondary }}
               tickLine={false}
-              axisLine={{ stroke: theme.palette.grey[200] }}
-              domain={[minValue, 'auto']}
+              axisLine={{ stroke: theme.palette.grey[400] }}
+              domain={[minValue, maxValue]}
               tickFormatter={
                 metric === 'inbound_bytes' || metric === 'outbound_bytes'
                   ? formatLargeNumber
@@ -205,8 +205,8 @@ export function ChartArea({
             />
             <Tooltip
               contentStyle={{
-                backgroundColor: theme.palette.common.white,
-                borderColor: theme.palette.grey[200],
+                backgroundColor: theme.palette.grey[900],
+                borderColor: theme.palette.grey[400],
                 borderRadius: 4,
                 boxShadow: theme.shadows[1],
               }}

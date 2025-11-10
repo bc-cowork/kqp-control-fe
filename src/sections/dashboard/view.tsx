@@ -52,7 +52,7 @@ export function DashboardView() {
   return (
     <DashboardContent maxWidth="xl">
       <Breadcrumb />
-      <Typography sx={{ fontSize: 28, fontWeight: 500, color: theme.palette.grey[600], mt: 2 }}>
+      <Typography sx={{ fontSize: 28, fontWeight: 500, color: theme.palette.grey[50], mt: 2 }}>
         {t('top.dashboard')}
       </Typography>
       <Box
@@ -70,7 +70,6 @@ export function DashboardView() {
                     height: '140px',
                     width: '140px',
                     borderRadius: '8px',
-                    border: `1px solid ${grey[600]}`,
                     background:
                       'radial-gradient(62.05% 21.26% at 50% 100%, #4A3BFF 0%, #202838 100%)',
                     color: theme.palette.common.white,
@@ -92,8 +91,7 @@ export function DashboardView() {
                     height: '140px',
                     width: '140px',
                     borderRadius: '8px',
-                    border: `1px solid ${grey[600]}`,
-                    backgroundColor: theme.palette.common.white,
+                    backgroundColor: '#202838',
                     color: grey[600],
                     mr: 0.5,
                   }}
@@ -103,10 +101,10 @@ export function DashboardView() {
                       label={t('top.on')}
                       color="success"
                       size="small"
-                      variant="status"
+                      variant="outlined"
                       sx={{
                         fontSize: 15,
-                        border: `1px solid ${theme.palette.success.main}`,
+                        backgroundColor: '#202838',
                       }}
                       icon={
                         <SvgIcon>
@@ -125,7 +123,7 @@ export function DashboardView() {
                   </Box>
                   <FadingDivider />
                   <Typography
-                    sx={{ fontSize: 28, fontWeight: 500, textAlign: 'right', pr: 2, pt: 2 }}
+                    sx={{ fontSize: 28, fontWeight: 500, textAlign: 'right', pr: 2, pt: 2, color: theme.palette.grey[50] }}
                   >
                     {onlineNodes}
                   </Typography>
@@ -175,7 +173,7 @@ export function DashboardView() {
                 py: 2.5,
                 px: 1.5,
                 borderRadius: 1.5,
-                backgroundColor: theme.palette.common.white,
+                backgroundColor: '#202838',
               }}
             >
               <Stack
@@ -253,13 +251,13 @@ const NavigationBox = ({ title, link }: { title: string; link: string }) => {
         py: 2.5,
         px: 1.5,
         width: '100%',
-        border: `1px solid ${grey[200]}`,
+        border: `1px solid ${grey[700]}`,
         borderRadius: '12px',
       }}
       onClick={() => router.push(link)}
     >
       <Stack direction="row" alignItems="center">
-        <Typography sx={{ fontSize: 17, fontWeight: 500 }}>{title}</Typography>
+        <Typography sx={{ fontSize: 17, fontWeight: 500, color: grey[700] }}>{title}</Typography>
         <SvgIcon sx={{ width: 20, height: 20 }}>
           <svg
             width="20"

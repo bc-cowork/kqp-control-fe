@@ -47,7 +47,7 @@ export function IdentifyListView({ nodeId }: Props) {
         <DashboardContent maxWidth="xl">
             <Breadcrumb node={nodeId} pages={[{ pageName: t("top.identify_list") }]} />
 
-            <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[600], mt: 2 }}>
+            <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50], mt: 2 }}>
                 {t("top.identify_list")}
             </Typography>
 

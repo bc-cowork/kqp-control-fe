@@ -61,7 +61,7 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
                 sx={{
                   fontSize: 17,
                   border: `1px solid ${isOnline ? '#DDF4DA' : '#F4D8D8'}`,
-                  backgroundColor: isOnline ? '#EBFBE9' : '#FFF2F4',
+                  backgroundColor: isOnline ? '#EBFBE9' : '#331B1E',
                 }}
                 icon={
                   <SvgIcon>
@@ -124,9 +124,9 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
               </Typography>
               <Typography variant="body2">
                 {selectedNode.emittable ? (
-                  <Chip label={t('left_side.true')} color="success" size="small" variant="soft" />
+                  <Chip label={t('left_side.true')} color="success" size="small" variant="outlined" />
                 ) : (
-                  <Chip label={t('left_side.false')} color="error" size="small" variant="soft" />
+                  <Chip label={t('left_side.false')} color="error" size="small" variant="outlined" />
                 )}
               </Typography>
             </Stack>

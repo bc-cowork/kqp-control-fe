@@ -28,21 +28,23 @@ const StyledToggleButton = styled(ToggleButton, {
   shouldForwardProp: (prop) => prop !== 'metric', // Prevent metric prop from being passed to DOM
 })<{ metric: string }>(({ theme, metric }) => {
   const isPercentageMetric = ['cpu', 'memory'].includes(metric);
+
   return {
     fontSize: 11,
     fontWeight: 400,
-    color: theme.palette.grey[400],
+    color: isPercentageMetric ? theme.palette.grey[800] : theme.palette.grey[400],
     padding: '2px 8px',
     '&.Mui-selected': {
-      backgroundColor: isPercentageMetric ? theme.palette.grey[50] : theme.palette.common.white,
+      backgroundColor: theme.palette.grey[700],
       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
-      color: theme.palette.text.primary,
+      color: isPercentageMetric ? '#667085' : theme.palette.common.white,
       '&:hover': {
         backgroundColor: theme.palette.common.white,
+        color: isPercentageMetric ? theme.palette.grey[800] : 'black',
       },
     },
     '&:not(.Mui-selected)': {
-      backgroundColor: theme.palette.grey[200],
+      backgroundColor: 'transparent',
       '&:hover': {
         backgroundColor: theme.palette.grey[300],
       },
@@ -68,6 +70,9 @@ export function SegmentedButtonGroupChart({
       exclusive
       onChange={handleChange}
       aria-label="segmented button group"
+      sx={{
+        backgroundColor: 'black',
+      }}
     >
       {tabs.map((tab) => (
         <StyledToggleButton
