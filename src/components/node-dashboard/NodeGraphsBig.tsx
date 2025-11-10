@@ -40,7 +40,7 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
   return (
     <Box
       sx={{
-        bgcolor: theme.palette.common.white,
+        bgcolor: theme.palette.grey[800],
         height: 'calc(100vh - 187px)',
         p: 1.5,
         pr: '4px',

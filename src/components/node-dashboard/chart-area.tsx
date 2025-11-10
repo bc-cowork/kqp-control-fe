@@ -98,16 +98,16 @@ export function ChartArea({
     return value.toString();
   };
 
-  const minValue = data.length > 0 ? Math.min(...data.map((point) => point[metric])) : 0;
-  const maxValue = data.length > 0 ? Math.max(...data.map((point) => point[metric])) : 100;
+  const minValue = 0;
+  const maxValue = 100;
 
   return (
     <Box
       sx={{
         border: 1,
-        borderColor: theme.palette.grey[50],
+        borderColor: theme.palette.grey[500],
         borderRadius: 1,
-        bgcolor: '#F9FAFB',
+        bgcolor: '#141C2A',
         height,
         display: 'flex',
         flexDirection: 'column',
@@ -121,7 +121,7 @@ export function ChartArea({
         alignItems="center"
         sx={{ mt: 1, mx: 1 }}
       >
-        <Typography sx={{ fontSize: 15, color: theme.palette.grey[400] }}>{titleString}</Typography>
+        <Typography sx={{ fontSize: 15, color: theme.palette.grey[300] }}>{titleString}</Typography>
         {tabs && tabValue && onTabChange && (
           <SegmentedButtonGroupChart
             tabs={tabs}
@@ -141,18 +141,18 @@ export function ChartArea({
           <CircularProgress />
         ) : (
           <AreaChart data={data} margin={{ top: 0, right: 5, left: -20, bottom: 0 }}>
-            <CartesianGrid stroke={theme.palette.grey[200]} strokeDasharray="3 3" fill="white" />
+            <CartesianGrid stroke={theme.palette.grey[500]} fill={theme.palette.grey[800]} />
             <XAxis
               dataKey="timestamp"
-              tick={{ fontSize: 12, fill: theme.palette.text.secondary }}
+              tick={{ fontSize: 12, fill: theme.palette.grey[400] }}
               tickLine={false}
-              axisLine={{ stroke: theme.palette.grey[200] }}
+              axisLine={{ stroke: theme.palette.grey[500] }}
             />
             <YAxis
-              tick={{ fontSize: 12, fill: theme.palette.text.secondary }}
+              tick={{ fontSize: 12, fill: theme.palette.grey[400] }}
               tickLine={false}
-              axisLine={{ stroke: theme.palette.grey[200] }}
-              domain={[minValue, 100]}
+              axisLine={{ stroke: theme.palette.grey[500] }}
+              domain={[minValue, maxValue]}
               tickFormatter={
                 metric === 'inbound_bytes' || metric === 'outbound_bytes'
                   ? formatLargeNumber
@@ -161,13 +161,13 @@ export function ChartArea({
             />
             <Tooltip
               contentStyle={{
-                backgroundColor: theme.palette.common.white,
-                borderColor: theme.palette.grey[200],
+                backgroundColor: theme.palette.grey[900],
+                borderColor: theme.palette.grey[600],
                 borderRadius: 4,
                 boxShadow: theme.shadows[1],
               }}
               labelStyle={{ color: theme.palette.text.primary }}
-              itemStyle={{ color: theme.palette.text.secondary }}
+              itemStyle={{ color: theme.palette.grey[400] }}
             />
 
             {/* Main Area Chart */}
