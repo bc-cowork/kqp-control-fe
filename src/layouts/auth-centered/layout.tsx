@@ -41,7 +41,7 @@ export function AuthCenteredLayout({ sx, children, header }: AuthCenteredLayoutP
             leftArea: (
               <>
                 {/* -- Logo -- */}
-                <Logo id="auth-c" isSingle={false} isWhite={true} />
+                <Logo id="auth-c" isSingle={false} isWhite />
               </>
             ),
             rightArea: <Box display="flex" alignItems="center" gap={{ xs: 1, sm: 1.5 }} />,
