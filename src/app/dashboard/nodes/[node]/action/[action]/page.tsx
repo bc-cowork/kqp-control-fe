@@ -13,6 +13,7 @@ import { fetcher, endpoints } from 'src/utils/axios';
 
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { a11yDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { grey } from '@mui/material/colors';
 
 type Props = {
     params: {
@@ -48,7 +49,7 @@ export default function Page({ params }: Props) {
             />
 
             <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{decodedAction}</Typography>
-            <Typography sx={{ textAlign: 'right', color: 'GrayText' }}>
+            <Typography sx={{ textAlign: 'right', color: grey[400] }}>
                 {timeStamp}
             </Typography>
             <Box sx={{ mt: 3 }}>
@@ -67,7 +68,7 @@ export default function Page({ params }: Props) {
 
                     <Grid item xs={12} md={5}>
                         <Paper sx={{ height: '100%', backgroundColor: 'black', p: 0.5 }} >
-                            <Box sx={{ backgroundColor: '#E0E4EB', p: 1.5, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
+                            <Box sx={{ backgroundColor: '#667085', p: 1.5, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
                                 <Typography sx={{ fontWeight: 600 }}>{t('detail_table.script_title')}</Typography>
                             </Box>
 

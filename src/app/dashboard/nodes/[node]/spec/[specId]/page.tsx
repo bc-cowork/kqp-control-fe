@@ -91,7 +91,9 @@ export default function Page({ params }: Props) {
                                         </TableRow>
                                     )}
                                     {identifiers.map((row, idx) => (
-                                        <TableRow key={row.name + idx}>
+                                        <TableRow
+                                            hover
+                                            key={row.name + idx}>
                                             <TableCell>{idx + 1}</TableCell>
                                             <TableCell>{row.name}</TableCell>
                                             <TableCell>{row.ref_count}</TableCell>
@@ -122,7 +124,7 @@ export default function Page({ params }: Props) {
                     <Grid item xs={12} md={7}>
                         <Paper sx={{ backgroundColor: '#202838', p: 0.5, color: '#D4DCFA', }}>
                             <Box sx={{ backgroundColor: (theme) => theme.palette.grey[400], p: 1, mb: 2, borderTopLeftRadius: 8, borderTopRightRadius: 8, position: 'sticky' }}>
-                                <Typography sx={{ fontWeight: 600 }}>{t('전문 정의')}</Typography>
+                                <Typography sx={{ fontWeight: 600 }}>{t('top.prof_definition')}</Typography>
                             </Box>
                             <TableContainer sx={{ p: 0.5, overflowY: 'auto', maxHeight: 'calc(64vh)' }}>
                                 <Table size="small">

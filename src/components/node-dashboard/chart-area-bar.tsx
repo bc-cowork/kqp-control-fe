@@ -70,7 +70,7 @@ export function ChartBar({ data = dummyData, loading = false }: ChartBarProps) {
         alignItems="center"
         sx={{ mt: 1, mx: 1 }}
       >
-        <Typography sx={{ fontSize: 15, color: theme.palette.grey[400] }}>Today Count</Typography>
+        <Typography sx={{ fontSize: 15, color: theme.palette.grey[300] }}>Today Count</Typography>
       </Stack>
 
       {/* Chart */}
@@ -79,24 +79,24 @@ export function ChartBar({ data = dummyData, loading = false }: ChartBarProps) {
           <CircularProgress />
         ) : (
           <BarChart data={data} margin={{ top: 10, right: 5, left: -20, bottom: 0 }}>
-            <CartesianGrid stroke={theme.palette.grey[200]} fill="white" vertical={false} />
+            <CartesianGrid stroke={theme.palette.grey[400]} fill="transparent" vertical={false} />
             <XAxis
               dataKey="timestamp"
-              tick={{ fontSize: 12, fill: theme.palette.text.secondary }}
+              tick={{ fontSize: 12, fill: theme.palette.grey[400] }}
               tickLine={false}
-              axisLine={{ stroke: theme.palette.grey[200] }}
+              axisLine={{ stroke: 'transparent' }}
             />
             <YAxis
-              tick={{ fontSize: 12, fill: theme.palette.text.secondary }}
+              tick={{ fontSize: 12, fill: theme.palette.grey[300] }}
               tickLine={false}
-              axisLine={{ stroke: theme.palette.grey[200] }}
+              axisLine={{ stroke: 'transparent' }}
               tickFormatter={formatLargeNumber}
               label={{
                 value: 'nn', // Placeholder label as in screenshot
                 angle: -90,
                 position: 'insideLeft',
                 offset: -10,
-                fill: theme.palette.text.secondary,
+                fill: theme.palette.grey[400],
                 fontSize: 12,
               }}
             />

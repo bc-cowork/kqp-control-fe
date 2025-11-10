@@ -11,6 +11,7 @@ import { paths } from 'src/routes/paths';
 import { fetcher, endpoints } from 'src/utils/axios';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { grey } from '@mui/material/colors';
 
 
 type Props = {
@@ -49,7 +50,7 @@ export default function Page({ params }: Props) {
       />
 
       <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{"RULE: "}{decodedAction}</Typography>
-      <Typography sx={{ textAlign: 'right', color: 'GrayText' }}>
+      <Typography sx={{ textAlign: 'right', color: grey[400] }}>
         {timeStamp}
       </Typography>
       <Box sx={{ mt: 3 }}>
@@ -68,7 +69,7 @@ export default function Page({ params }: Props) {
 
           <Grid item xs={12} md={5}>
             <Paper sx={{ height: '100%', backgroundColor: 'black', p: 0.5 }} >
-              <Box sx={{ backgroundColor: '#E0E4EB', p: 1.5, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
+              <Box sx={{ backgroundColor: '#667085', p: 1.5, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
                 <Typography sx={{ fontWeight: 600 }}>{t('detail_table.script_title')}</Typography>
               </Box>
 
@@ -124,7 +125,9 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
               </TableRow>
             )}
             {layoutList.map((item: any, idx: number) => (
-              <TableRow key={idx}>
+              <TableRow
+                hover
+                key={idx}>
                 <TableCell>{idx + 1}</TableCell>
                 <TableCell>{item.name}</TableCell>
                 <TableCell>{item.ref_count}</TableCell>
@@ -133,7 +136,7 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
           </TableBody>
         </Table>
       </TableContainer>
-      <Typography sx={{ textAlign: 'right', color: 'GrayText' }}>
+      <Typography sx={{ textAlign: 'right', color: grey[400] }}>
         {t('table.ref_layout')}{' '}{refLayoutCount}
       </Typography>
       <TableContainer sx={{ my: 4 }} component={Paper}>
@@ -162,7 +165,9 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
               </TableRow>
             )}
             {processList.map((item: any, idx: number) => (
-              <TableRow key={idx}>
+              <TableRow
+                hover
+                key={idx}>
                 <TableCell>{idx + 1}</TableCell>
                 <TableCell>{item.name}</TableCell>
                 <TableCell>{item.ref_count}</TableCell>
@@ -171,7 +176,7 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
           </TableBody>
         </Table>
       </TableContainer>
-      <Typography sx={{ textAlign: 'right', color: 'GrayText' }}>
+      <Typography sx={{ textAlign: 'right', color: grey[400] }}>
         {t('table.ref_process')}{' '}{refProcessCount}
       </Typography>
     </Box>

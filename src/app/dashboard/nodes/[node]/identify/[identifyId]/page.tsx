@@ -11,6 +11,7 @@ import { fetcher, endpoints } from 'src/utils/axios';
 import { ChartBar } from 'src/components/node-dashboard/chart-area-bar';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { grey } from '@mui/material/colors';
 
 type Props = {
     params: { node: string; identifyId: string };
@@ -48,7 +49,7 @@ export default function Page({ params }: Props) {
                 <Grid item xs={7}>
                     <Grid >
                         <Box sx={{ backgroundColor: '#E0E4EB', borderTopLeftRadius: 8, borderTopRightRadius: 8 }}>
-                            <Typography sx={{ p: 1, py: 0.5 }} variant="body2" color="text.primary">
+                            <Typography sx={{ p: 1, py: 0.5, color: grey[800] }} variant="body2">
                                 Key
                             </Typography>
                             <Box sx={{ backgroundColor: '#5E66FF', p: 1, py: 1.5 }}>
@@ -90,7 +91,7 @@ export default function Page({ params }: Props) {
                                                             </TableRow>
                                                         )}
                                                         {specList.map((row, idx) => (
-                                                            <TableRow key={idx + 1}>
+                                                            <TableRow hover key={idx + 1}>
                                                                 <TableCell>{idx + 1}</TableCell>
                                                                 <TableCell>{row.name}</TableCell>
                                                                 <TableCell>{row.ref_count}</TableCell>
@@ -105,7 +106,9 @@ export default function Page({ params }: Props) {
                             </Paper>
                         </Box>
                         <Box sx={{ textAlign: 'right', my: 2 }}>
-                            <Typography color='grey' variant="body2">
+                            <Typography sx={{
+                                color: grey[400]
+                            }} variant="body2">
                                 {isLoading || error ? '' : `ref. SPECs ${specList.length}`}
                             </Typography>
                         </Box>
@@ -114,7 +117,7 @@ export default function Page({ params }: Props) {
                                 borderRadius: '8px',
                                 height: 'calc(100vh - 195px)',
                                 color: 'red',
-                                backgroundColor: 'white'
+                                backgroundColor: '#202838',
                             }}
                         >
                             <ChartBar />
@@ -125,8 +128,8 @@ export default function Page({ params }: Props) {
 
                 <Grid item xs={12} md={5}>
                     <Paper sx={{ height: '100%', p: 0.5, backgroundColor: 'black' }}>
-                        <Box sx={{ backgroundColor: '#E0E4EB', p: 1, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
-                            <Typography color='grey' variant="body2" sx={{ fontWeight: 600 }}>{t('detail_table.script_title')}</Typography>
+                        <Box sx={{ backgroundColor: '#667085', p: 1, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
+                            <Typography variant="body2" sx={{ fontWeight: 600 }}>{t('detail_table.script_title')}</Typography>
                         </Box>
 
                         <Box sx={{ p: 2, bgcolor: '#202838', height: 'calc(100% - 48px)', overflowY: 'auto' }}>
