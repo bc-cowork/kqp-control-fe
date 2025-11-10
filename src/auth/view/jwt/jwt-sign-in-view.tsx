@@ -23,6 +23,7 @@ import { signInWithPassword } from 'src/auth/context/jwt';
 
 import { useAuthContext } from '../../hooks';
 import { FormHead } from '../../components/form-head';
+import { grey } from '@mui/material/colors';
 
 // ----------------------------------------------------------------------
 
@@ -75,18 +76,41 @@ export function JwtSignInView() {
   });
 
   const renderForm = (
-    <Box display="flex" flexDirection="column">
-      <Field.Text name="email" label="ID" sx={{ mb: 2.5 }} />
+    <Box display="flex" flexDirection="column"
+    >
+      <Field.Text name="email" label="ID"
+        InputLabelProps={{
+          sx: {
+            color: grey[500],
+            '&.Mui-focused': {
+              color: grey[500],
+            },
+          },
+        }}
+        sx={{
+          mb: 2.5,
+
+        }} />
 
       <Field.Text
         name="password"
         label="Password"
         type={password.value ? 'text' : 'password'}
+        InputLabelProps={{
+          sx: {
+            color: grey[500],
+            '&.Mui-focused': {
+              color: grey[500],
+            },
+          },
+        }}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
               <IconButton onClick={password.onToggle} edge="end">
-                <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+                <Iconify sx={{
+                  color: grey[400]
+                }} icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
               </IconButton>
             </InputAdornment>
           ),
