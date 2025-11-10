@@ -133,7 +133,7 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Typography sx={{ textAlign: 'right', color: 'GrayText' }}>
+            <Typography sx={{ textAlign: 'right', color: grey[400] }}>
                 {t('table.ref_layout')}{' '}{refLayoutCount}
             </Typography>
             <TableContainer sx={{ my: 4 }} component={Paper}>
@@ -171,9 +171,9 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Typography sx={{ textAlign: 'right', color: 'GrayText' }}>
+            <Typography sx={{ textAlign: 'right', color: grey[400] }}>
                 {t('table.ref_process')}{' '}{refProcessCount}
             </Typography>
-        </Box>
+        </Box >
     );
 }
