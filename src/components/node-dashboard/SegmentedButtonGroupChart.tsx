@@ -12,7 +12,7 @@ type SegmentedButtonGroupProps = {
 // Conditionally style the ToggleButtonGroup based on the metric
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   borderRadius: '6px',
-  backgroundColor: theme.palette.grey[200],
+  backgroundColor: theme.palette.grey[900],
   padding: 0,
   '& .MuiToggleButtonGroup-grouped': {
     margin: 0.5,
@@ -34,17 +34,19 @@ const StyledToggleButton = styled(ToggleButton, {
     color: theme.palette.grey[400],
     padding: '2px 8px',
     '&.Mui-selected': {
-      backgroundColor: isPercentageMetric ? theme.palette.grey[50] : theme.palette.common.white,
+      backgroundColor: theme.palette.grey[600],
       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
       color: theme.palette.text.primary,
       '&:hover': {
-        backgroundColor: theme.palette.common.white,
+        backgroundColor: theme.palette.grey[700],
       },
     },
     '&:not(.Mui-selected)': {
-      backgroundColor: theme.palette.grey[200],
+      backgroundColor: theme.palette.grey[900],
+      color: theme.palette.grey[50],
       '&:hover': {
-        backgroundColor: theme.palette.grey[300],
+        backgroundColor: theme.palette.grey[50],
+        color: isPercentageMetric ? theme.palette.error.main : theme.palette.primary.main,
       },
     },
   };
