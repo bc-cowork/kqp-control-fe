@@ -91,8 +91,6 @@ export function LayoutListView({ nodeId }: Props) {
                                     onClick={() => router.push(
                                         `${paths.dashboard.nodes.layoutDetail(nodeId, String(row.name))}`
                                     )}
-                                    sx={{ cursor: 'pointer' }}
-                                    tabIndex={0}
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter' || e.key === ' ') {
                                             router.push(
@@ -100,6 +98,9 @@ export function LayoutListView({ nodeId }: Props) {
                                             );
                                         }
                                     }}
+                                    sx={{ cursor: 'pointer' }}
+                                    tabIndex={0}
+
                                 >
                                     <TableCell>{index + 1}</TableCell>
                                     <TableCell>{row.name}</TableCell>

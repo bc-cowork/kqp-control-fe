@@ -30,7 +30,6 @@ export default function Page({ params }: Props) {
 
   const url = endpoints.layouts.detail(node, decodedLayout);
   const { data } = useSWR(url, fetcher);
-  console.log("data", data);
 
   const timeStamp = data?.data?.detail?.timestamp || '-';
   const layoutDefinition = data?.data?.layout_definition || '';

@@ -49,6 +49,7 @@ export const paths = {
       node: (node: string) => `/dashboard/nodes/${node}`,
       dashboard: (node: string) => `/dashboard/nodes/${node}/node-dashboard`,
       process: (node: string) => `/dashboard/nodes/${node}/process`,
+      processDetail: (node: string, process: string) => `/dashboard/nodes/${node}/process/${encodeURIComponent(process)}`,
       memory: (node: string) => `/dashboard/nodes/${node}/memory`,
       auditLog: (node: string) => `/dashboard/nodes/${node}/audit-log`,
       channelsInbound: (node: string) => `/dashboard/nodes/${node}/channels-inbound`,
