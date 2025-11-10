@@ -61,7 +61,7 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
                 sx={{
                   fontSize: 17,
                   border: `1px solid ${isOnline ? '#DDF4DA' : '#F4D8D8'}`,
-                  backgroundColor: isOnline ? '#EBFBE9' : '#FFF2F4',
+                  backgroundColor: isOnline ? '#EBFBE9' : '#331B1E',
                 }}
                 icon={
                   <SvgIcon>
@@ -114,39 +114,39 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
               p: 2,
               mb: 0.5,
               borderRadius: '8px',
-              backgroundColor: theme.palette.common.white,
+              backgroundColor: theme.palette.grey[800],
               height: 'calc(100vh - 455px)',
             }}
           >
             <Stack direction="row" sx={{ mb: 1.5 }}>
-              <Typography variant="subtitle2" sx={{ width: '60%' }}>
+              <Typography variant="subtitle2" sx={{ width: '60%', color: grey[400] }}>
                 {t('left_side.emitable')}
               </Typography>
               <Typography variant="body2">
                 {selectedNode.emittable ? (
-                  <Chip label={t('left_side.true')} color="success" size="small" variant="soft" />
+                  <Chip label={t('left_side.true')} color="success" size="small" variant="outlined" />
                 ) : (
-                  <Chip label={t('left_side.false')} color="error" size="small" variant="soft" />
+                  <Chip label={t('left_side.false')} color="error" size="small" variant="outlined" />
                 )}
               </Typography>
             </Stack>
             <Stack direction="row" sx={{ mb: 1.5 }}>
-              <Typography variant="subtitle2" sx={{ width: '60%' }}>
+              <Typography variant="subtitle2" sx={{ width: '60%', color: grey[400] }}>
                 {t('left_side.emit_count')}
               </Typography>
-              <Typography variant="body2" sx={{ color: grey[400] }}>
+              <Typography variant="body2">
                 {selectedNode.emit_count.toLocaleString()}
               </Typography>
             </Stack>
           </Box>
 
-          <Box sx={{ p: 2, borderRadius: '8px', backgroundColor: theme.palette.common.white }}>
+          <Box sx={{ p: 2, borderRadius: '8px', backgroundColor: theme.palette.grey[800] }}>
             <Typography sx={{ fontSize: 17, fontWeight: 500, color: grey[600] }}>
               {t('left_side.disk')}
             </Typography>
-            <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[900] }}>21%</Typography>
-            <Typography sx={{ fontSize: 16, fontWeight: 400, color: grey[400] }}>
-              <Box component="span" sx={{ color: grey[500], fontWeight: 500 }}>
+            <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50] }}>21%</Typography>
+            <Typography sx={{ fontSize: 16, fontWeight: 400, color: grey[50] }}>
+              <Box component="span" sx={{ fontWeight: 500 }}>
                 853 GB
               </Box>{' '}
               of 952 GB

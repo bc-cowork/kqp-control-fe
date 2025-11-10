@@ -28,7 +28,7 @@ export function MemoryItemView({ nodeId, code }: Props) {
           { pageName: t('top.memory_item') },
         ]}
       />
-      <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[600], mt: 2 }}>
+      <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50], mt: 2 }}>
         {t('top.memory_item')}
       </Typography>
       <Box

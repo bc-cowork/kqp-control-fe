@@ -82,7 +82,7 @@ const MuiDataGrid: Components<Theme>['MuiDataGrid'] = {
       const styles = {
         pinnedCell: {
           common: {
-            backgroundColor: theme.palette.background.default,
+            backgroundColor: 'theme.palette.background.default',
             '&::after': {
               backgroundColor: theme.vars.palette.action.hover,
             },

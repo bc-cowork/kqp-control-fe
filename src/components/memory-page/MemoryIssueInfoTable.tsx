@@ -37,7 +37,7 @@ const HeaderBox = styled(Box)(({ theme }) => ({
 }));
 
 const RowStack = styled(Stack)(({ theme }) => ({
-  height: 'calc(((100vh - 458px) / 2) / 4)',
+  height: '60px',
   alignItems: 'center',
 }));
 
@@ -92,8 +92,8 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
     },
   };
 
-  const tableFill1 = '#FFFFFF';
-  const tableFill2 = '#F9FAFB';
+  const tableFill1 = '#202838';
+  const tableFill2 = '#141C2A';
 
   return (
     <Box sx={{ mt: 0.5 }}>
@@ -149,7 +149,7 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
           <ValueBox>{tableData.amtAccum.nxt}</ValueBox>
         </RowStack>
 
-        <Box sx={{ backgroundColor: grey[100], height: '8px' }} />
+        <Box sx={{ backgroundColor: grey[900], height: '8px' }} />
 
         {/* Open Row */}
         <RowStackWide direction="row" sx={{ backgroundColor: tableFill1 }}>

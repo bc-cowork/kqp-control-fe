@@ -13,6 +13,7 @@ import { fetcher, endpoints } from 'src/utils/axios';
 import { paths } from 'src/routes/paths';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { grey } from '@mui/material/colors';
 
 type Props = {
   params: {
@@ -29,7 +30,6 @@ export default function Page({ params }: Props) {
 
   const url = endpoints.layouts.detail(node, decodedLayout);
   const { data } = useSWR(url, fetcher);
-  console.log("data", data);
 
   const timeStamp = data?.data?.detail?.timestamp || '-';
   const layoutDefinition = data?.data?.layout_definition || '';
@@ -45,12 +45,12 @@ export default function Page({ params }: Props) {
       />
 
       <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{t('top.layout')}{" : "}{decodedLayout}</Typography>
-      <Typography sx={{ fontSize: 15, fontWeight: 500, mt: 2, textAlign: 'right', color: '#667085', p: 2 }}>{timeStamp}</Typography>
+      <Typography sx={{ fontSize: 15, fontWeight: 500, mt: 2, textAlign: 'right', color: grey[400], p: 2 }}>{timeStamp}</Typography>
 
       <Paper sx={{ height: '100%', backgroundColor: 'black', p: 0.5 }} >
 
-        <Box sx={{ backgroundColor: '#E0E4EB', p: 1.5, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
-          <Typography sx={{ fontWeight: 600 }}>{t('detail_table.script_title')}</Typography>
+        <Box sx={{ backgroundColor: '#667085', p: 1.5, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
+          <Typography sx={{ fontWeight: 600, color: grey[300] }}>{t('detail_table.script_title')}</Typography>
         </Box>
 
         <Box sx={{ p: 2, bgcolor: '#202838', height: 'calc(100vh - 48px)', overflowY: 'auto' }}>

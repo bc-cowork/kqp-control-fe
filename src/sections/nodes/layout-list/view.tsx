@@ -48,7 +48,7 @@ export function LayoutListView({ nodeId }: Props) {
         <DashboardContent maxWidth="xl">
             <Breadcrumb node={nodeId} pages={[{ pageName: t('top.layout_list') }]} />
 
-            <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[600], mt: 2 }}>
+            <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50], mt: 2 }}>
                 {t('top.layout_list')}
             </Typography>
 
@@ -88,12 +88,9 @@ export function LayoutListView({ nodeId }: Props) {
                             {rows.map((row, index) => (
                                 <TableRow
                                     key={row.id}
-                                    hover
                                     onClick={() => router.push(
                                         `${paths.dashboard.nodes.layoutDetail(nodeId, String(row.name))}`
                                     )}
-                                    sx={{ cursor: 'pointer' }}
-                                    tabIndex={0}
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter' || e.key === ' ') {
                                             router.push(
@@ -101,6 +98,9 @@ export function LayoutListView({ nodeId }: Props) {
                                             );
                                         }
                                     }}
+                                    sx={{ cursor: 'pointer' }}
+                                    tabIndex={0}
+
                                 >
                                     <TableCell>{index + 1}</TableCell>
                                     <TableCell>{row.name}</TableCell>

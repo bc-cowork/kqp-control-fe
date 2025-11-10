@@ -105,7 +105,7 @@ export function DashboardLayout({ sx, children, header, data }: DashboardLayoutP
         },
 
         ...sx,
-        backgroundColor: theme.palette.grey[50],
+        backgroundColor: '#141C2A',
       }}
     >
       <Main isNavHorizontal={isNavHorizontal}>{children}</Main>

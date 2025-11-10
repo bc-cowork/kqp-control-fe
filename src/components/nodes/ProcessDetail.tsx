@@ -15,6 +15,8 @@ import {
 
 import { useTranslate } from 'src/locales';
 import { useGetProcesses } from 'src/actions/dashboard';
+import { paths } from 'src/routes/paths';
+import { useRouter } from 'next/navigation';
 
 // ----------------------------------------------------------------------
 
@@ -25,6 +27,7 @@ type Props = {
 
 export function ProcessDetail({ selectedNodeId, page = 'process' }: Props) {
   const { t } = useTranslate('process');
+  const router = useRouter();
   const { processes, processLoading, processesEmpty, processError } = useGetProcesses(
     selectedNodeId
   ) as {
@@ -70,7 +73,20 @@ export function ProcessDetail({ selectedNodeId, page = 'process' }: Props) {
             </TableRow>
           ) : (
             processes.map((process: IProcessItem, index: number) => (
-              <TableRow key={index}>
+              <TableRow
+                key={index}
+                sx={{ cursor: 'pointer' }}
+                onClick={() => router.push(
+                  `${paths.dashboard.nodes.processDetail(selectedNodeId, String(process.NAME))}`
+                )}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    router.push(
+                      `${paths.dashboard.nodes.processDetail(selectedNodeId, String(process.NAME))}`
+                    );
+                  }
+                }}
+              >
                 <TableCell align="right">{process.PID}</TableCell>
                 <TableCell>{process.NAME}</TableCell>
                 <TableCell>{process.PARAM}</TableCell>

@@ -51,7 +51,6 @@ export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props
   return (
     <Box
       sx={{
-        bgcolor: theme.palette.common.white,
         height: 'calc(100vh - 523px)',
         pl: 0.5,
         boxSizing: 'border-box',
@@ -61,7 +60,7 @@ export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props
         <Grid
           item
           md={selectedTab === '1x4' ? 12 : 6}
-          sx={{ height: selectedTab === '1x4' ? `25%` : `50%`, pb: 1 }}
+          sx={{ height: selectedTab === '1x4' ? `48%` : `95%`, pb: 1 }}
         >
           <ChartArea
             title={t('graph.cpu')}
@@ -79,7 +78,7 @@ export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props
         <Grid
           item
           md={selectedTab === '1x4' ? 12 : 6}
-          sx={{ height: selectedTab === '1x4' ? `25%` : `50%`, pb: 1 }}
+          sx={{ height: selectedTab === '1x4' ? `48%` : `95%`, pb: 1 }}
         >
           <ChartArea
             title={t('graph.memory')}
@@ -96,7 +95,7 @@ export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props
         <Grid
           item
           md={selectedTab === '1x4' ? 12 : 6}
-          sx={{ height: selectedTab === '1x4' ? `25%` : `50%`, pb: selectedTab === '1x4' ? 1 : 0 }}
+          sx={{ height: selectedTab === '1x4' ? `48%` : `95%`, pb: selectedTab === '1x4' ? 1 : 0 }}
         >
           <ChartArea
             title={t('graph.inbound')}
@@ -113,7 +112,7 @@ export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props
         <Grid
           item
           md={selectedTab === '1x4' ? 12 : 6}
-          sx={{ height: selectedTab === '1x4' ? `25%` : `50%` }}
+          sx={{ height: selectedTab === '1x4' ? `48%` : `95%` }}
         >
           <ChartArea
             title={t('graph.outbound')}

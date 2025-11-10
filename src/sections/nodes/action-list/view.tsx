@@ -48,7 +48,7 @@ export function ActionListView({ nodeId }: Props) {
         <DashboardContent maxWidth="xl">
             <Breadcrumb node={nodeId} pages={[{ pageName: t('top.action_list') }]} />
 
-            <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[600], mt: 2 }}>
+            <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50], mt: 2 }}>
                 {t('top.action_list')}
             </Typography>
 
@@ -88,7 +88,6 @@ export function ActionListView({ nodeId }: Props) {
                             {rows.map((row, index) => (
                                 <TableRow
                                     key={index}
-                                    hover
                                     onClick={() => router.push(
                                         `${paths.dashboard.nodes.actionDetail(nodeId, String(row.name))}`
                                     )}

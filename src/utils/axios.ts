@@ -94,6 +94,7 @@ export const endpoints = {
     nodeList: '/apik/node/list',
     serviceStatus: (node: string) => `/apik/${node}/service/status`,
     processList: (node: string) => `/apik/${node}/process/list`,
+    processDetail: (node: string, process: string) => `/apik/${node}/process/${process}`,
     issueList: (node: string) => `/apik/${node}/issue/list`,
     graph: (node: string) => `/apik/${node}/node/metrics`,
   },

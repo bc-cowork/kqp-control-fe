@@ -30,7 +30,7 @@ export function AuditLogFileView({ nodeId, file, seq }: Props) {
           { pageName: t('top.detail') },
         ]}
       />
-      <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[600], mt: 2 }}>
+      <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50], mt: 2 }}>
         {t('top.detail')}
       </Typography>
       <Box

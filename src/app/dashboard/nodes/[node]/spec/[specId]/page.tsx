@@ -19,6 +19,7 @@ import { useTranslate } from 'src/locales';
 import { paths } from 'src/routes/paths';
 import { fetcher, endpoints } from 'src/utils/axios';
 import Chip from '@mui/material/Chip';
+import { timeStamp } from 'console';
 
 // ----------------------------------------------------------------------
 
@@ -60,6 +61,7 @@ export default function Page({ params }: Props) {
             <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{"SPEC: "}{specName}</Typography>
 
             <Box sx={{ mt: 3 }}>
+                <Typography sx={{ textAlign: 'right', mb: 2, fontSize: 15, color: (theme) => theme.palette.grey[300] }}>{detail?.timestamp}</Typography>
                 <Grid container spacing={3}>
                     {/* Left side - Identifiers table */}
                     <Grid item xs={12} md={5}>
@@ -89,7 +91,9 @@ export default function Page({ params }: Props) {
                                         </TableRow>
                                     )}
                                     {identifiers.map((row, idx) => (
-                                        <TableRow key={row.name + idx}>
+                                        <TableRow
+                                            hover
+                                            key={row.name + idx}>
                                             <TableCell>{idx + 1}</TableCell>
                                             <TableCell>{row.name}</TableCell>
                                             <TableCell>{row.ref_count}</TableCell>
@@ -101,10 +105,15 @@ export default function Page({ params }: Props) {
 
                         <Box sx={{ ml: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
                             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-                                <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
+                                <Typography variant="body2" sx={{
+                                    mb: 0.5,
+                                    color: (theme) => theme.palette.grey[300]
+                                }}>
                                     {t('left.ref_identifier_with_count', { count: detail?.ref_identifies })}
                                 </Typography>
-                                <Typography variant="body2" color="text.secondary">
+                                <Typography variant="body2" sx={{
+                                    color: (theme) => theme.palette.grey[300]
+                                }}>
                                     {t('left.frags_sizes', { frags: detail?.frags, sizes: detail?.size })}
                                 </Typography>
                             </Box>
@@ -114,37 +123,37 @@ export default function Page({ params }: Props) {
                     {/* Right side - Fragments table with dark background */}
                     <Grid item xs={12} md={7}>
                         <Paper sx={{ backgroundColor: '#202838', p: 0.5, color: '#D4DCFA', }}>
-                            <Box sx={{ backgroundColor: '#E0E4EB', p: 1, mb: 2, borderTopLeftRadius: 8, borderTopRightRadius: 8, position: 'sticky' }}>
-                                <Typography sx={{ fontWeight: 600, color: '#4E576A' }}>{t('전문 정의')}</Typography>
+                            <Box sx={{ backgroundColor: (theme) => theme.palette.grey[400], p: 1, mb: 2, borderTopLeftRadius: 8, borderTopRightRadius: 8, position: 'sticky' }}>
+                                <Typography sx={{ fontWeight: 600 }}>{t('top.prof_definition')}</Typography>
                             </Box>
                             <TableContainer sx={{ p: 0.5, overflowY: 'auto', maxHeight: 'calc(64vh)' }}>
                                 <Table size="small">
-                                    <TableHead sx={{ '& .MuiTableCell-head': { backgroundColor: '#667085' } }}>
+                                    <TableHead>
                                         <TableRow>
-                                            <TableCell sx={{ color: '#D4DCFA' }}>{t('right.offset')}</TableCell>
-                                            <TableCell sx={{ color: '#D4DCFA' }}>{t('right.len')}</TableCell>
-                                            <TableCell sx={{ color: '#D4DCFA' }}>{t('right.type')}</TableCell>
-                                            <TableCell sx={{ color: '#D4DCFA' }}>{t('right.desc')}</TableCell>
+                                            <TableCell>{t('right.offset')}</TableCell>
+                                            <TableCell>{t('right.len')}</TableCell>
+                                            <TableCell>{t('right.type')}</TableCell>
+                                            <TableCell>{t('right.desc')}</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                         {isLoading && (
                                             <TableRow>
-                                                <TableCell colSpan={4} sx={{ color: '#D4DCFA' }}>
+                                                <TableCell colSpan={4}>
                                                     {t('loading')}
                                                 </TableCell>
                                             </TableRow>
                                         )}
                                         {error && (
                                             <TableRow>
-                                                <TableCell colSpan={4} sx={{ color: '#D4DCFA' }}>
+                                                <TableCell colSpan={4}>
                                                     {t('error')}
                                                 </TableCell>
                                             </TableRow>
                                         )}
                                         {!isLoading && !error && frags.length === 0 && (
                                             <TableRow>
-                                                <TableCell colSpan={4} sx={{ color: '#D4DCFA' }}>
+                                                <TableCell colSpan={4}>
                                                     {t('empty')}
                                                 </TableCell>
                                             </TableRow>
@@ -152,15 +161,26 @@ export default function Page({ params }: Props) {
                                         {frags?.map((row, idx) => (
                                             <TableRow sx={{ '&:nth-child(odd)': { backgroundColor: '#202838' }, '&:nth-child(even)': { backgroundColor: '#141C2A' } }} key={idx}>
                                                 <TableCell>
-                                                    <Chip label={row.offset} color="success" size="small" variant="outlined" />
+                                                    <Chip label={row.offset} sx={{
+                                                        backgroundColor: '#1D2F20',
+                                                        color: '#7EE081'
+                                                    }} size="small" variant="outlined" />
                                                 </TableCell>
                                                 <TableCell>
-                                                    <Chip label={row.length} color="primary" size="small" variant="soft" />
+                                                    <Chip label={row.length} sx={{
+                                                        backgroundColor: '#1D2654',
+                                                        color: '#7AA2FF'
+                                                    }} size="small" variant="outlined" />
                                                 </TableCell>
                                                 <TableCell >
-                                                    <Chip label={row.type} color="warning" size="small" variant="outlined" />
+                                                    <Chip label={row.type}
+                                                        sx={{
+                                                            backgroundColor: '#31291D',
+                                                            color: '#FFC711'
+                                                        }}
+                                                        size="small" variant="outlined" />
                                                 </TableCell>
-                                                <TableCell sx={{ color: '#AFB7C8' }}>{row.desc}</TableCell>
+                                                <TableCell>{row.desc}</TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>

@@ -41,7 +41,7 @@ export function AuthCenteredLayout({ sx, children, header }: AuthCenteredLayoutP
             leftArea: (
               <>
                 {/* -- Logo -- */}
-                <Logo id="auth-c" isSingle={false} />
+                <Logo id="auth-c" isSingle={false} isWhite />
               </>
             ),
             rightArea: <Box display="flex" alignItems="center" gap={{ xs: 1, sm: 1.5 }} />,
@@ -57,7 +57,7 @@ export function AuthCenteredLayout({ sx, children, header }: AuthCenteredLayoutP
        *************************************** */
       cssVars={{ '--layout-auth-content-width': '420px' }}
       sx={{
-        backgroundColor: (theme) => theme.palette.grey[50],
+        backgroundColor: (theme) => theme.palette.grey[900],
         '&::before': {
           width: 1,
           height: 1,

@@ -223,7 +223,6 @@ export function Memory({ selectedNodeId }: Props) {
           sx={{
             pb: 1.5,
             px: 1.5,
-            backgroundColor: common.white,
             borderBottomLeftRadius: '12px',
             borderBottomRightRadius: '12px',
           }}

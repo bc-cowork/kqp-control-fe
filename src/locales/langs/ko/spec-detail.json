@@ -1,6 +1,7 @@
 {
   "top": {
-    "spec_list": "SPEC 목록"
+    "spec_list": "SPEC 목록",
+    "prof_definition": "전문 정의"
   },
   "left": {
     "no": "번호",

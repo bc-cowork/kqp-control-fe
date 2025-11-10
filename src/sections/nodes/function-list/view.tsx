@@ -47,7 +47,7 @@ export function FunctionListView({ nodeId }: Props) {
         <DashboardContent maxWidth="xl">
             <Breadcrumb node={nodeId} pages={[{ pageName: t("top.function_list") }]} />
 
-            <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[600], mt: 2 }}>
+            <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50], mt: 2 }}>
                 {t("top.function_list")}
             </Typography>
 
@@ -86,7 +86,6 @@ export function FunctionListView({ nodeId }: Props) {
                             {rows.map((row, index) => (
                                 <TableRow
                                     key={row.name}
-                                    hover
                                     sx={{ cursor: 'pointer' }}
                                     tabIndex={0}
                                     onClick={() => router.push(paths.dashboard.nodes.functionDetail(nodeId, String(row.name)))}

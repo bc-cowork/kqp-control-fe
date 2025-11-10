@@ -35,7 +35,8 @@ export function NodeStatus({
     <Box
       sx={{
         borderRadius: 1,
-        backgroundColor: theme.palette.grey[50],
+        backgroundColor: theme.palette.grey[900],
+        height: 'auto',
         p: 0.5,
       }}
     >
@@ -115,39 +116,45 @@ export function NodeStatus({
               p: 2,
               mb: 0.5,
               borderRadius: '8px',
-              backgroundColor: theme.palette.common.white,
-              height: 'calc(100vh - 791px)',
+              backgroundColor: grey[800],
+              height: 'auto',
             }}
           >
             <Stack direction="row" sx={{ mb: 1.5 }}>
-              <Typography variant="subtitle2" sx={{ width: '60%' }}>
+              <Typography variant="subtitle2" sx={{ width: '60%', color: grey[400] }}>
                 {t('info.emittable')}
               </Typography>
               <Typography variant="body2">
                 {selectedNode.emittable ? (
-                  <Chip label={t('info.true')} color="success" size="small" variant="soft" />
+                  <Chip label={t('info.true')} color="success" size="small" variant="outlined"
+                    sx={{
+                      backgroundColor: '#1D2F20',
+                    }}
+                  />
                 ) : (
-                  <Chip label={t('info.false')} color="error" size="small" variant="soft" />
+                  <Chip label={t('info.false')} color="error" size="small" variant="outlined" sx={{
+                    backgroundColor: '#331B1E'
+                  }} />
                 )}
               </Typography>
             </Stack>
             <Stack direction="row" sx={{ mb: 1.5 }}>
-              <Typography variant="subtitle2" sx={{ width: '60%' }}>
+              <Typography variant="subtitle2" sx={{ width: '60%', color: grey[400] }}>
                 {t('info.emit_count')}
               </Typography>
-              <Typography variant="body2" sx={{ color: grey[400] }}>
+              <Typography variant="body2" sx={{ color: grey[50] }}>
                 {selectedNode.emit_count.toLocaleString()}
               </Typography>
             </Stack>
           </Box>
 
-          <Box sx={{ p: 2, borderRadius: '8px', backgroundColor: theme.palette.common.white }}>
+          <Box sx={{ p: 2, borderRadius: '8px', backgroundColor: grey[800] }}>
             <Typography sx={{ fontSize: 17, fontWeight: 500, color: grey[600] }}>
               {t('disk.disk')}
             </Typography>
-            <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[900] }}>21%</Typography>
-            <Typography sx={{ fontSize: 16, fontWeight: 400, color: grey[400] }}>
-              <Box component="span" sx={{ color: grey[500], fontWeight: 500 }}>
+            <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50] }}>21%</Typography>
+            <Typography sx={{ fontSize: 16, fontWeight: 400, color: grey[50] }}>
+              <Box component="span" sx={{ fontWeight: 500 }}>
                 853 GB
               </Box>{' '}
               of 952 GB

@@ -24,7 +24,7 @@ export function Main({ sx, children, layoutQuery, ...other }: MainProps) {
         borderRadius: 2,
         display: 'flex',
         flexDirection: 'column',
-        bgcolor: 'background.default',
+        bgcolor: '#202838',
         maxWidth: 'var(--layout-auth-content-width)',
       }}
     >

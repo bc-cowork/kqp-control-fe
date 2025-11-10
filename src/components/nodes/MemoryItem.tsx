@@ -61,8 +61,10 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
         )}
       </Grid>
       <Grid md={7} sx={{ pl: '10px' }}>
-        <TableContainer component={Paper} sx={{ height: { md: 'calc(100vh - 200px)' } }}>
-          <Table size="small">
+        <TableContainer component={Paper}
+          sx={{ height: { md: 'calc(100vh - 200px)' } }}>
+          <Table
+            size="small">
             <TableHead>
               <TableRow>
                 <TableCell align="right">{t('item.table.no')}</TableCell>
@@ -108,14 +110,16 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                     </TableCell>
                   </TableRow>
                   {rowKeysAsk.map((key: string) => (
-                    <TableRow key={key}>
+                    <TableRow
+                      hover
+                      key={key}>
                       <TableCell align="right">{key}</TableCell>
                       <TableCell align="right">
                         <Box
                           component="span"
                           sx={{
-                            color: (theme) => theme.palette.primary.main,
-                            backgroundColor: '#EFF6FF',
+                            color: '#7AA2FF',
+                            backgroundColor: '#212447',
                           }}
                         >
                           {(issueQuotesAsk as Record<string, { price: number }>)[
@@ -141,17 +145,19 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                     </TableRow>
                   ))}
                   <TableRow>
-                    <TableCell sx={{ height: '4px', backgroundColor: grey[100] }} colSpan={12} />
+                    <TableCell sx={{ height: '4px', backgroundColor: grey[900] }} colSpan={12} />
                   </TableRow>
                   {rowKeysBid.map((key: string) => (
-                    <TableRow key={key}>
+                    <TableRow
+                      hover
+                      key={key}>
                       <TableCell align="right">{key}</TableCell>
                       <TableCell align="right">
                         <Box
                           component="span"
                           sx={{
-                            color: (theme) => theme.palette.error.main,
-                            backgroundColor: '#FFF2F4',
+                            color: '#FF8882',
+                            backgroundColor: '#331B1E',
                           }}
                         >
                           {(issueQuotesBid as Record<string, { price: number }>)[
