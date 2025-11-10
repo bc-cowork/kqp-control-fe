@@ -91,7 +91,7 @@ export function Breadcrumb({ node, pages }: Props) {
                       padding: '0px 4px',
                       borderRadius: '8px',
                       // height: '28px',
-                      '&:hover': { backgroundColor: grey[200], textDecoration: 'none' },
+                      '&:hover': { backgroundColor: grey[600], textDecoration: 'none' },
                     }}
                   >
                     {page.pageName}
