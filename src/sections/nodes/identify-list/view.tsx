@@ -86,7 +86,6 @@ export function IdentifyListView({ nodeId }: Props) {
                             {rows.map((row, index) => (
                                 <TableRow
                                     key={row.name}
-                                    hover
                                     sx={{ cursor: 'pointer' }}
                                     tabIndex={0}
                                     onClick={() => router.push(paths.dashboard.nodes.identifyDetail(nodeId, String(row.name)))}

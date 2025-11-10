@@ -88,7 +88,6 @@ export function LayoutListView({ nodeId }: Props) {
                             {rows.map((row, index) => (
                                 <TableRow
                                     key={row.id}
-                                    hover
                                     onClick={() => router.push(
                                         `${paths.dashboard.nodes.layoutDetail(nodeId, String(row.name))}`
                                     )}

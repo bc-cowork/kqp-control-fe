@@ -88,7 +88,6 @@ export function ActionListView({ nodeId }: Props) {
                             {rows.map((row, index) => (
                                 <TableRow
                                     key={index}
-                                    hover
                                     onClick={() => router.push(
                                         `${paths.dashboard.nodes.actionDetail(nodeId, String(row.name))}`
                                     )}

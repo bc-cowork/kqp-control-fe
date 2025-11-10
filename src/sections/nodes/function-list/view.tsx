@@ -86,7 +86,6 @@ export function FunctionListView({ nodeId }: Props) {
                             {rows.map((row, index) => (
                                 <TableRow
                                     key={row.name}
-                                    hover
                                     sx={{ cursor: 'pointer' }}
                                     tabIndex={0}
                                     onClick={() => router.push(paths.dashboard.nodes.functionDetail(nodeId, String(row.name)))}

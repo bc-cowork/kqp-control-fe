@@ -80,7 +80,6 @@ export function SpecListView({ nodeId }: Props) {
                             {rows.map((row, index) => (
                                 <TableRow
                                     key={row.name}
-                                    hover
                                     tabIndex={0}
                                     sx={{ cursor: 'pointer' }}
                                     onClick={() => router.push(paths.dashboard.nodes.specDetail(nodeId, String(row.name)))}
