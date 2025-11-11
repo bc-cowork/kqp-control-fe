@@ -12,8 +12,8 @@
     "command": "명령어"
   },
   "loading": "로딩 중...",
-  "error": "레이아웃 로드 실패",
-  "empty": "레이아웃을 찾을 수 없습니다",
+  "error": "프로세스 로드 실패",
+  "empty": "프로세스를 찾을 수 없습니다",
   "detail_table": {
     "action_title": "관련 작업",
     "process_title": "관련 프로세스",

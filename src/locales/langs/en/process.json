@@ -12,8 +12,8 @@
     "command": "COMMAND"
   },
   "loading": "Loading...",
-  "error": "Failed to load layouts",
-  "empty": "No layouts found",
+  "error": "Failed to load process",
+  "empty": "No process found",
   "detail_table": {
     "action_title": "Related Actions",
     "process_title": "Related Processes",
