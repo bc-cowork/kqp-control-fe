@@ -10,5 +10,13 @@
     "mem": "MEM",
     "ppid": "PPID",
     "command": "COMMAND"
+  },
+  "loading": "Loading...",
+  "error": "Failed to load layouts",
+  "empty": "No layouts found",
+  "detail_table": {
+    "action_title": "Related Actions",
+    "process_title": "Related Processes",
+    "script_title": "Process Definition"
   }
 }

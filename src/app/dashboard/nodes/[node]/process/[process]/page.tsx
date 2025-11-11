@@ -24,7 +24,7 @@ type Props = {
 
 export default function Page({ params }: Props) {
     const { node, layout } = params;
-    const { t } = useTranslate('layout-list');
+    const { t } = useTranslate('process');
     const decodedLayout = decodeURIComponent(layout);
 
 
@@ -39,12 +39,12 @@ export default function Page({ params }: Props) {
             <Breadcrumb
                 node={node}
                 pages={[
-                    { pageName: t('top.layout_list'), link: paths.dashboard.nodes.layoutList(node) },
+                    { pageName: t('top.process'), link: paths.dashboard.nodes.process(node) },
                     { pageName: decodedLayout },
                 ]}
             />
 
-            <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{t('top.layout')}{" : "}{decodedLayout}</Typography>
+            <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{t('top.process')}{" : "}{decodedLayout}</Typography>
             <Typography sx={{ fontSize: 15, fontWeight: 500, mt: 2, textAlign: 'right', color: grey[400], p: 2 }}>{timeStamp}</Typography>
 
             <Paper sx={{ height: '100%', backgroundColor: 'black', p: 0.5 }} >
