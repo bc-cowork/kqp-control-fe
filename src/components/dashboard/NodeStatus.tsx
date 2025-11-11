@@ -22,7 +22,6 @@ type Props = {
 export function NodeStatus({
   selectedNodeParam,
   selectedNode,
-  height = 'calc(100vh - 460px)',
 }: Props) {
   const { status, statusLoading, statusError } = useGetStatus(selectedNodeParam);
 
@@ -36,7 +35,7 @@ export function NodeStatus({
       sx={{
         borderRadius: 1,
         backgroundColor: theme.palette.grey[900],
-        height: 'auto',
+        height: '505px',
         p: 0.5,
       }}
     >
@@ -117,7 +116,7 @@ export function NodeStatus({
               mb: 0.5,
               borderRadius: '8px',
               backgroundColor: grey[800],
-              height: 'auto',
+              height: '198px',
             }}
           >
             <Stack direction="row" sx={{ mb: 1.5 }}>
