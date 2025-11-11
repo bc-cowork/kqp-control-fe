@@ -247,7 +247,7 @@ const LanguageToggle = () => {
         backgroundColor: (theme) => theme.palette.grey[800],
         border: (theme) => `1px solid ${theme.palette.grey[700]}`,
         '&:hover': {
-          backgroundColor: grey[50],
+          backgroundColor: grey[500],
           border: `1px solid ${grey[200]}`,
         },
         '&:active': {

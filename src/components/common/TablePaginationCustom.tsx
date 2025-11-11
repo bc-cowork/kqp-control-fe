@@ -24,7 +24,7 @@ import { useTranslate } from 'src/locales';
 
 // Styled components (unchanged)
 const CustomSelect = styled(Select)(({ theme }) => ({
-  backgroundColor: theme.palette.grey[600],
+  backgroundColor: 'transparent !important',
   border: `1px solid ${theme.palette.grey[400]}`,
   borderRadius: 4,
   fontSize: 15,
@@ -33,7 +33,7 @@ const CustomSelect = styled(Select)(({ theme }) => ({
     paddingLeft: '8px !important',
     paddingRight: '30px !important',
     fontSize: 15,
-    backgroundColor: theme.palette.grey[600],
+    backgroundColor: 'transparent !important',
     color: theme.palette.grey[200],
   },
   '& .MuiOutlinedInput-notchedOutline': {
@@ -45,7 +45,8 @@ const CustomSelect = styled(Select)(({ theme }) => ({
   '& .MuiPaper-root': {
     borderRadius: 4,
     marginTop: 4,
-    backgroundColor: theme.palette.grey[600],
+    backgroundColor: 'transparent !important',
+
   },
 }));
 
