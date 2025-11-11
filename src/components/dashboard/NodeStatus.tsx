@@ -16,7 +16,6 @@ import { grey, error, common, success } from 'src/theme/core';
 type Props = {
   selectedNodeParam: string;
   selectedNode: INodeItem;
-  height?: string;
 };
 
 export function NodeStatus({
