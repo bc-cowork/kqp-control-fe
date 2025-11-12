@@ -32,7 +32,7 @@ type Props = {
 
 type IdentifyRow = { id?: number; name: string; ref_count: number, url: string };
 
-type FragRow = { offset: number; length: number; type: string; desc: string };
+type FragRow = { order: number, offset: number; length: number; type: string; desc: string };
 
 export default function Page({ params }: Props) {
     const { node, specId } = params;
@@ -142,6 +142,7 @@ export default function Page({ params }: Props) {
                                 <Table size="small">
                                     <TableHead>
                                         <TableRow>
+                                            <TableCell>{t('right.order')}</TableCell>
                                             <TableCell>{t('right.offset')}</TableCell>
                                             <TableCell>{t('right.len')}</TableCell>
                                             <TableCell>{t('right.type')}</TableCell>
@@ -172,6 +173,7 @@ export default function Page({ params }: Props) {
                                         )}
                                         {frags?.map((row, idx) => (
                                             <TableRow sx={{ '&:nth-child(odd)': { backgroundColor: '#202838' }, '&:nth-child(even)': { backgroundColor: '#141C2A' } }} key={idx}>
+                                                <TableCell>{row.order}</TableCell>
                                                 <TableCell>
                                                     <Chip label={row.offset} sx={{
                                                         backgroundColor: '#1D2F20',

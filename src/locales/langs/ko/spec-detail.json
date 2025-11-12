@@ -11,6 +11,7 @@
     "frags_sizes": "조각 {{frags}}, 크기 {{sizes}}"
   },
   "right": {
+    "order": "번호",
     "offset": "오프셋",
     "len": "길이",
     "type": "유형",

@@ -11,6 +11,7 @@
     "frags_sizes": "Frags {{frags}}, Sizes {{sizes}}"
   },
   "right": {
+    "order": "No.",
     "offset": "offset",
     "len": "len",
     "type": "Type",
