@@ -265,7 +265,7 @@ export function Memory({ selectedNodeId }: Props) {
                       <TableRow
                         key={index}
                         onClick={() =>
-                          router.push(`/dashboard/nodes/${selectedNodeId}/memory/${String(issue.name)}`)
+                          router.push(`/dashboard/nodes/${selectedNodeId}/memory/${String(issue.code)}`)
                         }
                         sx={{ cursor: 'pointer' }}
                       >

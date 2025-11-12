@@ -108,9 +108,9 @@ export function useAuditFrameList(
 ) {
   const url = file
     ? [
-        endpoints.nodes.auditLog.frameList(node),
-        { params: { file, page, limit, 'last-offset': offset, sort, refreshKey } },
-      ]
+      endpoints.nodes.auditLog.frameList(node),
+      { params: { file, page, limit, 'last-offset': offset, sort, refreshKey } },
+    ]
     : '';
 
   const { data, isLoading, error, isValidating } = useSWR<GetAuditFrameListResponse>(
@@ -152,9 +152,9 @@ export function useGetAuditLogFrame(
   if (side || cond || count) {
     url = file
       ? [
-          endpoints.nodes.auditLog.frame(node),
-          { params: { file, seq, side, count, cond, refreshKey } },
-        ]
+        endpoints.nodes.auditLog.frame(node),
+        { params: { file, seq, side, count, cond, refreshKey } },
+      ]
       : '';
   } else {
     url = file ? [endpoints.nodes.auditLog.frame(node), { params: { file, seq, refreshKey } }] : '';
@@ -241,7 +241,7 @@ const DEFAULT_ISSUE_INFO = {
 export function useGetIssueItemInfo(node: string, code: string) {
   const url = node && code ? [endpoints.nodes.issues.info(node), { params: { code } }] : '';
 
-  const { data, isLoading, error, isValidating } = useSWR<GetIssueItemInfoResponse>(
+  const { data, isLoading, error, isValidating, mutate } = useSWR<GetIssueItemInfoResponse>(
     url,
     fetcher,
     swrOptions
@@ -255,8 +255,9 @@ export function useGetIssueItemInfo(node: string, code: string) {
       issueInfoLoading: isLoading,
       issueInfoError: error,
       issueInfoValidating: isValidating,
+      onRefresh: mutate
     }),
-    [data?.data?.issueInfo, error, isLoading, isValidating]
+    [data?.data?.issueInfo, error, isLoading, isValidating, mutate]
   );
 
   return memoizedValue;
@@ -277,7 +278,7 @@ const DEFAULT_ISSUE_QUOTES_BID = {
 export function useGetIssueItemQuotes(node: string, code: string) {
   const url = node && code ? [endpoints.nodes.issues.quote(node), { params: { code } }] : '';
 
-  const { data, isLoading, error, isValidating } = useSWR<GetIssueItemQuotesResponse>(
+  const { data, isLoading, error, isValidating, mutate } = useSWR<GetIssueItemQuotesResponse>(
     url,
     fetcher,
     swrOptions
@@ -292,8 +293,9 @@ export function useGetIssueItemQuotes(node: string, code: string) {
       issueQuotesLoading: isLoading,
       issueQuotesError: error,
       issueQuotesValidating: isValidating,
+      onRefresh: mutate
     }),
-    [data?.data?.issueQuote?.order_book, error, isLoading, isValidating]
+    [data?.data?.issueQuote?.order_book, error, isLoading, isValidating, mutate]
   );
 
   return memoizedValue;
