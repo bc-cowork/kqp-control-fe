@@ -37,7 +37,7 @@ const StyledToggleButton = styled(ToggleButton, {
     '&.Mui-selected': {
       backgroundColor: theme.palette.grey[700],
       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
-      color: isPercentageMetric ? '#667085' : theme.palette.common.white,
+      color: isPercentageMetric ? '#F0F1F5' : theme.palette.common.white,
       '&:hover': {
         backgroundColor: theme.palette.common.white,
         color: isPercentageMetric ? theme.palette.grey[800] : 'black',

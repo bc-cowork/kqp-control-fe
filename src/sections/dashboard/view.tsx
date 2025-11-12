@@ -144,7 +144,7 @@ export function DashboardView() {
               sx={{
                 fontSize: 17,
                 fontWeight: 500,
-                color: theme.palette.grey[600],
+                color: '#AFB7C8',
                 mb: 1,
               }}
             >
@@ -186,7 +186,7 @@ export function DashboardView() {
                   sx={{
                     fontSize: 17,
                     fontWeight: 500,
-                    color: theme.palette.grey[600],
+                    color: '#AFB7C8',
                     mb: 1,
                   }}
                 >
@@ -257,7 +257,7 @@ const NavigationBox = ({ title, link }: { title: string; link: string }) => {
       onClick={() => router.push(link)}
     >
       <Stack direction="row" alignItems="center">
-        <Typography sx={{ fontSize: 17, fontWeight: 500, color: grey[700] }}>{title}</Typography>
+        <Typography sx={{ fontSize: 17, fontWeight: 500, color: '#D1D6E0' }}>{title}</Typography>
         <SvgIcon sx={{ width: 20, height: 20 }}>
           <svg
             width="20"
@@ -270,7 +270,7 @@ const NavigationBox = ({ title, link }: { title: string; link: string }) => {
               fillRule="evenodd"
               clipRule="evenodd"
               d="M7.00414 16.4468C7.25044 16.7205 7.67197 16.7427 7.94565 16.4964L14.6123 10.4966C14.7528 10.3702 14.833 10.1901 14.833 10.0011C14.833 9.81209 14.7528 9.63198 14.6123 9.50555L7.94567 3.50514C7.67201 3.25883 7.25048 3.281 7.00417 3.55466C6.75785 3.82833 6.78002 4.24986 7.05369 4.49617L13.1698 10.001L7.05371 15.5053C6.78004 15.7516 6.75784 16.1731 7.00414 16.4468Z"
-              fill="#4E576A"
+              fill="#D1D6E0"
             />
           </svg>
         </SvgIcon>
