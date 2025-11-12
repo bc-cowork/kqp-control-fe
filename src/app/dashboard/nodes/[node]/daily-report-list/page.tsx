@@ -23,8 +23,7 @@ export default function Page({ params }: Props) {
                     mt: '28px',
                     width: 1,
                 }}
-            >
-            </Box>
-        </DashboardContent>
+            />
+        </DashboardContent >
     );
 }
