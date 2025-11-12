@@ -76,7 +76,7 @@ input[type='number']::-webkit-inner-spin-button {
 
 /* Chrome, Edge, Safari */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 2px;
   height: 10px;
 }
 

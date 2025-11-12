@@ -12,7 +12,6 @@ const MuiTableContainer: Components<Theme>['MuiTableContainer'] = {
     root: ({ theme }) => ({
       position: 'relative',
       scrollbarWidth: 'thin',
-      scrollbarColor: `${varAlpha(theme.vars.palette.text.disabledChannel, 0.4)} ${varAlpha(theme.vars.palette.text.disabledChannel, 0.08)}`,
     }),
   },
 };
