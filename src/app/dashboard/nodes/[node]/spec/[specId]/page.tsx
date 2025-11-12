@@ -19,7 +19,7 @@ import { useTranslate } from 'src/locales';
 import { paths } from 'src/routes/paths';
 import { fetcher, endpoints } from 'src/utils/axios';
 import Chip from '@mui/material/Chip';
-import { timeStamp } from 'console';
+import { useRouter } from 'next/navigation';
 
 // ----------------------------------------------------------------------
 
@@ -30,13 +30,14 @@ type Props = {
     };
 };
 
-type IdentifyRow = { id?: number; name: string; ref_count: number };
+type IdentifyRow = { id?: number; name: string; ref_count: number, url: string };
 
 type FragRow = { offset: number; length: number; type: string; desc: string };
 
 export default function Page({ params }: Props) {
     const { node, specId } = params;
     const { t } = useTranslate('spec-detail');
+    const router = useRouter();
 
     const url = endpoints.spec.detail(node, decodeURIComponent(specId));
     const { data, error, isLoading } = useSWR(url, fetcher);
@@ -93,9 +94,20 @@ export default function Page({ params }: Props) {
                                     {identifiers.map((row, idx) => (
                                         <TableRow
                                             hover
-                                            key={row.name + idx}>
+                                            key={row.name + idx}
+
+                                        >
                                             <TableCell>{idx + 1}</TableCell>
-                                            <TableCell>{row.name}</TableCell>
+                                            <TableCell
+                                                onClick={() =>
+                                                    router.push(`${paths.dashboard.nodes.identifyDetail(node, row.url.split('/')[row.url.split('/').length - 1])}`)
+                                                }
+                                                sx={{
+                                                    color: '#4A3BFF',
+                                                    textDecoration: 'underline',
+                                                    cursor: 'pointer'
+                                                }}
+                                            >{row.name}</TableCell>
                                             <TableCell>{row.ref_count}</TableCell>
                                         </TableRow>
                                     ))}

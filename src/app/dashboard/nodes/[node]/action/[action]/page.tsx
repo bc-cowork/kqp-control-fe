@@ -14,6 +14,7 @@ import { fetcher, endpoints } from 'src/utils/axios';
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { a11yDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { grey } from '@mui/material/colors';
+import { useRouter } from 'next/navigation';
 
 type Props = {
     params: {
@@ -63,6 +64,7 @@ export default function Page({ params }: Props) {
                             t={t}
                             loading={isLoading}
                             error={error}
+                            node={node}
                         />
                     </Grid>
 
@@ -95,7 +97,9 @@ export default function Page({ params }: Props) {
     );
 }
 
-function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCount, refProcessCount }: any) {
+function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCount, refProcessCount, node }: any) {
+    const router = useRouter();
+
     return (
         <Box>
             <TableContainer component={Paper} sx={{ mb: 4 }}>
@@ -124,9 +128,19 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
                             </TableRow>
                         )}
                         {layoutList.map((item: any, idx: number) => (
-                            <TableRow key={idx}>
+                            <TableRow hover key={idx}
+                            >
                                 <TableCell>{idx + 1}</TableCell>
-                                <TableCell>{item.name}</TableCell>
+                                <TableCell
+                                    onClick={() =>
+                                        router.push(`${paths.dashboard.nodes.layoutDetail(node, item.url.split('/')[item.url.split('/').length - 1])}`)
+                                    }
+                                    sx={{
+                                        color: '#4A3BFF',
+                                        textDecoration: 'underline',
+                                        cursor: 'pointer'
+                                    }}
+                                >{item.name}</TableCell>
                                 <TableCell>{item.ref_count}</TableCell>
                             </TableRow>
                         ))}
@@ -162,9 +176,21 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
                             </TableRow>
                         )}
                         {processList.map((item: any, idx: number) => (
-                            <TableRow key={idx}>
+                            <TableRow
+                                hover
+                                key={idx}
+
+                            >
                                 <TableCell>{idx + 1}</TableCell>
-                                <TableCell>{item.name}</TableCell>
+                                <TableCell
+                                    onClick={() =>
+                                        router.push(`${paths.dashboard.nodes.processDetail(node, item.url.split('/')[item.url.split('/').length - 1])}`)
+                                    }
+                                    sx={{
+                                        color: '#4A3BFF',
+                                        textDecoration: 'underline'
+                                    }}
+                                >{item.name}</TableCell>
                                 <TableCell>{item.ref_count}</TableCell>
                             </TableRow>
                         ))}

@@ -12,6 +12,7 @@ import { fetcher, endpoints } from 'src/utils/axios';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { grey } from '@mui/material/colors';
+import { useRouter } from 'next/navigation';
 
 
 type Props = {
@@ -62,6 +63,7 @@ export default function Page({ params }: Props) {
               t={t}
               loading={isLoading}
               error={error}
+              node={node}
             />
           </Grid>
 
@@ -94,7 +96,8 @@ export default function Page({ params }: Props) {
   );
 }
 
-function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCount, refProcessCount }: any) {
+function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCount, refProcessCount, node }: any) {
+  const router = useRouter();
   return (
     <Box>
       <TableContainer component={Paper} sx={{ mb: 4 }}>
@@ -125,9 +128,20 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
             {layoutList.map((item: any, idx: number) => (
               <TableRow
                 hover
-                key={idx}>
+                key={idx}
+
+              >
                 <TableCell>{idx + 1}</TableCell>
-                <TableCell>{item.name}</TableCell>
+                <TableCell
+                  onClick={() =>
+                    router.push(`${paths.dashboard.nodes.layoutDetail(node, item.url.split('/')[item.url.split('/').length - 1])}`)
+                  }
+                  sx={{
+                    color: '#4A3BFF',
+                    textDecoration: 'underline',
+                    cursor: 'pointer'
+                  }}
+                >{item.name}</TableCell>
                 <TableCell>{item.ref_count}</TableCell>
               </TableRow>
             ))}
@@ -165,9 +179,20 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
             {processList.map((item: any, idx: number) => (
               <TableRow
                 hover
-                key={idx}>
+                key={idx}
+
+              >
                 <TableCell>{idx + 1}</TableCell>
-                <TableCell>{item.name}</TableCell>
+                <TableCell
+                  onClick={() =>
+                    router.push(`${paths.dashboard.nodes.processDetail(node, item.url.split('/')[item.url.split('/').length - 1])}`)
+                  }
+                  sx={{
+                    color: '#4A3BFF',
+                    textDecoration: 'underline',
+                    cursor: 'pointer'
+                  }}
+                >{item.name}</TableCell>
                 <TableCell>{item.ref_count}</TableCell>
               </TableRow>
             ))}
