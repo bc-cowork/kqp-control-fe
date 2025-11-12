@@ -25,11 +25,11 @@ export function MemoryItemView({ nodeId, code }: Props) {
         node={nodeId}
         pages={[
           { pageName: t('top.memory'), link: `/dashboard/nodes/${nodeId}/memory` },
-          { pageName: t('top.memory_item') },
+          { pageName: decodeURIComponent(code) },
         ]}
       />
       <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50], mt: 2 }}>
-        {t('top.memory_item')}
+        {decodeURIComponent(code)}
       </Typography>
       <Box
         sx={{

@@ -23,10 +23,8 @@ type Props = {
 
 export default function Page({ params }: Props) {
   const { node, id } = params;
-  const { t } = useTranslate('action-list');
+  const { t } = useTranslate('rule-list');
   const decodedAction = decodeURIComponent(id);
-
-  console.log('Decoded Action:', decodedAction);
 
   const url = endpoints.actions.detail(node, decodedAction);
   const { data, error, isLoading } = useSWR(url, fetcher);
@@ -44,7 +42,7 @@ export default function Page({ params }: Props) {
       <Breadcrumb
         node={node}
         pages={[
-          { pageName: t('rule-list.title'), link: paths.dashboard.nodes.rules(node) },
+          { pageName: t('top.title'), link: paths.dashboard.nodes.rules(node) },
           { pageName: decodedAction },
         ]}
       />

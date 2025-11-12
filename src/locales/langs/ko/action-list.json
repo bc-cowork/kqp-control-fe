@@ -1,7 +1,4 @@
 {
-    "rule-list": {
-        "title": "전문 목록"
-    },
     "top": {
         "action_list": "작업 목록"
     },
@@ -27,6 +24,6 @@
         "process_no": "No",
         "process_name": "연관 프로세스",
         "process_usage_freq": "활용 빈도",
-        "script_title": "함수 정의"
+        "script_title": "액션 정의"
     }
 }

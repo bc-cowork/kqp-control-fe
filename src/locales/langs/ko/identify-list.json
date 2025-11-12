@@ -11,7 +11,7 @@
     "explanation": "설명"
   },
   "detail_table": {
-    "script_title": "전문 정의",
+    "script_title": "식별자 정의",
     "no": "No",
     "related_spec": "연관 전문",
     "ref_freq": "참조 빈도"

@@ -11,7 +11,7 @@
         "desc": "설명"
     },
     "detail_table": {
-        "script_title": "Professional definition",
+        "script_title": "User Function Definition",
         "no": "No",
         "related_spec": "Related SPEC",
         "ref_freq": "Reference frequency"

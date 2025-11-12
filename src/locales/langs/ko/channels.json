@@ -1,6 +1,6 @@
 {
   "title": {
-    "inbound": "채널 입수",
+    "inbound": "채널 수신",
     "outbound": "채널 송출"
   },
   "table": {
