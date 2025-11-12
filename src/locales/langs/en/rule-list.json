@@ -11,5 +11,20 @@
     "ref_process": "ref. process",
     "ref_actions": "ref. actions",
     "desc": "Description"
+  },
+  "loading": "Loading...",
+  "error": "Failed to load actions",
+  "empty": "No actions found",
+  "detail": {
+    "placeholder": "Action details will appear here."
+  },
+  "detail_table": {
+    "layout_no": "No",
+    "layout_name": "Related Layout",
+    "layout_ref_freq": "Ref. Frequency",
+    "process_no": "No",
+    "process_name": "Related Process",
+    "process_usage_freq": "Usage Frequency",
+    "script_title": "Rule Definition"
   }
 }

@@ -1,7 +1,4 @@
 {
-    "rule-list": {
-        "title": "Rule List"
-    },
     "top": {
         "action_list": "Action List"
     },
@@ -27,6 +24,6 @@
         "process_no": "No",
         "process_name": "Related Process",
         "process_usage_freq": "Usage Frequency",
-        "script_title": "Function Definition"
+        "script_title": "Action Definition"
     }
 }

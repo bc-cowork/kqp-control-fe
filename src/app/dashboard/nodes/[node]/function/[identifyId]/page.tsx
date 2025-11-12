@@ -11,6 +11,7 @@ import { fetcher, endpoints } from 'src/utils/axios';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { grey } from '@mui/material/colors';
+import { useRouter } from 'next/navigation';
 
 type Props = {
     params: { node: string; identifyId: string };
@@ -20,12 +21,13 @@ export default function Page({ params }: Props) {
     const { node, identifyId } = params;
     const { t } = useTranslate('function-list');
     const decodedId = decodeURIComponent(identifyId);
+    const router = useRouter();
 
     const url = endpoints.function.detail(node, decodedId);
     const { data, error, isLoading } = useSWR(url, fetcher);
 
     const detail = data?.data || {};
-    const specList: Array<{ name: string; ref_count: number }> = detail.related_identifies || [];
+    const specList: Array<{ name: string; ref_count: number, url: string }> = detail.related_identifies || [];
     const script: string = detail.definition || '';
 
 
@@ -77,9 +79,20 @@ export default function Page({ params }: Props) {
                                                             </TableRow>
                                                         )}
                                                         {specList.map((row, idx) => (
-                                                            <TableRow key={idx + 1}>
+                                                            <TableRow hover key={idx + 1}
+
+                                                            >
                                                                 <TableCell>{idx + 1}</TableCell>
-                                                                <TableCell>{row.name}</TableCell>
+                                                                <TableCell
+                                                                    onClick={() =>
+                                                                        router.push(`${paths.dashboard.nodes.specDetail(node, row.url.split('/')[row.url.split('/').length - 1])}`)
+                                                                    }
+                                                                    sx={{
+                                                                        color: '#4A3BFF',
+                                                                        textDecoration: 'underline',
+                                                                        cursor: 'pointer'
+                                                                    }}
+                                                                >{row.name}</TableCell>
                                                                 <TableCell>{row.ref_count}</TableCell>
                                                             </TableRow>
                                                         ))}

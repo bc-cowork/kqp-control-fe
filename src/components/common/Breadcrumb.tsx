@@ -123,10 +123,10 @@ const ArrowSelector = () => {
 
   // Colors for different states
   const bgColors = {
-    default: common.white,
-    hover: grey[200],
-    pressed: grey[300],
-    selected: grey[400],
+    default: '#373F4E',
+    hover: '#4E576A',
+    pressed: '#667085',
+    selected: '#667085',
   };
 
   const colors = {

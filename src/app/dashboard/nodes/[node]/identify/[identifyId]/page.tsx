@@ -12,6 +12,7 @@ import { ChartBar } from 'src/components/node-dashboard/chart-area-bar';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { grey } from '@mui/material/colors';
+import { useRouter } from 'next/navigation';
 
 type Props = {
     params: { node: string; identifyId: string };
@@ -21,13 +22,14 @@ export default function Page({ params }: Props) {
     const { node, identifyId } = params;
     const { t } = useTranslate('identify-list');
     const decodedId = decodeURIComponent(identifyId);
+    const router = useRouter();
 
     const url = endpoints.identify.detail(node, decodedId);
     const { data, error, isLoading } = useSWR(url, fetcher);
 
     const detail = data?.data?.item || {};
     const keys: string[] = Array.isArray(detail.keys) ? detail.keys : [];
-    const specList: Array<{ name: string; ref_count: number }> = detail.related_specs || [];
+    const specList: Array<{ name: string; ref_count: number, url: string }> = detail.related_specs || [];
     const script: string = detail.spec_def || '';
 
 
@@ -91,9 +93,20 @@ export default function Page({ params }: Props) {
                                                             </TableRow>
                                                         )}
                                                         {specList.map((row, idx) => (
-                                                            <TableRow hover key={idx + 1}>
+                                                            <TableRow hover key={idx + 1}
+
+                                                            >
                                                                 <TableCell>{idx + 1}</TableCell>
-                                                                <TableCell>{row.name}</TableCell>
+                                                                <TableCell
+                                                                    onClick={() =>
+                                                                        router.push(`${paths.dashboard.nodes.specDetail(node, row.url.split('/')[row.url.split('/').length - 1])}`)
+                                                                    }
+                                                                    sx={{
+                                                                        color: '#4A3BFF',
+                                                                        textDecoration: 'underline',
+                                                                        cursor: 'pointer'
+                                                                    }}
+                                                                >{row.name}</TableCell>
                                                                 <TableCell>{row.ref_count}</TableCell>
                                                             </TableRow>
                                                         ))}
@@ -115,7 +128,7 @@ export default function Page({ params }: Props) {
                         <Box
                             sx={{
                                 borderRadius: '8px',
-                                height: 'calc(100vh - 195px)',
+                                height: '264px',
                                 color: 'red',
                                 backgroundColor: '#202838',
                             }}

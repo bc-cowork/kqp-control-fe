@@ -141,12 +141,12 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
           </Box>
 
           <Box sx={{ p: 2, borderRadius: '8px', backgroundColor: theme.palette.grey[800] }}>
-            <Typography sx={{ fontSize: 17, fontWeight: 500, color: grey[600] }}>
+            <Typography sx={{ fontSize: 17, fontWeight: 500, color: '#AFB7C8' }}>
               {t('left_side.disk')}
             </Typography>
             <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50] }}>21%</Typography>
-            <Typography sx={{ fontSize: 16, fontWeight: 400, color: grey[50] }}>
-              <Box component="span" sx={{ fontWeight: 500 }}>
+            <Typography sx={{ fontSize: 16, fontWeight: 400, color: '#AFB7C8' }}>
+              <Box component="span" sx={{ fontWeight: 500, color: grey[50] }}>
                 853 GB
               </Box>{' '}
               of 952 GB

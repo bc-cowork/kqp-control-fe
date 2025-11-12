@@ -10,7 +10,7 @@
     "process": "Process",
     "memory": "Memory",
     "audit_log": "Audit Log",
-    "channels_inbound": "Channels Inbound",
+    "channels_inbound": "Channel Inbound",
     "channels_outbound": "Channel Outbound",
     "rule_list": "Rule List",
     "action_list": "Action List",
