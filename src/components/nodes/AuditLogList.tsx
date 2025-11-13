@@ -126,6 +126,7 @@ export function AuditLogList({ selectedNodeId }: Props) {
             <TableCell align="right">{t('table_header.no')}</TableCell>
             <TableCell align="right">{t('table_header.date')}</TableCell>
             <TableCell>{t('table_header.type')}</TableCell>
+            <TableCell align="right">{t('table_header.desc')}</TableCell>
             <TableCell align="right">{t('table_header.size')}</TableCell>
           </TableRow>
         </TableHead>
@@ -148,6 +149,7 @@ export function AuditLogList({ selectedNodeId }: Props) {
                 <TableCell align="right">{auditLog.id}</TableCell>
                 <TableCell align="right">{auditLog.date}</TableCell>
                 <TableCell>{auditLog.kind}</TableCell>
+                <TableCell align='right'>{auditLog?.desc || '-'}</TableCell>
                 <TableCell align="right">{auditLog.size}</TableCell>
               </TableRow>
             ))

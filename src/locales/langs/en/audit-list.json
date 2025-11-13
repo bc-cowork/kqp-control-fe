@@ -1,6 +1,6 @@
 {
   "top": {
-    "audit_logs": "Audit Logs"
+    "audit_logs": "Audit Log"
   },
   "table_option": {
     "inbound": "Inbound",
@@ -16,6 +16,7 @@
     "no": "No",
     "date": "Date",
     "type": "Type",
-    "size": "Size"
+    "size": "Size",
+    "desc": "Desc"
   }
 }

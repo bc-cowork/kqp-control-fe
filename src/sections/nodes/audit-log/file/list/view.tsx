@@ -25,11 +25,11 @@ export function AuditFrameListView({ nodeId, file }: Props) {
         node={nodeId}
         pages={[
           { pageName: t('top.audit_logs'), link: `/dashboard/nodes/${nodeId}/audit-log` },
-          { pageName: t('top.list') },
+          { pageName: file },
         ]}
       />
       <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50], mt: 2 }}>
-        {t('top.list')}
+        {file}
       </Typography>
       <Box
         sx={{

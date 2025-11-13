@@ -19,6 +19,8 @@ export interface IAuditLogItem {
   date: string;
   kind: string;
   fname: string;
+  desc?: string
+
 }
 
 // Audit Log Frame Fragment (matches GetAuditLogFrameResponse['data']['spec']['frags'])
