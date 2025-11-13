@@ -144,12 +144,18 @@ function Group({ items, render, slotProps, enabledRootRedirect, cssVars }: NavGr
             sx={{
               border: 1,
               borderColor: '#FFD8D8',
-              backgroundColor: '#FFF2FA',
+              backgroundColor: '#FFF2F4',
               color: (theme) => theme.palette.error.main,
               fontWeight: 400,
-              fontSize: 19,
-              height: 50,
+              fontSize: 16,
+              height: 40,
               width: 110,
+              ":hover": {
+                backgroundColor: '#FFD8D8'
+              },
+              ":active": {
+                backgroundColor: '#FFD8D8'
+              }
             }}
             startIcon={
               <SvgIcon>

@@ -3,7 +3,7 @@
     "dashboard": "Dashboard",
     "nodes": "Nodes",
     "settings": "Settings",
-    "logout": "LOGOUT"
+    "logout": "Logout"
   },
   "tab_option": {
     "node_dashboard": "Node Dashboard",
