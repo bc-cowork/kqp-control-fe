@@ -14,26 +14,25 @@ import { paths } from 'src/routes/paths';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { grey } from '@mui/material/colors';
-import router from 'next/router';
 
 type Props = {
     params: {
         node: string;
-        layout: string;
+        process: string;
     };
 };
 
 export default function Page({ params }: Props) {
-    const { node, layout } = params;
+    const { node, process } = params;
     const { t } = useTranslate('process');
-    const decodedLayout = decodeURIComponent(layout);
+    const decodedProcess = decodeURIComponent(process);
 
 
-    const url = endpoints.dashboard.processDetail(node, decodedLayout);
+    const url = endpoints.dashboard.processDetail(node, decodedProcess);
     const { data, isLoading, error } = useSWR(url, fetcher);
 
 
-    const process = data?.data?.item;
+    const processItem = data?.data?.item;
     const processEmpty = !isLoading && process === null;
     const layoutDefinition = data?.data?.item?.layout_def || '';
 
@@ -43,11 +42,11 @@ export default function Page({ params }: Props) {
                 node={node}
                 pages={[
                     { pageName: t('top.process'), link: paths.dashboard.nodes.process(node) },
-                    { pageName: decodedLayout },
+                    { pageName: data?.data?.item?.name },
                 ]}
             />
 
-            <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{t('top.process')}{" : "}{decodedLayout}</Typography>
+            <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{t('top.process')}{" : "}{data?.data?.item?.name}</Typography>
             <TableContainer
                 component={Paper}
                 sx={{ height: 'auto', my: 2 }}
@@ -82,17 +81,17 @@ export default function Page({ params }: Props) {
                             </TableRow>
                         ) : (
                             <TableRow
-                                key={process.name}
+                                key={processItem.name}
                                 hover
                             >
                                 <TableCell align="left">{ }</TableCell>
-                                <TableCell align="left">{process.name}</TableCell>
+                                <TableCell align="left">{processItem.name}</TableCell>
                                 <TableCell align="left">{ }</TableCell>
-                                <TableCell>{process.timestamp}</TableCell>
-                                <TableCell align='right'>{process.cpu}</TableCell>
-                                <TableCell align="right">{process.mem}</TableCell>
+                                <TableCell>{processItem.timestamp}</TableCell>
+                                <TableCell align='right'>{processItem.cpu}</TableCell>
+                                <TableCell align="right">{processItem.mem}</TableCell>
                                 <TableCell align="left">{ }</TableCell>
-                                <TableCell align="right">{process?.desc}</TableCell>
+                                <TableCell align="right">{processItem?.desc}</TableCell>
                             </TableRow>
                         )}
                     </TableBody>

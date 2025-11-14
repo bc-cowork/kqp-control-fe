@@ -17,6 +17,8 @@ export interface IProcessItem {
   MEM: string;
   PPID: string;
   COMMAND: string;
+
+  APPCODE?: string;
 }
 
 // Process Response (updated to match GetProcessesResponse)

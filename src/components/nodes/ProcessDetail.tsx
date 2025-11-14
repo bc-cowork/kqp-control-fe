@@ -77,12 +77,12 @@ export function ProcessDetail({ selectedNodeId, page = 'process' }: Props) {
                 key={index}
                 sx={{ cursor: 'pointer' }}
                 onClick={() => router.push(
-                  `${paths.dashboard.nodes.processDetail(selectedNodeId, String(process.NAME))}`
+                  `${paths.dashboard.nodes.processDetail(selectedNodeId, String(process.APPCODE))}`
                 )}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     router.push(
-                      `${paths.dashboard.nodes.processDetail(selectedNodeId, String(process.NAME))}`
+                      `${paths.dashboard.nodes.processDetail(selectedNodeId, String(process.APPCODE))}`
                     );
                   }
                 }}
