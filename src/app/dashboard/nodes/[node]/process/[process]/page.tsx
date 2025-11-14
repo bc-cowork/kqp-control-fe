@@ -42,11 +42,11 @@ export default function Page({ params }: Props) {
                 node={node}
                 pages={[
                     { pageName: t('top.process'), link: paths.dashboard.nodes.process(node) },
-                    { pageName: data?.data?.item?.name },
+                    { pageName: decodedProcess },
                 ]}
             />
 
-            <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{t('top.process')}{" : "}{data?.data?.item?.name}</Typography>
+            <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{t('top.process')}{" : "}{decodedProcess}</Typography>
             <TableContainer
                 component={Paper}
                 sx={{ height: 'auto', my: 2 }}
