@@ -68,17 +68,17 @@ export default function Page({ params }: Props) {
                     <TableBody>
                         {isLoading ? (
                             <TableRow>
-                                <TableCell colSpan={9} align="center">
+                                <TableCell colSpan={8} align="center">
                                     <CircularProgress />
                                 </TableCell>
                             </TableRow>
                         ) : processEmpty ? (
                             <TableRow>
-                                <TableCell colSpan={6}>No Process Found</TableCell>
+                                <TableCell colSpan={8}>No Process Found</TableCell>
                             </TableRow>
                         ) : error ? (
                             <TableRow>
-                                <TableCell colSpan={6}>Error Fetching Process</TableCell>
+                                <TableCell colSpan={8}>Error Fetching Process</TableCell>
                             </TableRow>
                         ) : (
                             <TableRow
