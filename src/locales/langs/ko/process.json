@@ -18,5 +18,12 @@
     "action_title": "관련 작업",
     "process_title": "관련 프로세스",
     "script_title": "프로세스 정의"
+  },
+  "process_detail": {
+    "process_name": "프로세스 이름",
+    "timestamp": "타임스탬프",
+    "cpu": "CPU",
+    "mem": "MEM",
+    "desc": "설명"
   }
 }

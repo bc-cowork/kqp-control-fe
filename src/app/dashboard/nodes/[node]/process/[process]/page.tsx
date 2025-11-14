@@ -3,7 +3,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import { Typography } from '@mui/material';
+import { CircularProgress, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 
 import useSWR from 'swr';
 import { useTranslate } from 'src/locales';
@@ -14,6 +14,7 @@ import { paths } from 'src/routes/paths';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { grey } from '@mui/material/colors';
+import router from 'next/router';
 
 type Props = {
     params: {
@@ -29,9 +30,11 @@ export default function Page({ params }: Props) {
 
 
     const url = endpoints.dashboard.processDetail(node, decodedLayout);
-    const { data } = useSWR(url, fetcher);
+    const { data, isLoading, error } = useSWR(url, fetcher);
 
-    const timeStamp = data?.data?.item?.timestamp || '-';
+
+    const process = data?.data?.item;
+    const processEmpty = !isLoading && process === null;
     const layoutDefinition = data?.data?.item?.layout_def || '';
 
     return (
@@ -45,8 +48,50 @@ export default function Page({ params }: Props) {
             />
 
             <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{t('top.process')}{" : "}{decodedLayout}</Typography>
-            <Typography sx={{ fontSize: 15, fontWeight: 500, mt: 2, textAlign: 'right', color: grey[400], p: 2 }}>{timeStamp}</Typography>
-
+            <TableContainer
+                component={Paper}
+                sx={{ height: 'auto', my: 2 }}
+            >
+                <Table size="small">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>{t('process_detail.process_name')}</TableCell>
+                            <TableCell>{t('process_detail.timestamp')}</TableCell>
+                            <TableCell align="right">{t('process_detail.cpu')}</TableCell>
+                            <TableCell align="right">{t('process_detail.mem')}</TableCell>
+                            <TableCell align="right">{t('process_detail.desc')}</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {isLoading ? (
+                            <TableRow>
+                                <TableCell colSpan={9} align="center">
+                                    <CircularProgress />
+                                </TableCell>
+                            </TableRow>
+                        ) : processEmpty ? (
+                            <TableRow>
+                                <TableCell colSpan={6}>No Process Found</TableCell>
+                            </TableRow>
+                        ) : error ? (
+                            <TableRow>
+                                <TableCell colSpan={6}>Error Fetching Process</TableCell>
+                            </TableRow>
+                        ) : (
+                            <TableRow
+                                key={process.name}
+                                hover
+                            >
+                                <TableCell align="left">{process.name}</TableCell>
+                                <TableCell>{process.timestamp}</TableCell>
+                                <TableCell align='right'>{process.cpu}</TableCell>
+                                <TableCell align="right">{process.mem}</TableCell>
+                                <TableCell align="right">{process?.desc}</TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+            </TableContainer>
             <Paper sx={{ height: '100%', backgroundColor: 'black', p: 0.5 }} >
 
                 <Box sx={{ backgroundColor: '#667085', p: 1.5, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>

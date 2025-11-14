@@ -18,5 +18,12 @@
     "action_title": "Related Actions",
     "process_title": "Related Processes",
     "script_title": "Process Definition"
+  },
+  "process_detail": {
+    "process_name": "Process Name",
+    "timestamp": "timestamp",
+    "cpu": "CPU",
+    "mem": "MEM",
+    "desc": "Description"
   }
 }
