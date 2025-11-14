@@ -55,10 +55,13 @@ export default function Page({ params }: Props) {
                 <Table size="small">
                     <TableHead>
                         <TableRow>
+                            <TableCell>{ }</TableCell>
                             <TableCell>{t('process_detail.process_name')}</TableCell>
+                            <TableCell>{ }</TableCell>
                             <TableCell>{t('process_detail.timestamp')}</TableCell>
                             <TableCell align="right">{t('process_detail.cpu')}</TableCell>
                             <TableCell align="right">{t('process_detail.mem')}</TableCell>
+                            <TableCell>{ }</TableCell>
                             <TableCell align="right">{t('process_detail.desc')}</TableCell>
                         </TableRow>
                     </TableHead>
@@ -82,10 +85,13 @@ export default function Page({ params }: Props) {
                                 key={process.name}
                                 hover
                             >
+                                <TableCell align="left">{ }</TableCell>
                                 <TableCell align="left">{process.name}</TableCell>
+                                <TableCell align="left">{ }</TableCell>
                                 <TableCell>{process.timestamp}</TableCell>
                                 <TableCell align='right'>{process.cpu}</TableCell>
                                 <TableCell align="right">{process.mem}</TableCell>
+                                <TableCell align="left">{ }</TableCell>
                                 <TableCell align="right">{process?.desc}</TableCell>
                             </TableRow>
                         )}
