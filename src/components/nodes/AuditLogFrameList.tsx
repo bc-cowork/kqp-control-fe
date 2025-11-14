@@ -224,6 +224,11 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                   </Typography>
                 </Box>
                 <FadingDivider sx={{ my: 1.5 }} />
+                <Typography
+                  sx={{ color: theme.palette.grey[300], mb: 1 }}
+                >
+                  {t('right_side_audit_log_list.audit_log_list')}
+                </Typography>
                 <Box
                   sx={{
                     py: 1,

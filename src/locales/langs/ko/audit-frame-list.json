@@ -1,6 +1,6 @@
 {
   "top": {
-    "audit_logs": "증적 로그 목록",
+    "audit_logs": "증적 로그",
     "list": "목록"
   },
   "search_ui": {
@@ -14,7 +14,7 @@
     "go_to_page": "이동할 페이지"
   },
   "table_header": {
-    "frame_seq": "프레일 번호",
+    "frame_seq": "프레임 번호",
     "head": "전문 유형",
     "rid": "전문 식별자",
     "size": "크기"
