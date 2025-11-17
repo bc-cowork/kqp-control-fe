@@ -1,23 +1,54 @@
+## About Repo
+This is Kuanta Control Frontend repo for monitoring of firms internal messaging and monitoring system which provides you with the following modules:
+
+1. [Dashboard](./src/app/dashboard)
+2. [Node Dashboard](./src/app/dashboard/nodes/[node]/node-dashboard/)
+3. [Process](./src/app/dashboard/nodes/[node]/process)
+4. [Memory](./src/app/dashboard/nodes/[node]/memory)
+5. [Channels - Inbound](./src/app/dashboard/nodes/[node]/channels-inbound) | [Channels - Outbound](./src/app/dashboard/nodes/[node]/channels-outbound)
+6. [Audit Logs](./src/app/dashboard/nodes/[node]/audit-log)
+7. [Action](./src/app/dashboard/nodes/[node]/action)
+8. [Rules](./src/app/dashboard/nodes/[node]/rules)
+9. [SPECs](./src/app/dashboard/nodes/[node]/spec)
+10. [Identities](./src/app/dashboard/nodes/[node]/identify)
+11. [Alerts](./src/app/dashboard/nodes/[node]/alerts-list)
+12. [Reports](./src/app/dashboard/nodes/[node]/daily-report-list)
+
 ## Prerequisites
 
 - Node.js 20.x (Recommended)
 
 ## Installation
 
-**Using Yarn (Recommended)**
+**Using Yarn**
 
 ```sh
 yarn install
-yarn dev
-
 ```
 
-**Using Npm**
+**Using Npm (Recommended)**
 
 ```sh
 npm i
-npm run dev
 ```
+
+## Running via Mocking a server
+
+We have provided basic data to test app locally without connecting to server.
+
+Steps to follow:
+
+1. In [`/src/config-global.ts`](./src/config-global.ts) change value for `apiDataType: 'real'` => `apiDataType: 'dummy'`
+2. Run `npm run dev`
+
+**Note:** In case you want to change data you can change the data for corresponding endpoint/url in [`/src/mocks`](./src/mocks) directory.
+
+## Running via real server
+
+To run the app via real server you have to follow the following steps:
+
+1. Create `.env.local` file and paste the `NEXT_PUBLIC_SERVER_URL=http://141.164.63.141`
+2. Once you are done with creating environment file you are good to go with running it locally by `npm run dev`
 
 ## Build
 
@@ -26,30 +57,3 @@ yarn build
 # or
 npm run build
 ```
-
-## Mock server
-
-By default we provide demo data from : `https://api-dev-minimal-[version].vercel.app`
-
-To set up your local server:
-
-- **Guide:** [https://docs.minimals.cc/mock-server](https://docs.minimals.cc/mock-server).
-
-- **Resource:** [Download](https://www.dropbox.com/sh/6ojn099upi105tf/AACpmlqrNUacwbBfVdtt2t6va?dl=0).
-
-## Full version
-
-- Create React App ([migrate to CRA](https://docs.minimals.cc/migrate-to-cra/)).
-- Next.js
-- Vite.js
-
-## Starter version
-
-- To remove unnecessary components. This is a simplified version ([https://starter.minimals.cc/](https://starter.minimals.cc/))
-- Good to start a new project. You can copy components from the full version.
-- Make sure to install the dependencies exactly as compared to the full version.
-
----
-
-**NOTE:**
-_When copying folders remember to also copy hidden files like .env. This is important because .env files often contain environment variables that are crucial for the application to run correctly._
