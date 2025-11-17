@@ -3,18 +3,18 @@
         "function_list": "Function List"
     },
     "table": {
-        "id": "Id",
+        "id": "ID",
         "function_name": "Function Name",
         "path": "Path",
         "timestamp": "Timestamp",
-        "ref_identifies": "Ref. Identifies",
-        "desc": "설명"
+        "ref_identifies": "Ref. Identifier",
+        "desc": "Description"
     },
     "detail_table": {
         "script_title": "User Function Definition",
         "no": "No",
-        "related_spec": "Related SPEC",
-        "ref_freq": "Reference frequency"
+        "related_identifier": "Related Identifier",
+        "ref_freq": "Ref. Frequency"
     },
     "loading": "Loading...",
     "error": "Failed to load",

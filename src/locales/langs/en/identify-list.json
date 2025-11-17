@@ -3,7 +3,7 @@
         "identify_list": "Identity List"
     },
     "table": {
-        "id": "Id",
+        "id": "ID",
         "identity_name": "Identifier Name",
         "path": "Path",
         "timestamp": "Timestamp",

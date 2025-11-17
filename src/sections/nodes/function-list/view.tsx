@@ -56,12 +56,14 @@ export function FunctionListView({ nodeId }: Props) {
                     <Table size="small">
                         <TableHead>
                             <TableRow>
+                                <TableCell>{ }</TableCell>
                                 <TableCell>{t("table.id")}</TableCell>
                                 <TableCell>{t("table.function_name")}</TableCell>
                                 <TableCell>{t("table.path")}</TableCell>
                                 <TableCell>{t("table.timestamp")}</TableCell>
                                 <TableCell>{t("table.ref_identifies")}</TableCell>
                                 <TableCell>{t("table.desc")}</TableCell>
+                                <TableCell>{ }</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -95,12 +97,14 @@ export function FunctionListView({ nodeId }: Props) {
                                         }
                                     }}
                                 >
+                                    <TableCell>{ }</TableCell>
                                     <TableCell>{index + 1}</TableCell>
                                     <TableCell>{row.name}</TableCell>
                                     <TableCell>{row.path}</TableCell>
                                     <TableCell>{row.timestamp}</TableCell>
                                     <TableCell>{row.ref_identifies}</TableCell>
                                     <TableCell>{row.desc}</TableCell>
+                                    <TableCell>{ }</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

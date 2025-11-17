@@ -178,7 +178,7 @@ export default function Page({ params }: Props) {
 
 
                 <Grid item xs={12} md={5}>
-                    <Paper sx={{ height: '100%', p: 0.5, backgroundColor: 'black' }}>
+                    <Paper sx={{ height: '100%', p: 0.5, backgroundColor: 'transparent' }}>
                         <Box sx={{ backgroundColor: '#667085', p: 1, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
                             <Typography variant="body2" sx={{ fontWeight: 600 }}>{t('detail_table.script_title')}</Typography>
                         </Box>
