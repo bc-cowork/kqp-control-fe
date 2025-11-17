@@ -333,28 +333,29 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                     {formatDateCustom(auditFrameList?.date?.toString())}
                   </Typography>
                 </Box>
+                <Box
+                  sx={{
+                    borderRadius: '12px',
+                    background: 'linear-gradient(180deg, #202838 80%, #373F4E 100%)',
+                    p: 1,
+                    height: `calc(100vh - 590px)`,
+                  }}
+                >
+                  <Typography sx={{ color: theme.palette.grey[300], fontSize: 15 }}>
+                    Audit Log Frame Detail
+                  </Typography>
+                  <CustomTextFieldDark
+                    label="Frame Seq"
+                    value={frameSeq}
+                    setValue={setFrameSeq}
+                    type="number"
+                    // eslint-disable-next-line react/jsx-no-bind
+                    onKeyDownHandler={handleMoveToFrame}
+                    sx={{ mt: 1 }}
+                  />
+                </Box>
               </Box>
-              <Box
-                sx={{
-                  borderRadius: '12px',
-                  background: 'linear-gradient(180deg, #202838 80%, #373F4E 100%)',
-                  p: 1,
-                  height: `calc(100vh - 590px)`,
-                }}
-              >
-                <Typography sx={{ color: theme.palette.grey[300], fontSize: 15 }}>
-                  Audit Log Frame Detail
-                </Typography>
-                <CustomTextFieldDark
-                  label="Frame Seq"
-                  value={frameSeq}
-                  setValue={setFrameSeq}
-                  type="number"
-                  // eslint-disable-next-line react/jsx-no-bind
-                  onKeyDownHandler={handleMoveToFrame}
-                  sx={{ mt: 1 }}
-                />
-              </Box>
+
             </Box>
           </Grid>
         </Grid>

@@ -464,118 +464,119 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
                   {formatDateCustom(auditFrame?.date?.toString())}
                 </Typography>
               </Box>
-            </Box>
-            <Box
-              sx={{
-                borderRadius: '12px',
-                background: 'linear-gradient(180deg, #202838 80%, #373F4E 100%)',
-                p: 1,
-                height: `calc(100vh - 610px)`,
-              }}
-            >
-              <Typography sx={{ color: grey[300], fontSize: 15, mb: 1, mt: 0.5 }}>
-                Audit Log Frame Detail
-              </Typography>
-
               <Box
                 sx={{
-                  py: 1,
-                  px: 1,
-                  backgroundColor: primary.main,
-                  borderRadius: '8px',
-                  mb: 1,
+                  borderRadius: '12px',
+                  background: 'linear-gradient(180deg, #202838 80%, #373F4E 100%)',
+                  p: 1,
+                  height: `calc(100vh - 610px)`,
+                  overflowY: 'auto'
                 }}
               >
-                <Typography sx={{ color: grey[200], fontSize: 15 }}>Seq</Typography>
-                <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                  {auditFrame?.seq}
+                <Typography sx={{ color: grey[300], fontSize: 15, mb: 1, mt: 0.5 }}>
+                  Audit Log Frame Detail
                 </Typography>
-              </Box>
 
-              <Box
-                sx={{
-                  py: 1,
-                  px: 1,
-                  backgroundColor: grey[600],
-                  borderRadius: '8px',
-                  mb: 1,
-                }}
-              >
-                <Typography sx={{ color: grey[200], fontSize: 15 }}>Time</Typography>
-                <Typography
-                  sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}
-                  display="inline"
+                <Box
+                  sx={{
+                    py: 1,
+                    px: 1,
+                    backgroundColor: primary.main,
+                    borderRadius: '8px',
+                    mb: 1,
+                  }}
                 >
-                  {auditFrame?.time} &nbsp; {auditFrame?.time_ms}
-                </Typography>
-                <Typography
-                  variant="caption"
-                  display="inline"
-                  sx={{ fontSize: 12, ml: 0.3, color: common.white }}
-                >{`ms `}</Typography>
-                <Typography
-                  sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}
-                  display="inline"
-                >{` ${auditFrame?.time_us}`}</Typography>
-                <Typography
-                  variant="caption"
-                  display="inline"
-                  sx={{ fontSize: 12, ml: 0.3, color: common.white }}
-                >
-                  us
-                </Typography>
-              </Box>
+                  <Typography sx={{ color: grey[200], fontSize: 15 }}>Seq</Typography>
+                  <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
+                    {auditFrame?.seq}
+                  </Typography>
+                </Box>
 
-              <Grid container>
-                <Grid md={12}>
-                  <Box
-                    sx={{
-                      py: 1,
-                      px: 1,
-                      backgroundColor: grey[600],
-                      borderRadius: '8px',
-                      mb: 1,
-                    }}
+                <Box
+                  sx={{
+                    py: 1,
+                    px: 1,
+                    backgroundColor: grey[600],
+                    borderRadius: '8px',
+                    mb: 1,
+                  }}
+                >
+                  <Typography sx={{ color: grey[200], fontSize: 15 }}>Time</Typography>
+                  <Typography
+                    sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}
+                    display="inline"
                   >
-                    <Typography sx={{ color: grey[200], fontSize: 15 }}>Size</Typography>
-                    <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                      {auditFrame?.size}
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid md={6}>
-                  <Box
-                    sx={{
-                      py: 1,
-                      px: 1,
-                      backgroundColor: grey[600],
-                      borderRadius: '8px',
-                      mb: 1,
-                    }}
+                    {auditFrame?.time} &nbsp; {auditFrame?.time_ms}
+                  </Typography>
+                  <Typography
+                    variant="caption"
+                    display="inline"
+                    sx={{ fontSize: 12, ml: 0.3, color: common.white }}
+                  >{`ms `}</Typography>
+                  <Typography
+                    sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}
+                    display="inline"
+                  >{` ${auditFrame?.time_us}`}</Typography>
+                  <Typography
+                    variant="caption"
+                    display="inline"
+                    sx={{ fontSize: 12, ml: 0.3, color: common.white }}
                   >
-                    <Typography sx={{ color: grey[200], fontSize: 15 }}>Head</Typography>
-                    <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                      {auditFrame?.head}
-                    </Typography>
-                  </Box>
+                    us
+                  </Typography>
+                </Box>
+
+                <Grid container>
+                  <Grid md={12}>
+                    <Box
+                      sx={{
+                        py: 1,
+                        px: 1,
+                        backgroundColor: grey[600],
+                        borderRadius: '8px',
+                        mb: 1,
+                      }}
+                    >
+                      <Typography sx={{ color: grey[200], fontSize: 15 }}>Size</Typography>
+                      <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
+                        {auditFrame?.size}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid md={6}>
+                    <Box
+                      sx={{
+                        py: 1,
+                        px: 1,
+                        backgroundColor: grey[600],
+                        borderRadius: '8px',
+                        mb: 1,
+                      }}
+                    >
+                      <Typography sx={{ color: grey[200], fontSize: 15 }}>Head</Typography>
+                      <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
+                        {auditFrame?.head}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid md={6} sx={{ pl: 1 }}>
+                    <Box
+                      sx={{
+                        py: 1,
+                        px: 1,
+                        backgroundColor: grey[600],
+                        borderRadius: '8px',
+                        mb: 1,
+                      }}
+                    >
+                      <Typography sx={{ color: grey[200], fontSize: 15 }}>RID</Typography>
+                      <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
+                        {auditFrame?.rid}
+                      </Typography>
+                    </Box>
+                  </Grid>
                 </Grid>
-                <Grid md={6} sx={{ pl: 1 }}>
-                  <Box
-                    sx={{
-                      py: 1,
-                      px: 1,
-                      backgroundColor: grey[600],
-                      borderRadius: '8px',
-                      mb: 1,
-                    }}
-                  >
-                    <Typography sx={{ color: grey[200], fontSize: 15 }}>RID</Typography>
-                    <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                      {auditFrame?.rid}
-                    </Typography>
-                  </Box>
-                </Grid>
-              </Grid>
+              </Box>
             </Box>
           </Box>
         </Grid>
