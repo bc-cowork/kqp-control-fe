@@ -90,11 +90,11 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
         <Grid container>
           <Grid md={5} sx={{ pr: '10px' }}>
             {(issueInfoLoading || issueInfoValidating) ? (
-              <Box sx={{ p: 0.5, backgroundColor: grey[900], borderRadius: 1 }}>
+              <Box sx={{ p: 0.5, borderRadius: 1 }}>
                 <CircularProgress />
               </Box>
             ) : (
-              <Box sx={{ p: 0.5, backgroundColor: grey[900], borderRadius: 1 }}>
+              <Box sx={{ borderRadius: 1 }}>
                 <MemoryItemInfo issueInfo={issueInfo} />
                 <MemoryIssueInfoTable issueInfo={issueInfo} />
               </Box>

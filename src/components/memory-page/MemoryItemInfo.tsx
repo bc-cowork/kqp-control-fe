@@ -1,6 +1,7 @@
 'use client';
 
 import { Box, Stack, Typography } from '@mui/material';
+import { grey } from '@mui/material/colors';
 
 import { useTranslate } from 'src/locales';
 
@@ -35,9 +36,10 @@ export function MemoryItemInfo({ issueInfo }: Props) {
       sx={{
         background: 'linear-gradient(180deg, #202838 80%, #373F4E 100%)',
         borderRadius: '8px',
-        px: 3,
-        pt: 3,
+        px: 2,
+        pt: 2,
         pb: 2,
+        border: `1px solid ${grey[700]}`
       }}
     >
       <LabelValueRow label={t('item.left.seq')} value={issueInfo?.seq} />
