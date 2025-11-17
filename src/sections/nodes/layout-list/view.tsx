@@ -57,6 +57,7 @@ export function LayoutListView({ nodeId }: Props) {
                     <Table size='small'>
                         <TableHead>
                             <TableRow>
+                                <TableCell>{ }</TableCell>
                                 <TableCell>{t('table.id')}</TableCell>
                                 <TableCell>{t('table.layout_name')}</TableCell>
                                 <TableCell>{t('table.path')}</TableCell>
@@ -64,24 +65,25 @@ export function LayoutListView({ nodeId }: Props) {
                                 <TableCell>{t('table.process')}</TableCell>
                                 <TableCell>{t('table.channel_in')}</TableCell>
                                 <TableCell>{t('table.desc')}</TableCell>
+                                <TableCell>{ }</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {isLoading && (
                                 <TableRow>
-                                    <TableCell colSpan={7}>{t('loading') || 'Loading...'}</TableCell>
+                                    <TableCell colSpan={9}>{t('loading') || 'Loading...'}</TableCell>
                                 </TableRow>
                             )}
 
                             {error && (
                                 <TableRow>
-                                    <TableCell colSpan={7}>{t('error') || 'Failed to load'}</TableCell>
+                                    <TableCell colSpan={9}>{t('error') || 'Failed to load'}</TableCell>
                                 </TableRow>
                             )}
 
                             {!isLoading && !error && rows.length === 0 && (
                                 <TableRow>
-                                    <TableCell colSpan={7}>{t('empty') || 'No layouts'}</TableCell>
+                                    <TableCell colSpan={9}>{t('empty') || 'No layouts'}</TableCell>
                                 </TableRow>
                             )}
 
@@ -102,6 +104,7 @@ export function LayoutListView({ nodeId }: Props) {
                                     tabIndex={0}
 
                                 >
+                                    <TableCell>{ }</TableCell>
                                     <TableCell>{index + 1}</TableCell>
                                     <TableCell>{row.name}</TableCell>
                                     <TableCell>{row.path}</TableCell>
@@ -109,6 +112,7 @@ export function LayoutListView({ nodeId }: Props) {
                                     <TableCell>{row.process}</TableCell>
                                     <TableCell>{row.channel_in}</TableCell>
                                     <TableCell>{row.desc}</TableCell>
+                                    <TableCell>{ }</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

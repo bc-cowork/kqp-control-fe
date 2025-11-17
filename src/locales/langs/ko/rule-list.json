@@ -4,12 +4,12 @@
   },
   "table_header": {
     "id": "ID",
-    "name": "이름",
+    "name": "규칙 이름",
     "path": "경로",
     "timestamp": "타임스탬프",
     "ref_layout": "참조 레이아웃",
     "ref_process": "참조 프로세스",
-    "ref_actions": "참조 작업",
+    "ref_actions": "참조 액션",
     "desc": "설명"
   },
   "detail_table": {
@@ -19,7 +19,11 @@
     "process_no": "No",
     "process_name": "연관 프로세스",
     "process_usage_freq": "활용 빈도",
-    "script_title": "규칙 정의"
+    "script_title": "규칙 정의",
+    "ref_layout": "참조 레이아웃",
+    "ref_process": "참조 프로세스",
+    "ref_actions": "참조 액션",
+    "related_actions": "연관 액션"
   },
   "loading": "로딩 중...",
   "error": "작업을 불러오지 못했습니다",

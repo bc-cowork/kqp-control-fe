@@ -73,17 +73,17 @@ export default function Page({ params }: Props) {
                     <TableBody>
                         {isLoading ? (
                             <TableRow>
-                                <TableCell colSpan={8} align="center">
+                                <TableCell colSpan={10} align="center">
                                     <CircularProgress />
                                 </TableCell>
                             </TableRow>
                         ) : actionEmpty ? (
                             <TableRow>
-                                <TableCell colSpan={8}>No Process Found</TableCell>
+                                <TableCell colSpan={10}>No Process Found</TableCell>
                             </TableRow>
                         ) : error ? (
                             <TableRow>
-                                <TableCell colSpan={8}>Error Fetching Process</TableCell>
+                                <TableCell colSpan={10}>Error Fetching Process</TableCell>
                             </TableRow>
                         ) : (
                             <TableRow
@@ -160,7 +160,7 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
                     <TableHead>
                         <TableRow>
                             <TableCell>{ }</TableCell>
-                            <TableCell>{t('detail_table.layout_no')}</TableCell>
+                            <TableCell align='right'>{t('detail_table.layout_no')}</TableCell>
                             <TableCell>{t('detail_table.layout_name')}</TableCell>
                             <TableCell>{t('detail_table.layout_ref_freq')}</TableCell>
                             <TableCell>{ }</TableCell>
@@ -169,24 +169,24 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
                     <TableBody>
                         {loading && (
                             <TableRow>
-                                <TableCell colSpan={3}>{t('loading')}</TableCell>
+                                <TableCell colSpan={5}>{t('loading')}</TableCell>
                             </TableRow>
                         )}
                         {error && (
                             <TableRow>
-                                <TableCell colSpan={3}>{t('error')}</TableCell>
+                                <TableCell colSpan={5}>{t('error')}</TableCell>
                             </TableRow>
                         )}
                         {!loading && !error && layoutList.length === 0 && (
                             <TableRow>
-                                <TableCell colSpan={3}>{t('empty')}</TableCell>
+                                <TableCell colSpan={5}>{t('empty')}</TableCell>
                             </TableRow>
                         )}
                         {layoutList.map((item: any, idx: number) => (
                             <TableRow hover key={idx}
                             >
                                 <TableCell>{ }</TableCell>
-                                <TableCell>{idx + 1}</TableCell>
+                                <TableCell align='right'>{idx + 1}</TableCell>
                                 <TableCell
                                     onClick={() =>
                                         router.push(`${paths.dashboard.nodes.layoutDetail(node, item.url.split('/')[item.url.split('/').length - 1])}`)
@@ -212,7 +212,7 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
                     <TableHead>
                         <TableRow>
                             <TableCell>{ }</TableCell>
-                            <TableCell>{t('detail_table.process_no')}</TableCell>
+                            <TableCell align='right'>{t('detail_table.process_no')}</TableCell>
                             <TableCell>{t('detail_table.process_name')}</TableCell>
                             <TableCell>{t('detail_table.process_usage_freq')}</TableCell>
                             <TableCell>{ }</TableCell>
@@ -222,17 +222,17 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
                     <TableBody>
                         {loading && (
                             <TableRow>
-                                <TableCell colSpan={3}>{t('loading')}</TableCell>
+                                <TableCell colSpan={5}>{t('loading')}</TableCell>
                             </TableRow>
                         )}
                         {error && (
                             <TableRow>
-                                <TableCell colSpan={3}>{t('error')}</TableCell>
+                                <TableCell colSpan={5}>{t('error')}</TableCell>
                             </TableRow>
                         )}
                         {!loading && !error && processList.length === 0 && (
                             <TableRow>
-                                <TableCell colSpan={3}>{t('empty')}</TableCell>
+                                <TableCell colSpan={5}>{t('empty')}</TableCell>
                             </TableRow>
                         )}
                         {processList.map((item: any, idx: number) => (
@@ -242,7 +242,7 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
 
                             >
                                 <TableCell>{ }</TableCell>
-                                <TableCell>{idx + 1}</TableCell>
+                                <TableCell align='right'>{idx + 1}</TableCell>
                                 <TableCell
                                     onClick={() =>
                                         router.push(`${paths.dashboard.nodes.processDetail(node, item.url.split('/')[item.url.split('/').length - 1])}`)

@@ -40,13 +40,14 @@ export function RuleList({ selectedNodeId }: Props) {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell align="right">{t('table_header.id')}</TableCell>
+            <TableCell align="left"></TableCell>
+            <TableCell align="left">{t('table_header.id')}</TableCell>
             <TableCell>{t('table_header.name')}</TableCell>
             <TableCell>{t('table_header.path')}</TableCell>
-            <TableCell align="right">{t('table_header.timestamp')}</TableCell>
-            <TableCell align="right">{t('table_header.ref_layout')}</TableCell>
-            <TableCell align="right">{t('table_header.ref_process')}</TableCell>
-            <TableCell align="right">{t('table_header.ref_actions')}</TableCell>
+            <TableCell align="left">{t('table_header.timestamp')}</TableCell>
+            <TableCell align="left">{t('table_header.ref_layout')}</TableCell>
+            <TableCell align="left">{t('table_header.ref_process')}</TableCell>
+            <TableCell align="left">{t('table_header.ref_actions')}</TableCell>
             <TableCell>{t('table_header.desc')}</TableCell>
           </TableRow>
         </TableHead>
@@ -59,11 +60,11 @@ export function RuleList({ selectedNodeId }: Props) {
             </TableRow>
           ) : processesEmpty ? (
             <TableRow>
-              <TableCell colSpan={6}>No Processes Found</TableCell>
+              <TableCell colSpan={9}>No Processes Found</TableCell>
             </TableRow>
           ) : processError ? (
             <TableRow>
-              <TableCell colSpan={6}>Error Fetching Process List</TableCell>
+              <TableCell colSpan={9}>Error Fetching Process List</TableCell>
             </TableRow>
           ) : (
             processes.map((process: any, index: number) => (
@@ -72,13 +73,14 @@ export function RuleList({ selectedNodeId }: Props) {
                 onClick={() => router.push(`/dashboard/nodes/${selectedNodeId}/rules/${process.name}`)}
                 sx={{ cursor: 'pointer' }}
               >
-                <TableCell align="right">{index + 1}</TableCell>
+                <TableCell align="left"></TableCell>
+                <TableCell align="left">{index + 1}</TableCell>
                 <TableCell>{process.name}</TableCell>
                 <TableCell>{process.path}</TableCell>
-                <TableCell align="right">{process.timestamp}</TableCell>
-                <TableCell align="right">{process.ref_layout}</TableCell>
-                <TableCell align="right">{Number(process?.ref_process)?.toLocaleString()}</TableCell>
-                <TableCell align="right">{process.ref_actions}</TableCell>
+                <TableCell align="left">{process.timestamp}</TableCell>
+                <TableCell align="left">{process.ref_layout}</TableCell>
+                <TableCell align="left">{Number(process?.ref_process)?.toLocaleString()}</TableCell>
+                <TableCell align="left">{process.ref_actions}</TableCell>
                 <TableCell>{process.desc}</TableCell>
               </TableRow>
             ))
