@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Typography, Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Typography, Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, CircularProgress } from '@mui/material';
 import useSWR from 'swr';
 
 import { DashboardContent } from 'src/layouts/dashboard';
@@ -31,12 +31,13 @@ export default function Page({ params }: Props) {
     const url = endpoints.actions.detail(node, decodedAction);
     const { data, error, isLoading } = useSWR(url, fetcher);
 
+    const actionItem = data?.data || {};
+    const actionEmpty = actionItem === null;
     const layoutList = data?.data?.layouts || [];
     const processList = data?.data?.processes || [];
     const script = data?.data?.definition || '';
     const refLayoutCount = data?.data?.ref_layout || '-'
     const refProcessCount = data?.data?.ref_process || '-'
-    const timeStamp = data?.data?.timestamp || '-'
 
 
     return (
@@ -50,9 +51,61 @@ export default function Page({ params }: Props) {
             />
 
             <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{decodedAction}</Typography>
-            <Typography sx={{ textAlign: 'right', color: grey[400] }}>
-                {timeStamp}
-            </Typography>
+            <TableContainer
+                component={Paper}
+                sx={{ height: 'auto', my: 2 }}
+            >
+                <Table size="small">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>{ }</TableCell>
+                            <TableCell>{t('table.action_name')}</TableCell>
+                            <TableCell>{t('table.path')}</TableCell>
+                            <TableCell align="left">{t('table.timestamp')}</TableCell>
+                            <TableCell align="left">{t('table.ref_layout')}</TableCell>
+                            <TableCell>{t('table.ref_process')}</TableCell>
+                            <TableCell>{ }</TableCell>
+                            <TableCell>{ }</TableCell>
+                            <TableCell align="left">{t('table.desc')}</TableCell>
+                            <TableCell>{ }</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {isLoading ? (
+                            <TableRow>
+                                <TableCell colSpan={8} align="center">
+                                    <CircularProgress />
+                                </TableCell>
+                            </TableRow>
+                        ) : actionEmpty ? (
+                            <TableRow>
+                                <TableCell colSpan={8}>No Process Found</TableCell>
+                            </TableRow>
+                        ) : error ? (
+                            <TableRow>
+                                <TableCell colSpan={8}>Error Fetching Process</TableCell>
+                            </TableRow>
+                        ) : (
+                            <TableRow
+                                key={actionItem.name}
+                                hover
+                            >
+                                <TableCell align="left">{ }</TableCell>
+                                <TableCell align="left">{actionItem.name}</TableCell>
+                                <TableCell>{actionItem.path}</TableCell>
+                                <TableCell align='left'>{actionItem.timestamp}</TableCell>
+                                <TableCell align="left">{actionItem.ref_layout}</TableCell>
+                                <TableCell align="left">{actionItem.ref_process}</TableCell>
+                                <TableCell align="left">{ }</TableCell>
+                                <TableCell align="left">{ }</TableCell>
+                                <TableCell align="left">{actionItem?.desc}</TableCell>
+                                <TableCell align="left">{ }</TableCell>
+
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+            </TableContainer>
             <Box sx={{ mt: 3 }}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={7}>
@@ -106,9 +159,11 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
                 <Table size="small">
                     <TableHead>
                         <TableRow>
+                            <TableCell>{ }</TableCell>
                             <TableCell>{t('detail_table.layout_no')}</TableCell>
                             <TableCell>{t('detail_table.layout_name')}</TableCell>
                             <TableCell>{t('detail_table.layout_ref_freq')}</TableCell>
+                            <TableCell>{ }</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -130,6 +185,7 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
                         {layoutList.map((item: any, idx: number) => (
                             <TableRow hover key={idx}
                             >
+                                <TableCell>{ }</TableCell>
                                 <TableCell>{idx + 1}</TableCell>
                                 <TableCell
                                     onClick={() =>
@@ -142,6 +198,7 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
                                     }}
                                 >{item.name}</TableCell>
                                 <TableCell>{item.ref_count}</TableCell>
+                                <TableCell>{ }</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
@@ -154,9 +211,12 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
                 <Table size="small">
                     <TableHead>
                         <TableRow>
+                            <TableCell>{ }</TableCell>
                             <TableCell>{t('detail_table.process_no')}</TableCell>
                             <TableCell>{t('detail_table.process_name')}</TableCell>
                             <TableCell>{t('detail_table.process_usage_freq')}</TableCell>
+                            <TableCell>{ }</TableCell>
+
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -181,6 +241,7 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
                                 key={idx}
 
                             >
+                                <TableCell>{ }</TableCell>
                                 <TableCell>{idx + 1}</TableCell>
                                 <TableCell
                                     onClick={() =>
@@ -192,6 +253,7 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
                                     }}
                                 >{item.name}</TableCell>
                                 <TableCell>{item.ref_count}</TableCell>
+                                <TableCell>{ }</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

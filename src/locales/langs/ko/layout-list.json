@@ -5,7 +5,7 @@
   },
   "table": {
     "id": "ID",
-    "layout_name": "레이아웃명",
+    "layout_name": "레이아웃 이름",
     "path": "경로",
     "timestamp": "타임스탬프",
     "process": "프로세스",
@@ -18,6 +18,12 @@
   "detail_table": {
     "action_title": "연관 작업",
     "process_title": "연관 프로세스",
-    "script_title": "레이아웃 정의"
+    "script_title": "레이아웃 정의",
+    "layout_name": "레이아웃 이름",
+    "path": "경로",
+    "timestamp": "타임스탬프",
+    "process": "프로세스",
+    "channel_in": "채널.IN",
+    "description": "설명"
   }
 }

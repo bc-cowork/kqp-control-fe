@@ -57,6 +57,7 @@ export function ActionListView({ nodeId }: Props) {
                     <Table size='small'>
                         <TableHead>
                             <TableRow>
+                                <TableCell>{ }</TableCell>
                                 <TableCell>{t('table.id')}</TableCell>
                                 <TableCell>{t('table.action_name')}</TableCell>
                                 <TableCell>{t('table.path')}</TableCell>
@@ -64,6 +65,7 @@ export function ActionListView({ nodeId }: Props) {
                                 <TableCell>{t('table.ref_layout')}</TableCell>
                                 <TableCell>{t('table.ref_process')}</TableCell>
                                 <TableCell>{t('table.desc')}</TableCell>
+                                <TableCell>{ }</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -101,6 +103,7 @@ export function ActionListView({ nodeId }: Props) {
                                         }
                                     }}
                                 >
+                                    <TableCell>{ }</TableCell>
                                     <TableCell>{index + 1}</TableCell>
                                     <TableCell>{row.name}</TableCell>
                                     <TableCell>{row.path}</TableCell>
@@ -108,6 +111,7 @@ export function ActionListView({ nodeId }: Props) {
                                     <TableCell>{row.ref_layout}</TableCell>
                                     <TableCell>{row.ref_process}</TableCell>
                                     <TableCell>{row.desc}</TableCell>
+                                    <TableCell>{ }</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

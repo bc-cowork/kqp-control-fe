@@ -53,7 +53,7 @@ export function ProcessDetail({ selectedNodeId, page = 'process' }: Props) {
             <TableCell align="right">{t('table_header.cpu')}</TableCell>
             <TableCell align="right">{t('table_header.mem')}</TableCell>
             <TableCell align="right">{t('table_header.ppid')}</TableCell>
-            <TableCell>{t('table_header.command')}</TableCell>
+            <TableCell align='right'>{t('table_header.command')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -93,7 +93,7 @@ export function ProcessDetail({ selectedNodeId, page = 'process' }: Props) {
                 <TableCell align="right">{process.CPU}</TableCell>
                 <TableCell align="right">{Number(process?.MEM)?.toLocaleString()}</TableCell>
                 <TableCell align="right">{process.PPID}</TableCell>
-                <TableCell>{process.COMMAND}</TableCell>
+                <TableCell align='right'>{process.COMMAND}</TableCell>
               </TableRow>
             ))
           )}
