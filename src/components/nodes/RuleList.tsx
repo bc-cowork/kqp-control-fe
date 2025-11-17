@@ -36,7 +36,7 @@ export function RuleList({ selectedNodeId }: Props) {
 
 
   return (
-    <TableContainer component={Paper} sx={{ height: 'calc(100vh - 380px)' }}>
+    <TableContainer component={Paper}>
       <Table size="small">
         <TableHead>
           <TableRow>
