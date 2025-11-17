@@ -145,7 +145,7 @@ export default function Page({ params }: Props) {
                             <Typography variant="body2" sx={{ fontWeight: 600 }}>{t('detail_table.script_title')}</Typography>
                         </Box>
 
-                        <Box sx={{ p: 2, bgcolor: '#202838', height: 'calc(100% - 48px)', overflowY: 'auto' }}>
+                        <Box sx={{ bgcolor: '#202838', height: 'calc(100% - 48px)', overflowY: 'auto' }}>
                             <Box component="pre" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: 13, color: '#AFB7C8', m: 0 }}>
                                 <SyntaxHighlighter
                                     language="moonscript"

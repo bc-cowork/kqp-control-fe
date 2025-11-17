@@ -47,13 +47,13 @@ export default function Page({ params }: Props) {
       <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{t('top.layout')}{" : "}{decodedLayout}</Typography>
       <Typography sx={{ fontSize: 15, fontWeight: 500, mt: 2, textAlign: 'right', color: grey[400], p: 2 }}>{timeStamp}</Typography>
 
-      <Paper sx={{ height: '100%', backgroundColor: 'black', p: 0.5 }} >
+      <Paper sx={{ height: '100%', }} >
 
         <Box sx={{ backgroundColor: '#667085', p: 1.5, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
           <Typography sx={{ fontWeight: 600, color: grey[300] }}>{t('detail_table.script_title')}</Typography>
         </Box>
 
-        <Box sx={{ p: 2, bgcolor: '#202838', height: 'calc(100vh - 48px)', overflowY: 'auto' }}>
+        <Box sx={{ bgcolor: '#202838', height: 'calc(100vh - 48px)', overflowY: 'auto' }}>
           <Box component="pre" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: 13, color: '#AFB7C8', m: 0 }}>
             <SyntaxHighlighter
               language="moonscript"
