@@ -202,7 +202,7 @@ export function DashboardView() {
                 </Box>
               </Stack>
               {selectedNode ? (
-                <Grid container>
+                <Grid container spacing={1}>
                   <Grid md={4}>
                     <NodeStatus selectedNodeParam={selectedNodeParam} selectedNode={selectedNode} />
                   </Grid>
