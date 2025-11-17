@@ -45,9 +45,10 @@ type Props = {
   selectedNodeId: string;
   selectedFile: string;
   selectedSeq: string;
+  head: string;
 };
 
-export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Props) {
+export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head }: Props) {
   const { t } = useTranslate('audit-frame-detail');
   const [seq, setSeq] = useState<number>(Number(selectedSeq));
   const [apiSeq, setApiSeq] = useState<number>(Number(selectedSeq));
@@ -233,7 +234,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
   return (
     <>
       <Grid container>
-        <Grid md={9} sx={{ pr: 1.5 }}>
+        <Grid md={9} sx={{ pr: 0.5 }}>
           <AddFilter
             filters={filters}
             setFilters={setFilters}
@@ -273,9 +274,31 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
                 <TableHead>
                   <TableRow>
                     <TableCell align="right">ID</TableCell>
-                    <TableCell align="right">LEN</TableCell>
-                    <TableCell align="right">DATA</TableCell>
-                    <TableCell>Desc.</TableCell>
+                    <TableCell align="right">Len</TableCell>
+                    <TableCell align="right">Data
+                      <span
+                        style={{
+                          fontSize: '22px',
+                          marginLeft: '4px',
+                          color: '#FFC711'
+                        }}
+                      >*</span>
+                      <div
+                        style={{
+                          position: 'relative',
+                          right: '10px',
+                          bottom: '-6px',
+                          justifySelf: 'flex-end',
+                          width: '40px',
+                          height: '4px',
+                          backgroundColor: '#FFC711',
+                          borderTopLeftRadius: '2px',
+                          borderTopRightRadius: '2px'
+                        }}
+                      >
+                      </div>
+                    </TableCell>
+                    <TableCell>Description</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody sx={{ overflow: 'auto' }}>
@@ -293,9 +316,9 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
                             <Box
                               component="span"
                               sx={{
-                                backgroundColor: '#EBFBE9',
-                                color: success.dark,
-                                border: `1px solid #DDF4DA`,
+                                backgroundColor: '#1D2F20',
+                                border: `1px solid #36573C`,
+                                color: '#7EE081',
                                 borderRadius: '4px',
                                 px: 0.5,
                               }}
@@ -307,9 +330,9 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
                             <Box
                               component="span"
                               sx={{
-                                backgroundColor: '#EFF6FF',
-                                color: primary.dark,
-                                border: `1px solid #DFEAFF`,
+                                backgroundColor: '#1D2654',
+                                border: `1px solid #212447`,
+                                color: '#7AA2FF',
                                 borderRadius: '4px',
                                 px: 0.5,
                               }}
@@ -321,9 +344,9 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
                             <Box
                               component="span"
                               sx={{
-                                backgroundColor: '#FFF9EC',
-                                color: warning.dark,
-                                border: `1px solid #FFEFBD`,
+                                backgroundColor: '#31291D',
+                                border: `1px solid #49381F`,
+                                color: '#FFC711',
                                 borderRadius: '4px',
                                 px: 0.5,
                               }}

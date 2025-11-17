@@ -169,7 +169,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                             key={index}
                             onClick={() => {
                               router.push(
-                                `/dashboard/nodes/${selectedNodeId}/audit-log/${selectedFile}/${auditFrame.seq}`
+                                `/dashboard/nodes/${selectedNodeId}/audit-log/${selectedFile}/${auditFrame.seq}:${auditFrame.head}`
                               );
                             }}
                             sx={{ cursor: 'pointer' }}
@@ -358,8 +358,9 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
 
             </Box>
           </Grid>
-        </Grid>
-      )}
+        </Grid >
+      )
+      }
     </>
   );
 }
