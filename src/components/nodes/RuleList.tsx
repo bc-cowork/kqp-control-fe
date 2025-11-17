@@ -40,7 +40,7 @@ export function RuleList({ selectedNodeId }: Props) {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell align="left"></TableCell>
+            <TableCell align="left" />
             <TableCell align="left">{t('table_header.id')}</TableCell>
             <TableCell>{t('table_header.name')}</TableCell>
             <TableCell>{t('table_header.path')}</TableCell>
@@ -73,7 +73,7 @@ export function RuleList({ selectedNodeId }: Props) {
                 onClick={() => router.push(`/dashboard/nodes/${selectedNodeId}/rules/${process.name}`)}
                 sx={{ cursor: 'pointer' }}
               >
-                <TableCell align="left"></TableCell>
+                <TableCell align="left" />
                 <TableCell align="left">{index + 1}</TableCell>
                 <TableCell>{process.name}</TableCell>
                 <TableCell>{process.path}</TableCell>

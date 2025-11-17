@@ -295,8 +295,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                           borderTopLeftRadius: '2px',
                           borderTopRightRadius: '2px'
                         }}
-                      >
-                      </div>
+                      />
                     </TableCell>
                     <TableCell>{t('top.description')}</TableCell>
                   </TableRow>

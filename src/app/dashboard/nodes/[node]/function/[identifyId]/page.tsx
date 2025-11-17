@@ -62,24 +62,22 @@ export default function Page({ params }: Props) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {
-                            <TableRow
-                                key={detail.name}
-                                sx={{ cursor: 'pointer' }}
-                                tabIndex={0}
-                            >
-                                <TableCell>{ }</TableCell>
-                                <TableCell>{detail.function.name}</TableCell>
-                                <TableCell>{detail.function.path}</TableCell>
-                                <TableCell>{detail.function.timestamp}</TableCell>
-                                <TableCell>{detail.function.ref_identifies}</TableCell>
-                                <TableCell>{ }</TableCell>
-                                <TableCell>{ }</TableCell>
-                                <TableCell>{ }</TableCell>
-                                <TableCell>{detail.function.desc}</TableCell>
-                                <TableCell>{ }</TableCell>
-                            </TableRow>
-                        }
+                        <TableRow
+                            key={detail.name}
+                            sx={{ cursor: 'pointer' }}
+                            tabIndex={0}
+                        >
+                            <TableCell>{ }</TableCell>
+                            <TableCell>{detail.function.name}</TableCell>
+                            <TableCell>{detail.function.path}</TableCell>
+                            <TableCell>{detail.function.timestamp}</TableCell>
+                            <TableCell>{detail.function.ref_identifies}</TableCell>
+                            <TableCell>{ }</TableCell>
+                            <TableCell>{ }</TableCell>
+                            <TableCell>{ }</TableCell>
+                            <TableCell>{detail.function.desc}</TableCell>
+                            <TableCell>{ }</TableCell>
+                        </TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>

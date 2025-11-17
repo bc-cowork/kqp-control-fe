@@ -65,24 +65,22 @@ export default function Page({ params }: Props) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {
-                            <TableRow
-                                key={detail.name}
-                                sx={{ cursor: 'pointer' }}
-                            >
-                                <TableCell>{ }</TableCell>
-                                <TableCell>{detail.name}</TableCell>
-                                <TableCell>{detail.path}</TableCell>
-                                <TableCell>{detail.timestamp}</TableCell>
-                                <TableCell>{detail.ref_specs}</TableCell>
-                                <TableCell>{ }</TableCell>
-                                <TableCell>{ }</TableCell>
-                                <TableCell>{ }</TableCell>
-                                <TableCell>{ }</TableCell>
-                                <TableCell>{detail.desc}</TableCell>
-                                <TableCell>{ }</TableCell>
-                            </TableRow>
-                        }
+                        <TableRow
+                            key={detail.name}
+                            sx={{ cursor: 'pointer' }}
+                        >
+                            <TableCell>{ }</TableCell>
+                            <TableCell>{detail.name}</TableCell>
+                            <TableCell>{detail.path}</TableCell>
+                            <TableCell>{detail.timestamp}</TableCell>
+                            <TableCell>{detail.ref_specs}</TableCell>
+                            <TableCell>{ }</TableCell>
+                            <TableCell>{ }</TableCell>
+                            <TableCell>{ }</TableCell>
+                            <TableCell>{ }</TableCell>
+                            <TableCell>{detail.desc}</TableCell>
+                            <TableCell>{ }</TableCell>
+                        </TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>
