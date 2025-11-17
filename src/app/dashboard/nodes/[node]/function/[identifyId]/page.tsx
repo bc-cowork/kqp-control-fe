@@ -98,7 +98,7 @@ export default function Page({ params }: Props) {
                                                         <TableRow>
                                                             <TableCell align='right'>{ }</TableCell>
                                                             <TableCell align='right'>{t('detail_table.no')}</TableCell>
-                                                            <TableCell>{t('detail_table.related_spec')}</TableCell>
+                                                            <TableCell>{t('detail_table.related_identifier')}</TableCell>
                                                             <TableCell>{t('detail_table.ref_freq')}</TableCell>
                                                         </TableRow>
                                                     </TableHead>

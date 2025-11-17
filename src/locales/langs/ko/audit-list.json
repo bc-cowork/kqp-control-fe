@@ -13,7 +13,7 @@
     "go_to_page": "이동할 페이지"
   },
   "table_header": {
-    "no": "번호",
+    "no": "No",
     "date": "날짜",
     "type": "로그 종류",
     "size": "크기",

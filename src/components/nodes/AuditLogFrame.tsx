@@ -298,7 +298,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                       >
                       </div>
                     </TableCell>
-                    <TableCell>Description</TableCell>
+                    <TableCell>{t('top.description')}</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody sx={{ overflow: 'auto' }}>

@@ -4,7 +4,7 @@
     "outbound": "채널 송출"
   },
   "table": {
-    "id": "식별자",
+    "id": "ID",
     "name": "이름",
     "topic": "토픽",
     "type": "프로토콜 유형",

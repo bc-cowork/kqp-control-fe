@@ -2,7 +2,8 @@
   "top": {
     "audit_logs": "증적 로그 목록",
     "list": "목록",
-    "detail": "프레임 세부 정보"
+    "detail": "프레임 세부 정보",
+    "description": "설명"
   },
   "search_ui": {
     "add_filter": "검색 조건 추가",
