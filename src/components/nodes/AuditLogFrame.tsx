@@ -45,9 +45,10 @@ type Props = {
   selectedNodeId: string;
   selectedFile: string;
   selectedSeq: string;
+  head: string;
 };
 
-export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Props) {
+export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head }: Props) {
   const { t } = useTranslate('audit-frame-detail');
   const [seq, setSeq] = useState<number>(Number(selectedSeq));
   const [apiSeq, setApiSeq] = useState<number>(Number(selectedSeq));
@@ -233,7 +234,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
   return (
     <>
       <Grid container>
-        <Grid md={9} sx={{ pr: 1.5 }}>
+        <Grid md={9} sx={{ pr: 0.5 }}>
           <AddFilter
             filters={filters}
             setFilters={setFilters}
@@ -273,9 +274,30 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
                 <TableHead>
                   <TableRow>
                     <TableCell align="right">ID</TableCell>
-                    <TableCell align="right">LEN</TableCell>
-                    <TableCell align="right">DATA</TableCell>
-                    <TableCell>Desc.</TableCell>
+                    <TableCell align="right">Len</TableCell>
+                    <TableCell align="right">Data
+                      <span
+                        style={{
+                          fontSize: '22px',
+                          marginLeft: '4px',
+                          color: '#FFC711'
+                        }}
+                      >*</span>
+                      <div
+                        style={{
+                          position: 'relative',
+                          right: '10px',
+                          bottom: '-6px',
+                          justifySelf: 'flex-end',
+                          width: '40px',
+                          height: '4px',
+                          backgroundColor: '#FFC711',
+                          borderTopLeftRadius: '2px',
+                          borderTopRightRadius: '2px'
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell>{t('top.description')}</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody sx={{ overflow: 'auto' }}>
@@ -293,9 +315,9 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
                             <Box
                               component="span"
                               sx={{
-                                backgroundColor: '#EBFBE9',
-                                color: success.dark,
-                                border: `1px solid #DDF4DA`,
+                                backgroundColor: '#1D2F20',
+                                border: `1px solid #36573C`,
+                                color: '#7EE081',
                                 borderRadius: '4px',
                                 px: 0.5,
                               }}
@@ -307,9 +329,9 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
                             <Box
                               component="span"
                               sx={{
-                                backgroundColor: '#EFF6FF',
-                                color: primary.dark,
-                                border: `1px solid #DFEAFF`,
+                                backgroundColor: '#1D2654',
+                                border: `1px solid #212447`,
+                                color: '#7AA2FF',
                                 borderRadius: '4px',
                                 px: 0.5,
                               }}
@@ -321,9 +343,9 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
                             <Box
                               component="span"
                               sx={{
-                                backgroundColor: '#FFF9EC',
-                                color: warning.dark,
-                                border: `1px solid #FFEFBD`,
+                                backgroundColor: '#31291D',
+                                border: `1px solid #49381F`,
+                                color: '#FFC711',
                                 borderRadius: '4px',
                                 px: 0.5,
                               }}
@@ -464,118 +486,119 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq }: Pro
                   {formatDateCustom(auditFrame?.date?.toString())}
                 </Typography>
               </Box>
-            </Box>
-            <Box
-              sx={{
-                borderRadius: '12px',
-                background: 'linear-gradient(180deg, #202838 80%, #373F4E 100%)',
-                p: 1,
-                height: `calc(100vh - 610px)`,
-              }}
-            >
-              <Typography sx={{ color: grey[300], fontSize: 15, mb: 1, mt: 0.5 }}>
-                Audit Log Frame Detail
-              </Typography>
-
               <Box
                 sx={{
-                  py: 1,
-                  px: 1,
-                  backgroundColor: primary.main,
-                  borderRadius: '8px',
-                  mb: 1,
+                  borderRadius: '12px',
+                  background: 'linear-gradient(180deg, #202838 80%, #373F4E 100%)',
+                  p: 1,
+                  height: `calc(100vh - 610px)`,
+                  overflowY: 'auto'
                 }}
               >
-                <Typography sx={{ color: grey[200], fontSize: 15 }}>Seq</Typography>
-                <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                  {auditFrame?.seq}
+                <Typography sx={{ color: grey[300], fontSize: 15, mb: 1, mt: 0.5 }}>
+                  Audit Log Frame Detail
                 </Typography>
-              </Box>
 
-              <Box
-                sx={{
-                  py: 1,
-                  px: 1,
-                  backgroundColor: grey[600],
-                  borderRadius: '8px',
-                  mb: 1,
-                }}
-              >
-                <Typography sx={{ color: grey[200], fontSize: 15 }}>Time</Typography>
-                <Typography
-                  sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}
-                  display="inline"
+                <Box
+                  sx={{
+                    py: 1,
+                    px: 1,
+                    backgroundColor: primary.main,
+                    borderRadius: '8px',
+                    mb: 1,
+                  }}
                 >
-                  {auditFrame?.time} &nbsp; {auditFrame?.time_ms}
-                </Typography>
-                <Typography
-                  variant="caption"
-                  display="inline"
-                  sx={{ fontSize: 12, ml: 0.3, color: common.white }}
-                >{`ms `}</Typography>
-                <Typography
-                  sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}
-                  display="inline"
-                >{` ${auditFrame?.time_us}`}</Typography>
-                <Typography
-                  variant="caption"
-                  display="inline"
-                  sx={{ fontSize: 12, ml: 0.3, color: common.white }}
-                >
-                  us
-                </Typography>
-              </Box>
+                  <Typography sx={{ color: grey[200], fontSize: 15 }}>Seq</Typography>
+                  <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
+                    {auditFrame?.seq}
+                  </Typography>
+                </Box>
 
-              <Grid container>
-                <Grid md={12}>
-                  <Box
-                    sx={{
-                      py: 1,
-                      px: 1,
-                      backgroundColor: grey[600],
-                      borderRadius: '8px',
-                      mb: 1,
-                    }}
+                <Box
+                  sx={{
+                    py: 1,
+                    px: 1,
+                    backgroundColor: grey[600],
+                    borderRadius: '8px',
+                    mb: 1,
+                  }}
+                >
+                  <Typography sx={{ color: grey[200], fontSize: 15 }}>Time</Typography>
+                  <Typography
+                    sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}
+                    display="inline"
                   >
-                    <Typography sx={{ color: grey[200], fontSize: 15 }}>Size</Typography>
-                    <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                      {auditFrame?.size}
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid md={6}>
-                  <Box
-                    sx={{
-                      py: 1,
-                      px: 1,
-                      backgroundColor: grey[600],
-                      borderRadius: '8px',
-                      mb: 1,
-                    }}
+                    {auditFrame?.time} &nbsp; {auditFrame?.time_ms}
+                  </Typography>
+                  <Typography
+                    variant="caption"
+                    display="inline"
+                    sx={{ fontSize: 12, ml: 0.3, color: common.white }}
+                  >{`ms `}</Typography>
+                  <Typography
+                    sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}
+                    display="inline"
+                  >{` ${auditFrame?.time_us}`}</Typography>
+                  <Typography
+                    variant="caption"
+                    display="inline"
+                    sx={{ fontSize: 12, ml: 0.3, color: common.white }}
                   >
-                    <Typography sx={{ color: grey[200], fontSize: 15 }}>Head</Typography>
-                    <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                      {auditFrame?.head}
-                    </Typography>
-                  </Box>
+                    us
+                  </Typography>
+                </Box>
+
+                <Grid container>
+                  <Grid md={12}>
+                    <Box
+                      sx={{
+                        py: 1,
+                        px: 1,
+                        backgroundColor: grey[600],
+                        borderRadius: '8px',
+                        mb: 1,
+                      }}
+                    >
+                      <Typography sx={{ color: grey[200], fontSize: 15 }}>Size</Typography>
+                      <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
+                        {auditFrame?.size}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid md={6}>
+                    <Box
+                      sx={{
+                        py: 1,
+                        px: 1,
+                        backgroundColor: grey[600],
+                        borderRadius: '8px',
+                        mb: 1,
+                      }}
+                    >
+                      <Typography sx={{ color: grey[200], fontSize: 15 }}>Head</Typography>
+                      <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
+                        {auditFrame?.head}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid md={6} sx={{ pl: 1 }}>
+                    <Box
+                      sx={{
+                        py: 1,
+                        px: 1,
+                        backgroundColor: grey[600],
+                        borderRadius: '8px',
+                        mb: 1,
+                      }}
+                    >
+                      <Typography sx={{ color: grey[200], fontSize: 15 }}>RID</Typography>
+                      <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
+                        {auditFrame?.rid}
+                      </Typography>
+                    </Box>
+                  </Grid>
                 </Grid>
-                <Grid md={6} sx={{ pl: 1 }}>
-                  <Box
-                    sx={{
-                      py: 1,
-                      px: 1,
-                      backgroundColor: grey[600],
-                      borderRadius: '8px',
-                      mb: 1,
-                    }}
-                  >
-                    <Typography sx={{ color: grey[200], fontSize: 15 }}>RID</Typography>
-                    <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                      {auditFrame?.rid}
-                    </Typography>
-                  </Box>
-                </Grid>
-              </Grid>
+              </Box>
             </Box>
           </Box>
         </Grid>

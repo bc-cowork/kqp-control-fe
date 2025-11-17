@@ -41,14 +41,51 @@ export default function Page({ params }: Props) {
                 ]}
             />
 
-            <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>
+            <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2, mb: 2 }}>
                 FUNCTION: {detail?.function?.name || '-'}
             </Typography>
+
+            <TableContainer component={Paper}>
+                <Table size="small">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>{ }</TableCell>
+                            <TableCell>{t("table.function_name")}</TableCell>
+                            <TableCell>{t("table.path")}</TableCell>
+                            <TableCell>{t("table.timestamp")}</TableCell>
+                            <TableCell>{t("table.ref_identifies")}</TableCell>
+                            <TableCell>{ }</TableCell>
+                            <TableCell>{ }</TableCell>
+                            <TableCell>{ }</TableCell>
+                            <TableCell>{t("table.desc")}</TableCell>
+                            <TableCell>{ }</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow
+                            key={detail.name}
+                            sx={{ cursor: 'pointer' }}
+                            tabIndex={0}
+                        >
+                            <TableCell>{ }</TableCell>
+                            <TableCell>{detail.function.name}</TableCell>
+                            <TableCell>{detail.function.path}</TableCell>
+                            <TableCell>{detail.function.timestamp}</TableCell>
+                            <TableCell>{detail.function.ref_identifies}</TableCell>
+                            <TableCell>{ }</TableCell>
+                            <TableCell>{ }</TableCell>
+                            <TableCell>{ }</TableCell>
+                            <TableCell>{detail.function.desc}</TableCell>
+                            <TableCell>{ }</TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </TableContainer>
 
             <Grid container spacing={3} sx={{ mt: 3 }}>
                 <Grid item xs={7}>
                     <Grid>
-                        <Box sx={{ mt: 3 }}>
+                        <Box >
                             <Paper>
                                 <Grid container>
                                     <Grid item xs={12}>
@@ -57,32 +94,36 @@ export default function Page({ params }: Props) {
                                                 <Table size='small'>
                                                     <TableHead>
                                                         <TableRow>
-                                                            <TableCell>{t('detail_table.no')}</TableCell>
-                                                            <TableCell>{t('detail_table.related_spec')}</TableCell>
+                                                            <TableCell align='right'>{ }</TableCell>
+                                                            <TableCell align='right'>{t('detail_table.no')}</TableCell>
+                                                            <TableCell>{t('detail_table.related_identifier')}</TableCell>
                                                             <TableCell>{t('detail_table.ref_freq')}</TableCell>
                                                         </TableRow>
                                                     </TableHead>
                                                     <TableBody>
                                                         {isLoading && (
                                                             <TableRow>
-                                                                <TableCell colSpan={3}>{t('loading')}</TableCell>
+                                                                <TableCell colSpan={5}>{t('loading')}</TableCell>
                                                             </TableRow>
                                                         )}
                                                         {error && (
                                                             <TableRow>
-                                                                <TableCell colSpan={3}>{t('error')}</TableCell>
+                                                                <TableCell colSpan={5}>{t('error')}</TableCell>
                                                             </TableRow>
                                                         )}
                                                         {!isLoading && !error && specList.length === 0 && (
                                                             <TableRow>
-                                                                <TableCell colSpan={3}>{t('empty')}</TableCell>
+                                                                <TableCell colSpan={5}>{t('empty')}</TableCell>
                                                             </TableRow>
                                                         )}
                                                         {specList.map((row, idx) => (
                                                             <TableRow hover key={idx + 1}
 
                                                             >
-                                                                <TableCell>{idx + 1}</TableCell>
+                                                                <TableCell align='right'>{ }</TableCell>
+                                                                <TableCell
+                                                                    align='right'
+                                                                >{idx + 1}</TableCell>
                                                                 <TableCell
                                                                     onClick={() =>
                                                                         router.push(`${paths.dashboard.nodes.specDetail(node, row.url.split('/')[row.url.split('/').length - 1])}`)
@@ -104,24 +145,17 @@ export default function Page({ params }: Props) {
                                 </Grid>
                             </Paper>
                         </Box>
-                        <Box sx={{ textAlign: 'right', my: 2 }}>
-                            <Typography sx={{
-                                color: grey[400],
-                            }} variant="body2">
-                                {isLoading || error ? '' : `ref. Identifies ${specList.length}`}
-                            </Typography>
-                        </Box>
                     </Grid>
                 </Grid>
 
 
                 <Grid item xs={12} md={5}>
-                    <Paper sx={{ height: '100%', p: 0.5, backgroundColor: 'black' }}>
+                    <Paper sx={{ height: '100%', p: 0.5, backgroundColor: 'transparent' }}>
                         <Box sx={{ backgroundColor: '#667085', p: 1, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
                             <Typography variant="body2" sx={{ fontWeight: 600, color: grey[300] }}>{t('detail_table.script_title')}</Typography>
                         </Box>
 
-                        <Box sx={{ p: 2, bgcolor: '#202838', height: 'calc(100% - 48px)', overflowY: 'auto' }}>
+                        <Box sx={{ bgcolor: '#202838', height: 'calc(100% - 48px)', overflowY: 'auto' }}>
                             <Box component="pre" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: 13, color: '#AFB7C8', m: 0 }}>
                                 <SyntaxHighlighter
                                     language="moonscript"

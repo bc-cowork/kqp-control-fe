@@ -20,6 +20,7 @@ import { paths } from 'src/routes/paths';
 import { fetcher, endpoints } from 'src/utils/axios';
 import Chip from '@mui/material/Chip';
 import { useRouter } from 'next/navigation';
+import CircularProgress from '@mui/material/CircularProgress';
 
 // ----------------------------------------------------------------------
 
@@ -43,6 +44,7 @@ export default function Page({ params }: Props) {
     const { data, error, isLoading } = useSWR(url, fetcher);
 
 
+    const specItem = data?.data?.detail || {};
     const detail = data?.data?.detail || {};
     const specName = data?.data?.detail?.name;
     const identifiers: IdentifyRow[] = detail.related_identifies || [];
@@ -60,9 +62,60 @@ export default function Page({ params }: Props) {
             />
 
             <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{"SPEC: "}{specName}</Typography>
+            <TableContainer
+                component={Paper}
+                sx={{ height: 'auto', my: 2 }}
+            >
+                <Table size="small">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>{ }</TableCell>
+                            <TableCell>{t('table.spec_name')}</TableCell>
+                            <TableCell>{t('table.path')}</TableCell>
+                            <TableCell align="left">{t('table.timestamp')}</TableCell>
+                            <TableCell align="left">{t('table.ref_identifies')}</TableCell>
+                            <TableCell>{t('table.frags')}</TableCell>
+                            <TableCell>{t('table.size')}</TableCell>
+                            <TableCell align="left">{t('table.explanation')}</TableCell>
+                            <TableCell>{ }</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {isLoading ? (
+                            <TableRow>
+                                <TableCell colSpan={10} align="center">
+                                    <CircularProgress />
+                                </TableCell>
+                            </TableRow>
+                        ) : specItem == null ? (
+                            <TableRow>
+                                <TableCell colSpan={10}>No Action Rule</TableCell>
+                            </TableRow>
+                        ) : error ? (
+                            <TableRow>
+                                <TableCell colSpan={10}>Error Fetching Rule</TableCell>
+                            </TableRow>
+                        ) : (
+                            <TableRow
+                                key={specItem.name}
+                                hover
+                            >
+                                <TableCell align="left">{ }</TableCell>
+                                <TableCell align="left">{specItem.name}</TableCell>
+                                <TableCell>{specItem.path}</TableCell>
+                                <TableCell align='left'>{specItem.timestamp}</TableCell>
+                                <TableCell align="left">{specItem.ref_identifies}</TableCell>
+                                <TableCell align="left">{specItem.frags}</TableCell>
+                                <TableCell align="left">{specItem.size}</TableCell>
+                                <TableCell align="left">{specItem?.desc}</TableCell>
+                                <TableCell align="left">{ }</TableCell>
 
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+            </TableContainer>
             <Box sx={{ mt: 3 }}>
-                <Typography sx={{ textAlign: 'right', mb: 2, fontSize: 15, color: (theme) => theme.palette.grey[300] }}>{detail?.timestamp}</Typography>
                 <Grid container spacing={3}>
                     {/* Left side - Identifiers table */}
                     <Grid item xs={12} md={5}>
@@ -114,22 +167,6 @@ export default function Page({ params }: Props) {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-
-                        <Box sx={{ ml: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-                            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-                                <Typography variant="body2" sx={{
-                                    mb: 0.5,
-                                    color: (theme) => theme.palette.grey[300]
-                                }}>
-                                    {t('left.ref_identifier_with_count', { count: detail?.ref_identifies })}
-                                </Typography>
-                                <Typography variant="body2" sx={{
-                                    color: (theme) => theme.palette.grey[300]
-                                }}>
-                                    {t('left.frags_sizes', { frags: detail?.frags, sizes: detail?.size })}
-                                </Typography>
-                            </Box>
-                        </Box>
                     </Grid>
 
                     {/* Right side - Fragments table with dark background */}

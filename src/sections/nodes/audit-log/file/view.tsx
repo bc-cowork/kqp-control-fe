@@ -16,9 +16,10 @@ type Props = {
   nodeId: string;
   file: string;
   seq: string;
+  head: string;
 };
 
-export function AuditLogFileView({ nodeId, file, seq }: Props) {
+export function AuditLogFileView({ nodeId, file, seq, head }: Props) {
   const { t } = useTranslate('audit-frame-detail');
   return (
     <DashboardContent maxWidth="xl">
@@ -26,12 +27,12 @@ export function AuditLogFileView({ nodeId, file, seq }: Props) {
         node={nodeId}
         pages={[
           { pageName: t('top.audit_logs'), link: `/dashboard/nodes/${nodeId}/audit-log` },
-          { pageName: t('top.list'), link: `/dashboard/nodes/${nodeId}/audit-log/${file}` },
-          { pageName: t('top.detail') },
+          { pageName: file, link: `/dashboard/nodes/${nodeId}/audit-log/${file}` },
+          { pageName: head },
         ]}
       />
       <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50], mt: 2 }}>
-        {t('top.detail')}
+        {head}
       </Typography>
       <Box
         sx={{
@@ -39,7 +40,7 @@ export function AuditLogFileView({ nodeId, file, seq }: Props) {
           width: 1,
         }}
       >
-        <AuditLogFrame selectedNodeId={nodeId} selectedFile={file} selectedSeq={seq} />
+        <AuditLogFrame selectedNodeId={nodeId} selectedFile={file} selectedSeq={seq} head={head} />
       </Box>
     </DashboardContent>
   );

@@ -22,8 +22,8 @@
   "process_detail": {
     "process_name": "프로세스 이름",
     "timestamp": "타임스탬프",
-    "cpu": "CPU",
-    "mem": "MEM",
+    "cpu": "프로세서 사용률",
+    "mem": "메모리 사용량",
     "desc": "설명"
   }
 }

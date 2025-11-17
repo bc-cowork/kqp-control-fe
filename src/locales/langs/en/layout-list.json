@@ -18,6 +18,12 @@
   "detail_table": {
     "action_title": "Related Actions",
     "process_title": "Related Processes",
-    "script_title": "Layout Definition"
+    "script_title": "Layout Definition",
+    "layout_name": "Layout Name",
+    "path": "Path",
+    "timestamp": "Timestamp",
+    "process": "Process",
+    "channel_in": "Channel.IN",
+    "description": "Description"
   }
 }

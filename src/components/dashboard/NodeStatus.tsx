@@ -33,9 +33,7 @@ export function NodeStatus({
     <Box
       sx={{
         borderRadius: 1,
-        backgroundColor: theme.palette.grey[900],
         height: '505px',
-        p: 0.5,
       }}
     >
       {statusLoading ? (
@@ -46,10 +44,12 @@ export function NodeStatus({
         <Box>
           <Box
             sx={{
-              p: 2,
+              py: 2,
+              px: 1,
               background: `radial-gradient(100% 100% at 0% 100%, ${isOnline ? success.dark : error.dark} 0%, ${isOnline ? '#1D2F20' : '#331B1E'} 100%)`,
-              mb: 0.5,
+              mb: '12px',
               borderRadius: '8px',
+              border: '1px solid #4A2C31'
             }}
           >
             <Stack direction="row" alignItems="center" sx={{ mb: 1 }}>
@@ -84,7 +84,7 @@ export function NodeStatus({
               />
             </Stack>
 
-            <Stack direction="row" alignItems="center" sx={{ mb: 0.5 }}>
+            <Stack direction="row" alignItems="center" sx={{ mb: '12px' }}>
               <Typography sx={{ fontSize: 19, fontWeight: 500, color: common.white }}>
                 {selectedNode.id}
               </Typography>
@@ -111,11 +111,13 @@ export function NodeStatus({
 
           <Box
             sx={{
-              p: 2,
-              mb: 0.5,
+              py: 2,
+              px: 1,
+              mb: '12px',
               borderRadius: '8px',
               backgroundColor: grey[800],
               height: '198px',
+              border: '1px solid #4E576A'
             }}
           >
             <Stack direction="row" sx={{ mb: 1.5 }}>
@@ -146,7 +148,13 @@ export function NodeStatus({
             </Stack>
           </Box>
 
-          <Box sx={{ p: 2, borderRadius: '8px', backgroundColor: grey[800] }}>
+          <Box sx={{
+            py: 2,
+            px: 1,
+            borderRadius: '8px', backgroundColor: grey[800],
+            border: '1px solid #4E576A',
+            height: '150px'
+          }}>
             <Typography sx={{ fontSize: 17, fontWeight: 500, color: '#AFB7C8' }}>
               {t('disk.disk')}
             </Typography>

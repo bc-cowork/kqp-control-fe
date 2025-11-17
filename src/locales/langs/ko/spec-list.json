@@ -7,7 +7,7 @@
     "spec_name": "SPEC 이름",
     "path": "경로",
     "timestamp": "타임스탬프",
-    "ref_identifies": "ref. 식별자",
+    "ref_identifies": "참조 식별자",
     "frags": "조각",
     "size": "크기",
     "explanation": "설명"

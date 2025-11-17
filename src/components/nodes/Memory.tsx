@@ -100,14 +100,14 @@ export function Memory({ selectedNodeId }: Props) {
     [limit]
   );
 
-  const chartHeight = `calc((100vh - 326px)/2)`;
+  const chartHeight = `380px`;
 
   const chartData = processMemoryChartData(issueGraphData);
 
   return (
     <Grid container>
       <Grid md={3} sx={{ pr: 1.25 }}>
-        <Box sx={{ p: 0.5, backgroundColor: grey[900], borderRadius: 1.5 }}>
+        <Box sx={{ p: 0, borderRadius: 1.5 }}>
           <Grid
             container
             sx={{
@@ -125,7 +125,6 @@ export function Memory({ selectedNodeId }: Props) {
                     sx={{
                       background: 'linear-gradient(180deg, #202838 80%, #373F4E 100%)',
                       borderRadius: '8px',
-                      border: `1px solid ${grey[500]}`,
                       p: 1.5,
                     }}
                   >
@@ -150,7 +149,6 @@ export function Memory({ selectedNodeId }: Props) {
                     sx={{
                       background: 'linear-gradient(180deg, #202838 80%, #373F4E 100%)',
                       borderRadius: '8px',
-                      border: `1px solid ${grey[500]}`,
                       p: 1.5,
                     }}
                   >
@@ -174,7 +172,6 @@ export function Memory({ selectedNodeId }: Props) {
                   <Box
                     sx={{
                       borderRadius: '8px',
-                      border: `1px solid ${grey[500]}`,
                       mt: 0.5,
                       height: chartHeight,
                       backgroundColor: '#202838',
@@ -189,20 +186,6 @@ export function Memory({ selectedNodeId }: Props) {
                       onTabChange={graphTabs.onChange}
                       loading={issueGraphDataLoading}
                     />
-                  </Box>
-                </Grid>
-                <Grid md={12}>
-                  <Box
-                    sx={{
-                      borderRadius: '8px',
-                      border: `1px solid ${grey[500]}`,
-                      p: 1.5,
-                      mt: 0.5,
-                      height: chartHeight,
-                      backgroundColor: '#202838',
-                    }}
-                  >
-                    <Typography sx={{ color: common.white, textAlign: 'center' }}>TBD</Typography>
                   </Box>
                 </Grid>
               </>

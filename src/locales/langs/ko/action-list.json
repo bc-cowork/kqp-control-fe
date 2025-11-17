@@ -4,7 +4,7 @@
     },
     "table": {
         "id": "ID",
-        "action_name": "작업명",
+        "action_name": "액션 이름",
         "path": "경로",
         "timestamp": "타임스탬프",
         "ref_layout": "참조 레이아웃",

@@ -5,11 +5,11 @@
   },
   "table": {
     "id": "ID",
-    "name": "NAME",
+    "name": "Name",
     "topic": "Topic",
-    "type": "TYPE",
-    "u_type": "UTYPE",
-    "port": "PORT",
+    "type": "Type",
+    "u_type": "UType",
+    "port": "Port",
     "ip": "IP",
     "nic": "NIC",
     "count": "Count"

@@ -4,7 +4,7 @@
   },
   "table": {
     "id": "ID",
-    "identity_name": "아이덴티티 이름",
+    "identity_name": "식별자 이름",
     "path": "경로",
     "timestamp": "타임스탬프",
     "ref_specs": "참조 SPEC",
@@ -13,7 +13,7 @@
   "detail_table": {
     "script_title": "식별자 정의",
     "no": "No",
-    "related_spec": "연관 전문",
+    "related_spec": "연관 SPEC",
     "ref_freq": "참조 빈도"
   },
   "loading": "로딩 중...",

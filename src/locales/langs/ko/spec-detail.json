@@ -10,6 +10,16 @@
     "ref_identifier_with_count": "연관 식별자 {{count}}",
     "frags_sizes": "조각 {{frags}}, 크기 {{sizes}}"
   },
+  "table": {
+    "id": "ID",
+    "spec_name": "SPEC 이름",
+    "path": "경로",
+    "timestamp": "타임스탬프",
+    "ref_identifies": "참조 식별자",
+    "frags": "조각",
+    "size": "크기",
+    "explanation": "설명"
+  },
   "right": {
     "order": "번호",
     "offset": "오프셋",

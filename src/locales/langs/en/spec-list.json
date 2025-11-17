@@ -7,10 +7,10 @@
     "spec_name": "SPEC Name",
     "path": "Path",
     "timestamp": "Timestamp",
-    "ref_identifies": "ref. Identifies",
+    "ref_identifies": "Ref. Identifier",
     "frags": "Frags",
     "size": "Size",
-    "explanation": "Explanation"
+    "expdlanation": "Description"
   },
   "loading": "Loading...",
   "error": "Failed to load.",

@@ -1,8 +1,9 @@
 {
   "top": {
-    "audit_logs": "Audit Logs",
+    "audit_logs": "Audit Log",
     "list": "List",
-    "detail": "Frame Detail"
+    "detail": "Frame Detail",
+    "description": "Description"
   },
   "search_ui": {
     "add_filter": "Add Filter",
@@ -15,7 +16,7 @@
     "go_to_page": "Go to page"
   },
   "table_header": {
-    "frame_seq": "Frame seq",
+    "frame_seq": "Frame Seq",
     "head": "HEAD",
     "rid": "RID",
     "size": "Size"

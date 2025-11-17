@@ -3,7 +3,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import { Typography } from '@mui/material';
+import { CircularProgress, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 
 import useSWR from 'swr';
 import { useTranslate } from 'src/locales';
@@ -29,8 +29,10 @@ export default function Page({ params }: Props) {
 
 
   const url = endpoints.layouts.detail(node, decodedLayout);
-  const { data } = useSWR(url, fetcher);
+  const { data, isLoading, error } = useSWR(url, fetcher);
 
+  const layoutItem = data?.data?.detail || {};
+  const layoutEmpty = data?.data?.detail == null;
   const timeStamp = data?.data?.detail?.timestamp || '-';
   const layoutDefinition = data?.data?.layout_definition || '';
 
@@ -46,14 +48,68 @@ export default function Page({ params }: Props) {
 
       <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{t('top.layout')}{" : "}{decodedLayout}</Typography>
       <Typography sx={{ fontSize: 15, fontWeight: 500, mt: 2, textAlign: 'right', color: grey[400], p: 2 }}>{timeStamp}</Typography>
+      <TableContainer
+        component={Paper}
+        sx={{ height: 'auto', my: 2 }}
+      >
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell>{ }</TableCell>
+              <TableCell>{t('detail_table.layout_name')}</TableCell>
+              <TableCell>{t('detail_table.path')}</TableCell>
+              <TableCell align="left">{t('detail_table.timestamp')}</TableCell>
+              <TableCell align="left">{t('detail_table.process')}</TableCell>
+              <TableCell>{t('detail_table.channel_in')}</TableCell>
+              <TableCell>{ }</TableCell>
+              <TableCell>{ }</TableCell>
+              <TableCell align="left">{t('detail_table.description')}</TableCell>
+              <TableCell>{ }</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {isLoading ? (
+              <TableRow>
+                <TableCell colSpan={8} align="center">
+                  <CircularProgress />
+                </TableCell>
+              </TableRow>
+            ) : layoutEmpty ? (
+              <TableRow>
+                <TableCell colSpan={8}>No Process Found</TableCell>
+              </TableRow>
+            ) : error ? (
+              <TableRow>
+                <TableCell colSpan={8}>Error Fetching Process</TableCell>
+              </TableRow>
+            ) : (
+              <TableRow
+                key={layoutItem.name}
+                hover
+              >
+                <TableCell align="left">{ }</TableCell>
+                <TableCell align="left">{layoutItem.name}</TableCell>
+                <TableCell>{layoutItem.path}</TableCell>
+                <TableCell align='left'>{layoutItem.timestamp}</TableCell>
+                <TableCell align="left">{layoutItem.process}</TableCell>
+                <TableCell align="left">{layoutItem.channel_in}</TableCell>
+                <TableCell align="left">{ }</TableCell>
+                <TableCell align="left">{ }</TableCell>
+                <TableCell align="left">{layoutItem?.desc}</TableCell>
+                <TableCell align="left">{ }</TableCell>
 
-      <Paper sx={{ height: '100%', backgroundColor: 'black', p: 0.5 }} >
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Paper sx={{ height: '100%', }} >
 
         <Box sx={{ backgroundColor: '#667085', p: 1.5, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
           <Typography sx={{ fontWeight: 600, color: grey[300] }}>{t('detail_table.script_title')}</Typography>
         </Box>
 
-        <Box sx={{ p: 2, bgcolor: '#202838', height: 'calc(100vh - 48px)', overflowY: 'auto' }}>
+        <Box sx={{ bgcolor: '#202838', height: 'calc(100vh - 48px)', overflowY: 'auto' }}>
           <Box component="pre" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: 13, color: '#AFB7C8', m: 0 }}>
             <SyntaxHighlighter
               language="moonscript"

@@ -4,12 +4,12 @@
   },
   "table_header": {
     "id": "ID",
-    "name": "Name",
+    "name": "Rule Name",
     "path": "Path",
-    "timestamp": "timestamp",
-    "ref_layout": "ref. layout",
-    "ref_process": "ref. process",
-    "ref_actions": "ref. actions",
+    "timestamp": "Timestamp",
+    "ref_layout": "Ref. layout",
+    "ref_process": "Ref. process",
+    "ref_actions": "Ref. actions",
     "desc": "Description"
   },
   "loading": "Loading...",
@@ -25,6 +25,10 @@
     "process_no": "No",
     "process_name": "Related Process",
     "process_usage_freq": "Usage Frequency",
-    "script_title": "Rule Definition"
+    "script_title": "Rule Definition",
+    "ref_layout": "ref. layout",
+    "ref_process": "ref. process",
+    "ref_actions": "ref. actions",
+    "related_actions": "Related Actions"
   }
 }

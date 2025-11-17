@@ -56,30 +56,32 @@ export function IdentifyListView({ nodeId }: Props) {
                     <Table size="small">
                         <TableHead>
                             <TableRow>
+                                <TableCell>{ }</TableCell>
                                 <TableCell>{t("table.id")}</TableCell>
                                 <TableCell>{t("table.identity_name")}</TableCell>
                                 <TableCell>{t("table.path")}</TableCell>
                                 <TableCell>{t("table.timestamp")}</TableCell>
                                 <TableCell>{t("table.ref_specs")}</TableCell>
                                 <TableCell>{t("table.explanation")}</TableCell>
+                                <TableCell>{ }</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {isLoading && (
                                 <TableRow>
-                                    <TableCell colSpan={6}>{t("loading") || "Loading..."}</TableCell>
+                                    <TableCell colSpan={8}>{t("loading") || "Loading..."}</TableCell>
                                 </TableRow>
                             )}
 
                             {error && (
                                 <TableRow>
-                                    <TableCell colSpan={6}>{t("error") || "Failed to load"}</TableCell>
+                                    <TableCell colSpan={8}>{t("error") || "Failed to load"}</TableCell>
                                 </TableRow>
                             )}
 
                             {!isLoading && !error && rows.length === 0 && (
                                 <TableRow>
-                                    <TableCell colSpan={6}>{t("empty") || "No identities"}</TableCell>
+                                    <TableCell colSpan={8}>{t("empty") || "No identities"}</TableCell>
                                 </TableRow>
                             )}
 
@@ -95,12 +97,14 @@ export function IdentifyListView({ nodeId }: Props) {
                                         }
                                     }}
                                 >
+                                    <TableCell>{ }</TableCell>
                                     <TableCell>{index + 1}</TableCell>
                                     <TableCell>{row.name}</TableCell>
                                     <TableCell>{row.path}</TableCell>
                                     <TableCell>{row.timestamp}</TableCell>
                                     <TableCell>{row.ref_specs}</TableCell>
                                     <TableCell>{row.desc}</TableCell>
+                                    <TableCell>{ }</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

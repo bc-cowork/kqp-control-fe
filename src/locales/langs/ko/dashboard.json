@@ -7,7 +7,7 @@
   "node": {
     "node": "노드",
     "state": "상태",
-    "id": "식별자",
+    "id": "ID",
     "name": "이름",
     "description": "설명",
     "emittable": "송출 상태",

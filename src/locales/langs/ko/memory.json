@@ -27,7 +27,7 @@
   },
   "item": {
     "table": {
-      "no": "번호",
+      "no": "No",
       "price": "가격",
       "uni": "UNI",
       "krx": "KRX",

@@ -34,8 +34,6 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
     <Box
       sx={{
         borderRadius: '12px',
-        backgroundColor: theme.palette.grey[900],
-        p: 0.5,
       }}
     >
       {statusLoading ? (
@@ -48,8 +46,9 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
             sx={{
               p: 2,
               background: `radial-gradient(100% 100% at 0% 100%, ${isOnline ? success.dark : error.dark} 0%, ${isOnline ? '#1D2F20' : '#331B1E'} 100%)`,
-              mb: 0.5,
+              mb: '12px',
               borderRadius: '8px',
+              border: `1px solid #262e3cff `,
             }}
           >
             <Stack direction="row" alignItems="center" sx={{ mb: 1 }}>
@@ -84,7 +83,7 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
               />
             </Stack>
 
-            <Stack direction="row" alignItems="center" sx={{ mb: 0.5 }}>
+            <Stack direction="row" alignItems="center" sx={{ mb: '12px' }}>
               <Typography sx={{ fontSize: 19, fontWeight: 500, color: common.white }}>
                 {selectedNode.id}
               </Typography>
@@ -112,7 +111,7 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
           <Box
             sx={{
               p: 2,
-              mb: 0.5,
+              mb: '12px',
               borderRadius: '8px',
               backgroundColor: theme.palette.grey[800],
               height: 'calc(100vh - 455px)',
