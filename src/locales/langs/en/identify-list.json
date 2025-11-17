@@ -4,7 +4,7 @@
     },
     "table": {
         "id": "Id",
-        "identity_name": "Identity Name",
+        "identity_name": "Identifier Name",
         "path": "Path",
         "timestamp": "Timestamp",
         "ref_specs": "Ref. SPECs",
@@ -14,7 +14,7 @@
         "script_title": "Identifier Definition",
         "no": "No",
         "related_spec": "Related SPEC",
-        "ref_freq": "Reference frequency"
+        "ref_freq": "Ref. Frequency"
     },
     "loading": "Loading...",
     "error": "Failed to load",

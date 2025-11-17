@@ -36,9 +36,6 @@ export default function Page({ params }: Props) {
     const layoutList = data?.data?.layouts || [];
     const processList = data?.data?.processes || [];
     const script = data?.data?.definition || '';
-    const refLayoutCount = data?.data?.ref_layout || '-'
-    const refProcessCount = data?.data?.ref_process || '-'
-
 
     return (
         <DashboardContent maxWidth="xl">
@@ -110,8 +107,6 @@ export default function Page({ params }: Props) {
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={7}>
                         <StackOfTables
-                            refLayoutCount={refLayoutCount}
-                            refProcessCount={refProcessCount}
                             layoutList={layoutList}
                             processList={processList}
                             t={t}
@@ -150,7 +145,7 @@ export default function Page({ params }: Props) {
     );
 }
 
-function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCount, refProcessCount, node }: any) {
+function StackOfTables({ layoutList, processList, t, loading, error, node }: any) {
     const router = useRouter();
 
     return (
@@ -204,9 +199,6 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Typography sx={{ textAlign: 'right', color: grey[400] }}>
-                {t('table.ref_layout')}{' '}{refLayoutCount}
-            </Typography>
             <TableContainer sx={{ my: 4 }} component={Paper}>
                 <Table size="small">
                     <TableHead>
@@ -259,9 +251,6 @@ function StackOfTables({ layoutList, processList, t, loading, error, refLayoutCo
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Typography sx={{ textAlign: 'right', color: grey[400] }}>
-                {t('table.ref_process')}{' '}{refProcessCount}
-            </Typography>
         </Box >
     );
 }

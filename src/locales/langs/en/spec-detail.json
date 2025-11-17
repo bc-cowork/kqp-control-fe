@@ -10,6 +10,16 @@
     "ref_identifier_with_count": "ref. Identifier {{count}}",
     "frags_sizes": "Frags {{frags}}, Sizes {{sizes}}"
   },
+  "table": {
+    "id": "ID",
+    "spec_name": "SPEC Name",
+    "path": "Path",
+    "timestamp": "Timestamp",
+    "ref_identifies": "Ref. Identifier",
+    "frags": "Frags",
+    "size": "Size",
+    "explanation": "Description"
+  },
   "right": {
     "order": "No.",
     "offset": "offset",

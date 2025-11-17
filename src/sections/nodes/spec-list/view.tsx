@@ -51,7 +51,8 @@ export function SpecListView({ nodeId }: Props) {
                     <Table size="small">
                         <TableHead>
                             <TableRow>
-                                <TableCell>{t("table.id")}</TableCell>
+                                <TableCell align="right">{ }</TableCell>
+                                <TableCell align="right">{t("table.id")}</TableCell>
                                 <TableCell>{t("table.spec_name")}</TableCell>
                                 <TableCell>{t("table.path")}</TableCell>
                                 <TableCell>{t("table.timestamp")}</TableCell>
@@ -59,22 +60,23 @@ export function SpecListView({ nodeId }: Props) {
                                 <TableCell>{t("table.frags")}</TableCell>
                                 <TableCell>{t("table.size")}</TableCell>
                                 <TableCell>{t("table.explanation")}</TableCell>
+                                <TableCell align="right">{ }</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {isLoading && (
                                 <TableRow>
-                                    <TableCell colSpan={8}>{t("loading") || "Loading..."}</TableCell>
+                                    <TableCell colSpan={10}>{t("loading") || "Loading..."}</TableCell>
                                 </TableRow>
                             )}
                             {error && (
                                 <TableRow>
-                                    <TableCell colSpan={8}>{t("error") || "Failed to load"}</TableCell>
+                                    <TableCell colSpan={10}>{t("error") || "Failed to load"}</TableCell>
                                 </TableRow>
                             )}
                             {!isLoading && !error && rows.length === 0 && (
                                 <TableRow>
-                                    <TableCell colSpan={8}>{t("empty") || "No specs"}</TableCell>
+                                    <TableCell colSpan={10}>{t("empty") || "No specs"}</TableCell>
                                 </TableRow>
                             )}
                             {rows.map((row, index) => (
@@ -89,7 +91,8 @@ export function SpecListView({ nodeId }: Props) {
                                         }
                                     }}
                                 >
-                                    <TableCell>{index + 1}</TableCell>
+                                    <TableCell align="right">{ }</TableCell>
+                                    <TableCell align="right">{index + 1}</TableCell>
                                     <TableCell>{row.name}</TableCell>
                                     <TableCell>{row.path}</TableCell>
                                     <TableCell>{row.timestamp}</TableCell>
@@ -97,6 +100,7 @@ export function SpecListView({ nodeId }: Props) {
                                     <TableCell>{row.frags}</TableCell>
                                     <TableCell>{row.size}</TableCell>
                                     <TableCell>{row.desc}</TableCell>
+                                    <TableCell align="right">{ }</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

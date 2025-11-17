@@ -11,7 +11,6 @@ import { paths } from 'src/routes/paths';
 import { fetcher, endpoints } from 'src/utils/axios';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import { grey } from '@mui/material/colors';
 import { useRouter } from 'next/navigation';
 
 
@@ -35,9 +34,6 @@ export default function Page({ params }: Props) {
   const processList = data?.data?.processes || [];
   const actionList = data?.data?.actions || [];
   const script = data?.data?.definition || '';
-  const refLayoutCount = data?.data?.ref_layout || '-';
-  const refProcessCount = data?.data?.ref_process || '-';
-  const refActionCount = data?.data?.actions || '';
 
 
   return (
@@ -110,12 +106,9 @@ export default function Page({ params }: Props) {
         <Grid container spacing={3}>
           <Grid item xs={12} md={7}>
             <StackOfTables
-              refLayoutCount={refLayoutCount}
-              refProcessCount={refProcessCount}
               layoutList={layoutList}
               processList={processList}
               actionList={actionList}
-              refActionCount={refActionCount}
               t={t}
               loading={isLoading}
               error={error}
@@ -152,7 +145,7 @@ export default function Page({ params }: Props) {
   );
 }
 
-function StackOfTables({ layoutList, processList, actionList, t, loading, error, refLayoutCount, refProcessCount, refActionCount, node }: any) {
+function StackOfTables({ layoutList, processList, actionList, t, loading, error, node }: any) {
   const router = useRouter();
   return (
     <Box>
@@ -211,9 +204,6 @@ function StackOfTables({ layoutList, processList, actionList, t, loading, error,
           </TableBody>
         </Table>
       </TableContainer>
-      <Typography sx={{ textAlign: 'right', color: grey[400] }}>
-        {t('detail_table.ref_layout')}{' '}{refLayoutCount}
-      </Typography>
       <TableContainer sx={{ my: 4 }} component={Paper}>
         <Table size="small">
           <TableHead>
@@ -266,10 +256,6 @@ function StackOfTables({ layoutList, processList, actionList, t, loading, error,
           </TableBody>
         </Table>
       </TableContainer>
-      <Typography sx={{ textAlign: 'right', color: grey[400] }}>
-        {t('detail_table.ref_process')}{' '}{refProcessCount}
-      </Typography>
-
       <TableContainer sx={{ my: 4 }} component={Paper}>
         <Table size="small">
           <TableHead>
@@ -321,9 +307,6 @@ function StackOfTables({ layoutList, processList, actionList, t, loading, error,
           </TableBody>
         </Table>
       </TableContainer>
-      <Typography sx={{ textAlign: 'right', color: grey[400] }}>
-        {t('detail_table.ref_actions')}{' '}{refActionCount}
-      </Typography>
     </Box>
   );
 }
