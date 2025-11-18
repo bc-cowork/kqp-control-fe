@@ -178,6 +178,7 @@ export function Memory({ selectedNodeId }: Props) {
                     }}
                   >
                     <ChartAreaDark
+                      selectedNodeId={selectedNodeId}
                       title={t('graph.memory')}
                       data={chartData}
                       height="100%"

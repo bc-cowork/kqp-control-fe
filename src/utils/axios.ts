@@ -98,6 +98,7 @@ export const endpoints = {
     processDetail: (node: string, process: string) => `/apik/${node}/process/${process}`,
     issueList: (node: string) => `/apik/${node}/issue/list`,
     graph: (node: string) => `/apik/${node}/node/metrics`,
+    memoryMetrics: (node: string) => `/apik/${node}/node/metrics/memory`,
   },
   rules: {
     list: (node: string) => `/apik/${node}/rule/list`,

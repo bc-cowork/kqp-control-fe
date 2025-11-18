@@ -15,6 +15,7 @@ import { Box, Stack, Typography, CircularProgress } from '@mui/material';
 import { varAlpha } from 'src/theme/styles';
 
 import { SegmentedButtonGroupChart } from './SegmentedButtonGroupChart';
+import { useGetMemoryMetrics } from 'src/actions/dashboard';
 
 interface ChartAreaProps {
   title: string;
@@ -27,6 +28,7 @@ interface ChartAreaProps {
   tabValue: string;
   onTabChange: (value: string) => void;
   loading: boolean;
+  selectedNodeId: string;
 }
 
 export function ChartAreaDark({
@@ -37,8 +39,10 @@ export function ChartAreaDark({
   tabValue,
   onTabChange,
   loading,
+  selectedNodeId
 }: ChartAreaProps) {
   const theme = useTheme();
+  const { memoryMetricsData } = useGetMemoryMetrics(selectedNodeId)
 
   const { stroke, fill, fillOpacity } = {
     stroke: '#FFC711',
@@ -74,7 +78,7 @@ export function ChartAreaDark({
         />
       </Stack>
 
-      <Typography sx={{ fontSize: 20, color: '#C77F14', px: 1 }}>17.6 / 63.4GB (27%)</Typography>
+      <Typography sx={{ fontSize: 20, color: '#C77F14', px: 1 }}>{memoryMetricsData?.mem_used_size} / {memoryMetricsData?.mem_total_size}GB ({memoryMetricsData?.mem_usage}%)</Typography>
 
       {/* Chart */}
       <Box sx={{ flex: 1, minHeight: '100px', width: '100%' }}>

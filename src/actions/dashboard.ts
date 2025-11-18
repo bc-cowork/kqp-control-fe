@@ -140,6 +140,30 @@ export function useGetDiskMetrics(node: string) {
   return memoizedValue;
 }
 
+export function useGetMemoryMetrics(node: string) {
+  const url = endpoints.dashboard.memoryMetrics(node);
+
+  const { data, isLoading, error, isValidating } = useSWR<any>(
+    url,
+    fetcher,
+    swrOptions
+  );
+
+  // if (data) console.log('useGetStatus Response:', JSON.stringify(data, null, 2));
+
+  const memoizedValue = useMemo(
+    () => ({
+      memoryMetricsData: (data?.data || null),
+      memoryMetricLoading: isLoading,
+      memoryMetricError: error,
+      memoryMetricValidating: isValidating,
+    }),
+    [data?.data, error, isLoading, isValidating]
+  );
+
+  return memoizedValue;
+}
+
 // ----------------------------------------------------------------------
 
 /** **************************************
