@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import { Chip, Stack, SvgIcon, LinearProgress, CircularProgress } from '@mui/material';
 
 import { useTranslate } from 'src/locales';
-import { useGetStatus } from 'src/actions/dashboard';
+import { useGetDiskMetrics, useGetStatus } from 'src/actions/dashboard';
 import { grey, error, common, success } from 'src/theme/core';
 
 // ----------------------------------------------------------------------
@@ -23,6 +23,8 @@ export function NodeStatus({
   selectedNode,
 }: Props) {
   const { status, statusLoading, statusError } = useGetStatus(selectedNodeParam);
+  const { diskMetricsData, diskMetricLoading, diskMetricError } = useGetDiskMetrics(selectedNodeParam);
+
 
   const { t } = useTranslate('dashboard');
   const theme = useTheme();
@@ -64,8 +66,8 @@ export function NodeStatus({
                 variant="status"
                 sx={{
                   fontSize: 17,
-                  border: `1px solid ${isOnline ? '#DDF4DA' : '#F4D8D8'}`,
-                  backgroundColor: isOnline ? '#EBFBE9' : '#FFF2F4',
+                  border: `1px solid ${isOnline ? '#1D2F20' : '#331B1E'}`,
+                  backgroundColor: isOnline ? '#1D2F20' : '#331B1E',
                 }}
                 icon={
                   <SvgIcon>
@@ -167,12 +169,12 @@ export function NodeStatus({
             <Typography sx={{ fontSize: 17, fontWeight: 500, color: '#AFB7C8' }}>
               {t('disk.disk')}
             </Typography>
-            <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50] }}>21%</Typography>
+            <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50] }}>{diskMetricsData?.disk_used_size}%</Typography>
             <Typography sx={{ fontSize: 16, fontWeight: 400, color: '#AFB7C8' }}>
               <Box component="span" sx={{ fontWeight: 500, color: grey[50] }}>
-                853 GB
+                {diskMetricsData?.disk_usage} GB
               </Box>{' '}
-              of 952 GB
+              of {diskMetricsData?.disk_total_size} GB
             </Typography>
 
             {/* Progress Bar */}
@@ -180,7 +182,7 @@ export function NodeStatus({
               {/* Main Progress Bar */}
               <LinearProgress
                 variant="determinate"
-                value={21}
+                value={diskMetricsData?.disk_used_size}
                 sx={{
                   height: 10,
                   borderRadius: 5,

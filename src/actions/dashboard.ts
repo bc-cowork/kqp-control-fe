@@ -68,9 +68,9 @@ export function useGetProcesses(node: string) {
     () =>
       data?.data?.processList && Array.isArray(data?.data?.processList)
         ? data.data.processList
-            .filter((process) => process.data && Object.keys(process.data).length > 0)
-            .map((process) => process.data)
-            .flat()
+          .filter((process) => process.data && Object.keys(process.data).length > 0)
+          .map((process) => process.data)
+          .flat()
         : [],
     [data?.data?.processList]
   );
@@ -109,6 +109,30 @@ export function useGetStatus(node: string) {
       statusLoading: isLoading,
       statusError: error,
       statusValidating: isValidating,
+    }),
+    [data?.data, error, isLoading, isValidating]
+  );
+
+  return memoizedValue;
+}
+
+export function useGetDiskMetrics(node: string) {
+  const url = endpoints.dashboard.diskMetrics(node);
+
+  const { data, isLoading, error, isValidating } = useSWR<any>(
+    url,
+    fetcher,
+    swrOptions
+  );
+
+  // if (data) console.log('useGetStatus Response:', JSON.stringify(data, null, 2));
+
+  const memoizedValue = useMemo(
+    () => ({
+      diskMetricsData: (data?.data || null),
+      diskMetricLoading: isLoading,
+      diskMetricError: error,
+      diskMetricValidating: isValidating,
     }),
     [data?.data, error, isLoading, isValidating]
   );

@@ -93,6 +93,7 @@ export const endpoints = {
   dashboard: {
     nodeList: '/apik/node/list',
     serviceStatus: (node: string) => `/apik/${node}/service/status`,
+    diskMetrics: (node: string) => `/apik/${node}/node/metrics/disk`,
     processList: (node: string) => `/apik/${node}/process/list`,
     processDetail: (node: string, process: string) => `/apik/${node}/process/${process}`,
     issueList: (node: string) => `/apik/${node}/issue/list`,
