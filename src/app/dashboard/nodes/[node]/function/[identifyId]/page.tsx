@@ -63,19 +63,19 @@ export default function Page({ params }: Props) {
                     </TableHead>
                     <TableBody>
                         <TableRow
-                            key={detail.name}
+                            key={detail?.name}
                             sx={{ cursor: 'pointer' }}
                             tabIndex={0}
                         >
                             <TableCell>{ }</TableCell>
-                            <TableCell>{detail.function.name}</TableCell>
-                            <TableCell>{detail.function.path}</TableCell>
-                            <TableCell>{detail.function.timestamp}</TableCell>
-                            <TableCell>{detail.function.ref_identifies}</TableCell>
+                            <TableCell>{detail?.function?.name}</TableCell>
+                            <TableCell>{detail?.function?.path}</TableCell>
+                            <TableCell>{detail?.function?.timestamp}</TableCell>
+                            <TableCell>{detail?.function?.ref_identifies}</TableCell>
                             <TableCell>{ }</TableCell>
                             <TableCell>{ }</TableCell>
                             <TableCell>{ }</TableCell>
-                            <TableCell>{detail.function.desc}</TableCell>
+                            <TableCell>{detail?.function?.desc}</TableCell>
                             <TableCell>{ }</TableCell>
                         </TableRow>
                     </TableBody>

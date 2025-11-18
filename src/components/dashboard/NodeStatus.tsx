@@ -54,7 +54,7 @@ export function NodeStatus({
               background: `radial-gradient(100% 100% at 0% 100%, ${isOnline ? success.dark : error.dark} 0%, ${isOnline ? '#1D2F20' : '#331B1E'} 100%)`,
               mb: '12px',
               borderRadius: '8px',
-              border: '1px solid #4A2C31',
+              border: `1px solid ${isOnline ? '#36573C' : '#4A2C31'}`,
               flexShrink: 0,
             }}
           >
@@ -68,6 +68,7 @@ export function NodeStatus({
                   fontSize: 17,
                   border: `1px solid ${isOnline ? '#1D2F20' : '#331B1E'}`,
                   backgroundColor: isOnline ? '#1D2F20' : '#331B1E',
+                  boxShadow: isOnline ? '2px 2px 8px 0 rgba(27, 240, 27, 0.50)' : '2px 2px 8px 0 rgba(240, 27, 62, 0.50)'
                 }}
                 icon={
                   <SvgIcon>
@@ -141,7 +142,7 @@ export function NodeStatus({
                   />
                 ) : (
                   <Chip label={t('info.false')} color="error" size="small" variant="outlined" sx={{
-                    backgroundColor: '#331B1E'
+                    backgroundColor: '#331B1E',
                   }} />
                 )}
               </Typography>
@@ -209,7 +210,8 @@ export function NodeStatus({
             </Box>
           </Box>
         </>
-      )}
-    </Box>
+      )
+      }
+    </Box >
   );
 }
