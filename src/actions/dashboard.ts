@@ -4,6 +4,8 @@ import type {
   GetStatusResponse,
   GetProcessesResponse,
   GetGraphDataResponse,
+  GetDiskMetricsResponse,
+  GetMemoryMetricsResponse
 } from 'src/types/api';
 
 import useSWR from 'swr';
@@ -119,7 +121,7 @@ export function useGetStatus(node: string) {
 export function useGetDiskMetrics(node: string) {
   const url = endpoints.dashboard.diskMetrics(node);
 
-  const { data, isLoading, error, isValidating } = useSWR<any>(
+  const { data, isLoading, error, isValidating } = useSWR<GetDiskMetricsResponse>(
     url,
     fetcher,
     swrOptions
@@ -143,7 +145,7 @@ export function useGetDiskMetrics(node: string) {
 export function useGetMemoryMetrics(node: string) {
   const url = endpoints.dashboard.memoryMetrics(node);
 
-  const { data, isLoading, error, isValidating } = useSWR<any>(
+  const { data, isLoading, error, isValidating } = useSWR<GetMemoryMetricsResponse>(
     url,
     fetcher,
     swrOptions

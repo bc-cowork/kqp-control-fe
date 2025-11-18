@@ -286,6 +286,23 @@ interface StatusData {
 
 type GetStatusResponse = ApiResponse<StatusData>;
 
+interface DiskMetrics {
+  disk_used_size: number;
+  nodeId: string;
+  disk_usage: number;
+  disk_total_size: number;
+}
+
+type GetDiskMetricsResponse = ApiResponse<DiskMetrics>
+
+interface MemoryMetrics {
+  mem_usage: string;
+  mem_total_size: string;
+  mem_used_size: string;
+}
+
+type GetMemoryMetricsResponse = ApiResponse<MemoryMetrics>
+
 // ---- useGetNodes ----
 interface Node {
   id: string;
@@ -330,4 +347,6 @@ export type {
   GetAuditLogFrameResponse,
   GetAuditFrameListResponse,
   GetIssueItemQuotesResponse,
+  GetDiskMetricsResponse,
+  GetMemoryMetricsResponse
 };

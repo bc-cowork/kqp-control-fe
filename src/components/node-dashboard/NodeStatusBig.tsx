@@ -25,12 +25,7 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
 
 
   const theme = useTheme();
-
   const isOnline = status?.service_status?.okay;
-
-  const usedSpace = 300; // in GB
-  const totalSpace = 566; // in GB
-  const percentage = (usedSpace / totalSpace) * 100; // 21%
 
   return (
     <Box
