@@ -6,7 +6,7 @@
   "left": {
     "no": "No",
     "identifier": "Identifier",
-    "ref_count": "Ref. Freq",
+    "ref_count": "Ref. Frequency",
     "ref_identifier_with_count": "ref. Identifier {{count}}",
     "frags_sizes": "Frags {{frags}}, Sizes {{sizes}}"
   },
@@ -21,11 +21,11 @@
     "explanation": "Description"
   },
   "right": {
-    "order": "No.",
-    "offset": "offset",
-    "len": "len",
+    "order": "No",
+    "offset": "Offset",
+    "len": "Len",
     "type": "Type",
-    "desc": "Desc"
+    "desc": "Description"
   },
   "loading": "Loading...",
   "error": "Failed to load.",

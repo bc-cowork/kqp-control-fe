@@ -4,7 +4,7 @@
     "prof_definition": "전문 정의"
   },
   "left": {
-    "no": "번호",
+    "no": "No",
     "identifier": "연관 식별자",
     "ref_count": "참조 빈도",
     "ref_identifier_with_count": "연관 식별자 {{count}}",
@@ -16,12 +16,12 @@
     "path": "경로",
     "timestamp": "타임스탬프",
     "ref_identifies": "참조 식별자",
-    "frags": "조각",
+    "frags": "항목",
     "size": "크기",
     "explanation": "설명"
   },
   "right": {
-    "order": "번호",
+    "order": "No",
     "offset": "오프셋",
     "len": "길이",
     "type": "유형",

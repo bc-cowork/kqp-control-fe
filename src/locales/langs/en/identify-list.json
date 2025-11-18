@@ -8,7 +8,7 @@
         "path": "Path",
         "timestamp": "Timestamp",
         "ref_specs": "Ref. SPECs",
-        "explanation": "설명"
+        "explanation": "Description"
     },
     "detail_table": {
         "script_title": "Identifier Definition",
