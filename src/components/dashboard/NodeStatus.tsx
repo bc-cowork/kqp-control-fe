@@ -33,7 +33,9 @@ export function NodeStatus({
     <Box
       sx={{
         borderRadius: 1,
-        height: '505px',
+        height: '500px',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
       {statusLoading ? (
@@ -41,7 +43,8 @@ export function NodeStatus({
       ) : statusError ? (
         <Typography>Error Fetching Status</Typography>
       ) : (
-        <Box>
+        <>
+          {/* First Box - Fixed Height */}
           <Box
             sx={{
               py: 2,
@@ -49,7 +52,8 @@ export function NodeStatus({
               background: `radial-gradient(100% 100% at 0% 100%, ${isOnline ? success.dark : error.dark} 0%, ${isOnline ? '#1D2F20' : '#331B1E'} 100%)`,
               mb: '12px',
               borderRadius: '8px',
-              border: '1px solid #4A2C31'
+              border: '1px solid #4A2C31',
+              flexShrink: 0,
             }}
           >
             <Stack direction="row" alignItems="center" sx={{ mb: 1 }}>
@@ -109,6 +113,7 @@ export function NodeStatus({
             </Typography>
           </Box>
 
+          {/* Second Box - Flexible (Stretches to Fill Space) */}
           <Box
             sx={{
               py: 2,
@@ -116,8 +121,9 @@ export function NodeStatus({
               mb: '12px',
               borderRadius: '8px',
               backgroundColor: grey[800],
-              height: '198px',
-              border: '1px solid #4E576A'
+              border: '1px solid #4E576A',
+              flexGrow: 1,
+              minHeight: 0,
             }}
           >
             <Stack direction="row" sx={{ mb: 1.5 }}>
@@ -148,12 +154,15 @@ export function NodeStatus({
             </Stack>
           </Box>
 
+          {/* Third Box - Fixed Height */}
           <Box sx={{
             py: 2,
             px: 1,
-            borderRadius: '8px', backgroundColor: grey[800],
+            borderRadius: '8px',
+            backgroundColor: grey[800],
             border: '1px solid #4E576A',
-            height: '150px'
+            height: '150px',
+            flexShrink: 0,
           }}>
             <Typography sx={{ fontSize: 17, fontWeight: 500, color: '#AFB7C8' }}>
               {t('disk.disk')}
@@ -175,9 +184,9 @@ export function NodeStatus({
                 sx={{
                   height: 10,
                   borderRadius: 5,
-                  backgroundColor: '#e0e0e0', // Gray unfilled section
+                  backgroundColor: '#e0e0e0',
                   '& .MuiLinearProgress-bar': {
-                    backgroundColor: '#4A3BFF', // Blue filled section
+                    backgroundColor: '#4A3BFF',
                     borderRadius: 5,
                   },
                 }}
@@ -191,13 +200,13 @@ export function NodeStatus({
                   left: '90%',
                   width: '10%',
                   height: 10,
-                  backgroundColor: '#FFEBEE', // Light red for warning
+                  backgroundColor: '#FFEBEE',
                   borderRadius: '0 5px 5px 0',
                 }}
               />
             </Box>
           </Box>
-        </Box>
+        </>
       )}
     </Box>
   );

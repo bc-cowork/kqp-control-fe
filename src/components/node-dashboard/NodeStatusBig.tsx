@@ -114,7 +114,7 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
               mb: '12px',
               borderRadius: '8px',
               backgroundColor: theme.palette.grey[800],
-              height: 'calc(100vh - 455px)',
+              height: 'calc(100vh - 475px)',
             }}
           >
             <Stack direction="row" sx={{ mb: 1.5 }}>
