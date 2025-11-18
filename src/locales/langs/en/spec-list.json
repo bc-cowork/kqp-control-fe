@@ -10,7 +10,7 @@
     "ref_identifies": "Ref. Identifier",
     "frags": "Frags",
     "size": "Size",
-    "expdlanation": "Description"
+    "explanation": "Description"
   },
   "loading": "Loading...",
   "error": "Failed to load.",

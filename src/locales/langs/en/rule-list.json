@@ -7,9 +7,9 @@
     "name": "Rule Name",
     "path": "Path",
     "timestamp": "Timestamp",
-    "ref_layout": "Ref. layout",
-    "ref_process": "Ref. process",
-    "ref_actions": "Ref. actions",
+    "ref_layout": "Ref. Layout",
+    "ref_process": "Ref. Process",
+    "ref_actions": "Ref. Actions",
     "desc": "Description"
   },
   "loading": "Loading...",
@@ -26,9 +26,9 @@
     "process_name": "Related Process",
     "process_usage_freq": "Usage Frequency",
     "script_title": "Rule Definition",
-    "ref_layout": "ref. layout",
-    "ref_process": "ref. process",
-    "ref_actions": "ref. actions",
+    "ref_layout": "Ref. Layout",
+    "ref_process": "Ref. Process",
+    "ref_actions": "Ref. Actions",
     "related_actions": "Related Actions"
   }
 }
