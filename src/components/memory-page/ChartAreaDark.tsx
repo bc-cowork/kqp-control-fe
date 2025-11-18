@@ -8,6 +8,7 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from 'recharts';
+import { useGetMemoryMetrics } from 'src/actions/dashboard';
 
 import { useTheme } from '@mui/material/styles';
 import { Box, Stack, Typography, CircularProgress } from '@mui/material';
@@ -15,7 +16,6 @@ import { Box, Stack, Typography, CircularProgress } from '@mui/material';
 import { varAlpha } from 'src/theme/styles';
 
 import { SegmentedButtonGroupChart } from './SegmentedButtonGroupChart';
-import { useGetMemoryMetrics } from 'src/actions/dashboard';
 
 interface ChartAreaProps {
   title: string;
