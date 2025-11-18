@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import { Chip, Stack, SvgIcon, LinearProgress, CircularProgress } from '@mui/material';
 
 import { useTranslate } from 'src/locales';
-import { useGetStatus } from 'src/actions/dashboard';
+import { useGetDiskMetrics, useGetStatus } from 'src/actions/dashboard';
 import { grey, error, common, success } from 'src/theme/core';
 
 // ----------------------------------------------------------------------
@@ -21,6 +21,8 @@ type Props = {
 export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
   const { t } = useTranslate('node-dashboard');
   const { status, statusLoading, statusError } = useGetStatus(selectedNodeParam);
+  const { diskMetricsData } = useGetDiskMetrics(selectedNodeParam);
+
 
   const theme = useTheme();
 
@@ -143,12 +145,12 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
             <Typography sx={{ fontSize: 17, fontWeight: 500, color: '#AFB7C8' }}>
               {t('left_side.disk')}
             </Typography>
-            <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50] }}>21%</Typography>
+            <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50] }}>{diskMetricsData?.disk_used_size}%</Typography>
             <Typography sx={{ fontSize: 16, fontWeight: 400, color: '#AFB7C8' }}>
               <Box component="span" sx={{ fontWeight: 500, color: grey[50] }}>
-                853 GB
+                {diskMetricsData?.disk_usage} GB
               </Box>{' '}
-              of 952 GB
+              of {diskMetricsData?.disk_total_size} GB
             </Typography>
 
             {/* Progress Bar */}
@@ -156,7 +158,7 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
               {/* Main Progress Bar */}
               <LinearProgress
                 variant="determinate"
-                value={percentage}
+                value={diskMetricsData?.disk_used_size}
                 sx={{
                   height: 10,
                   borderRadius: 5,

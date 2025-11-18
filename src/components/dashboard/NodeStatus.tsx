@@ -23,7 +23,7 @@ export function NodeStatus({
   selectedNode,
 }: Props) {
   const { status, statusLoading, statusError } = useGetStatus(selectedNodeParam);
-  const { diskMetricsData, diskMetricLoading, diskMetricError } = useGetDiskMetrics(selectedNodeParam);
+  const { diskMetricsData } = useGetDiskMetrics(selectedNodeParam);
 
 
   const { t } = useTranslate('dashboard');
