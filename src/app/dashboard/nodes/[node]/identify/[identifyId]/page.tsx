@@ -44,7 +44,7 @@ export default function Page({ params }: Props) {
             />
 
             <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2, mb: 2 }}>
-                IDENTIFY: {detail?.name || '-'}
+                IDENTIFIER: {detail?.name || '-'}
             </Typography>
 
             <TableContainer component={Paper}>

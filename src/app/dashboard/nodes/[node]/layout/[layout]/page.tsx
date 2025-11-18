@@ -33,7 +33,6 @@ export default function Page({ params }: Props) {
 
   const layoutItem = data?.data?.detail || {};
   const layoutEmpty = data?.data?.detail == null;
-  const timeStamp = data?.data?.detail?.timestamp || '-';
   const layoutDefinition = data?.data?.layout_definition || '';
 
   return (
@@ -47,7 +46,6 @@ export default function Page({ params }: Props) {
       />
 
       <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{t('top.layout')}{" : "}{decodedLayout}</Typography>
-      <Typography sx={{ fontSize: 15, fontWeight: 500, mt: 2, textAlign: 'right', color: grey[400], p: 2 }}>{timeStamp}</Typography>
       <TableContainer
         component={Paper}
         sx={{ height: 'auto', my: 2 }}

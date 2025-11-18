@@ -76,7 +76,7 @@ export function getNavData(t: any, nodes: string[] = [],) {
                 path: paths.dashboard.nodes.specList(node),
               },
               {
-                title: t('tab_option.identify_list') || 'Identify List',
+                title: t('tab_option.identify_list') || 'Identifier List',
                 path: paths.dashboard.nodes.identifyList(node),
               },
               {
