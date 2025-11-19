@@ -26,14 +26,14 @@ export default function Page({ params }: Props) {
   const { t } = useTranslate('rule-list');
   const decodedAction = decodeURIComponent(id);
 
-  const url = endpoints.actions.detail(node, decodedAction);
+  const url = endpoints.rules.detail(node, decodedAction);
   const { data, error, isLoading } = useSWR(url, fetcher);
 
-  const ruleItem = data?.data || {};
-  const layoutList = data?.data?.layouts || [];
-  const processList = data?.data?.processes || [];
-  const actionList = data?.data?.actions || [];
-  const script = data?.data?.definition || '';
+  const ruleItem = data?.data?.detail || {};
+  const layoutList = data?.data?.detail?.related_layouts || [];
+  const processList = data?.data?.detail?.related_processes || [];
+  const actionList = data?.data?.detail?.related_actions || [];
+  const script = data?.data?.detail?.function_def?.code || '';
 
 
   return (
@@ -249,7 +249,7 @@ function StackOfTables({ layoutList, processList, actionList, t, loading, error,
                     cursor: 'pointer'
                   }}
                 >{item.name}</TableCell>
-                <TableCell>{item.ref_count}</TableCell>
+                <TableCell>{item.usage_count}</TableCell>
                 <TableCell>{ }</TableCell>
               </TableRow>
             ))}
@@ -300,7 +300,7 @@ function StackOfTables({ layoutList, processList, actionList, t, loading, error,
                     cursor: 'pointer'
                   }}
                 >{item.name}</TableCell>
-                <TableCell>{item.ref_count}</TableCell>
+                <TableCell>{item.usage_count}</TableCell>
                 <TableCell>{ }</TableCell>
               </TableRow>
             ))}
