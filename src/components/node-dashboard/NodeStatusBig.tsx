@@ -56,8 +56,9 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
                 variant="status"
                 sx={{
                   fontSize: 17,
-                  border: `1px solid ${isOnline ? '#DDF4DA' : '#F4D8D8'}`,
-                  backgroundColor: isOnline ? '#EBFBE9' : '#331B1E',
+                  border: `1px solid ${isOnline ? '#1D2F20' : '#331B1E'}`,
+                  backgroundColor: isOnline ? '#1D2F20' : '#331B1E',
+                  boxShadow: isOnline ? '2px 2px 8px 0 rgba(27, 240, 27, 0.50)' : '2px 2px 8px 0 rgba(240, 27, 62, 0.50)'
                 }}
                 icon={
                   <SvgIcon>
