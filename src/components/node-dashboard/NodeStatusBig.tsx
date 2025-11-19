@@ -45,7 +45,7 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
               background: `radial-gradient(100% 100% at 0% 100%, ${isOnline ? success.dark : error.dark} 0%, ${isOnline ? '#1D2F20' : '#331B1E'} 100%)`,
               mb: '12px',
               borderRadius: '8px',
-              border: `1px solid #262e3cff `,
+              border: `1px solid ${isOnline ? '#36573C' : '#4A2C31'}`,
             }}
           >
             <Stack direction="row" alignItems="center" sx={{ mb: 1 }}>
