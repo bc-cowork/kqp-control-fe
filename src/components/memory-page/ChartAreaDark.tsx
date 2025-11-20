@@ -50,7 +50,8 @@ export function ChartAreaDark({
     fillOpacity: 0.2,
   };
 
-  const minValue = data?.length > 0 ? Math.min(...data.map((point) => point.memory)) : 0;
+  const minValue = 0;
+  const maxValue = 100;
 
   return (
     <Box
@@ -122,7 +123,7 @@ export function ChartAreaDark({
                 tick={{ fontSize: 12, fill: theme.palette.grey[100] }}
                 tickLine={false}
                 axisLine={{ stroke: theme.palette.grey[500] }}
-                domain={[minValue, 'auto']}
+                domain={[minValue, maxValue]}
               />
               <Tooltip
                 contentStyle={{

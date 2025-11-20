@@ -6,7 +6,7 @@ import type { TFunction } from 'i18next';
 import type { ChartDataPoint } from 'src/types/dashboard';
 
 import Box from '@mui/material/Box';
-import { Grid } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2'; // Using Unstable_Grid2 for modern usage
 import { useTheme } from '@mui/material/styles';
 
 import { useTabs } from 'src/routes/hooks';
@@ -48,19 +48,35 @@ export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props
   // Process the data for the charts
   const chartData: ChartDataPoint[] = graphData?.metrics ? processChartData(graphData.metrics) : [];
 
+  const is1x4Layout = selectedTab === '1x4';
+
+  const baseGridXs = is1x4Layout ? 12 : 6;
+
+  const chartGridProps = {
+    xs: 12,
+    sm: baseGridXs,
+  };
+
+  const chartHeight = is1x4Layout ? '121px' : '250px';
+
   return (
     <Box
       sx={{
-        height: '500px',
         pl: 0.5,
         boxSizing: 'border-box',
+        minHeight: '500px',
+        width: '100%'
       }}
     >
-      <Grid container sx={{ height: '100%' }}>
+      <Grid container spacing={1} sx={{ height: '100%' }}>
+
+        {/* CPU Chart */}
         <Grid
-          item
-          md={selectedTab === '1x4' ? 12 : 6}
-          sx={{ height: selectedTab === '1x4' ? `25%` : `250px`, pb: 1 }}
+          {...chartGridProps}
+          sx={{
+            height: chartHeight,
+            mb: 1 // Margin Bottom for spacing
+          }}
         >
           <ChartArea
             title={t('graph.cpu')}
@@ -75,10 +91,14 @@ export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props
             loading={graphDataLoading}
           />
         </Grid>
+
+        {/* Memory Chart */}
         <Grid
-          item
-          md={selectedTab === '1x4' ? 12 : 6}
-          sx={{ height: selectedTab === '1x4' ? `25%` : `250px`, pb: 1 }}
+          {...chartGridProps}
+          sx={{
+            height: chartHeight,
+            mb: 1
+          }}
         >
           <ChartArea
             title={t('graph.memory')}
@@ -92,10 +112,14 @@ export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props
             loading={graphDataLoading}
           />
         </Grid>
+
+        {/* Inbound Chart */}
         <Grid
-          item
-          md={selectedTab === '1x4' ? 12 : 6}
-          sx={{ height: selectedTab === '1x4' ? `25%` : `250px`, pb: selectedTab === '1x4' ? 1 : 0 }}
+          {...chartGridProps}
+          sx={{
+            height: chartHeight,
+            mb: (is1x4Layout || !is1x4Layout) ? 1 : 0
+          }}
         >
           <ChartArea
             title={t('graph.inbound')}
@@ -109,10 +133,14 @@ export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props
             loading={graphDataLoading}
           />
         </Grid>
+
+        {/* Outbound Chart */}
         <Grid
-          item
-          md={selectedTab === '1x4' ? 12 : 6}
-          sx={{ height: selectedTab === '1x4' ? `25%` : `250px` }}
+          {...chartGridProps}
+          sx={{
+            height: chartHeight,
+            mb: 0
+          }}
         >
           <ChartArea
             title={t('graph.outbound')}

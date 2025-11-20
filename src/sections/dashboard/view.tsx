@@ -50,7 +50,7 @@ export function DashboardView() {
   };
 
   return (
-    <DashboardContent maxWidth="xl">
+    <DashboardContent>
       <Breadcrumb />
       <Typography sx={{ fontSize: 28, fontWeight: 500, color: theme.palette.grey[50], mt: 2 }}>
         {t('top.dashboard')}
@@ -62,7 +62,7 @@ export function DashboardView() {
         }}
       >
         <Grid container>
-          <Grid md={12}>
+          <Grid xs={12}>
             <Box sx={{ backgroundColor: grey[900], width: '100%', borderRadius: '12px', p: '4px' }}>
               <Stack direction="row" justifyContent="start" alignItems="center">
                 <Box
@@ -134,11 +134,9 @@ export function DashboardView() {
         </Grid>
 
         <Grid container sx={{ mt: 3 }}>
+          {/* NodeList - Table Component */}
           <Grid
-            md={6}
-            sx={{
-              pr: 1.25,
-            }}
+            xs={12}
           >
             <Typography
               sx={{
@@ -162,11 +160,9 @@ export function DashboardView() {
             />
           </Grid>
 
+          {/* NodeStatus & Charts - Other Stuff */}
           <Grid
-            md={6}
-            sx={{
-              pl: 1.25,
-            }}
+            xs={12}
           >
             <Box
               sx={{
@@ -203,10 +199,10 @@ export function DashboardView() {
               </Stack>
               {selectedNode ? (
                 <Grid container spacing={1}>
-                  <Grid md={4}>
+                  <Grid xs={12} sm={4}>
                     <NodeStatus selectedNodeParam={selectedNodeParam} selectedNode={selectedNode} />
                   </Grid>
-                  <Grid md={8}>
+                  <Grid xs={12} sm={8} md={6}>
                     <NodeGraphs
                       selectedNodeParam={selectedNodeParam}
                       selectedTab={viewTabs.value}
@@ -219,13 +215,13 @@ export function DashboardView() {
               )}
 
               <Grid container sx={{ mt: 1 }}>
-                <Grid md={6} sx={{ pr: 0.75 }}>
+                <Grid xs={12} sm={6} sx={{ pr: { xs: 0, sm: 0.75 } }}>
                   <NavigationBox
                     title={t('navigate.process_list')}
                     link={`/dashboard/nodes/${selectedNodeId}/process/`}
                   />
                 </Grid>
-                <Grid md={6} sx={{ pl: 0.75 }}>
+                <Grid xs={12} sm={6} sx={{ pl: { xs: 0, sm: 0.75 }, mt: { xs: 1, sm: 0 } }}>
                   <NavigationBox
                     title={t('navigate.channel_inbound')}
                     link={`/dashboard/nodes/${selectedNodeId}/channels-inbound/`}
@@ -241,6 +237,8 @@ export function DashboardView() {
 }
 
 // ----------------------------------------------------------------------
+// NavigationBox and FadingDivider components remain the same
+// ----------------------------------------------------------------------
 
 const NavigationBox = ({ title, link }: { title: string; link: string }) => {
   const router = useRouter();
@@ -253,12 +251,13 @@ const NavigationBox = ({ title, link }: { title: string; link: string }) => {
         width: '100%',
         border: `1px solid ${grey[700]}`,
         borderRadius: '12px',
+        cursor: 'pointer',
       }}
       onClick={() => router.push(link)}
     >
       <Stack direction="row" alignItems="center">
         <Typography sx={{ fontSize: 17, fontWeight: 500, color: '#D1D6E0' }}>{title}</Typography>
-        <SvgIcon sx={{ width: 20, height: 20 }}>
+        <SvgIcon sx={{ width: 20, height: 20, ml: 1 }}>
           <svg
             width="20"
             height="20"

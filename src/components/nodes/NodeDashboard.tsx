@@ -23,10 +23,25 @@ export function NodeDashboard({ selectedNodeId }: Props) {
 
   return (
     <Grid container>
-      <Grid md={3} sx={{ pr: '10px' }}>
+      <Grid
+        xs={12}
+        md={3}
+        sx={{
+          paddingRight: { xs: 0, md: '10px' },
+          marginBottom: { xs: '20px', md: 0 },
+        }}
+      >
         <NodeStatusBig selectedNodeParam={selectedNodeId} selectedNode={selectedNode} />
       </Grid>
-      <Grid md={9} sx={{ pl: '10px' }}>
+
+      <Grid
+        xs={12}
+        md={9}
+        sx={{
+          paddingLeft: { xs: 0, md: '10px' },
+          height: 'auto'
+        }}
+      >
         <NodeGraphsBig selectedNodeParam={selectedNodeId} />
       </Grid>
     </Grid>

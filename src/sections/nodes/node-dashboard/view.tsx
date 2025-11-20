@@ -19,7 +19,7 @@ type Props = {
 export function NodeDashboardView({ nodeId }: Props) {
   const { t } = useTranslate('node-dashboard');
   return (
-    <DashboardContent maxWidth="xl">
+    <DashboardContent maxWidth='xl'>
       <Breadcrumb node={nodeId} pages={[{ pageName: t('top.node_dashboard') }]} />
       <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50], mt: 2 }}>
         {t('top.node_dashboard')}

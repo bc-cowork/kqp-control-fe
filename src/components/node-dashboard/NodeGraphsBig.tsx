@@ -5,7 +5,7 @@
 import type { ChartDataPoint } from 'src/types/dashboard';
 
 import Box from '@mui/material/Box';
-import { Grid } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2'; // Use Unstable_Grid2 for consistency
 import { useTheme } from '@mui/material/styles';
 
 import { useTabs } from 'src/routes/hooks';
@@ -31,25 +31,35 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
   const inboundTabs = useTabs(getBoundTabs(t)[0].value);
   const outboundTabs = useTabs(getBoundTabs(t)[0].value);
 
-  // Fetch graph data
   const { graphData, graphDataLoading } = useGetGraphData(selectedNodeParam, 1);
 
-  // Process the data for the charts
   const chartData: ChartDataPoint[] = graphData?.metrics ? processChartData(graphData.metrics) : [];
+
+  const responsiveChartHeight = {
+    xs: '250px',
+    md: 'calc((100vh - 220px) / 2)',
+  };
 
   return (
     <Box
       sx={{
         bgcolor: theme.palette.grey[800],
-        height: 'calc(100vh - 187px)',
+        minHeight: 'calc(100vh - 187px)',
         p: 1.5,
         pr: '4px',
         borderRadius: '12px',
         boxSizing: 'border-box',
       }}
     >
-      <Grid container sx={{ height: '100%' }}>
-        <Grid item md={6} sx={{ height: `50%`, pb: 1 }}>
+      <Grid container spacing={2}>
+
+        <Grid
+          xs={12}
+          md={6}
+          sx={{
+            height: responsiveChartHeight,
+          }}
+        >
           <ChartArea
             title="CPU"
             titleString={t('graph.cpu')}
@@ -61,7 +71,15 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
             loading={graphDataLoading}
           />
         </Grid>
-        <Grid item md={6} sx={{ height: `50%`, pb: 1 }}>
+
+        {/* Memory Chart */}
+        <Grid
+          xs={12}
+          md={6}
+          sx={{
+            height: responsiveChartHeight,
+          }}
+        >
           <ChartArea
             title="Memory"
             titleString={t('graph.memory')}
@@ -72,7 +90,15 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
             loading={graphDataLoading}
           />
         </Grid>
-        <Grid item md={6} sx={{ height: `50%` }}>
+
+        {/* Inbound Chart */}
+        <Grid
+          xs={12}
+          md={6}
+          sx={{
+            height: responsiveChartHeight,
+          }}
+        >
           <ChartArea
             title="Inbound"
             titleString={t('graph.inbound')}
@@ -86,7 +112,15 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
             loading={graphDataLoading}
           />
         </Grid>
-        <Grid item md={6} sx={{ height: `50%` }}>
+
+        {/* Outbound Chart */}
+        <Grid
+          xs={12}
+          md={6}
+          sx={{
+            height: responsiveChartHeight,
+          }}
+        >
           <ChartArea
             title="Outbound"
             titleString={t('graph.outbound')}
