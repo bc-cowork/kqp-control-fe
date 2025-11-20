@@ -133,10 +133,14 @@ export function DashboardView() {
           </Grid>
         </Grid>
 
-        <Grid container sx={{ mt: 3 }}>
-          {/* NodeList - Table Component */}
+        <Grid container spacing={3} sx={{ mt: 3 }}>
+
           <Grid
             xs={12}
+            md={6}
+            sx={{
+              height: 'auto'
+            }}
           >
             <Typography
               sx={{
@@ -160,9 +164,9 @@ export function DashboardView() {
             />
           </Grid>
 
-          {/* NodeStatus & Charts - Other Stuff */}
           <Grid
             xs={12}
+            md={6}
           >
             <Box
               sx={{
@@ -202,7 +206,7 @@ export function DashboardView() {
                   <Grid xs={12} sm={4}>
                     <NodeStatus selectedNodeParam={selectedNodeParam} selectedNode={selectedNode} />
                   </Grid>
-                  <Grid xs={12} sm={8} md={6}>
+                  <Grid xs={12} sm={8}>
                     <NodeGraphs
                       selectedNodeParam={selectedNodeParam}
                       selectedTab={viewTabs.value}
