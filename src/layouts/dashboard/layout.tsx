@@ -44,7 +44,7 @@ export function DashboardLayout({ sx, children, header, data }: DashboardLayoutP
 
   const { nodes, nodesLoading, nodesEmpty, nodesError } = useGetNodes();
 
-  const layoutQuery: Breakpoint = 'lg';
+  const layoutQuery: Breakpoint = 'xs';
 
   const navData = data?.nav ?? getNavData(t, nodes?.map((node: any) => node.id) || []);
 

@@ -29,7 +29,7 @@ export function NavSectionMini({
     <Stack
       component="nav"
       className={navSectionClasses.mini.root}
-      sx={{ ...cssVars, ...sx, backgroundColor: theme.palette.grey[600] }}
+      sx={{ ...cssVars, ...sx, backgroundColor: 'transparent' }}
     >
       <NavUl sx={{ flex: '1 1 auto', gap: 'var(--nav-item-gap)' }}>
         {data.map((group) => (
@@ -62,6 +62,7 @@ function Group({ items, render, slotProps, enabledRootRedirect, cssVars }: NavGr
             cssVars={cssVars}
             slotProps={slotProps}
             enabledRootRedirect={enabledRootRedirect}
+
           />
         ))}
       </NavUl>

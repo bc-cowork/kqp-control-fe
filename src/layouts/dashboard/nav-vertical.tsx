@@ -78,14 +78,13 @@ export function NavVertical({
           ...hideScrollY,
           flex: '1 1 auto',
           overflowY: 'auto',
-          backgroundColor: theme.palette.grey[600],
         }}
         {...other}
       />
 
       {slots?.bottomArea ?? (
         <NavSectionMiniBottom
-          sx={{ px: 0.5, backgroundColor: theme.palette.grey[600] }}
+          sx={{ px: 0.5 }}
           {...other}
         />
       )}
