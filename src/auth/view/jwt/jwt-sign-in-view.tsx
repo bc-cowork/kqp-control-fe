@@ -125,10 +125,17 @@ export function JwtSignInView() {
         type="submit"
         variant="contained"
         loading={isSubmitting}
-        loadingIndicator="Signing in..."
-        sx={{ backgroundColor: 'primary.main', color: 'primary.contrastText' }}
+        loadingIndicator={
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: '#fff' }}>
+            Signing in...
+          </Box>
+        }
+        sx={{
+          backgroundColor: (theme) => `${theme.palette.primary.dark} !important`,
+          color: '#fff !important',
+        }}
       >
-        Sign in
+        {!isSubmitting && "Sign in"}
       </LoadingButton>
     </Box>
   );
