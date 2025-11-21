@@ -50,7 +50,7 @@ export function DashboardView() {
   };
 
   return (
-    <DashboardContent>
+    <DashboardContent maxWidth='xl'>
       <Breadcrumb />
       <Typography sx={{ fontSize: 28, fontWeight: 500, color: theme.palette.grey[50], mt: 2 }}>
         {t('top.dashboard')}
