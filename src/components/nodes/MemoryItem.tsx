@@ -87,8 +87,10 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
           width: 1,
         }}
       >
-        <Grid container>
-          <Grid md={5} sx={{ pr: '10px' }}>
+        <Grid
+          gap={2}
+          container>
+          <Grid xs={12} md={10} lg={4} sx={{ pr: '10px' }}>
             {(issueInfoLoading || issueInfoValidating) ? (
               <Box sx={{ p: 0.5, borderRadius: 1 }}>
                 <CircularProgress />
@@ -100,7 +102,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
               </Box>
             )}
           </Grid>
-          <Grid md={7} sx={{ pl: '10px' }}>
+          <Grid xs={12} lg={7.8} sx={{ pl: '10px' }}>
             <TableContainer component={Paper}
               sx={{ height: { md: 'calc(100vh - 200px)' } }}>
               <Table

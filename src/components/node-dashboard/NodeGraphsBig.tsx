@@ -5,7 +5,7 @@
 import type { ChartDataPoint } from 'src/types/dashboard';
 
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Unstable_Grid2'; // Use Unstable_Grid2 for consistency
+import Grid from '@mui/material/Unstable_Grid2';
 import { useTheme } from '@mui/material/styles';
 
 import { useTabs } from 'src/routes/hooks';
@@ -35,16 +35,21 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
 
   const chartData: ChartDataPoint[] = graphData?.metrics ? processChartData(graphData.metrics) : [];
 
+
   const responsiveChartHeight = {
-    xs: '250px',
-    md: 'calc((100vh - 220px) / 2)',
+    xs: '300px',
+    md: 'calc((100vh - 240px) / 2)',
+    lg: 'calc((100vh - 200px) / 2)',
   };
 
   return (
     <Box
       sx={{
         bgcolor: theme.palette.grey[800],
-        minHeight: 'calc(100vh - 187px)',
+        minHeight: {
+          xs: 'auto',
+          md: 'calc(100vh - 187px)',
+        },
         p: 1.5,
         pr: '4px',
         borderRadius: '12px',
@@ -53,6 +58,7 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
     >
       <Grid container spacing={2}>
 
+        {/* CPU Chart */}
         <Grid
           xs={12}
           md={6}
@@ -97,6 +103,7 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
           md={6}
           sx={{
             height: responsiveChartHeight,
+            mt: { xs: 2, md: 0 },
           }}
         >
           <ChartArea
@@ -119,6 +126,7 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
           md={6}
           sx={{
             height: responsiveChartHeight,
+            mt: { xs: 2, md: 0 },
           }}
         >
           <ChartArea
