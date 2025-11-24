@@ -106,13 +106,17 @@ export function Memory({ selectedNodeId }: Props) {
 
   return (
     <Grid container>
-      <Grid md={3} sx={{ pr: 1.25 }}>
-        <Box sx={{ p: 0, borderRadius: 1.5 }}>
+      {/* LEFT SECTION: Always 12 columns up to lg, then 3 columns from lg up.
+        The left-side padding (pr) is removed for xs screens when stacked vertically.
+      */}
+      <Grid
+        xs={12}
+        lg={3}
+        sx={{ pr: { xs: 0, lg: 1.25 } }}
+      >
+        <Box sx={{ p: 0, borderRadius: 1.5, mb: { xs: 2, lg: 0 } }}>
           <Grid
             container
-            sx={{
-              minHeight: '350px',
-            }}
           >
             {issuesLoading ? (
               <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 5 }}>
@@ -120,12 +124,17 @@ export function Memory({ selectedNodeId }: Props) {
               </Box>
             ) : (
               <>
-                <Grid md={6} sx={{ pr: 0.25 }}>
+                {/* STAT BOX 1: 12 columns up to md, then 6 columns from md up (side-by-side).
+                  Padding is adjusted based on screen size.
+                */}
+                <Grid lg={6} xs={5} sm={4} sx={{ pr: { xs: 0, md: 0.25 } }}>
                   <Box
                     sx={{
                       background: 'linear-gradient(180deg, #202838 80%, #373F4E 100%)',
                       borderRadius: '8px',
+                      border: '1px solid #4E576A',
                       p: 1.5,
+                      mb: { xs: 0.5, md: 0 },
                     }}
                   >
                     <Typography sx={{ fontSize: 15, fontWeight: 500, color: common.white }}>
@@ -144,11 +153,17 @@ export function Memory({ selectedNodeId }: Props) {
                     </Typography>
                   </Box>
                 </Grid>
-                <Grid md={6} sx={{ pl: 0.25 }}>
+
+                {/* STAT BOX 2: 12 columns up to md, then 6 columns from md up (side-by-side).
+                  Padding is adjusted based on screen size.
+                */}
+                <Grid lg={6} xs={5} sm={4} sx={{ pl: { xs: 0, md: 0.25 } }}>
                   <Box
                     sx={{
                       background: 'linear-gradient(180deg, #202838 80%, #373F4E 100%)',
                       borderRadius: '8px',
+                      border: '1px solid #4E576A',
+                      ml: 0.5,
                       p: 1.5,
                     }}
                   >
@@ -168,13 +183,16 @@ export function Memory({ selectedNodeId }: Props) {
                     </Typography>
                   </Box>
                 </Grid>
-                <Grid md={12}>
+
+                {/* CHART: Always 12 columns to ensure it's below the stat boxes at all screen sizes. */}
+                <Grid lg={12} xs={10} sm={8}>
                   <Box
                     sx={{
                       borderRadius: '8px',
                       mt: 0.5,
                       height: chartHeight,
                       backgroundColor: '#202838',
+                      border: '1px solid #4E576A',
                     }}
                   >
                     <ChartAreaDark
@@ -194,7 +212,15 @@ export function Memory({ selectedNodeId }: Props) {
           </Grid>
         </Box>
       </Grid>
-      <Grid md={9} sx={{ pl: 1.25 }}>
+
+      {/* RIGHT SECTION (TABLE): Always 12 columns up to lg, then 9 columns from lg up.
+        The right-side padding (pl) is removed for xs screens when stacked vertically.
+      */}
+      <Grid
+        xs={12}
+        lg={9}
+        sx={{ pl: { xs: 0, lg: 1.25 } }}
+      >
         <AddFilter
           filters={filters}
           setFilters={setFilters}
@@ -211,7 +237,7 @@ export function Memory({ selectedNodeId }: Props) {
             borderBottomRightRadius: '12px',
           }}
         >
-          <Box sx={{ py: 1 }}>
+          <Box sx={{ py: 1, overflow: 'auto' }}>
             <TablePaginationCustom
               rowsPerPage={limit}
               currentPage={issuesPagination?.current_page || 1}
@@ -222,7 +248,7 @@ export function Memory({ selectedNodeId }: Props) {
               onRowsPerPageChange={onChangeRowsPerPage}
             />
           </Box>
-          <TableContainer component={Paper} sx={{ height: 'calc(100vh - 310px)' }}>
+          <TableContainer component={Paper} sx={{ height: 'calc(100vh - 310px)', width: 'auto', overflow: 'auto' }}>
             <Table size="small">
               <TableHead>
                 <TableRow>

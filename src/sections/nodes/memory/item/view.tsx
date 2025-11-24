@@ -1,14 +1,6 @@
 'use client';
 
-import Box from '@mui/material/Box';
-import { Typography } from '@mui/material';
-
-import { grey } from 'src/theme/core';
-import { useTranslate } from 'src/locales';
-import { DashboardContent } from 'src/layouts/dashboard';
-
 import { MemoryItem } from 'src/components/nodes/MemoryItem';
-import { Breadcrumb } from 'src/components/common/Breadcrumb';
 
 // ----------------------------------------------------------------------
 

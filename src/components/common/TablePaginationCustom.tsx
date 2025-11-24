@@ -267,7 +267,7 @@ const TablePaginationCustom = ({
         sx={{ width: `100%` }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
-          <CustomTypography sx={{ ml: 0, color: theme.palette.grey[200] }}>{t('table.rows_per_page')}:</CustomTypography>
+          <CustomTypography sx={{ ml: 0, color: theme.palette.grey[200], width: '110px' }}>{t('table.rows_per_page')}:</CustomTypography>
           <CustomSelect
             value={rowsPerPage}
             onChange={handleChangeRowsPerPage}
