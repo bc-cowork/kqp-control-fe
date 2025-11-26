@@ -1,11 +1,12 @@
 'use client';
 
 import React from 'react';
-import { Typography, Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Chip } from '@mui/material';
+import { Typography, Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Chip, Stack } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { Breadcrumb } from 'src/components/common/Breadcrumb';
 import { DashboardContent } from 'src/layouts/dashboard';
 import { useTranslate } from 'src/locales';
+import { RrefreshButton } from 'src/components/common/RefreshButton';
 
 type Props = { params: { node: string } };
 
@@ -46,9 +47,13 @@ export default function Page({ params }: Props) {
     return (
         <DashboardContent maxWidth="xl">
             <Breadcrumb node={node} pages={[{ pageName: t('top.title') }]} />
-            <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50], mt: 2 }}>
-                {t('top.title')}
-            </Typography>
+            <Stack direction="row" alignItems="baseline" justifyContent="space-between">
+                <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50], mt: 2 }}>
+                    {t('top.title')}
+                </Typography>
+                <RrefreshButton onRefresh={() => console.log("lol")} />
+            </Stack>
+
             <Box sx={{ mt: '28px', width: 1 }}>
                 <Grid container spacing={3}>
 
