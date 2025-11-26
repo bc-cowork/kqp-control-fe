@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import {
     Box,
     Typography,
@@ -27,7 +28,6 @@ import {
     ZoomIn as ZoomInIcon,
     ChevronRight as ChevronRightIcon,
     KeyboardArrowDown as SelectIcon,
-    CalendarToday as CalendarIcon,
 } from '@mui/icons-material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -312,7 +312,6 @@ export default function Page({ params }: Props) {
     const fileTreeList = extractFileOptions(data?.data?.replay_interface?.file_tree) || [];
     // ------------------------------------------
 
-    console.log("fileTreeList", fileTreeList, logTypeList);
 
     const [logType, setLogType] = React.useState('');
     const [file, setFile] = React.useState('');
@@ -321,6 +320,10 @@ export default function Page({ params }: Props) {
     const [endTime, setEndTime] = React.useState('00:00:00');
     const [head, setHead] = React.useState('all');
     const [channel, setChannel] = React.useState('all');
+
+    // Tool PID/Kill modal state
+    const [toolPid, setToolPid] = React.useState('');
+    const [killDialogOpen, setKillDialogOpen] = React.useState(false);
 
 
     return (
@@ -363,7 +366,9 @@ export default function Page({ params }: Props) {
                                                         sx={{
                                                             backgroundColor: index % 2 === 0 ? darkColors.tableFill1 : darkColors.tableFill2,
                                                             '&:last-child td, &:last-child th': { border: 0 },
+                                                            cursor: 'pointer',
                                                         }}
+                                                        onClick={() => setToolPid(row.pid)}
                                                     >
                                                         <TableCell component="th" scope="row" sx={{ p: '8px 12px', border: 'none' }}>
                                                             <Chip label={`Play`}
@@ -413,7 +418,7 @@ export default function Page({ params }: Props) {
                                                 variant="outlined"
                                                 size="small"
                                                 placeholder="Tap the list"
-                                                value="PID"
+                                                value={toolPid}
                                                 InputProps={{
                                                     sx: {
                                                         height: 32,
@@ -431,25 +436,34 @@ export default function Page({ params }: Props) {
                                                         borderRadius: '4px',
                                                     },
                                                 }}
+                                                onChange={(e) => setToolPid(e.target.value)}
                                             />
                                             <Button
                                                 variant="contained"
-                                                disabled
+                                                disabled={!toolPid}
                                                 sx={{
                                                     height: 32,
                                                     p: '4px 12px',
-                                                    backgroundColor: darkColors.dangerFill,
-                                                    border: `2px solid ${darkColors.dangerTextDisabled}`,
-                                                    color: darkColors.dangerTextDisabled,
-                                                    '&.Mui-disabled': {
-                                                        backgroundColor: darkColors.dangerFill,
-                                                        color: darkColors.dangerTextDisabled,
-                                                        border: `2px solid ${darkColors.dangerTextDisabled}`,
-                                                    },
+                                                    backgroundColor: toolPid ? '#4A2C31 !important' : '#331B1E !important',
+                                                    border: `2px solid ${toolPid ? '#FF3D4A !important' : '#4A2C31 !important'
+                                                        }`,
+                                                    color: toolPid ? '#FF3D4A !important' : '#4A2C31 !important',
                                                 }}
+                                                onClick={() => setKillDialogOpen(true)}
                                             >
                                                 Kill
                                             </Button>
+                                            {/* Kill confirmation modal */}
+                                            <Dialog open={killDialogOpen} onClose={() => setKillDialogOpen(false)}>
+                                                <DialogTitle>Kill Process</DialogTitle>
+                                                <DialogContent>
+                                                    <Typography>Are you sure you want to kill process PID: <b>{toolPid}</b>?</Typography>
+                                                </DialogContent>
+                                                <DialogActions>
+                                                    <Button onClick={() => setKillDialogOpen(false)} color="inherit">Cancel</Button>
+                                                    <Button onClick={() => { setKillDialogOpen(false); setToolPid(''); }} color="error" variant="contained">Kill</Button>
+                                                </DialogActions>
+                                            </Dialog>
                                         </Box>
                                     </Box>
                                 </Grid>
