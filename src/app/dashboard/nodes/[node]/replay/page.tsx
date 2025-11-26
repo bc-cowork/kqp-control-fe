@@ -42,6 +42,7 @@ import { DashboardContent } from 'src/layouts/dashboard';
 import { endpoints, fetcher } from 'src/utils/axios';
 import useSWR from 'swr';
 import { LoadingScreen } from 'src/components/loading-screen';
+import { extractFileOptions } from 'src/utils/extractFileOptions';
 
 type Props = { params: { node: string } };
 
@@ -80,7 +81,8 @@ const inputStyle = {
     },
 };
 
-const SelectField = ({ label, value, onChange }) => (
+// --- FIXED SelectField Component ---
+const SelectField = ({ label, value, onChange, options = [], setValue }) => (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
         <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
             <Typography
@@ -90,30 +92,74 @@ const SelectField = ({ label, value, onChange }) => (
                 {label}
             </Typography>
         </Box>
-        <FormControl size="small">
-            <Select
-                value={value}
-                onChange={onChange}
-                IconComponent={SelectIcon}
-                sx={{
-                    ...inputStyle,
-                    '& .MuiSelect-select': {
-                        p: '4px 0px 4px 0px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        color: darkColors.textSecondary,
-                        fontSize: 15,
-                        textAlign: 'left',
-                        backgroundColor: 'transparent !important',
-                    },
-                    '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
-                    '& .MuiSvgIcon-root': { color: darkColors.textSecondary, fontSize: 16 },
-                }}
-                inputProps={{ 'aria-label': `${label} select` }}
-            >
-                <MenuItem value="Select">Select</MenuItem>
-            </Select>
-        </FormControl>
+        {
+            value === '' ? (<FormControl size="small">
+                <Select
+                    value={value}
+                    onChange={onChange}
+                    IconComponent={SelectIcon}
+                    sx={{
+                        ...inputStyle,
+                        '& .MuiSelect-select': {
+                            p: '4px 0px 4px 0px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            color: darkColors.textSecondary,
+                            fontSize: 15,
+                            textAlign: 'left',
+                            backgroundColor: 'transparent !important',
+                            ml: '-4px'
+                        },
+                        '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
+                        '& .MuiSvgIcon-root': { color: darkColors.textSecondary, fontSize: 16 },
+                    }}
+                    inputProps={{ 'aria-label': `${label} select` }}
+                    // Custom style for the dropdown menu background
+                    MenuProps={{
+                        PaperProps: {
+                            sx: {
+                                backgroundColor: darkColors.tableFill1,
+                                color: darkColors.textPrimary,
+                            },
+                        },
+                    }}
+                >
+                    {/* Map over the provided options (assuming they are strings) */}
+                    {options.map((option) => (
+                        <MenuItem
+                            key={option.key} // Using the string value itself as the key
+                            value={option.label} // Using the string value itself as the selected value
+                            sx={{
+                                color: darkColors.textPrimary,
+                                backgroundColor: 'transparent',
+                                '&:hover': { backgroundColor: darkColors.buttonTertiary },
+                                '&.Mui-selected': {
+                                    backgroundColor: darkColors.gray1,
+                                    '&:hover': { backgroundColor: darkColors.buttonTertiary }
+                                }
+                            }}
+                        >
+                            {option.label} {/* Rendering the string value as the visible label */}
+                        </MenuItem>
+                    ))}
+                </Select>
+            </FormControl>) : (
+                <Chip
+                    label={value}
+                    variant="soft"
+                    onDelete={() => {
+                        setValue('');
+                    }}
+                    sx={{
+                        width: 100,
+                        backgroundColor: "#212447",
+                        color: '#7AA2FF',
+                        border: '1px solid #1D2654',
+                    }}
+                />
+            )
+        }
+
     </Box>
 );
 
@@ -261,7 +307,12 @@ export default function Page({ params }: Props) {
 
     const processData = data?.data?.replay_status?.process_list || [];
 
-    console.log("data", data);
+    // --- EXTRACT LOG TYPE AND FILE TREE DATA ---
+    const logTypeList = data?.data?.replay_interface?.log_type_list || [];
+    const fileTreeList = extractFileOptions(data?.data?.replay_interface?.file_tree) || [];
+    // ------------------------------------------
+
+    console.log("fileTreeList", fileTreeList, logTypeList);
 
     const [logType, setLogType] = React.useState('');
     const [file, setFile] = React.useState('');
@@ -509,13 +560,17 @@ export default function Page({ params }: Props) {
                                                 <Box sx={{ ...panelStyle }}>
                                                     <SelectField
                                                         label="Log Type"
-                                                        value={logType || 'Select'}
+                                                        value={logType}
                                                         onChange={(e) => setLogType(e.target.value)}
+                                                        options={logTypeList}
+                                                        setValue={setLogType}
                                                     />
                                                     <SelectField
                                                         label="File"
-                                                        value={file || 'Select'}
+                                                        value={file}
                                                         onChange={(e) => setFile(e.target.value)}
+                                                        options={fileTreeList as string[]}
+                                                        setValue={setFile}
                                                     />
                                                 </Box>
                                             </Grid>
