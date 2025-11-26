@@ -81,7 +81,6 @@ const inputStyle = {
     },
 };
 
-// --- FIXED SelectField Component ---
 const SelectField = ({ label, value, onChange, options = [], setValue }) => (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
         <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
@@ -124,11 +123,10 @@ const SelectField = ({ label, value, onChange, options = [], setValue }) => (
                         },
                     }}
                 >
-                    {/* Map over the provided options (assuming they are strings) */}
                     {options.map((option) => (
                         <MenuItem
-                            key={option.key} // Using the string value itself as the key
-                            value={option.label} // Using the string value itself as the selected value
+                            key={option.key}
+                            value={option.label}
                             sx={{
                                 color: darkColors.textPrimary,
                                 backgroundColor: 'transparent',
@@ -139,7 +137,7 @@ const SelectField = ({ label, value, onChange, options = [], setValue }) => (
                                 }
                             }}
                         >
-                            {option.label} {/* Rendering the string value as the visible label */}
+                            {option.label}
                         </MenuItem>
                     ))}
                 </Select>
@@ -307,10 +305,8 @@ export default function Page({ params }: Props) {
 
     const processData = data?.data?.replay_status?.process_list || [];
 
-    // --- EXTRACT LOG TYPE AND FILE TREE DATA ---
     const logTypeList = data?.data?.replay_interface?.log_type_list || [];
     const fileTreeList = extractFileOptions(data?.data?.replay_interface?.file_tree) || [];
-    // ------------------------------------------
 
 
     const [logType, setLogType] = React.useState('');
@@ -583,7 +579,7 @@ export default function Page({ params }: Props) {
                                                         label="File"
                                                         value={file}
                                                         onChange={(e) => setFile(e.target.value)}
-                                                        options={fileTreeList as string[]}
+                                                        options={fileTreeList as never[]}
                                                         setValue={setFile}
                                                     />
                                                 </Box>
