@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Divider } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Divider, IconButton, InputAdornment } from '@mui/material';
 import {
     Box,
     Typography,
@@ -13,12 +13,8 @@ import {
     TableHead,
     TableRow,
     Button,
-    TextField,
     Grid,
     Stack,
-    FormControl,
-    Select,
-    MenuItem,
 } from '@mui/material';
 import {
     PlayArrow as PlayIcon,
@@ -27,14 +23,10 @@ import {
     Settings as SetttingsIcon,
     ZoomIn as ZoomInIcon,
     ChevronRight as ChevronRightIcon,
-    KeyboardArrowDown as SelectIcon,
     ErrorOutline as ErrorOutlineIcon,
 } from '@mui/icons-material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import dayjs from 'dayjs';
 
 import { useTranslate } from 'src/locales';
 import { grey } from '@mui/material/colors';
@@ -44,249 +36,11 @@ import { endpoints, fetcher } from 'src/utils/axios';
 import useSWR from 'swr';
 import { LoadingScreen } from 'src/components/loading-screen';
 import { extractFileOptions } from 'src/utils/extractFileOptions';
+import { CustomTextField, darkColors, DateTimeMuiField, SelectField, WideTextField } from 'src/components/replay';
+import { FilterDialog } from 'src/components/replay/FilterDialog';
 
 type Props = { params: { node: string } };
 
-const darkColors = {
-    backgroundScreen: '#161C25',
-    tableFill1: '#202838',
-    tableFill2: '#141C2A',
-    headerFill: '#667085',
-    textPrimary: '#F0F1F5',
-    textSecondary: '#D1D6E0',
-    buttonTertiary: '#373F4E',
-    border: '#4E576A',
-    badgeInfo: '#212447',
-    successText: '#7EE081',
-    successFill: '#1D2F20',
-    dangerFill: '#331B1E',
-    dangerTextDisabled: '#4A2C31',
-    textDisabled: '#667085',
-    black: '#0A0E15',
-    gray0: '#202838',
-    gray1: '#373F4E',
-    gray5: '#D1D6E0',
-};
-
-
-const inputStyle = {
-    height: 32,
-    maxWidth: 90,
-    px: 1,
-    py: 0,
-    backgroundColor: 'transparent',
-    borderRadius: '4px',
-    border: `1px solid ${darkColors.border}`,
-    '&:hover': {
-        border: `1px solid ${darkColors.border}`,
-    },
-};
-
-const SelectField = ({ label, value, onChange, options = [], setValue }) => (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-        <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
-            <Typography
-                variant="body2"
-                sx={{ color: darkColors.gray5, fontWeight: 400, lineHeight: '22.5px' }}
-            >
-                {label}
-            </Typography>
-        </Box>
-        {
-            value === '' ? (<FormControl size="small">
-                <Select
-                    value={value}
-                    onChange={onChange}
-                    IconComponent={SelectIcon}
-                    sx={{
-                        ...inputStyle,
-                        '& .MuiSelect-select': {
-                            p: '4px 0px 4px 0px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            color: darkColors.textSecondary,
-                            fontSize: 15,
-                            textAlign: 'left',
-                            backgroundColor: 'transparent !important',
-                            ml: '-4px'
-                        },
-                        '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
-                        '& .MuiSvgIcon-root': { color: darkColors.textSecondary, fontSize: 16 },
-                    }}
-                    inputProps={{ 'aria-label': `${label} select` }}
-                    // Custom style for the dropdown menu background
-                    MenuProps={{
-                        PaperProps: {
-                            sx: {
-                                backgroundColor: darkColors.tableFill1,
-                                color: darkColors.textPrimary,
-                            },
-                        },
-                    }}
-                >
-                    {options.map((option) => (
-                        <MenuItem
-                            key={option.key}
-                            value={option.label}
-                            sx={{
-                                color: darkColors.textPrimary,
-                                backgroundColor: 'transparent',
-                                '&:hover': { backgroundColor: darkColors.buttonTertiary },
-                                '&.Mui-selected': {
-                                    backgroundColor: darkColors.gray1,
-                                    '&:hover': { backgroundColor: darkColors.buttonTertiary }
-                                }
-                            }}
-                        >
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>) : (
-                <Chip
-                    label={value}
-                    variant="soft"
-                    onDelete={() => {
-                        setValue('');
-                    }}
-                    sx={{
-                        width: 100,
-                        backgroundColor: "#212447",
-                        color: '#7AA2FF',
-                        border: '1px solid #1D2654',
-                    }}
-                />
-            )
-        }
-
-    </Box>
-);
-
-const DateTimeMuiField = ({ label, type, value, onChange }) => {
-    const PickerComponent = type === 'date' ? DatePicker : TimePicker;
-    const placeholderValue = type === 'date' ? '0000-00-00' : '00:00:00';
-    const minWidth = type === 'date' ? 126 : 110;
-
-    const customInputProps = {
-        sx: {
-            ...inputStyle,
-            minWidth: minWidth,
-            maxWidth: minWidth,
-            height: 32,
-            '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
-            '& .MuiInputBase-input': {
-                p: '4px 0px 4px 0px',
-                display: 'flex',
-                alignItems: 'center',
-                color: darkColors.textSecondary,
-                fontSize: 15,
-                backgroundColor: 'transparent !important',
-                height: 'auto',
-            },
-            '& .MuiSvgIcon-root': { color: darkColors.textSecondary, fontSize: 16 },
-        },
-    };
-
-    const customPopperProps = {
-        sx: {
-            '& .MuiPaper-root': {
-                backgroundColor: darkColors.tableFill1,
-                color: darkColors.textPrimary,
-                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)',
-            },
-
-            '& .MuiMultiSectionDigitalClock-root': {
-                backgroundColor: darkColors.tableFill1,
-
-                '& .MuiButtonBase-root': {
-                    color: darkColors.textPrimary,
-                    backgroundColor: darkColors.gray1,
-                    '&:hover': {
-                        backgroundColor: darkColors.buttonTertiary,
-                    },
-
-                    '&.Mui-selected': {
-                        backgroundColor: darkColors.badgeInfo,
-                        color: 'white',
-                    },
-                },
-            },
-
-            '& .MuiDialogActions-root .MuiButton-root': {
-                color: darkColors.textPrimary,
-            },
-
-            '& .MuiClock-root': {
-                backgroundColor: darkColors.tableFill1,
-            },
-            '& .MuiCalendarPicker-root': {
-                backgroundColor: darkColors.tableFill1,
-            }
-        },
-    };
-
-    return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
-                <Typography
-                    variant="body2"
-                    sx={{ color: darkColors.gray5, fontWeight: 400, lineHeight: '22.5px' }}
-                >
-                    {label}
-                </Typography>
-            </Box>
-
-            <PickerComponent
-                value={dayjs(value, type === 'date' ? 'YYYY-MM-DD' : 'HH:mm:ss')}
-                onChange={(newValue) => {
-                    const formattedValue = newValue ? newValue.format(type === 'date' ? 'YYYY-MM-DD' : 'HH:mm:ss') : placeholderValue;
-                    onChange({ target: { value: formattedValue } });
-                }}
-                slotProps={{
-                    textField: {
-                        size: "small",
-                        placeholder: placeholderValue,
-                        variant: "outlined",
-                        InputProps: customInputProps,
-                    },
-                    popper: customPopperProps,
-                    openPickerButton: {
-                        sx: {
-                            color: darkColors.textSecondary,
-                            '& .MuiSvgIcon-root': { fontSize: 16 }
-                        }
-                    }
-                }}
-            />
-        </Box>
-    );
-};
-
-const WideTextField = ({ label, value, onChange, placeholder }) => (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-        <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
-            <Typography
-                variant="body2"
-                sx={{ color: darkColors.gray5, fontWeight: 400, lineHeight: '22.5px', }}
-            >
-                {label}
-            </Typography>
-        </Box>
-
-        <TextField
-            value={value}
-            onChange={onChange}
-            placeholder={placeholder}
-            variant="outlined"
-            size="small"
-            sx={{
-                border: '1px solid #4E576A',
-                borderRadius: '8px'
-
-            }}
-        />
-    </Box>
-);
 
 const panelStyle = {
     p: 1.5,
@@ -318,9 +72,43 @@ export default function Page({ params }: Props) {
     const [head, setHead] = React.useState('all');
     const [channel, setChannel] = React.useState('all');
 
-    // Tool PID/Kill modal state
     const [toolPid, setToolPid] = React.useState('');
     const [killDialogOpen, setKillDialogOpen] = React.useState(false);
+
+    // Filter Dialog State
+    const [filterDialogOpen, setFilterDialogOpen] = React.useState(false);
+    const [filterTarget, setFilterTarget] = React.useState<'HEAD' | 'CHANNEL' | null>(null);
+    const [filterMode, setFilterMode] = React.useState('all');
+
+    const handleOpenFilterDialog = (target) => {
+        setFilterTarget(target);
+        setFilterDialogOpen(true);
+        setFilterMode('all');
+    };
+
+    const handleCloseFilterDialog = () => {
+        setFilterDialogOpen(false);
+        setFilterTarget(null);
+    };
+
+    const handleFilterChange = (newExpression) => {
+        if (filterTarget === 'HEAD') {
+            setHead(newExpression);
+        } else if (filterTarget === 'CHANNEL') {
+            setChannel(newExpression);
+        }
+    };
+
+    const handleFilterReset = () => {
+        if (filterTarget === 'HEAD') {
+            setHead('all');
+        } else if (filterTarget === 'CHANNEL') {
+            setChannel('all');
+        }
+    };
+
+    const currentExpression = filterTarget === 'HEAD' ? head : channel;
+    const setCurrentExpression = filterTarget === 'HEAD' ? setHead : setChannel;
 
 
     return (
@@ -411,30 +199,7 @@ export default function Page({ params }: Props) {
                                             </Typography>
                                         </Box>
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                            <TextField
-                                                variant="outlined"
-                                                size="small"
-                                                placeholder="Tap the list"
-                                                value={toolPid}
-                                                InputProps={{
-                                                    sx: {
-                                                        height: 32,
-                                                        color: darkColors.textSecondary,
-                                                        backgroundColor: darkColors.backgroundScreen,
-                                                        border: `1px solid ${darkColors.border}`,
-                                                        '& fieldset': { border: 'none' },
-                                                    },
-                                                }}
-                                                sx={{
-                                                    flex: '1 1 0',
-                                                    '& .MuiOutlinedInput-root': {
-                                                        paddingLeft: '12px',
-                                                        paddingRight: '8px',
-                                                        borderRadius: '4px',
-                                                    },
-                                                }}
-                                                onChange={(e) => setToolPid(e.target.value)}
-                                            />
+                                            <CustomTextField toolPid={toolPid} setToolPid={setToolPid} />
                                             <Button
                                                 variant="contained"
                                                 disabled={!toolPid}
@@ -615,12 +380,24 @@ export default function Page({ params }: Props) {
                                                         value={head}
                                                         onChange={(e) => setHead(e.target.value)}
                                                         placeholder="all"
+                                                        onClick={() => handleOpenFilterDialog('HEAD')}
+                                                    />
+                                                    <FilterDialog
+                                                        open={filterDialogOpen}
+                                                        onClose={handleCloseFilterDialog}
+                                                        mode={filterMode}
+                                                        setMode={setFilterMode}
+                                                        expression={currentExpression}
+                                                        setExpression={setCurrentExpression}
+                                                        handleReset={handleFilterReset}
+                                                        handleConfirm={handleCloseFilterDialog}
                                                     />
                                                     <WideTextField
                                                         label="Channel Number"
                                                         value={channel}
                                                         onChange={(e) => setChannel(e.target.value)}
                                                         placeholder="all"
+                                                        onClick={() => handleOpenFilterDialog('CHANNEL')}
                                                     />
                                                 </Box>
                                             </Grid>
@@ -631,6 +408,8 @@ export default function Page({ params }: Props) {
                         </Box>
                     )
                 }
+
+
 
             </DashboardContent >
         </LocalizationProvider >
@@ -777,3 +556,4 @@ const CustomDialog = ({ open, handleClose, pid }) => {
         </Dialog>
     );
 };
+
