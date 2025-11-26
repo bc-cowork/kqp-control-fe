@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Divider } from '@mui/material';
 import {
     Box,
     Typography,
@@ -28,6 +28,7 @@ import {
     ZoomIn as ZoomInIcon,
     ChevronRight as ChevronRightIcon,
     KeyboardArrowDown as SelectIcon,
+    ErrorOutline as ErrorOutlineIcon,
 } from '@mui/icons-material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -444,22 +445,21 @@ export default function Page({ params }: Props) {
                                                     border: `2px solid ${toolPid ? '#FF3D4A !important' : '#4A2C31 !important'
                                                         }`,
                                                     color: toolPid ? '#FF3D4A !important' : '#4A2C31 !important',
+                                                    "&:hover": {
+                                                        backgroundColor: toolPid ? '#5E66FF !important' : '#331B1E !important',
+                                                        borderColor: toolPid ? '#4E57E5 !important' : '#4A2C31 !important',
+                                                        color: toolPid ? '#FFFFFF !important' : '#4A2C31 !important',
+                                                    }
                                                 }}
                                                 onClick={() => setKillDialogOpen(true)}
                                             >
                                                 Kill
                                             </Button>
-                                            {/* Kill confirmation modal */}
-                                            <Dialog open={killDialogOpen} onClose={() => setKillDialogOpen(false)}>
-                                                <DialogTitle>Kill Process</DialogTitle>
-                                                <DialogContent>
-                                                    <Typography>Are you sure you want to kill process PID: <b>{toolPid}</b>?</Typography>
-                                                </DialogContent>
-                                                <DialogActions>
-                                                    <Button onClick={() => setKillDialogOpen(false)} color="inherit">Cancel</Button>
-                                                    <Button onClick={() => { setKillDialogOpen(false); setToolPid(''); }} color="error" variant="contained">Kill</Button>
-                                                </DialogActions>
-                                            </Dialog>
+                                            <CustomDialog
+                                                open={killDialogOpen}
+                                                handleClose={() => setKillDialogOpen(false)}
+                                                pid={toolPid}
+                                            />
                                         </Box>
                                     </Box>
                                 </Grid>
@@ -634,5 +634,146 @@ export default function Page({ params }: Props) {
 
             </DashboardContent >
         </LocalizationProvider >
+    );
+};
+
+const CustomDialog = ({ open, handleClose, pid }) => {
+    return (
+        <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="custom-dialog-title"
+            PaperProps={{
+                style: {
+                    backgroundColor: '#0A0E15',
+                    borderRadius: 8,
+                    border: '1px solid #4E576A',
+                    color: '#F0F1F5',
+                    minWidth: '400px',
+                    minHeight: '220px',
+                },
+            }}
+        >
+            <DialogTitle
+                id="custom-dialog-title"
+                sx={{
+                    padding: '12px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                }}
+            >
+                <ErrorOutlineIcon />
+                <Typography
+                    variant="subtitle1"
+                    fontWeight="400"
+                    lineHeight="22.50px"
+                    sx={{ color: 'inherit' }}
+                >
+                    팝업 메세지
+                </Typography>
+            </DialogTitle>
+
+            <DialogContent
+                sx={{
+                    margin: '0 12px',
+                    background: '#161C25',
+                    borderRadius: '8px',
+                    border: '1px solid #4E576A',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: '8px',
+                }}
+            >
+                <Box
+                    sx={{
+
+                        display: 'flex',
+                        gap: '8px',
+                    }}
+                >
+                    <Typography
+                        variant="h6"
+                        fontWeight="600"
+                        lineHeight="25.50px"
+                        textAlign="center"
+                        sx={{ color: 'inherit' }}
+                    >
+                        PID
+                    </Typography>
+                    <Divider orientation="vertical" flexItem sx={{ width: '1px', height: '12px', backgroundColor: '#4E576A', alignSelf: 'center' }} />
+                    <Typography
+                        variant="h6"
+                        fontWeight="600"
+                        lineHeight="25.50px"
+                        textAlign="center"
+                        sx={{ color: 'inherit' }}
+                    >
+                        {pid}
+                    </Typography>
+                </Box>
+
+                <Typography
+                    variant="body1"
+                    fontWeight="400"
+                    lineHeight="22.50px"
+                    textAlign="center"
+                    sx={{ color: 'inherit' }}
+                >
+                    종료 하시겠습니까?
+                </Typography>
+            </DialogContent>
+
+            <DialogActions
+                sx={{
+                    padding: '20px 12px',
+                    justifyContent: 'flex-end',
+                    gap: '10px',
+                }}
+            >
+                <Button
+                    onClick={handleClose}
+                    sx={{
+                        padding: '4px 12px',
+                        background: '#5E66FF',
+                        borderRadius: '4px',
+                        color: 'white',
+                        fontSize: '15px',
+                        fontFamily: 'Roboto',
+                        fontWeight: '400',
+                        lineHeight: '22.50px',
+                        textTransform: 'none',
+                        '&:hover': {
+                            backgroundColor: '#4E57E5',
+                        },
+                    }}
+                >
+                    확인
+                </Button>
+
+                <Button
+                    onClick={handleClose}
+                    sx={{
+                        padding: '4px 12px',
+                        background: '#EFF6FF',
+                        borderRadius: '4px',
+                        border: '1px solid #DFEAFF',
+                        color: '#6B89FF',
+                        fontSize: '15px',
+                        fontFamily: 'Roboto',
+                        fontWeight: '400',
+                        lineHeight: '22.50px',
+                        textTransform: 'none',
+                        '&:hover': {
+                            backgroundColor: '#E0E8FF',
+                        },
+                    }}
+                >
+                    취소
+                </Button>
+            </DialogActions>
+        </Dialog>
     );
 };
