@@ -19,6 +19,8 @@
     "identify_list": "Identifier List",
     "function_list": "Function List",
     "daily_report_list": "Daily Report List",
-    "alerts_list": "Alerts List"
+    "alerts_list": "Alerts List",
+    "status": "Status",
+    "replay": "Replay"
   }
 }

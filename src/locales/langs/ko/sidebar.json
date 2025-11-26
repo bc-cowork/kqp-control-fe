@@ -19,6 +19,8 @@
     "identify_list": "식별자 목록",
     "function_list": "사용자 함수 목록",
     "daily_report_list": "일일 리포트 목록",
-    "alerts_list": "감시 목록(Alerts)"
+    "alerts_list": "감시 목록(Alerts)",
+    "status": "상태",
+    "replay": "재생"
   }
 }
