@@ -166,11 +166,9 @@ export default function Page({ params }: Props) {
         setReplayDialogOpen(true);
     }
 
-    // --- RENDER START ---
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DashboardContent maxWidth="xl">
-                {/* ... (Header and Process Table remain the same) ... */}
 
                 <Breadcrumb node={node} pages={[{ pageName: t('top.title') }]} />
                 <Stack direction="row" alignItems="baseline" justifyContent="space-between">
@@ -213,7 +211,7 @@ export default function Page({ params }: Props) {
                                                         }}
                                                         onClick={() => setToolPid(row.pid)}
                                                     >
-                                                        <TableCell component="th" scope="row" sx={{ p: '8px 12px', border: 'none' }}>
+                                                        <TableCell sx={{ p: '8px 12px', border: 'none' }}>
                                                             <Chip label="Play"
                                                                 icon={<PlayIcon sx={{ color: darkColors.successText, fontSize: 12 }} />}
                                                                 color="success" size="small" variant="outlined" sx={{
