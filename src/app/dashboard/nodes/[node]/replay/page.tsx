@@ -382,16 +382,21 @@ export default function Page({ params }: Props) {
                                                         placeholder="all"
                                                         onClick={() => handleOpenFilterDialog('HEAD')}
                                                     />
-                                                    <FilterDialog
-                                                        open={filterDialogOpen}
-                                                        onClose={handleCloseFilterDialog}
-                                                        mode={filterMode}
-                                                        setMode={setFilterMode}
-                                                        expression={currentExpression}
-                                                        setExpression={setCurrentExpression}
-                                                        handleReset={handleFilterReset}
-                                                        handleConfirm={handleCloseFilterDialog}
-                                                    />
+                                                    {
+                                                        filterTarget === 'HEAD' && (
+                                                            <FilterDialog
+                                                                open={filterDialogOpen}
+                                                                onClose={handleCloseFilterDialog}
+                                                                mode={filterMode}
+                                                                setMode={setFilterMode}
+                                                                expression={currentExpression}
+                                                                setExpression={setCurrentExpression}
+                                                                handleReset={handleFilterReset}
+                                                                handleConfirm={handleCloseFilterDialog}
+                                                            />
+                                                        )
+                                                    }
+
                                                     <WideTextField
                                                         label="Channel Number"
                                                         value={channel}
@@ -399,6 +404,22 @@ export default function Page({ params }: Props) {
                                                         placeholder="all"
                                                         onClick={() => handleOpenFilterDialog('CHANNEL')}
                                                     />
+
+                                                    {
+                                                        filterTarget === 'CHANNEL' && (
+                                                            <FilterDialog
+                                                                open={filterDialogOpen}
+                                                                onClose={handleCloseFilterDialog}
+                                                                mode={filterMode}
+                                                                setMode={setFilterMode}
+                                                                expression={currentExpression}
+                                                                setExpression={setCurrentExpression}
+                                                                handleReset={handleFilterReset}
+                                                                handleConfirm={handleCloseFilterDialog}
+                                                            />
+                                                        )
+                                                    }
+
                                                 </Box>
                                             </Grid>
                                         </Grid>
