@@ -100,9 +100,9 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
               </Box>
             )}
           </Grid>
-          <Grid xs={12} lg={7.8} sx={{ pl: '10px' }}>
+          <Grid xs={12} lg={7.8} sx={{ pl: { lg: '10px' } }}>
             <TableContainer component={Paper}
-              sx={{ height: { md: 'calc(100vh - 200px)' } }}>
+              sx={{ height: { md: 'auto' } }}>
               <Table
                 size="small">
                 <TableHead>
@@ -121,13 +121,13 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                     <TableErrorRows />
                   ) : (
                     <>
-                      <TableRow sx={{ backgroundColor: '#EFF6FF !important' }}>
+                      <TableRow sx={{ backgroundColor: '#212447 !important' }}>
                         <TableCell />
                         <TableCell />
                         <TableCell align="right">
                           <Box
                             component="span"
-                            sx={{ fontWeight: 500, color: (theme) => theme.palette.primary.main }}
+                            sx={{ fontWeight: 500, color: '#7AA2FF' }}
                           >
                             {sumDataAsk.uni.toLocaleString()}
                           </Box>
@@ -135,7 +135,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                         <TableCell align="right">
                           <Box
                             component="span"
-                            sx={{ fontWeight: 500, color: (theme) => theme.palette.primary.main }}
+                            sx={{ fontWeight: 500, color: '#7AA2FF' }}
                           >
                             {sumDataAsk.krx.toLocaleString()}
                           </Box>
@@ -143,7 +143,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                         <TableCell align="right">
                           <Box
                             component="span"
-                            sx={{ fontWeight: 500, color: (theme) => theme.palette.primary.main }}
+                            sx={{ fontWeight: 500, color: '#7AA2FF' }}
                           >
                             {sumDataAsk.nxt.toLocaleString()}
                           </Box>
@@ -160,6 +160,9 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                               sx={{
                                 color: '#7AA2FF',
                                 backgroundColor: '#212447',
+                                border: '1px solid #1D2654',
+                                padding: '2px 4px',
+                                borderRadius: '2px',
                               }}
                             >
                               {(issueQuotesAsk as Record<string, { price: number }>)[
@@ -198,6 +201,9 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                               sx={{
                                 color: '#FF8882',
                                 backgroundColor: '#331B1E',
+                                border: '1px solid #4A2C31',
+                                padding: '2px 4px',
+                                borderRadius: '2px',
                               }}
                             >
                               {(issueQuotesBid as Record<string, { price: number }>)[
@@ -222,13 +228,13 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                           </TableCell>
                         </TableRow>
                       ))}
-                      <TableRow sx={{ backgroundColor: '#FFF2F4 !important' }}>
+                      <TableRow sx={{ backgroundColor: '#331B1E !important' }}>
                         <TableCell />
                         <TableCell />
                         <TableCell align="right">
                           <Box
                             component="span"
-                            sx={{ fontWeight: 500, color: (theme) => theme.palette.error.main }}
+                            sx={{ fontWeight: 500, color: '#FF8882' }}
                           >
                             {sumDataBid.uni.toLocaleString()}
                           </Box>
@@ -236,7 +242,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                         <TableCell align="right">
                           <Box
                             component="span"
-                            sx={{ fontWeight: 500, color: (theme) => theme.palette.error.main }}
+                            sx={{ fontWeight: 500, color: '#FF8882' }}
                           >
                             {sumDataBid.krx.toLocaleString()}
                           </Box>
@@ -244,7 +250,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                         <TableCell align="right">
                           <Box
                             component="span"
-                            sx={{ fontWeight: 500, color: (theme) => theme.palette.error.main }}
+                            sx={{ fontWeight: 500, color: '#FF8882' }}
                           >
                             {sumDataBid.nxt.toLocaleString()}
                           </Box>
