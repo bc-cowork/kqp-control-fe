@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Divider, IconButton, InputAdornment } from '@mui/material';
 import {
+    Dialog, DialogTitle, DialogContent, DialogActions, Divider,
     Box,
     Typography,
     Chip,
@@ -80,7 +80,7 @@ export default function Page({ params }: Props) {
     const [filterTarget, setFilterTarget] = React.useState<'HEAD' | 'CHANNEL' | null>(null);
     const [filterMode, setFilterMode] = React.useState('all');
 
-    const handleOpenFilterDialog = (target) => {
+    const handleOpenFilterDialog = (target: any) => {
         setFilterTarget(target);
         setFilterDialogOpen(true);
         setFilterMode('all');
@@ -91,7 +91,7 @@ export default function Page({ params }: Props) {
         setFilterTarget(null);
     };
 
-    const handleFilterChange = (newExpression) => {
+    const handleFilterChange = (newExpression: any) => {
         if (filterTarget === 'HEAD') {
             setHead(newExpression);
         } else if (filterTarget === 'CHANNEL') {
@@ -125,7 +125,7 @@ export default function Page({ params }: Props) {
                         <LoadingScreen />
                     ) : (
                         <Box>
-                            <Grid container alignItems={"baseline"}
+                            <Grid container alignItems="baseline"
                                 sx={{
                                     marginBottom: 2
                                 }}
@@ -145,7 +145,7 @@ export default function Page({ params }: Props) {
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody sx={{ flex: '1 1 0', overflowY: 'auto' }}>
-                                                {processData.map((row, index) => (
+                                                {processData.map((row: any, index: number) => (
                                                     <TableRow
                                                         key={index}
                                                         sx={{
@@ -156,7 +156,7 @@ export default function Page({ params }: Props) {
                                                         onClick={() => setToolPid(row.pid)}
                                                     >
                                                         <TableCell component="th" scope="row" sx={{ p: '8px 12px', border: 'none' }}>
-                                                            <Chip label={`Play`}
+                                                            <Chip label="Play"
                                                                 icon={<PlayIcon sx={{ color: darkColors.successText, fontSize: 12 }} />}
                                                                 color="success" size="small" variant="outlined" sx={{
                                                                     backgroundColor: darkColors.successFill,
@@ -172,7 +172,7 @@ export default function Page({ params }: Props) {
                                                         <TableCell sx={{ color: darkColors.textSecondary, fontSize: 15, p: '8px 12px', border: 'none' }}>
                                                             {row.command}
                                                         </TableCell>
-                                                        <TableCell sx={{ p: '8px 12px', border: 'none' }} align="right"></TableCell>
+                                                        <TableCell sx={{ p: '8px 12px', border: 'none' }} align="right" />
                                                     </TableRow>
                                                 ))}
                                             </TableBody>
@@ -336,14 +336,14 @@ export default function Page({ params }: Props) {
                                                     <SelectField
                                                         label="Log Type"
                                                         value={logType}
-                                                        onChange={(e) => setLogType(e.target.value)}
+                                                        onChange={(e: any) => setLogType(e.target.value)}
                                                         options={logTypeList}
                                                         setValue={setLogType}
                                                     />
                                                     <SelectField
                                                         label="File"
                                                         value={file}
-                                                        onChange={(e) => setFile(e.target.value)}
+                                                        onChange={(e: any) => setFile(e.target.value)}
                                                         options={fileTreeList as never[]}
                                                         setValue={setFile}
                                                     />
@@ -356,19 +356,19 @@ export default function Page({ params }: Props) {
                                                         label="Date"
                                                         type="date"
                                                         value={date}
-                                                        onChange={(e) => setDate(e.target.value)}
+                                                        onChange={(e: any) => setDate(e.target.value)}
                                                     />
                                                     <DateTimeMuiField
                                                         label="Start Time"
                                                         type="time"
                                                         value={startTime}
-                                                        onChange={(e) => setStartTime(e.target.value)}
+                                                        onChange={(e: any) => setStartTime(e.target.value)}
                                                     />
                                                     <DateTimeMuiField
                                                         label="End Time"
                                                         type="time"
                                                         value={endTime}
-                                                        onChange={(e) => setEndTime(e.target.value)}
+                                                        onChange={(e: any) => setEndTime(e.target.value)}
                                                     />
                                                 </Box>
                                             </Grid>
@@ -378,7 +378,7 @@ export default function Page({ params }: Props) {
                                                     <WideTextField
                                                         label="HEAD"
                                                         value={head}
-                                                        onChange={(e) => setHead(e.target.value)}
+                                                        onChange={(e: any) => setHead(e.target.value)}
                                                         placeholder="all"
                                                         onClick={() => handleOpenFilterDialog('HEAD')}
                                                     />
@@ -400,7 +400,7 @@ export default function Page({ params }: Props) {
                                                     <WideTextField
                                                         label="Channel Number"
                                                         value={channel}
-                                                        onChange={(e) => setChannel(e.target.value)}
+                                                        onChange={(e: any) => setChannel(e.target.value)}
                                                         placeholder="all"
                                                         onClick={() => handleOpenFilterDialog('CHANNEL')}
                                                     />
@@ -437,144 +437,144 @@ export default function Page({ params }: Props) {
     );
 };
 
-const CustomDialog = ({ open, handleClose, pid }) => {
-    return (
-        <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="custom-dialog-title"
-            PaperProps={{
-                style: {
-                    backgroundColor: '#0A0E15',
-                    borderRadius: 8,
-                    border: '1px solid #4E576A',
-                    color: '#F0F1F5',
-                    minWidth: '400px',
-                    minHeight: '220px',
-                },
+const CustomDialog = ({ open, handleClose, pid }: any) =>
+(
+    <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="custom-dialog-title"
+        PaperProps={{
+            style: {
+                backgroundColor: '#0A0E15',
+                borderRadius: 8,
+                border: '1px solid #4E576A',
+                color: '#F0F1F5',
+                minWidth: '400px',
+                minHeight: '220px',
+            },
+        }}
+    >
+        <DialogTitle
+            id="custom-dialog-title"
+            sx={{
+                padding: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
             }}
         >
-            <DialogTitle
-                id="custom-dialog-title"
+            <ErrorOutlineIcon />
+            <Typography
+                variant="subtitle1"
+                fontWeight="400"
+                lineHeight="22.50px"
+                sx={{ color: 'inherit' }}
+            >
+                팝업 메세지
+            </Typography>
+        </DialogTitle>
+
+        <DialogContent
+            sx={{
+                margin: '0 12px',
+                background: '#161C25',
+                borderRadius: '8px',
+                border: '1px solid #4E576A',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: '8px',
+            }}
+        >
+            <Box
                 sx={{
-                    padding: '12px',
+
                     display: 'flex',
-                    alignItems: 'center',
                     gap: '8px',
                 }}
             >
-                <ErrorOutlineIcon />
                 <Typography
-                    variant="subtitle1"
-                    fontWeight="400"
-                    lineHeight="22.50px"
-                    sx={{ color: 'inherit' }}
-                >
-                    팝업 메세지
-                </Typography>
-            </DialogTitle>
-
-            <DialogContent
-                sx={{
-                    margin: '0 12px',
-                    background: '#161C25',
-                    borderRadius: '8px',
-                    border: '1px solid #4E576A',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    gap: '8px',
-                }}
-            >
-                <Box
-                    sx={{
-
-                        display: 'flex',
-                        gap: '8px',
-                    }}
-                >
-                    <Typography
-                        variant="h6"
-                        fontWeight="600"
-                        lineHeight="25.50px"
-                        textAlign="center"
-                        sx={{ color: 'inherit' }}
-                    >
-                        PID
-                    </Typography>
-                    <Divider orientation="vertical" flexItem sx={{ width: '1px', height: '12px', backgroundColor: '#4E576A', alignSelf: 'center' }} />
-                    <Typography
-                        variant="h6"
-                        fontWeight="600"
-                        lineHeight="25.50px"
-                        textAlign="center"
-                        sx={{ color: 'inherit' }}
-                    >
-                        {pid}
-                    </Typography>
-                </Box>
-
-                <Typography
-                    variant="body1"
-                    fontWeight="400"
-                    lineHeight="22.50px"
+                    variant="h6"
+                    fontWeight="600"
+                    lineHeight="25.50px"
                     textAlign="center"
                     sx={{ color: 'inherit' }}
                 >
-                    종료 하시겠습니까?
+                    PID
                 </Typography>
-            </DialogContent>
+                <Divider orientation="vertical" flexItem sx={{ width: '1px', height: '12px', backgroundColor: '#4E576A', alignSelf: 'center' }} />
+                <Typography
+                    variant="h6"
+                    fontWeight="600"
+                    lineHeight="25.50px"
+                    textAlign="center"
+                    sx={{ color: 'inherit' }}
+                >
+                    {pid}
+                </Typography>
+            </Box>
 
-            <DialogActions
+            <Typography
+                variant="body1"
+                fontWeight="400"
+                lineHeight="22.50px"
+                textAlign="center"
+                sx={{ color: 'inherit' }}
+            >
+                종료 하시겠습니까?
+            </Typography>
+        </DialogContent>
+
+        <DialogActions
+            sx={{
+                padding: '20px 12px',
+                justifyContent: 'flex-end',
+                gap: '10px',
+            }}
+        >
+            <Button
+                onClick={handleClose}
                 sx={{
-                    padding: '20px 12px',
-                    justifyContent: 'flex-end',
-                    gap: '10px',
+                    padding: '4px 12px',
+                    background: '#5E66FF',
+                    borderRadius: '4px',
+                    color: 'white',
+                    fontSize: '15px',
+                    fontFamily: 'Roboto',
+                    fontWeight: '400',
+                    lineHeight: '22.50px',
+                    textTransform: 'none',
+                    '&:hover': {
+                        backgroundColor: '#4E57E5',
+                    },
                 }}
             >
-                <Button
-                    onClick={handleClose}
-                    sx={{
-                        padding: '4px 12px',
-                        background: '#5E66FF',
-                        borderRadius: '4px',
-                        color: 'white',
-                        fontSize: '15px',
-                        fontFamily: 'Roboto',
-                        fontWeight: '400',
-                        lineHeight: '22.50px',
-                        textTransform: 'none',
-                        '&:hover': {
-                            backgroundColor: '#4E57E5',
-                        },
-                    }}
-                >
-                    확인
-                </Button>
+                확인
+            </Button>
 
-                <Button
-                    onClick={handleClose}
-                    sx={{
-                        padding: '4px 12px',
-                        background: '#EFF6FF',
-                        borderRadius: '4px',
-                        border: '1px solid #DFEAFF',
-                        color: '#6B89FF',
-                        fontSize: '15px',
-                        fontFamily: 'Roboto',
-                        fontWeight: '400',
-                        lineHeight: '22.50px',
-                        textTransform: 'none',
-                        '&:hover': {
-                            backgroundColor: '#E0E8FF',
-                        },
-                    }}
-                >
-                    취소
-                </Button>
-            </DialogActions>
-        </Dialog>
-    );
-};
+            <Button
+                onClick={handleClose}
+                sx={{
+                    padding: '4px 12px',
+                    background: '#EFF6FF',
+                    borderRadius: '4px',
+                    border: '1px solid #DFEAFF',
+                    color: '#6B89FF',
+                    fontSize: '15px',
+                    fontFamily: 'Roboto',
+                    fontWeight: '400',
+                    lineHeight: '22.50px',
+                    textTransform: 'none',
+                    '&:hover': {
+                        backgroundColor: '#E0E8FF',
+                    },
+                }}
+            >
+                취소
+            </Button>
+        </DialogActions>
+    </Dialog>
+);
+
 

@@ -23,7 +23,7 @@ export const FilterDialog = ({
     setExpression,
     handleReset,
     handleConfirm,
-}) => {
+}: any) => {
 
     const handleClearExpression = () => {
         setExpression('');

@@ -5,6 +5,7 @@ import {
     KeyboardArrowDown as SelectIcon,
     Cancel as CancelIcon,
 } from '@mui/icons-material';
+
 export const darkColors = {
     backgroundScreen: '#161C25',
     tableFill1: '#202838',
@@ -39,7 +40,7 @@ const inputStyle = {
     },
 };
 
-export const SelectField = ({ label, value, onChange, options = [], setValue }) => (
+export const SelectField = ({ label, value, onChange, options = [], setValue }: any) => (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
         <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
             <Typography
@@ -88,7 +89,7 @@ export const SelectField = ({ label, value, onChange, options = [], setValue }) 
                         Select
                     </MenuItem>
                     {/* ✨ END OF PLACEHOLDER */}
-                    {options.map((option) => (
+                    {options.map((option: any) => (
                         <MenuItem
                             key={option.key}
                             value={option.label}
@@ -135,7 +136,7 @@ export const SelectField = ({ label, value, onChange, options = [], setValue }) 
     </Box>
 );
 
-export const DateTimeMuiField = ({ label, type, value, onChange }) => {
+export const DateTimeMuiField = ({ label, type, value, onChange }: any) => {
     const PickerComponent = type === 'date' ? DatePicker : TimePicker;
     const placeholderValue = type === 'date' ? '0000-00-00' : '00:00:00';
     const minWidth = type === 'date' ? 126 : 110;
@@ -143,7 +144,7 @@ export const DateTimeMuiField = ({ label, type, value, onChange }) => {
     const customInputProps = {
         sx: {
             ...inputStyle,
-            minWidth: minWidth,
+            minWidth,
             maxWidth: minWidth,
             height: 32,
             '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
@@ -235,7 +236,7 @@ export const DateTimeMuiField = ({ label, type, value, onChange }) => {
     );
 };
 
-export const WideTextField = ({ label, value, onChange, placeholder, onClick }) => (
+export const WideTextField = ({ label, value, onChange, placeholder, onClick }: any) => (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
         <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
             <Typography
@@ -275,7 +276,7 @@ export const WideTextField = ({ label, value, onChange, placeholder, onClick }) 
     </Box>
 );
 
-export const CustomTextField = ({ toolPid, setToolPid }) => {
+export const CustomTextField = ({ toolPid, setToolPid }: any) => {
     // Function to handle clearing the toolPid value
     const handleClearToolPid = () => {
         setToolPid('');
