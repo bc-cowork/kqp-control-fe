@@ -114,7 +114,6 @@ export const SelectField = ({ label, value, onChange, options = [], setValue }: 
                         setValue('');
                     }
                 } />
-
             )
         }
     </Box>

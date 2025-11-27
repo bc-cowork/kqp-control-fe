@@ -28,6 +28,7 @@ import {
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
+// Assuming these imports are correctly defined in your project
 import { useTranslate } from 'src/locales';
 import { grey } from '@mui/material/colors';
 import { Breadcrumb } from 'src/components/common/Breadcrumb';
@@ -37,11 +38,12 @@ import useSWR from 'swr';
 import { LoadingScreen } from 'src/components/loading-screen';
 import { extractFileOptions } from 'src/utils/extractFileOptions';
 import { CustomTextField, darkColors, DateTimeMuiField, SelectField, WideTextField } from 'src/components/replay';
-import { FilterDialog } from 'src/components/replay/FilterDialog';
+import { FilterDialog } from 'src/components/replay/FilterDialog'; // Ensure this is the updated version
 import { LogTag } from 'src/components/replay/Logtag';
+import { AddReplayDialog } from 'src/components/replay/AddReplayDialog';
 
+// --- TYPE DEFINITIONS (from original code) ---
 type Props = { params: { node: string } };
-
 
 const panelStyle = {
     p: 1.5,
@@ -53,6 +55,7 @@ const panelStyle = {
     height: 446,
 };
 
+// --- MAIN PAGE COMPONENT ---
 export default function Page({ params }: Props) {
     const { node } = params;
     const { t } = useTranslate('status');
@@ -60,7 +63,6 @@ export default function Page({ params }: Props) {
     const { data, error, isLoading } = useSWR(url, fetcher);
 
     const processData = data?.data?.replay_status?.process_list || [];
-
     const logTypeList = data?.data?.replay_interface?.log_type_list || [];
     const fileTreeList = extractFileOptions(data?.data?.replay_interface?.file_tree) || [];
 
@@ -70,51 +72,109 @@ export default function Page({ params }: Props) {
     const [date, setDate] = React.useState('0000-00-00');
     const [startTime, setStartTime] = React.useState('00:00:00');
     const [endTime, setEndTime] = React.useState('00:00:00');
+    // Initialize head and channel to 'All' or '' depending on your default filter view
+    // Using 'All' makes sense if that's the default state.
     const [head, setHead] = React.useState('All');
     const [channel, setChannel] = React.useState('All');
 
     const [toolPid, setToolPid] = React.useState('');
     const [killDialogOpen, setKillDialogOpen] = React.useState(false);
+    const [replayDialogOpen, setReplayDialogOpen] = React.useState(false);
 
-    // Filter Dialog State
+    // --- Filter Dialog State Management (FIXED) ---
+
+    // 1. Separate state for dialog input/mode/error (generic to the open dialog)
     const [filterDialogOpen, setFilterDialogOpen] = React.useState(false);
     const [filterTarget, setFilterTarget] = React.useState<'HEAD' | 'CHANNEL' | null>(null);
-    const [filterMode, setFilterMode] = React.useState('All');
+    const [dialogMode, setDialogMode] = React.useState('All');
+    const [dialogExpression, setDialogExpression] = React.useState('');
+    const [filterError, setFilterError] = React.useState('');
 
-    const handleOpenFilterDialog = (target: any) => {
+    // --- END Filter Dialog State Management ---
+
+
+    const handleOpenFilterDialog = (target: 'HEAD' | 'CHANNEL') => {
         setFilterTarget(target);
         setFilterDialogOpen(true);
-        setFilterMode('all');
+        setFilterError('');
+
+        // Use the saved value for initialization
+        const savedValue = target === 'HEAD' ? head : channel;
+
+        // 2. Initialize dialog state based on saved value
+        if (savedValue === 'All') {
+            setDialogMode('All');
+            setDialogExpression('');
+        } else {
+            setDialogMode('Typing');
+            setDialogExpression(savedValue);
+        }
     };
 
     const handleCloseFilterDialog = () => {
         setFilterDialogOpen(false);
         setFilterTarget(null);
+        setFilterError('');
     };
 
-    const handleFilterChange = (newExpression: any) => {
-        if (filterTarget === 'HEAD') {
-            setHead(newExpression);
-        } else if (filterTarget === 'CHANNEL') {
-            setChannel(newExpression);
+    const handleFilterConfirm = () => {
+        // Validation logic
+        if (dialogMode === 'Typing' && !dialogExpression.trim()) {
+            setFilterError('Please enter a value to search or select "All" mode.');
+            return;
         }
+
+        // Determine the final value to save
+        const finalValue = (dialogMode === 'Typing' && dialogExpression.trim()) ? dialogExpression.trim() : 'All';
+
+        // 3. Update the correct final state (`head` or `channel`)
+        if (filterTarget === 'HEAD') {
+            setHead(finalValue);
+        } else if (filterTarget === 'CHANNEL') {
+            setChannel(finalValue);
+        }
+
+        handleCloseFilterDialog();
     };
 
     const handleFilterReset = () => {
+        // Reset dialog internal state to 'All'
+        setDialogExpression('');
+        setDialogMode('All');
+        setFilterError('');
+
+        // Optional: Also reset the persistent state to 'All' immediately upon Reset click
         if (filterTarget === 'HEAD') {
-            setHead('all');
+            setHead('All');
         } else if (filterTarget === 'CHANNEL') {
-            setChannel('all');
+            setChannel('All');
         }
     };
 
-    const currentExpression = filterTarget === 'HEAD' ? head : channel;
-    const setCurrentExpression = filterTarget === 'HEAD' ? setHead : setChannel;
+
+    // Logic: Determine if the Replay button should be active
+    const canReplay = React.useMemo(() => {
+        // Ensure all required fields have a meaningful selection
+        return (
+            logType && logType !== '' &&
+            file && file !== '' &&
+            date && date !== '0000-00-00' &&
+            startTime && startTime !== '00:00:00' &&
+            endTime && endTime !== '00:00:00'
+        );
+    }, [logType, file, date, startTime, endTime]);
 
 
+    const handleReplay = () => {
+        setReplayDialogOpen(true);
+    }
+
+    // --- RENDER START ---
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DashboardContent maxWidth="xl">
+                {/* ... (Header and Process Table remain the same) ... */}
+
                 <Breadcrumb node={node} pages={[{ pageName: t('top.title') }]} />
                 <Stack direction="row" alignItems="baseline" justifyContent="space-between">
                     <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50], mt: 2, mb: 6 }}>
@@ -270,13 +330,14 @@ export default function Page({ params }: Props) {
                                         <Grid container spacing={2} sx={{ mt: 1.5 }}>
                                             <Grid item xs={12} sm={3}>
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, }}>
+
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', px: 1 }}>
-                                                        <Typography variant="h6" sx={{ color: 'white', fontWeight: 600 }}>-</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 900 }}>{logType || '-'}{' : '}{file || '-'}</Typography>
                                                     </Box>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', px: 1 }}>
                                                         <DateIcon sx={{ color: darkColors.textPrimary, fontSize: 18 }} />
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600 }}>Date:</Typography>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>0000-00-00</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>{date || '0000-00-00'}</Typography>
                                                     </Box>
                                                 </Box>
                                             </Grid>
@@ -285,12 +346,12 @@ export default function Page({ params }: Props) {
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
                                                         <TimeIcon sx={{ color: darkColors.textPrimary, fontSize: 18 }} />
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600 }}>Start Time:</Typography>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>00:00:00</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>{startTime || '00:00:00'}</Typography>
                                                     </Box>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
                                                         <TimeIcon sx={{ color: darkColors.textPrimary, fontSize: 18 }} />
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600 }}>End Time:</Typography>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>00:00:00</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>{endTime || '00:00:00'}</Typography>
                                                     </Box>
                                                 </Box>
                                             </Grid>
@@ -298,28 +359,35 @@ export default function Page({ params }: Props) {
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600 }}>HEAD:</Typography>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>-</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>{head || '-'}</Typography>
                                                     </Box>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600 }}>Channel Number:</Typography>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>-</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>{channel || '-'}</Typography>
                                                     </Box>
                                                 </Box>
                                             </Grid>
                                             <Grid item xs={12} sm={3}>
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
                                                     <Button
-                                                        disabled
+                                                        // Conditional Activation
+                                                        disabled={!canReplay}
                                                         endIcon={<ChevronRightIcon sx={{ fontSize: 24 }} />}
                                                         sx={{
-                                                            color: darkColors.textDisabled,
+                                                            color: canReplay ? darkColors.textPrimary : darkColors.textDisabled,
+                                                            backgroundColor: canReplay ? '#5E66FF' : 'transparent',
                                                             py: 1,
                                                             px: 2,
                                                             '&.Mui-disabled': {
                                                                 color: darkColors.textDisabled,
+                                                            },
+                                                            "&:hover": {
+                                                                backgroundColor: canReplay ? '#4E57E5' : 'transparent',
                                                             }
                                                         }}
+                                                        onClick={() => handleReplay()}
                                                     >Replay</Button>
+                                                    <AddReplayDialog open={replayDialogOpen} onConfirm={() => { }} onClose={() => { setReplayDialogOpen(false) }} />
                                                 </Box>
                                             </Grid>
                                         </Grid>
@@ -387,20 +455,19 @@ export default function Page({ params }: Props) {
                                                             setHead('');
                                                         }}
                                                     />
-                                                    {
-                                                        filterTarget === 'HEAD' && (
-                                                            <FilterDialog
-                                                                open={filterDialogOpen}
-                                                                onClose={handleCloseFilterDialog}
-                                                                mode={filterMode}
-                                                                setMode={setFilterMode}
-                                                                expression={currentExpression}
-                                                                setExpression={setCurrentExpression}
-                                                                handleReset={handleFilterReset}
-                                                                handleConfirm={handleCloseFilterDialog}
-                                                            />
-                                                        )
-                                                    }
+                                                    {filterTarget === 'HEAD' && (
+                                                        <FilterDialog
+                                                            open={filterDialogOpen}
+                                                            onClose={handleCloseFilterDialog}
+                                                            mode={dialogMode}
+                                                            setMode={setDialogMode} // This setter updates the generic dialog mode state
+                                                            expression={dialogExpression}
+                                                            setExpression={setDialogExpression} // This setter updates the generic dialog expression state
+                                                            handleReset={handleFilterReset}
+                                                            handleConfirm={handleFilterConfirm}
+                                                            errorMessage={filterError}
+                                                        />
+                                                    )}
 
                                                     <WideTextField
                                                         label="Channel Number"
@@ -409,25 +476,25 @@ export default function Page({ params }: Props) {
                                                         placeholder="All"
                                                         onClick={() => handleOpenFilterDialog('CHANNEL')}
                                                         onClose={() => {
-                                                            setChannel('');
+                                                            setChannel('')
                                                         }}
+
+
                                                     />
+                                                    {filterTarget === 'CHANNEL' && (
+                                                        <FilterDialog
+                                                            open={filterDialogOpen}
+                                                            onClose={handleCloseFilterDialog}
+                                                            mode={dialogMode}
+                                                            setMode={setDialogMode} // This setter updates the generic dialog mode state
+                                                            expression={dialogExpression}
+                                                            setExpression={setDialogExpression} // This setter updates the generic dialog expression state
+                                                            handleReset={handleFilterReset}
+                                                            handleConfirm={handleFilterConfirm}
+                                                            errorMessage={filterError}
 
-                                                    {
-                                                        filterTarget === 'CHANNEL' && (
-                                                            <FilterDialog
-                                                                open={filterDialogOpen}
-                                                                onClose={handleCloseFilterDialog}
-                                                                mode={filterMode}
-                                                                setMode={setFilterMode}
-                                                                expression={currentExpression}
-                                                                setExpression={setCurrentExpression}
-                                                                handleReset={handleFilterReset}
-                                                                handleConfirm={handleCloseFilterDialog}
-                                                            />
-                                                        )
-                                                    }
-
+                                                        />
+                                                    )}
                                                 </Box>
                                             </Grid>
                                         </Grid>
@@ -438,13 +505,14 @@ export default function Page({ params }: Props) {
                     )
                 }
 
-
+                {/* 3. Filter Dialog Rendering: Renders only when open, uses generic state */}
 
             </DashboardContent >
         </LocalizationProvider >
     );
 };
 
+// --- CustomDialog Component (remains the same) ---
 const CustomDialog = ({ open, handleClose, pid }: any) =>
 (
     <Dialog
@@ -584,5 +652,3 @@ const CustomDialog = ({ open, handleClose, pid }: any) =>
         </DialogActions>
     </Dialog>
 );
-
-
