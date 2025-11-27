@@ -5,6 +5,7 @@ import {
     KeyboardArrowDown as SelectIcon,
     Cancel as CancelIcon,
 } from '@mui/icons-material';
+import { LogTag } from "./Logtag";
 
 export const darkColors = {
     backgroundScreen: '#161C25',
@@ -108,29 +109,12 @@ export const SelectField = ({ label, value, onChange, options = [], setValue }: 
                     ))}
                 </Select>
             </FormControl>) : (
-                <Chip
-                    label={value}
-                    variant="soft"
-                    onDelete={() => {
+                <LogTag text={value} onClose={
+                    () => {
                         setValue('');
-                    }}
-                    sx={{
-                        width: 100,
-                        backgroundColor: '#212447',
-                        color: '#7AA2FF !important',
-                        border: '1px solid #1D2654',
-                        "& .MuiChip-label": {
-                            color: '#7AA2FF !important',
-                        },
-                        "& .MuiChip-deleteIcon": {
-                            zIndex: 100,
-                            color: '#7AA2FF !important',
-                        }
-                    }}
-                    deleteIcon={
-                        <CancelIcon />
                     }
-                />
+                } />
+
             )
         }
     </Box>
@@ -236,7 +220,7 @@ export const DateTimeMuiField = ({ label, type, value, onChange }: any) => {
     );
 };
 
-export const WideTextField = ({ label, value, onChange, placeholder, onClick }: any) => (
+export const WideTextField = ({ label, value, onChange, placeholder, onClick, onClose }: any) => (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
         <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
             <Typography
@@ -246,34 +230,42 @@ export const WideTextField = ({ label, value, onChange, placeholder, onClick }: 
                 {label}
             </Typography>
         </Box>
-        <Box onClick={onClick} sx={{ cursor: 'pointer' }}>
-            <TextField
-                fullWidth
-                variant="outlined"
-                size="small"
-                value={value}
-                onChange={onChange}
-                placeholder={placeholder}
-                InputProps={{
-                    readOnly: true,
-                    sx: {
-                        height: 32,
-                        color: darkColors.textSecondary,
-                        border: `1px solid ${darkColors.border}`,
-                        '& fieldset': { border: 'none' },
-                    },
-                }}
-                sx={{
-                    flex: '1 1 0',
-                    '& .MuiOutlinedInput-root': {
-                        paddingLeft: '12px',
-                        paddingRight: '8px',
-                        borderRadius: '4px',
-                    },
-                }}
-            />
-        </Box>
-    </Box>
+        {
+            value === '' ? (
+                <Box onClick={onClick} sx={{ cursor: 'pointer' }}>
+                    <TextField
+                        fullWidth
+                        variant="outlined"
+                        size="small"
+                        value={value}
+                        onChange={onChange}
+                        placeholder={placeholder}
+                        InputProps={{
+                            readOnly: true,
+                            sx: {
+                                height: 32,
+                                color: darkColors.textSecondary,
+                                border: `1px solid ${darkColors.border}`,
+                                '& fieldset': { border: 'none' },
+                            },
+                        }}
+                        sx={{
+                            flex: '1 1 0',
+                            '& .MuiOutlinedInput-root': {
+                                paddingLeft: '12px',
+                                paddingRight: '8px',
+                                borderRadius: '4px',
+                            },
+                        }}
+                    />
+                </Box>
+
+            ) : (
+                <LogTag text={value} onClose={onClose} />
+            )
+        }
+
+    </Box >
 );
 
 export const CustomTextField = ({ toolPid, setToolPid }: any) => {

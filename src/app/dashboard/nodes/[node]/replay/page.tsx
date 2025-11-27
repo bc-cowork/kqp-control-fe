@@ -38,6 +38,7 @@ import { LoadingScreen } from 'src/components/loading-screen';
 import { extractFileOptions } from 'src/utils/extractFileOptions';
 import { CustomTextField, darkColors, DateTimeMuiField, SelectField, WideTextField } from 'src/components/replay';
 import { FilterDialog } from 'src/components/replay/FilterDialog';
+import { LogTag } from 'src/components/replay/Logtag';
 
 type Props = { params: { node: string } };
 
@@ -69,8 +70,8 @@ export default function Page({ params }: Props) {
     const [date, setDate] = React.useState('0000-00-00');
     const [startTime, setStartTime] = React.useState('00:00:00');
     const [endTime, setEndTime] = React.useState('00:00:00');
-    const [head, setHead] = React.useState('all');
-    const [channel, setChannel] = React.useState('all');
+    const [head, setHead] = React.useState('All');
+    const [channel, setChannel] = React.useState('All');
 
     const [toolPid, setToolPid] = React.useState('');
     const [killDialogOpen, setKillDialogOpen] = React.useState(false);
@@ -78,7 +79,7 @@ export default function Page({ params }: Props) {
     // Filter Dialog State
     const [filterDialogOpen, setFilterDialogOpen] = React.useState(false);
     const [filterTarget, setFilterTarget] = React.useState<'HEAD' | 'CHANNEL' | null>(null);
-    const [filterMode, setFilterMode] = React.useState('all');
+    const [filterMode, setFilterMode] = React.useState('All');
 
     const handleOpenFilterDialog = (target: any) => {
         setFilterTarget(target);
@@ -375,12 +376,16 @@ export default function Page({ params }: Props) {
 
                                             <Grid item xs={5}>
                                                 <Box sx={{ ...panelStyle }}>
+
                                                     <WideTextField
                                                         label="HEAD"
                                                         value={head}
                                                         onChange={(e: any) => setHead(e.target.value)}
-                                                        placeholder="all"
+                                                        placeholder="All"
                                                         onClick={() => handleOpenFilterDialog('HEAD')}
+                                                        onClose={() => {
+                                                            setHead('');
+                                                        }}
                                                     />
                                                     {
                                                         filterTarget === 'HEAD' && (
@@ -401,8 +406,11 @@ export default function Page({ params }: Props) {
                                                         label="Channel Number"
                                                         value={channel}
                                                         onChange={(e: any) => setChannel(e.target.value)}
-                                                        placeholder="all"
+                                                        placeholder="All"
                                                         onClick={() => handleOpenFilterDialog('CHANNEL')}
+                                                        onClose={() => {
+                                                            setChannel('');
+                                                        }}
                                                     />
 
                                                     {
