@@ -1,0 +1,22 @@
+{
+    "top": {
+        "title": "상태"
+    },
+    "table_top": {
+        "item": "항목",
+        "max": "Max",
+        "cur": "Cur",
+        "odd": "Odd",
+        "process": "프로세스",
+        "que": "큐",
+        "ch_inbound": "수신 채널",
+        "ch_outbound": "송출 채널"
+    },
+    "table_bottom": {
+        "time": "시간",
+        "ch_inbound": "수신 채널",
+        "ch_outbound": "송출 채널",
+        "number_inbound": "수신 건수",
+        "number_outbound": "송출 건수"
+    }
+}

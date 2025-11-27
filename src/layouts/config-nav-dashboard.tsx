@@ -91,6 +91,14 @@ export function getNavData(t: any, nodes: string[] = [],) {
                 title: t('tab_option.alerts_list') || 'Alerts',
                 path: paths.dashboard.nodes.alertsList(node),
               },
+              {
+                title: t('tab_option.status') || 'Status',
+                path: paths.dashboard.nodes.status(node),
+              },
+              {
+                title: t('tab_option.replay') || 'Replay',
+                path: paths.dashboard.nodes.replay(node),
+              },
             ],
           })),
         },

@@ -1,0 +1,22 @@
+{
+    "top": {
+        "title": "Status"
+    },
+    "table_top": {
+        "item": "Item",
+        "max": "Max",
+        "cur": "Cur",
+        "odd": "Odd",
+        "process": "Process",
+        "que": "Que",
+        "ch_inbound": "Ch.Inbound",
+        "ch_outbound": "Ch.Outbound"
+    },
+    "table_bottom": {
+        "time": "Time",
+        "ch_inbound": "Channel Inbound",
+        "ch_outbound": "Channel Outbound",
+        "number_inbound": "Number Inbound",
+        "number_outbound": "Number Outbound"
+    }
+}

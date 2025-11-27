@@ -74,8 +74,8 @@ const MuiTableCell: Components<Theme>['MuiTableCell'] = {
       fontSize: 15,
       color: theme.palette.primary.contrastText,
       'tr:first-child &': {
-        '&:first-of-type': { borderTopLeftRadius: '8px' },
-        '&:last-of-type': { borderTopRightRadius: '8px' },
+        '&:first-of-type': { borderTopLeftRadius: '0px' },
+        '&:last-of-type': { borderTopRightRadius: '0px' },
       },
       'tr:last-child &': {
         '&:first-of-type': { borderBottomLeftRadius: '8px' },
