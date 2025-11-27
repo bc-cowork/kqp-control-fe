@@ -10,60 +10,59 @@ const customTagColors = {
     iconPrimary: '#6B89FF',
 };
 
-export const LogTag = ({ text = '수신로그', onClose }: { text?: string, onClose: any }) => {
-    return (
-        <Box
+export const LogTag = ({ text = '수신로그', onClose }: { text?: string, onClose: any }) =>
+(
+    <Box
+        sx={{
+            width: 'fit-content',
+            padding: '4px',
+            paddingLeft: '8px',
+            paddingRight: '8px',
+            backgroundColor: customTagColors.background,
+            borderRadius: '4px',
+            border: `1px solid ${customTagColors.outlineBorder}`,
+            display: 'inline-flex',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            gap: '4px',
+            minWidth: 'fit-content',
+        }}
+    >
+        {/* Log Status Text (수신로그) */}
+        <Typography
             sx={{
-                width: 'fit-content',
-                padding: '4px',
-                paddingLeft: '8px',
-                paddingRight: '8px',
-                backgroundColor: customTagColors.background,
-                borderRadius: '4px',
-                border: `1px solid ${customTagColors.outlineBorder}`,
-                display: 'inline-flex',
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                gap: '4px',
-                minWidth: 'fit-content',
+                color: customTagColors.textPrimary,
+                fontSize: 15,
+                fontFamily: 'Roboto',
+                fontWeight: 400,
+                lineHeight: '22.50px',
+                // Your original styles for text:
+                textAlign: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
             }}
         >
-            {/* Log Status Text (수신로그) */}
-            <Typography
-                sx={{
-                    color: customTagColors.textPrimary,
-                    fontSize: 15,
-                    fontFamily: 'Roboto',
-                    fontWeight: 400,
-                    lineHeight: '22.50px',
-                    // Your original styles for text:
-                    textAlign: 'center',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                }}
-            >
-                {text}
-            </Typography>
+            {text}
+        </Typography>
 
-            {/* Icon Element (The directional shape) */}
-            <Box
+        {/* Icon Element (The directional shape) */}
+        <Box
+            sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                cursor: 'pointer',
+            }}
+            onClick={onClose}
+        >
+            <KeyboardArrowRightIcon
                 sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    cursor: 'pointer',
+                    width: 16,
+                    height: 16,
+                    color: customTagColors.iconPrimary,
                 }}
-                onClick={onClose}
-            >
-                <KeyboardArrowRightIcon
-                    sx={{
-                        width: 16,
-                        height: 16,
-                        color: customTagColors.iconPrimary,
-                    }}
-                />
-            </Box>
+            />
         </Box>
-    );
-};
+    </Box>
+);

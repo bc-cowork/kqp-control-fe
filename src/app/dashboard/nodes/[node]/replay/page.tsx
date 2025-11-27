@@ -152,17 +152,14 @@ export default function Page({ params }: Props) {
     };
 
 
-    // Logic: Determine if the Replay button should be active
-    const canReplay = React.useMemo(() => {
-        // Ensure all required fields have a meaningful selection
-        return (
-            logType && logType !== '' &&
-            file && file !== '' &&
-            date && date !== '0000-00-00' &&
-            startTime && startTime !== '00:00:00' &&
-            endTime && endTime !== '00:00:00'
-        );
-    }, [logType, file, date, startTime, endTime]);
+    const canReplay = React.useMemo(() =>
+    (
+        logType && logType !== '' &&
+        file && file !== '' &&
+        date && date !== '0000-00-00' &&
+        startTime && startTime !== '00:00:00' &&
+        endTime && endTime !== '00:00:00'
+    ), [logType, file, date, startTime, endTime]);
 
 
     const handleReplay = () => {
