@@ -3,7 +3,6 @@ import type { Theme, Components } from '@mui/material/styles';
 import { tableRowClasses } from '@mui/material/TableRow';
 import { tableCellClasses } from '@mui/material/TableCell';
 
-import { varAlpha } from '../../styles';
 
 // ----------------------------------------------------------------------
 
@@ -63,8 +62,8 @@ const MuiTableCell: Components<Theme>['MuiTableCell'] = {
       color: theme.palette.primary.contrastText,
       fontWeight: 400,
       backgroundColor: theme.palette.primary.darker,
-      '&:first-of-type': { borderTopLeftRadius: '8px', borderBottomLeftRadius: '0px' },
-      '&:last-of-type': { borderTopRightRadius: '8px', borderBottomRightRadius: '0px' },
+      '&:first-of-type': { borderTopLeftRadius: '0px', borderBottomLeftRadius: '0px' },
+      '&:last-of-type': { borderTopRightRadius: '0px', borderBottomRightRadius: '0px' },
       // Ensure sticky header cells keep these styles
       position: 'sticky',
       top: 0,
