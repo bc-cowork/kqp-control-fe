@@ -665,7 +665,7 @@ const CustomDialog = ({ open, handleClose, pid }: any) =>
 );
 
 const getKeysFromSelectedValue = (fileTree: any, log_tree: any, selectedKey: string) => {
-    const filteredValue = log_tree.filter((item: any) => item.label == selectedKey);
+    const filteredValue = log_tree.filter((item: any) => item.label === selectedKey);
     if (!fileTree || typeof fileTree !== 'object' || !fileTree[filteredValue[0]?.key]) {
         return [];
     }

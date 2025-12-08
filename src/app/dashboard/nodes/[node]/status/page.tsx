@@ -59,7 +59,7 @@ export default function Page({ params }: Props) {
             </Stack>
 
             <Box sx={{ mt: '28px', width: 1 }}>
-                <Grid container spacing={'4px'} rowSpacing={'8px'}>
+                <Grid container spacing='4px' rowSpacing='8px'>
                     <Grid item xs={12}>
                         <Grid xs={12} md={8} lg={6}>
                             <TableContainer component={Paper}>
@@ -105,7 +105,7 @@ export default function Page({ params }: Props) {
                     </Grid>
 
                     <Grid item xs={12} md={6}>
-                        <HeadRow title={'Channel Inbound'} />
+                        <HeadRow title='Channel Inbound' />
                         <TableContainer component={Paper}
                             sx={{
                                 borderTopLeftRadius: 0,
@@ -117,7 +117,7 @@ export default function Page({ params }: Props) {
                                 <TableHead>
                                     <TableRow
                                     >
-                                        <TableCell align='center'></TableCell>
+                                        <TableCell align='center' />
                                         <TableCell align='center'>{t('table_bottom.time')}</TableCell>
                                         <TableCell align='center'>{t('table_bottom.ch_inbound')}</TableCell>
                                         <TableCell align='center'>{t('table_bottom.number_inbound')}</TableCell>
@@ -126,7 +126,7 @@ export default function Page({ params }: Props) {
                                 <TableBody>
                                     {table2Data.map((row: any, index: any) => (
                                         <TableRow hover key={index}>
-                                            <TableCell align='center'></TableCell>
+                                            <TableCell align='center' />
                                             <TableCell align='center'>{row.time}</TableCell>
                                             <TableCell align='center'>{row.channel}</TableCell>
                                             <TableCell align='center'>{row.count}</TableCell>
@@ -138,7 +138,7 @@ export default function Page({ params }: Props) {
                     </Grid>
 
                     <Grid item xs={12} md={6}>
-                        <HeadRow title={'Channel Outbound'} />
+                        <HeadRow title='Channel Outbound' />
                         <TableContainer component={Paper}
                             sx={{
                                 borderTopLeftRadius: 0,
@@ -162,7 +162,7 @@ export default function Page({ params }: Props) {
                                             <TableCell align='center'>{row.time}</TableCell>
                                             <TableCell align='center'>{row.channel}</TableCell>
                                             <TableCell align='center'>{row.count}</TableCell>
-                                            <TableCell align='center'></TableCell>
+                                            <TableCell align='center' />
                                         </TableRow>
                                     ))}
                                 </TableBody>
