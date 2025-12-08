@@ -60,7 +60,7 @@ export const SelectField = ({ label, value, onChange, options = [], setValue }: 
                     displayEmpty
                     renderValue={(selected) => {
                         if (selected === '') {
-                            return <span style={{ color: darkColors.textSecondary }}>{'Select  '}</span>;
+                            return <span style={{ color: darkColors.textSecondary, fontSize: 15 }}>{'Select  '}</span>;
                         }
                         return <span style={{ color: darkColors.textPrimary }}>{selected}</span>;
                     }}

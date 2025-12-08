@@ -114,8 +114,8 @@ export const FilterDialog = ({
                         size="small"
                         value={expression}
                         onChange={(e) => setExpression(e.target.value)}
-                        placeholder={mode === 'All' ? "" : "Enter expression..."}
-                        disabled={mode === 'All'} // Disabled when in 'All' mode
+                        placeholder={mode === 'No Typing' ? "" : "Enter expression..."}
+                        disabled={mode === 'No Typing'} // Disabled when in 'All' mode
                         InputProps={{
                             startAdornment: mode === 'No Typing' ? (<Box
                                 sx={{

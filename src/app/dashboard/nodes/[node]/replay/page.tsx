@@ -57,7 +57,7 @@ const panelStyle = {
 // --- MAIN PAGE COMPONENT ---
 export default function Page({ params }: Props) {
     const { node } = params;
-    const { t } = useTranslate('status');
+    const { t } = useTranslate('replay');
     const url = endpoints.replay.info(node);
     const { data, error, isLoading } = useSWR(url, fetcher);
 
