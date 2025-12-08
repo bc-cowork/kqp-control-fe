@@ -1,5 +1,14 @@
 {
     "top": {
         "title": "Daily Report List"
-    }
+    },
+    "table": {
+        "id": "ID",
+        "report_name": "Report Name",
+        "job_at": "Job At",
+        "last_exec": "last exec.",
+        "desc": "Description"
+    },
+    "empty": "No Reports",
+    "report": "Report"
 }

@@ -1,4 +1,4 @@
-import { Box, Typography, FormControl, Select, MenuItem, Chip, TextField, IconButton, InputAdornment } from "@mui/material";
+import { Box, Typography, FormControl, Select, MenuItem, Chip, TextField, IconButton, InputAdornment, OutlinedInput } from "@mui/material";
 import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import {
@@ -46,7 +46,7 @@ export const SelectField = ({ label, value, onChange, options = [], setValue }: 
         <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
             <Typography
                 variant="body2"
-                sx={{ color: darkColors.gray5, fontWeight: 400, lineHeight: '22.5px' }}
+                sx={{ color: '#D1D6E0', fontWeight: 400, lineHeight: '22.5px', fontSize: 15 }}
             >
                 {label}
             </Typography>
@@ -58,6 +58,12 @@ export const SelectField = ({ label, value, onChange, options = [], setValue }: 
                     onChange={onChange}
                     IconComponent={SelectIcon}
                     displayEmpty
+                    renderValue={(selected) => {
+                        if (selected === '') {
+                            return <span style={{ color: darkColors.textSecondary, fontSize: 15 }}>{'Select  '}</span>;
+                        }
+                        return <span style={{ color: darkColors.textPrimary }}>{selected}</span>;
+                    }}
                     sx={{
                         ...inputStyle,
                         '& .MuiSelect-select': {
@@ -66,12 +72,18 @@ export const SelectField = ({ label, value, onChange, options = [], setValue }: 
                             alignItems: 'center',
                             color: darkColors.textSecondary,
                             fontSize: 15,
-                            textAlign: 'left',
+                            textAlign: 'center',
                             backgroundColor: 'transparent !important',
-                            ml: '-4px'
+                            ml: '-4px',
                         },
                         '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
-                        '& .MuiSvgIcon-root': { color: darkColors.textSecondary, fontSize: 16 },
+                        '&.Mui-focused': {
+                            border: '1px solid #E0E4EB !important',
+                            textAlign: 'center',
+                        },
+                        '& .MuiSvgIcon-root': {
+                            color: darkColors.textSecondary, fontSize: 16,
+                        },
                     }}
                     inputProps={{ 'aria-label': `${label} select` }}
                     MenuProps={{
@@ -79,16 +91,11 @@ export const SelectField = ({ label, value, onChange, options = [], setValue }: 
                             sx: {
                                 backgroundColor: darkColors.tableFill1,
                                 color: darkColors.textPrimary,
+                                border: "1px solid #4E576A",
                             },
                         },
                     }}
                 >
-                    <MenuItem
-                        disabled
-                        value=""
-                    >
-                        Select
-                    </MenuItem>
                     {/* ✨ END OF PLACEHOLDER */}
                     {options.map((option: any) => (
                         <MenuItem
@@ -97,6 +104,8 @@ export const SelectField = ({ label, value, onChange, options = [], setValue }: 
                             sx={{
                                 color: darkColors.textPrimary,
                                 backgroundColor: 'transparent',
+                                textAlign: 'center',
+                                justifyContent: 'center',
                                 '&:hover': { backgroundColor: '#5E66FF' },
                                 '&.Mui-selected': {
                                     backgroundColor: darkColors.gray1,
@@ -139,6 +148,9 @@ export const DateTimeMuiField = ({ label, type, value, onChange }: any) => {
                 fontSize: 15,
                 backgroundColor: 'transparent !important',
                 height: 'auto',
+            },
+            '&.Mui-focused': {
+                border: '1px solid #E0E4EB !important',
             },
             '& .MuiSvgIcon-root': { color: darkColors.textSecondary, fontSize: 16 },
         },
@@ -187,7 +199,7 @@ export const DateTimeMuiField = ({ label, type, value, onChange }: any) => {
             <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
                 <Typography
                     variant="body2"
-                    sx={{ color: darkColors.gray5, fontWeight: 400, lineHeight: '22.5px' }}
+                    sx={{ color: '#D1D6E0', fontWeight: 400, lineHeight: '22.5px', fontSize: 15 }}
                 >
                     {label}
                 </Typography>
@@ -224,7 +236,7 @@ export const WideTextField = ({ label, value, onChange, placeholder, onClick, on
         <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
             <Typography
                 variant="body2"
-                sx={{ color: darkColors.gray5, fontWeight: 400, lineHeight: '22.5px' }}
+                sx={{ color: '#D1D6E0', fontWeight: 400, lineHeight: '22.5px', fontSize: 15 }}
             >
                 {label}
             </Typography>

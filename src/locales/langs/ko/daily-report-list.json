@@ -1,5 +1,14 @@
 {
     "top": {
         "title": "일일 리포트 목록"
-    }
+    },
+    "table": {
+        "id": "ID",
+        "report_name": "리포트 이름",
+        "job_at": "작업 시간",
+        "last_exec": "마지막 실행",
+        "desc": "설명"
+    },
+    "empty": "보고서 없음",
+    "report": "리포트"
 }

@@ -7,43 +7,47 @@ import { Breadcrumb } from 'src/components/common/Breadcrumb';
 import { DashboardContent } from 'src/layouts/dashboard';
 import { useTranslate } from 'src/locales';
 import { RrefreshButton } from 'src/components/common/RefreshButton';
+import { endpoints, fetcher } from 'src/utils/axios';
+import useSWR from 'swr';
 
 type Props = { params: { node: string } };
 
-
-const table2 = [
-    { time: '8:05:23', channelInbound: 126, numberInbound: 408 },
-    { time: '8:05:23', channelInbound: 127, numberInbound: 409 },
-    { time: '8:05:23', channelInbound: 128, numberInbound: 410 },
-    { time: '8:05:23', channelInbound: 129, numberInbound: 411 },
-    { time: '8:05:23', channelInbound: 130, numberInbound: 412 },
-    { time: '8:05:23', channelInbound: 130, numberInbound: 412 },
-    { time: '8:05:23', channelInbound: 130, numberInbound: 412 },
-    { time: '8:05:23', channelInbound: 130, numberInbound: 412 },
-];
-
-const table3 = [
-    { time: '8:05:23', channelOutbound: 804, numberOutbound: 80523 },
-    { time: '8:05:23', channelOutbound: 804, numberOutbound: 80523 },
-    { time: '8:05:23', channelOutbound: 804, numberOutbound: 80523 },
-    { time: '8:05:23', channelOutbound: 804, numberOutbound: 80523 },
-    { time: '8:05:23', channelOutbound: 804, numberOutbound: 80523 },
-    { time: '8:05:23', channelOutbound: 804, numberOutbound: 80523 },
-    { time: '8:05:23', channelOutbound: 804, numberOutbound: 80523 },
-    { time: '8:05:23', channelOutbound: 804, numberOutbound: 80523 },
-];
+const HeadRow = ({ title }: { title: string }) => (
+    <Box sx={{ mb: 0.2, backgroundColor: '#667085', p: 1.2, borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}>
+        <Typography sx={{ fontSize: 14, fontWeight: 500, color: grey[50] }}>
+            {title}
+        </Typography>
+    </Box>
+);
 
 export default function Page({ params }: Props) {
     const { node } = params;
     const { t } = useTranslate('status');
+    const url = endpoints.status.list(node);
+    const { data, error, isLoading } = useSWR(url, fetcher);
 
 
-    const table1 = [
-        { Item: t('table_top.process'), Max: 49, Cur: 49, Odd: '', abnormal: false },
-        { Item: t('table_top.que'), Max: 49, Cur: 48, Odd: '', abnormal: false },
-        { Item: t('table_top.ch_inbound'), Max: 408, Cur: 108, Odd: 1, abnormal: true },
-        { Item: t('table_top.ch_outbound'), Max: 127, Cur: 127, Odd: '', abnormal: false },
-    ]
+    if (isLoading) {
+        return <Typography sx={{ mt: 4 }}>Loading service status...</Typography>;
+    }
+
+    if (error) {
+        return <Typography color="error" sx={{ mt: 4 }}>Failed to load data: {error.message}</Typography>;
+    }
+
+    const serviceSummary = data?.data?.service_status?.summary;
+    const traffics = data?.data?.service_status?.traffics;
+
+    const table1Data = serviceSummary ? [
+        { key: 'process', Item: t('table_top.process'), data: serviceSummary.process },
+        { key: 'queue', Item: t('table_top.que'), data: serviceSummary.queue },
+        { key: 'recv_channel', Item: t('table_top.ch_inbound'), data: serviceSummary.recv_channel },
+        { key: 'send_channel', Item: t('table_top.ch_outbound'), data: serviceSummary.send_channel },
+    ] : [];
+
+    const table2Data = traffics?.inbound || [];
+    const table3Data = traffics?.outbound || [];
+
     return (
         <DashboardContent maxWidth="xl">
             <Breadcrumb node={node} pages={[{ pageName: t('top.title') }]} />
@@ -51,13 +55,11 @@ export default function Page({ params }: Props) {
                 <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50], mt: 2 }}>
                     {t('top.title')}
                 </Typography>
-                <RrefreshButton onRefresh={() => console.log("lol")} />
+                <RrefreshButton onRefresh={() => console.log("Refreshed!")} />
             </Stack>
 
             <Box sx={{ mt: '28px', width: 1 }}>
-                <Grid container spacing={3}>
-
-                    {/* Top: single wide table for table1 */}
+                <Grid container spacing='4px' rowSpacing='8px'>
                     <Grid item xs={12}>
                         <Grid xs={12} md={8} lg={6}>
                             <TableContainer component={Paper}>
@@ -65,52 +67,69 @@ export default function Page({ params }: Props) {
                                     <TableHead>
                                         <TableRow>
                                             <TableCell>{t('table_top.item')}</TableCell>
-                                            <TableCell>{t('table_top.max')}</TableCell>
-                                            <TableCell>{t('table_top.cur')}</TableCell>
-                                            <TableCell>{t('table_top.odd')}</TableCell>
-                                            <TableCell>{ }</TableCell>
+                                            <TableCell align='right'>{t('table_top.max')}</TableCell>
+                                            <TableCell align='right'>{t('table_top.cur')}</TableCell>
+                                            <TableCell align='right'>{t('table_top.odd')}</TableCell>
+                                            <TableCell align='right'>{ }</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {table1.map((row, index) => (
-                                            <TableRow key={index} hover>
-                                                <TableCell>{row.Item}</TableCell>
-                                                <TableCell>{row.Max}</TableCell>
-                                                <TableCell>{row.Cur}</TableCell>
-                                                <TableCell>{row.Odd}</TableCell>
-
-                                                <TableCell>
-                                                    {row.abnormal && (
-                                                        <Chip label="Abnormal" color="error" size="small" variant="soft" sx={{
-                                                            backgroundColor: '#331B1E'
-                                                        }} />
-                                                    )}
-                                                </TableCell>
-                                            </TableRow>
-                                        ))}
+                                        {table1Data.map((row) => {
+                                            const isAbnormal = row.data.odd > 0 || row.data.note;
+                                            return (
+                                                <TableRow key={row.key} hover>
+                                                    <TableCell>{row.Item}</TableCell>
+                                                    <TableCell align='right'>{row.data.max}</TableCell>
+                                                    <TableCell align='right'>{row.data.cur}</TableCell>
+                                                    <TableCell align='right'>
+                                                        {row.data.odd > 0 ? row.data.odd : ''}
+                                                    </TableCell>
+                                                    <TableCell align='right'>
+                                                        {isAbnormal && (
+                                                            <Chip
+                                                                label={row.data.note || "Abnormal"}
+                                                                color="error"
+                                                                size="small"
+                                                                variant="soft"
+                                                                sx={{ backgroundColor: '#331B1E' }}
+                                                            />
+                                                        )}
+                                                    </TableCell>
+                                                </TableRow>
+                                            );
+                                        })}
                                     </TableBody>
                                 </Table>
                             </TableContainer>
                         </Grid>
                     </Grid>
 
-                    {/* Bottom: two tables side-by-side for table2 and table3 */}
                     <Grid item xs={12} md={6}>
-                        <TableContainer component={Paper}>
-                            <Table size="small">
+                        <HeadRow title='Channel Inbound' />
+                        <TableContainer component={Paper}
+                            sx={{
+                                borderTopLeftRadius: 0,
+                                borderTopRightRadius: 0,
+                            }}
+                        >
+                            <Table size="small"
+                            >
                                 <TableHead>
-                                    <TableRow>
+                                    <TableRow
+                                    >
+                                        <TableCell align='center' />
                                         <TableCell align='center'>{t('table_bottom.time')}</TableCell>
                                         <TableCell align='center'>{t('table_bottom.ch_inbound')}</TableCell>
                                         <TableCell align='center'>{t('table_bottom.number_inbound')}</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {table2.map((row, index) => (
+                                    {table2Data.map((row: any, index: any) => (
                                         <TableRow hover key={index}>
+                                            <TableCell align='center' />
                                             <TableCell align='center'>{row.time}</TableCell>
-                                            <TableCell align='center'>{row.channelInbound}</TableCell>
-                                            <TableCell align='center'>{row.numberInbound}</TableCell>
+                                            <TableCell align='center'>{row.channel}</TableCell>
+                                            <TableCell align='center'>{row.count}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -119,21 +138,31 @@ export default function Page({ params }: Props) {
                     </Grid>
 
                     <Grid item xs={12} md={6}>
-                        <TableContainer component={Paper}>
+                        <HeadRow title='Channel Outbound' />
+                        <TableContainer component={Paper}
+                            sx={{
+                                borderTopLeftRadius: 0,
+                                borderTopRightRadius: 0,
+                            }}
+                        >
                             <Table size="small">
                                 <TableHead>
                                     <TableRow>
+                                        <TableCell align='center'>{ }</TableCell>
+                                        <TableCell align='center'>{t('table_bottom.time')}</TableCell>
                                         <TableCell align='center'>{t('table_bottom.ch_outbound')}</TableCell>
                                         <TableCell align='center'>{t('table_bottom.number_outbound')}</TableCell>
-                                        <TableCell align='center'>{t('table_bottom.time')}</TableCell>
+                                        <TableCell align='center'>{ }</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {table3.map((row, index) => (
+                                    {table3Data.map((row: any, index: number | string) => (
                                         <TableRow hover key={index}>
-                                            <TableCell align='center'>{row.channelOutbound}</TableCell>
-                                            <TableCell align='center'>{row.numberOutbound}</TableCell>
+                                            <TableCell align='center'>{ }</TableCell>
                                             <TableCell align='center'>{row.time}</TableCell>
+                                            <TableCell align='center'>{row.channel}</TableCell>
+                                            <TableCell align='center'>{row.count}</TableCell>
+                                            <TableCell align='center' />
                                         </TableRow>
                                     ))}
                                 </TableBody>

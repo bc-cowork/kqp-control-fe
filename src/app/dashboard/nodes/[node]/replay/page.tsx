@@ -37,9 +37,8 @@ import { endpoints, fetcher } from 'src/utils/axios';
 import useSWR from 'swr';
 import { LoadingScreen } from 'src/components/loading-screen';
 import { extractFileOptions } from 'src/utils/extractFileOptions';
-import { CustomTextField, darkColors, DateTimeMuiField, SelectField, WideTextField } from 'src/components/replay';
+import { CustomTextField, darkColors, SelectField, WideTextField } from 'src/components/replay';
 import { FilterDialog } from 'src/components/replay/FilterDialog'; // Ensure this is the updated version
-import { LogTag } from 'src/components/replay/Logtag';
 import { AddReplayDialog } from 'src/components/replay/AddReplayDialog';
 
 // --- TYPE DEFINITIONS (from original code) ---
@@ -58,11 +57,16 @@ const panelStyle = {
 // --- MAIN PAGE COMPONENT ---
 export default function Page({ params }: Props) {
     const { node } = params;
-    const { t } = useTranslate('status');
+    const { t } = useTranslate('replay');
     const url = endpoints.replay.info(node);
     const { data, error, isLoading } = useSWR(url, fetcher);
 
-    const processData = data?.data?.replay_status?.process_list || [];
+    const processData = Array.isArray(
+        data?.data?.replay_status?.process_list
+    )
+        ? data.data.replay_status.process_list
+        : [];
+
     const logTypeList = data?.data?.replay_interface?.log_type_list || [];
     const fileTreeList = extractFileOptions(data?.data?.replay_interface?.file_tree) || [];
 
@@ -201,7 +205,16 @@ export default function Page({ params }: Props) {
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody sx={{ flex: '1 1 0', overflowY: 'auto' }}>
-                                                {processData.map((row: any, index: number) => (
+                                                {
+                                                    processData.length === 0 && (
+                                                        <TableRow>
+                                                            <TableCell colSpan={4}>
+                                                                <Typography sx={{ color: darkColors.textSecondary }}>No Processes Found</Typography>
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    )
+                                                }
+                                                {processData?.map((row: any, index: number) => (
                                                     <TableRow
                                                         key={index}
                                                         sx={{
@@ -250,7 +263,7 @@ export default function Page({ params }: Props) {
                                     >
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                             <SetttingsIcon sx={{ fontSize: 20, color: darkColors.textPrimary }} />
-                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>
+                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>
                                                 Tool
                                             </Typography>
                                         </Box>
@@ -317,7 +330,7 @@ export default function Page({ params }: Props) {
                                     >
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                             <ZoomInIcon sx={{ fontSize: 20, color: darkColors.textPrimary }} />
-                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>
+                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>
                                                 Audit Log
                                             </Typography>
                                         </Box>
@@ -327,12 +340,12 @@ export default function Page({ params }: Props) {
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, }}>
 
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', px: 1 }}>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 900 }}>{logType || '-'}{' : '}{file || '-'}</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 900, fontSize: '20px' }}>{logType || '-'}{' : '}{file || '-'}</Typography>
                                                     </Box>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', px: 1 }}>
                                                         <DateIcon sx={{ color: darkColors.textPrimary, fontSize: 18 }} />
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600 }}>Date:</Typography>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>{date || '0000-00-00'}</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>Date:</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{date || '0000-00-00'}</Typography>
                                                     </Box>
                                                 </Box>
                                             </Grid>
@@ -340,25 +353,25 @@ export default function Page({ params }: Props) {
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
                                                         <TimeIcon sx={{ color: darkColors.textPrimary, fontSize: 18 }} />
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600 }}>Start Time:</Typography>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>{startTime || '00:00:00'}</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>Start Time:</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{startTime || '00:00:00'}</Typography>
                                                     </Box>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
                                                         <TimeIcon sx={{ color: darkColors.textPrimary, fontSize: 18 }} />
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600 }}>End Time:</Typography>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>{endTime || '00:00:00'}</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>End Time:</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{endTime || '00:00:00'}</Typography>
                                                     </Box>
                                                 </Box>
                                             </Grid>
                                             <Grid item xs={12} sm={3}>
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600 }}>HEAD:</Typography>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>{head || '-'}</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>HEAD:</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{head || '-'}</Typography>
                                                     </Box>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600 }}>Channel Number:</Typography>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>{channel || '-'}</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>Channel Number:</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{channel || '-'}</Typography>
                                                     </Box>
                                                 </Box>
                                             </Grid>
@@ -371,6 +384,7 @@ export default function Page({ params }: Props) {
                                                         sx={{
                                                             color: canReplay ? darkColors.textPrimary : darkColors.textDisabled,
                                                             backgroundColor: canReplay ? '#5E66FF' : 'transparent',
+                                                            fontSize: 17,
                                                             py: 1,
                                                             px: 2,
                                                             '&.Mui-disabled': {
@@ -390,7 +404,7 @@ export default function Page({ params }: Props) {
 
                                     <Box sx={{ p: 1.5, flex: '1 1 0', alignSelf: 'stretch', minHeight: 100 }}>
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>
+                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>
                                                 Replay Interface
                                             </Typography>
                                         </Box>
@@ -408,7 +422,7 @@ export default function Page({ params }: Props) {
                                                         label="File"
                                                         value={file}
                                                         onChange={(e: any) => setFile(e.target.value)}
-                                                        options={fileTreeList as never[]}
+                                                        options={[...getKeysFromSelectedValue(data?.data?.replay_interface?.file_tree, logTypeList, logType)]}
                                                         setValue={setFile}
                                                     />
                                                 </Box>
@@ -416,23 +430,25 @@ export default function Page({ params }: Props) {
 
                                             <Grid item xs={4}>
                                                 <Box sx={{ ...panelStyle }}>
-                                                    <DateTimeMuiField
+                                                    <SelectField
                                                         label="Date"
-                                                        type="date"
                                                         value={date}
                                                         onChange={(e: any) => setDate(e.target.value)}
+                                                        options={[...getDatesFromSelectedValue(data?.data?.replay_interface?.file_tree, logTypeList, logType, file)]}
+                                                        setValue={setDate}
                                                     />
-                                                    <DateTimeMuiField
+                                                    <SelectField
                                                         label="Start Time"
-                                                        type="time"
                                                         value={startTime}
                                                         onChange={(e: any) => setStartTime(e.target.value)}
-                                                    />
-                                                    <DateTimeMuiField
+                                                        options={[]}
+                                                        setValue={setStartTime}
+                                                    /><SelectField
                                                         label="End Time"
-                                                        type="time"
                                                         value={endTime}
                                                         onChange={(e: any) => setEndTime(e.target.value)}
+                                                        options={[]}
+                                                        setValue={setEndTime}
                                                     />
                                                 </Box>
                                             </Grid>
@@ -647,3 +663,44 @@ const CustomDialog = ({ open, handleClose, pid }: any) =>
         </DialogActions>
     </Dialog>
 );
+
+const getKeysFromSelectedValue = (fileTree: any, log_tree: any, selectedKey: string) => {
+    const filteredValue = log_tree.filter((item: any) => item.label === selectedKey);
+    if (!fileTree || typeof fileTree !== 'object' || !fileTree[filteredValue[0]?.key]) {
+        return [];
+    }
+
+    const selectedObject = fileTree[filteredValue[0]?.key];
+    const keys = Object.keys(selectedObject);
+    const options = keys.map((key) => ({ label: key, value: key }));
+    return options;
+};
+
+const getDatesFromSelectedValue = (fileTree: any, log_tree: any, selectedKey: any, selectedFile: any) => {
+    const filteredValue = log_tree.filter((item: any) => item.label === selectedKey);
+    const fileTreeKey = filteredValue[0]?.key;
+
+    if (!fileTree || typeof fileTree !== 'object' || !fileTree[fileTreeKey] || !fileTree[fileTreeKey][selectedFile]) {
+        return [];
+    }
+
+    const selectedObject = fileTree[fileTreeKey];
+    const dateArray = selectedObject[selectedFile];
+
+    const selectedDateOptions = dateArray.map((dateString: any) => {
+
+        const year = dateString.substring(0, 4);
+        const month = dateString.substring(4, 6);
+        const day = dateString.substring(6, 8);
+
+        const dateObject = `${year}-${month}-${day}`;
+
+
+        return {
+            label: dateObject,
+            value: dateObject
+        };
+    }) || [];
+
+    return selectedDateOptions;
+};

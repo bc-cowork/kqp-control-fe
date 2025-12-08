@@ -25,30 +25,29 @@ import { paths } from 'src/routes/paths';
 
 type Props = { nodeId: string };
 
-type FunctionItem = {
+type AlertItem = {
     id: string;
     name: string;
-    path: string;
-    timestamp: string;
-    ref_identifies?: number | string;
+    job_at: string;
+    last_exec?: number | string;
     desc?: string;
 };
 
-export function FunctionListView({ nodeId }: Props) {
-    const { t } = useTranslate("function-list");
+export function AlertListView({ nodeId }: Props) {
+    const { t } = useTranslate('alert-list');
     const router = useRouter();
 
     const url = endpoints.function.list(nodeId);
     const { data, error, isLoading } = useSWR(url, fetcher);
 
-    const rows: FunctionItem[] = (data && data.data && data.data.list) || [];
+    const rows: AlertItem[] = (data && data.data && data.data.list) || [];
 
     return (
         <DashboardContent maxWidth="xl">
-            <Breadcrumb node={nodeId} pages={[{ pageName: t("top.function_list") }]} />
+            <Breadcrumb node={nodeId} pages={[{ pageName: t("top.title") }]} />
 
             <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50], mt: 2 }}>
-                {t("top.function_list")}
+                {t("top.title")}
             </Typography>
 
             <Box sx={{ mt: 3 }}>
@@ -58,10 +57,12 @@ export function FunctionListView({ nodeId }: Props) {
                             <TableRow>
                                 <TableCell>{ }</TableCell>
                                 <TableCell>{t("table.id")}</TableCell>
-                                <TableCell>{t("table.function_name")}</TableCell>
-                                <TableCell>{t("table.path")}</TableCell>
-                                <TableCell>{t("table.timestamp")}</TableCell>
-                                <TableCell>{t("table.ref_identifies")}</TableCell>
+                                <TableCell>{t("table.surv_name")}</TableCell>
+                                <TableCell>{t("table.start_at")}</TableCell>
+                                <TableCell>{t("table.end_at")}</TableCell>
+                                <TableCell>{t("table.interval")}</TableCell>
+                                <TableCell>{t("table.last_exec")}</TableCell>
+                                <TableCell>{t("table.status")}</TableCell>
                                 <TableCell>{t("table.desc")}</TableCell>
                                 <TableCell>{ }</TableCell>
                             </TableRow>
@@ -81,7 +82,7 @@ export function FunctionListView({ nodeId }: Props) {
 
                             {!isLoading && !error && rows.length === 0 && (
                                 <TableRow>
-                                    <TableCell colSpan={6}>{t("empty") || "No Functions"}</TableCell>
+                                    <TableCell colSpan={6}>{t("empty") || "No Report Item"}</TableCell>
                                 </TableRow>
                             )}
 
@@ -90,19 +91,21 @@ export function FunctionListView({ nodeId }: Props) {
                                     key={row.name}
                                     sx={{ cursor: 'pointer' }}
                                     tabIndex={0}
-                                    onClick={() => router.push(paths.dashboard.nodes.functionDetail(nodeId, String(row.name)))}
+                                    onClick={() => router.push(paths.dashboard.nodes.alertsDetail(nodeId, String(row.name)))}
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter' || e.key === ' ') {
-                                            router.push(paths.dashboard.nodes.functionDetail(nodeId, String(row.name)));
+                                            router.push(paths.dashboard.nodes.alertsDetail(nodeId, String(row.name)));
                                         }
                                     }}
                                 >
                                     <TableCell>{ }</TableCell>
                                     <TableCell>{index + 1}</TableCell>
                                     <TableCell>{row.name}</TableCell>
-                                    <TableCell>{row.path}</TableCell>
-                                    <TableCell>{row.timestamp}</TableCell>
-                                    <TableCell>{row.ref_identifies}</TableCell>
+                                    <TableCell>{row.job_at}</TableCell>
+                                    <TableCell>{row.last_exec}</TableCell>
+                                    <TableCell>{row.last_exec}</TableCell>
+                                    <TableCell>{row.last_exec}</TableCell>
+                                    <TableCell>{row.last_exec}</TableCell>
                                     <TableCell>{row.desc}</TableCell>
                                     <TableCell>{ }</TableCell>
                                 </TableRow>

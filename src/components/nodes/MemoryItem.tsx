@@ -88,13 +88,15 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
         <Grid
           gap={2}
           container>
-          <Grid xs={12} md={10} lg={4} sx={{ pr: '10px' }}>
+          <Grid xs={12} md={10} lg={4} sx={{ pr: '10px', height: '220%' }}>
             {(issueInfoLoading || issueInfoValidating) ? (
               <Box sx={{ p: 0.5, borderRadius: 1 }}>
                 <CircularProgress />
               </Box>
             ) : (
-              <Box sx={{ borderRadius: 1 }}>
+              <Box sx={{
+                borderRadius: 1
+              }}>
                 <MemoryItemInfo issueInfo={issueInfo} />
                 <MemoryIssueInfoTable issueInfo={issueInfo} />
               </Box>
