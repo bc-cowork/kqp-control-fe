@@ -264,7 +264,7 @@ export default function Page({ params }: Props) {
                                     >
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                             <SetttingsIcon sx={{ fontSize: 20, color: darkColors.textPrimary }} />
-                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>
+                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>
                                                 Tool
                                             </Typography>
                                         </Box>
@@ -331,7 +331,7 @@ export default function Page({ params }: Props) {
                                     >
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                             <ZoomInIcon sx={{ fontSize: 20, color: darkColors.textPrimary }} />
-                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>
+                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>
                                                 Audit Log
                                             </Typography>
                                         </Box>
@@ -341,12 +341,12 @@ export default function Page({ params }: Props) {
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, }}>
 
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', px: 1 }}>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 900 }}>{logType || '-'}{' : '}{file || '-'}</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 900, fontSize: '20px' }}>{logType || '-'}{' : '}{file || '-'}</Typography>
                                                     </Box>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', px: 1 }}>
                                                         <DateIcon sx={{ color: darkColors.textPrimary, fontSize: 18 }} />
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600 }}>Date:</Typography>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>{date || '0000-00-00'}</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>Date:</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{date || '0000-00-00'}</Typography>
                                                     </Box>
                                                 </Box>
                                             </Grid>
@@ -354,25 +354,25 @@ export default function Page({ params }: Props) {
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
                                                         <TimeIcon sx={{ color: darkColors.textPrimary, fontSize: 18 }} />
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600 }}>Start Time:</Typography>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>{startTime || '00:00:00'}</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>Start Time:</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{startTime || '00:00:00'}</Typography>
                                                     </Box>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
                                                         <TimeIcon sx={{ color: darkColors.textPrimary, fontSize: 18 }} />
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600 }}>End Time:</Typography>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>{endTime || '00:00:00'}</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>End Time:</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{endTime || '00:00:00'}</Typography>
                                                     </Box>
                                                 </Box>
                                             </Grid>
                                             <Grid item xs={12} sm={3}>
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600 }}>HEAD:</Typography>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>{head || '-'}</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>HEAD:</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{head || '-'}</Typography>
                                                     </Box>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600 }}>Channel Number:</Typography>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>{channel || '-'}</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>Channel Number:</Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{channel || '-'}</Typography>
                                                     </Box>
                                                 </Box>
                                             </Grid>
@@ -385,6 +385,7 @@ export default function Page({ params }: Props) {
                                                         sx={{
                                                             color: canReplay ? darkColors.textPrimary : darkColors.textDisabled,
                                                             backgroundColor: canReplay ? '#5E66FF' : 'transparent',
+                                                            fontSize: 17,
                                                             py: 1,
                                                             px: 2,
                                                             '&.Mui-disabled': {
@@ -404,7 +405,7 @@ export default function Page({ params }: Props) {
 
                                     <Box sx={{ p: 1.5, flex: '1 1 0', alignSelf: 'stretch', minHeight: 100 }}>
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary }}>
+                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>
                                                 Replay Interface
                                             </Typography>
                                         </Box>

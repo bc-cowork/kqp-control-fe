@@ -46,7 +46,7 @@ export const SelectField = ({ label, value, onChange, options = [], setValue }: 
         <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
             <Typography
                 variant="body2"
-                sx={{ color: darkColors.gray5, fontWeight: 400, lineHeight: '22.5px' }}
+                sx={{ color: '#D1D6E0', fontWeight: 400, lineHeight: '22.5px', fontSize: 15 }}
             >
                 {label}
             </Typography>
@@ -187,7 +187,7 @@ export const DateTimeMuiField = ({ label, type, value, onChange }: any) => {
             <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
                 <Typography
                     variant="body2"
-                    sx={{ color: darkColors.gray5, fontWeight: 400, lineHeight: '22.5px' }}
+                    sx={{ color: '#D1D6E0', fontWeight: 400, lineHeight: '22.5px', fontSize: 15 }}
                 >
                     {label}
                 </Typography>
@@ -224,7 +224,7 @@ export const WideTextField = ({ label, value, onChange, placeholder, onClick, on
         <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
             <Typography
                 variant="body2"
-                sx={{ color: darkColors.gray5, fontWeight: 400, lineHeight: '22.5px' }}
+                sx={{ color: '#D1D6E0', fontWeight: 400, lineHeight: '22.5px', fontSize: 15 }}
             >
                 {label}
             </Typography>
