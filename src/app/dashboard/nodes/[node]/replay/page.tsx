@@ -39,7 +39,6 @@ import { LoadingScreen } from 'src/components/loading-screen';
 import { extractFileOptions } from 'src/utils/extractFileOptions';
 import { CustomTextField, darkColors, DateTimeMuiField, SelectField, WideTextField } from 'src/components/replay';
 import { FilterDialog } from 'src/components/replay/FilterDialog'; // Ensure this is the updated version
-import { LogTag } from 'src/components/replay/Logtag';
 import { AddReplayDialog } from 'src/components/replay/AddReplayDialog';
 
 // --- TYPE DEFINITIONS (from original code) ---

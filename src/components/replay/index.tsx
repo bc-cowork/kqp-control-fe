@@ -68,10 +68,15 @@ export const SelectField = ({ label, value, onChange, options = [], setValue }: 
                             fontSize: 15,
                             textAlign: 'left',
                             backgroundColor: 'transparent !important',
-                            ml: '-4px'
+                            ml: '-4px',
                         },
                         '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
-                        '& .MuiSvgIcon-root': { color: darkColors.textSecondary, fontSize: 16 },
+                        '&.Mui-focused': {
+                            border: '1px solid #E0E4EB !important',
+                        },
+                        '& .MuiSvgIcon-root': {
+                            color: darkColors.textSecondary, fontSize: 16,
+                        },
                     }}
                     inputProps={{ 'aria-label': `${label} select` }}
                     MenuProps={{
@@ -79,6 +84,8 @@ export const SelectField = ({ label, value, onChange, options = [], setValue }: 
                             sx: {
                                 backgroundColor: darkColors.tableFill1,
                                 color: darkColors.textPrimary,
+                                border: "1px solid #4E576A"
+
                             },
                         },
                     }}
@@ -139,6 +146,9 @@ export const DateTimeMuiField = ({ label, type, value, onChange }: any) => {
                 fontSize: 15,
                 backgroundColor: 'transparent !important',
                 height: 'auto',
+            },
+            '&.Mui-focused': {
+                border: '1px solid #E0E4EB !important',
             },
             '& .MuiSvgIcon-root': { color: darkColors.textSecondary, fontSize: 16 },
         },
