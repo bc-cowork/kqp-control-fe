@@ -37,12 +37,12 @@ const HeaderBox = styled(Box)(({ theme }) => ({
 }));
 
 const RowStack = styled(Stack)(({ theme }) => ({
-  height: '60px',
+  height: '80px',
   alignItems: 'center',
 }));
 
 const RowStackWide = styled(Stack)(({ theme }) => ({
-  height: 'calc(((100vh - 458px) / 2) / 3)',
+  height: '80px',
   alignItems: 'center',
 }));
 
