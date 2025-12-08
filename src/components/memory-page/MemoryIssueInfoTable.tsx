@@ -100,7 +100,7 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
       {/* Header Row */}
       <RowStack
         direction="row"
-        sx={{ height: '32px', backgroundColor: grey[400], borderRadius: '8px' }}
+        sx={{ height: '32px', backgroundColor: grey[400], borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}
       >
         <HeaderBox />
         <HeaderBox>{t('item.table.uni')}</HeaderBox>
