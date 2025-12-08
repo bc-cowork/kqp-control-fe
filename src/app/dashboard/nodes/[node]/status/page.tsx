@@ -55,7 +55,7 @@ export default function Page({ params }: Props) {
             </Stack>
 
             <Box sx={{ mt: '28px', width: 1 }}>
-                <Grid container spacing={3}>
+                <Grid container spacing={'4px'} rowSpacing={'8px'}>
 
                     {/* Top: single wide table for table1 */}
                     <Grid item xs={12}>
@@ -65,21 +65,24 @@ export default function Page({ params }: Props) {
                                     <TableHead>
                                         <TableRow>
                                             <TableCell>{t('table_top.item')}</TableCell>
-                                            <TableCell>{t('table_top.max')}</TableCell>
-                                            <TableCell>{t('table_top.cur')}</TableCell>
-                                            <TableCell>{t('table_top.odd')}</TableCell>
-                                            <TableCell>{ }</TableCell>
+                                            <TableCell align='right'>{t('table_top.max')}</TableCell>
+                                            <TableCell align='right'>{t('table_top.cur')}</TableCell>
+                                            <TableCell align='right'>{t('table_top.odd')}</TableCell>
+                                            <TableCell align='right'>{ }</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                         {table1.map((row, index) => (
                                             <TableRow key={index} hover>
                                                 <TableCell>{row.Item}</TableCell>
-                                                <TableCell>{row.Max}</TableCell>
-                                                <TableCell>{row.Cur}</TableCell>
-                                                <TableCell>{row.Odd}</TableCell>
+                                                <TableCell align='right'>{row.Max}</TableCell>
+                                                <TableCell align='right'>{row.Cur}</TableCell>
+                                                <TableCell align='right'>
+                                                    {row.Odd}
 
-                                                <TableCell>
+                                                </TableCell>
+
+                                                <TableCell align='right'>
                                                     {row.abnormal && (
                                                         <Chip label="Abnormal" color="error" size="small" variant="soft" sx={{
                                                             backgroundColor: '#331B1E'
@@ -96,18 +99,24 @@ export default function Page({ params }: Props) {
 
                     {/* Bottom: two tables side-by-side for table2 and table3 */}
                     <Grid item xs={12} md={6}>
+                        <HeadRow title={'Channel Inbound'} />
                         <TableContainer component={Paper}>
                             <Table size="small">
                                 <TableHead>
-                                    <TableRow>
+                                    <TableRow
+                                        hover
+                                    >
+                                        <TableCell align='center'></TableCell>
                                         <TableCell align='center'>{t('table_bottom.time')}</TableCell>
                                         <TableCell align='center'>{t('table_bottom.ch_inbound')}</TableCell>
                                         <TableCell align='center'>{t('table_bottom.number_inbound')}</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
+
                                     {table2.map((row, index) => (
                                         <TableRow hover key={index}>
+                                            <TableCell align='center'></TableCell>
                                             <TableCell align='center'>{row.time}</TableCell>
                                             <TableCell align='center'>{row.channelInbound}</TableCell>
                                             <TableCell align='center'>{row.numberInbound}</TableCell>
@@ -119,21 +128,34 @@ export default function Page({ params }: Props) {
                     </Grid>
 
                     <Grid item xs={12} md={6}>
-                        <TableContainer component={Paper}>
+                        <HeadRow title={'Channel Outbound'} />
+                        <TableContainer component={Paper}
+
+                        >
                             <Table size="small">
-                                <TableHead>
-                                    <TableRow>
+                                <TableHead
+                                >
+                                    <TableRow
+                                    >
+                                        <TableCell align='center'>{ }</TableCell>
+                                        <TableCell align='center'>{t('table_bottom.time')}</TableCell>
                                         <TableCell align='center'>{t('table_bottom.ch_outbound')}</TableCell>
                                         <TableCell align='center'>{t('table_bottom.number_outbound')}</TableCell>
-                                        <TableCell align='center'>{t('table_bottom.time')}</TableCell>
+                                        <TableCell align='center'>{ }</TableCell>
                                     </TableRow>
                                 </TableHead>
+
                                 <TableBody>
+
                                     {table3.map((row, index) => (
-                                        <TableRow hover key={index}>
+                                        <TableRow hover key={index}
+                                        >
+                                            <TableCell align='center'>{ }</TableCell>
+                                            <TableCell align='center'>{row.time}</TableCell>
                                             <TableCell align='center'>{row.channelOutbound}</TableCell>
                                             <TableCell align='center'>{row.numberOutbound}</TableCell>
-                                            <TableCell align='center'>{row.time}</TableCell>
+                                            <TableCell align='center'></TableCell>
+
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -146,3 +168,11 @@ export default function Page({ params }: Props) {
         </DashboardContent>
     );
 }
+
+const HeadRow = ({ title }: { title: string }) => (
+    <Box sx={{ mb: 0.2, backgroundColor: '#667085', p: 1, borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}>
+        <Typography sx={{ fontSize: 14, fontWeight: 500, color: grey[50] }}>
+            {title}
+        </Typography>
+    </Box>
+);

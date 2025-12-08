@@ -62,7 +62,12 @@ export default function Page({ params }: Props) {
     const url = endpoints.replay.info(node);
     const { data, error, isLoading } = useSWR(url, fetcher);
 
-    const processData = data?.data?.replay_status?.process_list || [];
+    const processData = Array.isArray(
+        data?.data?.replay_status?.process_list
+    )
+        ? data.data.replay_status.process_list
+        : [];
+
     const logTypeList = data?.data?.replay_interface?.log_type_list || [];
     const fileTreeList = extractFileOptions(data?.data?.replay_interface?.file_tree) || [];
 
@@ -201,7 +206,16 @@ export default function Page({ params }: Props) {
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody sx={{ flex: '1 1 0', overflowY: 'auto' }}>
-                                                {processData.map((row: any, index: number) => (
+                                                {
+                                                    processData.length === 0 && (
+                                                        <TableRow>
+                                                            <TableCell colSpan={4}>
+                                                                <Typography sx={{ color: darkColors.textSecondary }}>No Processes Found</Typography>
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    )
+                                                }
+                                                {processData?.map((row: any, index: number) => (
                                                     <TableRow
                                                         key={index}
                                                         sx={{
