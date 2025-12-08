@@ -65,6 +65,7 @@ export const paths = {
       identifyList: (node: string) => `/dashboard/nodes/${node}/identify`,
       identifyDetail: (node: string, identifyId: string) => `/dashboard/nodes/${node}/identify/${encodeURIComponent(identifyId)}`,
       dailyReportList: (node: string) => `/dashboard/nodes/${node}/daily-report-list`,
+      dailyReportDetail: (node: string, dailyReportId: string) => `/dashboard/nodes/${node}/daily-report-list/${encodeURIComponent(dailyReportId)}`,
       alertsList: (node: string) => `/dashboard/nodes/${node}/alerts-list`,
       specDetail: (node: string, specId: string) => `/dashboard/nodes/${node}/spec/${encodeURIComponent(specId)}`,
       status: (node: string) => `/dashboard/nodes/${node}/status`,

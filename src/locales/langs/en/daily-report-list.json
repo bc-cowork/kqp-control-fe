@@ -9,5 +9,6 @@
         "last_exec": "last exec.",
         "desc": "Description"
     },
-    "empty": "No Reports"
+    "empty": "No Reports",
+    "report": "Report"
 }

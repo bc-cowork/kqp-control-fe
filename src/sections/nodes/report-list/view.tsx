@@ -88,10 +88,10 @@ export function ReportListView({ nodeId }: Props) {
                                     key={row.name}
                                     sx={{ cursor: 'pointer' }}
                                     tabIndex={0}
-                                    onClick={() => router.push(paths.dashboard.nodes.functionDetail(nodeId, String(row.name)))}
+                                    onClick={() => router.push(paths.dashboard.nodes.dailyReportDetail(nodeId, String(row.name)))}
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter' || e.key === ' ') {
-                                            router.push(paths.dashboard.nodes.functionDetail(nodeId, String(row.name)));
+                                            router.push(paths.dashboard.nodes.dailyReportDetail(nodeId, String(row.name)));
                                         }
                                     }}
                                 >
