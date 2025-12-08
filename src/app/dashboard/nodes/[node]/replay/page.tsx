@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Dialog, DialogTitle, DialogContent, DialogActions, Divider,
     Box,
@@ -169,6 +169,13 @@ export default function Page({ params }: Props) {
     const handleReplay = () => {
         setReplayDialogOpen(true);
     }
+
+    useEffect(() => {
+        if (!logType) {
+            setDate('');
+            setFile('');
+        }
+    }, [logType]);
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
