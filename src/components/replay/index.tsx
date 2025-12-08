@@ -72,13 +72,14 @@ export const SelectField = ({ label, value, onChange, options = [], setValue }: 
                             alignItems: 'center',
                             color: darkColors.textSecondary,
                             fontSize: 15,
-                            textAlign: 'left',
+                            textAlign: 'center',
                             backgroundColor: 'transparent !important',
                             ml: '-4px',
                         },
                         '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
                         '&.Mui-focused': {
                             border: '1px solid #E0E4EB !important',
+                            textAlign: 'center',
                         },
                         '& .MuiSvgIcon-root': {
                             color: darkColors.textSecondary, fontSize: 16,
@@ -90,8 +91,7 @@ export const SelectField = ({ label, value, onChange, options = [], setValue }: 
                             sx: {
                                 backgroundColor: darkColors.tableFill1,
                                 color: darkColors.textPrimary,
-                                border: "1px solid #4E576A"
-
+                                border: "1px solid #4E576A",
                             },
                         },
                     }}
@@ -104,6 +104,8 @@ export const SelectField = ({ label, value, onChange, options = [], setValue }: 
                             sx={{
                                 color: darkColors.textPrimary,
                                 backgroundColor: 'transparent',
+                                textAlign: 'center',
+                                justifyContent: 'center',
                                 '&:hover': { backgroundColor: '#5E66FF' },
                                 '&.Mui-selected': {
                                     backgroundColor: darkColors.gray1,
