@@ -37,7 +37,7 @@ import { endpoints, fetcher } from 'src/utils/axios';
 import useSWR from 'swr';
 import { LoadingScreen } from 'src/components/loading-screen';
 import { extractFileOptions } from 'src/utils/extractFileOptions';
-import { CustomTextField, darkColors, DateTimeMuiField, SelectField, WideTextField } from 'src/components/replay';
+import { CustomTextField, darkColors, SelectField, WideTextField } from 'src/components/replay';
 import { FilterDialog } from 'src/components/replay/FilterDialog'; // Ensure this is the updated version
 import { AddReplayDialog } from 'src/components/replay/AddReplayDialog';
 
@@ -422,7 +422,7 @@ export default function Page({ params }: Props) {
                                                         label="File"
                                                         value={file}
                                                         onChange={(e: any) => setFile(e.target.value)}
-                                                        options={fileTreeList as never[]}
+                                                        options={[...getKeysFromSelectedValue(data?.data?.replay_interface?.file_tree, logTypeList, logType)]}
                                                         setValue={setFile}
                                                     />
                                                 </Box>
@@ -430,23 +430,25 @@ export default function Page({ params }: Props) {
 
                                             <Grid item xs={4}>
                                                 <Box sx={{ ...panelStyle }}>
-                                                    <DateTimeMuiField
+                                                    <SelectField
                                                         label="Date"
-                                                        type="date"
                                                         value={date}
                                                         onChange={(e: any) => setDate(e.target.value)}
+                                                        options={[...getDatesFromSelectedValue(data?.data?.replay_interface?.file_tree, logTypeList, logType, file)]}
+                                                        setValue={setDate}
                                                     />
-                                                    <DateTimeMuiField
+                                                    <SelectField
                                                         label="Start Time"
-                                                        type="time"
                                                         value={startTime}
                                                         onChange={(e: any) => setStartTime(e.target.value)}
-                                                    />
-                                                    <DateTimeMuiField
+                                                        options={[]}
+                                                        setValue={setStartTime}
+                                                    /><SelectField
                                                         label="End Time"
-                                                        type="time"
                                                         value={endTime}
                                                         onChange={(e: any) => setEndTime(e.target.value)}
+                                                        options={[]}
+                                                        setValue={setEndTime}
                                                     />
                                                 </Box>
                                             </Grid>
@@ -661,3 +663,44 @@ const CustomDialog = ({ open, handleClose, pid }: any) =>
         </DialogActions>
     </Dialog>
 );
+
+const getKeysFromSelectedValue = (fileTree: any, log_tree: any, selectedKey: string) => {
+    const filteredValue = log_tree.filter((item: any) => item.label == selectedKey);
+    if (!fileTree || typeof fileTree !== 'object' || !fileTree[filteredValue[0]?.key]) {
+        return [];
+    }
+
+    const selectedObject = fileTree[filteredValue[0]?.key];
+    const keys = Object.keys(selectedObject);
+    const options = keys.map((key) => ({ label: key, value: key }));
+    return options;
+};
+
+const getDatesFromSelectedValue = (fileTree: any, log_tree: any, selectedKey: any, selectedFile: any) => {
+    const filteredValue = log_tree.filter((item: any) => item.label === selectedKey);
+    const fileTreeKey = filteredValue[0]?.key;
+
+    if (!fileTree || typeof fileTree !== 'object' || !fileTree[fileTreeKey] || !fileTree[fileTreeKey][selectedFile]) {
+        return [];
+    }
+
+    const selectedObject = fileTree[fileTreeKey];
+    const dateArray = selectedObject[selectedFile];
+
+    const selectedDateOptions = dateArray.map((dateString: any) => {
+
+        const year = dateString.substring(0, 4);
+        const month = dateString.substring(4, 6);
+        const day = dateString.substring(6, 8);
+
+        const dateObject = `${year}-${month}-${day}`;
+
+
+        return {
+            label: dateObject,
+            value: dateObject
+        };
+    }) || [];
+
+    return selectedDateOptions;
+};
