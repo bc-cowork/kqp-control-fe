@@ -1,4 +1,4 @@
-import { Box, Typography, FormControl, Select, MenuItem, Chip, TextField, IconButton, InputAdornment } from "@mui/material";
+import { Box, Typography, FormControl, Select, MenuItem, Chip, TextField, IconButton, InputAdornment, OutlinedInput } from "@mui/material";
 import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import {
@@ -58,6 +58,12 @@ export const SelectField = ({ label, value, onChange, options = [], setValue }: 
                     onChange={onChange}
                     IconComponent={SelectIcon}
                     displayEmpty
+                    renderValue={(selected) => {
+                        if (selected === '') {
+                            return <span style={{ color: darkColors.textSecondary }}>{'Select  '}</span>;
+                        }
+                        return <span style={{ color: darkColors.textPrimary }}>{selected}</span>;
+                    }}
                     sx={{
                         ...inputStyle,
                         '& .MuiSelect-select': {
@@ -90,12 +96,6 @@ export const SelectField = ({ label, value, onChange, options = [], setValue }: 
                         },
                     }}
                 >
-                    <MenuItem
-                        disabled
-                        value=""
-                    >
-                        Select
-                    </MenuItem>
                     {/* ✨ END OF PLACEHOLDER */}
                     {options.map((option: any) => (
                         <MenuItem
