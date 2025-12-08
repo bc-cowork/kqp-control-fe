@@ -67,6 +67,7 @@ export const paths = {
       dailyReportList: (node: string) => `/dashboard/nodes/${node}/daily-report-list`,
       dailyReportDetail: (node: string, dailyReportId: string) => `/dashboard/nodes/${node}/daily-report-list/${encodeURIComponent(dailyReportId)}`,
       alertsList: (node: string) => `/dashboard/nodes/${node}/alerts-list`,
+      alertsDetail: (node: string, alertId: string) => `/dashboard/nodes/${node}/alerts-list/${encodeURIComponent(alertId)}`,
       specDetail: (node: string, specId: string) => `/dashboard/nodes/${node}/spec/${encodeURIComponent(specId)}`,
       status: (node: string) => `/dashboard/nodes/${node}/status`,
       replay: (node: string) => `/dashboard/nodes/${node}/replay`,

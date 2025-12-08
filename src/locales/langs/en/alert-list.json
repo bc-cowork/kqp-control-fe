@@ -1,5 +1,16 @@
 {
     "top": {
-        "title": "Alerts List"
-    }
+        "title": "Watchlist (Alerts)"
+    },
+    "table": {
+        "id": "ID",
+        "surv_name": "감시 이름",
+        "start_at": "Start At",
+        "end_at": "End At",
+        "interval": "Interval (sec)",
+        "last_exec": "last exec.",
+        "status": "Status",
+        "desc": "설명"
+    },
+    "alert": "Alert"
 }
