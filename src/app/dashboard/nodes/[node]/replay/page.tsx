@@ -17,7 +17,6 @@ import {
     Stack,
 } from '@mui/material';
 import {
-    PlayArrow as PlayIcon,
     Schedule as TimeIcon,
     Event as DateIcon,
     Settings as SetttingsIcon,
@@ -36,8 +35,7 @@ import { DashboardContent } from 'src/layouts/dashboard';
 import { endpoints, fetcher } from 'src/utils/axios';
 import useSWR from 'swr';
 import { LoadingScreen } from 'src/components/loading-screen';
-import { extractFileOptions } from 'src/utils/extractFileOptions';
-import { CustomTextField, darkColors, SelectField, WideTextField } from 'src/components/replay';
+import { CustomTextField, darkColors, DateTimeMuiField, SelectField, WideTextField } from 'src/components/replay';
 import { FilterDialog } from 'src/components/replay/FilterDialog'; // Ensure this is the updated version
 import { AddReplayDialog } from 'src/components/replay/AddReplayDialog';
 
@@ -68,8 +66,6 @@ export default function Page({ params }: Props) {
         : [];
 
     const logTypeList = data?.data?.replay_interface?.log_type_list || [];
-    const fileTreeList = extractFileOptions(data?.data?.replay_interface?.file_tree) || [];
-
 
     const [logType, setLogType] = React.useState('');
     const [file, setFile] = React.useState('');
@@ -198,9 +194,15 @@ export default function Page({ params }: Props) {
                                 }}
                                 spacing={3}>
                                 <Grid item xs={12} md={8}>
-                                    <TableContainer>
-                                        <Table stickyHeader size="small">
-                                            <TableHead>
+                                    <TableContainer
+                                        sx={{
+                                            borderRadius: '8px'
+                                        }}
+                                    >
+                                        <Table size="small"
+
+                                        >
+                                            <TableHead >
                                                 <TableRow>
                                                     {['', 'PID', 'Command', ''].map((header, index) => (
                                                         <TableCell
@@ -233,13 +235,14 @@ export default function Page({ params }: Props) {
                                                     >
                                                         <TableCell sx={{ p: '8px 12px', border: 'none' }}>
                                                             <Chip label="Play"
-                                                                icon={<PlayIcon sx={{ color: darkColors.successText, fontSize: 12 }} />}
+                                                                icon={<Box sx={{ backgroundColor: darkColors.successText, width: 8, height: 8, borderRadius: 4 }} />}
                                                                 color="success" size="small" variant="outlined" sx={{
                                                                     backgroundColor: darkColors.successFill,
                                                                     borderColor: '#36573C',
                                                                     borderRadius: '12px',
                                                                     color: darkColors.successText,
-                                                                    fontWeight: 600
+                                                                    fontWeight: 600,
+                                                                    padding: '4px 8px',
                                                                 }} />
                                                         </TableCell>
                                                         <TableCell sx={{ color: darkColors.textSecondary, fontSize: 15, p: '8px 12px', border: 'none' }}>
@@ -444,18 +447,17 @@ export default function Page({ params }: Props) {
                                                         options={[...getDatesFromSelectedValue(data?.data?.replay_interface?.file_tree, logTypeList, logType, file)]}
                                                         setValue={setDate}
                                                     />
-                                                    <SelectField
+                                                    <DateTimeMuiField
                                                         label="Start Time"
+                                                        type="time"
                                                         value={startTime}
                                                         onChange={(e: any) => setStartTime(e.target.value)}
-                                                        options={[]}
-                                                        setValue={setStartTime}
-                                                    /><SelectField
+                                                    />
+                                                    <DateTimeMuiField
                                                         label="End Time"
                                                         value={endTime}
+                                                        type="time"
                                                         onChange={(e: any) => setEndTime(e.target.value)}
-                                                        options={[]}
-                                                        setValue={setEndTime}
                                                     />
                                                 </Box>
                                             </Grid>
