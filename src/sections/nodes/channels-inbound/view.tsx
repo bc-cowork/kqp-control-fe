@@ -27,7 +27,6 @@ export function ChannelInboundView({ nodeId }: Props) {
       <Box
         sx={{
           mt: '28px',
-          width: 1,
         }}
       >
         <ChannelInbound selectedNodeId={nodeId} />

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Typography, Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Chip, Stack } from '@mui/material';
+import { Typography, Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Chip, Stack, tableRowClasses, tableCellClasses } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { Breadcrumb } from 'src/components/common/Breadcrumb';
 import { DashboardContent } from 'src/layouts/dashboard';
@@ -113,6 +113,12 @@ export default function Page({ params }: Props) {
                             }}
                         >
                             <Table size="small"
+                                sx={{
+                                    [`& .${tableRowClasses.root}:last-child .${tableCellClasses.root}`]: {
+                                        borderTopLeftRadius: '0px !important',
+                                        borderTopRightRadius: '0px !important',
+                                    },
+                                }}
                             >
                                 <TableHead>
                                     <TableRow
@@ -145,7 +151,14 @@ export default function Page({ params }: Props) {
                                 borderTopRightRadius: 0,
                             }}
                         >
-                            <Table size="small">
+                            <Table size="small"
+                                sx={{
+                                    [`& .${tableRowClasses.root}:last-child .${tableCellClasses.root}`]: {
+                                        borderTopLeftRadius: '0px !important',
+                                        borderTopRightRadius: '0px !important',
+                                    },
+                                }}
+                            >
                                 <TableHead>
                                     <TableRow>
                                         <TableCell align='center'>{ }</TableCell>
