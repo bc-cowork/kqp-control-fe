@@ -28,6 +28,7 @@ type AddReplayDialogProps = {
     onConfirm: () => void;
     message?: string;
     title?: string;
+    replaying?: boolean;
 };
 
 export const AddReplayDialog = ({
@@ -36,6 +37,7 @@ export const AddReplayDialog = ({
     onConfirm,
     message = '재생 하시겠습니까?',
     title = '팝업 메세지',
+    replaying
 }: AddReplayDialogProps) => {
 
     const handleConfirm = () => {
@@ -164,7 +166,10 @@ export const AddReplayDialog = ({
                         }
                     }}
                 >
-                    확인
+                    {
+                        replaying ? '재생중...' : '확인'
+                    }
+
                 </Button>
 
                 {/* Cancel (취소) Button */}

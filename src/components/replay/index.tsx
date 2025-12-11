@@ -1,9 +1,13 @@
-import { Box, Typography, FormControl, Select, MenuItem, Chip, TextField, IconButton, InputAdornment, OutlinedInput } from "@mui/material";
-import { DatePicker, TimePicker } from "@mui/x-date-pickers";
+import {
+    Box, Typography, FormControl, Select, MenuItem, TextField, IconButton, InputAdornment, Button,
+} from "@mui/material";
+import { TimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import {
     KeyboardArrowDown as SelectIcon,
     Cancel as CancelIcon,
+    ArrowDropUp as ArrowUpwardIcon, ArrowDropDown as ArrowDownwardIcon,
+    KeyboardArrowDownOutlined as KeyboardArrowDownIcon,
 } from '@mui/icons-material';
 import { LogTag } from "./Logtag";
 
@@ -41,7 +45,7 @@ const inputStyle = {
     },
 };
 
-export const SelectField = ({ label, value, onChange, options = [], setValue }: any) => (
+export const SelectField = ({ label, value, onChange, options = [], setValue, placeholder, width = '94px' }: any) => (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
         <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
             <Typography
@@ -60,12 +64,13 @@ export const SelectField = ({ label, value, onChange, options = [], setValue }: 
                     displayEmpty
                     renderValue={(selected) => {
                         if (selected === '') {
-                            return <span style={{ color: darkColors.textSecondary, fontSize: 15 }}>{'Select  '}</span>;
+                            return <span style={{ color: darkColors.textSecondary, fontSize: 15 }}>{`${placeholder} `}</span>;
                         }
                         return <span style={{ color: darkColors.textPrimary }}>{selected}</span>;
                     }}
                     sx={{
                         ...inputStyle,
+                        maxWidth: `${width} !important`,
                         '& .MuiSelect-select': {
                             p: '4px 4px 4px 4px',
                             display: 'flex',
@@ -127,11 +132,15 @@ export const SelectField = ({ label, value, onChange, options = [], setValue }: 
         }
     </Box>
 );
+// ------------------------------------------
 
-export const DateTimeMuiField = ({ label, type, value, onChange }: any) => {
-    const PickerComponent = type === 'date' ? DatePicker : TimePicker;
+
+export const DateTimeMuiField = ({ label, type = 'time', value, onChange }: any) => {
+
     const placeholderValue = type === 'date' ? '0000-00-00' : '00:00:00';
-    const minWidth = type === 'date' ? 126 : 110;
+    const minWidth = type === 'date' ? 120 : 110;
+    const format = type === 'date' ? 'YYYY-MM-DD' : 'HH:mm:ss';
+    const timeViews = ['hours', 'minutes', 'seconds'] as const;
 
     const customInputProps = {
         sx: {
@@ -167,6 +176,10 @@ export const DateTimeMuiField = ({ label, type, value, onChange }: any) => {
             '& .MuiMultiSectionDigitalClock-root': {
                 backgroundColor: darkColors.tableFill1,
 
+                '& .MuiDigitalClockSection-separator': {
+                    color: darkColors.textPrimary,
+                },
+
                 '& .MuiButtonBase-root': {
                     color: darkColors.textPrimary,
                     backgroundColor: darkColors.gray1,
@@ -194,6 +207,20 @@ export const DateTimeMuiField = ({ label, type, value, onChange }: any) => {
         },
     };
 
+    // 2. Define the new component overrides
+    const pickerSlots = {
+        openPickerIcon: KeyboardArrowDownIcon,
+    };
+
+    // The slotProps for the button itself (re-used for both)
+    const openPickerButtonSlotProps = {
+        sx: {
+            color: darkColors.textSecondary,
+            '& .MuiSvgIcon-root': { fontSize: 16 }
+        }
+    };
+
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
             <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
@@ -205,79 +232,111 @@ export const DateTimeMuiField = ({ label, type, value, onChange }: any) => {
                 </Typography>
             </Box>
 
-            <PickerComponent
-                value={dayjs(value, type === 'date' ? 'YYYY-MM-DD' : 'HH:mm:ss')}
-                onChange={(newValue) => {
-                    const formattedValue = newValue ? newValue.format(type === 'date' ? 'YYYY-MM-DD' : 'HH:mm:ss') : placeholderValue;
-                    onChange({ target: { value: formattedValue } });
-                }}
-                slotProps={{
-                    textField: {
-                        size: "small",
-                        placeholder: placeholderValue,
-                        variant: "outlined",
-                        InputProps: customInputProps,
-                    },
-                    popper: customPopperProps,
-                    openPickerButton: {
-                        sx: {
-                            color: darkColors.textSecondary,
-                            '& .MuiSvgIcon-root': { fontSize: 16 }
-                        }
+            {value ? (
+                <TimePicker
+                    // FIX: Set closeOnSelect to false to prevent the popper from closing on value change
+                    closeOnSelect
+                    views={timeViews}
+                    value={dayjs(value, format)}
+                    format={format}
+                    onChange={(newValue) => {
+                        const formattedValue = newValue ? newValue.format(format) : placeholderValue;
+                        onChange({ target: { value: formattedValue } });
+                    }}
+                    slots={pickerSlots}
+                    slotProps={{
+                        textField: {
+                            size: "small",
+                            placeholder: placeholderValue,
+                            variant: "outlined",
+                            InputProps: customInputProps,
+                        },
+                        popper: customPopperProps,
+                        openPickerButton: openPickerButtonSlotProps
+                    }}
+                />
+            ) : (
+                <LogTag text={value} onClose={
+                    () => {
+                        onChange({ target: { value: placeholderValue } });
                     }
-                }}
-            />
+                } />
+            )}
         </Box>
     );
 };
 
-export const WideTextField = ({ label, value, onChange, placeholder, onClick, onClose }: any) => (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-        <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
-            <Typography
-                variant="body2"
-                sx={{ color: '#D1D6E0', fontWeight: 400, lineHeight: '22.5px', fontSize: 15 }}
-            >
-                {label}
-            </Typography>
-        </Box>
-        {
-            value === '' ? (
-                <Box onClick={onClick} sx={{ cursor: 'pointer' }}>
-                    <TextField
-                        fullWidth
-                        variant="outlined"
-                        size="small"
-                        value={value}
-                        onChange={onChange}
-                        placeholder={placeholder}
-                        InputProps={{
-                            readOnly: true,
-                            sx: {
-                                height: 32,
-                                color: darkColors.textSecondary,
-                                border: `1px solid ${darkColors.border}`,
-                                '& fieldset': { border: 'none' },
-                            },
-                        }}
+export const WideTextField = ({ label, value, onClick, onClose }: any) => {
+    // Show the 'All' button when value is empty or explicitly 'All'.
+    // Otherwise display the selected value as a removable tag.
+    const showAllButton = value === '' || value === 'All';
+
+    return (
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
+                <Typography
+                    variant="body2"
+                    sx={{ color: '#D1D6E0', fontWeight: 400, lineHeight: '22.5px', fontSize: 15 }}
+                >
+                    {label}
+                </Typography>
+            </Box>
+            {
+                showAllButton ? (
+                    <Button
+                        onClick={onClick}
+                        endIcon={
+                            <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                lineHeight: 0,
+                                padding: 0,
+                                height: 20,
+                                justifyContent: 'center',
+                            }}>
+                                <ArrowUpwardIcon sx={{
+                                    color: '#7AA2FF',
+                                    width: 18,
+                                    height: 18,
+
+                                }} />
+                                <ArrowDownwardIcon sx={{ color: '#7AA2FF', height: 18, width: 18, marginTop: '-10px' }} />
+                            </Box>
+                        }
                         sx={{
-                            flex: '1 1 0',
-                            '& .MuiOutlinedInput-root': {
-                                paddingLeft: '12px',
-                                paddingRight: '8px',
-                                borderRadius: '4px',
+                            height: 32,
+                            width: 'fit-content',
+                            padding: '4px 12px',
+                            backgroundColor: '#212447',
+                            color: '#7AA2FF',
+                            border: '1px solid #1D2654',
+                            fontSize: 15,
+                            fontWeight: 400,
+                            lineHeight: '22.50px',
+                            textTransform: 'none',
+                            borderRadius: '4px',
+                            boxShadow: 'none',
+                            '&:hover': {
+                                backgroundColor: '#212447',
+                                boxShadow: 'none',
                             },
+                            '& .MuiButton-endIcon': {
+                                marginLeft: '4px',
+                                marginRight: '-4px',
+                            }
                         }}
-                    />
-                </Box>
+                    >
+                        All
+                    </Button>
 
-            ) : (
-                <LogTag text={value} onClose={onClose} />
-            )
-        }
+                ) : (
+                    <LogTag text={value} onClose={onClose} />
+                )
+            }
 
-    </Box >
-);
+        </Box >
+    )
+};
 
 export const CustomTextField = ({ toolPid, setToolPid }: any) => {
     // Function to handle clearing the toolPid value

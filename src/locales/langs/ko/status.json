@@ -4,9 +4,9 @@
     },
     "table_top": {
         "item": "항목",
-        "max": "Max",
-        "cur": "Cur",
-        "odd": "Odd",
+        "max": "최대",
+        "cur": "현재",
+        "odd": "이상",
         "process": "프로세스",
         "que": "큐",
         "ch_inbound": "수신 채널",

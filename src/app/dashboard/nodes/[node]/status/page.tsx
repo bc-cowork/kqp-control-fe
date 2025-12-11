@@ -105,7 +105,7 @@ export default function Page({ params }: Props) {
                     </Grid>
 
                     <Grid item xs={12} md={6}>
-                        <HeadRow title='Channel Inbound' />
+                        <HeadRow title={t('table_bottom.ch_inbound')} />
                         <TableContainer component={Paper}
                             sx={{
                                 borderTopLeftRadius: 0,
@@ -144,7 +144,7 @@ export default function Page({ params }: Props) {
                     </Grid>
 
                     <Grid item xs={12} md={6}>
-                        <HeadRow title='Channel Outbound' />
+                        <HeadRow title={t('table_bottom.ch_outbound')} />
                         <TableContainer component={Paper}
                             sx={{
                                 borderTopLeftRadius: 0,
