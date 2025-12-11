@@ -173,7 +173,7 @@ export default function Page({ params }: Props) {
         head && head !== '' &&
         channel && channel !== '' &&
         outboundExpression && outboundExpression !== ''
-    ), [logType, file, date, startTime, endTime]);
+    ), [logType, file, date, startTime, endTime, head, channel, outboundExpression]);
 
 
     const handleReplay = () => {
@@ -414,12 +414,12 @@ export default function Page({ params }: Props) {
                                                                 <path d="M8.00019 1.33337C5.28495 1.33337 3.23828 2.35718 3.23828 3.71433L3.23828 12.2858C3.23828 13.6429 5.28495 14.6667 8.00019 14.6667C10.7154 14.6667 12.7621 13.6429 12.7621 12.2858L12.7621 3.71433C12.7621 2.35718 10.7154 1.33337 8.00019 1.33337ZM8.00019 2.28576C10.3249 2.28576 11.8097 3.13147 11.8097 3.71433C11.8097 4.29718 10.3249 5.1429 8.00019 5.1429C5.67542 5.1429 4.19066 4.29718 4.19066 3.71433C4.19066 3.13147 5.67447 2.28576 8.00019 2.28576ZM8.00019 13.7143C5.67447 13.7143 4.19066 12.8677 4.19066 12.2858L4.19066 5.1629C5.34671 5.82788 6.6677 6.15119 8.00019 6.09528C9.33267 6.15119 10.6537 5.82788 11.8097 5.1629L11.8097 12.2858C11.8097 12.8677 10.3249 13.7143 8.00019 13.7143Z" fill="#F4F4F8" />
                                                             </svg>
                                                             <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>Outbound Form </Typography>
-                                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{head || '-'}</Typography>
+                                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{outboundExpression || '-'}</Typography>
                                                         </Box>
                                                         <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
                                                             <PlayArrowOutlined sx={{ color: darkColors.textPrimary, fontSize: 18 }} />
                                                             <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>Speed </Typography>
-                                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{channel || '-'}</Typography>
+                                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{currentSpeed || '-'}</Typography>
                                                         </Box>
                                                     </Box>
                                                     <Box sx={{
@@ -459,8 +459,8 @@ export default function Page({ params }: Props) {
                                                                 }
                                                                 const BASE_URL = 'http://141.164.63.141/apik/prod1/replay';
 
-                                                                const params = new URLSearchParams(replayData).toString();
-                                                                const fullUrl = `${BASE_URL}?${params}`;
+                                                                const paramsLocal = new URLSearchParams(replayData).toString();
+                                                                const fullUrl = `${BASE_URL}?${paramsLocal}`;
 
 
                                                                 try {
@@ -475,13 +475,13 @@ export default function Page({ params }: Props) {
                                                                         throw new Error(`HTTP error! status: ${response.status}`);
                                                                     }
 
-                                                                    const data = await response.json();
-                                                                    console.log('Replay request successful:', data);
+                                                                    const replayRespData = await response.json();
+                                                                    console.log('Replay request successful:', replayRespData);
 
                                                                     setReplayDialogOpen(false);
 
-                                                                } catch (error) {
-                                                                    console.error('Failed to initiate replay request:', error);
+                                                                } catch (e) {
+                                                                    console.error('Failed to initiate replay request:', e);
 
                                                                 } finally {
                                                                     setReplaying(false);

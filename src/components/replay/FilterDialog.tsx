@@ -1,4 +1,4 @@
-import { Box, Button, TextField, IconButton, Typography } from "@mui/material";
+import { Box, Button, TextField, IconButton, Typography, Divider } from "@mui/material";
 import {
     Cancel as CancelIcon,
     Refresh as RefreshIcon,
@@ -18,13 +18,11 @@ export const FilterDialog = ({
     open,
     onClose,
     mode,
-    setMode,
     expression,
     setExpression,
     handleReset,
     handleConfirm,
     errorMessage,
-    setValue
 }: any) => {
 
     const handleClearExpression = () => {
@@ -42,9 +40,10 @@ export const FilterDialog = ({
                 backgroundColor: '#202838',
                 borderRadius: 1,
                 padding: '8px',
-                boxShadow: '0px 4px 20px rgba(10, 14, 21, 0.20)',
                 width: '100%',
                 maxWidth: '400px',
+                boxShadow: '0px 4px 20px #373F4E',
+
             }}
         >
             <Box
@@ -53,6 +52,7 @@ export const FilterDialog = ({
                     display: 'flex',
                     flexDirection: 'column',
                     gap: 1.5,
+
                 }}
             >
 
@@ -72,9 +72,23 @@ export const FilterDialog = ({
                         size="small"
                         value={expression}
                         onChange={(e) => setExpression(e.target.value)}
-                        placeholder="Enter expression..."
+                        placeholder=""
                         disabled={mode === 'All'}
                         InputProps={{
+                            startAdornment: (
+                                <Box sx={{ display: 'flex', alignItems: 'center', width: 80, gap: '8px' }}>
+                                    <Typography
+                                        sx={{
+                                            color: customColors.graysGray5,
+                                            fontSize: 15,
+                                            fontWeight: 400,
+                                            lineHeight: '22.50px',
+                                        }}
+                                    >
+                                        {'typing |'}
+                                    </Typography>
+                                </Box>
+                            ),
                             endAdornment: (
                                 <IconButton
                                     onClick={handleClearExpression}
