@@ -86,7 +86,7 @@ export default function Page({ params }: Props) {
     // 1. Separate state for dialog input/mode/error (generic to the open dialog)
     const [filterDialogOpen, setFilterDialogOpen] = React.useState(false);
     const [filterTarget, setFilterTarget] = React.useState<'HEAD' | 'CHANNEL' | null>(null);
-    const [dialogMode, setDialogMode] = React.useState('All');
+    const [dialogMode, setDialogMode] = React.useState('Typing');
     const [dialogExpression, setDialogExpression] = React.useState('');
     const [filterError, setFilterError] = React.useState('');
 
@@ -94,6 +94,12 @@ export default function Page({ params }: Props) {
 
 
     const handleOpenFilterDialog = (target: 'HEAD' | 'CHANNEL') => {
+        // Toggle: if the same dialog is open, close it; otherwise open and initialize
+        if (filterDialogOpen && filterTarget === target) {
+            handleCloseFilterDialog();
+            return;
+        }
+
         setFilterTarget(target);
         setFilterDialogOpen(true);
         setFilterError('');
@@ -103,7 +109,7 @@ export default function Page({ params }: Props) {
 
         // 2. Initialize dialog state based on saved value
         if (savedValue === 'All') {
-            setDialogMode('All');
+            setDialogMode('Typing');
             setDialogExpression('');
         } else {
             setDialogMode('Typing');
@@ -118,29 +124,26 @@ export default function Page({ params }: Props) {
     };
 
     const handleFilterConfirm = () => {
-        // Validation logic
-        if (dialogMode === 'Typing' && !dialogExpression.trim()) {
-            setFilterError('Please enter a value to search or select "All" mode.');
-            return;
-        }
+        // Allow confirming either with a typed expression or 'All' mode.
+        // If dialogMode is 'All' or expression is empty, store 'All'.
+        const trimmed = dialogExpression.trim();
+        const finalValue = dialogMode === 'All' || !trimmed ? 'All' : trimmed;
 
-        // Determine the final value to save
-        const finalValue = (dialogMode === 'Typing' && dialogExpression.trim()) ? dialogExpression.trim() : 'All';
-
-        // 3. Update the correct final state (`head` or `channel`)
         if (filterTarget === 'HEAD') {
             setHead(finalValue);
         } else if (filterTarget === 'CHANNEL') {
             setChannel(finalValue);
         }
 
+        // Clear any previous error and close the dialog
+        setFilterError('');
         handleCloseFilterDialog();
     };
 
     const handleFilterReset = () => {
         // Reset dialog internal state to 'All'
         setDialogExpression('');
-        setDialogMode('All');
+        setDialogMode('Typing');
         setFilterError('');
 
         // Optional: Also reset the persistent state to 'All' immediately upon Reset click
@@ -468,8 +471,6 @@ export default function Page({ params }: Props) {
                                                     <WideTextField
                                                         label="HEAD"
                                                         value={head}
-                                                        onChange={(e: any) => setHead(e.target.value)}
-                                                        placeholder="All"
                                                         onClick={() => handleOpenFilterDialog('HEAD')}
                                                         onClose={() => {
                                                             setHead('');
@@ -486,14 +487,13 @@ export default function Page({ params }: Props) {
                                                             handleReset={handleFilterReset}
                                                             handleConfirm={handleFilterConfirm}
                                                             errorMessage={filterError}
+                                                            setValue={setHead}
                                                         />
                                                     )}
 
                                                     <WideTextField
                                                         label="Channel Number"
                                                         value={channel}
-                                                        onChange={(e: any) => setChannel(e.target.value)}
-                                                        placeholder="All"
                                                         onClick={() => handleOpenFilterDialog('CHANNEL')}
                                                         onClose={() => {
                                                             setChannel('')
@@ -512,6 +512,7 @@ export default function Page({ params }: Props) {
                                                             handleReset={handleFilterReset}
                                                             handleConfirm={handleFilterConfirm}
                                                             errorMessage={filterError}
+                                                            setValue={setChannel}
 
                                                         />
                                                     )}

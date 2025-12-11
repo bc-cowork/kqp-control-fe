@@ -1,9 +1,12 @@
-import { Box, Typography, FormControl, Select, MenuItem, Chip, TextField, IconButton, InputAdornment, OutlinedInput } from "@mui/material";
+import {
+    Box, Typography, FormControl, Select, MenuItem, TextField, IconButton, InputAdornment, Button,
+} from "@mui/material";
 import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import {
     KeyboardArrowDown as SelectIcon,
     Cancel as CancelIcon,
+    ArrowDropUp as ArrowUpwardIcon, ArrowDropDown as ArrowDownwardIcon
 } from '@mui/icons-material';
 import { LogTag } from "./Logtag";
 
@@ -231,53 +234,77 @@ export const DateTimeMuiField = ({ label, type, value, onChange }: any) => {
     );
 };
 
-export const WideTextField = ({ label, value, onChange, placeholder, onClick, onClose }: any) => (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-        <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
-            <Typography
-                variant="body2"
-                sx={{ color: '#D1D6E0', fontWeight: 400, lineHeight: '22.5px', fontSize: 15 }}
-            >
-                {label}
-            </Typography>
-        </Box>
-        {
-            value === '' ? (
-                <Box onClick={onClick} sx={{ cursor: 'pointer' }}>
-                    <TextField
-                        fullWidth
-                        variant="outlined"
-                        size="small"
-                        value={value}
-                        onChange={onChange}
-                        placeholder={placeholder}
-                        InputProps={{
-                            readOnly: true,
-                            sx: {
-                                height: 32,
-                                color: darkColors.textSecondary,
-                                border: `1px solid ${darkColors.border}`,
-                                '& fieldset': { border: 'none' },
-                            },
-                        }}
+export const WideTextField = ({ label, value, onClick, onClose }: any) => {
+    // Show the 'All' button when value is empty or explicitly 'All'.
+    // Otherwise display the selected value as a removable tag.
+    const showAllButton = value === '' || value === 'All';
+
+    return (
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
+                <Typography
+                    variant="body2"
+                    sx={{ color: '#D1D6E0', fontWeight: 400, lineHeight: '22.5px', fontSize: 15 }}
+                >
+                    {label}
+                </Typography>
+            </Box>
+            {
+                showAllButton ? (
+                    <Button
+                        onClick={onClick}
+                        endIcon={
+                            <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                lineHeight: 0,
+                                padding: 0,
+                                height: 20,
+                                justifyContent: 'center',
+                            }}>
+                                <ArrowUpwardIcon sx={{
+                                    color: '#7AA2FF',
+                                    width: 18,
+                                    height: 18,
+
+                                }} />
+                                <ArrowDownwardIcon sx={{ color: '#7AA2FF', height: 18, width: 18, marginTop: '-10px' }} />
+                            </Box>
+                        }
                         sx={{
-                            flex: '1 1 0',
-                            '& .MuiOutlinedInput-root': {
-                                paddingLeft: '12px',
-                                paddingRight: '8px',
-                                borderRadius: '4px',
+                            height: 32,
+                            width: 'fit-content',
+                            padding: '4px 12px',
+                            backgroundColor: '#212447',
+                            color: '#7AA2FF',
+                            border: '1px solid #1D2654',
+                            fontSize: 15,
+                            fontWeight: 400,
+                            lineHeight: '22.50px',
+                            textTransform: 'none',
+                            borderRadius: '4px',
+                            boxShadow: 'none',
+                            '&:hover': {
+                                backgroundColor: '#212447',
+                                boxShadow: 'none',
                             },
+                            '& .MuiButton-endIcon': {
+                                marginLeft: '4px',
+                                marginRight: '-4px',
+                            }
                         }}
-                    />
-                </Box>
+                    >
+                        All
+                    </Button>
 
-            ) : (
-                <LogTag text={value} onClose={onClose} />
-            )
-        }
+                ) : (
+                    <LogTag text={value} onClose={onClose} />
+                )
+            }
 
-    </Box >
-);
+        </Box >
+    )
+};
 
 export const CustomTextField = ({ toolPid, setToolPid }: any) => {
     // Function to handle clearing the toolPid value

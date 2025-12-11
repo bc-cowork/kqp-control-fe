@@ -24,24 +24,21 @@ export const FilterDialog = ({
     handleReset,
     handleConfirm,
     errorMessage,
+    setValue
 }: any) => {
 
     const handleClearExpression = () => {
         setExpression('');
     };
+
     if (!open) {
         return null;
-    }
-
-    const handleApplyNoTyping = () => {
-
-        setExpression('');
-        handleConfirm();
     }
 
     return (
         <Box
             sx={{
+                // Main dialog container styling
                 backgroundColor: '#202838',
                 borderRadius: 1,
                 padding: '8px',
@@ -52,52 +49,12 @@ export const FilterDialog = ({
         >
             <Box
                 sx={{
+                    // Content wrapper
                     display: 'flex',
                     flexDirection: 'column',
                     gap: 1.5,
                 }}
             >
-                <Box
-                    sx={{
-                        alignSelf: 'stretch',
-                        padding: '2px',
-                        background: customColors.backgroundTertiary,
-                        borderRadius: '6px',
-                        display: 'flex',
-                        gap: '4px',
-                    }}
-                >
-                    {['No Typing', 'Typing'].map((btnMode) => (
-                        <Button
-                            key={btnMode}
-                            onClick={() => setMode(btnMode)}
-                            sx={{
-                                flex: '1 1 0',
-                                height: 32,
-                                padding: '4px 12px',
-                                borderRadius: '4px',
-                                backgroundColor:
-                                    mode === btnMode
-                                        ? customColors.buttonTertiaryDefault
-                                        : 'transparent',
-                                color: customColors.textPrimary,
-                                fontSize: 15,
-                                fontWeight: 400,
-                                lineHeight: '22.50px',
-                                textTransform: 'none',
-                                boxShadow:
-                                    mode === btnMode
-                                        ? '0px 4px 4px rgba(10, 14, 21, 0.10)'
-                                        : 'none',
-                                '&:hover': {
-                                    backgroundColor: customColors.buttonTertiaryDefault,
-                                }
-                            }}
-                        >
-                            {btnMode === 'No Typing' ? 'No Typing' : 'Typing'}
-                        </Button>
-                    ))}
-                </Box>
 
                 <Box
                     sx={{
@@ -108,43 +65,17 @@ export const FilterDialog = ({
                         gap: 0.5,
                     }}
                 >
+
                     <TextField
                         fullWidth
                         variant="outlined"
                         size="small"
                         value={expression}
                         onChange={(e) => setExpression(e.target.value)}
-                        placeholder={mode === 'No Typing' ? "" : "Enter expression..."}
-                        disabled={mode === 'No Typing'} // Disabled when in 'All' mode
+                        placeholder="Enter expression..."
+                        disabled={mode === 'All'}
                         InputProps={{
-                            startAdornment: mode === 'No Typing' ? (<Box
-                                sx={{
-                                    width: 120
-                                }}
-                            >
-                                <Typography
-                                    sx={{
-                                        color: '#7AA2FF'
-                                    }}
-                                >
-                                    View All |
-                                </Typography>
-                            </Box>) :
-                                (<Box
-                                    sx={{
-                                        width: 90
-                                    }}
-                                >
-                                    <Typography
-                                        sx={{
-                                            color: '#667085'
-                                        }}
-                                    >
-                                        Typing |
-                                    </Typography>
-                                </Box>)
-                            ,
-                            endAdornment: mode === 'Typing' ? (
+                            endAdornment: (
                                 <IconButton
                                     onClick={handleClearExpression}
                                     size="small"
@@ -152,26 +83,6 @@ export const FilterDialog = ({
                                 >
                                     <CancelIcon sx={{ width: 20, height: 20 }} />
                                 </IconButton>
-                            ) : (
-                                <Button
-                                    onClick={handleApplyNoTyping}
-                                    sx={{
-                                        height: 32,
-                                        padding: '4px 12px',
-                                        background: customColors.buttonPrimaryDefault,
-                                        color: 'white',
-                                        fontSize: 15,
-                                        fontWeight: 400,
-                                        lineHeight: '22.50px',
-                                        textTransform: 'none',
-                                        borderRadius: 1,
-                                        '&:hover': {
-                                            backgroundColor: '#4E57E5',
-                                        }
-                                    }}
-                                >
-                                    Apply
-                                </Button>
                             ),
                             sx: {
                                 height: 42,
@@ -204,57 +115,54 @@ export const FilterDialog = ({
                         </Typography>
                     )}
                 </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+                    <Button
+                        onClick={() => {
+                            handleReset();
+                            onClose();
+                        }}
+                        startIcon={
+                            <RefreshIcon sx={{ color: customColors.graysGray5, width: 16, height: 16 }} />
+                        }
+                        sx={{
+                            height: 32,
+                            padding: '4px 12px 4px 8px',
+                            background: customColors.buttonTertiaryDefault,
+                            border: `1px solid ${customColors.textPrimary}`,
+                            color: customColors.textPrimary,
+                            fontSize: 15,
+                            fontWeight: 400,
+                            lineHeight: '22.50px',
+                            textTransform: 'none',
+                            borderRadius: 1,
+                            '&:hover': {
+                                backgroundColor: '#47505F',
+                            }
+                        }}
+                    >
+                        Reset
+                    </Button>
 
-                {
-                    mode === 'Typing' && (
-                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
-                            <Button
-                                onClick={handleReset}
-                                startIcon={
-                                    <RefreshIcon sx={{ color: customColors.graysGray5, width: 16, height: 16 }} />
-                                }
-                                sx={{
-                                    height: 32,
-                                    padding: '4px 12px 4px 8px',
-                                    background: customColors.buttonTertiaryDefault,
-                                    border: `1px solid ${customColors.textPrimary}`,
-                                    color: customColors.textPrimary,
-                                    fontSize: 15,
-                                    fontWeight: 400,
-                                    lineHeight: '22.50px',
-                                    textTransform: 'none',
-                                    borderRadius: 1,
-                                    '&:hover': {
-                                        backgroundColor: '#47505F',
-                                    }
-                                }}
-                            >
-                                Reset
-                            </Button>
-
-                            <Button
-                                onClick={handleConfirm}
-                                sx={{
-                                    height: 32,
-                                    padding: '4px 12px',
-                                    background: customColors.buttonPrimaryDefault,
-                                    color: 'white',
-                                    fontSize: 15,
-                                    fontWeight: 400,
-                                    lineHeight: '22.50px',
-                                    textTransform: 'none',
-                                    borderRadius: 1,
-                                    '&:hover': {
-                                        backgroundColor: '#4E57E5',
-                                    }
-                                }}
-                            >
-                                확인
-                            </Button>
-                        </Box>
-                    )
-                }
-
+                    <Button
+                        onClick={handleConfirm}
+                        sx={{
+                            height: 32,
+                            padding: '4px 12px',
+                            background: customColors.buttonPrimaryDefault,
+                            color: 'white',
+                            fontSize: 15,
+                            fontWeight: 400,
+                            lineHeight: '22.50px',
+                            textTransform: 'none',
+                            borderRadius: 1,
+                            '&:hover': {
+                                backgroundColor: '#4E57E5',
+                            }
+                        }}
+                    >
+                        확인
+                    </Button>
+                </Box>
             </Box>
         </Box>
     );
