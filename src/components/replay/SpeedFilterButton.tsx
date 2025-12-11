@@ -49,7 +49,7 @@ export const SpeedSelectFilter = ({ currentSpeed, setCurrentSpeed }: {
                     variant="body2"
                     sx={{ color: '#D1D6E0', fontWeight: 400, lineHeight: '22.5px', fontSize: 15 }}
                 >
-                    {'Speed'}
+                    Speed
                 </Typography>
             </Box>
 

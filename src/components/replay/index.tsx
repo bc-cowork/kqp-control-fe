@@ -6,7 +6,8 @@ import dayjs from "dayjs";
 import {
     KeyboardArrowDown as SelectIcon,
     Cancel as CancelIcon,
-    ArrowDropUp as ArrowUpwardIcon, ArrowDropDown as ArrowDownwardIcon
+    ArrowDropUp as ArrowUpwardIcon, ArrowDropDown as ArrowDownwardIcon,
+    KeyboardArrowDownOutlined as KeyboardArrowDownIcon,
 } from '@mui/icons-material';
 import { LogTag } from "./Logtag";
 
@@ -134,20 +135,12 @@ export const SelectField = ({ label, value, onChange, options = [], setValue, pl
 // ------------------------------------------
 
 
-export const DateTimeMuiField = ({ label, type, value, onChange }: any) => {
-    // 1. Determine the Picker Component
-    const PickerComponent = type === 'date' ? DatePicker : TimePicker;
+export const DateTimeMuiField = ({ label, type = 'time', value, onChange }: any) => {
 
-    // 2. Define placeholder and minWidth based on the format
     const placeholderValue = type === 'date' ? '0000-00-00' : '00:00:00';
     const minWidth = type === 'date' ? 120 : 110;
-
-    // 3. Set the format string
     const format = type === 'date' ? 'YYYY-MM-DD' : 'HH:mm:ss';
-
-    // 4. Set the views for TimePicker to include seconds
-    // This is the key change for hh:mm:ss selection
-    const timeViews = ['hours', 'minutes', 'seconds'];
+    const timeViews = ['hours', 'minutes', 'seconds'] as const;
 
     const customInputProps = {
         sx: {
@@ -180,11 +173,10 @@ export const DateTimeMuiField = ({ label, type, value, onChange }: any) => {
                 boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)',
             },
 
-            // Targeting the Digital Clock component for custom dark mode styling
             '& .MuiMultiSectionDigitalClock-root': {
                 backgroundColor: darkColors.tableFill1,
 
-                '& .MuiDigitalClockSection-separator': { // Separator for hh:mm:ss
+                '& .MuiDigitalClockSection-separator': {
                     color: darkColors.textPrimary,
                 },
 
@@ -215,6 +207,20 @@ export const DateTimeMuiField = ({ label, type, value, onChange }: any) => {
         },
     };
 
+    // 2. Define the new component overrides
+    const pickerSlots = {
+        openPickerIcon: KeyboardArrowDownIcon,
+    };
+
+    // The slotProps for the button itself (re-used for both)
+    const openPickerButtonSlotProps = {
+        sx: {
+            color: darkColors.textSecondary,
+            '& .MuiSvgIcon-root': { fontSize: 16 }
+        }
+    };
+
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
             <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
@@ -226,33 +232,37 @@ export const DateTimeMuiField = ({ label, type, value, onChange }: any) => {
                 </Typography>
             </Box>
 
-            <PickerComponent
-                // Pass the views array only to the TimePicker component
-                {...(type === 'time' && { views: timeViews })}
+            {value ? (
+                <TimePicker
+                    // FIX: Set closeOnSelect to false to prevent the popper from closing on value change
+                    closeOnSelect={true}
 
-                value={dayjs(value, format)}
-                format={format} // Ensure the display format is also HH:mm:ss
-
-                onChange={(newValue) => {
-                    const formattedValue = newValue ? newValue.format(format) : placeholderValue;
-                    onChange({ target: { value: formattedValue } });
-                }}
-                slotProps={{
-                    textField: {
-                        size: "small",
-                        placeholder: placeholderValue,
-                        variant: "outlined",
-                        InputProps: customInputProps,
-                    },
-                    popper: customPopperProps,
-                    openPickerButton: {
-                        sx: {
-                            color: darkColors.textSecondary,
-                            '& .MuiSvgIcon-root': { fontSize: 16 }
-                        }
+                    views={timeViews}
+                    value={dayjs(value, format)}
+                    format={format}
+                    onChange={(newValue) => {
+                        const formattedValue = newValue ? newValue.format(format) : placeholderValue;
+                        onChange({ target: { value: formattedValue } });
+                    }}
+                    slots={pickerSlots}
+                    slotProps={{
+                        textField: {
+                            size: "small",
+                            placeholder: placeholderValue,
+                            variant: "outlined",
+                            InputProps: customInputProps,
+                        },
+                        popper: customPopperProps,
+                        openPickerButton: openPickerButtonSlotProps
+                    }}
+                />
+            ) : (
+                <LogTag text={value} onClose={
+                    () => {
+                        onChange({ target: { value: placeholderValue } });
                     }
-                }}
-            />
+                } />
+            )}
         </Box>
     );
 };

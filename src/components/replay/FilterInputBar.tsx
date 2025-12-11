@@ -21,7 +21,7 @@ export const FilterInputBar = ({ expression, setExpression }: any) => {
                     variant="body2"
                     sx={{ color: '#D1D6E0', fontWeight: 400, lineHeight: '22.5px', fontSize: 15 }}
                 >
-                    {'Outbound from'}
+                    Outbound from
                 </Typography>
             </Box>
             {expression?.length === 0 ? (<Box
