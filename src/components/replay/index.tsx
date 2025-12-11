@@ -44,7 +44,7 @@ const inputStyle = {
     },
 };
 
-export const SelectField = ({ label, value, onChange, options = [], setValue }: any) => (
+export const SelectField = ({ label, value, onChange, options = [], setValue, placeholder, width = '94px' }: any) => (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
         <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
             <Typography
@@ -63,12 +63,13 @@ export const SelectField = ({ label, value, onChange, options = [], setValue }: 
                     displayEmpty
                     renderValue={(selected) => {
                         if (selected === '') {
-                            return <span style={{ color: darkColors.textSecondary, fontSize: 15 }}>{'Select  '}</span>;
+                            return <span style={{ color: darkColors.textSecondary, fontSize: 15 }}>{`${placeholder} `}</span>;
                         }
                         return <span style={{ color: darkColors.textPrimary }}>{selected}</span>;
                     }}
                     sx={{
                         ...inputStyle,
+                        maxWidth: `${width} !important`,
                         '& .MuiSelect-select': {
                             p: '4px 4px 4px 4px',
                             display: 'flex',
@@ -130,11 +131,23 @@ export const SelectField = ({ label, value, onChange, options = [], setValue }: 
         }
     </Box>
 );
+// ------------------------------------------
+
 
 export const DateTimeMuiField = ({ label, type, value, onChange }: any) => {
+    // 1. Determine the Picker Component
     const PickerComponent = type === 'date' ? DatePicker : TimePicker;
+
+    // 2. Define placeholder and minWidth based on the format
     const placeholderValue = type === 'date' ? '0000-00-00' : '00:00:00';
-    const minWidth = type === 'date' ? 126 : 110;
+    const minWidth = type === 'date' ? 120 : 110;
+
+    // 3. Set the format string
+    const format = type === 'date' ? 'YYYY-MM-DD' : 'HH:mm:ss';
+
+    // 4. Set the views for TimePicker to include seconds
+    // This is the key change for hh:mm:ss selection
+    const timeViews = ['hours', 'minutes', 'seconds'];
 
     const customInputProps = {
         sx: {
@@ -167,8 +180,13 @@ export const DateTimeMuiField = ({ label, type, value, onChange }: any) => {
                 boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)',
             },
 
+            // Targeting the Digital Clock component for custom dark mode styling
             '& .MuiMultiSectionDigitalClock-root': {
                 backgroundColor: darkColors.tableFill1,
+
+                '& .MuiDigitalClockSection-separator': { // Separator for hh:mm:ss
+                    color: darkColors.textPrimary,
+                },
 
                 '& .MuiButtonBase-root': {
                     color: darkColors.textPrimary,
@@ -209,9 +227,14 @@ export const DateTimeMuiField = ({ label, type, value, onChange }: any) => {
             </Box>
 
             <PickerComponent
-                value={dayjs(value, type === 'date' ? 'YYYY-MM-DD' : 'HH:mm:ss')}
+                // Pass the views array only to the TimePicker component
+                {...(type === 'time' && { views: timeViews })}
+
+                value={dayjs(value, format)}
+                format={format} // Ensure the display format is also HH:mm:ss
+
                 onChange={(newValue) => {
-                    const formattedValue = newValue ? newValue.format(type === 'date' ? 'YYYY-MM-DD' : 'HH:mm:ss') : placeholderValue;
+                    const formattedValue = newValue ? newValue.format(format) : placeholderValue;
                     onChange({ target: { value: formattedValue } });
                 }}
                 slotProps={{
