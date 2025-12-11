@@ -386,12 +386,12 @@ export default function Page({ params }: Props) {
                                             <Grid item xs={12} sm={3.2}>
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
-                                                        <InventoryIcon sx={{ color: darkColors.textPrimary, fontSize: 18 }} />
+                                                        <InventoryIcon sx={{ color: darkColors.textPrimary, fontSize: 16 }} />
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>HEAD </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{head || '-'}</Typography>
                                                     </Box>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
-                                                        <InventoryIcon sx={{ color: darkColors.textPrimary, fontSize: 18 }} />
+                                                        <InventoryIcon sx={{ color: darkColors.textPrimary, fontSize: 16 }} />
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>Channel Number </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{channel || '-'}</Typography>
                                                     </Box>
