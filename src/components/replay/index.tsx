@@ -1,7 +1,7 @@
 import {
     Box, Typography, FormControl, Select, MenuItem, TextField, IconButton, InputAdornment, Button,
 } from "@mui/material";
-import { DatePicker, TimePicker } from "@mui/x-date-pickers";
+import { TimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import {
     KeyboardArrowDown as SelectIcon,
@@ -235,8 +235,7 @@ export const DateTimeMuiField = ({ label, type = 'time', value, onChange }: any)
             {value ? (
                 <TimePicker
                     // FIX: Set closeOnSelect to false to prevent the popper from closing on value change
-                    closeOnSelect={true}
-
+                    closeOnSelect
                     views={timeViews}
                     value={dayjs(value, format)}
                     format={format}
