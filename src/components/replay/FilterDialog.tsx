@@ -85,7 +85,7 @@ export const FilterDialog = ({
                                             lineHeight: '22.50px',
                                         }}
                                     >
-                                        {'typing |'}
+                                        typing |
                                     </Typography>
                                 </Box>
                             ),
