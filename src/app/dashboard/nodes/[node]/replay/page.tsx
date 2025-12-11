@@ -96,6 +96,7 @@ export default function Page({ params }: Props) {
     const [dialogExpression, setDialogExpression] = React.useState('');
     const [filterError, setFilterError] = React.useState('');
     const [outboundExpression, setOutboundExpression] = React.useState('');
+    const [replaying, setReplaying] = React.useState(false);
 
     // --- END Filter Dialog State Management ---
 
@@ -168,7 +169,10 @@ export default function Page({ params }: Props) {
         file && file !== '' &&
         date && date !== '0000-00-00' &&
         startTime && startTime !== '00:00:00' &&
-        endTime && endTime !== '00:00:00'
+        endTime && endTime !== '00:00:00' &&
+        head && head !== '' &&
+        channel && channel !== '' &&
+        outboundExpression && outboundExpression !== ''
     ), [logType, file, date, startTime, endTime]);
 
 
@@ -440,7 +444,49 @@ export default function Page({ params }: Props) {
                                                             }}
                                                             onClick={() => handleReplay()}
                                                         >Replay</Button>
-                                                        <AddReplayDialog open={replayDialogOpen} onConfirm={() => { }} onClose={() => { setReplayDialogOpen(false) }} />
+                                                        <AddReplayDialog
+                                                            replaying={replaying}
+                                                            open={replayDialogOpen} onConfirm={async () => {
+                                                                setReplaying(true);
+                                                                const replayData = {
+                                                                    name: file,
+                                                                    date: date.replaceAll('-', ''),
+                                                                    start_hhmmss: startTime.replaceAll(':', ''),
+                                                                    end_hhmmss: endTime.replaceAll(':', ''),
+                                                                    throw_to: outboundExpression,
+                                                                    head,
+                                                                    speed: currentSpeed,
+                                                                }
+                                                                const BASE_URL = 'http://141.164.63.141/apik/prod1/replay';
+
+                                                                const params = new URLSearchParams(replayData).toString();
+                                                                const fullUrl = `${BASE_URL}?${params}`;
+
+
+                                                                try {
+                                                                    const response = await fetch(fullUrl, {
+                                                                        method: 'GET',
+                                                                        headers: {
+                                                                            'accept': 'application/json',
+                                                                        },
+                                                                    });
+
+                                                                    if (!response.ok) {
+                                                                        throw new Error(`HTTP error! status: ${response.status}`);
+                                                                    }
+
+                                                                    const data = await response.json();
+                                                                    console.log('Replay request successful:', data);
+
+                                                                    setReplayDialogOpen(false);
+
+                                                                } catch (error) {
+                                                                    console.error('Failed to initiate replay request:', error);
+
+                                                                } finally {
+                                                                    setReplaying(false);
+                                                                }
+                                                            }} onClose={() => { setReplayDialogOpen(false) }} />
                                                     </Box>
                                                 </Grid>
                                             </Grid>
