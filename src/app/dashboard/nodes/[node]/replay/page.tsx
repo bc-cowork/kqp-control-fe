@@ -50,7 +50,7 @@ type Props = { params: { node: string } };
 
 const panelStyle = {
     p: 1.5,
-    borderRadius: 2,
+    borderRadius: '8px',
     display: 'flex',
     flexDirection: 'column',
     gap: 1,
@@ -280,7 +280,7 @@ export default function Page({ params }: Props) {
                                     <Box
                                         sx={{
                                             height: 189,
-                                            borderRadius: 2,
+                                            borderRadius: '8px',
                                             border: `1px solid ${darkColors.border}`,
                                             p: 2,
                                             display: 'flex',
@@ -338,7 +338,7 @@ export default function Page({ params }: Props) {
                                     sx={{
                                         flex: '1 1 0',
                                         backgroundColor: darkColors.black,
-                                        borderRadius: 3,
+                                        borderRadius: '12px',
                                         boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.05)',
                                         display: 'flex',
                                         flexDirection: 'column',
@@ -355,7 +355,7 @@ export default function Page({ params }: Props) {
                                             gap: 1.5,
                                         }}
                                     >
-                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, }}>
                                             <AuditLogIcon />
                                             <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>
                                                 Audit Log
