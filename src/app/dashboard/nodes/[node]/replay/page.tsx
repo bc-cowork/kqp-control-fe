@@ -42,11 +42,12 @@ import { FilterDialog } from 'src/components/replay/FilterDialog'; // Ensure thi
 import { AddReplayDialog } from 'src/components/replay/AddReplayDialog';
 import { FilterInputBar } from 'src/components/replay/FilterInputBar';
 import { SpeedInputFilter } from 'src/components/replay/SpeedInputFilter';
-import Gear from "./../../../../../../public/assets/icons/settings/gear.svg";
-import Time from "./../../../../../../public/assets/icons/custom/time.svg";
-import Archive from "./../../../../../../public/assets/icons/custom/archive.svg";
-import Calendar from "./../../../../../../public/assets/icons/custom/calendar.svg";
-import AuditLogIcon from "./../../../../../../public/assets/icons/custom/audit-log.svg";
+
+const Gear = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/settings/gear.svg`} alt="gear" {...props} />;
+const Time = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/custom/time.svg`} alt="time" {...props} />;
+const Archive = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/custom/archive.svg`} alt="archive" {...props} />;
+const Calendar = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/custom/calendar.svg`} alt="calendar" {...props} />;
+const AuditLogIcon = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/custom/audit-log.svg`} alt="audit-log" {...props} />;
 
 // --- TYPE DEFINITIONS (from original code) ---
 type Props = { params: { node: string } };
