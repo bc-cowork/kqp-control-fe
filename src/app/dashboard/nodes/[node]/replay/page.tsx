@@ -16,14 +16,16 @@ import {
     Grid,
     Stack,
 } from '@mui/material';
+import Gear from "./../../../../../../public/assets/icons/settings/gear.svg";
+import Time from "./../../../../../../public/assets/icons/custom/time.svg";
+import Archive from "./../../../../../../public/assets/icons/custom/archive.svg";
+import Calendar from "./../../../../../../public/assets/icons/custom/calendar.svg";
+import AuditLogIcon from "./../../../../../../public/assets/icons/custom/audit-log.svg";
+
+
 import {
-    Schedule as TimeIcon,
-    Event as DateIcon,
-    Settings as SetttingsIcon,
-    ZoomIn as ZoomInIcon,
     ChevronRight as ChevronRightIcon,
     ErrorOutline as ErrorOutlineIcon,
-    Inventory2Outlined as InventoryIcon,
     PlayArrowOutlined,
 } from '@mui/icons-material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -210,7 +212,8 @@ export default function Page({ params }: Props) {
                                 <Grid item xs={12} md={8}>
                                     <TableContainer
                                         sx={{
-                                            borderRadius: '8px'
+                                            borderRadius: '8px',
+                                            height: 174,
                                         }}
                                     >
                                         <Table size="small"
@@ -286,7 +289,7 @@ export default function Page({ params }: Props) {
                                         }}
                                     >
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                            <SetttingsIcon sx={{ fontSize: 20, color: darkColors.textPrimary }} />
+                                            <Gear />
                                             <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>
                                                 Tool
                                             </Typography>
@@ -353,7 +356,7 @@ export default function Page({ params }: Props) {
                                         }}
                                     >
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                            <ZoomInIcon sx={{ fontSize: 20, color: darkColors.textPrimary }} />
+                                            <AuditLogIcon />
                                             <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>
                                                 Audit Log
                                             </Typography>
@@ -367,7 +370,7 @@ export default function Page({ params }: Props) {
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 900, fontSize: '20px' }}>{logType || '-'}{' : '}{file || '-'}</Typography>
                                                     </Box>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', px: 1 }}>
-                                                        <DateIcon sx={{ color: darkColors.textPrimary, fontSize: 18 }} />
+                                                        <Calendar />
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>Date </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{date || '0000-00-00'}</Typography>
                                                     </Box>
@@ -376,12 +379,12 @@ export default function Page({ params }: Props) {
                                             <Grid item xs={12} sm={2.5}>
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
-                                                        <TimeIcon sx={{ color: darkColors.textPrimary, fontSize: 18 }} />
+                                                        <Time />
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>Start Time </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{startTime || '00:00:00'}</Typography>
                                                     </Box>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
-                                                        <TimeIcon sx={{ color: darkColors.textPrimary, fontSize: 18 }} />
+                                                        <Time />
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>End Time </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{endTime || '00:00:00'}</Typography>
                                                     </Box>
@@ -390,12 +393,12 @@ export default function Page({ params }: Props) {
                                             <Grid item xs={12} sm={3.2}>
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
-                                                        <InventoryIcon sx={{ color: darkColors.textPrimary, fontSize: 16 }} />
+                                                        <Archive />
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>HEAD </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{head || '-'}</Typography>
                                                     </Box>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
-                                                        <InventoryIcon sx={{ color: darkColors.textPrimary, fontSize: 16 }} />
+                                                        <Archive />
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>Channel Number </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{channel || '-'}</Typography>
                                                     </Box>
