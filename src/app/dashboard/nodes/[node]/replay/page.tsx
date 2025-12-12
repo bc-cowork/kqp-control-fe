@@ -16,11 +16,9 @@ import {
     Grid,
     Stack,
 } from '@mui/material';
-import Gear from "./../../../../../../public/assets/icons/settings/gear.svg";
-import Time from "./../../../../../../public/assets/icons/custom/time.svg";
-import Archive from "./../../../../../../public/assets/icons/custom/archive.svg";
-import Calendar from "./../../../../../../public/assets/icons/custom/calendar.svg";
-import AuditLogIcon from "./../../../../../../public/assets/icons/custom/audit-log.svg";
+import { CONFIG } from 'src/config-global';
+
+
 
 
 import {
@@ -44,7 +42,11 @@ import { FilterDialog } from 'src/components/replay/FilterDialog'; // Ensure thi
 import { AddReplayDialog } from 'src/components/replay/AddReplayDialog';
 import { FilterInputBar } from 'src/components/replay/FilterInputBar';
 import { SpeedInputFilter } from 'src/components/replay/SpeedInputFilter';
-import { CONFIG } from 'src/config-global';
+import Gear from "./../../../../../../public/assets/icons/settings/gear.svg";
+import Time from "./../../../../../../public/assets/icons/custom/time.svg";
+import Archive from "./../../../../../../public/assets/icons/custom/archive.svg";
+import Calendar from "./../../../../../../public/assets/icons/custom/calendar.svg";
+import AuditLogIcon from "./../../../../../../public/assets/icons/custom/audit-log.svg";
 
 // --- TYPE DEFINITIONS (from original code) ---
 type Props = { params: { node: string } };
@@ -632,7 +634,7 @@ export default function Page({ params }: Props) {
 };
 
 // --- CustomDialog Component (remains the same) ---
-export const CustomDialog = ({ open, handleClose, pid }: {
+const CustomDialog = ({ open, handleClose, pid }: {
     open: boolean;
     handleClose: () => void;
     pid: string | number;
@@ -651,7 +653,7 @@ export const CustomDialog = ({ open, handleClose, pid }: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    pid: pid,
+                    pid,
                 }),
             });
 
