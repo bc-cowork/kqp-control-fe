@@ -16,14 +16,14 @@ import {
     Grid,
     Stack,
 } from '@mui/material';
+import { CONFIG } from 'src/config-global';
+
+
+
+
 import {
-    Schedule as TimeIcon,
-    Event as DateIcon,
-    Settings as SetttingsIcon,
-    ZoomIn as ZoomInIcon,
     ChevronRight as ChevronRightIcon,
     ErrorOutline as ErrorOutlineIcon,
-    Inventory2Outlined as InventoryIcon,
     PlayArrowOutlined,
 } from '@mui/icons-material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -41,14 +41,20 @@ import { CustomTextField, darkColors, DateTimeMuiField, SelectField, WideTextFie
 import { FilterDialog } from 'src/components/replay/FilterDialog'; // Ensure this is the updated version
 import { AddReplayDialog } from 'src/components/replay/AddReplayDialog';
 import { FilterInputBar } from 'src/components/replay/FilterInputBar';
-import { SpeedSelectFilter } from 'src/components/replay/SpeedFilterButton';
+import { SpeedInputFilter } from 'src/components/replay/SpeedInputFilter';
+
+const Gear = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/settings/gear.svg`} alt="gear" {...props} />;
+const Time = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/custom/time.svg`} alt="time" {...props} />;
+const Archive = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/custom/archive.svg`} alt="archive" {...props} />;
+const Calendar = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/custom/calendar.svg`} alt="calendar" {...props} />;
+const AuditLogIcon = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/custom/audit-log.svg`} alt="audit-log" {...props} />;
 
 // --- TYPE DEFINITIONS (from original code) ---
 type Props = { params: { node: string } };
 
 const panelStyle = {
     p: 1.5,
-    borderRadius: 2,
+    borderRadius: '8px',
     display: 'flex',
     flexDirection: 'column',
     gap: 1,
@@ -210,7 +216,8 @@ export default function Page({ params }: Props) {
                                 <Grid item xs={12} md={8}>
                                     <TableContainer
                                         sx={{
-                                            borderRadius: '8px'
+                                            borderRadius: '8px',
+                                            height: 174,
                                         }}
                                     >
                                         <Table size="small"
@@ -277,7 +284,7 @@ export default function Page({ params }: Props) {
                                     <Box
                                         sx={{
                                             height: 189,
-                                            borderRadius: 2,
+                                            borderRadius: '8px',
                                             border: `1px solid ${darkColors.border}`,
                                             p: 2,
                                             display: 'flex',
@@ -286,7 +293,7 @@ export default function Page({ params }: Props) {
                                         }}
                                     >
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                            <SetttingsIcon sx={{ fontSize: 20, color: darkColors.textPrimary }} />
+                                            <Gear />
                                             <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>
                                                 Tool
                                             </Typography>
@@ -335,7 +342,7 @@ export default function Page({ params }: Props) {
                                     sx={{
                                         flex: '1 1 0',
                                         backgroundColor: darkColors.black,
-                                        borderRadius: 3,
+                                        borderRadius: '12px',
                                         boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.05)',
                                         display: 'flex',
                                         flexDirection: 'column',
@@ -352,8 +359,8 @@ export default function Page({ params }: Props) {
                                             gap: 1.5,
                                         }}
                                     >
-                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                            <ZoomInIcon sx={{ fontSize: 20, color: darkColors.textPrimary }} />
+                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, }}>
+                                            <AuditLogIcon />
                                             <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>
                                                 Audit Log
                                             </Typography>
@@ -367,7 +374,7 @@ export default function Page({ params }: Props) {
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 900, fontSize: '20px' }}>{logType || '-'}{' : '}{file || '-'}</Typography>
                                                     </Box>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', px: 1 }}>
-                                                        <DateIcon sx={{ color: darkColors.textPrimary, fontSize: 18 }} />
+                                                        <Calendar />
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>Date </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{date || '0000-00-00'}</Typography>
                                                     </Box>
@@ -376,12 +383,12 @@ export default function Page({ params }: Props) {
                                             <Grid item xs={12} sm={2.5}>
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
-                                                        <TimeIcon sx={{ color: darkColors.textPrimary, fontSize: 18 }} />
+                                                        <Time />
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>Start Time </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{startTime || '00:00:00'}</Typography>
                                                     </Box>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
-                                                        <TimeIcon sx={{ color: darkColors.textPrimary, fontSize: 18 }} />
+                                                        <Time />
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>End Time </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{endTime || '00:00:00'}</Typography>
                                                     </Box>
@@ -390,12 +397,12 @@ export default function Page({ params }: Props) {
                                             <Grid item xs={12} sm={3.2}>
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
-                                                        <InventoryIcon sx={{ color: darkColors.textPrimary, fontSize: 16 }} />
+                                                        <Archive />
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>HEAD </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{head || '-'}</Typography>
                                                     </Box>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
-                                                        <InventoryIcon sx={{ color: darkColors.textPrimary, fontSize: 16 }} />
+                                                        <Archive />
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>Channel Number </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{channel || '-'}</Typography>
                                                     </Box>
@@ -457,7 +464,7 @@ export default function Page({ params }: Props) {
                                                                     head,
                                                                     speed: currentSpeed,
                                                                 }
-                                                                const BASE_URL = 'http://141.164.63.141/apik/prod1/replay';
+                                                                const BASE_URL = `${CONFIG.serverUrl}/apik/prod1/replay`;
 
                                                                 const paramsLocal = new URLSearchParams(replayData).toString();
                                                                 const fullUrl = `${BASE_URL}?${paramsLocal}`;
@@ -606,7 +613,7 @@ export default function Page({ params }: Props) {
                                                         expression={outboundExpression}
                                                         setExpression={setOutboundExpression}
                                                     />
-                                                    <SpeedSelectFilter
+                                                    <SpeedInputFilter
                                                         currentSpeed={currentSpeed}
                                                         setCurrentSpeed={setCurrentSpeed}
                                                     />
@@ -628,145 +635,202 @@ export default function Page({ params }: Props) {
 };
 
 // --- CustomDialog Component (remains the same) ---
-const CustomDialog = ({ open, handleClose, pid }: any) =>
-(
-    <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="custom-dialog-title"
-        PaperProps={{
-            style: {
-                backgroundColor: '#0A0E15',
-                borderRadius: 8,
-                border: '1px solid #4E576A',
-                color: '#F0F1F5',
-                minWidth: '400px',
-                minHeight: '220px',
-            },
-        }}
-    >
-        <DialogTitle
-            id="custom-dialog-title"
-            sx={{
-                padding: '12px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-            }}
-        >
-            <ErrorOutlineIcon />
-            <Typography
-                variant="subtitle1"
-                fontWeight="400"
-                lineHeight="22.50px"
-                sx={{ color: 'inherit' }}
-            >
-                팝업 메세지
-            </Typography>
-        </DialogTitle>
+const CustomDialog = ({ open, handleClose, pid }: {
+    open: boolean;
+    handleClose: () => void;
+    pid: string | number;
+}) => {
+    const [isTerminating, setIsTerminating] = React.useState(false);
 
-        <DialogContent
-            sx={{
-                margin: '0 12px',
-                background: '#161C25',
-                borderRadius: '8px',
-                border: '1px solid #4E576A',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                gap: '8px',
+    const handleTerminate = async () => {
+        setIsTerminating(true);
+        const url = `${CONFIG.serverUrl}/apik/replay/terminate`;
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    pid,
+                }),
+            });
+
+            if (!response.ok) {
+                // Handle non-2xx responses (e.g., server error)
+                const errorData = await response.json().catch(() => ({ message: 'No message available' }));
+                console.error('Termination failed:', errorData);
+                alert(`Error terminating PID ${pid}: ${errorData.message || response.statusText}`);
+                return;
+            }
+
+            // Handle successful termination
+            console.log(`PID ${pid} terminated successfully.`);
+            handleClose(); // Close the dialog on success
+
+        } catch (error) {
+            // Handle network errors
+            console.error('Network or unexpected error during termination:', error);
+            alert('A network error occurred. Please try again.');
+        } finally {
+            // Ensure the button state is reset regardless of success or failure
+            setIsTerminating(false);
+        }
+    };
+
+    return (
+        <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="custom-dialog-title"
+            PaperProps={{
+                style: {
+                    backgroundColor: '#0A0E15',
+                    borderRadius: 8,
+                    border: '1px solid #4E576A',
+                    color: '#F0F1F5',
+                    minWidth: '400px',
+                    minHeight: '220px',
+                },
             }}
         >
-            <Box
+            <DialogTitle
+                id="custom-dialog-title"
                 sx={{
-
+                    padding: '12px',
                     display: 'flex',
+                    alignItems: 'center',
                     gap: '8px',
                 }}
             >
+                <ErrorOutlineIcon />
                 <Typography
-                    variant="h6"
-                    fontWeight="600"
-                    lineHeight="25.50px"
+                    variant="subtitle1"
+                    fontWeight="400"
+                    lineHeight="22.50px"
+                    sx={{ color: 'inherit' }}
+                >
+                    팝업 메세지
+                </Typography>
+            </DialogTitle>
+
+            <DialogContent
+                sx={{
+                    margin: '0 12px',
+                    background: '#161C25',
+                    borderRadius: '8px',
+                    border: '1px solid #4E576A',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: '8px',
+                }}
+            >
+                <Box
+                    sx={{
+                        display: 'flex',
+                        gap: '8px',
+                    }}
+                >
+                    <Typography
+                        variant="h6"
+                        fontWeight="600"
+                        lineHeight="25.50px"
+                        textAlign="center"
+                        sx={{ color: 'inherit' }}
+                    >
+                        PID
+                    </Typography>
+                    <Divider orientation="vertical" flexItem sx={{ width: '1px', height: '12px', backgroundColor: '#4E576A', alignSelf: 'center' }} />
+                    <Typography
+                        variant="h6"
+                        fontWeight="600"
+                        lineHeight="25.50px"
+                        textAlign="center"
+                        sx={{ color: 'inherit' }}
+                    >
+                        {pid}
+                    </Typography>
+                </Box>
+
+                <Typography
+                    variant="body1"
+                    fontWeight="400"
+                    lineHeight="22.50px"
                     textAlign="center"
                     sx={{ color: 'inherit' }}
                 >
-                    PID
+                    종료 하시겠습니까?
                 </Typography>
-                <Divider orientation="vertical" flexItem sx={{ width: '1px', height: '12px', backgroundColor: '#4E576A', alignSelf: 'center' }} />
-                <Typography
-                    variant="h6"
-                    fontWeight="600"
-                    lineHeight="25.50px"
-                    textAlign="center"
-                    sx={{ color: 'inherit' }}
+            </DialogContent>
+
+            <DialogActions
+                sx={{
+                    padding: '20px 12px',
+                    justifyContent: 'flex-end',
+                    gap: '10px',
+                }}
+            >
+                {/* '확인' Button: Calls handleTerminate and shows loading state */}
+                <Button
+                    onClick={handleTerminate}
+                    disabled={isTerminating}
+                    sx={{
+                        padding: '4px 12px',
+                        background: '#5E66FF',
+                        borderRadius: '4px',
+                        color: 'white',
+                        fontSize: '15px',
+                        fontFamily: 'Roboto',
+                        fontWeight: '400',
+                        lineHeight: '22.50px',
+                        textTransform: 'none',
+                        '&:hover': {
+                            backgroundColor: '#4E57E5',
+                        },
+                        '&.Mui-disabled': {
+                            background: '#5E66FF80',
+                            color: 'white',
+                        }
+                    }}
                 >
-                    {pid}
-                </Typography>
-            </Box>
+                    {/* Change button text based on state */}
+                    {isTerminating ? '종료하는 중...' : '확인'}
+                </Button>
 
-            <Typography
-                variant="body1"
-                fontWeight="400"
-                lineHeight="22.50px"
-                textAlign="center"
-                sx={{ color: 'inherit' }}
-            >
-                종료 하시겠습니까?
-            </Typography>
-        </DialogContent>
-
-        <DialogActions
-            sx={{
-                padding: '20px 12px',
-                justifyContent: 'flex-end',
-                gap: '10px',
-            }}
-        >
-            <Button
-                onClick={handleClose}
-                sx={{
-                    padding: '4px 12px',
-                    background: '#5E66FF',
-                    borderRadius: '4px',
-                    color: 'white',
-                    fontSize: '15px',
-                    fontFamily: 'Roboto',
-                    fontWeight: '400',
-                    lineHeight: '22.50px',
-                    textTransform: 'none',
-                    '&:hover': {
-                        backgroundColor: '#4E57E5',
-                    },
-                }}
-            >
-                확인
-            </Button>
-
-            <Button
-                onClick={handleClose}
-                sx={{
-                    padding: '4px 12px',
-                    background: '#EFF6FF',
-                    borderRadius: '4px',
-                    border: '1px solid #DFEAFF',
-                    color: '#6B89FF',
-                    fontSize: '15px',
-                    fontFamily: 'Roboto',
-                    fontWeight: '400',
-                    lineHeight: '22.50px',
-                    textTransform: 'none',
-                    '&:hover': {
-                        backgroundColor: '#E0E8FF',
-                    },
-                }}
-            >
-                취소
-            </Button>
-        </DialogActions>
-    </Dialog>
-);
+                {/* '취소' Button: Disabled while terminating is active */}
+                <Button
+                    onClick={handleClose}
+                    disabled={isTerminating}
+                    sx={{
+                        padding: '4px 12px',
+                        background: '#EFF6FF',
+                        borderRadius: '4px',
+                        border: '1px solid #DFEAFF',
+                        color: '#6B89FF',
+                        fontSize: '15px',
+                        fontFamily: 'Roboto',
+                        fontWeight: '400',
+                        lineHeight: '22.50px',
+                        textTransform: 'none',
+                        '&:hover': {
+                            backgroundColor: '#E0E8FF',
+                        },
+                        '&.Mui-disabled': {
+                            color: '#6B89FF80',
+                            border: '1px solid #DFEAFF80',
+                        }
+                    }}
+                >
+                    취소
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
+};
 
 const getKeysFromSelectedValue = (fileTree: any, log_tree: any, selectedKey: string) => {
     const filteredValue = log_tree.filter((item: any) => item.label === selectedKey);
