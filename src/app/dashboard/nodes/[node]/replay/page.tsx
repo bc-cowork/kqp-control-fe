@@ -43,7 +43,7 @@ import { CustomTextField, darkColors, DateTimeMuiField, SelectField, WideTextFie
 import { FilterDialog } from 'src/components/replay/FilterDialog'; // Ensure this is the updated version
 import { AddReplayDialog } from 'src/components/replay/AddReplayDialog';
 import { FilterInputBar } from 'src/components/replay/FilterInputBar';
-import { SpeedSelectFilter } from 'src/components/replay/SpeedFilterButton';
+import { SpeedInputFilter } from 'src/components/replay/SpeedInputFilter';
 
 // --- TYPE DEFINITIONS (from original code) ---
 type Props = { params: { node: string } };
@@ -609,7 +609,7 @@ export default function Page({ params }: Props) {
                                                         expression={outboundExpression}
                                                         setExpression={setOutboundExpression}
                                                     />
-                                                    <SpeedSelectFilter
+                                                    <SpeedInputFilter
                                                         currentSpeed={currentSpeed}
                                                         setCurrentSpeed={setCurrentSpeed}
                                                     />
