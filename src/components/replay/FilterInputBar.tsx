@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Button, TextField, Typography, Grid } from "@mui/material"; // Ensure Grid is imported
-import { LogTag } from "./Logtag";
 import { useTranslate } from "src/locales";
+import { LogTag } from "./Logtag";
 
 const customColors = {
     backgroundField: '#202838',

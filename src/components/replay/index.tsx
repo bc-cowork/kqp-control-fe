@@ -9,8 +9,8 @@ import {
     ArrowDropUp as ArrowUpwardIcon, ArrowDropDown as ArrowDownwardIcon,
     KeyboardArrowDownOutlined as KeyboardArrowDownIcon,
 } from '@mui/icons-material';
-import { LogTag } from "./Logtag";
 import { useTranslate } from "src/locales";
+import { LogTag } from "./Logtag";
 
 export const darkColors = {
     backgroundScreen: '#161C25',

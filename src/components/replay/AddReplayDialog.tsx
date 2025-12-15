@@ -27,8 +27,6 @@ type AddReplayDialogProps = {
     open: boolean;
     onClose: () => void;
     onConfirm: () => void;
-    message?: string;
-    title?: string;
     replaying?: boolean;
 };
 
