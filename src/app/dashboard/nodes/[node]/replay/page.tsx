@@ -224,6 +224,7 @@ export default function Page({ params }: Props) {
                                         sx={{
                                             borderRadius: '8px',
                                             height: 174,
+                                            backgroundColor: '#373F4E'
                                         }}
                                     >
                                         <Table size="small"
@@ -234,6 +235,7 @@ export default function Page({ params }: Props) {
                                                     {['', t('top_table.pid'), t('top_table.command'), ''].map((header, index) => (
                                                         <TableCell
                                                             key={index}
+                                                            align='left'
                                                         >
                                                             {header}
                                                         </TableCell>
@@ -272,10 +274,16 @@ export default function Page({ params }: Props) {
                                                                     padding: '4px 8px',
                                                                 }} />
                                                         </TableCell>
-                                                        <TableCell sx={{ color: darkColors.textSecondary, fontSize: 15, p: '8px 12px', border: 'none' }}>
+                                                        <TableCell align='left' sx={{ color: darkColors.textSecondary, fontSize: 15, border: 'none' }}>
                                                             {row.pid}
                                                         </TableCell>
-                                                        <TableCell sx={{ color: darkColors.textSecondary, fontSize: 15, p: '8px 12px', border: 'none' }}>
+                                                        <TableCell sx={{
+                                                            color: darkColors.textSecondary, fontSize: 15, border: 'none',
+                                                            whiteSpace: 'nowrap',
+                                                            overflow: 'hidden',
+                                                            textOverflow: 'ellipsis',
+                                                            maxWidth: '200px',
+                                                        }}>
                                                             {row.command}
                                                         </TableCell>
                                                         <TableCell sx={{ p: '8px 12px', border: 'none' }} align="right" />
