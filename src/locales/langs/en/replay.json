@@ -1,5 +1,19 @@
 {
     "top": {
         "title": "Replay"
+    },
+    "terminate_dialog": {
+        "confirm": "confirm",
+        "terminate": "Would you like to quit?",
+        "cancel": "No",
+        "submit": "Yes",
+        "submitting": "Terminating..."
+    },
+    "replay_dialog": {
+        "confirm": "confirm",
+        "replay": "Replay?",
+        "cancel": "No",
+        "submit": "Yes",
+        "submitting": "Replaying..."
     }
 }

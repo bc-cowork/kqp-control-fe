@@ -1,5 +1,19 @@
 {
     "top": {
         "title": "재생"
+    },
+    "terminate_dialog": {
+        "confirm": "팝업 메세지",
+        "terminate": "종료 하시겠습니까?",
+        "cancel": "취소",
+        "submit": "종료",
+        "submitting": "종료하는 중..."
+    },
+    "replay_dialog": {
+        "confirm": "팝업 메세지",
+        "replay": "재생 하시겠습니까?",
+        "cancel": "No",
+        "submit": "Yes",
+        "submitting": "재생중..."
     }
 }

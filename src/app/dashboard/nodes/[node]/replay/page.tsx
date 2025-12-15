@@ -640,6 +640,7 @@ const CustomDialog = ({ open, handleClose, pid }: {
     handleClose: () => void;
     pid: string | number;
 }) => {
+    const { t } = useTranslate('replay');
     const [isTerminating, setIsTerminating] = React.useState(false);
 
     const handleTerminate = async () => {
@@ -648,7 +649,7 @@ const CustomDialog = ({ open, handleClose, pid }: {
 
         try {
             const response = await fetch(url, {
-                method: 'POST',
+                method: 'DELETE',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
@@ -712,7 +713,7 @@ const CustomDialog = ({ open, handleClose, pid }: {
                     lineHeight="22.50px"
                     sx={{ color: 'inherit' }}
                 >
-                    팝업 메세지
+                    {t('terminate_dialog.confirm')}
                 </Typography>
             </DialogTitle>
 
@@ -763,7 +764,7 @@ const CustomDialog = ({ open, handleClose, pid }: {
                     textAlign="center"
                     sx={{ color: 'inherit' }}
                 >
-                    종료 하시겠습니까?
+                    {t('terminate_dialog.terminate')}
                 </Typography>
             </DialogContent>
 
@@ -798,7 +799,7 @@ const CustomDialog = ({ open, handleClose, pid }: {
                     }}
                 >
                     {/* Change button text based on state */}
-                    {isTerminating ? '종료하는 중...' : '확인'}
+                    {isTerminating ? t('terminate_dialog.submitting') : t('terminate_dialog.submit')}
                 </Button>
 
                 {/* '취소' Button: Disabled while terminating is active */}
@@ -825,7 +826,7 @@ const CustomDialog = ({ open, handleClose, pid }: {
                         }
                     }}
                 >
-                    취소
+                    {t('terminate_dialog.cancel')}
                 </Button>
             </DialogActions>
         </Dialog>
