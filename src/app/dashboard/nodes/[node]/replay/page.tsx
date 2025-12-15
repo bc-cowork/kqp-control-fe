@@ -374,13 +374,13 @@ export default function Page({ params }: Props) {
                                         </Box>
 
                                         <Grid container spacing={2} sx={{ mt: 1.5 }}>
-                                            <Grid item xs={12} sm={6} md={5} lg={2.5}>
+                                            <Grid item xs={12} sm={6} md={6} lg={2.5}>
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, }}>
 
-                                                    <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', px: 1 }}>
+                                                    <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', }}>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 900, fontSize: '20px' }}>{logType || '-'}{' : '}{file || '-'}</Typography>
                                                     </Box>
-                                                    <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', px: 1 }}>
+                                                    <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', }}>
                                                         <Calendar />
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{t('audit_log.date')} </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{date || '0000-00-00'}</Typography>
@@ -401,7 +401,7 @@ export default function Page({ params }: Props) {
                                                     </Box>
                                                 </Box>
                                             </Grid>
-                                            <Grid item xs={12} sm={6} md={5} lg={3.2}>
+                                            <Grid item xs={12} sm={6} md={6} lg={3.2}>
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
                                                         <Archive />
@@ -416,7 +416,7 @@ export default function Page({ params }: Props) {
                                                 </Box>
                                             </Grid>
 
-                                            <Grid item xs={12} sm={6} md={7} lg={3.7}>
+                                            <Grid item xs={12} sm={6} md={6} lg={3.7}>
                                                 <Grid sx={{
                                                     display: 'flex',
                                                     direction: 'row',
@@ -441,7 +441,7 @@ export default function Page({ params }: Props) {
                                                         display: {
                                                             xs: 'none',
                                                             sm: 'none',
-                                                            md: 'inline-block',
+                                                            md: 'none',
                                                             lg: 'inline-block',
                                                         }
                                                     }}>
@@ -511,80 +511,37 @@ export default function Page({ params }: Props) {
                                                     </Box>
                                                 </Grid>
                                             </Grid>
-                                            <Grid item xs={12} sm={6} md={7} lg={3.7}>
-                                                <Box sx={{
-                                                    alignSelf: 'flex-end',
+                                            <Grid
+                                                item
+                                                xs={12}
+                                                sx={{
+                                                    textAlign: 'right',
                                                     display: {
-                                                        xs: 'inline-block',
-                                                        sm: 'inline-block',
-                                                        md: 'none',
+                                                        xs: 'block',
                                                         lg: 'none',
-                                                    }
-
-                                                }}>
-                                                    <Button
-                                                        // Conditional Activation
-                                                        disabled={!canReplay}
-                                                        endIcon={<ChevronRightIcon sx={{ fontSize: 24 }} />}
-                                                        sx={{
-                                                            color: canReplay ? darkColors.textPrimary : darkColors.textDisabled,
-                                                            backgroundColor: canReplay ? '#5E66FF' : 'transparent',
-                                                            fontSize: 17,
-                                                            py: 1,
-                                                            px: 2,
-                                                            '&.Mui-disabled': {
-                                                                color: darkColors.textDisabled,
-                                                            },
-                                                            "&:hover": {
-                                                                backgroundColor: canReplay ? '#4E57E5' : 'transparent',
-                                                            }
-                                                        }}
-                                                        onClick={() => handleReplay()}
-                                                    >{t('audit_log.replay')}</Button>
-                                                    <AddReplayDialog
-                                                        replaying={replaying}
-                                                        open={replayDialogOpen} onConfirm={async () => {
-                                                            setReplaying(true);
-                                                            const replayData = {
-                                                                name: file,
-                                                                date: date.replaceAll('-', ''),
-                                                                start_hhmmss: startTime.replaceAll(':', ''),
-                                                                end_hhmmss: endTime.replaceAll(':', ''),
-                                                                throw_to: outboundExpression,
-                                                                head,
-                                                                speed: currentSpeed,
-                                                            }
-                                                            const BASE_URL = `${CONFIG.serverUrl}/apik/prod1/replay`;
-
-                                                            const paramsLocal = new URLSearchParams(replayData).toString();
-                                                            const fullUrl = `${BASE_URL}?${paramsLocal}`;
-
-
-                                                            try {
-                                                                const response = await fetch(fullUrl, {
-                                                                    method: 'GET',
-                                                                    headers: {
-                                                                        'accept': 'application/json',
-                                                                    },
-                                                                });
-
-                                                                if (!response.ok) {
-                                                                    throw new Error(`HTTP error! status: ${response.status}`);
-                                                                }
-
-                                                                const replayRespData = await response.json();
-                                                                console.log('Replay request successful:', replayRespData);
-
-                                                                setReplayDialogOpen(false);
-
-                                                            } catch (e) {
-                                                                console.error('Failed to initiate replay request:', e);
-
-                                                            } finally {
-                                                                setReplaying(false);
-                                                            }
-                                                        }} onClose={() => { setReplayDialogOpen(false) }} />
-                                                </Box>
+                                                    },
+                                                    width: '100%',
+                                                }}
+                                            >
+                                                <Button
+                                                    // Conditional Activation
+                                                    disabled={!canReplay}
+                                                    endIcon={<ChevronRightIcon sx={{ fontSize: 24 }} />}
+                                                    sx={{
+                                                        color: canReplay ? darkColors.textPrimary : darkColors.textDisabled,
+                                                        backgroundColor: canReplay ? '#5E66FF' : 'transparent',
+                                                        fontSize: 17,
+                                                        py: 1,
+                                                        px: 2,
+                                                        '&.Mui-disabled': {
+                                                            color: darkColors.textDisabled,
+                                                        },
+                                                        "&:hover": {
+                                                            backgroundColor: canReplay ? '#4E57E5' : 'transparent',
+                                                        }
+                                                    }}
+                                                    onClick={() => handleReplay()}
+                                                >{t('audit_log.replay')}</Button>
                                             </Grid>
                                         </Grid>
                                     </Box>
@@ -596,7 +553,7 @@ export default function Page({ params }: Props) {
                                             </Typography>
                                         </Box>
                                         <Grid container spacing={1} sx={{ width: '100%' }}>
-                                            <Grid item xs={12} sm={6} md={5.9} lg={2.5}>
+                                            <Grid item xs={12} sm={6} md={3} lg={2.5}>
                                                 <Box sx={{ ...panelStyle }}>
                                                     <SelectField
                                                         label={t('audit_log.log_type')}
@@ -617,7 +574,7 @@ export default function Page({ params }: Props) {
                                                 </Box>
                                             </Grid>
 
-                                            <Grid item xs={12} sm={6} md={5.9} lg={2.5}>
+                                            <Grid item xs={12} sm={6} md={3} lg={2.5}>
                                                 <Box sx={{ ...panelStyle }}>
                                                     <SelectField
                                                         label={t('audit_log.date')}
@@ -643,7 +600,7 @@ export default function Page({ params }: Props) {
                                                 </Box>
                                             </Grid>
 
-                                            <Grid item xs={12} sm={6} md={5.9} lg={3.2}>
+                                            <Grid item xs={12} sm={6} md={3} lg={3.2}>
                                                 <Box sx={{ ...panelStyle }}>
 
                                                     <WideTextField
@@ -696,7 +653,7 @@ export default function Page({ params }: Props) {
                                                     )}
                                                 </Box>
                                             </Grid>
-                                            <Grid item xs={12} sm={6} md={5.9} lg={3.7}>
+                                            <Grid item xs={12} sm={6} md={3} lg={3.7}>
                                                 <Box sx={{ ...panelStyle }}>
                                                     <FilterInputBar
                                                         expression={outboundExpression}
