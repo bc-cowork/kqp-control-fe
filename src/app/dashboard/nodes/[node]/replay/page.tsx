@@ -194,8 +194,9 @@ export default function Page({ params }: Props) {
     }, [logType]);
 
     return (
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DashboardContent maxWidth="xl">
+        <DashboardContent maxWidth="xl">
+
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
 
                 <Breadcrumb node={node} pages={[{ pageName: t('top.title') }]} />
                 <Stack direction="row" alignItems="baseline" justifyContent="space-between">
@@ -210,14 +211,20 @@ export default function Page({ params }: Props) {
                         <Box>
                             <Grid container alignItems="baseline"
                                 sx={{
-                                    marginBottom: 2
+                                    marginBottom: 2,
                                 }}
                                 spacing={3}>
-                                <Grid item xs={12} md={8}>
+                                <Grid item xs={12} lg={8}
+                                    order={{
+                                        xs: 1,
+                                        lg: 0
+                                    }}
+                                >
                                     <TableContainer
                                         sx={{
                                             borderRadius: '8px',
                                             height: 174,
+                                            backgroundColor: '#373F4E'
                                         }}
                                     >
                                         <Table size="small"
@@ -225,9 +232,10 @@ export default function Page({ params }: Props) {
                                         >
                                             <TableHead >
                                                 <TableRow>
-                                                    {['', 'PID', 'Command', ''].map((header, index) => (
+                                                    {['', t('top_table.pid'), t('top_table.command'), ''].map((header, index) => (
                                                         <TableCell
                                                             key={index}
+                                                            align='left'
                                                         >
                                                             {header}
                                                         </TableCell>
@@ -266,10 +274,16 @@ export default function Page({ params }: Props) {
                                                                     padding: '4px 8px',
                                                                 }} />
                                                         </TableCell>
-                                                        <TableCell sx={{ color: darkColors.textSecondary, fontSize: 15, p: '8px 12px', border: 'none' }}>
+                                                        <TableCell align='left' sx={{ color: darkColors.textSecondary, fontSize: 15, border: 'none' }}>
                                                             {row.pid}
                                                         </TableCell>
-                                                        <TableCell sx={{ color: darkColors.textSecondary, fontSize: 15, p: '8px 12px', border: 'none' }}>
+                                                        <TableCell sx={{
+                                                            color: darkColors.textSecondary, fontSize: 15, border: 'none',
+                                                            whiteSpace: 'nowrap',
+                                                            overflow: 'hidden',
+                                                            textOverflow: 'ellipsis',
+                                                            maxWidth: '200px',
+                                                        }}>
                                                             {row.command}
                                                         </TableCell>
                                                         <TableCell sx={{ p: '8px 12px', border: 'none' }} align="right" />
@@ -280,7 +294,7 @@ export default function Page({ params }: Props) {
                                     </TableContainer>
                                 </Grid>
 
-                                <Grid item xs={12} md={4}>
+                                <Grid item lg={4} xs={12} sm={8} md={6}>
                                     <Box
                                         sx={{
                                             height: 189,
@@ -295,7 +309,7 @@ export default function Page({ params }: Props) {
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                             <Gear />
                                             <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>
-                                                Tool
+                                                {t('tool_box.tool')}
                                             </Typography>
                                         </Box>
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -318,7 +332,8 @@ export default function Page({ params }: Props) {
                                                 }}
                                                 onClick={() => setKillDialogOpen(true)}
                                             >
-                                                Kill
+                                                {t('tool_box.kill')}
+
                                             </Button>
                                             <CustomDialog
                                                 open={killDialogOpen}
@@ -362,54 +377,54 @@ export default function Page({ params }: Props) {
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, }}>
                                             <AuditLogIcon />
                                             <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>
-                                                Audit Log
+                                                {t('audit_log.title')}
                                             </Typography>
                                         </Box>
 
                                         <Grid container spacing={2} sx={{ mt: 1.5 }}>
-                                            <Grid item xs={12} sm={2.5}>
+                                            <Grid item xs={12} sm={6} md={6} lg={2.5}>
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, }}>
 
-                                                    <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', px: 1 }}>
+                                                    <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', }}>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 900, fontSize: '20px' }}>{logType || '-'}{' : '}{file || '-'}</Typography>
                                                     </Box>
-                                                    <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', px: 1 }}>
+                                                    <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', }}>
                                                         <Calendar />
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>Date </Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{t('audit_log.date')} </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{date || '0000-00-00'}</Typography>
                                                     </Box>
                                                 </Box>
                                             </Grid>
-                                            <Grid item xs={12} sm={2.5}>
+                                            <Grid item xs={12} sm={6} md={5} lg={2.5}>
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
                                                         <Time />
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>Start Time </Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{t('audit_log.start_time')} </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{startTime || '00:00:00'}</Typography>
                                                     </Box>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
                                                         <Time />
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>End Time </Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{t('audit_log.end_time')} </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{endTime || '00:00:00'}</Typography>
                                                     </Box>
                                                 </Box>
                                             </Grid>
-                                            <Grid item xs={12} sm={3.2}>
+                                            <Grid item xs={12} sm={6} md={6} lg={3.2}>
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
                                                         <Archive />
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>HEAD </Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{t('audit_log.head')} </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{head || '-'}</Typography>
                                                     </Box>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
                                                         <Archive />
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>Channel Number </Typography>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{t('audit_log.channel_number')} </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{channel || '-'}</Typography>
                                                     </Box>
                                                 </Box>
                                             </Grid>
 
-                                            <Grid item xs={12} sm={3.7}>
+                                            <Grid item xs={12} sm={6} md={6} lg={3.7}>
                                                 <Grid sx={{
                                                     display: 'flex',
                                                     direction: 'row',
@@ -420,17 +435,23 @@ export default function Page({ params }: Props) {
                                                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                 <path d="M8.00019 1.33337C5.28495 1.33337 3.23828 2.35718 3.23828 3.71433L3.23828 12.2858C3.23828 13.6429 5.28495 14.6667 8.00019 14.6667C10.7154 14.6667 12.7621 13.6429 12.7621 12.2858L12.7621 3.71433C12.7621 2.35718 10.7154 1.33337 8.00019 1.33337ZM8.00019 2.28576C10.3249 2.28576 11.8097 3.13147 11.8097 3.71433C11.8097 4.29718 10.3249 5.1429 8.00019 5.1429C5.67542 5.1429 4.19066 4.29718 4.19066 3.71433C4.19066 3.13147 5.67447 2.28576 8.00019 2.28576ZM8.00019 13.7143C5.67447 13.7143 4.19066 12.8677 4.19066 12.2858L4.19066 5.1629C5.34671 5.82788 6.6677 6.15119 8.00019 6.09528C9.33267 6.15119 10.6537 5.82788 11.8097 5.1629L11.8097 12.2858C11.8097 12.8677 10.3249 13.7143 8.00019 13.7143Z" fill="#F4F4F8" />
                                                             </svg>
-                                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>Outbound Form </Typography>
+                                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{t('audit_log.destination_to')} </Typography>
                                                             <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{outboundExpression || '-'}</Typography>
                                                         </Box>
                                                         <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
                                                             <PlayArrowOutlined sx={{ color: darkColors.textPrimary, fontSize: 18 }} />
-                                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>Speed </Typography>
+                                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{t('audit_log.speed')} </Typography>
                                                             <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{currentSpeed || '-'}</Typography>
                                                         </Box>
                                                     </Box>
                                                     <Box sx={{
-                                                        alignSelf: 'flex-start'
+                                                        alignSelf: 'flex-end',
+                                                        display: {
+                                                            xs: 'none',
+                                                            sm: 'none',
+                                                            md: 'none',
+                                                            lg: 'inline-block',
+                                                        }
                                                     }}>
                                                         <Button
                                                             // Conditional Activation
@@ -447,10 +468,11 @@ export default function Page({ params }: Props) {
                                                                 },
                                                                 "&:hover": {
                                                                     backgroundColor: canReplay ? '#4E57E5' : 'transparent',
-                                                                }
+                                                                },
+
                                                             }}
                                                             onClick={() => handleReplay()}
-                                                        >Replay</Button>
+                                                        >{t('audit_log.replay')}</Button>
                                                         <AddReplayDialog
                                                             replaying={replaying}
                                                             open={replayDialogOpen} onConfirm={async () => {
@@ -497,29 +519,61 @@ export default function Page({ params }: Props) {
                                                     </Box>
                                                 </Grid>
                                             </Grid>
+                                            <Grid
+                                                item
+                                                xs={12}
+                                                sx={{
+                                                    textAlign: 'right',
+                                                    display: {
+                                                        xs: 'block',
+                                                        lg: 'none',
+                                                    },
+                                                    width: '100%',
+                                                }}
+                                            >
+                                                <Button
+                                                    // Conditional Activation
+                                                    disabled={!canReplay}
+                                                    endIcon={<ChevronRightIcon sx={{ fontSize: 24 }} />}
+                                                    sx={{
+                                                        color: canReplay ? darkColors.textPrimary : darkColors.textDisabled,
+                                                        backgroundColor: canReplay ? '#5E66FF' : 'transparent',
+                                                        fontSize: 17,
+                                                        py: 1,
+                                                        px: 2,
+                                                        '&.Mui-disabled': {
+                                                            color: darkColors.textDisabled,
+                                                        },
+                                                        "&:hover": {
+                                                            backgroundColor: canReplay ? '#4E57E5' : 'transparent',
+                                                        }
+                                                    }}
+                                                    onClick={() => handleReplay()}
+                                                >{t('audit_log.replay')}</Button>
+                                            </Grid>
                                         </Grid>
                                     </Box>
 
-                                    <Box sx={{ p: 1.5, flex: '1 1 0', alignSelf: 'stretch', minHeight: 100 }}>
+                                    <Box sx={{ p: 1.5, flex: '1 1 0', alignSelf: 'stretch', height: '100%' }}>
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                                             <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>
-                                                Replay Interface
+                                                {t('audit_log.replay_interface')}
                                             </Typography>
                                         </Box>
                                         <Grid container spacing={1} sx={{ width: '100%' }}>
-                                            <Grid item xs={2.5}>
+                                            <Grid item xs={12} sm={6} md={3} lg={2.5}>
                                                 <Box sx={{ ...panelStyle }}>
                                                     <SelectField
-                                                        label="Log Type"
-                                                        placeholder="Select"
+                                                        label={t('audit_log.log_type')}
+                                                        placeholder={t('audit_log.select')}
                                                         value={logType}
                                                         onChange={(e: any) => setLogType(e.target.value)}
                                                         options={logTypeList}
                                                         setValue={setLogType}
                                                     />
                                                     <SelectField
-                                                        label="File"
-                                                        placeholder="Select"
+                                                        label={t('audit_log.file')}
+                                                        placeholder={t('audit_log.select')}
                                                         value={file}
                                                         onChange={(e: any) => setFile(e.target.value)}
                                                         options={[...getKeysFromSelectedValue(data?.data?.replay_interface?.file_tree, logTypeList, logType)]}
@@ -528,10 +582,10 @@ export default function Page({ params }: Props) {
                                                 </Box>
                                             </Grid>
 
-                                            <Grid item xs={2.5}>
+                                            <Grid item xs={12} sm={6} md={3} lg={2.5}>
                                                 <Box sx={{ ...panelStyle }}>
                                                     <SelectField
-                                                        label="Date"
+                                                        label={t('audit_log.date')}
                                                         placeholder="0000-00-00"
                                                         value={date}
                                                         onChange={(e: any) => setDate(e.target.value)}
@@ -540,13 +594,13 @@ export default function Page({ params }: Props) {
                                                         width='120px'
                                                     />
                                                     <DateTimeMuiField
-                                                        label="Start Time"
+                                                        label={t('audit_log.start_time')}
                                                         type="time"
                                                         value={startTime}
                                                         onChange={(e: any) => setStartTime(e.target.value)}
                                                     />
                                                     <DateTimeMuiField
-                                                        label="End Time"
+                                                        label={t('audit_log.end_time')}
                                                         value={endTime}
                                                         type="time"
                                                         onChange={(e: any) => setEndTime(e.target.value)}
@@ -554,11 +608,11 @@ export default function Page({ params }: Props) {
                                                 </Box>
                                             </Grid>
 
-                                            <Grid item xs={3.2}>
+                                            <Grid item xs={12} sm={6} md={3} lg={3.2}>
                                                 <Box sx={{ ...panelStyle }}>
 
                                                     <WideTextField
-                                                        label="HEAD"
+                                                        label={t('audit_log.head')}
                                                         value={head}
                                                         onClick={() => handleOpenFilterDialog('HEAD')}
                                                         onClose={() => {
@@ -581,7 +635,7 @@ export default function Page({ params }: Props) {
                                                     )}
 
                                                     <WideTextField
-                                                        label="Channel Number"
+                                                        label={t('audit_log.channel_number')}
                                                         value={channel}
                                                         onClick={() => handleOpenFilterDialog('CHANNEL')}
                                                         onClose={() => {
@@ -607,7 +661,7 @@ export default function Page({ params }: Props) {
                                                     )}
                                                 </Box>
                                             </Grid>
-                                            <Grid item xs={3.7}>
+                                            <Grid item xs={12} sm={6} md={3} lg={3.7}>
                                                 <Box sx={{ ...panelStyle }}>
                                                     <FilterInputBar
                                                         expression={outboundExpression}
@@ -629,8 +683,9 @@ export default function Page({ params }: Props) {
 
                 {/* 3. Filter Dialog Rendering: Renders only when open, uses generic state */}
 
-            </DashboardContent >
-        </LocalizationProvider >
+            </LocalizationProvider >
+        </DashboardContent >
+
     );
 };
 
@@ -640,6 +695,7 @@ const CustomDialog = ({ open, handleClose, pid }: {
     handleClose: () => void;
     pid: string | number;
 }) => {
+    const { t } = useTranslate('replay');
     const [isTerminating, setIsTerminating] = React.useState(false);
 
     const handleTerminate = async () => {
@@ -648,7 +704,7 @@ const CustomDialog = ({ open, handleClose, pid }: {
 
         try {
             const response = await fetch(url, {
-                method: 'POST',
+                method: 'DELETE',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
@@ -712,7 +768,7 @@ const CustomDialog = ({ open, handleClose, pid }: {
                     lineHeight="22.50px"
                     sx={{ color: 'inherit' }}
                 >
-                    팝업 메세지
+                    {t('terminate_dialog.confirm')}
                 </Typography>
             </DialogTitle>
 
@@ -763,7 +819,7 @@ const CustomDialog = ({ open, handleClose, pid }: {
                     textAlign="center"
                     sx={{ color: 'inherit' }}
                 >
-                    종료 하시겠습니까?
+                    {t('terminate_dialog.terminate')}
                 </Typography>
             </DialogContent>
 
@@ -798,7 +854,7 @@ const CustomDialog = ({ open, handleClose, pid }: {
                     }}
                 >
                     {/* Change button text based on state */}
-                    {isTerminating ? '종료하는 중...' : '확인'}
+                    {isTerminating ? t('terminate_dialog.submitting') : t('terminate_dialog.submit')}
                 </Button>
 
                 {/* '취소' Button: Disabled while terminating is active */}
@@ -825,7 +881,7 @@ const CustomDialog = ({ open, handleClose, pid }: {
                         }
                     }}
                 >
-                    취소
+                    {t('terminate_dialog.cancel')}
                 </Button>
             </DialogActions>
         </Dialog>

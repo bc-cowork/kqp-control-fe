@@ -9,6 +9,7 @@ import {
     ArrowDropUp as ArrowUpwardIcon, ArrowDropDown as ArrowDownwardIcon,
     KeyboardArrowDownOutlined as KeyboardArrowDownIcon,
 } from '@mui/icons-material';
+import { useTranslate } from "src/locales";
 import { LogTag } from "./Logtag";
 
 export const darkColors = {
@@ -339,6 +340,8 @@ export const WideTextField = ({ label, value, onClick, onClose }: any) => {
 };
 
 export const CustomTextField = ({ toolPid, setToolPid }: any) => {
+
+    const { t } = useTranslate('replay')
     // Function to handle clearing the toolPid value
     const handleClearToolPid = () => {
         setToolPid('');
@@ -351,7 +354,7 @@ export const CustomTextField = ({ toolPid, setToolPid }: any) => {
         <TextField
             variant="outlined"
             size="small"
-            placeholder="Tap the list"
+            placeholder={t('tool_box.tab_the_list')}
             value={displayValue}
             InputProps={{
                 sx: {
@@ -367,7 +370,7 @@ export const CustomTextField = ({ toolPid, setToolPid }: any) => {
                             variant="body2"
                             sx={{ color: darkColors.textSecondary, fontWeight: 400, lineHeight: '22.5px' }}
                         >
-                            PID |
+                            {t('tool_box.pid')} |
                         </Typography>
                     </InputAdornment>
                 ),

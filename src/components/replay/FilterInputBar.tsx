@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, TextField, Typography, Grid } from "@mui/material"; // Ensure Grid is imported
+import { useTranslate } from "src/locales";
 import { LogTag } from "./Logtag";
 
 const customColors = {
@@ -12,6 +13,7 @@ const customColors = {
 };
 
 export const FilterInputBar = ({ expression, setExpression }: any) => {
+    const { t } = useTranslate('replay');
     const [inputExpression, setInputExpression] = React.useState(expression);
 
     return (
@@ -21,114 +23,129 @@ export const FilterInputBar = ({ expression, setExpression }: any) => {
                     variant="body2"
                     sx={{ color: '#D1D6E0', fontWeight: 400, lineHeight: '22.5px', fontSize: 15 }}
                 >
-                    Outbound from
+                    {t('audit_log.destination_to')}
                 </Typography>
             </Box>
-            {expression?.length === 0 ? (<Box
-                sx={{
-                    width: '100%',
-                    paddingBottom: '24px',
-                    paddingRight: '8px',
-                    paddingLeft: '4px',
-                    borderRadius: '8px',
-                    display: 'flex',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    gap: '20px',
-                }}
-            >
-
-                <Box
+            {expression?.length === 0 ? (
+                <Grid
+                    container
+                    spacing={{ xs: 1, md: 2 }}
                     sx={{
-                        flex: '1 1 0',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'flex-start',
-                        alignItems: 'flex-start',
-                        gap: '4px',
+                        width: '100%',
+                        paddingBottom: '24px',
+                        paddingRight: '8px',
+                        paddingLeft: '4px',
+                        borderRadius: '8px',
+                        alignItems: 'center',
                     }}
                 >
-                    <TextField
-                        fullWidth
-                        variant="outlined"
-                        size="small"
-                        value={inputExpression}
-                        onChange={(e) => setInputExpression(e.target.value)}
-                        InputProps={{
-                            startAdornment: (
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                    <Typography
-                                        sx={{
-                                            color: customColors.textDisabled,
-                                            fontSize: 15,
-                                            fontWeight: 400,
-                                            lineHeight: '22.50px',
-                                        }}
-                                    >
-                                        typing
-                                    </Typography>
-                                    <Box sx={{ width: '1px', height: '12px', background: customColors.borderColor, marginRight: '8px' }} />
-                                </Box>
-                            ),
-                            sx: {
-                                height: 42,
-                                paddingLeft: '8px',
-                                paddingRight: '8px',
-                                background: customColors.backgroundField,
-                                borderRadius: '8px',
-                                border: `1px solid ${customColors.borderColor}`,
+                    {/* --- Grid Item for TextField (Input) --- */}
+                    <Grid
+                        item
+                        xs={12} // Full width on xs-md (forces button to next line)
+                        md // Auto-size on md and up (fills remaining space)
+                    >
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'flex-start',
+                                alignItems: 'flex-start',
+                                gap: '4px',
+                            }}
+                        >
+                            <TextField
+                                fullWidth
+                                variant="outlined"
+                                size="small"
+                                value={inputExpression}
+                                onChange={(e) => setInputExpression(e.target.value)}
+                                InputProps={{
+                                    startAdornment: (
+                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                            <Typography
+                                                sx={{
+                                                    color: customColors.textDisabled,
+                                                    fontSize: 15,
+                                                    width: '60px',
+                                                    fontWeight: 400,
+                                                    lineHeight: '22.50px',
+                                                }}
+                                            >
+                                                {t('audit_log.typing')} |
+                                            </Typography>
+                                        </Box>
+                                    ),
+                                    sx: {
+                                        height: 42,
+                                        paddingLeft: '8px',
+                                        paddingRight: '8px',
+                                        background: customColors.backgroundField,
+                                        borderRadius: '8px',
+                                        border: `1px solid ${customColors.borderColor}`,
 
-                                '& fieldset': { border: 'none' },
+                                        '& fieldset': { border: 'none' },
 
-                                '& .MuiInputBase-input': {
-                                    padding: '0',
-                                    height: '100%',
-                                }
-                            },
-                        }}
+                                        '& .MuiInputBase-input': {
+                                            padding: '0',
+                                            height: '100%',
+                                        }
+                                    },
+                                }}
+                                sx={{
+                                    alignSelf: 'stretch',
+                                    '& .MuiInputBase-root': {
+                                        paddingLeft: '10px',
+                                    },
+                                }}
+                            />
+                        </Box>
+                    </Grid>
+
+                    {/* --- Grid Item for Button --- */}
+                    <Grid
+                        item
+                        xs={12} // Full width on xs-md (forces button to next line)
+                        md={10}
+                        lg="auto" // Only takes the space it needs on md and up (side-by-side)
                         sx={{
-                            alignSelf: 'stretch',
-                            '& .MuiInputBase-root': {
-                                paddingLeft: '10px',
-                            },
-                        }}
-                    />
-                </Box>
-
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'flex-start',
-                        alignItems: 'flex-start',
-                        gap: '8px',
-                    }}
-                >
-                    <Button
-                        variant="contained"
-                        onClick={() => {
-                            setExpression(inputExpression);
-                        }}
-                        sx={{
-                            height: 42,
-                            padding: '8px 16px',
-                            backgroundColor: '#5E66FF !important',
-                            color: 'white !important',
-                            borderRadius: '4px',
-                            fontSize: 17,
-                            fontWeight: 400,
-                            lineHeight: '25.50px',
-                            textTransform: 'none',
-                            boxShadow: 'none',
-                            '&:hover': {
-                                backgroundColor: '#343ecaff !important',
-                                boxShadow: 'none',
-                            }
+                            // Ensures the button is left-aligned when on its own line
+                            display: 'flex',
+                            justifyContent: 'flex-start',
+                            alignItems: 'flex-start',
                         }}
                     >
-                        확인
-                    </Button>
-                </Box>
-            </Box>) : (
+                        <Button
+                            variant="contained"
+                            onClick={() => {
+                                setExpression(inputExpression);
+                            }}
+                            sx={{
+                                height: 42,
+                                padding: '8px 16px',
+                                backgroundColor: '#5E66FF !important',
+                                color: 'white !important',
+                                borderRadius: '4px',
+                                fontSize: 17,
+                                fontWeight: 400,
+                                lineHeight: '25.50px',
+                                textTransform: 'none',
+                                boxShadow: 'none',
+
+                                // *** CRITICAL CHANGE: Removed responsive width ***
+                                // The button's width is now determined only by its content and padding.
+
+                                '&:hover': {
+                                    backgroundColor: '#343ecaff !important',
+                                    boxShadow: 'none',
+                                }
+                            }}
+                        >
+                            {t('audit_log.apply')}
+                        </Button>
+                    </Grid>
+                </Grid>
+            ) : (
                 <LogTag text={expression} onClose={
                     () => {
                         setExpression('');
@@ -136,6 +153,5 @@ export const FilterInputBar = ({ expression, setExpression }: any) => {
                 } />
             )}
         </>
-
     );
 };

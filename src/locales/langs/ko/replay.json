@@ -1,5 +1,47 @@
 {
     "top": {
         "title": "재생"
+    },
+    "top_table": {
+        "pid": "프로세스 식별자",
+        "command": "명령어"
+    },
+    "tool_box": {
+        "tool": "도구",
+        "pid": "식별자",
+        "tab_the_list": "목록에서 탭하기",
+        "kill": "종료"
+    },
+    "audit_log": {
+        "title": "증적 로그",
+        "date": "날짜",
+        "start_time": "시작 시간",
+        "end_time": "종료 시간",
+        "head": "전문 유형",
+        "channel_number": "채널 번호",
+        "destination_to": "송출처",
+        "speed": "속도",
+        "replay": "재생",
+        "log_type": "로그 종류",
+        "file": "파일",
+        "replay_interface": "재생 인터페이스",
+        "apply": "확인",
+        "typing": "입력",
+        "select": "선택",
+        "reset": "초기화"
+    },
+    "terminate_dialog": {
+        "confirm": "팝업 메세지",
+        "terminate": "종료 하시겠습니까?",
+        "cancel": "취소",
+        "submit": "종료",
+        "submitting": "종료하는 중..."
+    },
+    "replay_dialog": {
+        "confirm": "팝업 메세지",
+        "replay": "재생 하시겠습니까?",
+        "cancel": "No",
+        "submit": "Yes",
+        "submitting": "재생중..."
     }
 }

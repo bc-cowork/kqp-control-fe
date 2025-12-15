@@ -10,6 +10,7 @@ import {
 import {
     HelpOutline as HelpOutlineIcon
 } from '@mui/icons-material';
+import { useTranslate } from 'src/locales';
 
 const customDialogColors = {
     backgroundBlack: '#0A0E15',
@@ -26,8 +27,6 @@ type AddReplayDialogProps = {
     open: boolean;
     onClose: () => void;
     onConfirm: () => void;
-    message?: string;
-    title?: string;
     replaying?: boolean;
 };
 
@@ -35,10 +34,9 @@ export const AddReplayDialog = ({
     open,
     onClose,
     onConfirm,
-    message = '재생 하시겠습니까?',
-    title = '팝업 메세지',
     replaying
 }: AddReplayDialogProps) => {
+    const { t } = useTranslate('replay');
 
     const handleConfirm = () => {
         onConfirm();
@@ -97,7 +95,7 @@ export const AddReplayDialog = ({
                         lineHeight: '22.50px',
                     }}
                 >
-                    {title}
+                    {t('replay_dialog.confirm')}
                 </Typography>
             </DialogTitle>
 
@@ -130,7 +128,7 @@ export const AddReplayDialog = ({
                         textAlign: 'center',
                     }}
                 >
-                    {message}
+                    {t('replay_dialog.replay')}
                 </Typography>
             </DialogContent>
 
@@ -167,7 +165,7 @@ export const AddReplayDialog = ({
                     }}
                 >
                     {
-                        replaying ? '재생중...' : '확인'
+                        replaying ? t('replay_dialog.submitting') : t('replay_dialog.submit')
                     }
 
                 </Button>
@@ -190,7 +188,7 @@ export const AddReplayDialog = ({
                         }
                     }}
                 >
-                    취소
+                    {t('replay_dialog.cancel')}
                 </Button>
             </DialogActions>
         </Dialog>
