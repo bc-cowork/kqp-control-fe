@@ -9,6 +9,7 @@ import {
     ArrowDropDown as ArrowDownwardIcon
 } from '@mui/icons-material';
 import React from 'react';
+import { useTranslate } from "src/locales";
 
 const inputColors = {
     background: '#1D2432',
@@ -24,6 +25,7 @@ export const SpeedInputFilter = ({ currentSpeed, setCurrentSpeed }: {
     setCurrentSpeed: (speed: string) => void;
 }) => {
 
+    const { t } = useTranslate('replay');
     const updateSpeed = (newVal: number) => {
         setCurrentSpeed(newVal.toFixed(2).replace(/\.00$/, ''));
     };
@@ -88,7 +90,7 @@ export const SpeedInputFilter = ({ currentSpeed, setCurrentSpeed }: {
                     variant="body2"
                     sx={{ color: '#D1D6E0', fontWeight: 400, lineHeight: '22.5px', fontSize: 15 }}
                 >
-                    Speed
+                    {t('audit_log.speed')}
                 </Typography>
             </Box>
 

@@ -3,6 +3,7 @@ import {
     Cancel as CancelIcon,
     Refresh as RefreshIcon,
 } from '@mui/icons-material';
+import { useTranslate } from "src/locales";
 
 const customColors = {
     backgroundField: '#202838',
@@ -24,6 +25,7 @@ export const FilterDialog = ({
     handleConfirm,
     errorMessage,
 }: any) => {
+    const { t } = useTranslate('replay');
 
     const handleClearExpression = () => {
         setExpression('');
@@ -85,7 +87,7 @@ export const FilterDialog = ({
                                             lineHeight: '22.50px',
                                         }}
                                     >
-                                        typing |
+                                        {t("audit_log.typing")} |
                                     </Typography>
                                 </Box>
                             ),
@@ -154,7 +156,7 @@ export const FilterDialog = ({
                             }
                         }}
                     >
-                        Reset
+                        {t('audit_log.reset')}
                     </Button>
 
                     <Button
@@ -174,7 +176,7 @@ export const FilterDialog = ({
                             }
                         }}
                     >
-                        확인
+                        {t('audit_log.apply')}
                     </Button>
                 </Box>
             </Box>

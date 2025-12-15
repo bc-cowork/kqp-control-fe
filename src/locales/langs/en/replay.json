@@ -2,6 +2,34 @@
     "top": {
         "title": "Replay"
     },
+    "top_table": {
+        "pid": "PID",
+        "command": "Command"
+    },
+    "tool_box": {
+        "tool": "Tool",
+        "pid": "PID",
+        "tab_the_list": "Tab the list",
+        "kill": "Kill"
+    },
+    "audit_log": {
+        "title": "Audit Log",
+        "date": "Date",
+        "start_time": "Start Time",
+        "end_time": "End Time",
+        "head": "Head",
+        "channel_number": "Channel Number",
+        "destination_to": "Destination To",
+        "speed": "Speed",
+        "replay": "Replay",
+        "log_type": "Log Type",
+        "file": "File",
+        "replay_interface": "Replay Interface",
+        "apply": "Apply",
+        "typing": "Typing",
+        "select": "Select",
+        "reset": "Reset"
+    },
     "terminate_dialog": {
         "confirm": "confirm",
         "terminate": "Would you like to quit?",

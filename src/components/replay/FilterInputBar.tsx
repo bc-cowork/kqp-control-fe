@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { LogTag } from "./Logtag";
+import { useTranslate } from "src/locales";
 
 const customColors = {
     backgroundField: '#202838',
@@ -12,6 +13,7 @@ const customColors = {
 };
 
 export const FilterInputBar = ({ expression, setExpression }: any) => {
+    const { t } = useTranslate('replay');
     const [inputExpression, setInputExpression] = React.useState(expression);
 
     return (
@@ -21,7 +23,7 @@ export const FilterInputBar = ({ expression, setExpression }: any) => {
                     variant="body2"
                     sx={{ color: '#D1D6E0', fontWeight: 400, lineHeight: '22.5px', fontSize: 15 }}
                 >
-                    Outbound from
+                    {t('audit_log.destination_to')}
                 </Typography>
             </Box>
             {expression?.length === 0 ? (<Box
@@ -61,13 +63,13 @@ export const FilterInputBar = ({ expression, setExpression }: any) => {
                                         sx={{
                                             color: customColors.textDisabled,
                                             fontSize: 15,
+                                            width: '60px',
                                             fontWeight: 400,
                                             lineHeight: '22.50px',
                                         }}
                                     >
-                                        typing
+                                        {t('audit_log.typing')} |
                                     </Typography>
-                                    <Box sx={{ width: '1px', height: '12px', background: customColors.borderColor, marginRight: '8px' }} />
                                 </Box>
                             ),
                             sx: {
@@ -125,7 +127,7 @@ export const FilterInputBar = ({ expression, setExpression }: any) => {
                             }
                         }}
                     >
-                        확인
+                        {t('audit_log.apply')}
                     </Button>
                 </Box>
             </Box>) : (
