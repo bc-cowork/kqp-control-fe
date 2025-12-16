@@ -149,18 +149,24 @@ export const DateTimeMuiField = ({ label, type = 'time', value, onChange }: any)
             minWidth,
             maxWidth: minWidth,
             height: 32,
+            color: darkColors.textSecondary,
             '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
             '& .MuiInputBase-input': {
                 p: '4px 0px 4px 0px',
                 display: 'flex',
                 alignItems: 'center',
-                color: darkColors.textSecondary,
                 fontSize: 15,
                 backgroundColor: 'transparent !important',
                 height: 'auto',
             },
+            '&:hover': {
+                border: `1px solid ${darkColors.border}`,
+                color: '#7AA2FF !important',
+
+            },
             '&.Mui-focused': {
                 border: '1px solid #E0E4EB !important',
+                color: '#7AA2FF !important',
             },
             '& .MuiSvgIcon-root': { color: darkColors.textSecondary, fontSize: 16 },
         },
@@ -223,7 +229,7 @@ export const DateTimeMuiField = ({ label, type = 'time', value, onChange }: any)
 
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }} >
             <Box sx={{ alignSelf: 'stretch', height: 32, display: 'flex', alignItems: 'center' }}>
                 <Typography
                     variant="body2"
@@ -233,37 +239,39 @@ export const DateTimeMuiField = ({ label, type = 'time', value, onChange }: any)
                 </Typography>
             </Box>
 
-            {value ? (
-                <TimePicker
-                    // FIX: Set closeOnSelect to false to prevent the popper from closing on value change
-                    closeOnSelect
-                    views={timeViews}
-                    value={dayjs(value, format)}
-                    format={format}
-                    onChange={(newValue) => {
-                        const formattedValue = newValue ? newValue.format(format) : placeholderValue;
-                        onChange({ target: { value: formattedValue } });
-                    }}
-                    slots={pickerSlots}
-                    slotProps={{
-                        textField: {
-                            size: "small",
-                            placeholder: placeholderValue,
-                            variant: "outlined",
-                            InputProps: customInputProps,
-                        },
-                        popper: customPopperProps,
-                        openPickerButton: openPickerButtonSlotProps
-                    }}
-                />
-            ) : (
-                <LogTag text={value} onClose={
-                    () => {
-                        onChange({ target: { value: placeholderValue } });
-                    }
-                } />
-            )}
-        </Box>
+            {
+                value ? (
+                    <TimePicker
+                        // FIX: Set closeOnSelect to false to prevent the popper from closing on value change
+                        closeOnSelect
+                        views={timeViews}
+                        value={dayjs(value, format)}
+                        format={format}
+                        onChange={(newValue) => {
+                            const formattedValue = newValue ? newValue.format(format) : placeholderValue;
+                            onChange({ target: { value: formattedValue } });
+                        }}
+                        slots={pickerSlots}
+                        slotProps={{
+                            textField: {
+                                size: "small",
+                                placeholder: placeholderValue,
+                                variant: "outlined",
+                                InputProps: customInputProps,
+                            },
+                            popper: customPopperProps,
+                            openPickerButton: openPickerButtonSlotProps
+                        }}
+                    />
+                ) : (
+                    <LogTag text={value} onClose={
+                        () => {
+                            onChange({ target: { value: placeholderValue } });
+                        }
+                    } />
+                )
+            }
+        </Box >
     );
 };
 

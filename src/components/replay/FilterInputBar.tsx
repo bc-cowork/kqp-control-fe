@@ -1,7 +1,10 @@
 import React from "react";
-import { Box, Button, TextField, Typography, Grid } from "@mui/material"; // Ensure Grid is imported
+import { Box, Button, TextField, Typography, Grid, IconButton } from "@mui/material"; // Ensure Grid is imported
 import { useTranslate } from "src/locales";
 import { LogTag } from "./Logtag";
+import {
+    Cancel as CancelIcon,
+} from '@mui/icons-material';
 
 const customColors = {
     backgroundField: '#202838',
@@ -15,6 +18,9 @@ const customColors = {
 export const FilterInputBar = ({ expression, setExpression }: any) => {
     const { t } = useTranslate('replay');
     const [inputExpression, setInputExpression] = React.useState(expression);
+    const handleClearExpression = () => {
+        setInputExpression('');
+    }
 
     return (
         <>
@@ -65,7 +71,7 @@ export const FilterInputBar = ({ expression, setExpression }: any) => {
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                             <Typography
                                                 sx={{
-                                                    color: customColors.textDisabled,
+                                                    color: '#D1D6E0',
                                                     fontSize: 15,
                                                     width: '60px',
                                                     fontWeight: 400,
@@ -76,6 +82,15 @@ export const FilterInputBar = ({ expression, setExpression }: any) => {
                                             </Typography>
                                         </Box>
                                     ),
+                                    endAdornment:
+                                        inputExpression && (<IconButton
+                                            onClick={handleClearExpression}
+                                            size="small"
+                                            sx={{ color: "#D1D6E0", p: 0 }}
+                                        >
+                                            <CancelIcon sx={{ width: 20, height: 20 }} />
+                                        </IconButton>
+                                        ),
                                     sx: {
                                         height: 42,
                                         paddingLeft: '8px',
@@ -83,6 +98,7 @@ export const FilterInputBar = ({ expression, setExpression }: any) => {
                                         background: customColors.backgroundField,
                                         borderRadius: '8px',
                                         border: `1px solid ${customColors.borderColor}`,
+                                        color: '#7AA2FF',
 
                                         '& fieldset': { border: 'none' },
 
@@ -125,7 +141,7 @@ export const FilterInputBar = ({ expression, setExpression }: any) => {
                                 padding: '8px 16px',
                                 backgroundColor: '#5E66FF !important',
                                 color: 'white !important',
-                                borderRadius: '4px',
+                                borderRadius: '8px',
                                 fontSize: 17,
                                 fontWeight: 400,
                                 lineHeight: '25.50px',
