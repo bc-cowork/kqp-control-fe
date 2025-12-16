@@ -257,6 +257,9 @@ export const DateTimeMuiField = ({ label, type = 'time', value, onChange }: any)
                         }}
                         slots={pickerSlots}
                         slotProps={{
+                            actionBar: {
+                                actions: ['cancel', 'accept']
+                            },
                             textField: {
                                 size: "small",
                                 placeholder: placeholderValue,
