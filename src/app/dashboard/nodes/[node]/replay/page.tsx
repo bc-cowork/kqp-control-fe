@@ -304,6 +304,9 @@ export default function Page({ params }: Props) {
                                             display: 'flex',
                                             flexDirection: 'column',
                                             gap: 1.5,
+                                            sx: {
+                                                minWidth: '300px'
+                                            }
                                         }}
                                     >
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
