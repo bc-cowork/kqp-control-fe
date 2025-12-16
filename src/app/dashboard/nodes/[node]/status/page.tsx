@@ -14,7 +14,7 @@ type Props = { params: { node: string } };
 
 const HeadRow = ({ title }: { title: string }) => (
     <Box sx={{ mb: 0.2, backgroundColor: '#667085', p: 1.2, borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}>
-        <Typography sx={{ fontSize: 14, fontWeight: 500, color: grey[50] }}>
+        <Typography sx={{ fontSize: 17, fontWeight: 600, color: grey[50] }}>
             {title}
         </Typography>
     </Box>

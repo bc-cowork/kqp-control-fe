@@ -28,7 +28,8 @@
         "apply": "Apply",
         "typing": "Typing",
         "select": "Select",
-        "reset": "Reset"
+        "reset": "Reset",
+        "cancel": "Cancel"
     },
     "terminate_dialog": {
         "confirm": "confirm",

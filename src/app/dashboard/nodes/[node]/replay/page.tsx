@@ -382,7 +382,7 @@ export default function Page({ params }: Props) {
                                         </Box>
 
                                         <Grid container spacing={2} sx={{ mt: 1.5 }}>
-                                            <Grid item xs={12} sm={6} md={6} lg={2.5}>
+                                            <Grid item xs={12} sm={12} md={6} lg={2.5}>
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, }}>
 
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', }}>
@@ -395,7 +395,7 @@ export default function Page({ params }: Props) {
                                                     </Box>
                                                 </Box>
                                             </Grid>
-                                            <Grid item xs={12} sm={6} md={5} lg={2.5}>
+                                            <Grid item xs={12} sm={12} md={6} lg={2.5}>
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
                                                         <Time />
@@ -409,7 +409,7 @@ export default function Page({ params }: Props) {
                                                     </Box>
                                                 </Box>
                                             </Grid>
-                                            <Grid item xs={12} sm={6} md={6} lg={3.2}>
+                                            <Grid item xs={12} sm={12} md={6} lg={3.2}>
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                                                     <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
                                                         <Archive />
@@ -424,7 +424,7 @@ export default function Page({ params }: Props) {
                                                 </Box>
                                             </Grid>
 
-                                            <Grid item xs={12} sm={6} md={6} lg={3.7}>
+                                            <Grid item xs={12} sm={12} md={6} lg={3.7}>
                                                 <Grid sx={{
                                                     display: 'flex',
                                                     direction: 'row',
@@ -523,10 +523,15 @@ export default function Page({ params }: Props) {
                                                 item
                                                 xs={12}
                                                 sx={{
-                                                    textAlign: 'right',
                                                     display: {
                                                         xs: 'block',
                                                         lg: 'none',
+                                                    },
+                                                    textAlign: {
+                                                        xs: 'left',
+                                                        sm: 'left',
+                                                        md: 'right',
+                                                        lg: 'right',
                                                     },
                                                     width: '100%',
                                                 }}
@@ -561,7 +566,7 @@ export default function Page({ params }: Props) {
                                             </Typography>
                                         </Box>
                                         <Grid container spacing={1} sx={{ width: '100%' }}>
-                                            <Grid item xs={12} sm={6} md={3} lg={2.5}>
+                                            <Grid item xs={12} sm={12} md={5.9} lg={2.5}>
                                                 <Box sx={{ ...panelStyle }}>
                                                     <SelectField
                                                         label={t('audit_log.log_type')}
@@ -582,7 +587,7 @@ export default function Page({ params }: Props) {
                                                 </Box>
                                             </Grid>
 
-                                            <Grid item xs={12} sm={6} md={3} lg={2.5}>
+                                            <Grid item xs={12} sm={12} md={5.9} lg={2.5}>
                                                 <Box sx={{ ...panelStyle }}>
                                                     <SelectField
                                                         label={t('audit_log.date')}
@@ -608,7 +613,7 @@ export default function Page({ params }: Props) {
                                                 </Box>
                                             </Grid>
 
-                                            <Grid item xs={12} sm={6} md={3} lg={3.2}>
+                                            <Grid item xs={12} sm={12} md={5.9} lg={3.2}>
                                                 <Box sx={{ ...panelStyle }}>
 
                                                     <WideTextField
@@ -661,7 +666,7 @@ export default function Page({ params }: Props) {
                                                     )}
                                                 </Box>
                                             </Grid>
-                                            <Grid item xs={12} sm={6} md={3} lg={3.7}>
+                                            <Grid item xs={12} sm={12} md={5.9} lg={3.7}>
                                                 <Box sx={{ ...panelStyle }}>
                                                     <FilterInputBar
                                                         expression={outboundExpression}

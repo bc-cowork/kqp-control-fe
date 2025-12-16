@@ -1,7 +1,6 @@
-import { Box, Button, TextField, IconButton, Typography, Divider } from "@mui/material";
+import { Box, Button, TextField, IconButton, Typography } from "@mui/material";
 import {
     Cancel as CancelIcon,
-    Refresh as RefreshIcon,
 } from '@mui/icons-material';
 import { useTranslate } from "src/locales";
 
@@ -137,9 +136,6 @@ export const FilterDialog = ({
                             handleReset();
                             onClose();
                         }}
-                        startIcon={
-                            <RefreshIcon sx={{ color: customColors.graysGray5, width: 16, height: 16 }} />
-                        }
                         sx={{
                             height: 32,
                             padding: '4px 12px 4px 8px',
@@ -156,7 +152,7 @@ export const FilterDialog = ({
                             }
                         }}
                     >
-                        {t('audit_log.reset')}
+                        {t('audit_log.cancel')}
                     </Button>
 
                     <Button
