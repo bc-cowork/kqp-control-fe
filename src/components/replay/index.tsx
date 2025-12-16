@@ -1,7 +1,7 @@
 import {
     Box, Typography, FormControl, Select, MenuItem, TextField, IconButton, InputAdornment, Button,
 } from "@mui/material";
-import { TimePicker } from "@mui/x-date-pickers";
+import { DesktopTimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import {
     KeyboardArrowDown as SelectIcon,
@@ -182,6 +182,10 @@ export const DateTimeMuiField = ({ label, type = 'time', value, onChange }: any)
 
             '& .MuiMultiSectionDigitalClock-root': {
                 backgroundColor: darkColors.tableFill1,
+                justifyContent: 'center',
+                alignItems: 'center',
+
+
 
                 '& .MuiDigitalClockSection-separator': {
                     color: darkColors.textPrimary,
@@ -241,7 +245,7 @@ export const DateTimeMuiField = ({ label, type = 'time', value, onChange }: any)
 
             {
                 value ? (
-                    <TimePicker
+                    <DesktopTimePicker
                         // FIX: Set closeOnSelect to false to prevent the popper from closing on value change
                         closeOnSelect
                         views={timeViews}

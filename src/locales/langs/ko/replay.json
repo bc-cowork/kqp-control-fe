@@ -28,7 +28,8 @@
         "apply": "확인",
         "typing": "입력",
         "select": "선택",
-        "reset": "초기화"
+        "reset": "초기화",
+        "cancel": "취소"
     },
     "terminate_dialog": {
         "confirm": "팝업 메세지",
