@@ -1,7 +1,7 @@
 {
   "name": "@billy-crew/kunta-admin",
   "author": "Manthika Tharumudu",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "description": "Kuanta control admin panel",
   "private": true,
   "scripts": {
