@@ -338,10 +338,11 @@ export default function Page({ params }: Props) {
                                                 {t('tool_box.kill')}
 
                                             </Button>
-                                            <CustomDialog
+                                            <TerminatedDialog
                                                 open={killDialogOpen}
                                                 handleClose={() => setKillDialogOpen(false)}
                                                 pid={toolPid}
+                                                nodeId={node}
                                             />
                                         </Box>
                                     </Box>
@@ -697,18 +698,19 @@ export default function Page({ params }: Props) {
     );
 };
 
-// --- CustomDialog Component (remains the same) ---
-const CustomDialog = ({ open, handleClose, pid }: {
+// --- TerminatedDialog Component (remains the same) ---
+const TerminatedDialog = ({ open, handleClose, pid, nodeId }: {
     open: boolean;
     handleClose: () => void;
     pid: string | number;
+    nodeId: string | number
 }) => {
     const { t } = useTranslate('replay');
     const [isTerminating, setIsTerminating] = React.useState(false);
 
     const handleTerminate = async () => {
         setIsTerminating(true);
-        const url = `${CONFIG.serverUrl}/apik/replay/terminate`;
+        const url = `${CONFIG.serverUrl}/apik/${nodeId}/replay/terminate`;
 
         try {
             const response = await fetch(url, {
