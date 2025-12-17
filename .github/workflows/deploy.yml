@@ -56,6 +56,7 @@ jobs:
           echo "$DEPLOY_KEY" > deploy_key
           chmod 600 deploy_key
 
+
           # Copy .next, package.json, package-lock.json, public, and .env
           rsync -avz --delete -e "ssh -i deploy_key -o StrictHostKeyChecking=no" \
             .next package.json package-lock.json public .env \
@@ -63,23 +64,10 @@ jobs:
 
           ssh -i deploy_key -o StrictHostKeyChecking=no "$DEPLOY_USER@$DEPLOY_SERVER" "
             set -e
-            cd '$DEPLOY_PATH' 
-
-            echo '--- VERIFYING FILES ON SERVER ---'
-            ls -lt .next | head -n 10
-            
-            npm install --legacy-peer-deps 
-
-
-            # Delete the old process to ensure it reloads the new .env and .next folder
-
-
-
-            pm2 delete kqp-control-fe || true
-
-            # start fresh
-            pm2 start npm --name 'kqp-control-fe' -- start
-
+            cd '$DEPLOY_PATH' &&
+            npm install --legacy-peer-deps &&
+            (pm2 describe kqp-control-fe || pm2 start npm --name 'kqp-control-fe' -- start) &&
+            pm2 restart kqp-control-fe
           "
 
       - name: Cleanup key
