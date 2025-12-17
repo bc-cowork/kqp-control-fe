@@ -56,26 +56,26 @@ jobs:
           echo "$DEPLOY_KEY" > deploy_key
           chmod 600 deploy_key
 
-          # Copy .next, package.json, package-lock.json, public, and .env
           rsync -avz --delete -e "ssh -i deploy_key -o StrictHostKeyChecking=no" \
             .next package.json package-lock.json public .env \
             "$DEPLOY_USER@$DEPLOY_SERVER:$DEPLOY_PATH/"
 
           ssh -i deploy_key -o StrictHostKeyChecking=no "$DEPLOY_USER@$DEPLOY_SERVER" "
             set -e
-            cd '$DEPLOY_PATH' 
-
-            echo '--- VERIFYING FILES ON SERVER ---'
-            ls -lt .next | head -n 10
+            cd '$DEPLOY_PATH'
             
-            npm install --legacy-peer-deps 
-
-
-            # Delete the old process to ensure it reloads the new .env and .next folder
+            # 1. Clean up old node_modules to ensure no version ghosting
+            npm install --legacy-peer-deps
+            
+            # 2. Kill any existing process on port 8083 just in case
+            fuser -k 8083/tcp || true
+            
+            # 3. Delete and Restart PM2 with the specific port
             pm2 delete kqp-control-fe || true
-
-            # start fresh
-            pm2 start npm --name 'kqp-control-fe' -- start
+            pm2 start npm --name 'kqp-control-fe' -- start -- -p 8083
+            
+            # 4. Save PM2 list so it persists on server reboot
+            pm2 save
           "
 
       - name: Cleanup key
