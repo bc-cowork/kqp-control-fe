@@ -56,6 +56,12 @@ jobs:
           echo "$DEPLOY_KEY" > deploy_key
           chmod 600 deploy_key
 
+          # STOP PM2 FIRST to avoid serving stale code
+          ssh -i deploy_key -o StrictHostKeyChecking=no "$DEPLOY_USER@$DEPLOY_SERVER" "
+            pm2 stop kqp-control-fe || true
+            sleep 2
+          " || true
+
           # Copy .next, package.json, package-lock.json, public, and .env
           rsync -avz --delete -e "ssh -i deploy_key -o StrictHostKeyChecking=no" \
             .next package.json package-lock.json public .env \
