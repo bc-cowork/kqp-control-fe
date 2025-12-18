@@ -193,6 +193,11 @@ export default function Page({ params }: Props) {
         }
     }, [logType]);
 
+    const revalidateOnKill = () => {
+        setToolPid('');
+        mutate();
+    }
+
     return (
         <DashboardContent maxWidth="xl">
 
@@ -341,7 +346,7 @@ export default function Page({ params }: Props) {
                                             <TerminatedDialog
                                                 open={killDialogOpen}
                                                 handleClose={() => setKillDialogOpen(false)}
-                                                refresh={mutate}
+                                                refresh={revalidateOnKill}
                                                 pid={toolPid}
                                                 nodeId={node}
                                             />
@@ -519,6 +524,12 @@ export default function Page({ params }: Props) {
 
                                                                 } finally {
                                                                     mutate()
+                                                                    setLogType('');
+                                                                    setDate("0000-00-00");
+                                                                    setStartTime('00:00:00')
+                                                                    setEndTime('00:00:00');
+                                                                    setOutboundExpression('')
+                                                                    setFile('');
                                                                     setReplaying(false);
                                                                 }
                                                             }} onClose={() => { setReplayDialogOpen(false) }} />

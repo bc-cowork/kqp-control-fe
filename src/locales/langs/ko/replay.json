@@ -41,8 +41,8 @@
     "replay_dialog": {
         "confirm": "팝업 메세지",
         "replay": "재생 하시겠습니까?",
-        "cancel": "No",
-        "submit": "Yes",
+        "cancel": "취소",
+        "submit": "종료",
         "submitting": "재생중..."
     }
 }
