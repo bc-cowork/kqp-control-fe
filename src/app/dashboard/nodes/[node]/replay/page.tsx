@@ -15,10 +15,10 @@ import {
     Button,
     Grid,
     Stack,
+    tableRowClasses,
+    tableCellClasses,
 } from '@mui/material';
 import { CONFIG } from 'src/config-global';
-
-
 
 
 import {
@@ -42,6 +42,7 @@ import { FilterDialog } from 'src/components/replay/FilterDialog'; // Ensure thi
 import { AddReplayDialog } from 'src/components/replay/AddReplayDialog';
 import { FilterInputBar } from 'src/components/replay/FilterInputBar';
 import { SpeedInputFilter } from 'src/components/replay/SpeedInputFilter';
+import { AuditLogGrid } from 'src/components/replay/AuditLogGrid';
 
 const Gear = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/settings/gear.svg`} alt="gear" {...props} />;
 const Time = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/custom/time.svg`} alt="time" {...props} />;
@@ -233,7 +234,12 @@ export default function Page({ params }: Props) {
                                         }}
                                     >
                                         <Table size="small"
-
+                                            sx={{
+                                                [`& .${tableRowClasses.root}:last-child .${tableCellClasses.root}`]: {
+                                                    borderBottomLeftRadius: '0px !important',
+                                                    borderBottomRightRadius: '0px !important',
+                                                },
+                                            }}
                                         >
                                             <TableHead >
                                                 <TableRow>
@@ -376,22 +382,31 @@ export default function Page({ params }: Props) {
                                     <Box
                                         sx={{
                                             p: '20px 16px',
-                                            borderBottom: `1px solid transparent`,
-                                            borderImageSlice: 1,
-                                            borderImageSource: `linear-gradient(to right, #373F4E, #667085)`,
                                             display: 'flex',
                                             flexDirection: 'column',
                                             gap: 1.5,
+                                            borderBottom: { xl: '1px solid' },
+                                            borderImageSlice: { xl: 1 },
+                                            borderImageSource: {
+                                                xl: 'linear-gradient(to right, #373F4E 0%, #667085 50%, #373F4E 100%)'
+                                            },
                                         }}
                                     >
-                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, }}>
+
+                                        <Box sx={{
+                                            alignItems: 'center', gap: 1,
+                                            display: { xs: 'none', xl: 'flex' }
+                                        }}>
                                             <AuditLogIcon />
                                             <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>
-                                                {t('audit_log.title')}
+                                                {t('audit_log.title')}{'jinga'}
                                             </Typography>
                                         </Box>
 
-                                        <Grid container spacing={2} sx={{ mt: 1.5 }}>
+                                        <Grid container spacing={2} sx={{
+                                            mt: 1.5,
+                                            display: { xs: 'none', xl: 'flex' }
+                                        }}>
                                             <Grid item xs={12} sm={12} md={6} lg={2.5}>
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, }}>
 
@@ -460,7 +475,8 @@ export default function Page({ params }: Props) {
                                                             xs: 'none',
                                                             sm: 'none',
                                                             md: 'none',
-                                                            lg: 'inline-block',
+                                                            lg: 'none',
+                                                            xl: 'inline-flex'
                                                         }
                                                     }}>
                                                         <Button
@@ -536,44 +552,21 @@ export default function Page({ params }: Props) {
                                                     </Box>
                                                 </Grid>
                                             </Grid>
-                                            <Grid
-                                                item
-                                                xs={12}
-                                                sx={{
-                                                    display: {
-                                                        xs: 'block',
-                                                        lg: 'none',
-                                                    },
-                                                    textAlign: {
-                                                        xs: 'left',
-                                                        sm: 'left',
-                                                        md: 'right',
-                                                        lg: 'right',
-                                                    },
-                                                    width: '100%',
-                                                }}
-                                            >
-                                                <Button
-                                                    // Conditional Activation
-                                                    disabled={!canReplay}
-                                                    endIcon={<ChevronRightIcon sx={{ fontSize: 24 }} />}
-                                                    sx={{
-                                                        color: canReplay ? darkColors.textPrimary : darkColors.textDisabled,
-                                                        backgroundColor: canReplay ? '#5E66FF' : 'transparent',
-                                                        fontSize: 17,
-                                                        py: 1,
-                                                        px: 2,
-                                                        '&.Mui-disabled': {
-                                                            color: darkColors.textDisabled,
-                                                        },
-                                                        "&:hover": {
-                                                            backgroundColor: canReplay ? '#4E57E5' : 'transparent',
-                                                        }
-                                                    }}
-                                                    onClick={() => handleReplay()}
-                                                >{t('audit_log.replay')}</Button>
-                                            </Grid>
                                         </Grid>
+
+                                        <AuditLogGrid
+                                            t={t}
+                                            styles={{ darkColors }}
+                                            data={{
+                                                logType, file, date, startTime, endTime,
+                                                head, channel, outboundExpression, currentSpeed
+                                            }}
+                                            actions={{
+                                                canReplay,
+                                                handleReplay: () => handleReplay(),
+                                            }}
+                                        />
+
                                     </Box>
 
                                     <Box sx={{ p: 1.5, flex: '1 1 0', alignSelf: 'stretch', height: '100%' }}>
