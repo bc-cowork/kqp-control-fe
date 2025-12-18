@@ -67,7 +67,7 @@ export default function Page({ params }: Props) {
     const { node } = params;
     const { t } = useTranslate('replay');
     const url = endpoints.replay.info(node);
-    const { data, error, isLoading } = useSWR(url, fetcher);
+    const { data, error, isLoading, mutate } = useSWR(url, fetcher);
 
     const processData = Array.isArray(
         data?.data?.replay_status?.process_list
@@ -341,6 +341,7 @@ export default function Page({ params }: Props) {
                                             <TerminatedDialog
                                                 open={killDialogOpen}
                                                 handleClose={() => setKillDialogOpen(false)}
+                                                refresh={mutate}
                                                 pid={toolPid}
                                                 nodeId={node}
                                             />
@@ -517,6 +518,7 @@ export default function Page({ params }: Props) {
                                                                     console.error('Failed to initiate replay request:', e);
 
                                                                 } finally {
+                                                                    mutate()
                                                                     setReplaying(false);
                                                                 }
                                                             }} onClose={() => { setReplayDialogOpen(false) }} />
@@ -699,11 +701,12 @@ export default function Page({ params }: Props) {
 };
 
 // --- TerminatedDialog Component (remains the same) ---
-const TerminatedDialog = ({ open, handleClose, pid, nodeId }: {
+const TerminatedDialog = ({ open, handleClose, pid, nodeId, refresh }: {
     open: boolean;
     handleClose: () => void;
     pid: string | number;
-    nodeId: string | number
+    nodeId: string | number;
+    refresh: any
 }) => {
     const { t } = useTranslate('replay');
     const [isTerminating, setIsTerminating] = React.useState(false);
@@ -742,6 +745,7 @@ const TerminatedDialog = ({ open, handleClose, pid, nodeId }: {
             alert('A network error occurred. Please try again.');
         } finally {
             // Ensure the button state is reset regardless of success or failure
+            refresh()
             setIsTerminating(false);
         }
     };
