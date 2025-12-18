@@ -15,6 +15,8 @@ import {
     Button,
     Grid,
     Stack,
+    tableRowClasses,
+    tableCellClasses,
 } from '@mui/material';
 import { CONFIG } from 'src/config-global';
 
@@ -233,7 +235,12 @@ export default function Page({ params }: Props) {
                                         }}
                                     >
                                         <Table size="small"
-
+                                            sx={{
+                                                [`& .${tableRowClasses.root}:last-child .${tableCellClasses.root}`]: {
+                                                    borderBottomLeftRadius: '0px !important',
+                                                    borderBottomRightRadius: '0px !important',
+                                                },
+                                            }}
                                         >
                                             <TableHead >
                                                 <TableRow>
