@@ -90,7 +90,7 @@ export const FilterDialog = ({
                                     </Typography>
                                 </Box>
                             ),
-                            endAdornment: (
+                            endAdornment: expression && (
                                 <IconButton
                                     onClick={handleClearExpression}
                                     size="small"
