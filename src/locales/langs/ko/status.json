@@ -17,6 +17,8 @@
         "ch_inbound": "수신 채널",
         "ch_outbound": "송출 채널",
         "number_inbound": "수신 건수",
-        "number_outbound": "송출 건수"
+        "number_outbound": "송출 건수",
+        "no_inbound_traffic": "인바운드 트래픽 없음",
+        "no_outbound_traffic": "아웃바운드 트래픽 없음"
     }
 }

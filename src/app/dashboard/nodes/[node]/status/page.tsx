@@ -45,8 +45,12 @@ export default function Page({ params }: Props) {
         { key: 'send_channel', Item: t('table_top.ch_outbound'), data: serviceSummary.send_channel },
     ] : [];
 
-    const table2Data = traffics?.inbound || [];
-    const table3Data = traffics?.outbound || [];
+    const table2Data = (traffics?.inbound && Object.keys(traffics.inbound).length > 0)
+        ? traffics.inbound
+        : [];
+    const table3Data = (traffics?.outbound && Object.keys(traffics.outbound).length > 0)
+        ? traffics.outbound
+        : [];
 
     return (
         <DashboardContent maxWidth="xl">
@@ -130,14 +134,20 @@ export default function Page({ params }: Props) {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {table2Data.map((row: any, index: any) => (
+                                    {table2Data.length > 0 ? table2Data.map((row: any, index: any) => (
                                         <TableRow hover key={index}>
                                             <TableCell align='center' />
                                             <TableCell align='center'>{row.time}</TableCell>
                                             <TableCell align='center'>{row.channel}</TableCell>
                                             <TableCell align='center'>{row.count}</TableCell>
                                         </TableRow>
-                                    ))}
+                                    )) : (
+                                        <TableRow hover>
+                                            <TableCell colSpan={4}>
+                                                {t('table_bottom.no_inbound_traffic')}
+                                            </TableCell>
+                                        </TableRow>
+                                    )}
                                 </TableBody>
                             </Table>
                         </TableContainer>
@@ -169,7 +179,7 @@ export default function Page({ params }: Props) {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {table3Data.map((row: any, index: number | string) => (
+                                    {table3Data.length > 0 ? table3Data.map((row: any, index: number | string) => (
                                         <TableRow hover key={index}>
                                             <TableCell align='center'>{ }</TableCell>
                                             <TableCell align='center'>{row.time}</TableCell>
@@ -177,7 +187,13 @@ export default function Page({ params }: Props) {
                                             <TableCell align='center'>{row.count}</TableCell>
                                             <TableCell align='center' />
                                         </TableRow>
-                                    ))}
+                                    )) : (
+                                        <TableRow hover>
+                                            <TableCell colSpan={5}>
+                                                {t('table_bottom.no_outbound_traffic')}
+                                            </TableCell>
+                                        </TableRow>
+                                    )}
                                 </TableBody>
                             </Table>
                         </TableContainer>

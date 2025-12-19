@@ -17,6 +17,8 @@
         "ch_inbound": "Channel Inbound",
         "ch_outbound": "Channel Outbound",
         "number_inbound": "Number Inbound",
-        "number_outbound": "Number Outbound"
+        "number_outbound": "Number Outbound",
+        "no_inbound_traffic": "No Inbound Traffic",
+        "no_outbound_traffic": "No Outbound Traffic"
     }
 }
