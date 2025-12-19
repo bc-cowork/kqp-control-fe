@@ -199,6 +199,14 @@ export default function Page({ params }: Props) {
         mutate();
     }
 
+    const borderAtLarge = {
+        borderBottom: { xl: '0.5px solid' },
+        borderImageSlice: { xl: 0.5 },
+        borderImageSource: {
+            xl: 'linear-gradient(to right, #1b1c1dff 0%, #667085 50%, #1b1c1dff 100%)'
+        },
+    }
+
     return (
         <DashboardContent maxWidth="xl">
 
@@ -385,11 +393,6 @@ export default function Page({ params }: Props) {
                                             display: 'flex',
                                             flexDirection: 'column',
                                             gap: 1.5,
-                                            borderBottom: { xl: '1px solid' },
-                                            borderImageSlice: { xl: 1 },
-                                            borderImageSource: {
-                                                xl: 'linear-gradient(to right, #373F4E 0%, #667085 50%, #373F4E 100%)'
-                                            },
                                         }}
                                     >
 
@@ -399,7 +402,7 @@ export default function Page({ params }: Props) {
                                         }}>
                                             <AuditLogIcon />
                                             <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>
-                                                {t('audit_log.title')}{'jinga'}
+                                                {t('audit_log.title')}
                                             </Typography>
                                         </Box>
 
@@ -410,10 +413,16 @@ export default function Page({ params }: Props) {
                                             <Grid item xs={12} sm={12} md={6} lg={2.5}>
                                                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, }}>
 
-                                                    <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', }}>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 900, fontSize: '20px' }}>{logType || '-'}{' : '}{file || '-'}</Typography>
+                                                    <Box sx={{
+                                                        display: 'flex', gap: 1.5, alignItems: 'center',
+                                                    }}>
+                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 900, fontSize: '20px', }}>{logType || '-'}{' : '}{file || '-'}</Typography>
                                                     </Box>
-                                                    <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', }}>
+                                                    <Box sx={{
+                                                        display: 'flex', gap: 1.5, alignItems: 'center',
+                                                        ...borderAtLarge,
+                                                        paddingBottom: '12px'
+                                                    }}>
                                                         <Calendar />
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{t('audit_log.date')} </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{date || '0000-00-00'}</Typography>
@@ -421,13 +430,25 @@ export default function Page({ params }: Props) {
                                                 </Box>
                                             </Grid>
                                             <Grid item xs={12} sm={12} md={6} lg={2.5}>
-                                                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-                                                    <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
+                                                <Box sx={{
+                                                    display: 'flex', flexDirection: 'column', gap: 1.5,
+
+                                                }}>
+                                                    <Box sx={{
+                                                        display: 'flex', gap: 1.5, alignItems: 'center',
+                                                        ...borderAtLarge,
+                                                        paddingBottom: '12px'
+
+                                                    }}>
                                                         <Time />
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{t('audit_log.start_time')} </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{startTime || '00:00:00'}</Typography>
                                                     </Box>
-                                                    <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
+                                                    <Box sx={{
+                                                        display: 'flex', gap: 1.5, alignItems: 'center',
+                                                        ...borderAtLarge,
+                                                        paddingBottom: '12px'
+                                                    }}>
                                                         <Time />
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{t('audit_log.end_time')} </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{endTime || '00:00:00'}</Typography>
@@ -435,13 +456,23 @@ export default function Page({ params }: Props) {
                                                 </Box>
                                             </Grid>
                                             <Grid item xs={12} sm={12} md={6} lg={3.2}>
-                                                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-                                                    <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
+                                                <Box sx={{
+                                                    display: 'flex', flexDirection: 'column', gap: 1.5,
+                                                }}>
+                                                    <Box sx={{
+                                                        display: 'flex', gap: 1.5, alignItems: 'center',
+                                                        ...borderAtLarge,
+                                                        paddingBottom: '12px'
+                                                    }}>
                                                         <Archive />
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{t('audit_log.head')} </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{head || '-'}</Typography>
                                                     </Box>
-                                                    <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
+                                                    <Box sx={{
+                                                        display: 'flex', gap: 1.5, alignItems: 'center',
+                                                        ...borderAtLarge,
+                                                        paddingBottom: '12px'
+                                                    }}>
                                                         <Archive />
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{t('audit_log.channel_number')} </Typography>
                                                         <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{channel || '-'}</Typography>
@@ -455,15 +486,26 @@ export default function Page({ params }: Props) {
                                                     direction: 'row',
                                                     justifyContent: 'space-between',
                                                 }}>
-                                                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-                                                        <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
+                                                    <Box sx={{
+                                                        display: 'flex', flexDirection: 'column', gap: 1.5,
+                                                        minWidth: '257px',
+                                                    }}>
+                                                        <Box sx={{
+                                                            display: 'flex', gap: 1.5, alignItems: 'center',
+                                                            ...borderAtLarge,
+                                                            paddingBottom: '12px'
+                                                        }}>
                                                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                 <path d="M8.00019 1.33337C5.28495 1.33337 3.23828 2.35718 3.23828 3.71433L3.23828 12.2858C3.23828 13.6429 5.28495 14.6667 8.00019 14.6667C10.7154 14.6667 12.7621 13.6429 12.7621 12.2858L12.7621 3.71433C12.7621 2.35718 10.7154 1.33337 8.00019 1.33337ZM8.00019 2.28576C10.3249 2.28576 11.8097 3.13147 11.8097 3.71433C11.8097 4.29718 10.3249 5.1429 8.00019 5.1429C5.67542 5.1429 4.19066 4.29718 4.19066 3.71433C4.19066 3.13147 5.67447 2.28576 8.00019 2.28576ZM8.00019 13.7143C5.67447 13.7143 4.19066 12.8677 4.19066 12.2858L4.19066 5.1629C5.34671 5.82788 6.6677 6.15119 8.00019 6.09528C9.33267 6.15119 10.6537 5.82788 11.8097 5.1629L11.8097 12.2858C11.8097 12.8677 10.3249 13.7143 8.00019 13.7143Z" fill="#F4F4F8" />
                                                             </svg>
                                                             <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{t('audit_log.destination_to')} </Typography>
                                                             <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{outboundExpression || '-'}</Typography>
                                                         </Box>
-                                                        <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
+                                                        <Box sx={{
+                                                            display: 'flex', gap: 1.5, alignItems: 'center',
+                                                            ...borderAtLarge,
+                                                            paddingBottom: '12px'
+                                                        }}>
                                                             <PlayArrowOutlined sx={{ color: darkColors.textPrimary, fontSize: 18 }} />
                                                             <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{t('audit_log.speed')} </Typography>
                                                             <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{currentSpeed || '-'}</Typography>

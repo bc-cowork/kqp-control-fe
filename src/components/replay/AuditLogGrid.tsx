@@ -42,7 +42,7 @@ export const AuditLogGrid = ({ data, actions, styles, t }: { data: any, actions:
             display: { xs: 'block', xl: 'none' }
         }}>
 
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1, paddingBottom: '12px', }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1, paddingBottom: '24px', }}>
                 <Box sx={{
                     display: 'flex'
                 }}>
@@ -55,7 +55,7 @@ export const AuditLogGrid = ({ data, actions, styles, t }: { data: any, actions:
                     <ReplayButton isFullWidth={false} />
                 </Box>
             </Box>
-            <Grid container spacing={2} sx={{ mt: 1.5, position: 'relative' }}>
+            <Grid container spacing={2} sx={{ mt: 1.5, position: 'relative', paddingLeft: '12px' }}>
                 {
                     collapsed ? (
                         <ArrowDropUp
@@ -88,7 +88,7 @@ export const AuditLogGrid = ({ data, actions, styles, t }: { data: any, actions:
                         borderImageSource: 'linear-gradient(to right, #181819ff 0%, #667085 50%, #181819ff 100%)',
 
                     }}>
-                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 900, fontSize: '20px', width: '50%' }}>
+                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 900, fontSize: '20px', width: '50%', marginTop: '-4px' }}>
                             {data.logType || '-'}{' : '}{data.file || '-'}
                         </Typography>
                         <AuditLogDetailItem
