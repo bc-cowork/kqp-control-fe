@@ -60,7 +60,12 @@ const panelStyle = {
     flexDirection: 'column',
     gap: 1,
     background: `linear-gradient(180deg, ${darkColors.gray0} 80%, ${darkColors.gray1} 100%)`,
-    height: 446,
+    height: {
+        sx: '280px',
+        sm: '300px',
+        md: '340px',
+        lg: '446px'
+    }
 };
 
 // --- MAIN PAGE COMPONENT ---
@@ -238,7 +243,7 @@ export default function Page({ params }: Props) {
                                         sx={{
                                             borderRadius: '8px',
                                             height: 174,
-                                            backgroundColor: '#373F4E'
+                                            backgroundColor: '#373F4E',
                                         }}
                                     >
                                         <Table size="small"
@@ -316,7 +321,6 @@ export default function Page({ params }: Props) {
                                 <Grid item lg={4} xs={12} sm={8} md={6}>
                                     <Box
                                         sx={{
-                                            height: 189,
                                             borderRadius: '8px',
                                             border: `1px solid ${darkColors.border}`,
                                             p: 2,
@@ -324,7 +328,11 @@ export default function Page({ params }: Props) {
                                             flexDirection: 'column',
                                             gap: 1.5,
                                             sx: {
-                                                minWidth: '300px'
+                                                minWidth: '300px',
+                                            },
+                                            height: {
+                                                xs: "128px",
+                                                lg: '189px'
                                             }
                                         }}
                                     >
