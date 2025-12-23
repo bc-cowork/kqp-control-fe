@@ -562,7 +562,7 @@ export default function Page({ params }: Props) {
                                                                     head,
                                                                     speed: currentSpeed,
                                                                 }
-                                                                const BASE_URL = `${CONFIG.serverUrl}/apik/prod1/replay`;
+                                                                const BASE_URL = `${CONFIG.serverUrl}/apik/${node}/replay`;
 
                                                                 const paramsLocal = new URLSearchParams(replayData).toString();
                                                                 const fullUrl = `${BASE_URL}?${paramsLocal}`;
