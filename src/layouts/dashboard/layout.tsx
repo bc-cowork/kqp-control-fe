@@ -105,7 +105,7 @@ export function DashboardLayout({ sx, children, header, data }: DashboardLayoutP
         },
 
         ...sx,
-        backgroundColor: '#141C2A',
+        backgroundColor: theme.palette.mode === 'dark' ? '#141C2A' : '#F9FAFB',
       }}
     >
       <Main isNavHorizontal={isNavHorizontal}>{children}</Main>

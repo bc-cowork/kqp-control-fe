@@ -31,6 +31,8 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
     <Box
       sx={{
         borderRadius: '12px',
+        backgroundColor: theme.palette.mode === 'dark' ? 'transparent' : theme.palette.grey[800],
+        padding: theme.palette.mode === 'dark' ? '0px' : '4px'
       }}
     >
       {statusLoading ? (
@@ -38,12 +40,13 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
       ) : statusError ? (
         <Typography>Error Fetching Status</Typography>
       ) : (
-        <Box>
+        <Box
+        >
           <Box
             sx={{
               p: 2,
               background: `radial-gradient(100% 100% at 0% 100%, ${isOnline ? success.dark : error.dark} 0%, ${isOnline ? '#1D2F20' : '#331B1E'} 100%)`,
-              mb: '12px',
+              mb: theme.palette.mode === 'dark' ? '12px' : '4px',
               borderRadius: '8px',
               border: `1px solid ${isOnline ? '#36573C' : '#4A2C31'}`,
             }}
@@ -109,14 +112,14 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
           <Box
             sx={{
               p: 2,
-              mb: '12px',
+              mb: theme.palette.mode === 'dark' ? '12px' : '4px',
               borderRadius: '8px',
-              backgroundColor: theme.palette.grey[800],
-              height: 'calc(100vh - 475px)',
+              backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : theme.palette.primary.contrastText,
+              height: theme.palette.mode === 'dark' ? 'calc(100vh - 475px)' : 'calc(100vh - 464px)'
             }}
           >
             <Stack direction="row" sx={{ mb: 1.5 }}>
-              <Typography variant="subtitle2" sx={{ width: '60%', color: grey[400] }}>
+              <Typography variant="subtitle2" sx={{ width: '60%', color: theme.palette.mode === 'dark' ? grey[400] : grey[800] }}>
                 {t('left_side.emitable')}
               </Typography>
               <Typography variant="body2">
@@ -128,22 +131,40 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
               </Typography>
             </Stack>
             <Stack direction="row" sx={{ mb: 1.5 }}>
-              <Typography variant="subtitle2" sx={{ width: '60%', color: grey[400] }}>
+              <Typography variant="subtitle2" sx={{ width: '60%', color: theme.palette.mode === 'dark' ? grey[400] : grey[800] }}>
                 {t('left_side.emit_count')}
               </Typography>
-              <Typography variant="body2">
+              <Typography variant="body2"
+                style={{
+                  color: theme.palette.mode === 'dark' ? grey[50] : grey[400]
+                }}
+              >
                 {selectedNode.emit_count.toLocaleString()}
               </Typography>
             </Stack>
           </Box>
 
-          <Box sx={{ p: 2, borderRadius: '8px', backgroundColor: theme.palette.grey[800] }}>
-            <Typography sx={{ fontSize: 17, fontWeight: 500, color: '#AFB7C8' }}>
+          <Box sx={{
+            p: 2, borderRadius: '8px',
+            backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : theme.palette.primary.contrastText,
+          }}>
+            <Typography sx={{
+              fontSize: 17, fontWeight: 500,
+              color: theme.palette.mode === 'dark' ? '#AFB7C8' : grey[800]
+            }}>
               {t('left_side.disk')}
             </Typography>
-            <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50] }}>{diskMetricsData?.disk_used_size}%</Typography>
-            <Typography sx={{ fontSize: 16, fontWeight: 400, color: '#AFB7C8' }}>
-              <Box component="span" sx={{ fontWeight: 500, color: grey[50] }}>
+            <Typography sx={{
+              fontSize: 28, fontWeight: 500,
+              color: theme.palette.mode === 'dark' ? grey[50] : grey[800]
+            }}>{diskMetricsData?.disk_used_size}%</Typography>
+            <Typography sx={{
+              fontSize: 16, fontWeight: 400, color: theme.palette.mode === 'dark' ? '#D1D6E0' : '#667085'
+            }}>
+              <Box component="span" sx={{
+                fontWeight: 500,
+                color: theme.palette.mode === 'dark' ? grey[50] : grey[400]
+              }}>
                 {diskMetricsData?.disk_usage} GB
               </Box>{' '}
               of {diskMetricsData?.disk_total_size} GB

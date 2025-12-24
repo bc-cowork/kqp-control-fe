@@ -27,17 +27,17 @@ const MuiTable: Components<Theme>['MuiTable'] = {
 
 const MuiTableRow: Components<Theme>['MuiTableRow'] = {
   styleOverrides: {
-    root: ({ theme }) => ({
+    root: ({ theme }: any) => ({
       backgroundColor: theme.palette.primary.darker,
       border: 'none',
       '&:nth-child(odd)': {
-        backgroundColor: '#202838',
+        backgroundColor: theme.palette.mode === 'dark' ? theme.palette.primary.tableRowOdd : theme.palette.primary.tableRowLightOdd,
       },
       '&:nth-child(even)': {
-        backgroundColor: '#141C2A',
+        backgroundColor: theme.palette.mode === 'dark' ? theme.palette.primary.tableRowEven : theme.palette.primary.tableRowLightEven,
       },
-      '&:hover': { backgroundColor: theme.palette.primary.main, color: 'red' },
-      '&:active': { backgroundColor: theme.palette.primary.main, color: 'red' },
+      '&:hover': { backgroundColor: theme.palette.mode === 'dark' ? theme.palette.primary.main : 'rgba(0,0,0,0.1)', color: 'red' },
+      '&:active': { backgroundColor: theme.palette.mode === 'dark' ? theme.palette.primary.main : 'rgba(0,0,0,0.1)', color: 'red' },
       [`&.${tableRowClasses.selected}`]: {
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.primary.contrastText,
@@ -60,11 +60,11 @@ const MuiTableCell: Components<Theme>['MuiTableCell'] = {
       overflow: 'hidden',
       textOverflow: 'ellipsis',
     },
-    head: ({ theme }) => ({
+    head: ({ theme }: any) => ({
       fontSize: 17,
       color: theme.palette.primary.contrastText,
       fontWeight: 400,
-      backgroundColor: theme.palette.primary.darker,
+      backgroundColor: theme.palette.mode === 'dark' ? theme.palette.primary.tableHead : theme.palette.primary.tableHeadLight,
       '&:first-of-type': { borderTopLeftRadius: '8px', borderBottomLeftRadius: '0px' },
       '&:last-of-type': { borderTopRightRadius: '8px', borderBottomRightRadius: '0px' },
       // Ensure sticky header cells keep these styles
@@ -74,7 +74,7 @@ const MuiTableCell: Components<Theme>['MuiTableCell'] = {
     }),
     body: ({ theme }) => ({
       fontSize: 15,
-      color: theme.palette.primary.contrastText,
+      color: theme.palette.mode === 'dark' ? theme.palette.primary.contrastText : theme.palette.primary.darker,
       'tr:first-child &': {
         '&:first-of-type': { borderTopLeftRadius: '0px' },
         '&:last-of-type': { borderTopRightRadius: '0px' },

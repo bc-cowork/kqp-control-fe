@@ -118,8 +118,11 @@ export default function Page({ params }: Props) {
 
                     <Grid item xs={12} md={5}>
                         <Paper sx={{ height: '100%', }} >
-                            <Box sx={{ backgroundColor: '#667085', p: 1.5, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
-                                <Typography sx={{ fontWeight: 600 }}>{t('detail_table.script_title')}</Typography>
+                            <Box sx={{ backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#667085' : '#E0E4EB', p: 1.5, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
+                                <Typography sx={{
+                                    fontWeight: 600,
+                                    color: (theme) => theme.palette.mode === 'dark' ? grey[300] : '#4E576A'
+                                }}>{t('detail_table.script_title')}</Typography>
                             </Box>
 
                             <Box sx={{ bgcolor: '#202838', height: 'calc(100% - 48px)', overflowY: 'auto' }}>

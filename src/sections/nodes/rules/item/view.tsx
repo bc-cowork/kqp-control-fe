@@ -26,7 +26,7 @@ export function RuleDetailView({ nodeId, code }: Props) {
           { pageName: 'Rule Detail' },
         ]}
       />
-      <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50], mt: 2 }}>
+      <Typography sx={{ fontSize: 28, fontWeight: 600, color: (theme) => theme.palette.mode === 'dark' ? grey[50] : '#373F4E', mt: 2 }}>
         Rule Detail
       </Typography>
       <Box

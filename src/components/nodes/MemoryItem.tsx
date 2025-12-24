@@ -70,7 +70,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
         justifyContent: 'space-between',
         alignItems: 'flex-end'
       }}>
-        <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50], mt: 2 }}>
+        <Typography sx={{ fontSize: 28, fontWeight: 600, color: (theme) => theme.palette.mode === 'dark' ? grey[50] : '#373F4E', mt: 2 }}>
           {issueInfo.name || '-'}
         </Typography>
         {

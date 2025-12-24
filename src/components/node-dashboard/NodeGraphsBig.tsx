@@ -45,7 +45,7 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
   return (
     <Box
       sx={{
-        bgcolor: theme.palette.grey[800],
+        bgcolor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : theme.palette.primary.contrastText,
         minHeight: {
           xs: 'auto',
           md: 'calc(100vh - 187px)',
