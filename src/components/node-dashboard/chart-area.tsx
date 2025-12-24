@@ -127,7 +127,7 @@ export function ChartArea({
         alignItems="center"
         sx={{ mt: 1, mx: 1 }}
       >
-        <Typography sx={{ fontSize: 15, color: theme.palette.grey[300] }}>{titleString}</Typography>
+        <Typography sx={{ fontSize: 15, color: theme.palette.mode === 'dark' ? theme.palette.grey[300] : '#667085' }}>{titleString}</Typography>
         {tabs && tabValue && onTabChange && (
           <SegmentedButtonGroupChart
             tabs={tabs}
