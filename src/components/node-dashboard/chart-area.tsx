@@ -101,13 +101,19 @@ export function ChartArea({
   const minValue = 0;
   const maxValue = 100;
 
+  const fillColor = theme.palette.mode === 'dark' ? theme.palette.grey[800] : 'white'
+  const strokeColor = theme.palette.mode === 'dark' ? theme.palette.grey[500] : theme.palette.grey[100]
+  const fillXis = theme.palette.mode === 'dark' ? theme.palette.grey[400] : '#AFB7C8'
+
+
+
   return (
     <Box
       sx={{
         border: 1,
-        borderColor: theme.palette.grey[500],
+        borderColor: theme.palette.mode === 'dark' ? theme.palette.grey[500] : theme.palette.grey[50],
+        bgcolor: theme.palette.mode === 'dark' ? '#141C2A' : '#F9FAFB',
         borderRadius: 1,
-        bgcolor: '#141C2A',
         height,
         display: 'flex',
         flexDirection: 'column',
@@ -141,17 +147,17 @@ export function ChartArea({
           <CircularProgress />
         ) : (
           <AreaChart data={data} margin={{ top: 0, right: 5, left: -20, bottom: 0 }}>
-            <CartesianGrid stroke={theme.palette.grey[500]} fill={theme.palette.grey[800]} />
+            <CartesianGrid stroke={strokeColor} fill={fillColor} />
             <XAxis
               dataKey="timestamp"
-              tick={{ fontSize: 12, fill: theme.palette.grey[400] }}
+              tick={{ fontSize: 12, fill: fillXis }}
               tickLine={false}
-              axisLine={{ stroke: theme.palette.grey[500] }}
+              axisLine={{ stroke: strokeColor }}
             />
             <YAxis
-              tick={{ fontSize: 12, fill: theme.palette.grey[400] }}
+              tick={{ fontSize: 12, fill: fillXis }}
               tickLine={false}
-              axisLine={{ stroke: theme.palette.grey[500] }}
+              axisLine={{ stroke: strokeColor }}
               domain={[minValue, maxValue]}
               tickFormatter={
                 metric === 'inbound_bytes' || metric === 'outbound_bytes'

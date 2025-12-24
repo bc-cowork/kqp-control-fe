@@ -31,6 +31,8 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
     <Box
       sx={{
         borderRadius: '12px',
+        backgroundColor: theme.palette.mode === 'dark' ? 'transparent' : theme.palette.grey[800],
+        padding: theme.palette.mode === 'dark' ? '0px' : '4px'
       }}
     >
       {statusLoading ? (
@@ -38,12 +40,13 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
       ) : statusError ? (
         <Typography>Error Fetching Status</Typography>
       ) : (
-        <Box>
+        <Box
+        >
           <Box
             sx={{
               p: 2,
               background: `radial-gradient(100% 100% at 0% 100%, ${isOnline ? success.dark : error.dark} 0%, ${isOnline ? '#1D2F20' : '#331B1E'} 100%)`,
-              mb: '12px',
+              mb: theme.palette.mode === 'dark' ? '12px' : '4px',
               borderRadius: '8px',
               border: `1px solid ${isOnline ? '#36573C' : '#4A2C31'}`,
             }}
@@ -109,10 +112,10 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
           <Box
             sx={{
               p: 2,
-              mb: '12px',
+              mb: theme.palette.mode === 'dark' ? '12px' : '4px',
               borderRadius: '8px',
-              backgroundColor: theme.palette.grey[800],
-              height: 'calc(100vh - 475px)',
+              backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : theme.palette.primary.contrastText,
+              height: theme.palette.mode === 'dark' ? 'calc(100vh - 475px)' : 'calc(100vh - 464px)'
             }}
           >
             <Stack direction="row" sx={{ mb: 1.5 }}>
@@ -137,7 +140,10 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
             </Stack>
           </Box>
 
-          <Box sx={{ p: 2, borderRadius: '8px', backgroundColor: theme.palette.grey[800] }}>
+          <Box sx={{
+            p: 2, borderRadius: '8px',
+            backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : theme.palette.primary.contrastText,
+          }}>
             <Typography sx={{ fontSize: 17, fontWeight: 500, color: '#AFB7C8' }}>
               {t('left_side.disk')}
             </Typography>

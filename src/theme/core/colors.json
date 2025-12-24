@@ -6,7 +6,13 @@
     "dark": "#4A3BFF",
     "darker": "#667085",
     "darkest": "#212447",
-    "contrastText": "#FFFFFF"
+    "contrastText": "#FFFFFF",
+    "tableHead": "#667085",
+    "tableRowOdd": "#202838",
+    "tableRowEven": "#141C2A",
+    "tableHeadLight": "#1D2654",
+    "tableRowLightOdd": "#FFFFFF",
+    "tableRowLightEven": "#F9FAFB"
   },
   "secondary": {
     "lighter": "#EFD6FF",
