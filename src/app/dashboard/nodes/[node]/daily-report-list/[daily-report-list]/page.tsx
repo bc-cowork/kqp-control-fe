@@ -99,8 +99,11 @@ export default function Page({ params }: Props) {
             </TableContainer>
             <Paper sx={{ height: '100%', }} >
 
-                <Box sx={{ backgroundColor: '#667085', p: 1.5, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
-                    <Typography sx={{ fontWeight: 600, color: grey[300] }}>{t('report')}</Typography>
+                <Box sx={{ backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#667085' : '#E0E4EB', p: 1.5, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
+                    <Typography sx={{
+                        fontWeight: 600,
+                        color: (theme) => theme.palette.mode === 'dark' ? grey[300] : '#4E576A'
+                    }}>{t('report')}</Typography>
                 </Box>
 
                 <Box sx={{ bgcolor: '#202838', height: 'calc(100vh - 48px)', overflowY: 'auto' }}>
