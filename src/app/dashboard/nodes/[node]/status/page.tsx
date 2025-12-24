@@ -56,7 +56,7 @@ export default function Page({ params }: Props) {
         <DashboardContent maxWidth="xl">
             <Breadcrumb node={node} pages={[{ pageName: t('top.title') }]} />
             <Stack direction="row" alignItems="baseline" justifyContent="space-between">
-                <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50], mt: 2 }}>
+                <Typography sx={{ fontSize: 28, fontWeight: 600, color: (theme) => theme.palette.mode === 'dark' ? grey[50] : '#373F4E', mt: 2 }}>
                     {t('top.title')}
                 </Typography>
                 <RrefreshButton onRefresh={() => console.log("Refreshed!")} />
