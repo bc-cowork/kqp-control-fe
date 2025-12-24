@@ -119,7 +119,7 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
             }}
           >
             <Stack direction="row" sx={{ mb: 1.5 }}>
-              <Typography variant="subtitle2" sx={{ width: '60%', color: grey[400] }}>
+              <Typography variant="subtitle2" sx={{ width: '60%', color: theme.palette.mode === 'dark' ? grey[400] : grey[800] }}>
                 {t('left_side.emitable')}
               </Typography>
               <Typography variant="body2">
@@ -131,10 +131,14 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
               </Typography>
             </Stack>
             <Stack direction="row" sx={{ mb: 1.5 }}>
-              <Typography variant="subtitle2" sx={{ width: '60%', color: grey[400] }}>
+              <Typography variant="subtitle2" sx={{ width: '60%', color: theme.palette.mode === 'dark' ? grey[400] : grey[800] }}>
                 {t('left_side.emit_count')}
               </Typography>
-              <Typography variant="body2">
+              <Typography variant="body2"
+                style={{
+                  color: theme.palette.mode === 'dark' ? grey[50] : grey[400]
+                }}
+              >
                 {selectedNode.emit_count.toLocaleString()}
               </Typography>
             </Stack>
@@ -144,12 +148,23 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
             p: 2, borderRadius: '8px',
             backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : theme.palette.primary.contrastText,
           }}>
-            <Typography sx={{ fontSize: 17, fontWeight: 500, color: '#AFB7C8' }}>
+            <Typography sx={{
+              fontSize: 17, fontWeight: 500,
+              color: theme.palette.mode === 'dark' ? '#AFB7C8' : grey[800]
+            }}>
               {t('left_side.disk')}
             </Typography>
-            <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50] }}>{diskMetricsData?.disk_used_size}%</Typography>
-            <Typography sx={{ fontSize: 16, fontWeight: 400, color: '#AFB7C8' }}>
-              <Box component="span" sx={{ fontWeight: 500, color: grey[50] }}>
+            <Typography sx={{
+              fontSize: 28, fontWeight: 500,
+              color: theme.palette.mode === 'dark' ? grey[50] : grey[800]
+            }}>{diskMetricsData?.disk_used_size}%</Typography>
+            <Typography sx={{
+              fontSize: 16, fontWeight: 400, color: theme.palette.mode === 'dark' ? '#D1D6E0' : '#667085'
+            }}>
+              <Box component="span" sx={{
+                fontWeight: 500,
+                color: theme.palette.mode === 'dark' ? grey[50] : grey[400]
+              }}>
                 {diskMetricsData?.disk_usage} GB
               </Box>{' '}
               of {diskMetricsData?.disk_total_size} GB
