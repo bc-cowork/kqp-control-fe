@@ -197,7 +197,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
           </Grid>
           <Grid md={12} lg={3.5} sx={{ pl: 1.5, mb: '24px' }}>
             <Box sx={{ borderRadius: '12px', backgroundColor: grey[900], p: 1 }}>
-              <Grid container rowSpacing={'8px'} columnSpacing={'24px'}>
+              <Grid container rowSpacing='8px' columnSpacing='24px'>
                 <Grid xs={12} md={6} lg={12} xl={12}>
                   <Box sx={{ pt: 1, px: 1 }}>
                     <Stack direction="row" alignItems="center">
@@ -313,6 +313,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                       value={frameSeq}
                       setValue={setFrameSeq}
                       type="number"
+                      // eslint-disable-next-line react/jsx-no-bind
                       onKeyDownHandler={handleMoveToFrame}
                       sx={{ mt: 1 }}
                     />
