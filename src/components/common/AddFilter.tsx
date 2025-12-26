@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from 'react';
 
-import { Box, Grid, Stack, Button, Popover, SvgIcon, Typography } from '@mui/material';
+import { Box, Grid, Stack, Button, Popover, SvgIcon, Typography, useTheme } from '@mui/material';
 
 import { useTranslate } from 'src/locales';
 import { grey, primary } from 'src/theme/core';
@@ -40,6 +40,7 @@ const AddFilter: React.FC<AddFilterProps> = ({
   const { t } = useTranslate('memory');
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const theme = useTheme();
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -89,12 +90,15 @@ const AddFilter: React.FC<AddFilterProps> = ({
     }
   };
 
+  const fillColor = theme.palette.mode === 'dark' ? grey[50] : '#667085'
+
   return (
     <Box
       sx={{
         borderTopLeftRadius: '12px',
         borderTopRightRadius: '12px',
-        backgroundColor: '#212447',
+        backgroundColor: (theme) => theme.palette.mode === 'dark' ? "#212447" : '#EFF6FF',
+        border: (theme) => theme.palette.mode === 'dark' ? "1px solid #212447" : '1px solid #DFEAFF',
         p: 1,
         pt: 1.5,
       }}
@@ -109,10 +113,11 @@ const AddFilter: React.FC<AddFilterProps> = ({
               mr: 1,
               textTransform: 'none',
               borderRadius: '4px',
-              color: grey[300],
               fontWeight: 400,
+              borderColor: (theme) => theme.palette.mode === 'dark' ? '#4E576A' : '#E0E4EB',
+              color: (theme) => theme.palette.mode === 'dark' ? grey[300] : "#667085",
+              backgroundColor: (theme) => theme.palette.mode === 'dark' ? "#202838" : "white",
               fontSize: 15,
-              borderColor: grey[400],
               height: '32px',
             }}
             endIcon={
@@ -144,7 +149,7 @@ const AddFilter: React.FC<AddFilterProps> = ({
                       fillRule="evenodd"
                       clipRule="evenodd"
                       d="M13.1566 5.60174C13.3755 5.79877 13.3933 6.13599 13.1963 6.35494L8.39677 11.6883C8.29563 11.8007 8.15154 11.8648 8.00034 11.8648C7.84915 11.8649 7.70505 11.8007 7.60391 11.6883L2.80391 6.35496C2.60686 6.13602 2.62461 5.7988 2.84355 5.60176C3.06249 5.40471 3.39971 5.42246 3.59675 5.6414L8.00031 10.5342L12.4034 5.64142C12.6004 5.42247 12.9376 5.40471 13.1566 5.60174Z"
-                      fill={(grey[50] as string)}
+                      fill={fillColor}
                     />
                   </svg>
                 )}
@@ -214,12 +219,14 @@ const AddFilter: React.FC<AddFilterProps> = ({
               ml: 1,
               textTransform: 'none',
               borderRadius: '4px',
-              color: theme => theme.palette.grey[200],
               fontWeight: 400,
               fontSize: 15,
               border: `1px solid ${grey[200]}`,
               height: '32px',
               px: 1,
+              borderColor: (theme) => theme.palette.mode === 'dark' ? 'white' : '#E0E4EB',
+              color: (theme) => theme.palette.mode === 'dark' ? 'white' : "#667085",
+              backgroundColor: (theme) => theme.palette.mode === 'dark' ? "#373F4E" : "white",
             }}
             onClick={handleReset}
             size="small"
