@@ -146,13 +146,17 @@ export function ChartArea({
   const minValue = 0;
   const maxValue = 100;
 
+  const fillColor = theme.palette.mode === 'dark' ? theme.palette.grey[800] : 'white'
+  const strokeColor = theme.palette.mode === 'dark' ? theme.palette.grey[500] : theme.palette.grey[100]
+  const fillXis = theme.palette.mode === 'dark' ? theme.palette.grey[400] : '#AFB7C8'
+
   return (
     <Box
       sx={{
         border: 1,
-        borderColor: theme.palette.grey[500],
+        borderColor: theme.palette.mode === 'dark' ? theme.palette.grey[500] : "#F0F1F5",
         borderRadius: 1,
-        bgcolor: '#141C2A',
+        backgroundColor: theme.palette.mode === 'dark' ? '#141C2A' : "#F9FAFB",
         height,
         display: 'flex',
         flexDirection: 'column',
@@ -167,7 +171,10 @@ export function ChartArea({
         alignItems="center"
         sx={{ my: 1, mx: 1 }}
       >
-        <Typography sx={{ fontSize: 15, color: theme.palette.grey[100] }}>{title}</Typography>
+        <Typography sx={{
+          fontSize: 15,
+          color: theme.palette.mode === 'dark' ? theme.palette.grey[100] : '#667085'
+        }}>{title}</Typography>
         <SegmentedButtonGroupChart
           tabs={tabs}
           value={tabValue}
@@ -185,17 +192,17 @@ export function ChartArea({
             data={data}
             margin={{ top: 0, right: 5, left: -20, bottom: layout === '1x4' ? 10 : 0 }}
           >
-            <CartesianGrid stroke={theme.palette.grey[400]} />
+            <CartesianGrid stroke={strokeColor} fill={fillColor} />
             <XAxis
               dataKey="timestamp"
-              tick={{ fontSize: 12, fill: theme.palette.text.secondary }}
+              tick={{ fontSize: 12, fill: fillXis }}
               tickLine={false}
-              axisLine={{ stroke: theme.palette.grey[400] }}
+              axisLine={{ stroke: strokeColor }}
             />
             <YAxis
-              tick={{ fontSize: 12, fill: theme.palette.text.secondary }}
+              tick={{ fontSize: 12, fill: fillXis }}
               tickLine={false}
-              axisLine={{ stroke: theme.palette.grey[400] }}
+              axisLine={{ stroke: strokeColor }}
               domain={[minValue, maxValue]}
               tickFormatter={
                 metric === 'inbound_bytes' || metric === 'outbound_bytes'
