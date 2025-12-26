@@ -52,7 +52,11 @@ export function DashboardView() {
   return (
     <DashboardContent maxWidth='xl'>
       <Breadcrumb />
-      <Typography sx={{ fontSize: 28, fontWeight: 500, color: theme.palette.grey[50], mt: 2 }}>
+      <Typography sx={{
+        fontSize: 28, fontWeight: 600,
+        color: (theme) => theme.palette.mode === 'dark' ? grey[50] : '#373F4E',
+        mt: 2
+      }}>
         {t('top.dashboard')}
       </Typography>
       <Box
@@ -146,7 +150,7 @@ export function DashboardView() {
               sx={{
                 fontSize: 17,
                 fontWeight: 500,
-                color: '#AFB7C8',
+                color: (theme) => theme.palette.mode === 'dark' ? '#AFB7C8' : '#373F4E',
                 mb: 1,
               }}
             >

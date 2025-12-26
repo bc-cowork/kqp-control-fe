@@ -67,7 +67,7 @@ export function NodeList({
   };
 
   return (
-    <TableContainer component={Paper} sx={{ height: 'calc(100vh - 400px)', backgroundColor: 'transparent' }}>
+    <TableContainer component={Paper} sx={{ height: 'calc(100vh - 400px)' }}>
       <Table
         size="small"
         sx={{
@@ -105,12 +105,19 @@ export function NodeList({
                 key={node.id}
                 selected={selectedNode?.id === node.id}
                 onClick={() => onSelectedNode(node)}
-                sx={{ cursor: 'pointer' }}
+
+                sx={{
+                  cursor: 'pointer',
+                }}
               >
                 <TableCell>
                   <Chip
                     label={node.online_status ? 'Online' : 'Offline'}
                     color={node.online_status ? 'success' : 'error'}
+                    sx={{
+                      backgroundColor: (theme) => theme.palette.mode === 'dark' ? (node.online_status ? '#1D2F20' : '#331B1E') : (node.online_status ? '#EBFBE9' : '#FFF2F4'),
+                      border: (theme) => theme.palette.mode === 'dark' ? (node.online_status ? '1px solid #36573C' : '1px solid #4A2C31') : (node.online_status ? '1px solid #DDF4DA' : '1px solid #FFD8D8'),
+                    }}
                     size="small"
                     variant="status"
                     icon={
@@ -141,15 +148,10 @@ export function NodeList({
                 <TableCell>{node.name}</TableCell>
                 <TableCell>{node.desc}</TableCell>
                 <TableCell>
-                  {node.emittable ? (
-                    <Chip label="Yes" color="success" size="small" variant="outlined" sx={{
-                      backgroundColor: '#1D2F20',
-                    }} />
-                  ) : (
-                    <Chip label="No" color="error" size="small" variant="outlined" sx={{
-                      backgroundColor: '#331B1E'
-                    }} />
-                  )}
+                  <Chip label={node.emittable ? "Yes" : "No"} color={node.emittable ? "success" : "error"} size="small" variant="outlined" sx={{
+                    backgroundColor: (theme) => theme.palette.mode === 'dark' ? (node.emittable ? '#1D2F20' : '#331B1E') : (node.emittable ? '#EBFBE9' : '#FFF2F4'),
+                    border: (theme) => theme.palette.mode === 'dark' ? (node.emittable ? '1px solid #36573C' : '1px solid #4A2C31') : (node.emittable ? '1px solid #DDF4DA' : '1px solid #FFD8D8'),
+                  }} />
                 </TableCell>
                 <TableCell align="right">{node.emit_count.toLocaleString()}</TableCell>
               </TableRow>
