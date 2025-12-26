@@ -67,7 +67,7 @@ export function NodeList({
   };
 
   return (
-    <TableContainer component={Paper} sx={{ height: 'calc(100vh - 400px)' }}>
+    <TableContainer component={Paper} sx={{ height: 'calc(100vh - 100px)', backgroundColor: 'transparent' }}>
       <Table
         size="small"
         sx={{

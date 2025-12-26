@@ -190,7 +190,7 @@ export function DashboardView() {
                   sx={{
                     fontSize: 17,
                     fontWeight: 500,
-                    color: '#AFB7C8',
+                    color: (theme) => theme.palette.mode === 'dark' ? "#AFB7C8" : "#373F4E",
                     mb: 1,
                   }}
                 >

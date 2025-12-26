@@ -38,6 +38,8 @@ export function NodeStatus({
         height: '500px',
         display: 'flex',
         flexDirection: 'column',
+        backgroundColor: theme.palette.mode === 'dark' ? 'transparent' : '#F0F1F5',
+        padding: theme.palette.mode === 'dark' ? '0px' : '4px'
       }}
     >
       {statusLoading ? (
@@ -52,7 +54,7 @@ export function NodeStatus({
               py: 2,
               px: 1,
               background: `radial-gradient(100% 100% at 0% 100%, ${isOnline ? success.dark : error.dark} 0%, ${isOnline ? '#1D2F20' : '#331B1E'} 100%)`,
-              mb: '12px',
+              mb: theme.palette.mode === 'dark' ? '8px' : '4px',
               borderRadius: '8px',
               border: `1px solid ${isOnline ? '#36573C' : '#4A2C31'}`,
               flexShrink: 0,
@@ -121,37 +123,32 @@ export function NodeStatus({
             sx={{
               py: 2,
               px: 1,
-              mb: '12px',
+              mb: theme.palette.mode === 'dark' ? '8px' : '4px',
+              border: theme.palette.mode === 'dark' ? '1px solid #4E576A' : 'transparent',
               borderRadius: '8px',
-              backgroundColor: grey[800],
-              border: '1px solid #4E576A',
-              flexGrow: 1,
-              minHeight: 0,
+              backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : theme.palette.primary.contrastText,
+              height: theme.palette.mode === 'dark' ? 'calc(100vh - 475px)' : 'calc(100vh - 464px)'
             }}
           >
             <Stack direction="row" sx={{ mb: 1.5 }}>
-              <Typography variant="subtitle2" sx={{ width: '60%', color: grey[400] }}>
+              <Typography variant="subtitle2" sx={{ width: '60%', color: theme.palette.mode === 'dark' ? grey[400] : grey[800] }}>
                 {t('info.emittable')}
               </Typography>
               <Typography variant="body2">
                 {selectedNode.emittable ? (
-                  <Chip label={t('info.true')} color="success" size="small" variant="outlined"
-                    sx={{
-                      backgroundColor: '#1D2F20',
-                    }}
-                  />
+                  <Chip label={t('info.true')} color="success" size="small" variant="outlined" />
                 ) : (
-                  <Chip label={t('info.false')} color="error" size="small" variant="outlined" sx={{
-                    backgroundColor: '#331B1E',
-                  }} />
+                  <Chip label={t('info.false')} color="error" size="small" variant="outlined" />
                 )}
               </Typography>
             </Stack>
             <Stack direction="row" sx={{ mb: 1.5 }}>
-              <Typography variant="subtitle2" sx={{ width: '60%', color: grey[400] }}>
+              <Typography variant="subtitle2" sx={{ width: '60%', color: theme.palette.mode === 'dark' ? grey[400] : grey[800] }}>
                 {t('info.emit_count')}
               </Typography>
-              <Typography variant="body2" sx={{ color: grey[50] }}>
+              <Typography variant="body2" sx={{
+                color: theme.palette.mode === 'dark' ? grey[50] : grey[400]
+              }}>
                 {selectedNode.emit_count.toLocaleString()}
               </Typography>
             </Stack>
@@ -162,17 +159,23 @@ export function NodeStatus({
             py: 2,
             px: 1,
             borderRadius: '8px',
-            backgroundColor: grey[800],
-            border: '1px solid #4E576A',
+            backgroundColor: theme.palette.mode === 'dark' ? grey[800] : 'white',
+            border: theme.palette.mode === 'dark' ? '1px solid #4E576A' : 'transparent',
             height: '150px',
             flexShrink: 0,
           }}>
-            <Typography sx={{ fontSize: 17, fontWeight: 500, color: '#AFB7C8' }}>
+            <Typography sx={{
+              fontSize: 17, fontWeight: 600, color: theme.palette.mode === 'dark' ? '#AFB7C8' : grey[800]
+            }}>
               {t('disk.disk')}
             </Typography>
-            <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50] }}>{diskMetricsData?.disk_used_size}%</Typography>
-            <Typography sx={{ fontSize: 16, fontWeight: 400, color: '#AFB7C8' }}>
-              <Box component="span" sx={{ fontWeight: 500, color: grey[50] }}>
+            <Typography sx={{
+              fontSize: 28, fontWeight: 500, color: theme.palette.mode === 'dark' ? grey[50] : grey[800]
+            }}>{diskMetricsData?.disk_used_size}%</Typography>
+            <Typography sx={{ fontSize: 16, fontWeight: 400, color: theme.palette.mode === 'dark' ? '#D1D6E0' : '#667085' }}>
+              <Box component="span" sx={{
+                fontWeight: 500, color: theme.palette.mode === 'dark' ? grey[50] : grey[400]
+              }}>
                 {diskMetricsData?.disk_usage} GB
               </Box>{' '}
               of {diskMetricsData?.disk_total_size} GB
