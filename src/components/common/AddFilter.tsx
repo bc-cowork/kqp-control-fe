@@ -97,8 +97,8 @@ const AddFilter: React.FC<AddFilterProps> = ({
       sx={{
         borderTopLeftRadius: '12px',
         borderTopRightRadius: '12px',
-        backgroundColor: (theme) => theme.palette.mode === 'dark' ? "#212447" : '#EFF6FF',
-        border: (theme) => theme.palette.mode === 'dark' ? "1px solid #212447" : '1px solid #DFEAFF',
+        backgroundColor: theme.palette.mode === 'dark' ? "#212447" : '#EFF6FF',
+        border: theme.palette.mode === 'dark' ? "1px solid #212447" : '1px solid #DFEAFF',
         p: 1,
         pt: 1.5,
       }}
@@ -114,9 +114,9 @@ const AddFilter: React.FC<AddFilterProps> = ({
               textTransform: 'none',
               borderRadius: '4px',
               fontWeight: 400,
-              borderColor: (theme) => theme.palette.mode === 'dark' ? '#4E576A' : '#E0E4EB',
-              color: (theme) => theme.palette.mode === 'dark' ? grey[300] : "#667085",
-              backgroundColor: (theme) => theme.palette.mode === 'dark' ? "#202838" : "white",
+              borderColor: theme.palette.mode === 'dark' ? '#4E576A' : '#E0E4EB',
+              color: theme.palette.mode === 'dark' ? grey[300] : "#667085",
+              backgroundColor: theme.palette.mode === 'dark' ? "#202838" : "white",
               fontSize: 15,
               height: '32px',
             }}
@@ -224,9 +224,9 @@ const AddFilter: React.FC<AddFilterProps> = ({
               border: `1px solid ${grey[200]}`,
               height: '32px',
               px: 1,
-              borderColor: (theme) => theme.palette.mode === 'dark' ? 'white' : '#E0E4EB',
-              color: (theme) => theme.palette.mode === 'dark' ? 'white' : "#667085",
-              backgroundColor: (theme) => theme.palette.mode === 'dark' ? "#373F4E" : "white",
+              borderColor: theme.palette.mode === 'dark' ? 'white' : '#E0E4EB',
+              color: theme.palette.mode === 'dark' ? 'white' : "#667085",
+              backgroundColor: theme.palette.mode === 'dark' ? "#373F4E" : "white",
             }}
             onClick={handleReset}
             size="small"

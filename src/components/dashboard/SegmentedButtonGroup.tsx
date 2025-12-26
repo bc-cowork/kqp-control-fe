@@ -17,29 +17,27 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   },
 }));
 
-const StyledToggleButton = styled(ToggleButton)(({ theme }) => {
-  return {
-    fontSize: 11,
-    fontWeight: 400,
-    color: theme.palette.grey[400],
-    padding: '2px 8px',
-    '&.Mui-selected': {
-      backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[600] : 'white',
-      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
-      color: theme.palette.text.primary,
-      '&:hover': {
-        backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : 'white',
-      },
+const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
+  fontSize: 11,
+  fontWeight: 400,
+  color: theme.palette.grey[400],
+  padding: '2px 8px',
+  '&.Mui-selected': {
+    backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[600] : 'white',
+    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+    color: theme.palette.text.primary,
+    '&:hover': {
+      backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : 'white',
     },
-    '&:not(.Mui-selected)': {
-      backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[900] : 'transparent',
-      color: theme.palette.mode === 'dark' ? theme.palette.grey[50] : '#667085',
-      '&:hover': {
-        backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[50] : 'transparent',
-      },
+  },
+  '&:not(.Mui-selected)': {
+    backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[900] : 'transparent',
+    color: theme.palette.mode === 'dark' ? theme.palette.grey[50] : '#667085',
+    '&:hover': {
+      backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[50] : 'transparent',
     },
-  };
-});
+  },
+}));
 
 type SegmentedButtonGroupProps = {
   tabs: { label: string; value: string }[];

@@ -54,7 +54,7 @@ export function DashboardView() {
       <Breadcrumb />
       <Typography sx={{
         fontSize: 28, fontWeight: 600,
-        color: (theme) => theme.palette.mode === 'dark' ? grey[50] : '#373F4E',
+        color: theme.palette.mode === 'dark' ? grey[50] : '#373F4E',
         mt: 2
       }}>
         {t('top.dashboard')}
@@ -150,7 +150,7 @@ export function DashboardView() {
               sx={{
                 fontSize: 17,
                 fontWeight: 500,
-                color: (theme) => theme.palette.mode === 'dark' ? '#AFB7C8' : '#373F4E',
+                color: theme.palette.mode === 'dark' ? '#AFB7C8' : '#373F4E',
                 mb: 1,
               }}
             >
@@ -177,7 +177,7 @@ export function DashboardView() {
                 py: 2.5,
                 px: 1.5,
                 borderRadius: 1.5,
-                backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF',
+                backgroundColor: theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF',
               }}
             >
               <Stack
@@ -190,7 +190,7 @@ export function DashboardView() {
                   sx={{
                     fontSize: 17,
                     fontWeight: 500,
-                    color: (theme) => theme.palette.mode === 'dark' ? "#AFB7C8" : "#373F4E",
+                    color: theme.palette.mode === 'dark' ? "#AFB7C8" : "#373F4E",
                     mb: 1,
                   }}
                 >
@@ -259,7 +259,7 @@ const NavigationBox = ({ title, link }: { title: string; link: string }) => {
         py: 2.5,
         px: 1.5,
         width: '100%',
-        border: (theme) => theme.palette.mode === 'dark' ? `1px solid ${grey[700]}` : '1px solid #E0E4EB',
+        border: theme.palette.mode === 'dark' ? `1px solid ${grey[700]}` : '1px solid #E0E4EB',
         borderRadius: '12px',
         cursor: 'pointer',
       }}
@@ -268,7 +268,7 @@ const NavigationBox = ({ title, link }: { title: string; link: string }) => {
       <Stack direction="row" alignItems="center">
         <Typography sx={{
           fontSize: 17, fontWeight: 500,
-          color: (theme) => theme.palette.mode === 'dark' ? `#D1D6E0` : '#373F4E',
+          color: theme.palette.mode === 'dark' ? `#D1D6E0` : '#373F4E',
         }}>{title}</Typography>
         <SvgIcon sx={{ width: 20, height: 20, ml: 1 }}>
           <svg

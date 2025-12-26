@@ -115,8 +115,8 @@ export function NodeList({
                     label={node.online_status ? 'Online' : 'Offline'}
                     color={node.online_status ? 'success' : 'error'}
                     sx={{
-                      backgroundColor: (theme) => theme.palette.mode === 'dark' ? (node.online_status ? '#1D2F20' : '#331B1E') : (node.online_status ? '#EBFBE9' : '#FFF2F4'),
-                      border: (theme) => theme.palette.mode === 'dark' ? (node.online_status ? '1px solid #36573C' : '1px solid #4A2C31') : (node.online_status ? '1px solid #DDF4DA' : '1px solid #FFD8D8'),
+                      backgroundColor: theme.palette.mode === 'dark' ? (node.online_status ? '#1D2F20' : '#331B1E') : (node.online_status ? '#EBFBE9' : '#FFF2F4'),
+                      border: theme.palette.mode === 'dark' ? (node.online_status ? '1px solid #36573C' : '1px solid #4A2C31') : (node.online_status ? '1px solid #DDF4DA' : '1px solid #FFD8D8'),
                     }}
                     size="small"
                     variant="status"
@@ -149,8 +149,8 @@ export function NodeList({
                 <TableCell>{node.desc}</TableCell>
                 <TableCell>
                   <Chip label={node.emittable ? "Yes" : "No"} color={node.emittable ? "success" : "error"} size="small" variant="outlined" sx={{
-                    backgroundColor: (theme) => theme.palette.mode === 'dark' ? (node.emittable ? '#1D2F20' : '#331B1E') : (node.emittable ? '#EBFBE9' : '#FFF2F4'),
-                    border: (theme) => theme.palette.mode === 'dark' ? (node.emittable ? '1px solid #36573C' : '1px solid #4A2C31') : (node.emittable ? '1px solid #DDF4DA' : '1px solid #FFD8D8'),
+                    backgroundColor: theme.palette.mode === 'dark' ? (node.emittable ? '#1D2F20' : '#331B1E') : (node.emittable ? '#EBFBE9' : '#FFF2F4'),
+                    border: theme.palette.mode === 'dark' ? (node.emittable ? '1px solid #36573C' : '1px solid #4A2C31') : (node.emittable ? '1px solid #DDF4DA' : '1px solid #FFD8D8'),
                   }} />
                 </TableCell>
                 <TableCell align="right">{node.emit_count.toLocaleString()}</TableCell>
