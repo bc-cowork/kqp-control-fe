@@ -219,7 +219,9 @@ export function Memory({ selectedNodeId }: Props) {
       <Grid
         xs={12}
         lg={9}
-        sx={{ pl: { xs: 0, lg: 1.25 } }}
+        sx={{
+          pl: { xs: 0, lg: 1.25 }
+        }}
       >
         <AddFilter
           filters={filters}
@@ -235,6 +237,7 @@ export function Memory({ selectedNodeId }: Props) {
             px: 1.5,
             borderBottomLeftRadius: '12px',
             borderBottomRightRadius: '12px',
+            backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'transparent' : 'white',
           }}
         >
           <Box sx={{ py: 1, overflow: 'auto' }}>

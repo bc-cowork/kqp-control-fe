@@ -52,7 +52,11 @@ export function DashboardView() {
   return (
     <DashboardContent maxWidth='xl'>
       <Breadcrumb />
-      <Typography sx={{ fontSize: 28, fontWeight: 500, color: theme.palette.grey[50], mt: 2 }}>
+      <Typography sx={{
+        fontSize: 28, fontWeight: 600,
+        color: theme.palette.mode === 'dark' ? grey[50] : '#373F4E',
+        mt: 2
+      }}>
         {t('top.dashboard')}
       </Typography>
       <Box
@@ -146,7 +150,7 @@ export function DashboardView() {
               sx={{
                 fontSize: 17,
                 fontWeight: 500,
-                color: '#AFB7C8',
+                color: theme.palette.mode === 'dark' ? '#AFB7C8' : '#373F4E',
                 mb: 1,
               }}
             >
@@ -173,7 +177,7 @@ export function DashboardView() {
                 py: 2.5,
                 px: 1.5,
                 borderRadius: 1.5,
-                backgroundColor: '#202838',
+                backgroundColor: theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF',
               }}
             >
               <Stack
@@ -186,7 +190,7 @@ export function DashboardView() {
                   sx={{
                     fontSize: 17,
                     fontWeight: 500,
-                    color: '#AFB7C8',
+                    color: theme.palette.mode === 'dark' ? "#AFB7C8" : "#373F4E",
                     mb: 1,
                   }}
                 >
@@ -246,6 +250,8 @@ export function DashboardView() {
 
 const NavigationBox = ({ title, link }: { title: string; link: string }) => {
   const router = useRouter();
+  const theme = useTheme();
+  const fillColor = theme.palette.mode === 'dark' ? "#D1D6E0" : "#4E576A";
 
   return (
     <Box
@@ -253,14 +259,17 @@ const NavigationBox = ({ title, link }: { title: string; link: string }) => {
         py: 2.5,
         px: 1.5,
         width: '100%',
-        border: `1px solid ${grey[700]}`,
+        border: theme.palette.mode === 'dark' ? `1px solid ${grey[700]}` : '1px solid #E0E4EB',
         borderRadius: '12px',
         cursor: 'pointer',
       }}
       onClick={() => router.push(link)}
     >
       <Stack direction="row" alignItems="center">
-        <Typography sx={{ fontSize: 17, fontWeight: 500, color: '#D1D6E0' }}>{title}</Typography>
+        <Typography sx={{
+          fontSize: 17, fontWeight: 500,
+          color: theme.palette.mode === 'dark' ? `#D1D6E0` : '#373F4E',
+        }}>{title}</Typography>
         <SvgIcon sx={{ width: 20, height: 20, ml: 1 }}>
           <svg
             width="20"
@@ -273,7 +282,7 @@ const NavigationBox = ({ title, link }: { title: string; link: string }) => {
               fillRule="evenodd"
               clipRule="evenodd"
               d="M7.00414 16.4468C7.25044 16.7205 7.67197 16.7427 7.94565 16.4964L14.6123 10.4966C14.7528 10.3702 14.833 10.1901 14.833 10.0011C14.833 9.81209 14.7528 9.63198 14.6123 9.50555L7.94567 3.50514C7.67201 3.25883 7.25048 3.281 7.00417 3.55466C6.75785 3.82833 6.78002 4.24986 7.05369 4.49617L13.1698 10.001L7.05371 15.5053C6.78004 15.7516 6.75784 16.1731 7.00414 16.4468Z"
-              fill="#D1D6E0"
+              fill={fillColor}
             />
           </svg>
         </SvgIcon>
