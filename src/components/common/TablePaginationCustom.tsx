@@ -25,8 +25,8 @@ import { useTranslate } from 'src/locales';
 // Styled components (unchanged)
 const CustomSelect = styled(Select)(({ theme }) => ({
   backgroundColor: 'transparent !important',
-  border: `1px solid ${theme.palette.grey[400]}`,
   borderRadius: 4,
+  border: theme.palette.mode === 'dark' ? `1px solid ${theme.palette.grey[400]}` : '1px solid #E0E4EB',
   fontSize: 15,
   '& .MuiSelect-select': {
     padding: '3px !important',
@@ -34,27 +34,28 @@ const CustomSelect = styled(Select)(({ theme }) => ({
     paddingRight: '30px !important',
     fontSize: 15,
     backgroundColor: 'transparent !important',
-    color: theme.palette.grey[200],
+    color: theme.palette.mode === 'dark' ? theme.palette.grey[200] : '#667085',
   },
   '& .MuiOutlinedInput-notchedOutline': {
     border: 'none',
   },
   '& .MuiSelect-icon': {
-    color: theme.palette.grey[200],
+    color: theme.palette.mode === 'dark' ? theme.palette.grey[200] : '#667085',
   },
   '& .MuiPaper-root': {
     borderRadius: 4,
     marginTop: 4,
     backgroundColor: 'transparent !important',
 
+
   },
 }));
 
 const CustomMenuItem = styled(MenuItem)(({ theme }) => ({
-  backgroundColor: theme.palette.grey[600],
+  backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[600] : 'transparent',
   color: theme.palette.text.primary,
   '&:hover': {
-    backgroundColor: theme.palette.grey[500],
+    backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[500] : '#E0E4EB',
   },
   '&:active': {
     backgroundColor: theme.palette.grey[300],

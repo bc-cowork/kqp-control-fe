@@ -67,40 +67,50 @@ export function AuditLogList({ selectedNodeId }: Props) {
   };
 
   return (
-    <Box sx={{ backgroundColor: '#202838', borderRadius: 1.5, p: 1.5 }}>
+    <Box sx={{
+      backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#202838' : 'white',
+      borderRadius: 1.5, p: 1.5
+    }}>
       <Stack direction="row" alignItems="center" sx={{ mb: 1 }}>
         <Select
           value={type}
-          label="Type"
           onChange={handleTypeChange}
           inputProps={{ sx: { color: grey[400] } }}
           sx={{
             height: "32px",
             borderRadius: "4px",
-            backgroundColor: '#202838', // black background for the select itself
-            color: grey[400],
+            backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#202838' : 'white',
+            color: (theme) => theme.palette.mode === 'dark' ? 'white' : 'green',
+
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: (theme) => theme.palette.mode === 'dark' ? "#4E576A" : '#E0E4EB !important', // Keep it the same as the default border color
+              borderWidth: "1px",
+            },
+
+            "& .MuiSelect-select:focus": {
+              outline: "none",
+              border: 'none'
+            },
+
             "& .MuiSelect-select": {
-              backgroundColor: "transparent !important", // ensures inner select area is black
-              color: grey[300],
+              backgroundColor: "transparent !important",
+              color: (theme) => theme.palette.mode === 'dark' ? 'white' : '#667085',
               padding: "4px 8px",
             },
             "& fieldset": {
-              borderColor: grey[700], // optional: dark border
+              borderColor: (theme) => theme.palette.mode === 'dark' ? "#4E576A" : '#E0E4EB !important',
             },
             "&:hover fieldset": {
-              borderColor: grey[500],
-            },
-            "&.Mui-focused fieldset": {
-              borderColor: grey[300],
+              borderColor: (theme) => theme.palette.mode === 'dark' ? "#4E576A" : `#E0E4EB !important`, // Force hover color
             },
           }}
         >
           {getAuditLogTypes(t).map((logType) => (
             <MenuItem key={logType.value}
               sx={{
-                backgroundColor: '#202838',
+                backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#202838' : 'white',
                 ":hover": {
-                  backgroundColor: grey[400],
+                  backgroundColor: (theme) => theme.palette.mode === 'dark' ? grey[400] : '#E0E4EB',
                 },
               }}
               value={logType.value}>
