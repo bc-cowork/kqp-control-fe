@@ -95,9 +95,15 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
               </Box>
             ) : (
               <Box sx={{
-                borderRadius: 1
+                borderRadius: 1,
+                backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'transparent' : '#1D2654',
+                padding: (theme) => theme.palette.mode === 'dark' ? '0px' : '4px',
               }}>
                 <MemoryItemInfo issueInfo={issueInfo} />
+                <Box sx={{
+                  backgroundColor: 'black',
+                  height: (theme) => theme.palette.mode === 'dark' ? '0px' : '4px'
+                }} />
                 <MemoryIssueInfoTable issueInfo={issueInfo} />
               </Box>
             )}
