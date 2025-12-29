@@ -137,7 +137,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
               sx={{
                 borderBottomRightRadius: '12px',
                 borderBottomLeftRadius: '12px',
-                backgroundColor: 'transparent',
+                backgroundColor: theme.palette.mode === 'dark' ? 'transparent' : 'white',
                 p: 1,
               }}
             >
