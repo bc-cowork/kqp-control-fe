@@ -97,7 +97,11 @@ export default function Page({ params }: Props) {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Paper sx={{ height: '100%', }} >
+            <Paper sx={{
+                height: '100%',
+                padding: (theme) => theme.palette.mode === 'dark' ? '0px' : '4px',
+                backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'transparent' : 'black'
+            }} >
 
                 <Box sx={{ backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#667085' : '#E0E4EB', p: 1.5, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
                     <Typography sx={{ fontWeight: 600, color: (theme) => theme.palette.mode === 'dark' ? grey[300] : '#4E576A' }}>{t('detail_table.script_title')}</Typography>

@@ -150,7 +150,11 @@ export default function Page({ params }: Props) {
 
 
                 <Grid item xs={12} md={5}>
-                    <Paper sx={{ height: '100%', p: 0.5, backgroundColor: 'transparent' }}>
+                    <Paper sx={{
+                        height: '100%', p: 0.5,
+                        padding: (theme) => theme.palette.mode === 'dark' ? '0px' : '4px',
+                        backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'transparent' : 'black'
+                    }}>
                         <Box sx={{ backgroundColor: '#667085', p: 1, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
                             <Typography variant="body2" sx={{ fontWeight: 600, color: grey[300] }}>{t('detail_table.script_title')}</Typography>
                         </Box>
