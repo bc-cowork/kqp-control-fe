@@ -249,7 +249,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
             sx={{
               borderBottomRightRadius: '12px',
               borderBottomLeftRadius: '12px',
-              backgroundColor: 'transparent',
+              backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'transparent' : 'white',
               p: 1,
             }}
           >
@@ -270,7 +270,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
             />
 
             <TableContainer component={Paper} sx={{ height: 'calc(100vh - 300px)' }}>
-              <Table size="small" stickyHeader>
+              <Table size="small" >
                 <TableHead>
                   <TableRow>
                     <TableCell align="right">ID</TableCell>

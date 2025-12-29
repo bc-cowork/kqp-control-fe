@@ -95,9 +95,15 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
               </Box>
             ) : (
               <Box sx={{
-                borderRadius: 1
+                borderRadius: 1,
+                backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'transparent' : '#1D2654',
+                padding: (theme) => theme.palette.mode === 'dark' ? '0px' : '4px',
               }}>
                 <MemoryItemInfo issueInfo={issueInfo} />
+                <Box sx={{
+                  backgroundColor: 'black',
+                  height: (theme) => theme.palette.mode === 'dark' ? '0px' : '4px'
+                }} />
                 <MemoryIssueInfoTable issueInfo={issueInfo} />
               </Box>
             )}
@@ -123,7 +129,9 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                     <TableErrorRows />
                   ) : (
                     <>
-                      <TableRow sx={{ backgroundColor: '#212447 !important' }}>
+                      <TableRow sx={{
+                        backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#212447 !important' : '#EFF6FF !important'
+                      }}>
                         <TableCell />
                         <TableCell />
                         <TableCell align="right">
@@ -161,8 +169,8 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                               component="span"
                               sx={{
                                 color: '#7AA2FF',
-                                backgroundColor: '#212447',
-                                border: '1px solid #1D2654',
+                                backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#212447' : '#EFF6FF',
+                                border: (theme) => theme.palette.mode === 'dark' ? '1px solid #1D2654' : '1px solid #DFEAFF',
                                 padding: '2px 4px',
                                 borderRadius: '2px',
                               }}
@@ -189,8 +197,11 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                           </TableCell>
                         </TableRow>
                       ))}
-                      <TableRow>
-                        <TableCell sx={{ height: '4px', backgroundColor: grey[900] }} colSpan={12} />
+                      <TableRow
+                      >
+                        <TableCell sx={{
+                          backgroundColor: (theme) => theme.palette.mode === 'dark' ? grey[900] : '#F4F4F8'
+                        }} colSpan={12} />
                       </TableRow>
                       {rowKeysBid.map((key: string) => (
                         <TableRow
@@ -202,8 +213,8 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                               component="span"
                               sx={{
                                 color: '#FF8882',
-                                backgroundColor: '#331B1E',
-                                border: '1px solid #4A2C31',
+                                backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#331B1E' : '#FFF2F4',
+                                border: (theme) => theme.palette.mode === 'dark' ? '1px solid #4A2C31' : '1px solid #FFD8D8',
                                 padding: '2px 4px',
                                 borderRadius: '2px',
                               }}
@@ -230,7 +241,9 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                           </TableCell>
                         </TableRow>
                       ))}
-                      <TableRow sx={{ backgroundColor: '#331B1E !important' }}>
+                      <TableRow sx={{
+                        backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#331B1E !important' : '#FFF2F4 !important'
+                      }}>
                         <TableCell />
                         <TableCell />
                         <TableCell align="right">

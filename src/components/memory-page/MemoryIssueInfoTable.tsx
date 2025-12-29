@@ -39,6 +39,7 @@ const HeaderBox = styled(Box)(({ theme }) => ({
 const RowStack = styled(Stack)(({ theme }) => ({
   height: '80px',
   alignItems: 'center',
+  gap: 0,
 }));
 
 const RowStackWide = styled(Stack)(({ theme }) => ({
@@ -94,13 +95,22 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
 
   const tableFill1 = '#202838';
   const tableFill2 = '#141C2A';
+  const tableFillLight1 = '#FFFFFF';
+  const tableFillLight2 = '#F9FAFB';
 
   return (
-    <Box sx={{ mt: 0.5 }}>
+    <Box sx={{
+      mt: 0.5,
+    }}>
       {/* Header Row */}
       <RowStack
         direction="row"
-        sx={{ height: '32px', backgroundColor: grey[400], borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}
+        sx={{
+          height: '32px',
+          backgroundColor: (theme) => theme.palette.mode === 'dark' ? grey[400] : '#1D2654',
+          borderTopLeftRadius: '8px',
+          borderTopRightRadius: '8px'
+        }}
       >
         <HeaderBox />
         <HeaderBox>{t('item.table.uni')}</HeaderBox>
@@ -114,9 +124,9 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
         <RowStack
           direction="row"
           sx={{
-            backgroundColor: tableFill1,
-            borderTopLeftRadius: '8px',
-            borderTopRightRadius: '8px',
+            backgroundColor: (theme) => theme.palette.mode === 'dark' ? tableFill1 : tableFillLight1,
+            borderTopLeftRadius: (theme) => theme.palette.mode === 'dark' ? '8px' : '0px',
+            borderTopRightRadius: (theme) => theme.palette.mode === 'dark' ? '8px' : '0px',
           }}
         >
           <LabelBox>{t('item.left.last_price')}</LabelBox>
@@ -126,7 +136,9 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
         </RowStack>
 
         {/* Last.Vol Row */}
-        <RowStack direction="row" sx={{ backgroundColor: tableFill2 }}>
+        <RowStack direction="row" sx={{
+          backgroundColor: (theme) => theme.palette.mode === 'dark' ? tableFill2 : tableFillLight2,
+        }}>
           <LabelBox>{t('item.left.last_vol')}</LabelBox>
           <ValueBox>{tableData.lastVol.uni}</ValueBox>
           <ValueBox>{tableData.lastVol.krx}</ValueBox>
@@ -134,7 +146,9 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
         </RowStack>
 
         {/* Vol.Accum Row */}
-        <RowStack direction="row" sx={{ backgroundColor: tableFill1 }}>
+        <RowStack direction="row" sx={{
+          backgroundColor: (theme) => theme.palette.mode === 'dark' ? tableFill1 : tableFillLight1,
+        }}>
           <LabelBox>{t('item.left.vol_accum')}</LabelBox>
           <ValueBox>{tableData.volAccum.uni}</ValueBox>
           <ValueBox>{tableData.volAccum.krx}</ValueBox>
@@ -142,17 +156,24 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
         </RowStack>
 
         {/* Amt.Accum Row */}
-        <RowStack direction="row" sx={{ backgroundColor: tableFill2 }}>
+        <RowStack direction="row" sx={{
+          backgroundColor: (theme) => theme.palette.mode === 'dark' ? tableFill2 : tableFillLight2,
+        }}>
           <LabelBox>{t('item.left.amt_accum')}</LabelBox>
           <ValueBox>{tableData.amtAccum.uni}</ValueBox>
           <ValueBox>{tableData.amtAccum.krx}</ValueBox>
           <ValueBox>{tableData.amtAccum.nxt}</ValueBox>
         </RowStack>
 
-        <Box sx={{ backgroundColor: grey[900], height: '8px' }} />
+        <Box sx={{
+          backgroundColor: (theme) => theme.palette.mode === 'dark' ? grey[900] : '#F4F4F8',
+          height: '8px'
+        }} />
 
         {/* Open Row */}
-        <RowStackWide direction="row" sx={{ backgroundColor: tableFill1 }}>
+        <RowStackWide direction="row" sx={{
+          backgroundColor: (theme) => theme.palette.mode === 'dark' ? tableFill1 : tableFillLight1,
+        }}>
           <LabelBox>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
               <SvgIcon sx={{ mr: 0.5, height: 16, width: 16 }}>
@@ -178,7 +199,9 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
         </RowStackWide>
 
         {/* High Row */}
-        <RowStackWide direction="row" sx={{ backgroundColor: tableFill2 }}>
+        <RowStackWide direction="row" sx={{
+          backgroundColor: (theme) => theme.palette.mode === 'dark' ? tableFill2 : tableFillLight2,
+        }}>
           <LabelBox>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
               <SvgIcon sx={{ mr: 0.5, height: 16, width: 16 }}>
@@ -212,7 +235,7 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
         <RowStackWide
           direction="row"
           sx={{
-            backgroundColor: tableFill1,
+            backgroundColor: (theme) => theme.palette.mode === 'dark' ? tableFill1 : tableFillLight1,
             borderBottomLeftRadius: '8px',
             borderBottomRightRadius: '8px',
           }}

@@ -118,7 +118,11 @@ export default function Page({ params }: Props) {
           </Grid>
 
           <Grid item xs={12} md={5}>
-            <Paper sx={{ height: '100%', }} >
+            <Paper sx={{
+              height: '100%',
+              padding: (theme) => theme.palette.mode === 'dark' ? '0px' : '4px',
+              backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'transparent' : 'black'
+            }} >
               <Box sx={{ backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#667085' : '#E0E4EB', p: 1.5, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
                 <Typography sx={{
                   fontWeight: 600,

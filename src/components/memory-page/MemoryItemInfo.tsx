@@ -39,7 +39,7 @@ export function MemoryItemInfo({ issueInfo }: Props) {
         px: 2,
         pt: 2,
         pb: 2,
-        border: `1px solid ${grey[700]}`
+        border: `1px solid ${grey[700]}`,
       }}
     >
       <LabelValueRow label={t('item.left.seq')} value={issueInfo?.seq} />
