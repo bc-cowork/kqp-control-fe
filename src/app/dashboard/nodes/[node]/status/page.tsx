@@ -13,7 +13,13 @@ import useSWR from 'swr';
 type Props = { params: { node: string } };
 
 const HeadRow = ({ title }: { title: string }) => (
-    <Box sx={{ mb: 0.2, backgroundColor: '#667085', p: 1.2, borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}>
+    <Box sx={{
+        mb: (theme) => theme.palette.mode === 'dark' ? 0.2 : 0,
+        borderBottom: (theme) => theme.palette.mode === 'dark' ? 'none' : '1px solid black',
+        backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#667085' : '#1D2654',
+        p: 0.5, borderTopLeftRadius: '8px', borderTopRightRadius: '8px',
+        paddingLeft: 1.2
+    }}>
         <Typography sx={{ fontSize: 17, fontWeight: 600, color: grey[50] }}>
             {title}
         </Typography>
@@ -95,7 +101,10 @@ export default function Page({ params }: Props) {
                                                                 color="error"
                                                                 size="small"
                                                                 variant="soft"
-                                                                sx={{ backgroundColor: '#331B1E' }}
+                                                                sx={{
+                                                                    backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#331B1E' : '#FFF2F4',
+                                                                    border: (theme) => theme.palette.mode === 'dark' ? '1px solid #4A2C31' : '1px solid #FFD8D8'
+                                                                }}
                                                             />
                                                         )}
                                                     </TableCell>

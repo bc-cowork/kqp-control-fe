@@ -181,8 +181,11 @@ export default function Page({ params }: Props) {
                         padding: (theme) => theme.palette.mode === 'dark' ? '0px' : '4px',
                         backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'transparent' : 'black'
                     }}>
-                        <Box sx={{ backgroundColor: '#667085', p: 1, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
-                            <Typography variant="body2" sx={{ fontWeight: 600 }}>{t('detail_table.script_title')}</Typography>
+                        <Box sx={{ backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#667085' : '#E0E4EB', p: 1, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
+                            <Typography variant="body2" sx={{
+                                fontWeight: 600,
+                                color: (theme) => theme.palette.mode === 'dark' ? grey[300] : '#4E576A'
+                            }}>{t('detail_table.script_title')}</Typography>
                         </Box>
 
                         <Box sx={{ bgcolor: '#202838', height: 'calc(100% - 48px)', overflowY: 'auto' }}>

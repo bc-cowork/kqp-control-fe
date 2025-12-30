@@ -44,7 +44,16 @@ import { FilterInputBar } from 'src/components/replay/FilterInputBar';
 import { SpeedInputFilter } from 'src/components/replay/SpeedInputFilter';
 import { AuditLogGrid } from 'src/components/replay/AuditLogGrid';
 
-const Gear = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/settings/gear.svg`} alt="gear" {...props} />;
+const Gear = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/settings/gear.svg`} alt="gear" {...props}
+    sx={{
+        display: (theme) => theme.palette.mode === 'dark' ? 'inline' : 'none'
+    }}
+/>;
+const GearGrey = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/settings/gearGrey.svg`} alt="gear" {...props}
+    sx={{
+        display: (theme) => theme.palette.mode === 'dark' ? 'none' : 'inline'
+    }}
+/>
 const Time = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/custom/time.svg`} alt="time" {...props} />;
 const Archive = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/custom/archive.svg`} alt="archive" {...props} />;
 const Calendar = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/custom/calendar.svg`} alt="calendar" {...props} />;
@@ -219,7 +228,11 @@ export default function Page({ params }: Props) {
 
                 <Breadcrumb node={node} pages={[{ pageName: t('top.title') }]} />
                 <Stack direction="row" alignItems="baseline" justifyContent="space-between">
-                    <Typography sx={{ fontSize: 28, fontWeight: 500, color: grey[50], mt: 2, mb: 6 }}>
+                    <Typography sx={{
+                        fontSize: 28, fontWeight: 500,
+                        color: (theme) => theme.palette.mode === 'dark' ? grey[50] : '#373F4E',
+                        mt: 2, mb: 6
+                    }}>
                         {t('top.title')}
                     </Typography>
                 </Stack>
@@ -243,7 +256,6 @@ export default function Page({ params }: Props) {
                                         sx={{
                                             borderRadius: '8px',
                                             height: 174,
-                                            backgroundColor: '#373F4E',
                                         }}
                                     >
                                         <Table size="small"
@@ -288,21 +300,25 @@ export default function Page({ params }: Props) {
                                                     >
                                                         <TableCell sx={{ p: '8px 12px', border: 'none' }}>
                                                             <Chip label="Play"
-                                                                icon={<Box sx={{ backgroundColor: darkColors.successText, width: 8, height: 8, borderRadius: 4 }} />}
+                                                                icon={<Box sx={{
+                                                                    backgroundColor: (theme) => theme.palette.mode === 'dark' ? darkColors.successText : '#00A41E',
+                                                                    width: 8, height: 8, borderRadius: 4
+                                                                }} />}
                                                                 color="success" size="small" variant="outlined" sx={{
-                                                                    backgroundColor: darkColors.successFill,
-                                                                    borderColor: '#36573C',
+                                                                    backgroundColor: (theme) => theme.palette.mode === 'dark' ? darkColors.successFill : '#EBFBE9',
+                                                                    borderColor: (theme) => theme.palette.mode === 'dark' ? '#36573C' : '#DDF4DA',
                                                                     borderRadius: '12px',
-                                                                    color: darkColors.successText,
+                                                                    color: (theme) => theme.palette.mode === 'dark' ? darkColors.successText : '#05811B',
                                                                     fontWeight: 600,
                                                                     padding: '4px 8px',
                                                                 }} />
                                                         </TableCell>
-                                                        <TableCell align='left' sx={{ color: darkColors.textSecondary, fontSize: 15, border: 'none' }}>
+                                                        <TableCell align='left' sx={{ color: (theme) => theme.palette.mode === 'dark' ? darkColors.textSecondary : '#667085', fontSize: 15, border: 'none' }}>
                                                             {row.pid}
                                                         </TableCell>
                                                         <TableCell sx={{
-                                                            color: darkColors.textSecondary, fontSize: 15, border: 'none',
+                                                            color: (theme) => theme.palette.mode === 'dark' ? darkColors.textSecondary : '#667085',
+                                                            fontSize: 15, border: 'none',
                                                             whiteSpace: 'nowrap',
                                                             overflow: 'hidden',
                                                             textOverflow: 'ellipsis',
@@ -322,7 +338,8 @@ export default function Page({ params }: Props) {
                                     <Box
                                         sx={{
                                             borderRadius: '8px',
-                                            border: `1px solid ${darkColors.border}`,
+                                            border: (theme) => theme.palette.mode === 'dark' ? `1px solid ${darkColors.border}` : '1px solid #E0E4EB',
+                                            backgroundColor: (theme) => theme.palette.mode === 'dark' ? `transparent` : 'white',
                                             p: 2,
                                             display: 'flex',
                                             flexDirection: 'column',
@@ -337,8 +354,13 @@ export default function Page({ params }: Props) {
                                         }}
                                     >
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                            <Gear />
-                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>
+                                            <Gear
+                                            />
+                                            <GearGrey />
+                                            <Typography variant="body1" sx={{
+                                                color: (theme) => theme.palette.mode === 'dark' ? darkColors.textPrimary : '#373F4E',
+                                                fontFamily: 'Roboto, sans-serif !important', fontSize: '15px'
+                                            }}>
                                                 {t('tool_box.tool')}
                                             </Typography>
                                         </Box>
@@ -350,10 +372,9 @@ export default function Page({ params }: Props) {
                                                 sx={{
                                                     height: 32,
                                                     p: '4px 12px',
-                                                    backgroundColor: toolPid ? '#4A2C31 !important' : '#331B1E !important',
-                                                    border: `2px solid ${toolPid ? '#FF3D4A !important' : '#4A2C31 !important'
-                                                        }`,
-                                                    color: toolPid ? '#FF3D4A !important' : '#4A2C31 !important',
+                                                    backgroundColor: (theme) => toolPid ? (theme.palette.mode === 'dark' ? '#4A2C31 !important' : '#FFF2F4 !important') : (theme.palette.mode === 'dark' ? '#331B1E !important' : '#FFF2F4 !important'),
+                                                    border: (theme) => theme.palette.mode === 'dark' ? `2px solid ${toolPid ? '#FF3D4A !important' : '#4A2C31 !important'}` : '1px solid red',
+                                                    color: (theme) => theme.palette.mode === 'dark' ? toolPid ? '#FF3D4A !important' : '#4A2C31 !important' : '#FF3D4A !important',
                                                     "&:hover": {
                                                         backgroundColor: toolPid ? '#5E66FF !important' : '#331B1E !important',
                                                         borderColor: toolPid ? '#4E57E5 !important' : '#4A2C31 !important',
@@ -741,8 +762,8 @@ export default function Page({ params }: Props) {
                                         </Grid>
                                     </Box>
                                 </Box>
-                            </Box>
-                        </Box>
+                            </Box >
+                        </Box >
                     )
                 }
 
