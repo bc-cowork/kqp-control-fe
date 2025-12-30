@@ -171,14 +171,28 @@ export default function Page({ params }: Props) {
 
                     {/* Right side - Fragments table with dark background */}
                     <Grid item xs={12} md={7}>
-                        <Paper sx={{ backgroundColor: '#202838', p: 0.5, color: '#D4DCFA', }}>
-                            <Box sx={{ backgroundColor: (theme) => theme.palette.grey[400], p: 1, mb: 2, borderTopLeftRadius: 8, borderTopRightRadius: 8, position: 'sticky' }}>
-                                <Typography sx={{ fontWeight: 600 }}>{t('top.prof_definition')}</Typography>
+                        <Paper sx={{ backgroundColor: '#202838', p: 0.5, color: (theme) => theme.palette.mode === 'dark' ? '#D4DCFA' : '#4E576A', }}>
+                            <Box sx={{ backgroundColor: (theme) => theme.palette.mode === 'dark' ? theme.palette.grey[400] : '#E0E4EB', p: 1, mb: 2, borderTopLeftRadius: 8, borderTopRightRadius: 8, position: 'sticky' }}>
+                                <Typography sx={{
+                                    fontWeight: 600,
+                                }}>{t('top.prof_definition')}</Typography>
                             </Box>
                             <TableContainer sx={{ p: 0.5, overflowY: 'auto', maxHeight: 'calc(64vh)' }}>
-                                <Table size="small">
-                                    <TableHead>
-                                        <TableRow>
+                                <Table size="small"
+                                >
+                                    <TableHead
+                                        sx={{
+                                            backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#212447' : '#667085',
+                                            borderBottomRightRadius: (theme) => theme.palette.mode === 'dark' ? '0px' : '8px',
+                                            borderBottomLeftRadius: (theme) => theme.palette.mode === 'dark' ? '0px' : '8px',
+                                            '& .MuiTableCell-head': {
+                                                backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#212447' : '#667085',
+
+                                            }
+                                        }}
+                                    >
+                                        <TableRow
+                                        >
                                             <TableCell>{t('right.order')}</TableCell>
                                             <TableCell>{t('right.offset')}</TableCell>
                                             <TableCell>{t('right.len')}</TableCell>

@@ -372,15 +372,22 @@ export const CustomTextField = ({ toolPid, setToolPid }: any) => {
                 sx: {
                     height: 32,
                     color: darkColors.textSecondary,
-                    backgroundColor: darkColors.backgroundScreen,
-                    border: `1px solid ${darkColors.border}`,
+                    backgroundColor: (theme) => theme.palette.mode === 'dark' ? darkColors.backgroundScreen : '#F4F4F8',
+                    border: (theme) => theme.palette.mode === 'dark' ? `1px solid ${darkColors.border}` : '1px solid #E0E4EB',
                     '& fieldset': { border: 'none' },
+                    '& input::placeholder': {
+                        color: (theme) => theme.palette.mode === 'dark' ? '#667085' : '#AFB7C8',
+                        opacity: 1,
+                    },
                 },
                 startAdornment: (
                     <InputAdornment position="start">
                         <Typography
                             variant="body2"
-                            sx={{ color: darkColors.textSecondary, fontWeight: 400, lineHeight: '22.5px' }}
+                            sx={{
+                                color: (theme) => theme.palette.mode === 'dark' ? darkColors.textSecondary : '#667085',
+                                fontWeight: 400, lineHeight: '22.5px'
+                            }}
                         >
                             {t('tool_box.pid')} |
                         </Typography>
