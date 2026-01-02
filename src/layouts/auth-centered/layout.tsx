@@ -7,11 +7,11 @@ import Box from '@mui/material/Box';
 import { stylesMode } from 'src/theme/styles';
 
 import { Logo } from 'src/components/logo';
+import { useTheme } from '@mui/material';
 
 import { Main } from './main';
 import { HeaderSection } from '../core/header-section';
 import { LayoutSection } from '../core/layout-section';
-import { useTheme } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -43,7 +43,7 @@ export function AuthCenteredLayout({ sx, children, header }: AuthCenteredLayoutP
             leftArea: (
               <>
                 {/* -- Logo -- */}
-                <Logo id="auth-c" isSingle={false} isWhite={theme.palette.mode === 'dark' ? true : false} />
+                <Logo id="auth-c" isSingle={false} isWhite={theme.palette.mode === 'dark'} />
               </>
             ),
             rightArea: <Box display="flex" alignItems="center" gap={{ xs: 1, sm: 1.5 }} />,
@@ -59,7 +59,7 @@ export function AuthCenteredLayout({ sx, children, header }: AuthCenteredLayoutP
        *************************************** */
       cssVars={{ '--layout-auth-content-width': '420px' }}
       sx={{
-        backgroundColor: (theme) => theme.palette.mode === 'dark' ? theme.palette.grey[900] : '#F4F4F8',
+        backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[900] : '#F4F4F8',
         '&::before': {
           width: 1,
           height: 1,

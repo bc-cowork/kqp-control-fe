@@ -101,7 +101,7 @@ export const DisplaySettings = () => {
                     <Typography
                         sx={{
                             flex: 1,
-                            color: (theme) => theme.palette.mode === 'dark' ? '#D1D6E0' : '#667085',
+                            color: theme.palette.mode === 'dark' ? '#D1D6E0' : '#667085',
                             fontSize: 15,
                             fontWeight: 400,
                             lineHeight: '22.5px',
@@ -121,11 +121,11 @@ export const DisplaySettings = () => {
                                 height: 44,
                                 fontSize: 17,
                                 lineHeight: '25.5px',
-                                bgcolor: (theme) => theme.palette.mode === 'dark' ? '#202838' : 'white',
-                                color: (theme) => theme.palette.mode === 'dark' ? 'white' : 'green',
+                                bgcolor: theme.palette.mode === 'dark' ? '#202838' : 'white',
+                                color: theme.palette.mode === 'dark' ? 'white' : 'green',
 
                                 "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                                    borderColor: (theme) => theme.palette.mode === 'dark' ? "#4E576A !important" : '#E0E4EB !important', // Keep it the same as the default border color
+                                    borderColor: theme.palette.mode === 'dark' ? "#4E576A !important" : '#E0E4EB !important', // Keep it the same as the default border color
                                     borderWidth: "1px",
                                 },
 
@@ -136,31 +136,31 @@ export const DisplaySettings = () => {
 
                                 "& .MuiSelect-select": {
                                     backgroundColor: "transparent !important",
-                                    color: (theme) => theme.palette.mode === 'dark' ? '#D1D6E0' : '#667085',
+                                    color: theme.palette.mode === 'dark' ? '#D1D6E0' : '#667085',
                                     padding: "4px 8px",
                                 },
                                 "& fieldset": {
-                                    borderColor: (theme) => theme.palette.mode === 'dark' ? "#4E576A !important" : '#E0E4EB !important',
+                                    borderColor: theme.palette.mode === 'dark' ? "#4E576A !important" : '#E0E4EB !important',
                                 },
                                 "&:hover fieldset": {
-                                    borderColor: (theme) => theme.palette.mode === 'dark' ? "#4E576A !important" : `#E0E4EB !important`, // Force hover color
+                                    borderColor: theme.palette.mode === 'dark' ? "#4E576A !important" : `#E0E4EB !important`, // Force hover color
                                 },
                             }}
                         >
                             <MenuItem
                                 sx={{
-                                    backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#202838' : 'white',
+                                    backgroundColor: theme.palette.mode === 'dark' ? '#202838' : 'white',
                                     ":hover": {
-                                        backgroundColor: (theme) => theme.palette.mode === 'dark' ? grey[400] : '#E0E4EB',
+                                        backgroundColor: theme.palette.mode === 'dark' ? grey[400] : '#E0E4EB',
                                     },
                                 }}
 
                                 value="dark">{t('dark')}</MenuItem>
                             <MenuItem
                                 sx={{
-                                    backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#202838' : 'white',
+                                    backgroundColor: theme.palette.mode === 'dark' ? '#202838' : 'white',
                                     ":hover": {
-                                        backgroundColor: (theme) => theme.palette.mode === 'dark' ? grey[400] : '#E0E4EB',
+                                        backgroundColor: theme.palette.mode === 'dark' ? grey[400] : '#E0E4EB',
                                     },
                                 }}
                                 value="light">{t('light')}</MenuItem>
