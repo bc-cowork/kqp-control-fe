@@ -24,7 +24,7 @@ export function Main({ sx, children, layoutQuery, ...other }: MainProps) {
         borderRadius: 2,
         display: 'flex',
         flexDirection: 'column',
-        bgcolor: '#202838',
+        bgcolor: theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF',
         maxWidth: 'var(--layout-auth-content-width)',
       }}
     >

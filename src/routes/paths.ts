@@ -72,6 +72,7 @@ export const paths = {
       status: (node: string) => `/dashboard/nodes/${node}/status`,
       replay: (node: string) => `/dashboard/nodes/${node}/replay`,
     },
+    settings: `/dashboard/settings`,
     two: `${ROOTS.DASHBOARD}/two`,
     three: `${ROOTS.DASHBOARD}/three`,
     group: {

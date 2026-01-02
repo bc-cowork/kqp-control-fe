@@ -123,18 +123,32 @@ export function Memory({ selectedNodeId }: Props) {
                 <CircularProgress />
               </Box>
             ) : (
-              <>
-                {/* STAT BOX 1: 12 columns up to md, then 6 columns from md up (side-by-side).
-                  Padding is adjusted based on screen size.
-                */}
-                <Grid lg={6} xs={5} sm={4} sx={{ pr: { xs: 0, md: 0.25 } }}>
+              <Grid
+                container
+                lg={12}
+                xs={12}
+                sm={10}
+                md={6}
+                sx={{
+                  backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'transparent' : 'black',
+                  padding: '4px',
+                  borderRadius: '12px'
+                }}
+              >
+                {/* STAT BOX 1 */}
+                <Grid item xs={6} sm={6} lg={6}
+                  sx={{
+                    pr: '4px',
+                    pb: '4px'
+                  }}
+                >
                   <Box
                     sx={{
                       background: 'linear-gradient(180deg, #202838 80%, #373F4E 100%)',
                       borderRadius: '8px',
                       border: '1px solid #4E576A',
                       p: 1.5,
-                      mb: { xs: 0.5, md: 0 },
+                      height: '100%', // Ensures consistent height
                     }}
                   >
                     <Typography sx={{ fontSize: 15, fontWeight: 500, color: common.white }}>
@@ -154,17 +168,19 @@ export function Memory({ selectedNodeId }: Props) {
                   </Box>
                 </Grid>
 
-                {/* STAT BOX 2: 12 columns up to md, then 6 columns from md up (side-by-side).
-                  Padding is adjusted based on screen size.
-                */}
-                <Grid lg={6} xs={5} sm={4} sx={{ pl: { xs: 0, md: 0.25 } }}>
+                {/* STAT BOX 2 */}
+                <Grid item xs={6} sm={6} lg={6}
+                  sx={{
+                    pb: '4px'
+                  }}
+                >
                   <Box
                     sx={{
                       background: 'linear-gradient(180deg, #202838 80%, #373F4E 100%)',
                       borderRadius: '8px',
                       border: '1px solid #4E576A',
-                      ml: 0.5,
                       p: 1.5,
+                      height: '100%', // Ensures consistent height
                     }}
                   >
                     <Typography sx={{ fontSize: 15, fontWeight: 500, color: common.white }}>
@@ -184,12 +200,11 @@ export function Memory({ selectedNodeId }: Props) {
                   </Box>
                 </Grid>
 
-                {/* CHART: Always 12 columns to ensure it's below the stat boxes at all screen sizes. */}
-                <Grid lg={12} xs={10} sm={8}>
+                {/* CHART */}
+                <Grid item xs={12} sm={12} lg={12}>
                   <Box
                     sx={{
                       borderRadius: '8px',
-                      mt: 0.5,
                       height: chartHeight,
                       backgroundColor: '#202838',
                       border: '1px solid #4E576A',
@@ -207,7 +222,7 @@ export function Memory({ selectedNodeId }: Props) {
                     />
                   </Box>
                 </Grid>
-              </>
+              </Grid>
             )}
           </Grid>
         </Box>

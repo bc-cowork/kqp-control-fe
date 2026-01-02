@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import { stylesMode } from 'src/theme/styles';
 
 import { Logo } from 'src/components/logo';
+import { useTheme } from '@mui/material';
 
 import { Main } from './main';
 import { HeaderSection } from '../core/header-section';
@@ -24,6 +25,7 @@ export type AuthCenteredLayoutProps = {
 
 export function AuthCenteredLayout({ sx, children, header }: AuthCenteredLayoutProps) {
   const layoutQuery: Breakpoint = 'md';
+  const theme = useTheme()
 
   return (
     <LayoutSection
@@ -41,7 +43,7 @@ export function AuthCenteredLayout({ sx, children, header }: AuthCenteredLayoutP
             leftArea: (
               <>
                 {/* -- Logo -- */}
-                <Logo id="auth-c" isSingle={false} isWhite />
+                <Logo id="auth-c" isSingle={false} isWhite={theme.palette.mode === 'dark'} />
               </>
             ),
             rightArea: <Box display="flex" alignItems="center" gap={{ xs: 1, sm: 1.5 }} />,
@@ -57,7 +59,7 @@ export function AuthCenteredLayout({ sx, children, header }: AuthCenteredLayoutP
        *************************************** */
       cssVars={{ '--layout-auth-content-width': '420px' }}
       sx={{
-        backgroundColor: (theme) => theme.palette.grey[900],
+        backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[900] : '#F4F4F8',
         '&::before': {
           width: 1,
           height: 1,
