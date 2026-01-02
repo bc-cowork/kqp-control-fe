@@ -110,7 +110,7 @@ export function getNavData(t: any, nodes: string[] = [],) {
 export function getBottomNavData(t: any) {
   return [
     {
-      items: [{ title: t('side_bar.settings'), path: '#', icon: ICONS.settings }],
+      items: [{ title: t('side_bar.settings'), path: '/dashboard/settings', icon: ICONS.settings }],
     },
   ];
 }
