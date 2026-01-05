@@ -20,12 +20,16 @@ import {
     ExpandMore,
     ExpandLess,
 } from '@mui/icons-material';
+import { useTranslate } from 'src/locales';
+import { DashboardContent } from 'src/layouts/dashboard';
+import { Breadcrumb } from '../common/Breadcrumb';
 
 interface Props {
     children: ReactNode;
     fallback?: ReactNode;
     onError?: (error: Error, errorInfo: React.ErrorInfo) => void;
     resetKeys?: Array<string | number>;
+    t: (key: string) => string;
 }
 
 interface State {
@@ -45,7 +49,6 @@ class ErrorBoundary extends Component<Props, State> {
     }
 
     componentDidUpdate(prevProps: Props) {
-        // Reset error boundary when resetKeys change (e.g., route change)
         if (
             this.state.hasError &&
             this.props.resetKeys &&
@@ -77,127 +80,130 @@ class ErrorBoundary extends Component<Props, State> {
     };
 
     render() {
+        const { t } = this.props;
+
         if (this.state.hasError) {
             if (this.props.fallback) {
                 return this.props.fallback;
             }
 
             return (
-                <Box
-                    sx={{
-                        minHeight: '100vh',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
-                        py: 4,
-                    }}
-                >
-                    <Container maxWidth="sm">
-                        <Paper
-                            elevation={8}
-                            sx={{
-                                p: { xs: 3, sm: 5 },
-                                borderRadius: 3,
-                                textAlign: 'center',
-                            }}
-                        >
-                            <Avatar
+                <DashboardContent maxWidth="xl">
+                    <Breadcrumb />
+                    <Box
+                        sx={{
+                            minHeight: '80vh',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            pt: '20px'
+                        }}
+                    >
+                        <Container maxWidth="sm">
+                            <Paper
+                                elevation={8}
                                 sx={{
-                                    width: 80,
-                                    height: 80,
-                                    bgcolor: 'error.light',
-                                    mx: 'auto',
-                                    mb: 3,
+                                    p: { xs: 3, sm: 5 },
+                                    borderRadius: 3,
+                                    textAlign: 'center',
                                 }}
                             >
-                                <ErrorOutline sx={{ fontSize: 48, color: 'error.main' }} />
-                            </Avatar>
+                                <Avatar
+                                    sx={{
+                                        width: 80,
+                                        height: 80,
+                                        bgcolor: 'error.light',
+                                        mx: 'auto',
+                                        mb: 3,
+                                    }}
+                                >
+                                    <ErrorOutline sx={{ fontSize: 48, color: 'error.main' }} />
+                                </Avatar>
 
-                            <Typography
-                                variant="h4"
-                                component="h1"
-                                gutterBottom
-                                fontWeight="bold"
-                                color="text.primary"
-                            >
-                                Oops! Something went wrong
-                            </Typography>
+                                <Typography
+                                    variant="h4"
+                                    component="h1"
+                                    gutterBottom
+                                    fontWeight="bold"
+                                    color="text.primary"
+                                >
+                                    {t('errorBoundary.title')}
+                                </Typography>
 
-                            <Typography
-                                variant="body1"
-                                color="text.secondary"
-                                sx={{ mb: 3 }}
-                            >
-                                We encountered an unexpected error. Don't worry, our team has
-                                been notified and we're working on it.
-                            </Typography>
+                                <Typography
+                                    variant="body1"
+                                    color="text.secondary"
+                                    sx={{ mb: 3 }}
+                                >
+                                    {t('errorBoundary.description')}
+                                </Typography>
 
-                            {this.state.error && (
-                                <Box sx={{ mb: 3 }}>
+                                {this.state.error && (
+                                    <Box sx={{ mb: 3 }}>
+                                        <Button
+                                            size="small"
+                                            onClick={this.toggleDetails}
+                                            endIcon={
+                                                this.state.showDetails ? <ExpandLess /> : <ExpandMore />
+                                            }
+                                            sx={{ mb: 1 }}
+                                        >
+                                            {t('errorBoundary.technicalDetails')}
+                                        </Button>
+                                        <Collapse in={this.state.showDetails}>
+                                            <Alert severity="error" sx={{ textAlign: 'left' }}>
+                                                <Typography
+                                                    variant="body2"
+                                                    component="code"
+                                                    sx={{
+                                                        fontFamily: 'monospace',
+                                                        wordBreak: 'break-word',
+                                                    }}
+                                                >
+                                                    {this.state.error.message}
+                                                </Typography>
+                                            </Alert>
+                                        </Collapse>
+                                    </Box>
+                                )}
+
+                                <Stack
+                                    direction={{ xs: 'column', sm: 'row' }}
+                                    spacing={2}
+                                    justifyContent="center"
+                                    sx={{ mb: 3 }}
+                                >
                                     <Button
-                                        size="small"
-                                        onClick={this.toggleDetails}
-                                        endIcon={
-                                            this.state.showDetails ? <ExpandLess /> : <ExpandMore />
-                                        }
-                                        sx={{ mb: 1 }}
+                                        variant="contained"
+                                        size="large"
+                                        startIcon={<Refresh />}
+                                        onClick={this.handleReset}
+                                        sx={{
+                                            textTransform: 'none',
+                                            fontWeight: 600,
+                                            px: 4,
+                                        }}
                                     >
-                                        Technical Details
+                                        {t('errorBoundary.tryAgain')}
                                     </Button>
-                                    <Collapse in={this.state.showDetails}>
-                                        <Alert severity="error" sx={{ textAlign: 'left' }}>
-                                            <Typography
-                                                variant="body2"
-                                                component="code"
-                                                sx={{
-                                                    fontFamily: 'monospace',
-                                                    wordBreak: 'break-word',
-                                                }}
-                                            >
-                                                {this.state.error.message}
-                                            </Typography>
-                                        </Alert>
-                                    </Collapse>
-                                </Box>
-                            )}
-
-                            <Stack
-                                direction={{ xs: 'column', sm: 'row' }}
-                                spacing={2}
-                                justifyContent="center"
-                                sx={{ mb: 3 }}
-                            >
-                                <Button
-                                    variant="contained"
-                                    size="large"
-                                    startIcon={<Refresh />}
-                                    onClick={this.handleReset}
-                                    sx={{
-                                        textTransform: 'none',
-                                        fontWeight: 600,
-                                        px: 4,
-                                    }}
-                                >
-                                    Try Again
-                                </Button>
-                                <Button
-                                    variant="outlined"
-                                    size="large"
-                                    startIcon={<Home />}
-                                    onClick={this.handleGoHome}
-                                    sx={{
-                                        textTransform: 'none',
-                                        fontWeight: 600,
-                                        px: 4,
-                                    }}
-                                >
-                                    Go to Homepage
-                                </Button>
-                            </Stack>
-                        </Paper>
-                    </Container>
-                </Box>
+                                    <Button
+                                        variant="outlined"
+                                        size="large"
+                                        startIcon={<Home />}
+                                        onClick={this.handleGoHome}
+                                        sx={{
+                                            textTransform: 'none',
+                                            fontWeight: 600,
+                                            px: 4,
+                                        }}
+                                    >
+                                        {t('errorBoundary.goToHomepage')}
+                                    </Button>
+                                </Stack>
+                            </Paper>
+                        </Container>
+                    </Box>
+                </DashboardContent>
             );
         }
 
@@ -205,11 +211,13 @@ class ErrorBoundary extends Component<Props, State> {
     }
 }
 
-// Wrapper component to handle route changes
-function ErrorBoundaryWithRouter(props: Omit<Props, 'resetKeys'>) {
+function ErrorBoundaryWithRouter(props: Omit<Props, 'resetKeys' | 't'>) {
     const pathname = usePathname();
+    const { t } = useTranslate('error-boundary');
 
-    return <ErrorBoundary {...props} resetKeys={[pathname]} />;
+    return (
+        <ErrorBoundary {...props} resetKeys={[pathname]} t={t} />
+    );
 }
 
 export default ErrorBoundaryWithRouter;
