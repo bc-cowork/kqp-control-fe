@@ -1,0 +1,11 @@
+{
+    "errorBoundary": {
+        "title": "오류가 발생했습니다",
+        "description": "예기치 않은 오류가 발생했습니다. 걱정하지 마세요. 저희 팀에 알림이 전달되었으며 문제를 해결하고 있습니다.",
+        "technicalDetails": "기술적 세부사항",
+        "tryAgain": "다시 시도",
+        "goToHomepage": "홈페이지로 이동",
+        "needHelp": "도움이 필요하신가요?",
+        "contactSupport": "지원팀에 문의하기"
+    }
+}
