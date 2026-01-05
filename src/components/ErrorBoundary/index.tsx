@@ -1,5 +1,9 @@
 'use client';
 
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable class-methods-use-this */
+
+
 import React, { Component, ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
 import {
