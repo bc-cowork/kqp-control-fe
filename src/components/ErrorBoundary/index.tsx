@@ -16,6 +16,7 @@ import {
     Collapse,
     Alert,
     Avatar,
+    useTheme,
 } from '@mui/material';
 import {
     ErrorOutline,
@@ -34,6 +35,7 @@ interface Props {
     onError?: (error: Error, errorInfo: React.ErrorInfo) => void;
     resetKeys?: Array<string | number>;
     t: (key: string) => string;
+    theme: any;
 }
 
 interface State {
@@ -116,7 +118,7 @@ class ErrorBoundary extends Component<Props, State> {
                                     sx={{
                                         width: 80,
                                         height: 80,
-                                        bgcolor: 'error.light',
+                                        bgcolor: this.props.theme.palette.mode === 'dark' ? 'transparent' : 'white',
                                         mx: 'auto',
                                         mb: 3,
                                     }}
@@ -215,12 +217,13 @@ class ErrorBoundary extends Component<Props, State> {
     }
 }
 
-function ErrorBoundaryWithRouter(props: Omit<Props, 'resetKeys' | 't'>) {
+function ErrorBoundaryWithRouter(props: Omit<Props, 'resetKeys' | 't' | 'theme'>) {
     const pathname = usePathname();
     const { t } = useTranslate('error-boundary');
+    const theme = useTheme();
 
     return (
-        <ErrorBoundary {...props} resetKeys={[pathname]} t={t} />
+        <ErrorBoundary {...props} resetKeys={[pathname]} t={t} theme={theme} />
     );
 }
 
