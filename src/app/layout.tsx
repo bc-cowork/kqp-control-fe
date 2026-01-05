@@ -49,7 +49,6 @@ export default async function RootLayout({ children }: Props) {
           defaultMode={schemeConfig.defaultMode}
           modeStorageKey={schemeConfig.modeStorageKey}
         />
-
         <I18nProvider lang={CONFIG.isStaticExport ? undefined : lang}>
           <LocalizationProvider>
             <AuthProvider>

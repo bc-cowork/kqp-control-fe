@@ -2,6 +2,7 @@ import { CONFIG } from 'src/config-global';
 import { DashboardLayout } from 'src/layouts/dashboard';
 
 import { AuthGuard } from 'src/auth/guard';
+import ErrorBoundaryWithRouter from 'src/components/ErrorBoundary';
 
 // ----------------------------------------------------------------------
 
@@ -16,7 +17,11 @@ export default function Layout({ children }: Props) {
 
   return (
     <AuthGuard>
-      <DashboardLayout>{children}</DashboardLayout>
+      <DashboardLayout>
+        <ErrorBoundaryWithRouter>
+          {children}
+        </ErrorBoundaryWithRouter>
+      </DashboardLayout>
     </AuthGuard>
   );
 }
