@@ -157,7 +157,7 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
             <Typography sx={{
               fontSize: 28, fontWeight: 500,
               color: theme.palette.mode === 'dark' ? grey[50] : grey[800]
-            }}>{diskMetricsData?.disk_used_size}%</Typography>
+            }}>{diskMetricsData?.disk_usage}%</Typography>
             <Typography sx={{
               fontSize: 16, fontWeight: 400, color: theme.palette.mode === 'dark' ? '#D1D6E0' : '#667085'
             }}>
@@ -165,7 +165,7 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
                 fontWeight: 500,
                 color: theme.palette.mode === 'dark' ? grey[50] : grey[400]
               }}>
-                {diskMetricsData?.disk_usage} GB
+                {diskMetricsData?.disk_used_size} GB
               </Box>{' '}
               of {diskMetricsData?.disk_total_size} GB
             </Typography>
