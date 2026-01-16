@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "dotenv -e .env.local -- next dev",
-    "start": "dotenv -e .env next start",
+    "start": "dotenv -e .env next start -H $HOSTNAME",
     "build": "next build",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
