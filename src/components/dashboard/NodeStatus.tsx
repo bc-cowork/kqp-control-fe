@@ -5,10 +5,10 @@ import type { INodeItem } from 'src/types/dashboard';
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import { Chip, Stack, SvgIcon, LinearProgress, CircularProgress } from '@mui/material';
+import { Chip, Stack, SvgIcon, LinearProgress } from '@mui/material';
 
 import { useTranslate } from 'src/locales';
-import { useGetDiskMetrics, useGetStatus } from 'src/actions/dashboard';
+import { useGetDiskMetrics } from 'src/actions/dashboard';
 import { grey, error, common, success } from 'src/theme/core';
 
 // ----------------------------------------------------------------------
@@ -22,14 +22,13 @@ export function NodeStatus({
   selectedNodeParam,
   selectedNode,
 }: Props) {
-  const { status, statusLoading, statusError } = useGetStatus(selectedNodeParam);
   const { diskMetricsData } = useGetDiskMetrics(selectedNodeParam);
 
 
   const { t } = useTranslate('dashboard');
   const theme = useTheme();
 
-  const isOnline = status?.service_status?.okay;
+  const isOnline = selectedNode.online_status;
 
   return (
     <Box
@@ -42,11 +41,7 @@ export function NodeStatus({
         padding: theme.palette.mode === 'dark' ? '0px' : '4px'
       }}
     >
-      {statusLoading ? (
-        <CircularProgress />
-      ) : statusError ? (
-        <Typography>Error Fetching Status</Typography>
-      ) : (
+      {(
         <>
           {/* First Box - Fixed Height */}
           <Box
