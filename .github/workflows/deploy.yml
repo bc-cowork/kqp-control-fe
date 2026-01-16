@@ -28,7 +28,7 @@ jobs:
       - name: Create .env for build
         run: |
           set -euo pipefail
-          printf "NEXT_PUBLIC_SERVER_URL=http://141.164.63.141\n" > .env
+          printf "NEXT_PUBLIC_SERVER_URL=http://141.164.63.141\nPORT=8083" > .env
           echo "Wrote .env:"
           cat .env
 
@@ -97,7 +97,7 @@ jobs:
       - name: Create .env for offline package
         run: |
           set -euo pipefail
-          printf "NEXT_PUBLIC_SERVER_URL=http://141.164.63.141\n" > .env
+          printf "NEXT_PUBLIC_SERVER_URL=http://141.164.63.141\nPORT=8083" > .env
           echo "Wrote .env for packaging:"
           cat .env
 

@@ -5,8 +5,8 @@
   "description": "Kuanta control admin panel",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 8083",
-    "start": "next start -p 8083",
+    "dev": "dotenv -e .env.local -- next dev",
+    "start": "dotenv -e .env next start",
     "build": "next build",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
@@ -19,7 +19,7 @@
     "dev:ts": "yarn dev & yarn ts:watch",
     "ts": "tsc --noEmit --incremental",
     "ts:watch": "yarn ts --watch",
-    "start:out": "npx serve@latest out -p 8083"
+    "start:out": "dotenv -e .env npx serve@latest out"
   },
   "engines": {
     "node": "20.x"
@@ -48,6 +48,7 @@
     "autosuggest-highlight": "^3.3.4",
     "axios": "^1.7.4",
     "dayjs": "^1.11.13",
+    "dotenv-cli": "^11.0.0",
     "framer-motion": "^11.3.29",
     "i18next": "^23.14.0",
     "i18next-browser-languagedetector": "^8.0.0",
