@@ -5,8 +5,8 @@
   "description": "Kuanta control admin panel",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 8083",
-    "start": "next start -p 8083",
+    "dev": "export $(cat .env | xargs) && next dev --port $PORT",
+    "start": "export $(cat .env | xargs) && next start --port $PORT",
     "build": "next build",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
@@ -19,7 +19,7 @@
     "dev:ts": "yarn dev & yarn ts:watch",
     "ts": "tsc --noEmit --incremental",
     "ts:watch": "yarn ts --watch",
-    "start:out": "npx serve@latest out -p 8083"
+    "start:out": "export $(cat .env | xargs) && npx serve@latest out --port $PORT"
   },
   "engines": {
     "node": "20.x"
