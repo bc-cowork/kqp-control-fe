@@ -66,6 +66,7 @@ export const FilterInputBar = ({ expression, setExpression }: any) => {
                                 size="small"
                                 value={inputExpression}
                                 onChange={(e) => setInputExpression(e.target.value)}
+                                placeholder="<app>.<inst>"
                                 InputProps={{
                                     startAdornment: (
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
