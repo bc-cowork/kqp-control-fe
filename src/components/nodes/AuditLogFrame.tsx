@@ -21,23 +21,24 @@ import {
   DialogTitle,
   DialogContent,
   TableContainer,
+  CircularProgress,
 } from '@mui/material';
 
 import { formatDateCustom } from 'src/utils/format-time';
 
 import { useTranslate } from 'src/locales';
 import { useGetAuditLogFrame } from 'src/actions/nodes';
-import { grey, error, common, primary, success, warning } from 'src/theme/core';
+import { grey, error, common, primary } from 'src/theme/core';
 
 import { Iconify } from '../iconify';
 import AddFilter from '../common/AddFilter';
 import FadingDivider from '../common/FadingDivider';
-import { TableEmptyRows } from '../table/table-empty-rows';
 import { TableErrorRows } from '../table/table-error-rows';
-import { TableLoadingRows } from '../table/table-loading-rows';
 import TablePaginationCustomShort from '../common/TablePaginationCustomShort';
 
 import type { Filter } from '../common/AddFilter';
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 // ----------------------------------------------------------------------
 
@@ -235,133 +236,191 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
     <>
       <Grid container>
         <Grid md={9} sx={{ pr: 0.5 }}>
-          <AddFilter
-            filters={filters}
-            setFilters={setFilters}
-            page="Audit Frame"
-            onApply={handleSearch}
-            count={auditFrame?.max_frame || 0}
-            onResetClick={handleResetClick}
-            onRemovePillClick={handleRemovePillClick}
-            popoverWidth="430px"
-          />
-          <Box
-            sx={{
-              borderBottomRightRadius: '12px',
-              borderBottomLeftRadius: '12px',
-              backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'transparent' : 'white',
-              p: 1,
-            }}
-          >
-            <TablePaginationCustomShort
-              rowsPerPage={count || 40}
-              page={5} // doesn't matter in this case
-              count={auditFrame?.max_frame || 0}
-              onPageChange={onChangePage}
-              onPrev={onPrev}
-              onNext={onNext}
-              onFirst={onFirst}
-              onLast={onLast}
-              firstDisabled={apiSeq === 1}
-              lastDisabled={false}
-              prevDisabled={apiSeq === 1}
-              nextDisabled={apiSeq === 0 || apiSeq === auditFrame.max_frame}
-              sx={{ mb: 1 }}
-            />
+          {auditFrameLoading ? (
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              sx={{ height: 'calc(100vh - 300px)' }}
+            >
+              <CircularProgress color='primary' />
+            </Box>
+          ) : auditFrame?.frags && auditFrame.frags.length > 0 ? (
+            <>
+              <AddFilter
+                filters={filters}
+                setFilters={setFilters}
+                page="Audit Frame"
+                onApply={handleSearch}
+                count={auditFrame?.max_frame || 0}
+                onResetClick={handleResetClick}
+                onRemovePillClick={handleRemovePillClick}
+                popoverWidth="430px"
+              />
+              <Box
+                sx={{
+                  borderBottomRightRadius: '12px',
+                  borderBottomLeftRadius: '12px',
+                  backgroundColor: (theme) => (theme.palette.mode === 'dark' ? 'transparent' : 'white'),
+                  p: 1,
+                }}
+              >
+                <TablePaginationCustomShort
+                  rowsPerPage={count || 40}
+                  page={5}
+                  count={auditFrame?.max_frame || 0}
+                  onPageChange={onChangePage}
+                  onPrev={onPrev}
+                  onNext={onNext}
+                  onFirst={onFirst}
+                  onLast={onLast}
+                  firstDisabled={apiSeq === 1}
+                  lastDisabled={false}
+                  prevDisabled={apiSeq === 1}
+                  nextDisabled={apiSeq === 0 || apiSeq === auditFrame.max_frame}
+                  sx={{ mb: 1 }}
+                />
 
-            <TableContainer component={Paper} sx={{ height: 'calc(100vh - 300px)' }}>
-              <Table size="small" >
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="right">ID</TableCell>
-                    <TableCell align="right">Len</TableCell>
-                    <TableCell align="right">Data
-                      <span
-                        style={{
-                          fontSize: '22px',
-                          marginLeft: '4px',
-                          color: '#FFC711'
-                        }}
-                      >*</span>
-                      <div
-                        style={{
-                          position: 'relative',
-                          right: '10px',
-                          bottom: '-6px',
-                          justifySelf: 'flex-end',
-                          width: '40px',
-                          height: '4px',
-                          backgroundColor: '#FFC711',
-                          borderTopLeftRadius: '2px',
-                          borderTopRightRadius: '2px'
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell>{t('top.description')}</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody sx={{ overflow: 'auto' }}>
-                  {auditFrameLoading ? (
-                    <TableLoadingRows height={20} loadingRows={10} />
-                  ) : auditFrameFragsEmpty ? (
-                    <TableEmptyRows />
-                  ) : auditFrameError ? (
-                    <TableErrorRows />
-                  ) : (
-                    auditFrame?.frags?.map(
-                      (auditFrameFrag: AuditLogFrameFragItem, index: number) => (
-                        <TableRow key={index}>
-                          <TableCell align="right">
-                            <Box
-                              component="span"
-                              sx={{
-                                backgroundColor: '#1D2F20',
-                                border: `1px solid #36573C`,
-                                color: '#7EE081',
-                                borderRadius: '4px',
-                                px: 0.5,
-                              }}
-                            >
-                              {auditFrameFrag.id}
-                            </Box>
-                          </TableCell>
-                          <TableCell align="right">
-                            <Box
-                              component="span"
-                              sx={{
-                                backgroundColor: '#1D2654',
-                                border: `1px solid #212447`,
-                                color: '#7AA2FF',
-                                borderRadius: '4px',
-                                px: 0.5,
-                              }}
-                            >
-                              {auditFrameFrag.len}
-                            </Box>
-                          </TableCell>
-                          <TableCell align="right">
-                            <Box
-                              component="span"
-                              sx={{
-                                backgroundColor: '#31291D',
-                                border: `1px solid #49381F`,
-                                color: '#FFC711',
-                                borderRadius: '4px',
-                                px: 0.5,
-                              }}
-                            >
-                              {auditFrameFrag.data}
-                            </Box>
-                          </TableCell>
-                          <TableCell>{auditFrameFrag.desc}</TableCell>
-                        </TableRow>
-                      )
-                    )
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
+                <TableContainer component={Paper} sx={{ height: 'calc(100vh - 300px)' }}>
+                  <Table size="small">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell align="right">ID</TableCell>
+                        <TableCell align="right">Len</TableCell>
+                        <TableCell align="right">
+                          Data
+                          <span style={{ fontSize: '22px', marginLeft: '4px', color: '#FFC711' }}>*</span>
+                          <div
+                            style={{
+                              position: 'relative',
+                              right: '10px',
+                              bottom: '-6px',
+                              justifySelf: 'flex-end',
+                              width: '40px',
+                              height: '4px',
+                              backgroundColor: '#FFC711',
+                              borderTopLeftRadius: '2px',
+                              borderTopRightRadius: '2px',
+                            }}
+                          />
+                        </TableCell>
+                        <TableCell>{t('top.description')}</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody sx={{ overflow: 'auto' }}>
+                      {auditFrameError ? (
+                        <TableErrorRows />
+                      ) : (
+                        auditFrame.frags.map((auditFrameFrag: AuditLogFrameFragItem, index: number) => (
+                          <TableRow key={index}>
+                            <TableCell align="right">
+                              <Box
+                                component="span"
+                                sx={{
+                                  backgroundColor: '#1D2F20',
+                                  border: `1px solid #36573C`,
+                                  color: '#7EE081',
+                                  borderRadius: '4px',
+                                  px: 0.5,
+                                }}
+                              >
+                                {auditFrameFrag.id}
+                              </Box>
+                            </TableCell>
+                            <TableCell align="right">
+                              <Box
+                                component="span"
+                                sx={{
+                                  backgroundColor: '#1D2654',
+                                  border: `1px solid #212447`,
+                                  color: '#7AA2FF',
+                                  borderRadius: '4px',
+                                  px: 0.5,
+                                }}
+                              >
+                                {auditFrameFrag.len}
+                              </Box>
+                            </TableCell>
+                            <TableCell align="right">
+                              <Box
+                                component="span"
+                                sx={{
+                                  backgroundColor: '#31291D',
+                                  border: `1px solid #49381F`,
+                                  color: '#FFC711',
+                                  borderRadius: '4px',
+                                  px: 0.5,
+                                }}
+                              >
+                                {auditFrameFrag.data}
+                              </Box>
+                            </TableCell>
+                            <TableCell>{auditFrameFrag.desc}</TableCell>
+                          </TableRow>
+                        ))
+                      )}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Box>
+            </>
+          ) : (
+            <Paper
+              sx={{
+                padding: (theme) => (theme.palette.mode === 'dark' ? '0px' : '4px'),
+                backgroundColor: (theme) => (theme.palette.mode === 'dark' ? 'transparent' : 'black'),
+                marginBottom: '12px'
+              }}
+            >
+              <Box
+                sx={{
+                  backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#667085' : '#E0E4EB'),
+                  p: 1.5,
+                  borderTopLeftRadius: 4,
+                  borderTopRightRadius: 4,
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontWeight: 600,
+                    color: (theme) => (theme.palette.mode === 'dark' ? grey[300] : '#4E576A'),
+                  }}
+                >
+                  {t('audit_log_frame_detail.data_definition')}
+                </Typography>
+              </Box>
+
+              <Box sx={{ bgcolor: '#202838', height: 'calc(100vh - 244px)', overflowX: 'hidden', overflowY: 'auto' }}>
+                <Box
+                  component="pre"
+                  sx={{
+                    whiteSpace: 'pre-wrap',
+                    fontFamily: 'monospace',
+                    fontSize: 13,
+                    color: '#AFB7C8',
+                    m: 0
+                  }}
+                >
+                  <SyntaxHighlighter
+                    language="moonscript"
+                    style={a11yDark}
+                    wrapLines={true}
+                    lineProps={{
+                      style: { wordBreak: 'break-all', whiteSpace: 'pre-wrap' }
+                    }}
+                    customStyle={{
+                      background: 'transparent',
+                      whiteSpace: 'pre-wrap',
+                      wordBreak: 'break-all',
+                      padding: '10px',
+                    }}
+                  >
+                    {auditFrame?.data || ''}
+                  </SyntaxHighlighter>
+                </Box>
+              </Box>
+            </Paper>
+          )}
         </Grid>
         <Grid md={3} sx={{ pl: 1.5 }}>
           <Box sx={{ borderRadius: '12px', backgroundColor: grey[900] }}>
