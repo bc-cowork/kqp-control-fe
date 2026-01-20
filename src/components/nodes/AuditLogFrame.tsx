@@ -25,6 +25,8 @@ import {
 } from '@mui/material';
 
 import { formatDateCustom } from 'src/utils/format-time';
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 import { useTranslate } from 'src/locales';
 import { useGetAuditLogFrame } from 'src/actions/nodes';
@@ -37,8 +39,7 @@ import { TableErrorRows } from '../table/table-error-rows';
 import TablePaginationCustomShort from '../common/TablePaginationCustomShort';
 
 import type { Filter } from '../common/AddFilter';
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+
 
 // ----------------------------------------------------------------------
 
@@ -404,7 +405,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                   <SyntaxHighlighter
                     language="moonscript"
                     style={a11yDark}
-                    wrapLines={true}
+                    wrapLines
                     lineProps={{
                       style: { wordBreak: 'break-all', whiteSpace: 'pre-wrap' }
                     }}
