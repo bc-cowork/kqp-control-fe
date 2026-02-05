@@ -181,7 +181,7 @@ export function NodeStatus({
               {/* Main Progress Bar */}
               <LinearProgress
                 variant="determinate"
-                value={diskMetricsData?.disk_used_size}
+                value={diskMetricsData?.disk_usage}
                 sx={{
                   height: 10,
                   borderRadius: 5,
