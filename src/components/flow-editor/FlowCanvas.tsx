@@ -5,7 +5,7 @@ import '@xyflow/react/dist/style.css';
 import type { Edge, OnEdgesChange, OnNodesChange } from '@xyflow/react';
 
 import { useMemo } from 'react';
-import { MiniMap, Controls, ReactFlow, Background, BackgroundVariant } from '@xyflow/react';
+import { Controls, ReactFlow, Background, BackgroundVariant } from '@xyflow/react';
 
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
@@ -90,7 +90,7 @@ export function FlowCanvas({ nodes, edges, onNodesChange, onEdgesChange }: FlowC
           type: 'smoothstep',
           animated: true,
           style: {
-            stroke: isDark ? '#4A3BFF' : '#7B6FFF',
+            stroke: '#22C55E',
             strokeWidth: 2,
           },
         }}
@@ -102,15 +102,6 @@ export function FlowCanvas({ nodes, edges, onNodesChange, onEdgesChange }: FlowC
           color={isDark ? '#1E2A3E' : '#D0D5DD'}
         />
         <Controls showInteractive={false} />
-        <MiniMap
-          nodeColor={isDark ? '#4A3BFF' : '#7B6FFF'}
-          maskColor={isDark ? 'rgba(20, 28, 42, 0.85)' : 'rgba(249, 250, 251, 0.85)'}
-          style={{
-            backgroundColor: isDark ? '#0A0E15' : '#FFFFFF',
-            width: 140,
-            height: 90,
-          }}
-        />
       </ReactFlow>
     </Box>
   );

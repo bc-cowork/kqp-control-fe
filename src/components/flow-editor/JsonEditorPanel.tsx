@@ -64,7 +64,7 @@ export function JsonEditorPanel({
               width: 8,
               height: 8,
               borderRadius: '50%',
-              backgroundColor: hasErrors ? theme.palette.error.main : '#22C55E',
+              backgroundColor: hasErrors ? theme.palette.error.main : '#cae900c1',
               boxShadow: hasErrors
                 ? `0 0 6px ${theme.palette.error.main}60`
                 : '0 0 6px #22C55E60',
