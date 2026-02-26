@@ -117,7 +117,7 @@ function EntityNodeComponent({ data, selected }: NodeProps) {
                 fontWeight: 500,
               }}
             >
-              {nodeData?.entityData?.description || 'No description'}
+              {(nodeData?.entityData?.description as string) || 'No description'}
             </Typography>
           )}
         </Stack>
