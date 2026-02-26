@@ -82,8 +82,8 @@ export function FlowEditorView({ nodeId }: Props) {
 
       {/* Stats bar */}
       <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
-        <StatChip label="Entities" value={nodes.length} isDark={isDark} color="#4A3BFF" />
-        <StatChip label="Relations" value={edges.length} isDark={isDark} color="#22C55E" />
+        <StatChip label={t('stats.entities')} value={nodes.length} isDark={isDark} color="#4A3BFF" />
+        <StatChip label={t('stats.relations')} value={edges.length} isDark={isDark} color="#22C55E" />
       </Stack>
 
       <Box
@@ -97,7 +97,7 @@ export function FlowEditorView({ nodeId }: Props) {
           {/* Left: Flow Canvas */}
           <Grid xs={12} md={7} sx={{ height: { xs: 420, md: '100%' } }}>
             <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-              <PanelHeader isDark={isDark} icon="graph" title="Graph View" />
+              <PanelHeader isDark={isDark} icon="graph" title={t('panel.graph_view')} />
               <Box sx={{ flex: 1, minHeight: 0 }}>
                 <FlowCanvas
                   nodes={nodes}
@@ -112,7 +112,7 @@ export function FlowEditorView({ nodeId }: Props) {
           {/* Right: JSON Editor */}
           <Grid xs={12} md={5} sx={{ height: { xs: 420, md: '100%' } }}>
             <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-              <PanelHeader isDark={isDark} icon="code" title="Definition" />
+              <PanelHeader isDark={isDark} icon="code" title={t('panel.definition')} />
               <Box sx={{ flex: 1, minHeight: 0 }}>
                 <JsonEditorPanel
                   jsonValue={jsonValue}

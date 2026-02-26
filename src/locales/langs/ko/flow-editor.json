@@ -4,6 +4,15 @@
   },
   "apply_button": "적용",
   "errors_title": "유효성 오류",
+  "stats": {
+    "entities": "엔티티",
+    "relations": "관계"
+  },
+  "panel": {
+    "graph_view": "그래프 뷰",
+    "definition": "정의",
+    "json_definition": "JSON 정의"
+  },
   "validation": {
     "invalid_json": "잘못된 JSON 구문",
     "unknown_entity": "관계 '{{source}}'가 존재하지 않는 엔티티 '{{target}}'를 참조합니다",

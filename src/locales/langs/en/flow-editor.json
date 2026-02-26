@@ -4,6 +4,15 @@
   },
   "apply_button": "Apply",
   "errors_title": "Validation Errors",
+  "stats": {
+    "entities": "Entities",
+    "relations": "Relations"
+  },
+  "panel": {
+    "graph_view": "Graph View",
+    "definition": "Definition",
+    "json_definition": "JSON Definition"
+  },
   "validation": {
     "invalid_json": "Invalid JSON syntax",
     "unknown_entity": "Relation '{{source}}' references unknown entity '{{target}}'",

@@ -108,7 +108,7 @@ function EntityNodeComponent({ data, selected }: NodeProps) {
             {nodeData.label}
           </Typography>
 
-          {propCount > 0 && (
+          {nodeData?.entityData && (
             <Typography
               sx={{
                 fontSize: 10,
@@ -117,7 +117,7 @@ function EntityNodeComponent({ data, selected }: NodeProps) {
                 fontWeight: 500,
               }}
             >
-              {propCount} {propCount === 1 ? 'prop' : 'props'}
+              {nodeData?.entityData?.description || 'No description'}
             </Typography>
           )}
         </Stack>

@@ -78,7 +78,7 @@ export function JsonEditorPanel({
               letterSpacing: '0.02em',
             }}
           >
-            JSON Definition
+            {t('panel.json_definition')}
           </Typography>
         </Stack>
 
