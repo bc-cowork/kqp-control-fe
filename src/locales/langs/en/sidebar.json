@@ -21,6 +21,7 @@
     "daily_report_list": "Daily Report List",
     "alerts_list": "Alerts List",
     "status": "Status",
-    "replay": "Replay"
+    "replay": "Replay",
+    "flow_editor": "Message Flow"
   }
 }

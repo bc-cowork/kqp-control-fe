@@ -1,0 +1,12 @@
+{
+  "top": {
+    "title": "Message Flow"
+  },
+  "apply_button": "Apply",
+  "errors_title": "Validation Errors",
+  "validation": {
+    "invalid_json": "Invalid JSON syntax",
+    "unknown_entity": "Relation '{{source}}' references unknown entity '{{target}}'",
+    "invalid_to": "Relation '{{source}}' has invalid 'to' value"
+  }
+}

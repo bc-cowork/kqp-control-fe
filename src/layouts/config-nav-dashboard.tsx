@@ -99,6 +99,10 @@ export function getNavData(t: any, nodes: string[] = [],) {
                 title: t('tab_option.replay') || 'Replay',
                 path: paths.dashboard.nodes.replay(node),
               },
+              {
+                title: t('tab_option.flow_editor') || 'Message Flow',
+                path: paths.dashboard.nodes.flowEditor(node),
+              },
             ],
           })),
         },
