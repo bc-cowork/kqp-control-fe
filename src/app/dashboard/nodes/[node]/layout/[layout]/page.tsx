@@ -222,6 +222,8 @@ export default function Page({ params }: Props) {
           definition={dataFlowDefinition}
           fileName={`${decodedLayout}.moon`}
           layoutDefinition={layoutDefinition}
+          node={node}
+          layout={decodedLayout}
         />
       )}
 

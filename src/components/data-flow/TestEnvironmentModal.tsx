@@ -3,9 +3,9 @@
 import '@xyflow/react/dist/style.css';
 
 import type { Edge } from '@xyflow/react';
+import type { editor } from 'monaco-editor';
 
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import dynamic from 'next/dynamic';
 import { useRef, useMemo, useState, useEffect, useCallback } from 'react';
 import {
   Panel,
@@ -22,14 +22,22 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
+import DialogTitle from '@mui/material/DialogTitle';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import CircularProgress from '@mui/material/CircularProgress';
+
+import axiosInstance, { endpoints } from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
 
+import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 import { usePopover, CustomPopover } from 'src/components/custom-popover';
 
@@ -46,6 +54,9 @@ import {
 } from './constants';
 
 import type { DataFlowDefinition, DataFlowNodeInstance } from './types';
+
+// Lazy load Monaco to avoid SSR issues
+const MonacoEditor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
 
 // ----------------------------------------------------------------------
 
@@ -76,6 +87,8 @@ type TestEnvironmentModalProps = {
   definition: DataFlowDefinition;
   fileName: string;
   layoutDefinition: string;
+  node: string;
+  layout: string;
 };
 
 // ----------------------------------------------------------------------
@@ -85,6 +98,8 @@ function ModalContent({
   definition,
   fileName,
   layoutDefinition,
+  node,
+  layout,
 }: Omit<TestEnvironmentModalProps, 'open'>) {
   const { t } = useTranslate('data-flow');
   const { zoomIn, zoomOut, getZoom } = useReactFlow();
@@ -94,6 +109,20 @@ function ModalContent({
   const [viewMode, setViewMode] = useState<ViewMode>('horizontal');
   const [interfaceScale, setInterfaceScale] = useState(100);
   const [isFullscreen, setIsFullscreen] = useState(false);
+
+  // Editable MoonScript code
+  const [moonCode, setMoonCode] = useState(layoutDefinition);
+  const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
+
+  // Loading states
+  const [isPreviewing, setIsPreviewing] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
+  // Confirmation dialog state
+  const [saveDialogOpen, setSaveDialogOpen] = useState(false);
+
+  // Current data flow definition (starts from prop, updated on preview)
+  const [currentDefinition, setCurrentDefinition] = useState<DataFlowDefinition>(definition);
 
   // Popover instances
   const viewModePopover = usePopover();
@@ -109,20 +138,23 @@ function ModalContent({
   const nodeTypes = useMemo(() => ({ dataFlow_node: DataFlowNode }), []);
 
   const initialGraph = useMemo(() => {
-    const { nodes, edges } = buildDataFlowGraph(definition);
-    const laidOut = computeDataFlowLayout(nodes, edges);
-    return { nodes: laidOut, edges };
-  }, [definition]);
+    const { nodes: builtNodes, edges: builtEdges } = buildDataFlowGraph(currentDefinition);
+    const laidOut = computeDataFlowLayout(builtNodes, builtEdges);
+    return { nodes: laidOut, edges: builtEdges };
+  }, [currentDefinition]);
 
-  const [nodes, , onNodesChange] = useNodesState<DataFlowNodeInstance>(initialGraph.nodes);
-  const [edges, , onEdgesChange] = useEdgesState<Edge>(initialGraph.edges);
+  const [nodes, setNodes, onNodesChange] = useNodesState<DataFlowNodeInstance>(initialGraph.nodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>(initialGraph.edges);
+
+  // Sync graph when currentDefinition changes (via preview)
+  useEffect(() => {
+    setNodes(initialGraph.nodes);
+    setEdges(initialGraph.edges);
+  }, [initialGraph, setNodes, setEdges]);
 
   const handleViewportChange = useCallback(() => {
     setZoom(Math.round(getZoom() * 100));
   }, [getZoom]);
-
-  // Scrollbar ref for layout definition
-  const scrollRef = useRef<HTMLDivElement>(null);
 
   // View mode handler
   const handleViewModeChange = useCallback(
@@ -176,6 +208,51 @@ function ModalContent({
     optionsPopover.onClose();
     onClose();
   }, [optionsPopover, onClose]);
+
+  // Preview handler — POST MoonScript code to API, update graph
+  const handlePreview = useCallback(async () => {
+    setIsPreviewing(true);
+    try {
+      const response = await axiosInstance.post(endpoints.layouts.preview(node), {
+        layout_definition: moonCode,
+      });
+
+      if (response.data?.okay) {
+        const newDef = response.data.data.data_flow_definition as DataFlowDefinition;
+        setCurrentDefinition(newDef);
+        toast.success(t('sandbox.preview_success'));
+      } else {
+        toast.error(response.data?.msg || t('sandbox.preview_error'));
+      }
+    } catch (error) {
+      console.error('Preview failed:', error);
+      toast.error(t('sandbox.preview_error'));
+    } finally {
+      setIsPreviewing(false);
+    }
+  }, [node, moonCode, t]);
+
+  // Save handler — PUT MoonScript code to API
+  const handleSaveConfirm = useCallback(async () => {
+    setSaveDialogOpen(false);
+    setIsSaving(true);
+    try {
+      const response = await axiosInstance.put(endpoints.layouts.detail(node, layout), {
+        layout_definition: moonCode,
+      });
+
+      if (response.data?.okay) {
+        toast.success(t('sandbox.save_success'));
+      } else {
+        toast.error(response.data?.msg || t('sandbox.save_error'));
+      }
+    } catch (error) {
+      console.error('Save failed:', error);
+      toast.error(t('sandbox.save_error'));
+    } finally {
+      setIsSaving(false);
+    }
+  }, [node, layout, moonCode, t]);
 
   const isHorizontal = viewMode === 'horizontal';
 
@@ -268,9 +345,9 @@ function ModalContent({
               sx={{ color: 'white', flexShrink: 0, display: 'inline-flex', justifySelf: 'center', marginBottom: '-4px' }}
             >
               {isHorizontal ? (
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M1.2 11C0.537258 11 0 10.4627 0 9.8V1.8C0 1.13726 0.537259 0.599999 1.2 0.599999H11.8667C12.5294 0.599999 13.0667 1.13726 13.0667 1.8V9.8C13.0667 10.4627 12.5294 11 11.8667 11H1.2ZM1.06667 9.8C1.06667 9.87364 1.12636 9.93333 1.2 9.93333H6.1332V1.66667H1.2C1.12636 1.66667 1.06667 1.72636 1.06667 1.8V9.8ZM7.19987 1.66667V9.93333H11.8667C11.9403 9.93333 12 9.87364 12 9.8V1.8C12 1.72636 11.9403 1.66667 11.8667 1.66667H7.19987Z" fill="white" />
+                <path fillRule="evenodd" clipRule="evenodd" d="M1.2 11C0.537258 11 0 10.4627 0 9.8V1.8C0 1.13726 0.537259 0.599999 1.2 0.599999H11.8667C12.5294 0.599999 13.0667 1.13726 13.0667 1.8V9.8C13.0667 10.4627 12.5294 11 11.8667 11H1.2ZM1.06667 9.8C1.06667 9.87364 1.12636 9.93333 1.2 9.93333H6.1332V1.66667H1.2C1.12636 1.66667 1.06667 1.72636 1.06667 1.8V9.8ZM7.19987 1.66667V9.93333H11.8667C11.9403 9.93333 12 9.87364 12 9.8V1.8C12 1.72636 11.9403 1.66667 11.8667 1.66667H7.19987Z" fill="white" />
               ) : (
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M11 1.2C11 0.537258 10.4627 0 9.8 0H1.8C1.13726 0 0.599999 0.537259 0.599999 1.2V11.8667C0.599999 12.5294 1.13726 13.0667 1.8 13.0667H9.8C10.4627 13.0667 11 12.5294 11 11.8667V1.2ZM9.8 1.06667C9.87364 1.06667 9.93333 1.12636 9.93333 1.2V6.1332H1.66667V1.2C1.66667 1.12636 1.72636 1.06667 1.8 1.06667H9.8ZM1.66667 7.19987V11.8667C1.66667 11.9403 1.72636 12 1.8 12H9.8C9.87364 12 9.93333 11.9403 9.93333 11.8667V7.19987L1.66667 7.19987Z" fill="white" />
+                <path fillRule="evenodd" clipRule="evenodd" d="M11 1.2C11 0.537258 10.4627 0 9.8 0H1.8C1.13726 0 0.599999 0.537259 0.599999 1.2V11.8667C0.599999 12.5294 1.13726 13.0667 1.8 13.0667H9.8C10.4627 13.0667 11 12.5294 11 11.8667V1.2ZM9.8 1.06667C9.87364 1.06667 9.93333 1.12636 9.93333 1.2V6.1332H1.66667V1.2C1.66667 1.12636 1.72636 1.06667 1.8 1.06667H9.8ZM1.66667 7.19987V11.8667C1.66667 11.9403 1.72636 12 1.8 12H9.8C9.87364 12 9.93333 11.9403 9.93333 11.8667V7.19987L1.66667 7.19987Z" fill="white" />
               )}
             </Box>
           </Stack>
@@ -336,7 +413,7 @@ function ModalContent({
 
             <ListItemIcon>
               <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M1.2 1C0.537258 1 0 1.53726 0 2.2V10.2C0 10.8627 0.537259 11.4 1.2 11.4H11.8667C12.5294 11.4 13.0667 10.8627 13.0667 10.2V2.2C13.0667 1.53726 12.5294 1 11.8667 1H1.2ZM1.06667 2.2C1.06667 2.12636 1.12636 2.06667 1.2 2.06667H6.1332V10.3333H1.2C1.12636 10.3333 1.06667 10.2736 1.06667 10.2V2.2ZM7.19987 10.3333H11.8667C11.9403 10.3333 12 10.2736 12 10.2V2.2C12 2.12636 11.9403 2.06667 11.8667 2.06667H7.19987V10.3333Z" fill="currentColor" />
+                <path fillRule="evenodd" clipRule="evenodd" d="M1.2 1C0.537258 1 0 1.53726 0 2.2V10.2C0 10.8627 0.537259 11.4 1.2 11.4H11.8667C12.5294 11.4 13.0667 10.8627 13.0667 10.2V2.2C13.0667 1.53726 12.5294 1 11.8667 1H1.2ZM1.06667 2.2C1.06667 2.12636 1.12636 2.06667 1.2 2.06667H6.1332V10.3333H1.2C1.12636 10.3333 1.06667 10.2736 1.06667 10.2V2.2ZM7.19987 10.3333H11.8667C11.9403 10.3333 12 10.2736 12 10.2V2.2C12 2.12636 11.9403 2.06667 11.8667 2.06667H7.19987V10.3333Z" fill="currentColor" />
               </svg>
             </ListItemIcon>
 
@@ -352,7 +429,7 @@ function ModalContent({
 
             <ListItemIcon>
               <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M11 1.2C11 0.537258 10.4627 0 9.8 0H1.8C1.13726 0 0.599999 0.537259 0.599999 1.2V11.8667C0.599999 12.5294 1.13726 13.0667 1.8 13.0667H9.8C10.4627 13.0667 11 12.5294 11 11.8667V1.2ZM9.8 1.06667C9.87364 1.06667 9.93333 1.12636 9.93333 1.2V6.1332H1.66667V1.2C1.66667 1.12636 1.72636 1.06667 1.8 1.06667H9.8ZM1.66667 7.19987V11.8667C1.66667 11.9403 1.72636 12 1.8 12H9.8C9.87364 12 9.93333 11.9403 9.93333 11.8667V7.19987L1.66667 7.19987Z" fill="currentColor" />
+                <path fillRule="evenodd" clipRule="evenodd" d="M11 1.2C11 0.537258 10.4627 0 9.8 0H1.8C1.13726 0 0.599999 0.537259 0.599999 1.2V11.8667C0.599999 12.5294 1.13726 13.0667 1.8 13.0667H9.8C10.4627 13.0667 11 12.5294 11 11.8667V1.2ZM9.8 1.06667C9.87364 1.06667 9.93333 1.12636 9.93333 1.2V6.1332H1.66667V1.2C1.66667 1.12636 1.72636 1.06667 1.8 1.06667H9.8ZM1.66667 7.19987V11.8667C1.66667 11.9403 1.72636 12 1.8 12H9.8C9.87364 12 9.93333 11.9403 9.93333 11.8667V7.19987L1.66667 7.19987Z" fill="currentColor" />
               </svg>
             </ListItemIcon>
 
@@ -598,6 +675,9 @@ function ModalContent({
             {/* Save button */}
             <Button
               size="small"
+              onClick={() => setSaveDialogOpen(true)}
+              disabled={isSaving}
+              startIcon={isSaving ? <CircularProgress size={14} color="inherit" /> : undefined}
               sx={{
                 px: 1.5,
                 py: 0.5,
@@ -609,9 +689,10 @@ function ModalContent({
                 textTransform: 'none',
                 lineHeight: '22.5px',
                 '&:hover': { backgroundColor: '#4E576A' },
+                '&.Mui-disabled': { color: '#6B7280', backgroundColor: '#2A3344' },
               }}
             >
-              {t('sandbox.save')}
+              {isSaving ? t('sandbox.saving') : t('sandbox.save')}
             </Button>
 
             {/* Revert button */}
@@ -782,6 +863,9 @@ function ModalContent({
             {/* Preview button */}
             <Button
               size="small"
+              onClick={handlePreview}
+              disabled={isPreviewing}
+              startIcon={isPreviewing ? <CircularProgress size={14} color="inherit" /> : undefined}
               sx={{
                 px: 1.5,
                 py: 0.5,
@@ -793,54 +877,180 @@ function ModalContent({
                 textTransform: 'none',
                 lineHeight: '22.5px',
                 '&:hover': { backgroundColor: '#3A2BE0' },
+                '&.Mui-disabled': { color: '#9BA3B5', backgroundColor: '#3A2BE0' },
               }}
             >
               {t('sandbox.preview_btn')}
             </Button>
           </Stack>
 
-          {/* Code viewer */}
+          {/* Monaco MoonScript Editor */}
           <Box
-            ref={scrollRef}
             sx={{
               flex: 1,
-              overflow: 'auto',
+              overflow: 'hidden',
               backgroundColor: CANVAS_BG,
-              scrollbarWidth: 'thin',
-              scrollbarColor: '#4E576A #202838',
+              '& .monaco-scrollable-element > .scrollbar > .slider': {
+                backgroundColor: 'rgba(255, 255, 255, 0.2) !important',
+                borderRadius: '4px !important',
+              },
+              '& .monaco-scrollable-element > .scrollbar > .slider:hover': {
+                backgroundColor: 'rgba(255, 255, 255, 0.35) !important',
+              },
+              '& .monaco-scrollable-element > .scrollbar > .slider.active': {
+                backgroundColor: 'rgba(255, 255, 255, 0.4) !important',
+              },
             }}
           >
-            <Box sx={{ p: 3.5 }}>
-              <Box
-                component="pre"
-                sx={{
-                  whiteSpace: 'pre-wrap',
-                  fontFamily: 'Roboto, monospace',
-                  fontSize: 15,
-                  lineHeight: '22.5px',
-                  color: '#AFB7C8',
-                  m: 0,
-                }}
-              >
-                <SyntaxHighlighter
-                  language="moonscript"
-                  style={a11yDark}
-                  customStyle={{
-                    background: 'transparent',
-                    whiteSpace: 'pre-wrap',
-                    padding: 0,
-                    margin: 0,
-                    fontSize: 15,
-                    lineHeight: '22.5px',
-                  }}
-                >
-                  {layoutDefinition}
-                </SyntaxHighlighter>
-              </Box>
-            </Box>
+            <MonacoEditor
+              height="100%"
+              language="lua"
+              theme="vs-dark"
+              defaultValue={layoutDefinition}
+              onMount={(ed) => {
+                editorRef.current = ed;
+              }}
+              onChange={(v) => setMoonCode(v || '')}
+              options={{
+                minimap: { enabled: false },
+                fontSize: 15,
+                fontFamily: 'Roboto, monospace',
+                lineHeight: 22.5,
+                padding: { top: 16 },
+                scrollBeyondLastLine: false,
+                automaticLayout: true,
+                tabSize: 2,
+                insertSpaces: true,
+                wordWrap: 'on',
+                scrollbar: {
+                  verticalScrollbarSize: 8,
+                  horizontalScrollbarSize: 8,
+                  verticalSliderSize: 8,
+                  horizontalSliderSize: 8,
+                },
+              }}
+            />
           </Box>
         </Box>
       </Box>
+
+      {/* ========== Save Confirmation Dialog ========== */}
+      <Dialog
+        open={saveDialogOpen}
+        onClose={() => setSaveDialogOpen(false)}
+        PaperProps={{
+          sx: {
+            backgroundColor: '#0A0E15',
+            borderRadius: '8px',
+            border: '1px solid #4E576A',
+            color: '#F0F1F5',
+            width: '100%',
+            maxWidth: 400,
+            p: '12px',
+            boxShadow: 'none',
+          },
+        }}
+      >
+        <DialogTitle
+          sx={{
+            p: 0,
+            m: 0,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            height: 32,
+          }}
+        >
+          <Iconify icon="solar:diskette-bold" width={20} sx={{ color: '#F0F1F5' }} />
+          <Typography
+            variant="body1"
+            sx={{
+              color: '#F0F1F5',
+              fontSize: 15,
+              fontWeight: 400,
+              lineHeight: '22.50px',
+            }}
+          >
+            {t('sandbox.save_confirm_title')}
+          </Typography>
+        </DialogTitle>
+
+        <DialogContent
+          sx={{
+            p: 0,
+            mt: '8px',
+            minHeight: 108,
+            backgroundColor: '#161C25',
+            borderRadius: '8px',
+            border: '1px solid #4E576A',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            px: '12px',
+            py: 0,
+          }}
+        >
+          <Typography
+            variant="body1"
+            sx={{
+              color: '#F0F1F5',
+              fontSize: 15,
+              fontWeight: 400,
+              lineHeight: '22.50px',
+              textAlign: 'center',
+            }}
+          >
+            {t('sandbox.save_confirm_message')}
+          </Typography>
+        </DialogContent>
+
+        <DialogActions
+          sx={{
+            p: 0,
+            mt: '8px',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            gap: '10px',
+            pt: '20px',
+            pb: '20px',
+          }}
+        >
+          <Button
+            onClick={handleSaveConfirm}
+            disabled={isSaving}
+            sx={{
+              padding: '4px 12px',
+              backgroundColor: '#5E66FF',
+              borderRadius: '4px',
+              color: 'white',
+              fontSize: 15,
+              fontWeight: 400,
+              lineHeight: '22.50px',
+              textTransform: 'none',
+              '&:hover': { backgroundColor: '#4E57E5' },
+            }}
+          >
+            {isSaving ? t('sandbox.saving') : t('sandbox.save_confirm_btn')}
+          </Button>
+          <Button
+            onClick={() => setSaveDialogOpen(false)}
+            sx={{
+              padding: '4px 12px',
+              backgroundColor: '#EFF6FF',
+              borderRadius: '4px',
+              border: '1px solid #DFEAFF',
+              color: '#6B89FF',
+              fontSize: 15,
+              fontWeight: 400,
+              lineHeight: '22.50px',
+              textTransform: 'none',
+              '&:hover': { backgroundColor: '#E0E8FF' },
+            }}
+          >
+            {t('sandbox.save_cancel_btn')}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }
@@ -853,6 +1063,8 @@ export function TestEnvironmentModal({
   definition,
   fileName,
   layoutDefinition,
+  node,
+  layout,
 }: TestEnvironmentModalProps) {
   return (
     <Modal
@@ -878,6 +1090,8 @@ export function TestEnvironmentModal({
           definition={definition}
           fileName={fileName}
           layoutDefinition={layoutDefinition}
+          node={node}
+          layout={layout}
         />
       </ReactFlowProvider>
     </Modal>

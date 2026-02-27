@@ -43,7 +43,16 @@
     "exit": "Exit",
     "scale_reset": "Reset To Default",
     "scale_larger": "Make Larger",
-    "scale_smaller": "Make Smaller"
+    "scale_smaller": "Make Smaller",
+    "save_confirm_title": "Save Layout",
+    "save_confirm_message": "Are you sure you want to save changes to this layout?",
+    "save_confirm_btn": "Save",
+    "save_cancel_btn": "Cancel",
+    "save_success": "Layout saved successfully",
+    "save_error": "Failed to save layout",
+    "preview_success": "Preview generated successfully",
+    "preview_error": "Failed to generate preview",
+    "saving": "Saving..."
   },
   "empty": "No data flow to visualize",
   "parse_error": "Failed to parse layout definition"
