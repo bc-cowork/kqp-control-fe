@@ -28,11 +28,19 @@
   },
   "sandbox": {
     "title": "Test Environment (SANDBOX)",
-    "vertical_view": "vertical View",
+    "horizontal_view": "horizontal View",
+    "vertical_view": "Vertical View",
+    "horizontal": "horizontal",
+    "vertical": "vertical",
     "save": "저장",
     "revert": "되돌리기",
     "layout_definition": "Layout Definition",
-    "preview_btn": "미리보기"
+    "preview_btn": "미리보기",
+    "view_screen": "화면 보기",
+    "interface_scale": "인터페이스 크기",
+    "enter_fullscreen": "전체화면",
+    "exit_fullscreen": "전체화면 종료",
+    "exit": "종료"
   },
   "empty": "시각화할 데이터 흐름이 없습니다",
   "parse_error": "레이아웃 정의 파싱에 실패했습니다"

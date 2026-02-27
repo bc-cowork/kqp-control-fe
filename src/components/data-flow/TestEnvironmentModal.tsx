@@ -5,8 +5,8 @@ import '@xyflow/react/dist/style.css';
 import type { Edge } from '@xyflow/react';
 
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { useRef, useMemo, useState, useCallback } from 'react';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { useRef, useMemo, useState, useEffect, useCallback } from 'react';
 import {
   Panel,
   ReactFlow,
@@ -22,16 +22,45 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
+import MenuList from '@mui/material/MenuList';
+import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 
 import { useTranslate } from 'src/locales';
+
+import { Iconify } from 'src/components/iconify';
+import { usePopover, CustomPopover } from 'src/components/custom-popover';
 
 import { DataFlowNode } from './nodes/DataFlowNode';
 import { buildDataFlowGraph } from './graph-builder';
 import { computeDataFlowLayout } from './layout-algorithm';
-import { CANVAS_BG, HEADER_BG, HEADER_BORDER, TEXT_TERTIARY, TEXT_SECONDARY, GRID_LINE_COLOR } from './constants';
+import {
+  CANVAS_BG,
+  HEADER_BG,
+  HEADER_BORDER,
+  TEXT_TERTIARY,
+  TEXT_SECONDARY,
+  GRID_LINE_COLOR,
+} from './constants';
 
 import type { DataFlowDefinition, DataFlowNodeInstance } from './types';
+
+// ----------------------------------------------------------------------
+
+type ViewMode = 'horizontal' | 'vertical';
+
+const SCALE_OPTIONS = [75, 100, 125, 150];
+
+const DARK_POPOVER_PAPER_SX = {
+  bgcolor: '#1A2030',
+  border: '1px solid #373F4E',
+  boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
+  '& .MuiMenuItem-root': { color: '#E0E4EB', fontSize: 14 },
+  '& .MuiMenuItem-root:hover': { bgcolor: '#2A3344' },
+  '& .MuiListItemIcon-root': { color: '#AFB7C8', minWidth: 28 },
+};
 
 // ----------------------------------------------------------------------
 
@@ -55,6 +84,22 @@ function ModalContent({
   const { zoomIn, zoomOut, getZoom } = useReactFlow();
   const [zoom, setZoom] = useState(100);
 
+  // View mode & layout state
+  const [viewMode, setViewMode] = useState<ViewMode>('horizontal');
+  const [interfaceScale, setInterfaceScale] = useState(100);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  // Popover instances
+  const viewModePopover = usePopover();
+  const optionsPopover = usePopover();
+
+  // Submenu anchors
+  const [viewScreenAnchor, setViewScreenAnchor] = useState<HTMLElement | null>(null);
+  const [scaleAnchor, setScaleAnchor] = useState<HTMLElement | null>(null);
+
+  // Fullscreen ref
+  const contentRef = useRef<HTMLDivElement>(null);
+
   const nodeTypes = useMemo(() => ({ dataFlow_node: DataFlowNode }), []);
 
   const initialGraph = useMemo(() => {
@@ -73,8 +118,64 @@ function ModalContent({
   // Scrollbar ref for layout definition
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // View mode handler
+  const handleViewModeChange = useCallback(
+    (mode: ViewMode) => {
+      setViewMode(mode);
+      viewModePopover.onClose();
+      setViewScreenAnchor(null);
+      optionsPopover.onClose();
+    },
+    [viewModePopover, optionsPopover]
+  );
+
+  // Interface scale handler
+  const handleScaleChange = useCallback(
+    (scale: number) => {
+      setInterfaceScale(scale);
+      setScaleAnchor(null);
+      optionsPopover.onClose();
+    },
+    [optionsPopover]
+  );
+
+  // Fullscreen handler
+  const handleToggleFullscreen = useCallback(() => {
+    optionsPopover.onClose();
+    if (!document.fullscreenElement) {
+      contentRef.current?.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  }, [optionsPopover]);
+
+  // Sync fullscreen state with browser
+  useEffect(() => {
+    const handleFsChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFsChange);
+    return () => document.removeEventListener('fullscreenchange', handleFsChange);
+  }, []);
+
+  // Close submenus when options popover closes
+  const handleOptionsClose = useCallback(() => {
+    optionsPopover.onClose();
+    setViewScreenAnchor(null);
+    setScaleAnchor(null);
+  }, [optionsPopover]);
+
+  // Exit handler
+  const handleExit = useCallback(() => {
+    optionsPopover.onClose();
+    onClose();
+  }, [optionsPopover, onClose]);
+
+  const isHorizontal = viewMode === 'horizontal';
+
   return (
     <Box
+      ref={contentRef}
       sx={{
         position: 'absolute',
         top: 20,
@@ -88,23 +189,17 @@ function ModalContent({
         outline: '5px solid #373F4E',
         outlineOffset: '-5px',
         pt: 3,
-        pb: 5,
         px: 4.5,
         display: 'flex',
         flexDirection: 'column',
         gap: 3,
-        // Thin scrollbar for the modal itself
         scrollbarWidth: 'thin',
         scrollbarColor: '#4E576A #202838',
+        pb: 50,
       }}
     >
       {/* ========== Modal Header ========== */}
-      <Stack
-        direction="row"
-        alignItems="center"
-        spacing={1}
-        sx={{ pb: 2 }}
-      >
+      <Stack direction="row" alignItems="center" spacing={1} sx={{ pb: 2 }}>
         {/* File icon */}
         <Box sx={{ width: 24, height: 24, position: 'relative' }}>
           <Box
@@ -138,21 +233,40 @@ function ModalContent({
         <Stack direction="row" alignItems="center" spacing={1}>
           {/* Zoom label */}
           <Box sx={{ px: 1.5, py: 0.5, borderRadius: '4px' }}>
-            <Typography sx={{ fontSize: 12, fontWeight: 400, lineHeight: '16.8px', color: 'white' }}>
-              100%
+            <Typography
+              sx={{ fontSize: 12, fontWeight: 400, lineHeight: '16.8px', color: 'white' }}
+            >
+              {zoom}%
             </Typography>
           </Box>
 
-          {/* Vertical view */}
-          <Stack direction="row" alignItems="center" spacing={0.75}>
-            <Typography sx={{ fontSize: 15, fontWeight: 400, lineHeight: '22.5px', color: TEXT_TERTIARY }}>
-              {t('sandbox.vertical_view')}
+          {/* View mode button */}
+          <Stack
+            direction="row"
+            alignItems="center"
+            spacing={0.75}
+            onClick={viewModePopover.onOpen}
+            sx={{ cursor: 'pointer', '&:hover': { opacity: 0.8 } }}
+          >
+            <Typography
+              sx={{ fontSize: 15, fontWeight: 400, lineHeight: '22.5px', color: TEXT_TERTIARY }}
+            >
+              {t(isHorizontal ? 'sandbox.horizontal_view' : 'sandbox.vertical_view')}
             </Typography>
-            <Box sx={{ width: 12, height: 12, opacity: 0.1 }} />
+            <Iconify
+              icon={
+                isHorizontal
+                  ? 'solar:columns-minimalistic-outline'
+                  : 'solar:document-text-outline'
+              }
+              width={16}
+              sx={{ color: TEXT_TERTIARY }}
+            />
           </Stack>
 
-          {/* Fullscreen button */}
+          {/* Options chevron button */}
           <Box
+            onClick={optionsPopover.onOpen}
             sx={{
               px: 1.5,
               py: 0.5,
@@ -165,7 +279,7 @@ function ModalContent({
               '&:hover': { backgroundColor: '#4E576A' },
             }}
           >
-            <Box sx={{ width: 16, height: 16, opacity: 0.1 }} />
+            <Iconify icon="eva:chevron-down-fill" width={16} sx={{ color: TEXT_TERTIARY }} />
           </Box>
 
           {/* Close button */}
@@ -183,335 +297,514 @@ function ModalContent({
               '&:hover': { backgroundColor: '#4E576A' },
             }}
           >
-            <Typography sx={{ fontSize: 15, fontWeight: 400, color: TEXT_TERTIARY, lineHeight: '22.5px' }}>
+            <Typography
+              sx={{ fontSize: 15, fontWeight: 400, color: TEXT_TERTIARY, lineHeight: '22.5px' }}
+            >
               ✕
             </Typography>
           </Box>
         </Stack>
       </Stack>
 
-      {/* ========== Data Flow Canvas Preview ========== */}
+      {/* ========== View Mode Popover ========== */}
+      <CustomPopover
+        open={viewModePopover.open}
+        anchorEl={viewModePopover.anchorEl}
+        onClose={viewModePopover.onClose}
+        slotProps={{ arrow: { hide: true }, paper: { sx: DARK_POPOVER_PAPER_SX } }}
+      >
+        <MenuList>
+          <MenuItem
+            selected={isHorizontal}
+            onClick={() => handleViewModeChange('horizontal')}
+          >
+            <ListItemIcon>
+              <Iconify icon="solar:columns-minimalistic-outline" width={18} />
+            </ListItemIcon>
+            <ListItemText>{t('sandbox.horizontal')}</ListItemText>
+          </MenuItem>
+          <MenuItem
+            selected={!isHorizontal}
+            onClick={() => handleViewModeChange('vertical')}
+          >
+            <ListItemIcon>
+              <Iconify icon="solar:document-text-outline" width={18} />
+            </ListItemIcon>
+            <ListItemText>{t('sandbox.vertical')}</ListItemText>
+          </MenuItem>
+        </MenuList>
+      </CustomPopover>
+
+      {/* ========== Options Popover ========== */}
+      <CustomPopover
+        open={optionsPopover.open}
+        anchorEl={optionsPopover.anchorEl}
+        onClose={handleOptionsClose}
+        slotProps={{ arrow: { hide: true }, paper: { sx: DARK_POPOVER_PAPER_SX } }}
+      >
+        <MenuList>
+          {/* View Screen submenu */}
+          <MenuItem
+            onMouseEnter={(e) => {
+              setViewScreenAnchor(e.currentTarget);
+              setScaleAnchor(null);
+            }}
+          >
+            <ListItemIcon>
+              <Iconify icon="solar:monitor-outline" width={18} />
+            </ListItemIcon>
+            <ListItemText>{t('sandbox.view_screen')}</ListItemText>
+            <Iconify icon="eva:chevron-right-fill" width={16} sx={{ ml: 2, color: '#AFB7C8' }} />
+          </MenuItem>
+
+          {/* Interface Scale submenu */}
+          <MenuItem
+            onMouseEnter={(e) => {
+              setScaleAnchor(e.currentTarget);
+              setViewScreenAnchor(null);
+            }}
+          >
+            <ListItemIcon>
+              <Iconify icon="solar:magnifer-outline" width={18} />
+            </ListItemIcon>
+            <ListItemText>{t('sandbox.interface_scale')}</ListItemText>
+            <Iconify icon="eva:chevron-right-fill" width={16} sx={{ ml: 2, color: '#AFB7C8' }} />
+          </MenuItem>
+
+          {/* Enter/Exit Full Screen */}
+          <MenuItem
+            onClick={handleToggleFullscreen}
+            onMouseEnter={() => {
+              setViewScreenAnchor(null);
+              setScaleAnchor(null);
+            }}
+          >
+            <ListItemIcon>
+              <Iconify
+                icon={
+                  isFullscreen
+                    ? 'solar:quit-full-screen-square-outline'
+                    : 'solar:full-screen-square-outline'
+                }
+                width={18}
+              />
+            </ListItemIcon>
+            <ListItemText>
+              {t(isFullscreen ? 'sandbox.exit_fullscreen' : 'sandbox.enter_fullscreen')}
+            </ListItemText>
+          </MenuItem>
+
+          {/* Exit */}
+          <MenuItem
+            onClick={handleExit}
+            onMouseEnter={() => {
+              setViewScreenAnchor(null);
+              setScaleAnchor(null);
+            }}
+          >
+            <ListItemIcon>
+              <Iconify icon="solar:logout-2-outline" width={18} />
+            </ListItemIcon>
+            <ListItemText>{t('sandbox.exit')}</ListItemText>
+          </MenuItem>
+        </MenuList>
+      </CustomPopover>
+
+      {/* ========== View Screen Submenu ========== */}
+      <CustomPopover
+        open={!!viewScreenAnchor}
+        anchorEl={viewScreenAnchor}
+        onClose={() => setViewScreenAnchor(null)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+        slotProps={{ arrow: { hide: true }, paper: { sx: DARK_POPOVER_PAPER_SX } }}
+      >
+        <MenuList>
+          <MenuItem
+            selected={isHorizontal}
+            onClick={() => handleViewModeChange('horizontal')}
+          >
+            <ListItemIcon>
+              <Iconify icon="solar:columns-minimalistic-outline" width={18} />
+            </ListItemIcon>
+            <ListItemText>{t('sandbox.horizontal')}</ListItemText>
+          </MenuItem>
+          <MenuItem
+            selected={!isHorizontal}
+            onClick={() => handleViewModeChange('vertical')}
+          >
+            <ListItemIcon>
+              <Iconify icon="solar:document-text-outline" width={18} />
+            </ListItemIcon>
+            <ListItemText>{t('sandbox.vertical')}</ListItemText>
+          </MenuItem>
+        </MenuList>
+      </CustomPopover>
+
+      {/* ========== Interface Scale Submenu ========== */}
+      <CustomPopover
+        open={!!scaleAnchor}
+        anchorEl={scaleAnchor}
+        onClose={() => setScaleAnchor(null)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+        slotProps={{ arrow: { hide: true }, paper: { sx: DARK_POPOVER_PAPER_SX } }}
+      >
+        <MenuList>
+          {SCALE_OPTIONS.map((scale) => (
+            <MenuItem
+              key={scale}
+              selected={interfaceScale === scale}
+              onClick={() => handleScaleChange(scale)}
+            >
+              <ListItemText>{scale}%</ListItemText>
+            </MenuItem>
+          ))}
+        </MenuList>
+      </CustomPopover>
+
+      {/* ========== Panels Container ========== */}
       <Box
         sx={{
-          minHeight: 832,
-          borderRadius: '12px',
-          overflow: 'hidden',
-          border: '1.2px solid #667085',
-          backgroundColor: CANVAS_BG,
           display: 'flex',
-          flexDirection: 'column',
+          flexDirection: isHorizontal ? 'row' : 'column',
+          gap: 3,
+          ...(interfaceScale !== 100 && {
+            transform: `scale(${interfaceScale / 100})`,
+            transformOrigin: 'top left',
+            width: `${10000 / interfaceScale}%`,
+          }),
         }}
       >
-        {/* Preview toolbar */}
-        <Stack
-          direction="row"
-          alignItems="center"
-          spacing={1}
-          sx={{
-            p: 1.5,
-            backgroundColor: HEADER_BG,
-            borderBottom: `1px solid ${HEADER_BORDER}`,
-          }}
-        >
-          {/* PREVIEW badge (danger/red) */}
-          <Box
-            sx={{
-              px: 1.5,
-              pl: 1,
-              py: 0,
-              backgroundColor: '#331B1E',
-              borderRadius: '100px',
-              border: '1px solid #4A2C31',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 0.5,
-            }}
-          >
-            <Box
-              sx={{
-                width: 8,
-                height: 8,
-                borderRadius: '50%',
-                backgroundColor: '#FF5B5B',
-              }}
-            />
-            <Typography
-              sx={{
-                fontSize: 15,
-                fontFamily: 'Roboto, sans-serif',
-                fontWeight: 400,
-                lineHeight: '22.5px',
-                color: '#FF8882',
-              }}
-            >
-              PREVIEW
-            </Typography>
-          </Box>
-
-          {/* Title */}
-          <Typography
-            sx={{
-              flex: 1,
-              fontSize: 15,
-              fontFamily: 'Roboto, sans-serif',
-              fontWeight: 400,
-              lineHeight: '22.5px',
-              color: TEXT_SECONDARY,
-            }}
-          >
-            Data Flow
-          </Typography>
-
-          {/* Filename */}
-          <Typography
-            sx={{
-              flex: 1,
-              fontSize: 15,
-              fontFamily: 'Roboto, sans-serif',
-              fontWeight: 400,
-              lineHeight: '22.5px',
-              color: TEXT_SECONDARY,
-            }}
-          >
-            {fileName}
-          </Typography>
-
-          {/* Save button */}
-          <Button
-            size="small"
-            sx={{
-              px: 1.5,
-              py: 0.5,
-              backgroundColor: '#373F4E',
-              borderRadius: '4px',
-              color: TEXT_TERTIARY,
-              fontSize: 15,
-              fontWeight: 400,
-              textTransform: 'none',
-              lineHeight: '22.5px',
-              '&:hover': { backgroundColor: '#4E576A' },
-            }}
-          >
-            {t('sandbox.save')}
-          </Button>
-
-          {/* Revert button */}
-          <Button
-            size="small"
-            sx={{
-              px: 1.5,
-              py: 0.5,
-              backgroundColor: '#4A3BFF',
-              borderRadius: '4px',
-              color: TEXT_TERTIARY,
-              fontSize: 15,
-              fontWeight: 400,
-              textTransform: 'none',
-              lineHeight: '22.5px',
-              '&:hover': { backgroundColor: '#3A2BE0' },
-            }}
-          >
-            {t('sandbox.revert')}
-          </Button>
-        </Stack>
-
-        {/* Canvas */}
-        <Box sx={{ flex: 1, position: 'relative' }}>
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            nodeTypes={nodeTypes}
-            fitView
-            fitViewOptions={{ padding: 0.3 }}
-            proOptions={{ hideAttribution: true }}
-            nodesDraggable
-            nodesConnectable={false}
-            elementsSelectable={false}
-            onMoveEnd={handleViewportChange}
-            defaultEdgeOptions={{ type: 'smoothstep' }}
-          >
-            <Background
-              variant={BackgroundVariant.Lines}
-              gap={50}
-              lineWidth={0.5}
-              color={GRID_LINE_COLOR}
-            />
-
-            {/* Zoom Controls */}
-            <Panel position="bottom-right">
-              <Stack spacing={0.5} alignItems="center">
-                <Box
-                  onClick={() => zoomIn({ duration: 200 })}
-                  sx={{
-                    width: 40,
-                    height: 32,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    backgroundColor: '#373F4E',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    '&:hover': { backgroundColor: '#4E576A' },
-                  }}
-                >
-                  <Typography sx={{ color: 'white', fontSize: 16, fontWeight: 600 }}>+</Typography>
-                </Box>
-                <Typography sx={{ fontSize: 12, color: 'white', fontWeight: 400 }}>
-                  {zoom}%
-                </Typography>
-                <Box
-                  onClick={() => zoomOut({ duration: 200 })}
-                  sx={{
-                    width: 40,
-                    height: 32,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    backgroundColor: '#373F4E',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    '&:hover': { backgroundColor: '#4E576A' },
-                  }}
-                >
-                  <Typography sx={{ color: 'white', fontSize: 16, fontWeight: 600 }}>-</Typography>
-                </Box>
-              </Stack>
-            </Panel>
-          </ReactFlow>
-        </Box>
-      </Box>
-
-      {/* ========== Layout Definition Panel ========== */}
-      <Box
-        sx={{
-          minHeight: 837,
-          borderRadius: '12px',
-          overflow: 'hidden',
-          border: '1.2px solid #667085',
-          backgroundColor: CANVAS_BG,
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        {/* Header */}
-        <Stack
-          direction="row"
-          alignItems="center"
-          spacing={1}
-          sx={{
-            p: 1.5,
-            backgroundColor: HEADER_BG,
-            borderBottom: `1px solid ${HEADER_BORDER}`,
-          }}
-        >
-          {/* MOON DSL badge (info/blue) */}
-          <Box
-            sx={{
-              px: 1.5,
-              pl: 1,
-              py: 0,
-              backgroundColor: '#212447',
-              borderRadius: '100px',
-              border: '1px solid #1D2654',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 0.5,
-            }}
-          >
-            <Box
-              sx={{
-                width: 8,
-                height: 8,
-                borderRadius: '50%',
-                backgroundColor: '#7AA2FF',
-              }}
-            />
-            <Typography
-              sx={{
-                fontSize: 15,
-                fontFamily: 'Roboto, sans-serif',
-                fontWeight: 400,
-                lineHeight: '22.5px',
-                color: '#7AA2FF',
-              }}
-            >
-              MOON DSL
-            </Typography>
-          </Box>
-
-          {/* Title */}
-          <Typography
-            sx={{
-              flex: 1,
-              fontSize: 15,
-              fontFamily: 'Roboto, sans-serif',
-              fontWeight: 400,
-              lineHeight: '22.5px',
-              color: TEXT_SECONDARY,
-            }}
-          >
-            {t('sandbox.layout_definition')}
-          </Typography>
-
-          {/* Preview button */}
-          <Button
-            size="small"
-            sx={{
-              px: 1.5,
-              py: 0.5,
-              backgroundColor: '#4A3BFF',
-              borderRadius: '4px',
-              color: '#F0F1F5',
-              fontSize: 15,
-              fontWeight: 400,
-              textTransform: 'none',
-              lineHeight: '22.5px',
-              '&:hover': { backgroundColor: '#3A2BE0' },
-            }}
-          >
-            {t('sandbox.preview_btn')}
-          </Button>
-        </Stack>
-
-        {/* Code viewer */}
+        {/* ========== Data Flow Canvas Preview ========== */}
         <Box
-          ref={scrollRef}
           sx={{
-            flex: 1,
-            overflow: 'auto',
+            minHeight: isHorizontal ? 600 : 832,
+            width: isHorizontal ? '50%' : '100%',
+            borderRadius: '12px',
+            overflow: 'hidden',
+            border: '1.2px solid #667085',
             backgroundColor: CANVAS_BG,
-            scrollbarWidth: 'thin',
-            scrollbarColor: '#4E576A #202838',
+            display: 'flex',
+            flexDirection: 'column',
           }}
         >
-          <Box sx={{ p: 3.5 }}>
+          {/* Preview toolbar */}
+          <Stack
+            direction="row"
+            alignItems="center"
+            spacing={1}
+            sx={{
+              p: 1.5,
+              backgroundColor: HEADER_BG,
+              borderBottom: `1px solid ${HEADER_BORDER}`,
+            }}
+          >
+            {/* PREVIEW badge (danger/red) */}
             <Box
-              component="pre"
               sx={{
-                whiteSpace: 'pre-wrap',
-                fontFamily: 'Roboto, monospace',
-                fontSize: 15,
-                lineHeight: '22.5px',
-                color: '#AFB7C8',
-                m: 0,
+                px: 1.5,
+                pl: 1,
+                py: 0,
+                backgroundColor: '#331B1E',
+                borderRadius: '100px',
+                border: '1px solid #4A2C31',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 0.5,
               }}
             >
-              <SyntaxHighlighter
-                language="moonscript"
-                style={a11yDark}
-                customStyle={{
-                  background: 'transparent',
-                  whiteSpace: 'pre-wrap',
-                  padding: 0,
-                  margin: 0,
+              <Box
+                sx={{
+                  width: 8,
+                  height: 8,
+                  borderRadius: '50%',
+                  backgroundColor: '#FF5B5B',
+                }}
+              />
+              <Typography
+                sx={{
                   fontSize: 15,
+                  fontFamily: 'Roboto, sans-serif',
+                  fontWeight: 400,
                   lineHeight: '22.5px',
+                  color: '#FF8882',
                 }}
               >
-                {layoutDefinition}
-              </SyntaxHighlighter>
+                PREVIEW
+              </Typography>
+            </Box>
+
+            {/* Title */}
+            <Typography
+              sx={{
+                flex: 1,
+                fontSize: 15,
+                fontFamily: 'Roboto, sans-serif',
+                fontWeight: 400,
+                lineHeight: '22.5px',
+                color: TEXT_SECONDARY,
+              }}
+            >
+              Data Flow
+            </Typography>
+
+            {/* Filename */}
+            <Typography
+              sx={{
+                flex: 1,
+                fontSize: 15,
+                fontFamily: 'Roboto, sans-serif',
+                fontWeight: 400,
+                lineHeight: '22.5px',
+                color: TEXT_SECONDARY,
+              }}
+            >
+              {fileName}
+            </Typography>
+
+            {/* Save button */}
+            <Button
+              size="small"
+              sx={{
+                px: 1.5,
+                py: 0.5,
+                backgroundColor: '#373F4E',
+                borderRadius: '4px',
+                color: TEXT_TERTIARY,
+                fontSize: 15,
+                fontWeight: 400,
+                textTransform: 'none',
+                lineHeight: '22.5px',
+                '&:hover': { backgroundColor: '#4E576A' },
+              }}
+            >
+              {t('sandbox.save')}
+            </Button>
+
+            {/* Revert button */}
+            <Button
+              size="small"
+              sx={{
+                px: 1.5,
+                py: 0.5,
+                backgroundColor: '#4A3BFF',
+                borderRadius: '4px',
+                color: TEXT_TERTIARY,
+                fontSize: 15,
+                fontWeight: 400,
+                textTransform: 'none',
+                lineHeight: '22.5px',
+                '&:hover': { backgroundColor: '#3A2BE0' },
+              }}
+            >
+              {t('sandbox.revert')}
+            </Button>
+          </Stack>
+
+          {/* Canvas */}
+          <Box sx={{ flex: 1, position: 'relative' }}>
+            <ReactFlow
+              nodes={nodes}
+              edges={edges}
+              onNodesChange={onNodesChange}
+              onEdgesChange={onEdgesChange}
+              nodeTypes={nodeTypes}
+              fitView
+              fitViewOptions={{ padding: 0.3 }}
+              proOptions={{ hideAttribution: true }}
+              nodesDraggable
+              nodesConnectable={false}
+              elementsSelectable={false}
+              onMoveEnd={handleViewportChange}
+              defaultEdgeOptions={{ type: 'smoothstep' }}
+            >
+              <Background
+                variant={BackgroundVariant.Lines}
+                gap={50}
+                lineWidth={0.5}
+                color={GRID_LINE_COLOR}
+              />
+
+              {/* Zoom Controls */}
+              <Panel position="bottom-right">
+                <Stack spacing={0.5} alignItems="center">
+                  <Box
+                    onClick={() => zoomIn({ duration: 200 })}
+                    sx={{
+                      width: 40,
+                      height: 32,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      backgroundColor: '#373F4E',
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                      '&:hover': { backgroundColor: '#4E576A' },
+                    }}
+                  >
+                    <Typography sx={{ color: 'white', fontSize: 16, fontWeight: 600 }}>
+                      +
+                    </Typography>
+                  </Box>
+                  <Typography sx={{ fontSize: 12, color: 'white', fontWeight: 400 }}>
+                    {zoom}%
+                  </Typography>
+                  <Box
+                    onClick={() => zoomOut({ duration: 200 })}
+                    sx={{
+                      width: 40,
+                      height: 32,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      backgroundColor: '#373F4E',
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                      '&:hover': { backgroundColor: '#4E576A' },
+                    }}
+                  >
+                    <Typography sx={{ color: 'white', fontSize: 16, fontWeight: 600 }}>
+                      -
+                    </Typography>
+                  </Box>
+                </Stack>
+              </Panel>
+            </ReactFlow>
+          </Box>
+        </Box>
+
+        {/* ========== Layout Definition Panel ========== */}
+        <Box
+          sx={{
+            maxHeight: isHorizontal ? 600 : 837,
+            width: isHorizontal ? '50%' : '100%',
+            borderRadius: '12px',
+            overflow: 'hidden',
+            border: '1.2px solid #667085',
+            backgroundColor: CANVAS_BG,
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          {/* Header */}
+          <Stack
+            direction="row"
+            alignItems="center"
+            spacing={1}
+            sx={{
+              p: 1.5,
+              backgroundColor: HEADER_BG,
+              borderBottom: `1px solid ${HEADER_BORDER}`,
+            }}
+          >
+            {/* MOON DSL badge (info/blue) */}
+            <Box
+              sx={{
+                px: 1.5,
+                pl: 1,
+                py: 0,
+                backgroundColor: '#212447',
+                borderRadius: '100px',
+                border: '1px solid #1D2654',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 0.5,
+              }}
+            >
+              <Box
+                sx={{
+                  width: 8,
+                  height: 8,
+                  borderRadius: '50%',
+                  backgroundColor: '#7AA2FF',
+                }}
+              />
+              <Typography
+                sx={{
+                  fontSize: 15,
+                  fontFamily: 'Roboto, sans-serif',
+                  fontWeight: 400,
+                  lineHeight: '22.5px',
+                  color: '#7AA2FF',
+                }}
+              >
+                MOON DSL
+              </Typography>
+            </Box>
+
+            {/* Title */}
+            <Typography
+              sx={{
+                flex: 1,
+                fontSize: 15,
+                fontFamily: 'Roboto, sans-serif',
+                fontWeight: 400,
+                lineHeight: '22.5px',
+                color: TEXT_SECONDARY,
+              }}
+            >
+              {t('sandbox.layout_definition')}
+            </Typography>
+
+            {/* Preview button */}
+            <Button
+              size="small"
+              sx={{
+                px: 1.5,
+                py: 0.5,
+                backgroundColor: '#4A3BFF',
+                borderRadius: '4px',
+                color: '#F0F1F5',
+                fontSize: 15,
+                fontWeight: 400,
+                textTransform: 'none',
+                lineHeight: '22.5px',
+                '&:hover': { backgroundColor: '#3A2BE0' },
+              }}
+            >
+              {t('sandbox.preview_btn')}
+            </Button>
+          </Stack>
+
+          {/* Code viewer */}
+          <Box
+            ref={scrollRef}
+            sx={{
+              flex: 1,
+              overflow: 'auto',
+              backgroundColor: CANVAS_BG,
+              scrollbarWidth: 'thin',
+              scrollbarColor: '#4E576A #202838',
+            }}
+          >
+            <Box sx={{ p: 3.5 }}>
+              <Box
+                component="pre"
+                sx={{
+                  whiteSpace: 'pre-wrap',
+                  fontFamily: 'Roboto, monospace',
+                  fontSize: 15,
+                  lineHeight: '22.5px',
+                  color: '#AFB7C8',
+                  m: 0,
+                }}
+              >
+                <SyntaxHighlighter
+                  language="moonscript"
+                  style={a11yDark}
+                  customStyle={{
+                    background: 'transparent',
+                    whiteSpace: 'pre-wrap',
+                    padding: 0,
+                    margin: 0,
+                    fontSize: 15,
+                    lineHeight: '22.5px',
+                  }}
+                >
+                  {layoutDefinition}
+                </SyntaxHighlighter>
+              </Box>
             </Box>
           </Box>
         </Box>

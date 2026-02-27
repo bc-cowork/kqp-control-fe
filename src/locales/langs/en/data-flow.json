@@ -28,11 +28,19 @@
   },
   "sandbox": {
     "title": "Test Environment (SANDBOX)",
-    "vertical_view": "vertical View",
+    "horizontal_view": "horizontal View",
+    "vertical_view": "Vertical View",
+    "horizontal": "horizontal",
+    "vertical": "vertical",
     "save": "Save",
     "revert": "Revert",
     "layout_definition": "Layout Definition",
-    "preview_btn": "Preview"
+    "preview_btn": "Preview",
+    "view_screen": "View Screen",
+    "interface_scale": "Interface Scale",
+    "enter_fullscreen": "Enter Full Screen",
+    "exit_fullscreen": "Exit Full Screen",
+    "exit": "Exit"
   },
   "empty": "No data flow to visualize",
   "parse_error": "Failed to parse layout definition"

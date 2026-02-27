@@ -126,7 +126,7 @@ export function DataFlowToolbar({
             textTransform: 'none',
             lineHeight: '22.5px',
             justifySelf: 'flex-end',
-            '&:hover': { backgroundColor: '#4E576A' },
+            '&:hover': { backgroundColor: '#5E66FF' },
           }}
         >
           테스트 환경 접속
