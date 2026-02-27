@@ -185,6 +185,7 @@ function DataFlowCanvasInner({ definition, fileName }: DataFlowCanvasProps) {
                 sx={{
                   p: 1.5,
                   borderBottom: `1px solid ${HEADER_BORDER}`,
+                  marginBottom: 1,
                 }}
               >
                 <Typography
@@ -263,7 +264,30 @@ function LegendItem({ color, label }: { color: string; label: string }) {
       spacing={2}
       sx={{ px: 1.5, py: 0.5 }}
     >
-      <Box sx={{ width: 16, height: 2, backgroundColor: color, borderRadius: 1 }} />
+      <Stack direction="row" alignItems="center" sx={{ position: 'relative' }}>
+        {/* The horizontal line (The "Shaft") */}
+        <Box
+          sx={{
+            width: 12,
+            height: 1.5,
+            backgroundColor: color,
+            borderRadius: '1px 0 0 1px'
+          }}
+        />
+
+        {/* The Arrowhead (The "Point") */}
+        <Box
+          sx={{
+            width: 0,
+            height: 0,
+            borderTop: '3px solid transparent',
+            borderBottom: '3px solid transparent',
+            borderLeft: `4px solid ${color}`, // This creates the triangle pointing right
+            ml: -0.1, // Slight overlap to prevent a gap
+          }}
+        />
+      </Stack>
+
       <Typography
         sx={{
           fontSize: 15,
