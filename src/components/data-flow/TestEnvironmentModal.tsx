@@ -510,34 +510,54 @@ function ModalContent({
         open={!!viewScreenAnchor}
         anchorEl={viewScreenAnchor}
         onClose={() => setViewScreenAnchor(null)}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-        slotProps={{ arrow: { hide: true }, paper: { sx: DARK_POPOVER_PAPER_SX } }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        slotProps={{ arrow: { hide: true }, paper: { sx: { ...DARK_POPOVER_PAPER_SX, marginLeft: '-6px' } } }}
       >
-        <MenuList>
+        <MenuList >
           <MenuItem
             selected={isHorizontal}
             onClick={() => handleViewModeChange('horizontal')}
             sx={{
-              backgroundColor: 'transparent'
+              display: 'flex',
+              backgroundColor: 'transparent',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
             }}
           >
-            <ListItemIcon>
-              <Iconify icon="solar:columns-minimalistic-outline" width={18} />
-            </ListItemIcon>
             <ListItemText>{t('sandbox.horizontal')}</ListItemText>
+            <ListItemIcon sx={{
+              position: 'relative',
+              right: -24,
+              top: 0
+            }}>
+              <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M1.2 1C0.537258 1 0 1.53726 0 2.2V10.2C0 10.8627 0.537259 11.4 1.2 11.4H11.8667C12.5294 11.4 13.0667 10.8627 13.0667 10.2V2.2C13.0667 1.53726 12.5294 1 11.8667 1H1.2ZM1.06667 2.2C1.06667 2.12636 1.12636 2.06667 1.2 2.06667H6.1332V10.3333H1.2C1.12636 10.3333 1.06667 10.2736 1.06667 10.2V2.2ZM7.19987 10.3333H11.8667C11.9403 10.3333 12 10.2736 12 10.2V2.2C12 2.12636 11.9403 2.06667 11.8667 2.06667H7.19987V10.3333Z" fill="currentColor" />
+              </svg>
+            </ListItemIcon>
           </MenuItem>
           <MenuItem
             selected={!isHorizontal}
             onClick={() => handleViewModeChange('vertical')}
             sx={{
-              backgroundColor: 'transparent'
+              display: 'flex',
+              backgroundColor: 'transparent',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
             }}
           >
-            <ListItemIcon>
-              <Iconify icon="solar:document-text-outline" width={18} />
-            </ListItemIcon>
             <ListItemText>{t('sandbox.vertical')}</ListItemText>
+            <ListItemIcon
+              sx={{
+                position: 'relative',
+                right: -24,
+                top: 0
+              }}
+            >
+              <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M11 1.2C11 0.537258 10.4627 0 9.8 0H1.8C1.13726 0 0.599999 0.537259 0.599999 1.2V11.8667C0.599999 12.5294 1.13726 13.0667 1.8 13.0667H9.8C10.4627 13.0667 11 12.5294 11 11.8667V1.2ZM9.8 1.06667C9.87364 1.06667 9.93333 1.12636 9.93333 1.2V6.1332H1.66667V1.2C1.66667 1.12636 1.72636 1.06667 1.8 1.06667H9.8ZM1.66667 7.19987V11.8667C1.66667 11.9403 1.72636 12 1.8 12H9.8C9.87364 12 9.93333 11.9403 9.93333 11.8667V7.19987L1.66667 7.19987Z" fill="currentColor" />
+              </svg>
+            </ListItemIcon>
           </MenuItem>
         </MenuList>
       </CustomPopover>
@@ -547,9 +567,9 @@ function ModalContent({
         open={!!scaleAnchor}
         anchorEl={scaleAnchor}
         onClose={() => setScaleAnchor(null)}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-        slotProps={{ arrow: { hide: true }, paper: { sx: DARK_POPOVER_PAPER_SX } }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        slotProps={{ arrow: { hide: true }, paper: { sx: { ...DARK_POPOVER_PAPER_SX, marginLeft: '-6px' } } }}
       >
         <MenuList>
           {SCALE_OPTIONS.map((option) => (
