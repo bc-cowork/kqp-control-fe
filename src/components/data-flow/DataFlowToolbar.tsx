@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 import { useTranslate } from 'src/locales';
 
-import { HEADER_BG, HEADER_BORDER, TEXT_TERTIARY, TEXT_SECONDARY } from './constants';
+import { HEADER_BG, TEXT_TERTIARY, TEXT_SECONDARY } from './constants';
 
 // ----------------------------------------------------------------------
 
@@ -107,7 +107,7 @@ export function DataFlowToolbar({
       </Typography>
 
       {/* Buttons */}
-      <Stack direction="row" width={'240px'}>
+      <Stack direction="row" width="240px">
         <Button
           size="small"
           onClick={onAutoLayout}

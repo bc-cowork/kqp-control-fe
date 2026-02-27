@@ -23,6 +23,9 @@
     "emit": "EMIT",
     "recv_channels": "Receive Channel"
   },
+  "editor": {
+    "title": "JSON Definition"
+  },
   "empty": "No data flow to visualize",
   "parse_error": "Failed to parse layout definition"
 }

@@ -23,6 +23,9 @@
     "emit": "EMIT",
     "recv_channels": "수신 채널"
   },
+  "editor": {
+    "title": "JSON Definition"
+  },
   "empty": "시각화할 데이터 흐름이 없습니다",
   "parse_error": "레이아웃 정의 파싱에 실패했습니다"
 }

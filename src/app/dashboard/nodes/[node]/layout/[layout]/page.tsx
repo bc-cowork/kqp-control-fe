@@ -1,8 +1,10 @@
 "use client";
 
+import type { DataFlowDefinition } from 'src/components/data-flow';
+
 import useSWR from 'swr';
-import React from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
+import React, { useState, useEffect, useCallback } from 'react';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 import Box from '@mui/material/Box';
@@ -17,8 +19,121 @@ import { fetcher, endpoints } from 'src/utils/axios';
 import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
 
-import { DataFlowCanvas } from 'src/components/data-flow';
 import { Breadcrumb } from 'src/components/common/Breadcrumb';
+import { DataFlowCanvas, DataFlowJsonEditor } from 'src/components/data-flow';
+
+const demoLayoutDefinifinition: DataFlowDefinition = {
+  "PMR": {
+    "description": "KOSPI/KOSDAQ 주식 그룹",
+    "nodes": {
+      "KSKQ_def": {
+        "description": "구조화증권 기본/기타 라우터",
+        "recv2r": [216, 224, 225, 226, 230, 238, 239, 261, 260],
+        "topics": {
+          "inbound": [
+            { "act": "log", "params": { "to": "rcv0" }, "comment": "입수 로깅" },
+            { "act": "route", "params": { "to": "1", "app": "kqp" }, "comment": "통합시세로 넘김" },
+            { "act": "route", "params": { "to": "KSKQ_def_emit" }, "comment": "송출기로 넘김.  => CBR" }
+          ]
+        }
+      },
+      "KSKQ_def_emit": {
+        "description": "",
+        "topics": {
+          "inbound": [
+            { "act": "destinate", "params": { "rule": "route_map" } },
+            { "act": "modify", "params": { "rule": "wrsec1" }, "comment": "헤더 추가" },
+            { "act": "emit", "params": {} },
+            { "act": "log", "params": { "to": "dist0" }, "comment": "송출 로깅" }
+          ]
+        }
+      },
+      "KS_q": {
+        "description": "KOSPI 주식 호가",
+        "recv2r": [222, 223, 258],
+        "topics": {
+          "inbound": [
+            { "act": "log", "params": { "to": "rcv0" } },
+            { "act": "route", "params": { "to": "ksp_q", "app": "kqp" }, "comment": "통합시세로 넘김" },
+            { "act": "route", "params": { "to": "KS_q_emit" } }
+          ]
+        }
+      },
+      "KS_q_emit": {
+        "description": "",
+        "topics": {
+          "inbound": [
+            { "act": "destinate", "params": { "rule": "route_map" } },
+            { "act": "modify", "params": { "rule": "wrsec1" }, "comment": "헤더 추가" },
+            { "act": "emit", "params": {} }
+          ]
+        }
+      },
+      "KS_f": {
+        "description": "KOSPI 주식 체결",
+        "recv2r": [217, 218, 219, 220, 221, 256],
+        "topics": {
+          "inbound": [
+            { "act": "log", "params": { "to": "rcv0" } },
+            { "act": "route", "params": { "to": "KS_f_emit" } }
+          ]
+        }
+      },
+      "KS_f_emit": {
+        "description": "",
+        "topics": {
+          "inbound": [
+            { "act": "destinate", "params": { "rule": "route_map" } },
+            { "act": "modify", "params": { "rule": "wrsec1" }, "comment": "헤더 추가" },
+            { "act": "emit", "params": {} },
+            { "act": "log", "params": { "to": "dist0" }, "comment": "송출 로깅" }
+          ]
+        }
+      },
+      "KQ_q": {
+        "description": "KOSDAQ 주식 호가",
+        "recv2r": [236, 237, 259],
+        "topics": {
+          "inbound": [
+            { "act": "log", "params": { "to": "rcv0" } },
+            { "act": "route", "params": { "to": "KS_q_emit" } }
+          ]
+        }
+      },
+      "KQ_q_emit": {
+        "description": "",
+        "topics": {
+          "inbound": [
+            { "act": "destinate", "params": { "rule": "route_map" } },
+            { "act": "modify", "params": { "rule": "wrsec1" }, "comment": "헤더 추가" },
+            { "act": "emit", "params": {} }
+          ]
+        }
+      },
+      "KQ_f": {
+        "description": "KOSDAQ 주식 체결",
+        "recv2r": [231, 232, 233, 234, 235, 257],
+        "topics": {
+          "inbound": [
+            { "act": "log", "params": { "to": "rcv0" } },
+            { "act": "route", "params": { "to": "KQ_f_emit" } }
+          ]
+        }
+      },
+      "KQ_f_emit": {
+        "description": "",
+        "topics": {
+          "inbound": [
+            { "act": "destinate", "params": { "rule": "route_map" } },
+            { "act": "modify", "params": { "rule": "wrsec1" }, "comment": "헤더 추가" },
+            { "act": "emit", "params": {} }
+          ]
+        }
+      }
+    }
+  }
+};
+const demoJSONValue = JSON.stringify(demoLayoutDefinifinition, null, 2);
 
 type Props = {
   params: {
@@ -39,117 +154,30 @@ export default function Page({ params }: Props) {
   const layoutItem = data?.data?.detail || {};
   const layoutEmpty = data?.data?.detail == null;
   const layoutDefinition = data?.data?.layout_definition || '';
-  const dataFlowDefinition = data?.data?.data_flow_definition || {
-    "PMR": {
-      "description": "KOSPI/KOSDAQ 주식 그룹",
-      "nodes": {
-        "KSKQ_def": {
-          "description": "구조화증권 기본/기타 라우터",
-          "recv2r": [216, 224, 225, 226, 230, 238, 239, 261, 260],
-          "topics": {
-            "inbound": [
-              { "act": "log", "params": { "to": "rcv0" }, "comment": "입수 로깅" },
-              { "act": "route", "params": { "to": "1", "app": "kqp" }, "comment": "통합시세로 넘김" },
-              { "act": "route", "params": { "to": "KSKQ_def_emit" }, "comment": "송출기로 넘김.  => CBR" }
-            ]
-          }
-        },
-        "KSKQ_def_emit": {
-          "description": "",
-          "topics": {
-            "inbound": [
-              { "act": "destinate", "params": { "rule": "route_map" } },
-              { "act": "modify", "params": { "rule": "wrsec1" }, "comment": "헤더 추가" },
-              { "act": "emit", "params": {} },
-              { "act": "log", "params": { "to": "dist0" }, "comment": "송출 로깅" }
-            ]
-          }
-        },
-        "KS_q": {
-          "description": "KOSPI 주식 호가",
-          "recv2r": [222, 223, 258],
-          "topics": {
-            "inbound": [
-              { "act": "log", "params": { "to": "rcv0" } },
-              { "act": "route", "params": { "to": "ksp_q", "app": "kqp" }, "comment": "통합시세로 넘김" },
-              { "act": "route", "params": { "to": "KS_q_emit" } }
-            ]
-          }
-        },
-        "KS_q_emit": {
-          "description": "",
-          "topics": {
-            "inbound": [
-              { "act": "destinate", "params": { "rule": "route_map" } },
-              { "act": "modify", "params": { "rule": "wrsec1" }, "comment": "헤더 추가" },
-              { "act": "emit", "params": {} }
-            ]
-          }
-        },
-        "KS_f": {
-          "description": "KOSPI 주식 체결",
-          "recv2r": [217, 218, 219, 220, 221, 256],
-          "topics": {
-            "inbound": [
-              { "act": "log", "params": { "to": "rcv0" } },
-              { "act": "route", "params": { "to": "KS_f_emit" } }
-            ]
-          }
-        },
-        "KS_f_emit": {
-          "description": "",
-          "topics": {
-            "inbound": [
-              { "act": "destinate", "params": { "rule": "route_map" } },
-              { "act": "modify", "params": { "rule": "wrsec1" }, "comment": "헤더 추가" },
-              { "act": "emit", "params": {} },
-              { "act": "log", "params": { "to": "dist0" }, "comment": "송출 로깅" }
-            ]
-          }
-        },
-        "KQ_q": {
-          "description": "KOSDAQ 주식 호가",
-          "recv2r": [236, 237, 259],
-          "topics": {
-            "inbound": [
-              { "act": "log", "params": { "to": "rcv0" } },
-              { "act": "route", "params": { "to": "KS_q_emit" } }
-            ]
-          }
-        },
-        "KQ_q_emit": {
-          "description": "",
-          "topics": {
-            "inbound": [
-              { "act": "destinate", "params": { "rule": "route_map" } },
-              { "act": "modify", "params": { "rule": "wrsec1" }, "comment": "헤더 추가" },
-              { "act": "emit", "params": {} }
-            ]
-          }
-        },
-        "KQ_f": {
-          "description": "KOSDAQ 주식 체결",
-          "recv2r": [231, 232, 233, 234, 235, 257],
-          "topics": {
-            "inbound": [
-              { "act": "log", "params": { "to": "rcv0" } },
-              { "act": "route", "params": { "to": "KQ_f_emit" } }
-            ]
-          }
-        },
-        "KQ_f_emit": {
-          "description": "",
-          "topics": {
-            "inbound": [
-              { "act": "destinate", "params": { "rule": "route_map" } },
-              { "act": "modify", "params": { "rule": "wrsec1" }, "comment": "헤더 추가" },
-              { "act": "emit", "params": {} }
-            ]
-          }
-        }
-      }
+  const apiDataFlowDef = data?.data?.data_flow_definition || null;
+
+  // State for JSON editor text and parsed definition
+  const [jsonValue, setJsonValue] = useState(demoJSONValue);
+  const [dataFlowDefinition, setDataFlowDefinition] = useState<DataFlowDefinition | null>(demoLayoutDefinifinition);
+
+  // Initialize from API data
+  useEffect(() => {
+    if (apiDataFlowDef) {
+      setJsonValue(JSON.stringify(apiDataFlowDef, null, 2));
+      setDataFlowDefinition(apiDataFlowDef);
     }
-  };
+  }, [apiDataFlowDef]);
+
+  // Handle JSON editor changes — parse and update graph
+  const handleJsonChange = useCallback((value: string) => {
+    setJsonValue(value);
+    try {
+      const parsed = JSON.parse(value) as DataFlowDefinition;
+      setDataFlowDefinition(parsed);
+    } catch {
+      // Invalid JSON — keep current graph, user is still typing
+    }
+  }, []);
 
   return (
     <DashboardContent maxWidth="xl">
@@ -224,6 +252,16 @@ export default function Page({ params }: Props) {
           <DataFlowCanvas
             definition={dataFlowDefinition}
             fileName={`${decodedLayout}.moon`}
+          />
+        </Box>
+      )}
+
+      {/* JSON Definition Editor */}
+      {jsonValue && (
+        <Box sx={{ mb: 3 }}>
+          <DataFlowJsonEditor
+            value={jsonValue}
+            onChange={handleJsonChange}
           />
         </Box>
       )}

@@ -41,7 +41,7 @@ export function ActionLine({ action, nodeType }: ActionLineProps) {
       <Box component="span" sx={{ color: actionColor }}>
         &apos;{action.act}&apos;
       </Box>
-      <Box component="span" sx={{ color: TEXT_GRAY }}>
+      <Box component="span" sx={{ color: TEXT_GRAY, marginRight: 1.5 }}>
         ,{' '}
       </Box>
       <Box component="span" sx={{ color: paramColor }}>

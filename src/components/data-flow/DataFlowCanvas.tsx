@@ -67,7 +67,13 @@ function DataFlowCanvasInner({ definition, fileName }: DataFlowCanvasProps) {
   }, [definition]);
 
   const [nodes, setNodes, onNodesChange] = useNodesState<DataFlowNodeInstance>(initialGraph.nodes);
-  const [edges, , onEdgesChange] = useEdgesState<Edge>(initialGraph.edges);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>(initialGraph.edges);
+
+  // Sync nodes/edges when definition changes
+  useEffect(() => {
+    setNodes(initialGraph.nodes);
+    setEdges(initialGraph.edges);
+  }, [initialGraph, setNodes, setEdges]);
 
   // Auto Layout handler
   const handleAutoLayout = useCallback(() => {
