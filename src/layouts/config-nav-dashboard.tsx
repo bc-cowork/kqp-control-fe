@@ -1,10 +1,9 @@
+
 import { paths } from 'src/routes/paths';
 
 import { CONFIG } from 'src/config-global';
 
 import { SvgColor } from 'src/components/svg-color';
-import { useTranslate } from 'src/locales';
-import { use } from 'react';
 
 // ----------------------------------------------------------------------
 
@@ -98,10 +97,6 @@ export function getNavData(t: any, nodes: string[] = [],) {
               {
                 title: t('tab_option.replay') || 'Replay',
                 path: paths.dashboard.nodes.replay(node),
-              },
-              {
-                title: t('tab_option.flow_editor') || 'Message Flow',
-                path: paths.dashboard.nodes.flowEditor(node),
               },
             ],
           })),

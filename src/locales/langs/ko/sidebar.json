@@ -21,7 +21,6 @@
     "daily_report_list": "일일 리포트 목록",
     "alerts_list": "감시 목록(Alerts)",
     "status": "상태",
-    "replay": "재생",
-    "flow_editor": "메시지 플로우"
+    "replay": "재생"
   }
 }

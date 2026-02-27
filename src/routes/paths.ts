@@ -71,7 +71,6 @@ export const paths = {
       specDetail: (node: string, specId: string) => `/dashboard/nodes/${node}/spec/${encodeURIComponent(specId)}`,
       status: (node: string) => `/dashboard/nodes/${node}/status`,
       replay: (node: string) => `/dashboard/nodes/${node}/replay`,
-      flowEditor: (node: string) => `/dashboard/nodes/${node}/flow-editor`,
     },
     settings: `/dashboard/settings`,
     two: `${ROOTS.DASHBOARD}/two`,
