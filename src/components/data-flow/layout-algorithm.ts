@@ -1,6 +1,6 @@
 import type { Edge } from '@xyflow/react';
 
-import { X_GAP, Y_GAP, NODE_WIDTHS } from './constants';
+import { X_GAP, Y_GAP, NODE_WIDTH } from './constants';
 
 import type { DataFlowNodeData, DataFlowNodeInstance } from './types';
 
@@ -74,45 +74,21 @@ export function computeDataFlowLayout(
     nodesByLevel.get(level)!.push(n);
   });
 
-  // Sort within levels by type priority
-  const typePriority: Record<string, number> = {
-    recv: 0,
-    entity: 1,
-    route: 2,
-    log: 3,
-    emit: 4,
-  };
-
-  nodesByLevel.forEach((levelNodes) => {
-    levelNodes.sort((a, b) => {
-      const aType = (a.data as DataFlowNodeData).nodeType;
-      const bType = (b.data as DataFlowNodeData).nodeType;
-      return (typePriority[aType] || 99) - (typePriority[bType] || 99);
-    });
-  });
-
   // Assign positions (left-to-right flow)
   let xOffset = 40;
   const sortedLevels = Array.from(nodesByLevel.keys()).sort((a, b) => a - b);
 
   sortedLevels.forEach((level) => {
     const levelNodes = nodesByLevel.get(level)!;
-    let maxWidth = 0;
     let yOffset = 60;
 
     levelNodes.forEach((node) => {
-      const {nodeType} = (node.data as DataFlowNodeData);
-      const width = NODE_WIDTHS[nodeType] || 333;
-
       node.position = { x: xOffset, y: yOffset };
-
-      // Estimate node height based on type and content
       const height = estimateNodeHeight(node);
       yOffset += height + Y_GAP;
-      maxWidth = Math.max(maxWidth, width);
     });
 
-    xOffset += maxWidth + X_GAP;
+    xOffset += NODE_WIDTH + X_GAP;
   });
 
   return [...nodes];
@@ -122,24 +98,7 @@ export function computeDataFlowLayout(
 
 function estimateNodeHeight(node: DataFlowNodeInstance): number {
   const data = node.data as DataFlowNodeData;
-
-  switch (data.nodeType) {
-    case 'emit':
-      return 47;
-    case 'log':
-      return data.desc ? 100 : 60;
-    case 'recv': {
-      const channelText = data.channels?.join(', ') || '';
-      const lines = Math.ceil(channelText.length / 30);
-      return 55 + lines * 24;
-    }
-    case 'entity':
-    case 'route': {
-      const actionCount = data.actions?.length || 0;
-      const hasDesc = data.desc ? 1 : 0;
-      return 55 + hasDesc * 30 + actionCount * 26 + 16;
-    }
-    default:
-      return 80;
-  }
+  const actionCount = data.actions?.length || 0;
+  // Header ~47px + actions ~26px each + padding
+  return 47 + actionCount * 26 + 16;
 }

@@ -23,114 +23,25 @@ import { Breadcrumb } from 'src/components/common/Breadcrumb';
 import { DataFlowCanvas, DataFlowJsonEditor } from 'src/components/data-flow';
 
 const demoLayoutDefinifinition: DataFlowDefinition = {
-  "PMR": {
-    "description": "KOSPI/KOSDAQ 주식 그룹",
-    "nodes": {
-      "KSKQ_def": {
-        "description": "구조화증권 기본/기타 라우터",
-        "recv2r": [216, 224, 225, 226, 230, 238, 239, 261, 260],
-        "topics": {
-          "inbound": [
-            { "act": "log", "params": { "to": "rcv0" }, "comment": "입수 로깅" },
-            { "act": "route", "params": { "to": "1", "app": "kqp" }, "comment": "통합시세로 넘김" },
-            { "act": "route", "params": { "to": "KSKQ_def_emit" }, "comment": "송출기로 넘김.  => CBR" }
-          ]
-        }
-      },
-      "KSKQ_def_emit": {
-        "description": "",
-        "topics": {
-          "inbound": [
-            { "act": "destinate", "params": { "rule": "route_map" } },
-            { "act": "modify", "params": { "rule": "wrsec1" }, "comment": "헤더 추가" },
-            { "act": "emit", "params": {} },
-            { "act": "log", "params": { "to": "dist0" }, "comment": "송출 로깅" }
-          ]
-        }
-      },
-      "KS_q": {
-        "description": "KOSPI 주식 호가",
-        "recv2r": [222, 223, 258],
-        "topics": {
-          "inbound": [
-            { "act": "log", "params": { "to": "rcv0" } },
-            { "act": "route", "params": { "to": "ksp_q", "app": "kqp" }, "comment": "통합시세로 넘김" },
-            { "act": "route", "params": { "to": "KS_q_emit" } }
-          ]
-        }
-      },
-      "KS_q_emit": {
-        "description": "",
-        "topics": {
-          "inbound": [
-            { "act": "destinate", "params": { "rule": "route_map" } },
-            { "act": "modify", "params": { "rule": "wrsec1" }, "comment": "헤더 추가" },
-            { "act": "emit", "params": {} }
-          ]
-        }
-      },
-      "KS_f": {
-        "description": "KOSPI 주식 체결",
-        "recv2r": [217, 218, 219, 220, 221, 256],
-        "topics": {
-          "inbound": [
-            { "act": "log", "params": { "to": "rcv0" } },
-            { "act": "route", "params": { "to": "KS_f_emit" } }
-          ]
-        }
-      },
-      "KS_f_emit": {
-        "description": "",
-        "topics": {
-          "inbound": [
-            { "act": "destinate", "params": { "rule": "route_map" } },
-            { "act": "modify", "params": { "rule": "wrsec1" }, "comment": "헤더 추가" },
-            { "act": "emit", "params": {} },
-            { "act": "log", "params": { "to": "dist0" }, "comment": "송출 로깅" }
-          ]
-        }
-      },
-      "KQ_q": {
-        "description": "KOSDAQ 주식 호가",
-        "recv2r": [236, 237, 259],
-        "topics": {
-          "inbound": [
-            { "act": "log", "params": { "to": "rcv0" } },
-            { "act": "route", "params": { "to": "KS_q_emit" } }
-          ]
-        }
-      },
-      "KQ_q_emit": {
-        "description": "",
-        "topics": {
-          "inbound": [
-            { "act": "destinate", "params": { "rule": "route_map" } },
-            { "act": "modify", "params": { "rule": "wrsec1" }, "comment": "헤더 추가" },
-            { "act": "emit", "params": {} }
-          ]
-        }
-      },
-      "KQ_f": {
-        "description": "KOSDAQ 주식 체결",
-        "recv2r": [231, 232, 233, 234, 235, 257],
-        "topics": {
-          "inbound": [
-            { "act": "log", "params": { "to": "rcv0" } },
-            { "act": "route", "params": { "to": "KQ_f_emit" } }
-          ]
-        }
-      },
-      "KQ_f_emit": {
-        "description": "",
-        "topics": {
-          "inbound": [
-            { "act": "destinate", "params": { "rule": "route_map" } },
-            { "act": "modify", "params": { "rule": "wrsec1" }, "comment": "헤더 추가" },
-            { "act": "emit", "params": {} }
-          ]
-        }
-      }
-    }
+  "KS_f": {
+    "description": "KOSPI 주식 체결",
+    "actions": ["log", "route", "route"]
+  },
+  "KS_qos": {
+    "description": "KOSPI QoS",
+    "actions": ["route"]
+  },
+  "KS_F_emit": {
+    "description": "KOSPI 송출",
+    "actions": ["modify", "emit"]
+  },
+  "KS_F_qos_emit": {
+    "description": "KOSPI QoS 송출",
+    "actions": ["emit"]
+  },
+  "relations": {
+    "KS_f": { "to": ["KS_F_emit", "KS_qos"] },
+    "KS_qos": { "to": ["KS_F_qos_emit"] }
   }
 };
 const demoJSONValue = JSON.stringify(demoLayoutDefinifinition, null, 2);

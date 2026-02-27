@@ -107,7 +107,27 @@ export function DataFlowToolbar({
       </Typography>
 
       {/* Buttons */}
-      <Stack direction="row" width="240px">
+      <Stack direction="row" width="240px" style={{
+        justifyContent: 'flex-end'
+      }}>
+        <Button
+          size="small"
+          sx={{
+            px: 1.5,
+            py: 0.5,
+            backgroundColor: '#373F4E',
+            borderRadius: '4px',
+            color: TEXT_TERTIARY,
+            fontSize: 15,
+            fontWeight: 400,
+            textTransform: 'none',
+            lineHeight: '22.5px',
+            justifySelf: 'flex-end',
+            '&:hover': { backgroundColor: '#4E576A' },
+          }}
+        >
+          {'테스트 환경 접속'}
+        </Button>
         <Button
           size="small"
           onClick={onAutoLayout}

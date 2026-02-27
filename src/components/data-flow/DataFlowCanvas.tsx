@@ -20,17 +20,11 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { useTranslate } from 'src/locales';
-
-import { LogFlowNode } from './nodes/LogFlowNode';
 import { DataFlowToolbar } from './DataFlowToolbar';
-import { RecvFlowNode } from './nodes/RecvFlowNode';
-import { EmitFlowNode } from './nodes/EmitFlowNode';
+import { DataFlowNode } from './nodes/DataFlowNode';
 import { buildDataFlowGraph } from './graph-builder';
-import { RouteFlowNode } from './nodes/RouteFlowNode';
-import { EntityFlowNode } from './nodes/EntityFlowNode';
+import { CANVAS_BG, GRID_LINE_COLOR } from './constants';
 import { computeDataFlowLayout } from './layout-algorithm';
-import { CANVAS_BG, HEADER_BG, EDGE_COLORS, HEADER_BORDER, TEXT_TERTIARY, TEXT_SECONDARY, GRID_LINE_COLOR } from './constants';
 
 import type { DataFlowDefinition, DataFlowNodeInstance } from './types';
 
@@ -42,7 +36,6 @@ type DataFlowCanvasProps = {
 };
 
 function DataFlowCanvasInner({ definition, fileName }: DataFlowCanvasProps) {
-  const { t } = useTranslate('data-flow');
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const { fitView, zoomIn, zoomOut, getZoom } = useReactFlow();
@@ -50,11 +43,7 @@ function DataFlowCanvasInner({ definition, fileName }: DataFlowCanvasProps) {
 
   const nodeTypes = useMemo(
     () => ({
-      dataFlow_entity: EntityFlowNode,
-      dataFlow_recv: RecvFlowNode,
-      dataFlow_route: RouteFlowNode,
-      dataFlow_log: LogFlowNode,
-      dataFlow_emit: EmitFlowNode,
+      dataFlow_node: DataFlowNode,
     }),
     []
   );
@@ -132,7 +121,7 @@ function DataFlowCanvasInner({ definition, fileName }: DataFlowCanvasProps) {
       sx={{
         borderRadius: '12px',
         overflow: 'hidden',
-        border: `1.2px solid #667085`,
+        border: '1.2px solid #667085',
         backgroundColor: CANVAS_BG,
         height: isFullscreen ? '100vh' : 800,
         display: 'flex',
@@ -172,47 +161,6 @@ function DataFlowCanvasInner({ definition, fileName }: DataFlowCanvasProps) {
             lineWidth={0.5}
             color={GRID_LINE_COLOR}
           />
-
-          {/* Legend Panel */}
-          <Panel position="top-right">
-            <Box
-              sx={{
-                width: 148,
-                pb: 1,
-                backgroundColor: HEADER_BG,
-                borderRadius: '12px',
-                border: `0.5px solid #667085`,
-                overflow: 'hidden',
-              }}
-            >
-              <Stack
-                direction="row"
-                alignItems="center"
-                sx={{
-                  p: 1.5,
-                  borderBottom: `1px solid ${HEADER_BORDER}`,
-                  marginBottom: 1,
-                }}
-              >
-                <Typography
-                  sx={{
-                    flex: 1,
-                    fontSize: 15,
-                    fontWeight: 400,
-                    lineHeight: '22.5px',
-                    color: TEXT_SECONDARY,
-                  }}
-                >
-                  {t('legend.title')}
-                </Typography>
-              </Stack>
-
-              <LegendItem color={EDGE_COLORS.receive} label={t('legend.receive')} />
-              <LegendItem color={EDGE_COLORS.routing} label={t('legend.routing')} />
-              <LegendItem color={EDGE_COLORS.logging} label={t('legend.logging')} />
-              <LegendItem color={EDGE_COLORS.emit} label={t('legend.emit')} />
-            </Box>
-          </Panel>
 
           {/* Zoom Controls Panel */}
           <Panel position="bottom-right">
@@ -257,54 +205,6 @@ function DataFlowCanvasInner({ definition, fileName }: DataFlowCanvasProps) {
         </ReactFlow>
       </Box>
     </Box>
-  );
-}
-
-// ----------------------------------------------------------------------
-
-function LegendItem({ color, label }: { color: string; label: string }) {
-  return (
-    <Stack
-      direction="row"
-      alignItems="center"
-      spacing={2}
-      sx={{ px: 1.5, py: 0.5 }}
-    >
-      <Stack direction="row" alignItems="center" sx={{ position: 'relative' }}>
-        {/* The horizontal line (The "Shaft") */}
-        <Box
-          sx={{
-            width: 12,
-            height: 1.5,
-            backgroundColor: color,
-            borderRadius: '1px 0 0 1px'
-          }}
-        />
-
-        {/* The Arrowhead (The "Point") */}
-        <Box
-          sx={{
-            width: 0,
-            height: 0,
-            borderTop: '3px solid transparent',
-            borderBottom: '3px solid transparent',
-            borderLeft: `4px solid ${color}`, // This creates the triangle pointing right
-            ml: -0.1, // Slight overlap to prevent a gap
-          }}
-        />
-      </Stack>
-
-      <Typography
-        sx={{
-          fontSize: 15,
-          fontWeight: 400,
-          lineHeight: '22.5px',
-          color: TEXT_TERTIARY,
-        }}
-      >
-        {label}
-      </Typography>
-    </Stack>
   );
 }
 
