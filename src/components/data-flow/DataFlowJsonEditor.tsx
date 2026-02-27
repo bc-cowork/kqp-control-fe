@@ -1,6 +1,9 @@
 'use client';
 
+import type { editor } from 'monaco-editor';
+
 import dynamic from 'next/dynamic';
+import { useRef, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -21,6 +24,14 @@ type DataFlowJsonEditorProps = {
 
 export function DataFlowJsonEditor({ value, onChange }: DataFlowJsonEditorProps) {
   const { t } = useTranslate('data-flow');
+  const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
+
+  // Push external value changes (e.g. API data) into the editor imperatively
+  useEffect(() => {
+    if (editorRef.current && value !== editorRef.current.getValue()) {
+      editorRef.current.setValue(value);
+    }
+  }, [value]);
 
   return (
     <Box
@@ -64,13 +75,25 @@ export function DataFlowJsonEditor({ value, onChange }: DataFlowJsonEditorProps)
           borderBottomLeftRadius: '8px',
           borderBottomRightRadius: '8px',
           overflow: 'hidden',
+          // Match app-wide thin scrollbar style
+          '& .monaco-scrollable-element > .scrollbar > .slider': {
+            backgroundColor: 'rgba(255, 255, 255, 0.2) !important',
+            borderRadius: '4px !important',
+          },
+          '& .monaco-scrollable-element > .scrollbar > .slider:hover': {
+            backgroundColor: 'rgba(255, 255, 255, 0.35) !important',
+          },
+          '& .monaco-scrollable-element > .scrollbar > .slider.active': {
+            backgroundColor: 'rgba(255, 255, 255, 0.4) !important',
+          },
         }}
       >
         <Editor
           height="100%"
           language="json"
           theme="vs-dark"
-          value={value}
+          defaultValue={value}
+          onMount={(ed) => { editorRef.current = ed; }}
           onChange={(v) => onChange(v || '')}
           options={{
             minimap: { enabled: false },
@@ -83,8 +106,10 @@ export function DataFlowJsonEditor({ value, onChange }: DataFlowJsonEditorProps)
             tabSize: 2,
             wordWrap: 'on',
             scrollbar: {
-              verticalScrollbarSize: 16,
-              horizontalScrollbarSize: 10,
+              verticalScrollbarSize: 8,
+              horizontalScrollbarSize: 8,
+              verticalSliderSize: 8,
+              horizontalSliderSize: 8,
             },
           }}
         />

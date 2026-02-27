@@ -4,7 +4,7 @@ import type { DataFlowDefinition } from 'src/components/data-flow';
 
 import useSWR from 'swr';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 import Box from '@mui/material/Box';
@@ -168,15 +168,19 @@ export default function Page({ params }: Props) {
     }
   }, [apiDataFlowDef]);
 
-  // Handle JSON editor changes — parse and update graph
-  const handleJsonChange = useCallback((value: string) => {
-    setJsonValue(value);
-    try {
-      const parsed = JSON.parse(value) as DataFlowDefinition;
-      setDataFlowDefinition(parsed);
-    } catch {
-      // Invalid JSON — keep current graph, user is still typing
-    }
+  // Handle JSON editor changes — update text immediately, debounce graph rebuild
+  const parseTimerRef = useRef<ReturnType<typeof setTimeout>>();
+
+  const handleJsonChange = useCallback((val: string) => {
+    clearTimeout(parseTimerRef.current);
+    parseTimerRef.current = setTimeout(() => {
+      try {
+        const parsed = JSON.parse(val) as DataFlowDefinition;
+        setDataFlowDefinition(parsed);
+      } catch {
+        // Invalid JSON — keep current graph, user is still typing
+      }
+    }, 1000);
   }, []);
 
   return (
