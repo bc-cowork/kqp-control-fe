@@ -46,21 +46,26 @@ import {
 } from './constants';
 
 import type { DataFlowDefinition, DataFlowNodeInstance } from './types';
-import { CONFIG } from 'src/config-global';
 
 // ----------------------------------------------------------------------
 
 type ViewMode = 'horizontal' | 'vertical';
 
-const SCALE_OPTIONS = [75, 100, 125, 150];
+const SCALE_OPTIONS = [
+  { key: 'current', value: 100 },
+  { key: 'scale_reset', value: 50 },
+  { key: 'scale_larger', value: 125 },
+  { key: 'scale_smaller', value: 50 },
+] as const;
 
 const DARK_POPOVER_PAPER_SX = {
   bgcolor: '#1A2030',
   border: '1px solid #373F4E',
   boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
-  '& .MuiMenuItem-root': { color: '#E0E4EB', fontSize: 14 },
+  '& .MuiMenuItem-root': { color: '#E0E4EB' },
   '& .MuiMenuItem-root:hover': { bgcolor: '#2A3344' },
   '& .MuiListItemIcon-root': { color: '#AFB7C8', minWidth: 28 },
+  '& .MuiListItemText-primary': { fontSize: 12 },
 };
 
 // ----------------------------------------------------------------------
@@ -132,8 +137,8 @@ function ModalContent({
 
   // Interface scale handler
   const handleScaleChange = useCallback(
-    (scale: number) => {
-      setInterfaceScale(scale);
+    (value: number) => {
+      setInterfaceScale(value);
       setScaleAnchor(null);
       optionsPopover.onClose();
     },
@@ -327,9 +332,7 @@ function ModalContent({
               backgroundColor: 'transparent'
             }}
           >
-            <ListItemText sx={{
-              fontSize: 2,
-            }}>{t('sandbox.horizontal')}</ListItemText>
+            <ListItemText>{t('sandbox.horizontal')}</ListItemText>
 
             <ListItemIcon>
               <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -345,9 +348,7 @@ function ModalContent({
               backgroundColor: 'transparent'
             }}
           >
-            <ListItemText sx={{
-              fontSize: 2,
-            }}>{t('sandbox.vertical')}</ListItemText>
+            <ListItemText>{t('sandbox.vertical')}</ListItemText>
 
             <ListItemIcon>
               <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -366,61 +367,41 @@ function ModalContent({
         onClose={handleOptionsClose}
         slotProps={{ arrow: { hide: true }, paper: { sx: DARK_POPOVER_PAPER_SX } }}
       >
-        <MenuList
-
-        >
+        <MenuList>
           {/* View Screen submenu */}
           <MenuItem
-            onMouseEnter={(e) => {
+            onClick={(e) => {
               setViewScreenAnchor(e.currentTarget);
               setScaleAnchor(null);
             }}
-            sx={{
-              backgroundColor: 'transparent',
-            }}
+            sx={{ backgroundColor: 'transparent' }}
           >
             <ListItemIcon>
-              <Iconify icon="solar:monitor-outline" width={18}
-                sx={{
-                  marginRight: 1,
-                }}
-              />
-              <ListItemText>{t('sandbox.view_screen')}</ListItemText>
+              <Iconify icon="solar:monitor-outline" width={18} />
             </ListItemIcon>
-            <Iconify icon="eva:chevron-right-fill" width={16} sx={{ ml: 2, color: '#AFB7C8' }} />
+            <ListItemText sx={{ flex: 'none' }}>{t('sandbox.view_screen')}</ListItemText>
+            <Iconify icon="eva:chevron-right-fill" width={16} sx={{ ml: 'auto', color: '#AFB7C8' }} />
           </MenuItem>
 
           {/* Interface Scale submenu */}
           <MenuItem
-            onMouseEnter={(e) => {
+            onClick={(e) => {
               setScaleAnchor(e.currentTarget);
               setViewScreenAnchor(null);
             }}
-            sx={{
-              backgroundColor: 'transparent'
-            }}
+            sx={{ backgroundColor: 'transparent' }}
           >
             <ListItemIcon>
-              <Iconify icon="solar:magnifer-outline" width={18}
-                sx={{
-                  marginRight: 1,
-                }}
-              />
-              <ListItemText>{t('sandbox.interface_scale')}</ListItemText>
+              <Iconify icon="solar:magnifer-outline" width={18} />
             </ListItemIcon>
-            <Iconify icon="eva:chevron-right-fill" width={16} sx={{ ml: 2, color: '#AFB7C8' }} />
+            <ListItemText sx={{ flex: 'none' }}>{t('sandbox.interface_scale')}</ListItemText>
+            <Iconify icon="eva:chevron-right-fill" width={16} sx={{ ml: 'auto', color: '#AFB7C8' }} />
           </MenuItem>
 
           {/* Enter/Exit Full Screen */}
           <MenuItem
             onClick={handleToggleFullscreen}
-            onMouseEnter={() => {
-              setViewScreenAnchor(null);
-              setScaleAnchor(null);
-            }}
-            sx={{
-              backgroundColor: 'transparent',
-            }}
+            sx={{ backgroundColor: 'transparent' }}
           >
             <ListItemIcon>
               <Iconify
@@ -430,34 +411,22 @@ function ModalContent({
                     : 'solar:full-screen-square-outline'
                 }
                 width={18}
-                sx={{
-                  marginRight: 1,
-                }}
               />
-              <ListItemText>
-                {t(isFullscreen ? 'sandbox.exit_fullscreen' : 'sandbox.enter_fullscreen')}
-              </ListItemText>
             </ListItemIcon>
-
+            <ListItemText>
+              {t(isFullscreen ? 'sandbox.exit_fullscreen' : 'sandbox.enter_fullscreen')}
+            </ListItemText>
           </MenuItem>
 
           {/* Exit */}
           <MenuItem
             onClick={handleExit}
-            onMouseEnter={() => {
-              setViewScreenAnchor(null);
-              setScaleAnchor(null);
-            }}
-            sx={{
-              backgroundColor: 'transparent'
-            }}
+            sx={{ backgroundColor: 'transparent' }}
           >
             <ListItemIcon>
-              <Iconify icon="solar:logout-2-outline" width={18} sx={{
-                marginRight: 1,
-              }} />
-              <ListItemText>{t('sandbox.exit')}</ListItemText>
+              <Iconify icon="solar:logout-2-outline" width={18} />
             </ListItemIcon>
+            <ListItemText>{t('sandbox.exit')}</ListItemText>
           </MenuItem>
         </MenuList>
       </CustomPopover>
@@ -482,9 +451,7 @@ function ModalContent({
             <ListItemIcon>
               <Iconify icon="solar:columns-minimalistic-outline" width={18} />
             </ListItemIcon>
-            <ListItemText sx={{
-              fontSize: 2,
-            }}>{t('sandbox.horizontal')}</ListItemText>
+            <ListItemText>{t('sandbox.horizontal')}</ListItemText>
           </MenuItem>
           <MenuItem
             selected={!isHorizontal}
@@ -496,9 +463,7 @@ function ModalContent({
             <ListItemIcon>
               <Iconify icon="solar:document-text-outline" width={18} />
             </ListItemIcon>
-            <ListItemText sx={{
-              fontSize: 2,
-            }}>{t('sandbox.vertical')}</ListItemText>
+            <ListItemText>{t('sandbox.vertical')}</ListItemText>
           </MenuItem>
         </MenuList>
       </CustomPopover>
@@ -513,16 +478,18 @@ function ModalContent({
         slotProps={{ arrow: { hide: true }, paper: { sx: DARK_POPOVER_PAPER_SX } }}
       >
         <MenuList>
-          {SCALE_OPTIONS.map((scale) => (
+          {SCALE_OPTIONS.map((option) => (
             <MenuItem
-              key={scale}
-              selected={interfaceScale === scale}
-              onClick={() => handleScaleChange(scale)}
+              key={option.key}
+              selected={interfaceScale === option.value}
+              onClick={() => handleScaleChange(option.value)}
               sx={{
                 backgroundColor: 'transparent'
               }}
             >
-              <ListItemText>{scale}%</ListItemText>
+              <ListItemText>
+                {option.key === 'current' ? `${option.value}%` : t(`sandbox.${option.key}`)}
+              </ListItemText>
             </MenuItem>
           ))}
         </MenuList>

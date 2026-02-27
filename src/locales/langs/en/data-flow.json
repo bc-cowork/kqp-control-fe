@@ -40,7 +40,10 @@
     "interface_scale": "Interface Scale",
     "enter_fullscreen": "Enter Full Screen",
     "exit_fullscreen": "Exit Full Screen",
-    "exit": "Exit"
+    "exit": "Exit",
+    "scale_reset": "Reset To Default",
+    "scale_larger": "Make Larger",
+    "scale_smaller": "Make Smaller"
   },
   "empty": "No data flow to visualize",
   "parse_error": "Failed to parse layout definition"
