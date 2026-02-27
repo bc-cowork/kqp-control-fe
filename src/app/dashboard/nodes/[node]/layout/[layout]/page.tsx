@@ -1,19 +1,24 @@
 "use client";
 
-import React from 'react';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import { CircularProgress, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-
 import useSWR from 'swr';
-import { useTranslate } from 'src/locales';
-import { DashboardContent } from 'src/layouts/dashboard';
-import { Breadcrumb } from 'src/components/common/Breadcrumb';
-import { fetcher, endpoints } from 'src/utils/axios';
-import { paths } from 'src/routes/paths';
+import React from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 import { grey } from '@mui/material/colors';
+import { Table, TableRow, TableBody, TableCell, TableHead, Typography, TableContainer, CircularProgress } from '@mui/material';
+
+import { paths } from 'src/routes/paths';
+
+import { fetcher, endpoints } from 'src/utils/axios';
+
+import { useTranslate } from 'src/locales';
+import { DashboardContent } from 'src/layouts/dashboard';
+
+import { DataFlowCanvas } from 'src/components/data-flow';
+import { Breadcrumb } from 'src/components/common/Breadcrumb';
 
 type Props = {
   params: {
@@ -34,6 +39,117 @@ export default function Page({ params }: Props) {
   const layoutItem = data?.data?.detail || {};
   const layoutEmpty = data?.data?.detail == null;
   const layoutDefinition = data?.data?.layout_definition || '';
+  const dataFlowDefinition = data?.data?.data_flow_definition || {
+    "PMR": {
+      "description": "KOSPI/KOSDAQ 주식 그룹",
+      "nodes": {
+        "KSKQ_def": {
+          "description": "구조화증권 기본/기타 라우터",
+          "recv2r": [216, 224, 225, 226, 230, 238, 239, 261, 260],
+          "topics": {
+            "inbound": [
+              { "act": "log", "params": { "to": "rcv0" }, "comment": "입수 로깅" },
+              { "act": "route", "params": { "to": "1", "app": "kqp" }, "comment": "통합시세로 넘김" },
+              { "act": "route", "params": { "to": "KSKQ_def_emit" }, "comment": "송출기로 넘김.  => CBR" }
+            ]
+          }
+        },
+        "KSKQ_def_emit": {
+          "description": "",
+          "topics": {
+            "inbound": [
+              { "act": "destinate", "params": { "rule": "route_map" } },
+              { "act": "modify", "params": { "rule": "wrsec1" }, "comment": "헤더 추가" },
+              { "act": "emit", "params": {} },
+              { "act": "log", "params": { "to": "dist0" }, "comment": "송출 로깅" }
+            ]
+          }
+        },
+        "KS_q": {
+          "description": "KOSPI 주식 호가",
+          "recv2r": [222, 223, 258],
+          "topics": {
+            "inbound": [
+              { "act": "log", "params": { "to": "rcv0" } },
+              { "act": "route", "params": { "to": "ksp_q", "app": "kqp" }, "comment": "통합시세로 넘김" },
+              { "act": "route", "params": { "to": "KS_q_emit" } }
+            ]
+          }
+        },
+        "KS_q_emit": {
+          "description": "",
+          "topics": {
+            "inbound": [
+              { "act": "destinate", "params": { "rule": "route_map" } },
+              { "act": "modify", "params": { "rule": "wrsec1" }, "comment": "헤더 추가" },
+              { "act": "emit", "params": {} }
+            ]
+          }
+        },
+        "KS_f": {
+          "description": "KOSPI 주식 체결",
+          "recv2r": [217, 218, 219, 220, 221, 256],
+          "topics": {
+            "inbound": [
+              { "act": "log", "params": { "to": "rcv0" } },
+              { "act": "route", "params": { "to": "KS_f_emit" } }
+            ]
+          }
+        },
+        "KS_f_emit": {
+          "description": "",
+          "topics": {
+            "inbound": [
+              { "act": "destinate", "params": { "rule": "route_map" } },
+              { "act": "modify", "params": { "rule": "wrsec1" }, "comment": "헤더 추가" },
+              { "act": "emit", "params": {} },
+              { "act": "log", "params": { "to": "dist0" }, "comment": "송출 로깅" }
+            ]
+          }
+        },
+        "KQ_q": {
+          "description": "KOSDAQ 주식 호가",
+          "recv2r": [236, 237, 259],
+          "topics": {
+            "inbound": [
+              { "act": "log", "params": { "to": "rcv0" } },
+              { "act": "route", "params": { "to": "KS_q_emit" } }
+            ]
+          }
+        },
+        "KQ_q_emit": {
+          "description": "",
+          "topics": {
+            "inbound": [
+              { "act": "destinate", "params": { "rule": "route_map" } },
+              { "act": "modify", "params": { "rule": "wrsec1" }, "comment": "헤더 추가" },
+              { "act": "emit", "params": {} }
+            ]
+          }
+        },
+        "KQ_f": {
+          "description": "KOSDAQ 주식 체결",
+          "recv2r": [231, 232, 233, 234, 235, 257],
+          "topics": {
+            "inbound": [
+              { "act": "log", "params": { "to": "rcv0" } },
+              { "act": "route", "params": { "to": "KQ_f_emit" } }
+            ]
+          }
+        },
+        "KQ_f_emit": {
+          "description": "",
+          "topics": {
+            "inbound": [
+              { "act": "destinate", "params": { "rule": "route_map" } },
+              { "act": "modify", "params": { "rule": "wrsec1" }, "comment": "헤더 추가" },
+              { "act": "emit", "params": {} }
+            ]
+          }
+        }
+      }
+    }
+  };
 
   return (
     <DashboardContent maxWidth="xl">
@@ -101,6 +217,17 @@ export default function Page({ params }: Props) {
           </TableBody>
         </Table>
       </TableContainer>
+
+      {/* Data Flow Visualization */}
+      {dataFlowDefinition && (
+        <Box sx={{ mb: 3 }}>
+          <DataFlowCanvas
+            definition={dataFlowDefinition}
+            fileName={`${decodedLayout}.moon`}
+          />
+        </Box>
+      )}
+
       <Paper sx={{
         height: '100%',
         padding: (theme) => theme.palette.mode === 'dark' ? '0px' : '4px',
@@ -130,6 +257,8 @@ export default function Page({ params }: Props) {
           </Box>
         </Box>
       </Paper>
+
+
     </DashboardContent>
   );
 }

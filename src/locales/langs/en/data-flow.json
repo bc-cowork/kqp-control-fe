@@ -1,0 +1,28 @@
+{
+  "toolbar": {
+    "preview": "Preview",
+    "title": "Data Flow",
+    "auto_layout": "Auto Layout",
+    "fit_view": "Fit View",
+    "export": "Export",
+    "fullscreen": "Fullscreen",
+    "exit_fullscreen": "Exit Fullscreen"
+  },
+  "legend": {
+    "title": "Connection Types",
+    "receive": "Receive",
+    "routing": "Routing",
+    "logging": "Logging",
+    "emit": "Emit"
+  },
+  "nodes": {
+    "entity": "ENTITY",
+    "recv": "RECV",
+    "route": "ROUTE",
+    "log": "LOG",
+    "emit": "EMIT",
+    "recv_channels": "Receive Channel"
+  },
+  "empty": "No data flow to visualize",
+  "parse_error": "Failed to parse layout definition"
+}

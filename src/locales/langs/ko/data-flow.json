@@ -1,0 +1,28 @@
+{
+  "toolbar": {
+    "preview": "미리보기",
+    "title": "Data Flow",
+    "auto_layout": "Auto Layout",
+    "fit_view": "Fit View",
+    "export": "Export",
+    "fullscreen": "전체화면",
+    "exit_fullscreen": "전체화면 종료"
+  },
+  "legend": {
+    "title": "연결 유형",
+    "receive": "수신",
+    "routing": "라우팅",
+    "logging": "로깅",
+    "emit": "송출"
+  },
+  "nodes": {
+    "entity": "ENTITY",
+    "recv": "RECV",
+    "route": "ROUTE",
+    "log": "LOG",
+    "emit": "EMIT",
+    "recv_channels": "수신 채널"
+  },
+  "empty": "시각화할 데이터 흐름이 없습니다",
+  "parse_error": "레이아웃 정의 파싱에 실패했습니다"
+}
