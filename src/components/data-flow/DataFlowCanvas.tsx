@@ -33,9 +33,10 @@ import type { DataFlowDefinition, DataFlowNodeInstance } from './types';
 type DataFlowCanvasProps = {
   definition: DataFlowDefinition;
   fileName: string;
+  onTestEnvClick?: () => void;
 };
 
-function DataFlowCanvasInner({ definition, fileName }: DataFlowCanvasProps) {
+function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const { fitView, zoomIn, zoomOut, getZoom } = useReactFlow();
@@ -135,6 +136,7 @@ function DataFlowCanvasInner({ definition, fileName }: DataFlowCanvasProps) {
         onExport={handleExport}
         onFullscreen={handleFullscreen}
         isFullscreen={isFullscreen}
+        onTestEnvClick={onTestEnvClick}
       />
 
       <Box sx={{ flex: 1, position: 'relative' }}>

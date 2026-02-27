@@ -26,6 +26,14 @@
   "editor": {
     "title": "JSON Definition"
   },
+  "sandbox": {
+    "title": "Test Environment (SANDBOX)",
+    "vertical_view": "vertical View",
+    "save": "저장",
+    "revert": "되돌리기",
+    "layout_definition": "Layout Definition",
+    "preview_btn": "미리보기"
+  },
   "empty": "시각화할 데이터 흐름이 없습니다",
   "parse_error": "레이아웃 정의 파싱에 실패했습니다"
 }

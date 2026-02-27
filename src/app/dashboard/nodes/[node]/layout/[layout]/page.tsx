@@ -14,13 +14,15 @@ import { Table, TableRow, TableBody, TableCell, TableHead, Typography, TableCont
 
 import { paths } from 'src/routes/paths';
 
+import { useBoolean } from 'src/hooks/use-boolean';
+
 import { fetcher, endpoints } from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
 
 import { Breadcrumb } from 'src/components/common/Breadcrumb';
-import { DataFlowCanvas, DataFlowJsonEditor } from 'src/components/data-flow';
+import { DataFlowCanvas, DataFlowJsonEditor, TestEnvironmentModal } from 'src/components/data-flow';
 
 const demoLayoutDefinifinition: DataFlowDefinition = {
   "KS_f": {
@@ -57,7 +59,7 @@ export default function Page({ params }: Props) {
   const { node, layout } = params;
   const { t } = useTranslate('layout-list');
   const decodedLayout = decodeURIComponent(layout);
-
+  const testEnvModal = useBoolean();
 
   const url = endpoints.layouts.detail(node, decodedLayout);
   const { data, isLoading, error } = useSWR(url, fetcher);
@@ -95,7 +97,7 @@ export default function Page({ params }: Props) {
   }, []);
 
   return (
-    <DashboardContent maxWidth="xl">
+    <DashboardContent maxWidth="xl" sx={{ position: 'relative' }}>
       <Breadcrumb
         node={node}
         pages={[
@@ -167,6 +169,7 @@ export default function Page({ params }: Props) {
           <DataFlowCanvas
             definition={dataFlowDefinition}
             fileName={`${decodedLayout}.moon`}
+            onTestEnvClick={testEnvModal.onTrue}
           />
         </Box>
       )}
@@ -211,6 +214,16 @@ export default function Page({ params }: Props) {
         </Box>
       </Paper>
 
+      {/* Test Environment Modal */}
+      {dataFlowDefinition && (
+        <TestEnvironmentModal
+          open={testEnvModal.value}
+          onClose={testEnvModal.onFalse}
+          definition={dataFlowDefinition}
+          fileName={`${decodedLayout}.moon`}
+          layoutDefinition={layoutDefinition}
+        />
+      )}
 
     </DashboardContent>
   );

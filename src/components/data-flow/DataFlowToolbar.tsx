@@ -18,6 +18,7 @@ type DataFlowToolbarProps = {
   onExport: () => void;
   onFullscreen: () => void;
   isFullscreen: boolean;
+  onTestEnvClick?: () => void;
 };
 
 export function DataFlowToolbar({
@@ -27,6 +28,7 @@ export function DataFlowToolbar({
   onExport,
   onFullscreen,
   isFullscreen,
+  onTestEnvClick,
 }: DataFlowToolbarProps) {
   const { t } = useTranslate('data-flow');
 
@@ -112,6 +114,7 @@ export function DataFlowToolbar({
       }}>
         <Button
           size="small"
+          onClick={onTestEnvClick}
           sx={{
             px: 1.5,
             py: 0.5,
@@ -126,7 +129,7 @@ export function DataFlowToolbar({
             '&:hover': { backgroundColor: '#4E576A' },
           }}
         >
-          {'테스트 환경 접속'}
+          테스트 환경 접속
         </Button>
         <Button
           size="small"

@@ -26,6 +26,14 @@
   "editor": {
     "title": "JSON Definition"
   },
+  "sandbox": {
+    "title": "Test Environment (SANDBOX)",
+    "vertical_view": "vertical View",
+    "save": "Save",
+    "revert": "Revert",
+    "layout_definition": "Layout Definition",
+    "preview_btn": "Preview"
+  },
   "empty": "No data flow to visualize",
   "parse_error": "Failed to parse layout definition"
 }
