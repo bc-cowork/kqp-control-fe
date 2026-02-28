@@ -110,7 +110,7 @@ function ModalContent({
   const [zoom, setZoom] = useState(100);
 
   // View mode & layout state
-  const [viewMode, setViewMode] = useState<ViewMode>('horizontal');
+  const [viewMode, setViewMode] = useState<ViewMode>('vertical');
   const [interfaceScale, setInterfaceScale] = useState(100);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
