@@ -84,15 +84,18 @@ export function DataFlowPreviewPanel({
   // Ctrl+wheel zoom (same behaviour as DataFlowCanvas)
   useEffect(() => {
     const el = containerRef.current;
-    if (!el) return;
+
     const handleWheel = (e: WheelEvent) => {
       if (!e.ctrlKey) return;
       e.preventDefault();
       if (e.deltaY < 0) zoomIn({ duration: 150 });
       else zoomOut({ duration: 150 });
     };
-    el.addEventListener('wheel', handleWheel, { passive: false });
-    return () => el.removeEventListener('wheel', handleWheel);
+
+    if (el) el.addEventListener('wheel', handleWheel, { passive: false });
+    return () => {
+      if (el) el.removeEventListener('wheel', handleWheel);
+    };
   }, [zoomIn, zoomOut]);
 
   return (

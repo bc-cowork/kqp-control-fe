@@ -127,27 +127,20 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
     setZoom(Math.round(getZoom() * 100));
   }, [getZoom]);
 
-  // OPTIONAL: Ctrl + Wheel Zoom Only
+  // Ctrl + Wheel Zoom Only
   useEffect(() => {
     const el = containerRef.current;
-    if (!el) return;
 
     const handleWheel = (e: WheelEvent) => {
-      if (!e.ctrlKey) return; // allow normal page scroll
-
+      if (!e.ctrlKey) return;
       e.preventDefault();
-
-      if (e.deltaY < 0) {
-        zoomIn({ duration: 150 });
-      } else {
-        zoomOut({ duration: 150 });
-      }
+      if (e.deltaY < 0) zoomIn({ duration: 150 });
+      else zoomOut({ duration: 150 });
     };
 
-    el.addEventListener('wheel', handleWheel, { passive: false });
-
+    if (el) el.addEventListener('wheel', handleWheel, { passive: false });
     return () => {
-      el.removeEventListener('wheel', handleWheel);
+      if (el) el.removeEventListener('wheel', handleWheel);
     };
   }, [zoomIn, zoomOut]);
 
@@ -193,7 +186,7 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
           zoomOnScroll={false}
           panOnScroll={false}
           preventScrolling={false}
-          zoomOnPinch={true}
+          zoomOnPinch
           panOnDrag
         >
           <Background

@@ -1,7 +1,7 @@
 import type { editor } from 'monaco-editor';
 
-import { useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { useRef, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';

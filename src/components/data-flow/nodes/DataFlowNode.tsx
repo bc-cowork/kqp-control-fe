@@ -116,7 +116,7 @@ function EntityNodeBody({ actions }: { actions: DataFlowAction[] }) {
                 color: ACTION_GRAY,
               }}
             >
-              {','}
+              ,
             </Typography>
           </Box>
 
