@@ -56,8 +56,11 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
     return { nodes: laidOut, edges };
   }, [definition]);
 
-  const [nodes, setNodes, onNodesChange] = useNodesState<DataFlowNodeInstance>(initialGraph.nodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>(initialGraph.edges);
+  const [nodes, setNodes, onNodesChange] =
+    useNodesState<DataFlowNodeInstance>(initialGraph.nodes);
+
+  const [edges, setEdges, onEdgesChange] =
+    useEdgesState<Edge>(initialGraph.edges);
 
   // Sync nodes/edges when definition changes
   useEffect(() => {
@@ -65,38 +68,43 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
     setEdges(initialGraph.edges);
   }, [initialGraph, setNodes, setEdges]);
 
-  // Auto Layout handler
+  // Auto Layout
   const handleAutoLayout = useCallback(() => {
     const laidOut = computeDataFlowLayout([...nodes], edges);
     setNodes(laidOut);
     setTimeout(() => fitView({ padding: 0.3, duration: 300 }), 50);
   }, [nodes, edges, setNodes, fitView]);
 
-  // Fit View handler
+  // Fit View
   const handleFitView = useCallback(() => {
     fitView({ padding: 0.3, duration: 300 });
   }, [fitView]);
 
-  // Export handler
+  // Export
   const handleExport = useCallback(async () => {
-    const flowViewport = containerRef.current?.querySelector('.react-flow__viewport') as HTMLElement;
+    const flowViewport = containerRef.current?.querySelector(
+      '.react-flow__viewport'
+    ) as HTMLElement;
+
     if (!flowViewport) return;
+
     try {
       const { toPng } = await import('html-to-image');
       const dataUrl = await toPng(flowViewport, {
         backgroundColor: CANVAS_BG,
         quality: 1,
       });
+
       const link = document.createElement('a');
       link.download = `${fileName || 'data-flow'}.png`;
       link.href = dataUrl;
       link.click();
     } catch {
-      // Silently fail if export not available
+      // silent fail
     }
   }, [fileName]);
 
-  // Fullscreen handler
+  // Fullscreen
   const handleFullscreen = useCallback(() => {
     if (!document.fullscreenElement) {
       containerRef.current?.requestFullscreen();
@@ -106,15 +114,42 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
   }, []);
 
   useEffect(() => {
-    const handleChange = () => setIsFullscreen(!!document.fullscreenElement);
+    const handleChange = () =>
+      setIsFullscreen(!!document.fullscreenElement);
+
     document.addEventListener('fullscreenchange', handleChange);
-    return () => document.removeEventListener('fullscreenchange', handleChange);
+    return () =>
+      document.removeEventListener('fullscreenchange', handleChange);
   }, []);
 
-  // Track zoom level
+  // Track zoom %
   const handleViewportChange = useCallback(() => {
     setZoom(Math.round(getZoom() * 100));
   }, [getZoom]);
+
+  // OPTIONAL: Ctrl + Wheel Zoom Only
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (!e.ctrlKey) return; // allow normal page scroll
+
+      e.preventDefault();
+
+      if (e.deltaY < 0) {
+        zoomIn({ duration: 150 });
+      } else {
+        zoomOut({ duration: 150 });
+      }
+    };
+
+    el.addEventListener('wheel', handleWheel, { passive: false });
+
+    return () => {
+      el.removeEventListener('wheel', handleWheel);
+    };
+  }, [zoomIn, zoomOut]);
 
   return (
     <Box
@@ -153,9 +188,13 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
           nodesConnectable={false}
           elementsSelectable={false}
           onMoveEnd={handleViewportChange}
-          defaultEdgeOptions={{
-            type: 'smoothstep',
-          }}
+          defaultEdgeOptions={{ type: 'smoothstep' }}
+
+          // 🔥 IMPORTANT SCROLL FIXES
+          zoomOnScroll={false}
+          panOnScroll={false}
+          zoomOnPinch={true}
+          panOnDrag
         >
           <Background
             variant={BackgroundVariant.Lines}
@@ -164,7 +203,7 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
             color={GRID_LINE_COLOR}
           />
 
-          {/* Zoom Controls Panel */}
+          {/* Zoom Controls */}
           <Panel position="bottom-right">
             <Stack spacing={0.5} alignItems="center">
               <Box
@@ -181,11 +220,15 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
                   '&:hover': { backgroundColor: '#4E576A' },
                 }}
               >
-                <Typography sx={{ color: 'white', fontSize: 16, fontWeight: 600 }}>+</Typography>
+                <Typography sx={{ color: 'white', fontSize: 16, fontWeight: 600 }}>
+                  +
+                </Typography>
               </Box>
+
               <Typography sx={{ fontSize: 12, color: 'white', fontWeight: 400 }}>
                 {zoom}%
               </Typography>
+
               <Box
                 onClick={() => zoomOut({ duration: 200 })}
                 sx={{
@@ -200,7 +243,9 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
                   '&:hover': { backgroundColor: '#4E576A' },
                 }}
               >
-                <Typography sx={{ color: 'white', fontSize: 16, fontWeight: 600 }}>-</Typography>
+                <Typography sx={{ color: 'white', fontSize: 16, fontWeight: 600 }}>
+                  -
+                </Typography>
               </Box>
             </Stack>
           </Panel>
@@ -212,7 +257,6 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
 
 // ----------------------------------------------------------------------
 
-// Wrapper with ReactFlowProvider
 export function DataFlowCanvas(props: DataFlowCanvasProps) {
   return (
     <ReactFlowProvider>
