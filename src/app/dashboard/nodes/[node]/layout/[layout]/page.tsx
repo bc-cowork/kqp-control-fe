@@ -25,25 +25,44 @@ import { Breadcrumb } from 'src/components/common/Breadcrumb';
 import { DataFlowCanvas, DataFlowJsonEditor, TestEnvironmentModal } from 'src/components/data-flow';
 
 const demoLayoutDefinifinition: DataFlowDefinition = {
-  "KS_f": {
-    "description": "KOSPI 주식 체결",
-    "actions": ["log", "route", "route"]
+  "KSKQ_def": {
+    "desc": "구조화증권 기본/기타 라우터",
+    "recv2r": [216, 224, 225, 226, 230, 238, 239, 261, 260],
+    "actions": [
+      { "act": "log", "param": { "to": "rcv0" } },
+      { "act": "route", "param": { "to": "1", "app": "kqp" } },
+      { "act": "route", "param": { "to": "KSKQ_def_emit" } }
+    ]
   },
-  "KS_qos": {
-    "description": "KOSPI QoS",
-    "actions": ["route"]
+  "KSKQ_def_emit": {
+    "desc": "구조화증권 기본/기타 송출",
+    "actions": [
+      { "act": "destinate", "param": { "rule": "route_map" } },
+      { "act": "modify", "param": { "rule": "wrsec1" } },
+      { "act": "emit", "param": {} },
+      { "act": "log", "param": { "to": "dist0" } }
+    ]
   },
-  "KS_F_emit": {
-    "description": "KOSPI 송출",
-    "actions": ["modify", "emit"]
+  "KS_q": {
+    "desc": "",
+    "recv2r": [222, 223, 258],
+    "actions": [
+      { "act": "log", "param": { "to": "rcv0" } },
+      { "act": "route", "param": { "to": "ksp_q", "app": "kqp" } },
+      { "act": "route", "param": { "to": "KS_q_emit" } }
+    ]
   },
-  "KS_F_qos_emit": {
-    "description": "KOSPI QoS 송출",
-    "actions": ["emit"]
+  "KS_q_emit": {
+    "desc": "KOSPI 주식 호가 송출",
+    "actions": [
+      { "act": "destinate", "param": { "rule": "route_map" } },
+      { "act": "modify", "param": { "rule": "wrsec1" } },
+      { "act": "emit", "param": {} }
+    ]
   },
   "relations": {
-    "KS_f": { "to": ["KS_F_emit", "KS_qos"] },
-    "KS_qos": { "to": ["KS_F_qos_emit"] }
+    "KSKQ_def": { "to": ["KSKQ_def_emit"] },
+    "KS_q": { "to": ["KS_q_emit"] }
   }
 };
 const demoJSONValue = JSON.stringify(demoLayoutDefinifinition, null, 2);

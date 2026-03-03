@@ -1,8 +1,9 @@
 // Node appearance
-export const NODE_WIDTH = 250;
+export const NODE_WIDTH = 333;
 export const NODE_BORDER = '#4A3BFF';
 export const NODE_BODY_BG = '#212447';
 export const ACTION_COLOR = '#5E66FF';
+export const ACTION_GRAY = '#AFB7C8';
 
 // Edge
 export const EDGE_COLOR = '#4A3BFF';

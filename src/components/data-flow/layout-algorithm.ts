@@ -98,7 +98,13 @@ export function computeDataFlowLayout(
 
 function estimateNodeHeight(node: DataFlowNodeInstance): number {
   const data = node.data as DataFlowNodeData;
+
+  // RECV node: header (~47px) + channels line (~26px) + count line (~26px) + body padding (16px)
+  if (data.nodeType === 'recv') {
+    return 47 + 26 + 26 + 16;
+  }
+
+  // ENTITY node: header (~47px) + each action row (~26px) + body padding (16px)
   const actionCount = data.actions?.length || 0;
-  // Header ~47px + actions ~26px each + padding
   return 47 + actionCount * 26 + 16;
 }

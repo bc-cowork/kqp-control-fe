@@ -4,9 +4,17 @@ import type { Node } from '@xyflow/react';
 
 // --- API JSON Structure ---
 
+export type ActionParam = Record<string, unknown>;
+
+export type DataFlowAction = {
+  act: string;
+  param: ActionParam;
+};
+
 export type DataFlowEntityDef = {
-  description?: string;
-  actions: string[];
+  desc?: string;
+  recv2r?: number[];
+  actions?: DataFlowAction[];
 };
 
 export type DataFlowRelations = Record<string, { to: string[] }>;
@@ -20,7 +28,9 @@ export type DataFlowDefinition = {
 
 export type DataFlowNodeData = {
   label: string;
-  actions?: string[];
+  nodeType: 'recv' | 'entity';
+  channels?: number[];
+  actions?: DataFlowAction[];
   [key: string]: unknown;
 };
 
