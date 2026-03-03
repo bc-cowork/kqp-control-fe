@@ -190,9 +190,9 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
           onMoveEnd={handleViewportChange}
           defaultEdgeOptions={{ type: 'smoothstep' }}
 
-          // 🔥 IMPORTANT SCROLL FIXES
           zoomOnScroll={false}
           panOnScroll={false}
+          preventScrolling={false}
           zoomOnPinch={true}
           panOnDrag
         >

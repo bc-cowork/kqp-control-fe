@@ -244,6 +244,7 @@ export function DataFlowPreviewPanel({
           defaultEdgeOptions={{ type: 'smoothstep' }}
           zoomOnScroll={false}
           panOnScroll={false}
+          preventScrolling={false}
           zoomOnPinch
           panOnDrag
         >

@@ -29,42 +29,180 @@ const demoLayoutDefinifinition: DataFlowDefinition = {
     "desc": "구조화증권 기본/기타 라우터",
     "recv2r": [216, 224, 225, 226, 230, 238, 239, 261, 260],
     "actions": [
-      { "act": "log", "param": { "to": "rcv0" } },
-      { "act": "route", "param": { "to": "1", "app": "kqp" } },
-      { "act": "route", "param": { "to": "KSKQ_def_emit" } }
+      {
+        "act": "log",
+        "param": { "to": "rcv0" }
+      },
+      {
+        "act": "route",
+        "param": { "to": "1", "app": "kqp" }
+      },
+      {
+        "act": "route",
+        "param": { "to": "KSKQ_def_emit" }
+      }
     ]
   },
   "KSKQ_def_emit": {
     "desc": "구조화증권 기본/기타 송출",
     "actions": [
-      { "act": "destinate", "param": { "rule": "route_map" } },
-      { "act": "modify", "param": { "rule": "wrsec1" } },
-      { "act": "emit", "param": {} },
-      { "act": "log", "param": { "to": "dist0" } }
+      {
+        "act": "destinate",
+        "param": { "rule": "route_map" }
+      },
+      {
+        "act": "modify",
+        "param": { "rule": "wrsec1" }
+      },
+      {
+        "act": "emit",
+        "param": {}
+      },
+      {
+        "act": "log",
+        "param": { "to": "dist0" }
+      }
     ]
   },
   "KS_q": {
     "desc": "",
     "recv2r": [222, 223, 258],
     "actions": [
-      { "act": "log", "param": { "to": "rcv0" } },
-      { "act": "route", "param": { "to": "ksp_q", "app": "kqp" } },
-      { "act": "route", "param": { "to": "KS_q_emit" } }
+      {
+        "act": "log",
+        "param": { "to": "rcv0" }
+      },
+      {
+        "act": "route",
+        "param": { "to": "ksp_q", "app": "kqp" }
+      },
+      {
+        "act": "route",
+        "param": { "to": "KS_q_emit" }
+      }
     ]
   },
   "KS_q_emit": {
     "desc": "KOSPI 주식 호가 송출",
     "actions": [
-      { "act": "destinate", "param": { "rule": "route_map" } },
-      { "act": "modify", "param": { "rule": "wrsec1" } },
-      { "act": "emit", "param": {} }
+      {
+        "act": "destinate",
+        "param": { "rule": "route_map" }
+      },
+      {
+        "act": "modify",
+        "param": { "rule": "wrsec1" }
+      },
+      {
+        "act": "emit",
+        "param": {}
+      }
+    ]
+  },
+  "KS_f": {
+    "recv2r": [217, 218, 219, 220, 221, 256],
+    "actions": [
+      {
+        "act": "log",
+        "param": { "to": "rcv0" }
+      },
+      {
+        "act": "route",
+        "param": { "to": "KS_f_emit" }
+      }
+    ]
+  },
+  "KS_f_emit": {
+    "actions": [
+      {
+        "act": "destinate",
+        "param": { "rule": "route_map" }
+      },
+      {
+        "act": "modify",
+        "param": { "rule": "wrsec1" }
+      },
+      {
+        "act": "emit",
+        "param": {}
+      },
+      {
+        "act": "log",
+        "param": { "to": "dist0" }
+      }
+    ]
+  },
+  "KQ_q": {
+    "desc": "KOSDAQ 주식 호가",
+    "recv2r": [236, 237, 259],
+    "actions": [
+      {
+        "act": "log",
+        "param": { "to": "rcv0" }
+      },
+      {
+        "act": "route",
+        "param": { "to": "KS_q_emit" }
+      }
+    ]
+  },
+  "KQ_q_emit": {
+    "desc": "KOSDAQ 주식 호가 송출",
+    "actions": [
+      {
+        "act": "destinate",
+        "param": { "rule": "route_map" }
+      },
+      {
+        "act": "modify",
+        "param": { "rule": "wrsec1" }
+      },
+      {
+        "act": "emit",
+        "param": {}
+      }
+    ]
+  },
+  "KQ_f": {
+    "desc": "KOSDAQ 주식 체결",
+    "recv2r": [231, 232, 233, 234, 235, 257],
+    "actions": [
+      {
+        "act": "log",
+        "param": { "to": "rcv0" }
+      },
+      {
+        "act": "route",
+        "param": { "to": "KQ_f_emit" }
+      }
+    ]
+  },
+  "KQ_f_emit": {
+    "desc": "KOSDAQ 주식 체결 송출",
+    "actions": [
+      {
+        "act": "destinate",
+        "param": { "rule": "route_map" }
+      },
+      {
+        "act": "modify",
+        "param": { "rule": "wrsec1" }
+      },
+      {
+        "act": "emit",
+        "param": {}
+      }
     ]
   },
   "relations": {
     "KSKQ_def": { "to": ["KSKQ_def_emit"] },
-    "KS_q": { "to": ["KS_q_emit"] }
+    "KS_q": { "to": ["KS_q_emit"] },
+    "KS_f": { "to": ["KS_f_emit"] },
+    "KQ_q": { "to": ["KQ_q_emit"] },
+    "KQ_f": { "to": ["KQ_f_emit"] }
   }
-};
+}
+  ;
 const demoJSONValue = JSON.stringify(demoLayoutDefinifinition, null, 2);
 
 type Props = {

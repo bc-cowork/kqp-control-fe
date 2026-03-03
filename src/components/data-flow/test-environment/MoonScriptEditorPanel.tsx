@@ -1,6 +1,6 @@
 import type { editor } from 'monaco-editor';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 
 import Box from '@mui/material/Box';
@@ -35,6 +35,7 @@ export function MoonScriptEditorPanel({
 }: MoonScriptEditorPanelProps) {
   const { t } = useTranslate('data-flow');
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
+  const [isActive, setIsActive] = useState(false);
 
   return (
     <Box
@@ -136,6 +137,7 @@ export function MoonScriptEditorPanel({
       <Box
         sx={{
           flex: 1,
+          position: 'relative',
           overflow: 'hidden',
           backgroundColor: CANVAS_BG,
           '& .monaco-scrollable-element > .scrollbar > .slider': {
@@ -150,6 +152,16 @@ export function MoonScriptEditorPanel({
           },
         }}
       >
+        {/* Click-to-activate overlay — blocks scroll capture until user clicks in */}
+        {!isActive && (
+          <Box
+            onClick={() => {
+              setIsActive(true);
+              editorRef.current?.focus();
+            }}
+            sx={{ position: 'absolute', inset: 0, zIndex: 10, cursor: 'text' }}
+          />
+        )}
         <MonacoEditor
           height="100%"
           language="lua"
@@ -157,6 +169,7 @@ export function MoonScriptEditorPanel({
           defaultValue={layoutDefinition}
           onMount={(ed) => {
             editorRef.current = ed;
+            ed.onDidBlurEditorText(() => setIsActive(false));
           }}
           onChange={(v) => onCodeChange(v || '')}
           options={{

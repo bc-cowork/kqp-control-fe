@@ -3,7 +3,7 @@
 import type { editor } from 'monaco-editor';
 
 import dynamic from 'next/dynamic';
-import { useRef, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -25,6 +25,7 @@ type DataFlowJsonEditorProps = {
 export function DataFlowJsonEditor({ value, onChange }: DataFlowJsonEditorProps) {
   const { t } = useTranslate('data-flow');
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
+  const [isActive, setIsActive] = useState(false);
 
   // Push external value changes (e.g. API data) into the editor imperatively
   useEffect(() => {
@@ -71,6 +72,7 @@ export function DataFlowJsonEditor({ value, onChange }: DataFlowJsonEditorProps)
       <Box
         sx={{
           flex: 1,
+          position: 'relative',
           backgroundColor: '#1E1E1E',
           borderBottomLeftRadius: '8px',
           borderBottomRightRadius: '8px',
@@ -88,12 +90,25 @@ export function DataFlowJsonEditor({ value, onChange }: DataFlowJsonEditorProps)
           },
         }}
       >
+        {/* Click-to-activate overlay — blocks scroll capture until user clicks in */}
+        {!isActive && (
+          <Box
+            onClick={() => {
+              setIsActive(true);
+              editorRef.current?.focus();
+            }}
+            sx={{ position: 'absolute', inset: 0, zIndex: 10, cursor: 'text' }}
+          />
+        )}
         <Editor
           height="100%"
           language="json"
           theme="vs-dark"
           defaultValue={value}
-          onMount={(ed) => { editorRef.current = ed; }}
+          onMount={(ed) => {
+            editorRef.current = ed;
+            ed.onDidBlurEditorText(() => setIsActive(false));
+          }}
           onChange={(v) => onChange(v || '')}
           options={{
             minimap: { enabled: false },
