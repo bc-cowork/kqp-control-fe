@@ -1,6 +1,6 @@
 import type { Edge } from '@xyflow/react';
 
-import { useMemo, useState, useEffect, useCallback } from 'react';
+import { useRef, useMemo, useState, useEffect, useCallback } from 'react';
 import {
   Panel,
   ReactFlow,
@@ -56,6 +56,7 @@ export function DataFlowPreviewPanel({
   const { t } = useTranslate('data-flow');
   const { zoomIn, zoomOut, getZoom } = useReactFlow();
   const [zoom, setZoom] = useState(100);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const nodeTypes = useMemo(() => ({ dataFlow_node: DataFlowNode }), []);
 
@@ -80,8 +81,23 @@ export function DataFlowPreviewPanel({
     onZoomChange(newZoom);
   }, [getZoom, onZoomChange]);
 
+  // Ctrl+wheel zoom (same behaviour as DataFlowCanvas)
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const handleWheel = (e: WheelEvent) => {
+      if (!e.ctrlKey) return;
+      e.preventDefault();
+      if (e.deltaY < 0) zoomIn({ duration: 150 });
+      else zoomOut({ duration: 150 });
+    };
+    el.addEventListener('wheel', handleWheel, { passive: false });
+    return () => el.removeEventListener('wheel', handleWheel);
+  }, [zoomIn, zoomOut]);
+
   return (
     <Box
+      ref={containerRef}
       sx={{
         minHeight: isHorizontal ? 600 : 832,
         width: isHorizontal ? '50%' : '100%',
@@ -226,6 +242,10 @@ export function DataFlowPreviewPanel({
           elementsSelectable={false}
           onMoveEnd={handleViewportChange}
           defaultEdgeOptions={{ type: 'smoothstep' }}
+          zoomOnScroll={false}
+          panOnScroll={false}
+          zoomOnPinch
+          panOnDrag
         >
           <Background
             variant={BackgroundVariant.Lines}

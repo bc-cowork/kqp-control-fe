@@ -184,7 +184,6 @@ function ModalContent({
         left: 20,
         right: 20,
         bottom: 20,
-        maxHeight: 'calc(100vh)',
         overflowY: 'auto',
         bgcolor: '#0A0E15',
         borderRadius: '16px',
@@ -197,7 +196,7 @@ function ModalContent({
         gap: 3,
         scrollbarWidth: 'thin',
         scrollbarColor: '#4E576A #202838',
-        pb: 50,
+        pb: 6,
       }}
     >
       {/* ========== Modal Header ========== */}
@@ -375,19 +374,6 @@ export function TestEnvironmentModal({
     <Modal
       open={open}
       onClose={onClose}
-      disablePortal
-      sx={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-      }}
-      slotProps={{
-        backdrop: {
-          sx: { position: 'absolute' },
-        },
-      }}
     >
       <ReactFlowProvider>
         <ModalContent
