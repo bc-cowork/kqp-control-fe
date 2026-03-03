@@ -40,7 +40,7 @@ export function MoonScriptEditorPanel({
   return (
     <Box
       sx={{
-        maxHeight: isHorizontal ? 600 : 837,
+        minHeight: isHorizontal ? 600 : 837,
         width: isHorizontal ? '50%' : '100%',
         borderRadius: '12px',
         overflow: 'hidden',
