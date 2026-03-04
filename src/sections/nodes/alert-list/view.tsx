@@ -27,7 +27,7 @@ import { Breadcrumb } from 'src/components/common/Breadcrumb';
 
 type AlertItem = {
   name: string;
-  status: 'active' | 'inactive';
+  status: 'OK';
   desc?: string;
   file?: string;
   start_at?: string;
@@ -40,8 +40,8 @@ type Props = { nodeId: string };
 
 // ----------------------------------------------------------------------
 
-function StatusBadge({ status }: { status: 'active' | 'inactive' }) {
-  const isActive = status === 'active';
+function StatusBadge({ status }: { status: 'OK' }) {
+  const isActive = status === 'OK';
   return (
     <Box
       sx={{
@@ -77,7 +77,7 @@ function StatusBadge({ status }: { status: 'active' | 'inactive' }) {
           fontSize: 15, fontWeight: 400, lineHeight: '22.5px',
         }}
       >
-        {status}
+        {status === 'OK' ? "active" : "inactive"}
       </Typography>
     </Box>
   );
