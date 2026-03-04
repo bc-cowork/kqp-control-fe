@@ -105,7 +105,9 @@ function AlertRow({ item, nodeId }: { item: AlertItem; nodeId: string }) {
   return (
     <Box sx={{ borderBottom: '1px solid #2A3142' }}>
       {/* Row header */}
-      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 1.5 }}>
+      <Stack
+        onClick={() => router.push(paths.dashboard.nodes.alertsDetail(nodeId, item.name))}
+        direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 1.5, cursor: 'pointer' }}>
         {/* Left: icon placeholder + name + status + description */}
         <Stack direction="row" alignItems="center" gap={2} sx={{ flex: 1, height: 65, px: 1.5 }}>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -114,7 +116,6 @@ function AlertRow({ item, nodeId }: { item: AlertItem; nodeId: string }) {
           <Box sx={{ flex: 1 }}>
             <Stack direction="row" alignItems="center" gap={1.5} sx={{ py: 0.5 }}>
               <Typography
-                onClick={() => router.push(paths.dashboard.nodes.alertsDetail(nodeId, item.name))}
                 sx={{ color: '#D1D6E0', fontSize: 15, fontWeight: 400, lineHeight: '22.5px', cursor: 'pointer' }}
               >
                 {item.name}
@@ -132,16 +133,19 @@ function AlertRow({ item, nodeId }: { item: AlertItem; nodeId: string }) {
         {/* Right: filename + expand chevron */}
         <Stack direction="row" alignItems="center" gap={2} sx={{ width: 189, justifyContent: 'flex-end' }}>
           <Typography sx={{ flex: 1, color: '#667085', fontSize: 12, fontWeight: 400, lineHeight: '18px' }}>
-            {item.file}
+            {item.file || "KOSPI_KOSDAQ.moon"}
           </Typography>
           <Box
-            onClick={() => setExpanded((p) => !p)}
+            onClick={(e) => {
+              setExpanded((p) => !p)
+              e.stopPropagation();
+            }}
             sx={{ height: 26, px: 1.5, display: 'flex', alignItems: 'center', cursor: 'pointer' }}
           >
             <KeyboardArrowDown
               sx={{
                 color: '#667085',
-                fontSize: 16,
+                fontSize: 22,
                 transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
                 transition: 'transform 0.2s',
               }}
@@ -186,6 +190,7 @@ function AlertRow({ item, nodeId }: { item: AlertItem; nodeId: string }) {
               alignItems: 'center',
               justifyContent: 'center',
               borderRight: `1px solid ${COL_DIVIDER}`,
+              cursor: 'pointer',
             }}
           >
             <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -195,7 +200,10 @@ function AlertRow({ item, nodeId }: { item: AlertItem; nodeId: string }) {
 
           {/* Delete button */}
           <Box
-            sx={{ width: 76, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            sx={{
+              width: 76, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer',
+            }}
           >
             <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M8 9.4H18M16.8889 9.4V17.8C16.8889 18.4 16.3333 19 15.7778 19H10.2222C9.66667 19 9.11111 18.4 9.11111 17.8V9.4M10.7778 9.4V8.2C10.7778 7.6 11.3333 7 11.8889 7H14.1111C14.6667 7 15.2222 7.6 15.2222 8.2V9.4M11.8889 12.4V16M14.1111 12.4V16" stroke="#667085" stroke-width="1.16667" stroke-linecap="round" stroke-linejoin="round" />

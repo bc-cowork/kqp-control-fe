@@ -3,7 +3,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import { CircularProgress, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Chip, CircularProgress, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 
 import useSWR from 'swr';
 import { useTranslate } from 'src/locales';
@@ -40,7 +40,7 @@ export default function Page({ params }: Props) {
             <Breadcrumb
                 node={node}
                 pages={[
-                    { pageName: t('top.title'), link: paths.dashboard.nodes.dailyReportList(node) },
+                    { pageName: t('top.title'), link: paths.dashboard.nodes.alertsList(node) },
                     { pageName: decodedAlertId },
                 ]}
             />
@@ -88,7 +88,13 @@ export default function Page({ params }: Props) {
                                 <TableCell align='left'>{reportItem.start_at}</TableCell>
                                 <TableCell align="left">{reportItem.end_at}</TableCell>
                                 <TableCell align="left">{reportItem.interval_sec}</TableCell>
-                                <TableCell align="left">{reportItem.status}</TableCell>
+                                <TableCell align="left">
+                                    <Chip label={reportItem.status} sx={{
+                                        backgroundColor: '#1D2F20',
+                                        color: '#7EE081'
+                                    }} size="small" variant="outlined" />
+
+                                </TableCell>
                                 <TableCell align="left">{reportItem?.desc}</TableCell>
                                 <TableCell align="left">{ }</TableCell>
 
