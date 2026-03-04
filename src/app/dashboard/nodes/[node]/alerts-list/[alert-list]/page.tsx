@@ -18,22 +18,22 @@ import { grey } from '@mui/material/colors';
 type Props = {
     params: {
         node: string;
-        layout: string;
+        alertId: string;
     };
 };
 
 export default function Page({ params }: Props) {
-    const { node, layout } = params;
+    const { node, alertId } = params;
     const { t } = useTranslate('alert-list');
-    const decodedLayout = decodeURIComponent(layout);
+    const decodedAlertId = decodeURIComponent(alertId);
 
 
-    const url = endpoints.layouts.detail(node, decodedLayout);
+    const url = endpoints.alert.detail(node, decodedAlertId);
     const { data, isLoading, error } = useSWR(url, fetcher);
 
     const reportItem = data?.data?.detail || {};
-    const layoutEmpty = data?.data?.detail == null;
-    const layoutDefinition = data?.data?.layout_definition || '';
+    const alertEmpty = data?.data?.detail == null;
+    const alertDefinition = data?.data?.detail?.alert_def?.code || '';
 
     return (
         <DashboardContent maxWidth="xl">
@@ -41,11 +41,11 @@ export default function Page({ params }: Props) {
                 node={node}
                 pages={[
                     { pageName: t('top.title'), link: paths.dashboard.nodes.dailyReportList(node) },
-                    { pageName: decodedLayout },
+                    { pageName: decodedAlertId },
                 ]}
             />
 
-            <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{t('alert')}{" : "}{decodedLayout}</Typography>
+            <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{t('alert')}{" : "}{decodedAlertId}</Typography>
             <TableContainer
                 component={Paper}
                 sx={{ height: 'auto', my: 2 }}
@@ -70,7 +70,7 @@ export default function Page({ params }: Props) {
                                     <CircularProgress />
                                 </TableCell>
                             </TableRow>
-                        ) : layoutEmpty ? (
+                        ) : alertEmpty ? (
                             <TableRow>
                                 <TableCell colSpan={8}>No Process Found</TableCell>
                             </TableRow>
@@ -85,10 +85,10 @@ export default function Page({ params }: Props) {
                             >
                                 <TableCell align="left">{ }</TableCell>
                                 <TableCell align="left">{reportItem.name}</TableCell>
-                                <TableCell align='left'>{reportItem.timestamp}</TableCell>
-                                <TableCell align="left">{reportItem.channel_in}</TableCell>
-                                <TableCell align="left">{ }</TableCell>
-                                <TableCell align="left">{ }</TableCell>
+                                <TableCell align='left'>{reportItem.start_at}</TableCell>
+                                <TableCell align="left">{reportItem.end_at}</TableCell>
+                                <TableCell align="left">{reportItem.interval_sec}</TableCell>
+                                <TableCell align="left">{reportItem.status}</TableCell>
                                 <TableCell align="left">{reportItem?.desc}</TableCell>
                                 <TableCell align="left">{ }</TableCell>
 
@@ -121,7 +121,7 @@ export default function Page({ params }: Props) {
 
                             }}
                         >
-                            {layoutDefinition}
+                            {alertDefinition}
                         </SyntaxHighlighter>
                     </Box>
                 </Box>
