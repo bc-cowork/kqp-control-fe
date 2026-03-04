@@ -4,13 +4,22 @@
     },
     "table": {
         "id": "ID",
-        "surv_name": "감시 이름",
+        "surv_name": "Name",
         "start_at": "Start At",
         "end_at": "End At",
         "interval": "Interval (sec)",
-        "last_exec": "last exec.",
+        "last_exec": "Last exec.",
         "status": "Status",
-        "desc": "설명"
+        "desc": "Description"
+    },
+    "btn": {
+        "add": "Add Item"
+    },
+    "loading": "Loading...",
+    "empty": "No alert items",
+    "detail": {
+        "empty": "No alert found",
+        "error": "Error loading alert"
     },
     "alert": "Alert"
 }
