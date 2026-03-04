@@ -20,6 +20,7 @@ import { paths } from 'src/routes/paths';
 
 import { fetcher, endpoints } from 'src/utils/axios';
 
+import { grey } from 'src/theme/core';
 import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
 
@@ -58,7 +59,7 @@ export default function Page({ params }: Props) {
                 ]}
             />
 
-            <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>
+            <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2, color: (theme) => theme.palette.mode === 'dark' ? grey[50] : '#373F4E' }}>
                 {t('alert')} : {decodedAlertId}
             </Typography>
 
@@ -103,7 +104,11 @@ export default function Page({ params }: Props) {
                                         label={reportItem.status}
                                         size="small"
                                         variant="outlined"
-                                        sx={{ backgroundColor: '#1D2F20', color: '#7EE081' }}
+                                        sx={{
+                                            backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#1D2F20' : '#E8F5E9',
+                                            color: (theme) => theme.palette.mode === 'dark' ? '#7EE081' : '#2E7D32',
+                                            borderColor: (theme) => theme.palette.mode === 'dark' ? '#36573C' : '#A5D6A7',
+                                        }}
                                     />
                                 </TableCell>
                                 <TableCell>{reportItem.desc}</TableCell>
