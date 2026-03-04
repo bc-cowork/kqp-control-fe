@@ -38,6 +38,7 @@ type DataFlowCanvasProps = {
 
 function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const isHoveredRef = useRef(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const { fitView, zoomIn, zoomOut, getZoom } = useReactFlow();
   const [zoom, setZoom] = useState(100);
@@ -143,6 +144,48 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
       if (el) el.removeEventListener('wheel', handleWheel);
     };
   }, [zoomIn, zoomOut]);
+
+  // Track hover so keyboard shortcuts only fire over the canvas
+  useEffect(() => {
+    const el = containerRef.current;
+    const onEnter = () => { isHoveredRef.current = true; };
+    const onLeave = () => { isHoveredRef.current = false; };
+    if (el) {
+      el.addEventListener('mouseenter', onEnter);
+      el.addEventListener('mouseleave', onLeave);
+    }
+    return () => {
+      if (el) {
+        el.removeEventListener('mouseenter', onEnter);
+        el.removeEventListener('mouseleave', onLeave);
+      }
+    };
+  }, []);
+
+  // Keyboard zoom: Ctrl/Cmd + (+/=), Ctrl/Cmd + (-), Ctrl/Cmd + 0
+  useEffect(() => {
+    const isMac = typeof navigator !== 'undefined' && /Mac/i.test(navigator.userAgent);
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!isHoveredRef.current) return;
+      const modifier = isMac ? e.metaKey : e.ctrlKey;
+      if (!modifier) return;
+
+      if (e.key === '=' || e.key === '+') {
+        e.preventDefault();
+        zoomIn({ duration: 200 });
+      } else if (e.key === '-') {
+        e.preventDefault();
+        zoomOut({ duration: 200 });
+      } else if (e.key === '0') {
+        e.preventDefault();
+        fitView({ padding: 0.3, duration: 300 });
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [zoomIn, zoomOut, fitView]);
 
   return (
     <Box
