@@ -126,6 +126,7 @@ export const endpoints = {
     detail: (node: string, identifyId: string) => `/apik/${node}/alert/${identifyId}`,
     add: (node: string) => `/apik/${node}/alert/add`,
     update: (node: string, alertId: string) => `/apik/${node}/alert/${alertId}`,
+    delete: (node: string, alertId: string) => `/apik/${node}/alert/${alertId}`,
   },
   status: {
     list: (node: string) => `/apik/${node}/service/status`,

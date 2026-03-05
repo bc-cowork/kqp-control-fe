@@ -5,6 +5,8 @@
     "table": {
         "id": "ID",
         "surv_name": "Name",
+        "alert_name": "Alert Name",
+        "schedule": "Schedule",
         "start_at": "Start At",
         "end_at": "End At",
         "interval": "Interval (sec)",
@@ -19,7 +21,23 @@
     "empty": "No alert items",
     "detail": {
         "empty": "No alert found",
-        "error": "Error loading alert"
+        "error": "Error loading alert",
+        "info_title": "Detail Info",
+        "item_name": "Alert Item Name",
+        "desc": "Description",
+        "schedule": "Operation Schedule",
+        "timezone": "Operation Time Zone",
+        "status": "Status",
+        "script_file": "Script File",
+        "active": "Active",
+        "stopped": "Stopped",
+        "crontab": "Crontab",
+        "interval_fmt": "{{interval}} sec interval",
+        "btn_edit": "Edit",
+        "btn_delete": "Delete",
+        "delete_confirm": "Are you sure you want to delete this alert?",
+        "delete_success": "Alert deleted",
+        "delete_error": "Failed to delete alert"
     },
     "alert": "Alert",
     "form": {
