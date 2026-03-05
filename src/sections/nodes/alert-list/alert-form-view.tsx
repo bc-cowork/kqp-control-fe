@@ -74,12 +74,30 @@ function buildCronDays(selected: boolean[]): string {
     if (cur === prev + 1) {
       prev = cur;
     } else {
-      parts.push(start === prev ? String(start) : `${start} - ${prev}`);
+      parts.push(start === prev ? String(start) : `${start}-${prev}`);
       start = cur;
       prev = cur;
     }
   }
-  return parts.join(', ');
+  return parts.join(',');
+}
+
+/** Parse crontab day string (e.g. "1-5", "1,3,5", "*") back to boolean[7] */
+function parseCronDays(cron: string): boolean[] {
+  if (!cron || cron === '*') return [true, true, true, true, true, true, true];
+
+  const values: number[] = cron
+    .split(',')
+    .map((s) => s.trim())
+    .flatMap((seg) => {
+      if (seg.includes('-')) {
+        const [a, b] = seg.split('-').map((x) => Number(x.trim()));
+        return Array.from({ length: b - a + 1 }, (_, i) => a + i);
+      }
+      return [Number(seg)];
+    });
+
+  return DAY_CRON_VALUES.map((cronVal) => values.includes(cronVal));
 }
 
 // ----------------------------------------------------------------------
@@ -132,6 +150,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
         scriptCode: script,
       });
       setIsActive(d.status === 'active');
+      if (d.schedule_days) setSelectedDays(parseCronDays(d.schedule_days));
       if (d.start_at != null) setStartTime(normalizeTime(d.start_at));
       if (d.end_at != null) setEndTime(normalizeTime(d.end_at));
     }
@@ -169,26 +188,23 @@ export function AlertFormView({ nodeId, alertId }: Props) {
   const onSubmit = useCallback(
     async (values: FormValues) => {
       try {
-        const payload = {
-          name: values.name,
+        const base = {
           desc: values.desc,
+          schedule_days: cronDays,
           start_at: startTime,
           end_at: endTime,
           interval_sec: values.interval,
-          status: isActive ? 'OK' : 'STOPPED',
-          file: values.scriptFileName,
-          alert_def: { code: values.scriptCode },
-          schedule_days: cronDays,
+          status: isActive ? 'active' : 'inactive',
         };
 
         if (isEdit && alertId) {
-          await axiosInstance.put(endpoints.alert.update(nodeId, alertId), payload);
+          await axiosInstance.put(endpoints.alert.update(nodeId, alertId), base);
         } else {
-          await axiosInstance.post(endpoints.alert.add(nodeId), payload);
+          await axiosInstance.post(endpoints.alert.add(nodeId), { name: values.name, ...base });
         }
         toast.success(isEdit ? 'Alert updated' : 'Alert created');
         router.push(paths.dashboard.nodes.alertsList(nodeId));
-      } catch (error) {
+      } catch (err) {
         toast.error('Failed to save alert');
       }
     },

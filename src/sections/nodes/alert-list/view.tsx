@@ -15,12 +15,13 @@ import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 
 import { paths } from 'src/routes/paths';
 
-import { fetcher, endpoints } from 'src/utils/axios';
+import axiosInstance, { fetcher, endpoints } from 'src/utils/axios';
 
 import { grey } from 'src/theme/core';
 import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
 
+import { toast } from 'src/components/snackbar';
 import { Breadcrumb } from 'src/components/common/Breadcrumb';
 
 // ----------------------------------------------------------------------
@@ -29,11 +30,12 @@ type AlertItem = {
   name: string;
   status: 'active' | 'inactive';
   desc?: string;
-  file?: string;
+  schedule_days?: string;
   start_at?: string;
   end_at?: string;
   interval_sec?: number;
-  last_exec?: string;
+  last_exec_at?: string;
+  url?: string;
 };
 
 type Props = { nodeId: string };
@@ -85,9 +87,9 @@ function StatusBadge({ status }: { status: 'active' | 'inactive' }) {
 
 // ----------------------------------------------------------------------
 
-type AlertRowProps = { item: AlertItem; nodeId: string; t: (key: string) => string };
+type AlertRowProps = { item: AlertItem; nodeId: string; t: (key: string) => string; onDeleted: () => void };
 
-function AlertRow({ item, nodeId, t }: AlertRowProps) {
+function AlertRow({ item, nodeId, t, onDeleted }: AlertRowProps) {
   const [expanded, setExpanded] = useState(false);
   const router = useRouter();
   const theme = useTheme();
@@ -101,7 +103,7 @@ function AlertRow({ item, nodeId, t }: AlertRowProps) {
     { label: t('table.start_at'), value: item.start_at ?? '00:00' },
     { label: t('table.end_at'), value: item.end_at ?? '00:00' },
     { label: t('table.interval'), value: String(item.interval_sec ?? 0) },
-    { label: t('table.last_exec'), value: item.last_exec ?? '0000-00-00 00:00:00' },
+    { label: t('table.last_exec'), value: item.last_exec_at ?? '-' },
   ];
 
   const cellBase = {
@@ -145,7 +147,7 @@ function AlertRow({ item, nodeId, t }: AlertRowProps) {
         {/* Right: filename + expand chevron */}
         <Stack direction="row" alignItems="center" gap={2} sx={{ width: 189, justifyContent: 'flex-end' }}>
           <Typography sx={{ flex: 1, color: (th) => th.palette.mode === 'dark' ? '#667085' : grey[500], fontSize: 12, fontWeight: 400, lineHeight: '18px' }}>
-            {item.file || "KOSPI_KOSDAQ.moon"}
+            {item.name}
           </Typography>
           <Box
             onClick={(e) => {
@@ -216,6 +218,17 @@ function AlertRow({ item, nodeId, t }: AlertRowProps) {
 
           {/* Delete button */}
           <Box
+            onClick={async (e) => {
+              e.stopPropagation();
+              if (!window.confirm(t('detail.delete_confirm'))) return;
+              try {
+                await axiosInstance.delete(endpoints.alert.delete(nodeId, item.name));
+                toast.success(t('detail.delete_success'));
+                onDeleted();
+              } catch {
+                toast.error(t('detail.delete_error'));
+              }
+            }}
             sx={{
               width: 76, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center',
               cursor: 'pointer',
@@ -237,7 +250,7 @@ export function AlertListView({ nodeId }: Props) {
   const { t } = useTranslate('alert-list');
   const router = useRouter();
 
-  const { data, isLoading } = useSWR(endpoints.alert.list(nodeId), fetcher);
+  const { data, isLoading, mutate } = useSWR(endpoints.alert.list(nodeId), fetcher);
   const rows: AlertItem[] = data?.data?.list ?? [];
 
   return (
@@ -290,7 +303,7 @@ export function AlertListView({ nodeId }: Props) {
             <Typography sx={{ p: 2, color: (theme) => theme.palette.mode === 'dark' ? '#AFB7C8' : grey[500], fontSize: 15 }}>{t('empty')}</Typography>
           )}
           {rows.map((row) => (
-            <AlertRow key={row.name} item={row} nodeId={nodeId} t={t} />
+            <AlertRow key={row.name} item={row} nodeId={nodeId} t={t} onDeleted={mutate} />
           ))}
         </Box>
       </Box>
