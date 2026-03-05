@@ -569,7 +569,7 @@ export default function Page({ params }: Props) {
                 lineNumbers: 'off',
                 glyphMargin: false,
                 folding: false,
-                lineDecorationsWidth: 0,
+                lineDecorationsWidth: 16,
                 lineNumbersMinChars: 0,
                 guides: { indentation: false, bracketPairs: false },
                 renderLineHighlight: 'none',
