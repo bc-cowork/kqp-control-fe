@@ -3,6 +3,8 @@
     "inbound": "채널 수신",
     "outbound": "채널 송출"
   },
+  "empty": "채널을 찾을 수 없음",
+  "error": "채널 불러오기 오류",
   "table": {
     "id": "ID",
     "name": "이름",

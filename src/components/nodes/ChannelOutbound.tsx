@@ -45,11 +45,11 @@ export function ChannelOutbound({ selectedNodeId }: Props) {
             </TableRow>
           ) : channelsEmpty ? (
             <TableRow>
-              <TableCell colSpan={6}>No Processes Found</TableCell>
+              <TableCell colSpan={9}>{t('empty')}</TableCell>
             </TableRow>
           ) : channelsError ? (
             <TableRow>
-              <TableCell colSpan={6}>Error Fetching Process List</TableCell>
+              <TableCell colSpan={9}>{t('error')}</TableCell>
             </TableRow>
           ) : (
             channels.map((channel: IChannelItem, index: number) => (

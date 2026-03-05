@@ -109,7 +109,7 @@ export default function Page({ params }: Props) {
       },
       {
         label: t('detail.status'),
-        value: isActive ? `Active (${t('detail.active')})` : `Stopped (${t('detail.stopped')})`,
+        value: isActive ? `Active (${t('detail.active')})` : `Inactive (${t('detail.stopped')})`,
         isStatus: true,
       },
       { label: t('detail.script_file'), value: scriptFileName },
@@ -182,9 +182,13 @@ export default function Page({ params }: Props) {
             display: 'flex',
             alignItems: 'center',
             gap: 0.5,
-            bgcolor: isDark ? '#1D2F20' : '#E8F5E9',
+            bgcolor: isActive
+              ? (isDark ? '#1D2F20' : '#E8F5E9')
+              : (isDark ? '#2F1D1D' : '#FDE8E8'),
             borderRadius: '100px',
-            outline: `1px solid ${isDark ? '#36573C' : '#A5D6A7'}`,
+            outline: `1px solid ${isActive
+              ? (isDark ? '#36573C' : '#A5D6A7')
+              : (isDark ? '#573C3C' : '#F5A5A5')}`,
             outlineOffset: '-1px',
           }}
         >
@@ -202,13 +206,13 @@ export default function Page({ params }: Props) {
                 width: 8,
                 height: 8,
                 borderRadius: '50%',
-                bgcolor: isActive ? '#4FCB53' : '#667085',
+                bgcolor: isActive ? '#4FCB53' : '#FF5B5B',
               }}
             />
           </Box>
           <Typography
             sx={{
-              color: isActive ? (isDark ? '#7EE081' : '#2E7D32') : '#667085',
+              color: isActive ? (isDark ? '#7EE081' : '#2E7D32') : '#FF5B5B',
               fontSize: 15,
               fontWeight: 400,
               lineHeight: '22.5px',
@@ -312,14 +316,14 @@ export default function Page({ params }: Props) {
                   width: 8,
                   height: 8,
                   borderRadius: '50%',
-                  bgcolor: isActive ? '#4FCB53' : '#667085',
+                  bgcolor: isActive ? '#4FCB53' : '#FF5B5B',
                 }}
               />
             </Box>
             <Typography
               sx={{
                 flex: 1,
-                color: isActive ? '#4FCB53' : '#667085',
+                color: isActive ? '#4FCB53' : '#FF5B5B',
                 fontSize: 15,
                 fontWeight: 400,
                 lineHeight: '22.5px',
@@ -383,13 +387,13 @@ export default function Page({ params }: Props) {
                             width: 8,
                             height: 8,
                             borderRadius: '50%',
-                            bgcolor: isActive ? '#4FCB53' : '#667085',
+                            bgcolor: isActive ? '#4FCB53' : '#FF5B5B',
                             flexShrink: 0,
                           }}
                         />
                         <Typography
                           sx={{
-                            color: isActive ? '#4FCB53' : '#667085',
+                            color: isActive ? '#4FCB53' : '#FF5B5B',
                             fontSize: 15,
                             fontWeight: 400,
                             lineHeight: '22.5px',

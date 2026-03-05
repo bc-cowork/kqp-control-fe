@@ -3,6 +3,8 @@
     "inbound": "Channel Inbound",
     "outbound": "Channel Outbound"
   },
+  "empty": "No channels found",
+  "error": "Error loading channels",
   "table": {
     "id": "ID",
     "name": "Name",
