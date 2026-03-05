@@ -41,6 +41,7 @@
     },
     "alert": "Alert",
     "form": {
+        "page_title": "Set up surveillance items",
         "title_add": "Register Alert Item",
         "title_edit": "Edit Alert Item",
         "name": "Item Name",

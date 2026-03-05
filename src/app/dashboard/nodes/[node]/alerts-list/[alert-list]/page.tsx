@@ -88,25 +88,25 @@ export default function Page({ params }: Props) {
   // Detail info rows
   const infoRows = detail
     ? [
-        { label: t('detail.item_name'), value: detail.name },
-        { label: t('detail.desc'), value: detail.desc, multiline: true },
-        {
-          label: t('detail.schedule'),
-          value: scheduleText
-            ? `${scheduleText} — ${t('detail.crontab')}: ${scheduleText}`
-            : '-',
-        },
-        {
-          label: t('detail.timezone'),
-          value: `${detail.start_at || '-'} ~ ${detail.end_at || '-'}, ${detail.interval_sec ?? '-'} ${t('form.interval_suffix')}`,
-        },
-        {
-          label: t('detail.status'),
-          value: isActive ? `Active (${t('detail.active')})` : `Stopped (${t('detail.stopped')})`,
-          isStatus: true,
-        },
-        { label: t('detail.script_file'), value: detail.file || '-' },
-      ]
+      { label: t('detail.item_name'), value: detail.name },
+      { label: t('detail.desc'), value: detail.desc, multiline: true },
+      {
+        label: t('detail.schedule'),
+        value: scheduleText
+          ? `${scheduleText} — ${t('detail.crontab')}: ${scheduleText}`
+          : '-',
+      },
+      {
+        label: t('detail.timezone'),
+        value: `${detail.start_at || '-'} ~ ${detail.end_at || '-'}, ${detail.interval_sec ?? '-'} ${t('form.interval_suffix')}`,
+      },
+      {
+        label: t('detail.status'),
+        value: isActive ? `Active (${t('detail.active')})` : `Stopped (${t('detail.stopped')})`,
+        isStatus: true,
+      },
+      { label: t('detail.script_file'), value: detail.file || '-' },
+    ]
     : [];
 
   if (isLoading) {

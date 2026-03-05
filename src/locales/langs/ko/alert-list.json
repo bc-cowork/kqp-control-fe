@@ -41,6 +41,7 @@
     },
     "alert": "감시",
     "form": {
+        "page_title": "감시 아이템 설정",
         "title_add": "감시 아이템 등록",
         "title_edit": "감시 아이템 편집",
         "name": "감시 아이템명",

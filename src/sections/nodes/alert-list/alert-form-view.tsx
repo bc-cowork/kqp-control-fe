@@ -230,6 +230,17 @@ export function AlertFormView({ nodeId, alertId }: Props) {
         ]}
       />
 
+      <Typography
+        sx={{
+          fontSize: 28,
+          fontWeight: 600,
+          color: (theme) => (theme.palette.mode === 'dark' ? grey[50] : '#373F4E'),
+          mt: 2,
+        }}
+      >
+        {t('form.page_title')}
+      </Typography>
+
       <FormProvider {...methods}>
         <Box
           component="form"
