@@ -214,7 +214,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
   };
 
   const labelSx = {
-    color: (theme: any) => (theme.palette.mode === 'dark' ? '#4E576A' : grey[600]),
+    color: (theme: any) => (theme.palette.mode === 'dark' ? '#AFB7C8' : grey[600]),
     fontSize: 16,
     fontWeight: 600,
     lineHeight: '22.4px',
@@ -238,7 +238,12 @@ export function AlertFormView({ nodeId, alertId }: Props) {
             mt: 3,
             borderRadius: '12px',
             overflow: 'hidden',
+            fontFamily: 'Pretendard',
             bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF'),
+            '& .MuiTypography-root': { fontFamily: 'Pretendard' },
+            '& .MuiOutlinedInput-input': { fontFamily: 'Pretendard' },
+            '& .MuiInput-input': { fontFamily: 'Pretendard' },
+            '& .MuiButton-root': { fontFamily: 'Pretendard' },
           }}
         >
           {/* ── Header ── */}
@@ -258,7 +263,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
               sx={{
                 color: (theme) => (theme.palette.mode === 'dark' ? '#AFB7C8' : grey[600]),
                 fontSize: 22,
-                fontWeight: 600,
+                fontWeight: 500,
                 lineHeight: '26.4px',
               }}
             >
@@ -286,7 +291,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                   color: (theme) =>
                     theme.palette.mode === 'dark' ? '#6B89FF' : '#5E66FF',
                   fontSize: 17,
-                  fontWeight: 600,
+                  fontWeight: 500,
                   lineHeight: '25.5px',
                 }}
               >
@@ -500,7 +505,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                 <Typography
                   component="span"
                   sx={{
-                    color: (theme) => (theme.palette.mode === 'dark' ? '#667085' : grey[500]),
+                    color: (theme) => (theme.palette.mode === 'dark' ? '#AFB7C8' : grey[500]),
                     fontSize: 15,
                     lineHeight: '22.5px',
                   }}
