@@ -792,15 +792,16 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                       textTransform: 'none',
                       fontSize: 15,
                       fontWeight: 400,
-                      color: (theme) =>
+                      color: isScriptEditing ? '#FFFFFF' : (theme) =>
                         theme.palette.mode === 'dark' ? '#D1D6E0' : '#373F4E',
-                      borderColor: (theme) =>
+                      borderColor: isScriptEditing ? '#5E66FF' : (theme) =>
                         theme.palette.mode === 'dark' ? '#373F4E' : grey[300],
-                      bgcolor: (theme) =>
+                      bgcolor: isScriptEditing ? '#5E66FF' : (theme) =>
                         theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF',
                       '&:hover': {
-                        borderColor: (theme) =>
+                        borderColor: isScriptEditing ? '#4A3BFF' : (theme) =>
                           theme.palette.mode === 'dark' ? '#667085' : grey[400],
+                        bgcolor: isScriptEditing ? '#4A3BFF' : undefined,
                       },
                     }}
                   >
@@ -817,7 +818,9 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                       sx={{
                         height: 300,
                         bgcolor: (theme) =>
-                          theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF',
+                          theme.palette.mode === 'dark'
+                            ? isScriptEditing ? '#161C25' : 'transparent'
+                            : '#FFFFFF',
                       }}
                     >
                       <MonacoEditor
