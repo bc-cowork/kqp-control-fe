@@ -126,7 +126,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
         scriptFileName: d.file || '',
         scriptCode: d.alert_def?.code || '',
       });
-      setIsActive(d.status === 'OK' || d.status === 'active');
+      setIsActive(d.status === 'active');
       if (d.start_at != null) setStartTime(normalizeTime(d.start_at));
       if (d.end_at != null) setEndTime(normalizeTime(d.end_at));
     }

@@ -62,7 +62,7 @@ export default function Page({ params }: Props) {
 
   const detail = data?.data?.detail;
   const alertCode = detail?.alert_def?.code || '';
-  const isActive = detail?.status === 'OK' || detail?.status === 'active';
+  const isActive = detail?.status === 'active';
 
   const handleEdit = useCallback(() => {
     router.push(paths.dashboard.nodes.alertsEdit(node, decodedAlertId));
