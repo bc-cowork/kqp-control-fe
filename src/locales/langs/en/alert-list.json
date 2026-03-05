@@ -39,7 +39,7 @@
         "script": "driving Script",
         "script_view": "View",
         "script_edit": "Edit",
-        "status_running": "Running",
+        "status_active": "Active",
         "status_stopped": "Stopped",
         "btn_cancel": "Cancel",
         "btn_save": "Save",

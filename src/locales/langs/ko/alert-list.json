@@ -39,7 +39,7 @@
         "script": "구동 스크립트",
         "script_view": "보기",
         "script_edit": "편집",
-        "status_running": "작동 중",
+        "status_active": "작동 중",
         "status_stopped": "중지",
         "btn_cancel": "취소",
         "btn_save": "저장",

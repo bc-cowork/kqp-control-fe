@@ -295,7 +295,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                   lineHeight: '25.5px',
                 }}
               >
-                {isActive ? t('form.status_running') : t('form.status_stopped')}
+                {isActive ? t('form.status_active') : t('form.status_stopped')}
               </Typography>
             </Stack>
           </Stack>
