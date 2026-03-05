@@ -307,7 +307,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                 theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF',
               borderBottomLeftRadius: '8px',
               borderBottomRightRadius: '8px',
-              gap: 3,
+              gap: '40px',
               pb: 0,
             }}
           >
@@ -331,7 +331,10 @@ export function AlertFormView({ nodeId, alertId }: Props) {
 
             {/* ── Description ── */}
             <Box sx={{ px: 2 }}>
-              <Typography sx={labelSx}>{t('form.desc')}</Typography>
+              <Typography sx={{
+                ...labelSx,
+                color: '#4E576A'
+              }}>{t('form.desc')}</Typography>
               <Controller
                 name="desc"
                 control={control}
