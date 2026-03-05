@@ -269,9 +269,15 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                 checked={isActive}
                 onChange={(_, checked) => setIsActive(checked)}
                 sx={{
+                  '& .MuiSwitch-switchBase': { color: '#AFB7C8' },
+                  '& .MuiSwitch-switchBase + .MuiSwitch-track': {
+                    bgcolor: '#373F4E',
+                    opacity: 1,
+                  },
                   '& .MuiSwitch-switchBase.Mui-checked': { color: '#fff' },
                   '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
                     bgcolor: '#5E66FF',
+                    opacity: 1,
                   },
                 }}
               />
