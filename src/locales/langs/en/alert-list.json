@@ -21,5 +21,42 @@
         "empty": "No alert found",
         "error": "Error loading alert"
     },
-    "alert": "Alert"
+    "alert": "Alert",
+    "form": {
+        "title_add": "Register Alert Item",
+        "title_edit": "Edit Alert Item",
+        "name": "Item Name",
+        "desc": "Description",
+        "schedule": "Operation Schedule",
+        "schedule_help": "Select the days to run.",
+        "schedule_cron_help": "Selected days are converted to crontab syntax. e.g.) Mon-Fri →",
+        "schedule_cron_help2": "/ Mon, Wed, Fri →",
+        "timezone": "Operation Time Zone",
+        "start_time": "Start Time",
+        "end_time": "End Time",
+        "interval_sec": "Interval (sec)",
+        "interval_suffix": "seconds per run",
+        "script": "driving Script",
+        "script_view": "View",
+        "script_edit": "Edit",
+        "status_running": "Running",
+        "status_stopped": "Stopped",
+        "btn_cancel": "Cancel",
+        "btn_save": "Save",
+        "days": {
+            "mon": "Mon",
+            "tue": "Tue",
+            "wed": "Wed",
+            "thu": "Thu",
+            "fri": "Fri",
+            "sat": "Sat",
+            "sun": "Sun"
+        },
+        "presets": {
+            "weekdays": "Weekdays",
+            "weekend": "Weekend",
+            "everyday": "Everyday",
+            "reset": "Reset"
+        }
+    }
 }

@@ -21,5 +21,42 @@
         "empty": "알림을 찾을 수 없음",
         "error": "알림 불러오기 오류"
     },
-    "alert": "감시"
+    "alert": "감시",
+    "form": {
+        "title_add": "감시 아이템 등록",
+        "title_edit": "감시 아이템 편집",
+        "name": "감시 아이템명",
+        "desc": "설명",
+        "schedule": "작동 스케줄",
+        "schedule_help": "실행할 요일을 선택하세요.",
+        "schedule_cron_help": "선택된 요일은 crontab 문법으로 변환됩니다. 예) 월~금 선택 →",
+        "schedule_cron_help2": "/ 월,수,금 선택 →",
+        "timezone": "작동 시간대",
+        "start_time": "시작 시간",
+        "end_time": "종료 시간",
+        "interval_sec": "구동 간격 (초)",
+        "interval_suffix": "초마다 1회 실행",
+        "script": "구동 스크립트",
+        "script_view": "보기",
+        "script_edit": "편집",
+        "status_running": "작동 중",
+        "status_stopped": "중지",
+        "btn_cancel": "취소",
+        "btn_save": "저장",
+        "days": {
+            "mon": "월",
+            "tue": "화",
+            "wed": "수",
+            "thu": "목",
+            "fri": "금",
+            "sat": "토",
+            "sun": "일"
+        },
+        "presets": {
+            "weekdays": "평일",
+            "weekend": "주말",
+            "everyday": "매일",
+            "reset": "초기화"
+        }
+    }
 }

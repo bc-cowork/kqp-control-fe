@@ -32,7 +32,7 @@ type AlertItem = {
   file?: string;
   start_at?: string;
   end_at?: string;
-  interval?: number;
+  interval_sec?: number;
   last_exec?: string;
 };
 
@@ -100,7 +100,7 @@ function AlertRow({ item, nodeId, t }: AlertRowProps) {
   const columns = [
     { label: t('table.start_at'), value: item.start_at ?? '00:00' },
     { label: t('table.end_at'), value: item.end_at ?? '00:00' },
-    { label: t('table.interval'), value: String(item.interval ?? 0) },
+    { label: t('table.interval'), value: String(item.interval_sec ?? 0) },
     { label: t('table.last_exec'), value: item.last_exec ?? '0000-00-00 00:00:00' },
   ];
 
@@ -195,6 +195,10 @@ function AlertRow({ item, nodeId, t }: AlertRowProps) {
 
           {/* Edit button */}
           <Box
+            onClick={(e) => {
+              e.stopPropagation();
+              router.push(paths.dashboard.nodes.alertsEdit(nodeId, item.name));
+            }}
             sx={{
               width: 76,
               height: 64,
@@ -231,6 +235,7 @@ function AlertRow({ item, nodeId, t }: AlertRowProps) {
 
 export function AlertListView({ nodeId }: Props) {
   const { t } = useTranslate('alert-list');
+  const router = useRouter();
 
   const { data, isLoading } = useSWR(endpoints.alert.list(nodeId), fetcher);
   const rows: AlertItem[] = data?.data?.list ?? [];
@@ -257,6 +262,7 @@ export function AlertListView({ nodeId }: Props) {
           </Stack>
 
           <Button
+            onClick={() => router.push(paths.dashboard.nodes.alertsAdd(nodeId))}
             startIcon={<Add sx={{ fontSize: 16 }} />}
             sx={{
               px: 1.5,
