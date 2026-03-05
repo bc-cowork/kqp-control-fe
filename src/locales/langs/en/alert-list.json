@@ -41,9 +41,10 @@
     },
     "alert": "Alert",
     "form": {
-        "page_title": "Set up surveillance items",
+        "page_title": "Item Setting Form",
         "title_add": "Register Alert Item",
-        "title_edit": "Edit Alert Item",
+        "title_add_breadcrump": "Add Item",
+        "title_edit": "Register Alert Item",
         "name": "Item Name",
         "desc": "Description",
         "schedule": "Operation Schedule",

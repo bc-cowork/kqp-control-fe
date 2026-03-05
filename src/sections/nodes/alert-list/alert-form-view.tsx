@@ -117,14 +117,19 @@ export function AlertFormView({ nodeId, alertId }: Props) {
 
   // Pre-fill form when editing
   useEffect(() => {
-    if (existingData?.data?.detail) {
-      const d = existingData.data.detail;
+    if (existingData?.data?.alert) {
+      const d = existingData.data.alert;
+      const script = existingData.data.script || '';
+      // Extract filename from first line of script (e.g. "-- alert_A351SQ.moon")
+      const firstLine = script.split('\n')[0] || '';
+      const fileMatch = firstLine.match(/^--\s*(.+\.moon)/);
+      const fileName = fileMatch ? fileMatch[1] : `${d.name || ''}.moon`;
       reset({
         name: d.name || '',
         desc: d.desc || '',
         interval: d.interval_sec ?? 120,
-        scriptFileName: d.file || '',
-        scriptCode: d.alert_def?.code || '',
+        scriptFileName: fileName,
+        scriptCode: script,
       });
       setIsActive(d.status === 'active');
       if (d.start_at != null) setStartTime(normalizeTime(d.start_at));
@@ -226,7 +231,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
         node={nodeId}
         pages={[
           { pageName: t('top.title'), link: paths.dashboard.nodes.alertsList(nodeId) },
-          { pageName: isEdit ? t('form.title_edit') : t('form.title_add') },
+          { pageName: t('form.title_add_breadcrump') },
         ]}
       />
 

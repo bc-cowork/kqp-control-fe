@@ -60,9 +60,16 @@ export default function Page({ params }: Props) {
     fetcher
   );
 
-  const detail = data?.data?.detail;
-  const alertCode = detail?.alert_def?.code || '';
+  const detail = data?.data?.alert;
+  const alertCode = data?.data?.script || '';
   const isActive = detail?.status === 'active';
+
+  // Extract filename from first line of script (e.g. "-- alert_A351SQ.moon")
+  const scriptFileName = (() => {
+    const firstLine = alertCode.split('\n')[0] || '';
+    const match = firstLine.match(/^--\s*(.+\.moon)/);
+    return match ? match[1] : `${detail?.name || 'script'}.moon`;
+  })();
 
   const handleEdit = useCallback(() => {
     router.push(paths.dashboard.nodes.alertsEdit(node, decodedAlertId));
@@ -105,7 +112,7 @@ export default function Page({ params }: Props) {
         value: isActive ? `Active (${t('detail.active')})` : `Stopped (${t('detail.stopped')})`,
         isStatus: true,
       },
-      { label: t('detail.script_file'), value: detail.file || '-' },
+      { label: t('detail.script_file'), value: scriptFileName },
     ]
     : [];
 
@@ -529,7 +536,7 @@ export default function Page({ params }: Props) {
             <Typography
               sx={{ color: '#667085', fontSize: 13, fontWeight: 400, lineHeight: '19.5px' }}
             >
-              -- {detail.file || 'script.moon'}
+              -- {scriptFileName}
             </Typography>
           </Box>
 
