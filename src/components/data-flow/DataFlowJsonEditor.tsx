@@ -112,6 +112,7 @@ export function DataFlowJsonEditor({ value, onChange }: DataFlowJsonEditorProps)
           onChange={(v) => onChange(v || '')}
           options={{
             minimap: { enabled: false },
+            stickyScroll: { enabled: false },
             fontSize: 15,
             fontFamily: 'Roboto, monospace',
             lineHeight: 22.5,
