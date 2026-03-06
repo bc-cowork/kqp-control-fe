@@ -62,7 +62,7 @@ function RecvNodeBody({ channels }: { channels: number[] }) {
           fontFamily: 'Roboto, sans-serif',
           fontWeight: 400,
           lineHeight: '22.5px',
-          textAlign: 'right',
+          textAlign: 'left',
         }}
       >
         {channels.length} channels
