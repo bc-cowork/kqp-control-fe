@@ -1,6 +1,6 @@
 import type { Edge } from '@xyflow/react';
 
-import { X_GAP, Y_GAP, NODE_WIDTH } from './constants';
+import { X_GAP, Y_GAP, RECV_NODE_WIDTH, ENTITY_NODE_WIDTH } from './constants';
 
 import type { DataFlowNodeData, DataFlowNodeInstance } from './types';
 
@@ -81,20 +81,28 @@ export function computeDataFlowLayout(
   sortedLevels.forEach((level) => {
     const levelNodes = nodesByLevel.get(level)!;
     let yOffset = 60;
+    let maxWidth = 0;
 
     levelNodes.forEach((node) => {
       node.position = { x: xOffset, y: yOffset };
+      const width = getNodeWidth(node);
+      if (width > maxWidth) maxWidth = width;
       const height = estimateNodeHeight(node);
       yOffset += height + Y_GAP;
     });
 
-    xOffset += NODE_WIDTH + X_GAP;
+    xOffset += maxWidth + X_GAP;
   });
 
   return [...nodes];
 }
 
 // ----------------------------------------------------------------------
+
+function getNodeWidth(node: DataFlowNodeInstance): number {
+  const data = node.data as DataFlowNodeData;
+  return data.nodeType === 'recv' ? RECV_NODE_WIDTH : ENTITY_NODE_WIDTH;
+}
 
 function estimateNodeHeight(node: DataFlowNodeInstance): number {
   const data = node.data as DataFlowNodeData;

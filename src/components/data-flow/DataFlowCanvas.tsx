@@ -23,7 +23,7 @@ import Typography from '@mui/material/Typography';
 import { DataFlowToolbar } from './DataFlowToolbar';
 import { DataFlowNode } from './nodes/DataFlowNode';
 import { buildDataFlowGraph } from './graph-builder';
-import { CANVAS_BG, GRID_LINE_COLOR } from './constants';
+import { CANVAS_BG, GRID_LINE_COLOR, HELP_TEXT_COLOR } from './constants';
 import { computeDataFlowLayout } from './layout-algorithm';
 
 import type { DataFlowDefinition, DataFlowNodeInstance } from './types';
@@ -238,6 +238,21 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
             lineWidth={0.5}
             color={GRID_LINE_COLOR}
           />
+
+          {/* Help text */}
+          <Panel position="top-left">
+            <Typography
+              sx={{
+                color: HELP_TEXT_COLOR,
+                fontSize: 15,
+                fontFamily: 'Roboto, sans-serif',
+                fontWeight: 400,
+                lineHeight: '22.5px',
+              }}
+            >
+              ctrl + (+/=) for zoom in and ctrl + (-) for zoom out and ctrl + (0) for reset.
+            </Typography>
+          </Panel>
 
           {/* Zoom Controls */}
           <Panel position="bottom-right">

@@ -31,6 +31,7 @@ export type DataFlowNodeData = {
   nodeType: 'recv' | 'entity';
   channels?: number[];
   actions?: DataFlowAction[];
+  badgeLabel?: string;
   [key: string]: unknown;
 };
 

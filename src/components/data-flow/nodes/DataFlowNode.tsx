@@ -10,15 +10,20 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import {
-  NODE_WIDTH,
-  NODE_BORDER,
-  NODE_BODY_BG,
-  ACTION_COLOR,
+  BADGE_BG,
+  BADGE_TEXT,
   ACTION_GRAY,
-  HEADER_BG,
-  HEADER_BORDER,
+  ACTION_COLOR,
   TEXT_SECONDARY,
-  TEXT_TERTIARY,
+  HEADER_BORDER,
+  RECV_NODE_BG,
+  RECV_HEADER_BG,
+  RECV_NODE_WIDTH,
+  RECV_NODE_BORDER,
+  ENTITY_NODE_BG,
+  ENTITY_NODE_WIDTH,
+  ENTITY_NODE_BORDER,
+  ENTITY_HEADER_BG,
 } from '../constants';
 
 import type { DataFlowAction, DataFlowNodeData } from '../types';
@@ -29,7 +34,9 @@ function formatParam(param: Record<string, unknown>): string {
   const entries = Object.entries(param);
   if (entries.length === 0) return '{}';
   const parts = entries.map(([k, v]) => `${k}:'${v}'`);
-  return `{${parts.join(',')}}`;
+  const text = `{${parts.join(',')}}`;
+  if (text.length > 30) return `${text.slice(0, 28)}..}`;
+  return text;
 }
 
 // ----------------------------------------------------------------------
@@ -39,7 +46,7 @@ function RecvNodeBody({ channels }: { channels: number[] }) {
     <Box sx={{ px: 1.5, py: 1 }}>
       <Typography
         sx={{
-          color: ACTION_GRAY,
+          color: '#AFB7C8',
           fontSize: 15,
           fontFamily: 'Roboto, sans-serif',
           fontWeight: 400,
@@ -50,11 +57,12 @@ function RecvNodeBody({ channels }: { channels: number[] }) {
       </Typography>
       <Typography
         sx={{
-          color: ACTION_GRAY,
+          color: '#AFB7C8',
           fontSize: 15,
           fontFamily: 'Roboto, sans-serif',
           fontWeight: 400,
           lineHeight: '22.5px',
+          textAlign: 'right',
         }}
       >
         {channels.length} channels
@@ -67,7 +75,7 @@ function RecvNodeBody({ channels }: { channels: number[] }) {
 
 function EntityNodeBody({ actions }: { actions: DataFlowAction[] }) {
   return (
-    <Stack sx={{ px: 1.5, pt: 1, pb: 1 }}>
+    <Stack sx={{ px: 1.5, pt: 0.5, pb: 0.5 }}>
       {actions.map((action, idx) => (
         <Box
           key={idx}
@@ -121,7 +129,7 @@ function EntityNodeBody({ actions }: { actions: DataFlowAction[] }) {
           </Box>
 
           {/* Right col: {params} */}
-          <Box sx={{ flex: 1, width: 200 }}>
+          <Box sx={{ flex: 1 }}>
             <Typography
               sx={{
                 fontSize: 15,
@@ -147,38 +155,137 @@ function EntityNodeBody({ actions }: { actions: DataFlowAction[] }) {
 
 function DataFlowNodeComponent({ data }: NodeProps) {
   const nodeData = data as DataFlowNodeData;
+  const isRecv = nodeData.nodeType === 'recv';
 
-  const badgeLabel = 'ENTITY';
+  if (isRecv) {
+    return (
+      <>
+        <Handle
+          type="target"
+          position={Position.Left}
+          style={{ opacity: 0, width: 8, height: 8 }}
+        />
 
+        <Box
+          sx={{
+            width: RECV_NODE_WIDTH,
+            borderRadius: '12px',
+            overflow: 'hidden',
+            backgroundColor: RECV_NODE_BG,
+            border: `1px solid ${RECV_NODE_BORDER}`,
+          }}
+        >
+          {/* Header: badge (left) + label (right) */}
+          <Stack
+            direction="row"
+            alignItems="center"
+            spacing={1}
+            sx={{
+              p: 1.5,
+              backgroundColor: RECV_HEADER_BG,
+              borderBottom: `1px solid ${HEADER_BORDER}`,
+            }}
+          >
+            <Box
+              sx={{
+                px: 0.5,
+                backgroundColor: BADGE_BG,
+                borderRadius: '4px',
+                flexShrink: 0,
+              }}
+            >
+              <Typography
+                sx={{
+                  fontSize: 15,
+                  fontFamily: 'Roboto, sans-serif',
+                  fontWeight: 400,
+                  lineHeight: '22.5px',
+                  color: BADGE_TEXT,
+                }}
+              >
+                {String(nodeData.badgeLabel || 'recv2r')}
+              </Typography>
+            </Box>
+            <Typography
+              sx={{
+                flex: 1,
+                fontSize: 15,
+                fontFamily: 'Roboto, sans-serif',
+                fontWeight: 400,
+                lineHeight: '22.5px',
+                color: TEXT_SECONDARY,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {nodeData.label}
+            </Typography>
+          </Stack>
+
+          {/* Body: channel list */}
+          {nodeData.channels && nodeData.channels.length > 0 && (
+            <RecvNodeBody channels={nodeData.channels} />
+          )}
+        </Box>
+
+        <Handle
+          type="source"
+          position={Position.Right}
+          style={{ opacity: 0, width: 8, height: 8 }}
+        />
+      </>
+    );
+  }
+
+  // Entity node
   return (
     <>
-      <Handle type="target" position={Position.Left} style={{ opacity: 0, width: 8, height: 8 }} />
+      <Handle
+        type="target"
+        position={Position.Left}
+        style={{ opacity: 0, width: 8, height: 8 }}
+      />
 
       <Box
         sx={{
-          width: NODE_WIDTH,
+          width: ENTITY_NODE_WIDTH,
           borderRadius: '12px',
           overflow: 'hidden',
-          backgroundColor: NODE_BODY_BG,
-          border: `1px solid ${NODE_BORDER}`,
+          background: ENTITY_NODE_BG,
+          border: `1px solid ${ENTITY_NODE_BORDER}`,
         }}
       >
-        {/* Header */}
+        {/* Header: name (left, bold) + PMR badge (right) */}
         <Stack
           direction="row"
           alignItems="center"
           spacing={1}
           sx={{
             p: 1.5,
-            backgroundColor: HEADER_BG,
+            background: ENTITY_HEADER_BG,
             borderBottom: `1px solid ${HEADER_BORDER}`,
           }}
         >
-          {/* Badge */}
+          <Typography
+            sx={{
+              flex: 1,
+              fontSize: 15,
+              fontFamily: 'Roboto, sans-serif',
+              fontWeight: 600,
+              lineHeight: '22.5px',
+              color: TEXT_SECONDARY,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {nodeData.label}
+          </Typography>
           <Box
             sx={{
               px: 0.5,
-              backgroundColor: NODE_BODY_BG,
+              backgroundColor: BADGE_BG,
               borderRadius: '4px',
               flexShrink: 0,
             }}
@@ -189,42 +296,25 @@ function DataFlowNodeComponent({ data }: NodeProps) {
                 fontFamily: 'Roboto, sans-serif',
                 fontWeight: 400,
                 lineHeight: '22.5px',
-                color: TEXT_TERTIARY,
+                color: BADGE_TEXT,
               }}
             >
-              {badgeLabel}
+              PMR
             </Typography>
           </Box>
-
-          {/* Label */}
-          <Typography
-            sx={{
-              flex: 1,
-              fontSize: 15,
-              fontFamily: 'Roboto, sans-serif',
-              fontWeight: 400,
-              lineHeight: '22.5px',
-              color: TEXT_SECONDARY,
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {nodeData.label}
-          </Typography>
         </Stack>
 
-        {/* Body */}
-        {nodeData.nodeType === 'recv' && nodeData.channels && nodeData.channels.length > 0 && (
-          <RecvNodeBody channels={nodeData.channels} />
-        )}
-
-        {nodeData.nodeType === 'entity' && nodeData.actions && nodeData.actions.length > 0 && (
+        {/* Body: action rows */}
+        {nodeData.actions && nodeData.actions.length > 0 && (
           <EntityNodeBody actions={nodeData.actions} />
         )}
       </Box>
 
-      <Handle type="source" position={Position.Right} style={{ opacity: 0, width: 8, height: 8 }} />
+      <Handle
+        type="source"
+        position={Position.Right}
+        style={{ opacity: 0, width: 8, height: 8 }}
+      />
     </>
   );
 }

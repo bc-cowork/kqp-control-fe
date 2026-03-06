@@ -1,7 +1,5 @@
 import type { Edge } from '@xyflow/react';
 
-import { MarkerType } from '@xyflow/react';
-
 import { EDGE_COLOR } from './constants';
 
 import type { DataFlowEntityDef, DataFlowDefinition, DataFlowNodeInstance } from './types';
@@ -17,13 +15,7 @@ export function buildDataFlowGraph(definition: DataFlowDefinition): {
 
   const edgeDefaults = {
     type: 'smoothstep' as const,
-    style: { stroke: EDGE_COLOR, strokeWidth: 1.5 },
-    markerEnd: {
-      type: MarkerType.ArrowClosed,
-      color: EDGE_COLOR,
-      width: 16,
-      height: 16,
-    },
+    style: { stroke: EDGE_COLOR, strokeWidth: 2 },
   };
 
   // Collect entity entries (everything except "relations")
