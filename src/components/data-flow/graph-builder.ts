@@ -14,7 +14,7 @@ export function buildDataFlowGraph(definition: DataFlowDefinition): {
   const edges: Edge[] = [];
 
   const edgeDefaults = {
-    type: 'smoothstep' as const,
+    type: 'default' as const,
     style: { stroke: EDGE_COLOR, strokeWidth: 2 },
   };
 

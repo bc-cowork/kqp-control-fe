@@ -253,7 +253,25 @@ function DataFlowNodeComponent({ data }: NodeProps) {
           borderRadius: '12px',
           overflow: 'hidden',
           background: ENTITY_NODE_BG,
-          border: `1px solid ${ENTITY_NODE_BORDER}`,
+          position: 'relative',
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '1px',
+            background: `linear-gradient(to right, rgba(55,63,78,0), #AFB7C8 50%, rgba(55,63,78,0))`,
+          },
+          '&::after': {
+            content: '""',
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: '1px',
+            background: `linear-gradient(to right, rgba(55,63,78,0), #AFB7C8 50%, rgba(55,63,78,0))`,
+          },
         }}
       >
         {/* Header: name (left, bold) + PMR badge (right) */}
