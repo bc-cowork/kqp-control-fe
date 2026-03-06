@@ -344,17 +344,19 @@ export default function Page({ params }: Props) {
       <Paper sx={{
         height: '100%',
         padding: (theme) => theme.palette.mode === 'dark' ? '0px' : '4px',
-        backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'transparent' : 'black'
+        backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'transparent' : 'black',
       }} >
 
-        <Box sx={{ backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#667085' : '#E0E4EB', p: 1.5, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
+        <Box sx={{ backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#667085' : '#E0E4EB', p: 1.5, borderTopLeftRadius: '12px', borderTopRightRadius: '12px' }}>
           <Typography sx={{
             fontWeight: 600,
             color: (theme) => theme.palette.mode === 'dark' ? grey[300] : '#4E576A'
           }}>{t('detail_table.script_title')}</Typography>
         </Box>
 
-        <Box sx={{ bgcolor: '#202838', height: 'calc(100vh - 48px)', overflowY: 'auto' }}>
+        <Box sx={{
+          bgcolor: '#202838', height: 'calc(100vh - 48px)', overflowY: 'auto',
+        }}>
           <Box component="pre" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: 13, color: '#AFB7C8', m: 0 }}>
             <SyntaxHighlighter
               language="moonscript"
