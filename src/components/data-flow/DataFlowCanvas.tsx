@@ -73,12 +73,12 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
   const handleAutoLayout = useCallback(() => {
     const laidOut = computeDataFlowLayout([...nodes], edges);
     setNodes(laidOut);
-    setTimeout(() => fitView({ padding: 0.3, duration: 300 }), 50);
+    setTimeout(() => fitView({ padding: 0.05, duration: 300 }), 50);
   }, [nodes, edges, setNodes, fitView]);
 
   // Fit View
   const handleFitView = useCallback(() => {
-    fitView({ padding: 0.3, duration: 300 });
+    fitView({ padding: 0.05, duration: 300 });
   }, [fitView]);
 
   // Export
@@ -179,7 +179,7 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
         zoomOut({ duration: 200 });
       } else if (e.key === '0') {
         e.preventDefault();
-        fitView({ padding: 0.3, duration: 300 });
+        fitView({ padding: 0.05, duration: 300 });
       }
     };
 
@@ -217,8 +217,7 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           nodeTypes={nodeTypes}
-          fitView
-          fitViewOptions={{ padding: 0.3 }}
+          defaultViewport={{ x: 0, y: 0, zoom: 0.7 }}
           proOptions={{ hideAttribution: true }}
           nodesDraggable
           nodesConnectable={false}

@@ -74,13 +74,36 @@ export function computeDataFlowLayout(
     nodesByLevel.get(level)!.push(n);
   });
 
-  // Assign positions (left-to-right flow)
-  let xOffset = 40;
+  // Compute total height per level to center vertically
   const sortedLevels = Array.from(nodesByLevel.keys()).sort((a, b) => a - b);
+
+  // Find the tallest column to use as reference for vertical centering
+  let maxColumnHeight = 0;
+  sortedLevels.forEach((level) => {
+    const levelNodes = nodesByLevel.get(level)!;
+    let colHeight = 0;
+    levelNodes.forEach((node, idx) => {
+      colHeight += estimateNodeHeight(node);
+      if (idx < levelNodes.length - 1) colHeight += Y_GAP;
+    });
+    if (colHeight > maxColumnHeight) maxColumnHeight = colHeight;
+  });
+
+  // Assign positions (left-to-right flow, vertically centered per column)
+  let xOffset = 40;
 
   sortedLevels.forEach((level) => {
     const levelNodes = nodesByLevel.get(level)!;
-    let yOffset = 60;
+
+    // Calculate this column's total height
+    let colHeight = 0;
+    levelNodes.forEach((node, idx) => {
+      colHeight += estimateNodeHeight(node);
+      if (idx < levelNodes.length - 1) colHeight += Y_GAP;
+    });
+
+    // Center vertically relative to the tallest column
+    let yOffset = 40 + (maxColumnHeight - colHeight) / 2;
     let maxWidth = 0;
 
     levelNodes.forEach((node) => {
@@ -89,6 +112,10 @@ export function computeDataFlowLayout(
       if (width > maxWidth) maxWidth = width;
       const height = estimateNodeHeight(node);
       yOffset += height + Y_GAP;
+
+      // Fix position for recv (depth 0) and 1-depth PMR nodes
+      // Only 2-depth+ nodes are draggable
+      node.draggable = level >= 2;
     });
 
     xOffset += maxWidth + X_GAP;

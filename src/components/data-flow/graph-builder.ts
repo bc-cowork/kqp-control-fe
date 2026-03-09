@@ -1,4 +1,5 @@
 import type { Edge } from '@xyflow/react';
+import { MarkerType } from '@xyflow/react';
 
 import { EDGE_COLOR } from './constants';
 
@@ -16,6 +17,12 @@ export function buildDataFlowGraph(definition: DataFlowDefinition): {
   const edgeDefaults = {
     type: 'default' as const,
     style: { stroke: EDGE_COLOR, strokeWidth: 2 },
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      color: EDGE_COLOR,
+      width: 16,
+      height: 16,
+    },
   };
 
   // Collect entity entries (everything except "relations")
