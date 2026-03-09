@@ -229,7 +229,18 @@ export default function Page({ params }: Props) {
 
   const [scriptCopied, setScriptCopied] = useState(false);
   const handleCopyScript = useCallback(() => {
-    navigator.clipboard.writeText(layoutDefinition);
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(layoutDefinition);
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = layoutDefinition;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    }
     setScriptCopied(true);
     setTimeout(() => setScriptCopied(false), 2000);
   }, [layoutDefinition]);
