@@ -16,6 +16,7 @@ export function buildDataFlowGraph(definition: DataFlowDefinition): {
 
   const edgeDefaults = {
     type: 'default' as const,
+    zIndex: 1,
     style: { stroke: EDGE_COLOR, strokeWidth: 2 },
     markerEnd: {
       type: MarkerType.ArrowClosed,
@@ -71,11 +72,20 @@ export function buildDataFlowGraph(definition: DataFlowDefinition): {
   if (relations) {
     Object.entries(relations).forEach(([source, rel]) => {
       const targets = rel.to || [];
+      const sourceEntity = definition[source] as DataFlowEntityDef | undefined;
+      const sourceActions = sourceEntity?.actions || [];
+
       targets.forEach((target, idx) => {
+        // Find the route action that points to this target
+        const routeIdx = sourceActions.findIndex(
+          (a) => a.act === 'route' && String(a.param.to) === target
+        );
+
         edges.push({
           id: `e-${source}-${target}-${idx}`,
           source,
           target,
+          sourceHandle: routeIdx >= 0 ? `action-${routeIdx}` : 'default',
           ...edgeDefaults,
         });
       });

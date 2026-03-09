@@ -239,12 +239,20 @@ function DataFlowNodeComponent({ data }: NodeProps) {
   }
 
   // Entity node
+  // Header height: p=1.5 (12px) + lineHeight 22.5px + p=1.5 (12px) + 1px border = 48px
+  // Body top padding: pt=0.5 = 4px; each action row: 26px
+  const HEADER_H = 48;
+  const BODY_PT = 4;
+  const ROW_H = 26;
+  const actions = nodeData.actions || [];
+
   return (
     <>
+      {/* Target handle — positioned at header center (top/head of node) */}
       <Handle
         type="target"
         position={Position.Left}
-        style={{ opacity: 0, width: 8, height: 8 }}
+        style={{ opacity: 0, width: 8, height: 8, top: HEADER_H / 2 }}
       />
 
       <Box
@@ -323,14 +331,33 @@ function DataFlowNodeComponent({ data }: NodeProps) {
         </Stack>
 
         {/* Body: action rows */}
-        {nodeData.actions && nodeData.actions.length > 0 && (
-          <EntityNodeBody actions={nodeData.actions} />
-        )}
+        {actions.length > 0 && <EntityNodeBody actions={actions} />}
       </Box>
 
+      {/* Source handles — one per route action, offset inward to start from text area */}
+      {actions.map((action, idx) =>
+        action.act === 'route' ? (
+          <Handle
+            key={`action-${idx}`}
+            type="source"
+            position={Position.Right}
+            id={`action-${idx}`}
+            style={{
+              opacity: 0,
+              width: 1,
+              height: 1,
+              top: HEADER_H + BODY_PT + idx * ROW_H + ROW_H / 2 + 4,
+              right: 20,
+            }}
+          />
+        ) : null
+      )}
+
+      {/* Fallback source handle for non-route edges */}
       <Handle
         type="source"
         position={Position.Right}
+        id="default"
         style={{ opacity: 0, width: 8, height: 8 }}
       />
     </>
