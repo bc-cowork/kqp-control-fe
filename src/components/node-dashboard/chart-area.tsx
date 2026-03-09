@@ -172,8 +172,8 @@ export function ChartArea({
                 borderRadius: 4,
                 boxShadow: theme.shadows[1],
               }}
-              labelStyle={{ color: theme.palette.text.primary }}
-              itemStyle={{ color: theme.palette.grey[400] }}
+              labelStyle={{ color: theme.palette.grey[100] }}
+              itemStyle={{ color: theme.palette.grey[100] }}
             />
 
             {/* Main Area Chart */}
