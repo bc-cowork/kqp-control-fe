@@ -365,7 +365,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
             <Box sx={{ px: 2 }}>
               <Typography sx={{
                 ...labelSx,
-                color: '#4E576A'
+                color: '#AFB7C8'
               }}>{t('form.desc')}</Typography>
               <Controller
                 name="desc"
@@ -707,6 +707,44 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                       </Typography>
                     </Stack>
                   </Stack>
+                </Stack>
+
+                {/* Time presets */}
+                <Stack direction="row" gap={1} sx={{ px: 1, pb: 2 }}>
+                  {([
+                    { key: 'time_all_day', start: '00:00', end: '23:59' },
+                    { key: 'time_regular_session', start: '08:00', end: '20:00' },
+                  ] as const).map((preset) => (
+                    <Box
+                      key={preset.key}
+                      onClick={() => {
+                        setStartTime(preset.start);
+                        setEndTime(preset.end);
+                      }}
+                      sx={{
+                        px: 1.75,
+                        py: 0.625,
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        bgcolor: (theme) =>
+                          theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF',
+                        border: (theme) =>
+                          `1px solid ${theme.palette.mode === 'dark' ? '#373F4E' : grey[300]}`,
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          color: (theme) =>
+                            theme.palette.mode === 'dark' ? '#AFB7C8' : grey[500],
+                          fontSize: 12,
+                          fontWeight: 400,
+                          lineHeight: '16.8px',
+                        }}
+                      >
+                        {t(`form.${preset.key}`)}
+                      </Typography>
+                    </Box>
+                  ))}
                 </Stack>
               </Box>
             </Box>

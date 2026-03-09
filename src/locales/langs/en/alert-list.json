@@ -56,6 +56,8 @@
         "end_time": "End Time",
         "interval_sec": "Interval (sec)",
         "interval_suffix": "seconds per run",
+        "time_all_day": "all day",
+        "time_regular_session": "regular session",
         "script": "Driving Script",
         "script_view": "View",
         "script_edit": "Edit",

@@ -56,6 +56,8 @@
         "end_time": "종료 시간",
         "interval_sec": "구동 간격 (초)",
         "interval_suffix": "초마다 1회 실행",
+        "time_all_day": "all day",
+        "time_regular_session": "regular session",
         "script": "구동 스크립트",
         "script_view": "보기",
         "script_edit": "편집",
