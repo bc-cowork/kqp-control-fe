@@ -74,47 +74,27 @@ export function computeDataFlowLayout(
     nodesByLevel.get(level)!.push(n);
   });
 
-  // Compute total height per level to center vertically
   const sortedLevels = Array.from(nodesByLevel.keys()).sort((a, b) => a - b);
+  const TOP_Y = 80;
 
-  // Find the tallest column to use as reference for vertical centering
-  let maxColumnHeight = 0;
-  sortedLevels.forEach((level) => {
-    const levelNodes = nodesByLevel.get(level)!;
-    let colHeight = 0;
-    levelNodes.forEach((node, idx) => {
-      colHeight += estimateNodeHeight(node);
-      if (idx < levelNodes.length - 1) colHeight += Y_GAP;
-    });
-    if (colHeight > maxColumnHeight) maxColumnHeight = colHeight;
-  });
-
-  // Assign positions (left-to-right flow, vertically centered per column)
+  // Assign positions (left-to-right flow)
+  // Each node is placed using its own actual height + a fixed Y_GAP,
+  // so the visible gap between the bottom of one node and the top of the next is always equal.
   let xOffset = 40;
 
   sortedLevels.forEach((level) => {
     const levelNodes = nodesByLevel.get(level)!;
 
-    // Calculate this column's total height
-    let colHeight = 0;
-    levelNodes.forEach((node, idx) => {
-      colHeight += estimateNodeHeight(node);
-      if (idx < levelNodes.length - 1) colHeight += Y_GAP;
-    });
-
-    // Center vertically relative to the tallest column
-    let yOffset = 40 + (maxColumnHeight - colHeight) / 2;
+    let yOffset = TOP_Y;
     let maxWidth = 0;
 
     levelNodes.forEach((node) => {
       node.position = { x: xOffset, y: yOffset };
       const width = getNodeWidth(node);
       if (width > maxWidth) maxWidth = width;
-      const height = estimateNodeHeight(node);
-      yOffset += height + Y_GAP;
+      yOffset += estimateNodeHeight(node) + Y_GAP;
 
       // Fix position for recv (depth 0) and 1-depth PMR nodes
-      // Only 2-depth+ nodes are draggable
       node.draggable = level >= 2;
     });
 
@@ -134,9 +114,22 @@ function getNodeWidth(node: DataFlowNodeInstance): number {
 function estimateNodeHeight(node: DataFlowNodeInstance): number {
   const data = node.data as DataFlowNodeData;
 
-  // RECV node: header (~47px) + channels line (~26px) + count line (~26px) + body padding (16px)
+  // RECV node: header (~47px) + channel text (wraps) + count line (~22.5px) + body padding (16px)
   if (data.nodeType === 'recv') {
-    return 47 + 26 + 26 + 16;
+    const HEADER = 47;
+    const BODY_PAD = 16; // py:1 = 8px top + 8px bottom
+    const LINE_H = 22.5;
+    const COUNT_LINE = LINE_H; // "N channels"
+
+    // Estimate how many lines the channel list text wraps to.
+    // Body has px:1.5 = 12px each side, so text width = RECV_NODE_WIDTH - 24
+    const textWidth = RECV_NODE_WIDTH - 24;
+    const channelText = (data.channels || []).join(', ');
+    // At font-size 15px Roboto, average char width is ~8px
+    const charWidth = 8;
+    const textLines = Math.max(1, Math.ceil((channelText.length * charWidth) / textWidth));
+
+    return HEADER + textLines * LINE_H + COUNT_LINE + BODY_PAD;
   }
 
   // ENTITY node: header (~47px) + each action row (~26px) + body padding (16px)

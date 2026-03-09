@@ -41,7 +41,7 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
   const isHoveredRef = useRef(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const { fitView, zoomIn, zoomOut, getZoom } = useReactFlow();
-  const [zoom, setZoom] = useState(100);
+  const [zoom, setZoom] = useState(70);
 
   const nodeTypes = useMemo(
     () => ({

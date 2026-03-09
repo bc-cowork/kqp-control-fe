@@ -33,7 +33,7 @@ export const GRID_LINE_COLOR = '#202838';
 export const HELP_TEXT_COLOR = '#373F4E';
 
 // Layout
-export const X_GAP = 80;
+export const X_GAP = 140;
 export const Y_GAP = 40;
 
 // Legacy aliases (keep for toolbar import compatibility)
