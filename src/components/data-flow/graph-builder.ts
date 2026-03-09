@@ -75,11 +75,21 @@ export function buildDataFlowGraph(definition: DataFlowDefinition): {
       const sourceEntity = definition[source] as DataFlowEntityDef | undefined;
       const sourceActions = sourceEntity?.actions || [];
 
+      // Collect indices of all route actions for positional fallback
+      const routeActionIndices = sourceActions
+        .map((a, i) => (a.act === 'route' ? i : -1))
+        .filter((i) => i >= 0);
+
       targets.forEach((target, idx) => {
-        // Find the route action that points to this target
-        const routeIdx = sourceActions.findIndex(
+        // Try exact match first: find route action whose param.to matches the target
+        let routeIdx = sourceActions.findIndex(
           (a) => a.act === 'route' && String(a.param.to) === target
         );
+
+        // Fallback: match Nth relation target to Nth route action by position
+        if (routeIdx < 0 && idx < routeActionIndices.length) {
+          routeIdx = routeActionIndices[idx];
+        }
 
         edges.push({
           id: `e-${source}-${target}-${idx}`,
