@@ -10,6 +10,7 @@ import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import { grey } from '@mui/material/colors';
+import IconButton from '@mui/material/IconButton';
 import { Table, TableRow, TableBody, TableCell, TableHead, Typography, TableContainer, CircularProgress } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
@@ -226,6 +227,13 @@ export default function Page({ params }: Props) {
   const layoutDefinition = data?.data?.layout_definition || '';
   const apiDataFlowDef = data?.data?.data_flow_definition || null;
 
+  const [scriptCopied, setScriptCopied] = useState(false);
+  const handleCopyScript = useCallback(() => {
+    navigator.clipboard.writeText(layoutDefinition);
+    setScriptCopied(true);
+    setTimeout(() => setScriptCopied(false), 2000);
+  }, [layoutDefinition]);
+
   // State for JSON editor text and parsed definition
   const [jsonValue, setJsonValue] = useState(demoJSONValue);
   const [dataFlowDefinition, setDataFlowDefinition] = useState<DataFlowDefinition | null>(demoLayoutDefinifinition);
@@ -347,11 +355,21 @@ export default function Page({ params }: Props) {
         backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'transparent' : 'black',
       }} >
 
-        <Box sx={{ backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#667085' : '#E0E4EB', p: 1.5, borderTopLeftRadius: '12px', borderTopRightRadius: '12px' }}>
+        <Box sx={{ backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#667085' : '#E0E4EB', p: 1.5, borderTopLeftRadius: '12px', borderTopRightRadius: '12px', display: 'flex', alignItems: 'center' }}>
           <Typography sx={{
+            flex: 1,
             fontWeight: 600,
             color: (theme) => theme.palette.mode === 'dark' ? grey[300] : '#4E576A'
           }}>{t('detail_table.script_title')}</Typography>
+          <IconButton onClick={handleCopyScript} size="small" sx={{ color: (theme) => theme.palette.mode === 'dark' ? '#E0E4EB' : '#4E576A', '&:hover': { color: '#fff' } }}>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M4.1333 5.33346C4.1333 4.67072 4.67056 4.13346 5.3333 4.13346H12.8C13.4627 4.13346 14 4.67072 14 5.33346V12.8001C14 13.4629 13.4627 14.0001 12.8 14.0001H5.3333C4.67056 14.0001 4.1333 13.4629 4.1333 12.8001V5.33346ZM5.3333 5.20013C5.25966 5.20013 5.19997 5.25983 5.19997 5.33346V12.8001C5.19997 12.8738 5.25966 12.9335 5.3333 12.9335H12.8C12.8736 12.9335 12.9333 12.8738 12.9333 12.8001V5.33346C12.9333 5.25982 12.8736 5.20013 12.8 5.20013H5.3333Z" fill="white" />
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M2.00049 3.2C2.00049 2.53726 2.53775 2 3.20049 2H12.1333C12.4279 2 12.6666 2.23878 12.6666 2.53333C12.6666 2.82789 12.4279 3.06667 12.1333 3.06667H3.20049C3.12685 3.06667 3.06715 3.12636 3.06715 3.2V12.1335C3.06715 12.428 2.82837 12.6668 2.53382 12.6668C2.23927 12.6668 2.00049 12.428 2.00049 12.1335V3.2Z" fill="white" />
+            </svg>
+          </IconButton>
+          {scriptCopied && (
+            <Typography sx={{ fontSize: 12, color: '#7EE081', ml: 0.5 }}>Copied!</Typography>
+          )}
         </Box>
 
         <Box sx={{
