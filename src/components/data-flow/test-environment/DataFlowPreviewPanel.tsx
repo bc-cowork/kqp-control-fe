@@ -30,6 +30,7 @@ import {
   TEXT_TERTIARY,
   TEXT_SECONDARY,
   GRID_LINE_COLOR,
+  HELP_TEXT_COLOR,
 } from '../constants';
 
 import type { DataFlowDefinition, DataFlowNodeInstance } from '../types';
@@ -237,8 +238,7 @@ export function DataFlowPreviewPanel({
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           nodeTypes={nodeTypes}
-          fitView
-          fitViewOptions={{ padding: 0.3 }}
+          defaultViewport={{ x: 0, y: 0, zoom: 0.7 }}
           proOptions={{ hideAttribution: true }}
           nodesDraggable
           nodesConnectable={false}
@@ -257,6 +257,21 @@ export function DataFlowPreviewPanel({
             lineWidth={0.5}
             color={GRID_LINE_COLOR}
           />
+
+          {/* Help text */}
+          <Panel position="top-left">
+            <Typography
+              sx={{
+                color: HELP_TEXT_COLOR,
+                fontSize: 15,
+                fontFamily: 'Roboto, sans-serif',
+                fontWeight: 400,
+                lineHeight: '22.5px',
+              }}
+            >
+              ctrl + (+/=) for zoom in and ctrl + (-) for zoom out and ctrl + (0) for reset.
+            </Typography>
+          </Panel>
 
           {/* Zoom Controls */}
           <Panel position="bottom-right">
