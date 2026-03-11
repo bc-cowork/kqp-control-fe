@@ -77,24 +77,105 @@ export function computeDataFlowLayout(
   const sortedLevels = Array.from(nodesByLevel.keys()).sort((a, b) => a - b);
   const TOP_Y = 80;
 
+  // Build reverse edge map: child → parent(s)
+  const parentOf = new Map<string, string>();
+  edges.forEach((e) => {
+    if (!parentOf.has(e.target)) {
+      parentOf.set(e.target, e.source);
+    }
+  });
+
   // Assign positions (left-to-right flow)
-  // Each node is placed using its own actual height + a fixed Y_GAP,
-  // so the visible gap between the bottom of one node and the top of the next is always equal.
+  // Columns 0 and 1: simple top-down with ownHeight + Y_GAP (original design)
+  // Column 2+: staggered zigzag layout — alternating groups offset on X axis
   let xOffset = 40;
 
   sortedLevels.forEach((level) => {
     const levelNodes = nodesByLevel.get(level)!;
-
-    let yOffset = TOP_Y;
     let maxWidth = 0;
 
-    levelNodes.forEach((node) => {
-      node.position = { x: xOffset, y: yOffset };
-      const width = getNodeWidth(node);
-      if (width > maxWidth) maxWidth = width;
-      yOffset += estimateNodeHeight(node) + Y_GAP;
+    if (level >= 2) {
+      // Scattered grid layout: spread children across the canvas in a grid pattern.
+      // Each parent's children occupy a row, columns wrap after COLS_PER_ROW.
+      const COLS_PER_ROW = 3;
+      const COL_WIDTH = ENTITY_NODE_WIDTH + 80; // horizontal gap between grid columns
+      const ROW_GAP = 200; // vertical gap between parent groups (rows)
+      const CELL_GAP = 80; // vertical gap between nodes in same grid column
+      const groups = new Map<string, DataFlowNodeInstance[]>();
+      const orphans: DataFlowNodeInstance[] = [];
 
-      // Fix position for recv (depth 0) and 1-depth PMR nodes
+      levelNodes.forEach((node) => {
+        const parent = parentOf.get(node.id);
+        if (parent) {
+          if (!groups.has(parent)) groups.set(parent, []);
+          groups.get(parent)!.push(node);
+        } else {
+          orphans.push(node);
+        }
+      });
+
+      // Sort groups by parent Y — prevents edge crossings
+      const sortedParents = Array.from(groups.keys()).sort((a, b) => {
+        const nodeA = nodes.find((n) => n.id === a);
+        const nodeB = nodes.find((n) => n.id === b);
+        return (nodeA?.position?.y || 0) - (nodeB?.position?.y || 0);
+      });
+
+      let nextRowY = TOP_Y;
+
+      sortedParents.forEach((parentId) => {
+        const group = groups.get(parentId)!;
+        const parentNode = nodes.find((n) => n.id === parentId);
+        const parentY = parentNode?.position?.y || 0;
+        const parentHeight = parentNode ? estimateNodeHeight(parentNode) : 0;
+        const parentCenterY = parentY + parentHeight / 2;
+
+        // Try to align row start with parent center
+        const rowStartY = Math.max(nextRowY, parentCenterY - estimateNodeHeight(group[0]) / 2);
+
+        // Place children in a horizontal row, wrapping after COLS_PER_ROW
+        let rowMaxBottom = rowStartY;
+
+        group.forEach((node, i) => {
+          const col = i % COLS_PER_ROW;
+          const row = Math.floor(i / COLS_PER_ROW);
+          const nodeH = estimateNodeHeight(node);
+
+          const nodeX = xOffset + col * COL_WIDTH;
+          const nodeY = rowStartY + row * (nodeH + CELL_GAP);
+
+          node.position = { x: nodeX, y: nodeY };
+
+          const effectiveWidth = col * COL_WIDTH + getNodeWidth(node);
+          if (effectiveWidth > maxWidth) maxWidth = effectiveWidth;
+
+          const bottom = nodeY + nodeH;
+          if (bottom > rowMaxBottom) rowMaxBottom = bottom;
+        });
+
+        nextRowY = rowMaxBottom + ROW_GAP;
+      });
+
+      // Orphans at the end
+      orphans.forEach((node) => {
+        node.position = { x: xOffset, y: nextRowY };
+        const width = getNodeWidth(node);
+        if (width > maxWidth) maxWidth = width;
+        nextRowY += estimateNodeHeight(node) + CELL_GAP;
+      });
+    } else {
+      // Columns 0 and 1: simple top-down, original spacing
+      let yOffset = TOP_Y;
+      levelNodes.forEach((node) => {
+        node.position = { x: xOffset, y: yOffset };
+        const width = getNodeWidth(node);
+        if (width > maxWidth) maxWidth = width;
+        yOffset += estimateNodeHeight(node) + Y_GAP;
+      });
+    }
+
+    // Fix position for recv (depth 0) and 1-depth PMR nodes
+    levelNodes.forEach((node) => {
       node.draggable = level >= 2;
     });
 

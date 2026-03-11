@@ -28,19 +28,37 @@ import { DataFlowCanvas, DataFlowJsonEditor, TestEnvironmentModal } from 'src/co
 const demoLayoutDefinifinition: DataFlowDefinition = {
   "KSKQ_def": {
     "desc": "구조화증권 기본/기타 라우터",
-    "recv2r": [216, 224, 225, 226, 230, 238, 239, 261, 260],
+    "recv2r": [
+      216,
+      224,
+      225,
+      226,
+      230,
+      238,
+      239,
+      261,
+      260
+    ],
     "actions": [
       {
         "act": "log",
-        "param": { "to": "rcv0" }
+        "param": {
+          "to": "rcv0"
+        }
       },
       {
         "act": "route",
-        "param": { "to": "1", "app": "kqp" }
+        "param": {
+          "to": "KSKQ_def_emit"
+        }
       },
       {
-        "act": "route",
-        "param": { "to": "KSKQ_def_emit" }
+        "act": "kpass",
+        "param": {
+          "app": "kqp",
+          "inst": "1",
+          "fnid": 10
+        }
       }
     ]
   },
@@ -49,11 +67,15 @@ const demoLayoutDefinifinition: DataFlowDefinition = {
     "actions": [
       {
         "act": "destinate",
-        "param": { "rule": "route_map" }
+        "param": {
+          "rule": "route_map"
+        }
       },
       {
         "act": "modify",
-        "param": { "rule": "wrsec1" }
+        "param": {
+          "rule": "wrsec1"
+        }
       },
       {
         "act": "emit",
@@ -61,25 +83,49 @@ const demoLayoutDefinifinition: DataFlowDefinition = {
       },
       {
         "act": "log",
-        "param": { "to": "dist0" }
+        "param": {
+          "to": "dist0"
+        }
       }
     ]
   },
+  "kqp.1": {
+    "desc": "통합시세 기본",
+    "actions": []
+  },
   "KS_q": {
-    "desc": "",
-    "recv2r": [222, 223, 258],
+    "desc": "KOSPI 주식 호가",
+    "recv2r": [
+      222,
+      223,
+      258
+    ],
     "actions": [
       {
         "act": "log",
-        "param": { "to": "rcv0" }
+        "param": {
+          "to": "rcv0"
+        }
       },
       {
         "act": "route",
-        "param": { "to": "ksp_q", "app": "kqp" }
+        "param": {
+          "to": "KS_q_emit"
+        }
+      },
+      {
+        "act": "kpass",
+        "param": {
+          "app": "kqp",
+          "inst": "ksp_q",
+          "fnid": 10
+        }
       },
       {
         "act": "route",
-        "param": { "to": "KS_q_emit" }
+        "param": {
+          "to": "KS_q_qos"
+        }
       }
     ]
   },
@@ -88,40 +134,122 @@ const demoLayoutDefinifinition: DataFlowDefinition = {
     "actions": [
       {
         "act": "destinate",
-        "param": { "rule": "route_map" }
+        "param": {
+          "rule": "route_map"
+        }
       },
       {
         "act": "modify",
-        "param": { "rule": "wrsec1" }
+        "param": {
+          "rule": "wrsec1"
+        }
       },
       {
         "act": "emit",
         "param": {}
+      },
+      {
+        "act": "log",
+        "param": {
+          "to": "dist0"
+        }
       }
     ]
   },
+  "KS_q_qos": {
+    "desc": "KOSPI 주식 호가 QoS",
+    "actions": [
+      {
+        "act": "qos",
+        "param": {
+          "rule": "qos_wrsec",
+          "time_ms": 200,
+          "head": "B6"
+        }
+      },
+      {
+        "act": "destinate",
+        "param": {
+          "rule": "rtm_code_route",
+          "offset": [18, 12],
+          "dest": [2611, 2612, 2613, 2614, 2615]
+        }
+      },
+      {
+        "act": "modify",
+        "param": {
+          "rule": "wrsec1"
+        }
+      },
+      {
+        "act": "emit",
+        "param": {}
+      },
+      {
+        "act": "log",
+        "param": {
+          "to": "qos"
+        }
+      }
+    ]
+  },
+  "kqp.ksp_q": {
+    "desc": "통합시세 KOSPI 호가",
+    "actions": []
+  },
   "KS_f": {
-    "recv2r": [217, 218, 219, 220, 221, 256],
+    "desc": "KOSPI 주식 체결",
+    "recv2r": [
+      217,
+      218,
+      219,
+      220,
+      221,
+      256
+    ],
     "actions": [
       {
         "act": "log",
-        "param": { "to": "rcv0" }
+        "param": {
+          "to": "rcv0"
+        }
       },
       {
         "act": "route",
-        "param": { "to": "KS_f_emit" }
+        "param": {
+          "to": "KS_f_emit"
+        }
+      },
+      {
+        "act": "kpass",
+        "param": {
+          "app": "kqp",
+          "inst": "ksp_f",
+          "fnid": 10
+        }
+      },
+      {
+        "act": "route",
+        "param": {
+          "to": "KS_f_qos"
+        }
       }
     ]
   },
   "KS_f_emit": {
+    "desc": "KOSPI 주식 체결 송출",
     "actions": [
       {
         "act": "destinate",
-        "param": { "rule": "route_map" }
+        "param": {
+          "rule": "route_map"
+        }
       },
       {
         "act": "modify",
-        "param": { "rule": "wrsec1" }
+        "param": {
+          "rule": "wrsec1"
+        }
       },
       {
         "act": "emit",
@@ -129,21 +257,85 @@ const demoLayoutDefinifinition: DataFlowDefinition = {
       },
       {
         "act": "log",
-        "param": { "to": "dist0" }
+        "param": {
+          "to": "dist0"
+        }
       }
     ]
   },
+  "KS_f_qos": {
+    "desc": "KOSPI 주식 체결 QoS",
+    "actions": [
+      {
+        "act": "qos",
+        "param": {
+          "rule": "qos_wrsec_A3",
+          "time_ms": 200
+        }
+      },
+      {
+        "act": "destinate",
+        "param": {
+          "rule": "rtm_code_route",
+          "offset": [18, 12],
+          "dest": [2621, 2622, 2623, 2624, 2625]
+        }
+      },
+      {
+        "act": "modify",
+        "param": {
+          "rule": "wrsec1"
+        }
+      },
+      {
+        "act": "emit",
+        "param": {}
+      },
+      {
+        "act": "log",
+        "param": {
+          "to": "qos"
+        }
+      }
+    ]
+  },
+  "kqp.ksp_f": {
+    "desc": "통합시세 KOSPI 체결",
+    "actions": []
+  },
   "KQ_q": {
     "desc": "KOSDAQ 주식 호가",
-    "recv2r": [236, 237, 259],
+    "recv2r": [
+      236,
+      237,
+      259
+    ],
     "actions": [
       {
         "act": "log",
-        "param": { "to": "rcv0" }
+        "param": {
+          "to": "rcv0"
+        }
       },
       {
         "act": "route",
-        "param": { "to": "KS_q_emit" }
+        "param": {
+          "to": "KQ_q_emit"
+        }
+      },
+      {
+        "act": "kpass",
+        "param": {
+          "app": "kqp",
+          "inst": "ksq_q",
+          "fnid": 10
+        }
+      },
+      {
+        "act": "route",
+        "param": {
+          "to": "KQ_q_qos"
+        }
       }
     ]
   },
@@ -152,29 +344,105 @@ const demoLayoutDefinifinition: DataFlowDefinition = {
     "actions": [
       {
         "act": "destinate",
-        "param": { "rule": "route_map" }
+        "param": {
+          "rule": "route_map"
+        }
       },
       {
         "act": "modify",
-        "param": { "rule": "wrsec1" }
+        "param": {
+          "rule": "wrsec1"
+        }
       },
       {
         "act": "emit",
         "param": {}
+      },
+      {
+        "act": "log",
+        "param": {
+          "to": "dist0"
+        }
       }
     ]
   },
+  "KQ_q_qos": {
+    "desc": "KOSDAQ 주식 호가 QoS",
+    "actions": [
+      {
+        "act": "qos",
+        "param": {
+          "rule": "qos_wrsec",
+          "time_ms": 200,
+          "head": "B6"
+        }
+      },
+      {
+        "act": "destinate",
+        "param": {
+          "rule": "rtm_code_route",
+          "offset": [18, 12],
+          "dest": [2651, 2652, 2653, 2654, 2655]
+        }
+      },
+      {
+        "act": "modify",
+        "param": {
+          "rule": "wrsec1"
+        }
+      },
+      {
+        "act": "emit",
+        "param": {}
+      },
+      {
+        "act": "log",
+        "param": {
+          "to": "qos"
+        }
+      }
+    ]
+  },
+  "kqp.ksq_q": {
+    "desc": "통합시세 KOSDAQ 호가",
+    "actions": []
+  },
   "KQ_f": {
     "desc": "KOSDAQ 주식 체결",
-    "recv2r": [231, 232, 233, 234, 235, 257],
+    "recv2r": [
+      231,
+      232,
+      233,
+      234,
+      235,
+      257
+    ],
     "actions": [
       {
         "act": "log",
-        "param": { "to": "rcv0" }
+        "param": {
+          "to": "rcv0"
+        }
       },
       {
         "act": "route",
-        "param": { "to": "KQ_f_emit" }
+        "param": {
+          "to": "KQ_f_emit"
+        }
+      },
+      {
+        "act": "kpass",
+        "param": {
+          "app": "kqp",
+          "inst": "ksq_f",
+          "fnid": 10
+        }
+      },
+      {
+        "act": "route",
+        "param": {
+          "to": "KQ_f_qos"
+        }
       }
     ]
   },
@@ -183,26 +451,106 @@ const demoLayoutDefinifinition: DataFlowDefinition = {
     "actions": [
       {
         "act": "destinate",
-        "param": { "rule": "route_map" }
+        "param": {
+          "rule": "route_map"
+        }
       },
       {
         "act": "modify",
-        "param": { "rule": "wrsec1" }
+        "param": {
+          "rule": "wrsec1"
+        }
       },
       {
         "act": "emit",
         "param": {}
+      },
+      {
+        "act": "log",
+        "param": {
+          "to": "dist0"
+        }
       }
     ]
   },
+  "KQ_f_qos": {
+    "desc": "KOSDAQ 주식 체결 QoS",
+    "actions": [
+      {
+        "act": "qos",
+        "param": {
+          "rule": "qos_wrsec_A3",
+          "time_ms": 200
+        }
+      },
+      {
+        "act": "destinate",
+        "param": {
+          "rule": "rtm_code_route",
+          "offset": [18, 12],
+          "dest": [2661, 2662, 2663, 2664, 2665]
+        }
+      },
+      {
+        "act": "modify",
+        "param": {
+          "rule": "wrsec1"
+        }
+      },
+      {
+        "act": "emit",
+        "param": {}
+      },
+      {
+        "act": "log",
+        "param": {
+          "to": "qos"
+        }
+      }
+    ]
+  },
+  "kqp.ksq_f": {
+    "desc": "통합시세 KOSDAQ 체결",
+    "actions": []
+  },
   "relations": {
-    "KSKQ_def": { "to": ["KSKQ_def_emit"] },
-    "KS_q": { "to": ["KS_q_emit"] },
-    "KS_f": { "to": ["KS_f_emit"] },
-    "KQ_q": { "to": ["KQ_q_emit"] },
-    "KQ_f": { "to": ["KQ_f_emit"] }
+    "KSKQ_def": {
+      "to": [
+        "KSKQ_def_emit",
+        "kqp.1"
+      ]
+    },
+    "KS_q": {
+      "to": [
+        "KS_q_emit",
+        "kqp.ksp_q",
+        "KS_q_qos"
+      ]
+    },
+    "KS_f": {
+      "to": [
+        "KS_f_emit",
+        "kqp.ksp_f",
+        "KS_f_qos"
+      ]
+    },
+    "KQ_q": {
+      "to": [
+        "KQ_q_emit",
+        "kqp.ksq_q",
+        "KQ_q_qos"
+      ]
+    },
+    "KQ_f": {
+      "to": [
+        "KQ_f_emit",
+        "kqp.ksq_f",
+        "KQ_f_qos"
+      ]
+    }
   }
 }
+
   ;
 const demoJSONValue = JSON.stringify(demoLayoutDefinifinition, null, 2);
 

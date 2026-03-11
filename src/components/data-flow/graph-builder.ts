@@ -14,8 +14,7 @@ export function buildDataFlowGraph(definition: DataFlowDefinition): {
   const nodes: DataFlowNodeInstance[] = [];
   const edges: Edge[] = [];
 
-  const edgeDefaults = {
-    type: 'default' as const,
+  const edgeStyle = {
     zIndex: 1,
     style: { stroke: EDGE_COLOR, strokeWidth: 2 },
     markerEnd: {
@@ -25,6 +24,8 @@ export function buildDataFlowGraph(definition: DataFlowDefinition): {
       height: 16,
     },
   };
+
+  const edgeDefaults = { type: 'default' as const, ...edgeStyle };
 
   // Collect entity entries (everything except "relations")
   const entityEntries = Object.entries(definition).filter(([key]) => key !== 'relations');
