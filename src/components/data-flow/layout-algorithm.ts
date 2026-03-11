@@ -164,13 +164,15 @@ export function computeDataFlowLayout(
         nextRowY += estimateNodeHeight(node) + CELL_GAP;
       });
     } else {
-      // Columns 0 and 1: simple top-down, original spacing
+      // Columns 0 and 1: simple top-down
+      // Recv nodes (level 0) get extra vertical spacing
+      const gap = level === 0 ? 60 : Y_GAP + 80;
       let yOffset = TOP_Y;
       levelNodes.forEach((node) => {
         node.position = { x: xOffset, y: yOffset };
         const width = getNodeWidth(node);
         if (width > maxWidth) maxWidth = width;
-        yOffset += estimateNodeHeight(node) + Y_GAP;
+        yOffset += estimateNodeHeight(node) + gap;
       });
     }
 
