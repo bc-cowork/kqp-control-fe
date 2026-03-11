@@ -239,6 +239,8 @@ export function DataFlowPreviewPanel({
           onEdgesChange={onEdgesChange}
           nodeTypes={nodeTypes}
           defaultViewport={{ x: 0, y: 0, zoom: 0.7 }}
+          minZoom={0.1}
+          maxZoom={2}
           proOptions={{ hideAttribution: true }}
           nodesDraggable
           nodesConnectable={false}

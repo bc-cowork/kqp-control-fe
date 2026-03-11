@@ -218,6 +218,9 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
           onEdgesChange={onEdgesChange}
           nodeTypes={nodeTypes}
           defaultViewport={{ x: 0, y: 0, zoom: 0.7 }}
+          minZoom={0.1}
+          maxZoom={2}
+          fitViewOptions={{ padding: 0.08, maxZoom: 0.7 }}
           proOptions={{ hideAttribution: true }}
           nodesDraggable
           nodesConnectable={false}

@@ -334,9 +334,9 @@ function DataFlowNodeComponent({ data }: NodeProps) {
         {actions.length > 0 && <EntityNodeBody actions={actions} />}
       </Box>
 
-      {/* Source handles — one per route action, offset inward to start from text area */}
+      {/* Source handles — one per routing action (route/kpass), offset inward */}
       {actions.map((action, idx) =>
-        action.act === 'route' ? (
+        action.act === 'route' || action.act === 'kpass' ? (
           <Handle
             key={`action-${idx}`}
             type="source"
