@@ -215,7 +215,7 @@ function DataFlowNodeComponent({ id, data }: NodeProps) {
             borderRadius: '12px',
             overflow: 'visible',
             backgroundColor: RECV_NODE_BG,
-            border: `1px solid ${RECV_NODE_BORDER}`,
+            border: `2px solid ${RECV_NODE_BORDER}`,
             position: 'relative',
           }}
         >
@@ -331,7 +331,7 @@ function DataFlowNodeComponent({ id, data }: NodeProps) {
           borderRadius: '12px',
           overflow: 'visible',
           background: ENTITY_NODE_BG,
-          border: '1px solid #7EE081',
+          border: '2px solid #7EE081',
           position: 'relative',
         }}
       >
@@ -387,14 +387,12 @@ function DataFlowNodeComponent({ id, data }: NodeProps) {
           </Box>
         </Stack>
 
-        {/* Body: action rows */}
-        {actions.length > 0 && (
-          <Stack spacing={0.5} sx={{ px: 1.5, pt: 0.5, pb: 0.5 }}>
-            {actions.map((action, idx) => (
-              <ActionRow key={idx} action={action} idx={idx} />
-            ))}
-          </Stack>
-        )}
+        {/* Body: action rows (always shown, empty body if no actions) */}
+        <Stack spacing={0.5} sx={{ px: 1.5, pt: 0.5, pb: 0.5, minHeight: 32 }}>
+          {actions.map((action, idx) => (
+            <ActionRow key={idx} action={action} idx={idx} />
+          ))}
+        </Stack>
       </Box>
 
       {/* Fallback source handle for non-route edges */}

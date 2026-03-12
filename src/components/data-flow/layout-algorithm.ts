@@ -275,7 +275,27 @@ function estimateNodeHeight(node: DataFlowNodeInstance): number {
     return HEADER + textLines * LINE_H + COUNT_LINE + BODY_PAD;
   }
 
-  // ENTITY node: header (~47px) + each action row (~26px) + body padding (16px)
-  const actionCount = data.actions?.length || 0;
-  return 47 + actionCount * 26 + 16;
+  // ENTITY node: header (~47px) + action rows + body padding (8px) + spacing between rows (4px each)
+  const HEADER = 47;
+  const BODY_PAD = 8; // pt:0.5 + pb:0.5
+  const ROW_SPACING = 4; // spacing={0.5} = 4px
+  const LINE_H = 22.5;
+  const actions = data.actions || [];
+
+  // Body content width: node width - px:1.5 (12px each side) - left col (105px) - circle (14px) - gap (4px)
+  const paramTextWidth = ENTITY_NODE_WIDTH - 24 - 105 - 14 - 4;
+  const charWidth = 8; // approximate char width at font-size 15px Roboto
+
+  let totalRowHeight = 0;
+  actions.forEach((action) => {
+    const paramText = Object.entries(action.param || {})
+      .map(([k, v]) => `${k}:'${v}'`)
+      .join(',');
+    const fullText = `{${paramText}}`;
+    const textLines = Math.max(1, Math.ceil((fullText.length * charWidth) / paramTextWidth));
+    totalRowHeight += textLines * LINE_H;
+  });
+
+  const totalSpacing = actions.length > 1 ? (actions.length - 1) * ROW_SPACING : 0;
+  return HEADER + BODY_PAD + totalRowHeight + totalSpacing;
 }
