@@ -339,7 +339,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                                   px: 0.5,
                                 }}
                               >
-                                {auditFrameFrag.len}
+                                {auditFrameFrag.len?.toLocaleString()}
                               </Box>
                             </TableCell>
                             <TableCell align="right">
@@ -515,7 +515,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                   </SvgIcon>
                 </Box>
                 <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                  {auditFrame?.max_frame}
+                  {auditFrame?.max_frame?.toLocaleString()}
                 </Typography>
               </Box>
               <Box
@@ -570,7 +570,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                 >
                   <Typography sx={{ color: grey[200], fontSize: 15 }}>Seq</Typography>
                   <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                    {auditFrame?.seq}
+                    {auditFrame?.seq?.toLocaleString()}
                   </Typography>
                 </Box>
 
@@ -621,7 +621,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                     >
                       <Typography sx={{ color: grey[200], fontSize: 15 }}>Size</Typography>
                       <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                        {auditFrame?.size}
+                        {auditFrame?.size?.toLocaleString()}
                       </Typography>
                     </Box>
                   </Grid>
@@ -653,7 +653,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                     >
                       <Typography sx={{ color: grey[200], fontSize: 15 }}>RID</Typography>
                       <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                        {auditFrame?.rid}
+                        {auditFrame?.rid?.toLocaleString()}
                       </Typography>
                     </Box>
                   </Grid>

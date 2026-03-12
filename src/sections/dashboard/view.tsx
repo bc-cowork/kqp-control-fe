@@ -87,7 +87,7 @@ export function DashboardView() {
                   <Typography
                     sx={{ fontSize: 28, fontWeight: 500, textAlign: 'right', pr: 2, pt: 2 }}
                   >
-                    {totalNodes}
+                    {totalNodes?.toLocaleString()}
                   </Typography>
                 </Box>
                 <Box
@@ -129,7 +129,7 @@ export function DashboardView() {
                   <Typography
                     sx={{ fontSize: 28, fontWeight: 500, textAlign: 'right', pr: 2, pt: 2, color: theme.palette.grey[50] }}
                   >
-                    {onlineNodes}
+                    {onlineNodes?.toLocaleString()}
                   </Typography>
                 </Box>
               </Stack>

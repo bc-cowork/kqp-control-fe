@@ -60,7 +60,7 @@ export function ChannelInbound({ selectedNodeId }: Props) {
                 <TableCell align="right">{channel.port}</TableCell>
                 <TableCell align="right">{channel.mip}</TableCell>
                 <TableCell align="right">{channel.nic}</TableCell>
-                <TableCell align="right">{channel.count}</TableCell>
+                <TableCell align="right">{channel.count?.toLocaleString()}</TableCell>
               </TableRow>
             ))
           )}

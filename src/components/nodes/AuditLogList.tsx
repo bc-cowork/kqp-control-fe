@@ -160,7 +160,7 @@ export function AuditLogList({ selectedNodeId }: Props) {
                 <TableCell align="right">{auditLog.date}</TableCell>
                 <TableCell>{auditLog.kind}</TableCell>
                 <TableCell align='right'>{auditLog?.desc || '-'}</TableCell>
-                <TableCell align="right">{auditLog.size}</TableCell>
+                <TableCell align="right">{auditLog.size?.toLocaleString()}</TableCell>
               </TableRow>
             ))
           )}

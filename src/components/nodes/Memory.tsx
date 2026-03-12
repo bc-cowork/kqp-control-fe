@@ -163,7 +163,7 @@ export function Memory({ selectedNodeId }: Props) {
                         textAlign: 'right',
                       }}
                     >
-                      {issues?.max_issue_count}
+                      {issues?.max_issue_count?.toLocaleString()}
                     </Typography>
                   </Box>
                 </Grid>
@@ -195,7 +195,7 @@ export function Memory({ selectedNodeId }: Props) {
                         textAlign: 'right',
                       }}
                     >
-                      {issues?.compet_count}
+                      {issues?.compet_count?.toLocaleString()}
                     </Typography>
                   </Box>
                 </Grid>
@@ -297,11 +297,11 @@ export function Memory({ selectedNodeId }: Props) {
                         }
                         sx={{ cursor: 'pointer' }}
                       >
-                        <TableCell align="right">{issue.seq}</TableCell>
+                        <TableCell align="right">{issue.seq?.toLocaleString()}</TableCell>
                         <TableCell>{issue.code}</TableCell>
                         <TableCell>{issue.name}</TableCell>
                         <TableCell>{`[${issue.daily_info_dates.join(' / ')}]`}</TableCell>
-                        <TableCell align="right">{issue.compet}</TableCell>
+                        <TableCell align="right">{issue.compet?.toLocaleString()}</TableCell>
                       </TableRow>
                     )
                   )

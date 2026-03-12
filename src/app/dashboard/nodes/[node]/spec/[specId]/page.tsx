@@ -105,8 +105,8 @@ export default function Page({ params }: Props) {
                                 <TableCell>{specItem.path}</TableCell>
                                 <TableCell align='left'>{specItem.timestamp}</TableCell>
                                 <TableCell align="left">{specItem.ref_identifies}</TableCell>
-                                <TableCell align="left">{specItem.frags}</TableCell>
-                                <TableCell align="left">{specItem.size}</TableCell>
+                                <TableCell align="left">{specItem.frags?.toLocaleString()}</TableCell>
+                                <TableCell align="left">{specItem.size?.toLocaleString()}</TableCell>
                                 <TableCell align="left">{specItem?.desc}</TableCell>
                                 <TableCell align="left">{ }</TableCell>
 

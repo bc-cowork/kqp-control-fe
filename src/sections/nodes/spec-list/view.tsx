@@ -97,8 +97,8 @@ export function SpecListView({ nodeId }: Props) {
                                     <TableCell>{row.path}</TableCell>
                                     <TableCell>{row.timestamp}</TableCell>
                                     <TableCell>{row.ref_identifies}</TableCell>
-                                    <TableCell>{row.frags}</TableCell>
-                                    <TableCell>{row.size}</TableCell>
+                                    <TableCell>{row.frags?.toLocaleString()}</TableCell>
+                                    <TableCell>{row.size?.toLocaleString()}</TableCell>
                                     <TableCell>{row.desc}</TableCell>
                                     <TableCell align="right">{ }</TableCell>
                                 </TableRow>

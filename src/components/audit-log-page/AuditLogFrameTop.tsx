@@ -104,7 +104,7 @@ export function AuditLogFrameTop({ selectedFile, auditFrame, onMaxFrameRefresh }
               </svg>
             </SvgIcon>
           </Box>
-          <Typography variant="subtitle1">{auditFrame?.max_frame}</Typography>
+          <Typography variant="subtitle1">{auditFrame?.max_frame?.toLocaleString()}</Typography>
         </Grid>
         <Grid
           md={1.4}
@@ -171,7 +171,7 @@ export function AuditLogFrameTop({ selectedFile, auditFrame, onMaxFrameRefresh }
           }}
         >
           <Typography variant="caption">Size</Typography>
-          <Typography variant="subtitle1">{auditFrame?.size}</Typography>
+          <Typography variant="subtitle1">{auditFrame?.size?.toLocaleString()}</Typography>
         </Grid>
         <Grid
           md={0.8}
@@ -196,7 +196,7 @@ export function AuditLogFrameTop({ selectedFile, auditFrame, onMaxFrameRefresh }
           }}
         >
           <Typography variant="caption">RID</Typography>
-          <Typography variant="subtitle1">{auditFrame?.rid}</Typography>
+          <Typography variant="subtitle1">{auditFrame?.rid?.toLocaleString()}</Typography>
         </Grid>
       </Grid>
     </Box>

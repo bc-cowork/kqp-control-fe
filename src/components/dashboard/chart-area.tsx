@@ -143,8 +143,9 @@ export function ChartArea({
     return value.toString();
   };
 
+  const isPercentMetric = metric === 'cpu' || metric === 'memory';
   const minValue = 0;
-  const maxValue = 100;
+  const maxValue = isPercentMetric ? 100 : 'auto';
 
   const fillColor = theme.palette.mode === 'dark' ? theme.palette.grey[800] : 'white'
   const strokeColor = theme.palette.mode === 'dark' ? theme.palette.grey[500] : theme.palette.grey[100]

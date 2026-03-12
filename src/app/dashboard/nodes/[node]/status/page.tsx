@@ -89,10 +89,10 @@ export default function Page({ params }: Props) {
                                             return (
                                                 <TableRow key={row.key} hover>
                                                     <TableCell>{row.Item}</TableCell>
-                                                    <TableCell align='right'>{row.data.max}</TableCell>
-                                                    <TableCell align='right'>{row.data.cur}</TableCell>
+                                                    <TableCell align='right'>{row.data.max?.toLocaleString()}</TableCell>
+                                                    <TableCell align='right'>{row.data.cur?.toLocaleString()}</TableCell>
                                                     <TableCell align='right'>
-                                                        {row.data.odd > 0 ? row.data.odd : ''}
+                                                        {row.data.odd > 0 ? row.data.odd?.toLocaleString() : ''}
                                                     </TableCell>
                                                     <TableCell align='right'>
                                                         {isAbnormal && (
@@ -148,7 +148,7 @@ export default function Page({ params }: Props) {
                                             <TableCell align='center' />
                                             <TableCell align='center'>{row.time}</TableCell>
                                             <TableCell align='center'>{row.channel}</TableCell>
-                                            <TableCell align='center'>{row.count}</TableCell>
+                                            <TableCell align='center'>{row.count?.toLocaleString()}</TableCell>
                                         </TableRow>
                                     )) : (
                                         <TableRow hover>
@@ -193,7 +193,7 @@ export default function Page({ params }: Props) {
                                             <TableCell align='center'>{ }</TableCell>
                                             <TableCell align='center'>{row.time}</TableCell>
                                             <TableCell align='center'>{row.channel}</TableCell>
-                                            <TableCell align='center'>{row.count}</TableCell>
+                                            <TableCell align='center'>{row.count?.toLocaleString()}</TableCell>
                                             <TableCell align='center' />
                                         </TableRow>
                                     )) : (

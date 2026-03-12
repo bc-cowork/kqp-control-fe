@@ -79,7 +79,7 @@ export function ChartAreaDark({
         />
       </Stack>
 
-      <Typography sx={{ fontSize: 20, color: '#C77F14', px: 1 }}>{memoryMetricsData?.mem_used_size} / {memoryMetricsData?.mem_total_size}GB ({memoryMetricsData?.mem_usage}%)</Typography>
+      <Typography sx={{ fontSize: 20, color: '#C77F14', px: 1 }}>{memoryMetricsData?.mem_used_size?.toLocaleString()} / {memoryMetricsData?.mem_total_size?.toLocaleString()}GB ({memoryMetricsData?.mem_usage}%)</Typography>
 
       {/* Chart */}
       <Box sx={{ flex: 1, minHeight: '100px', width: '100%' }}>
