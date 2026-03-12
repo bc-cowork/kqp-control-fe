@@ -26,6 +26,7 @@ import {
   ENTITY_NODE_BG,
   ENTITY_NODE_WIDTH,
   ENTITY_HEADER_BG,
+  EDGE_COLOR,
 } from '../constants';
 
 import type { DataFlowAction, DataFlowNodeData } from '../types';
@@ -330,25 +331,8 @@ function DataFlowNodeComponent({ id, data }: NodeProps) {
           borderRadius: '12px',
           overflow: 'visible',
           background: ENTITY_NODE_BG,
+          border: '1px solid #7EE081',
           position: 'relative',
-          '&::before': {
-            content: '""',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            height: '1px',
-            background: `linear-gradient(to right, rgba(55,63,78,0), #AFB7C8 50%, rgba(55,63,78,0))`,
-          },
-          '&::after': {
-            content: '""',
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: '1px',
-            background: `linear-gradient(to right, rgba(55,63,78,0), #AFB7C8 50%, rgba(55,63,78,0))`,
-          },
         }}
       >
         {/* Header: name (left, bold) + PMR badge (right) */}
@@ -358,8 +342,12 @@ function DataFlowNodeComponent({ id, data }: NodeProps) {
           spacing={1}
           sx={{
             p: 1.5,
+            borderTopRightRadius: '12px',
+            borderTopLeftRadius: '12px',
             background: ENTITY_HEADER_BG,
-            borderBottom: `1px solid ${HEADER_BORDER}`,
+            borderBottom: '1px solid',
+            borderImageSource: `linear-gradient(to right, rgba(55,63,78,0), ${EDGE_COLOR} 50%, rgba(55,63,78,0))`,
+            borderImageSlice: 1,
           }}
         >
           <Typography
