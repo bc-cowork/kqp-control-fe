@@ -205,7 +205,10 @@ export function ChartArea({
               axisLine={{ stroke: strokeColor }}
               domain={[minValue, maxValue]}
               tickFormatter={
-                metric === 'inbound_bytes' || metric === 'outbound_bytes'
+                metric === 'inbound_bytes' ||
+                  metric === 'outbound_bytes' ||
+                  metric === 'inbound_count' ||
+                  metric === 'outbound_count'
                   ? formatLargeNumber
                   : undefined
               }
@@ -219,6 +222,7 @@ export function ChartArea({
               }}
               labelStyle={{ color: theme.palette.grey[100] }}
               itemStyle={{ color: theme.palette.grey[100] }}
+              formatter={(value: number) => value.toLocaleString()}
             />
 
             {/* Main Area Chart */}
