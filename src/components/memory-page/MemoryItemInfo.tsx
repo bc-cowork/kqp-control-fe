@@ -42,7 +42,7 @@ export function MemoryItemInfo({ issueInfo }: Props) {
         border: `1px solid ${grey[700]}`,
       }}
     >
-      <LabelValueRow label={t('item.left.seq')} value={issueInfo?.seq} />
+      <LabelValueRow label={t('item.left.seq')} value={issueInfo?.seq?.toLocaleString()} />
       <LabelValueRow label={t('item.left.code')} value={issueInfo.code} />
       <LabelValueRow label={t('item.left.name')} value={issueInfo.name} />
       <LabelValueRow
@@ -53,7 +53,7 @@ export function MemoryItemInfo({ issueInfo }: Props) {
             : issueInfo.g1_ssn_id
         }
       />
-      <LabelValueRow label={t('item.left.compet')} value={issueInfo.compet} />
+      <LabelValueRow label={t('item.left.compet')} value={issueInfo.compet?.toLocaleString()} />
     </Box>
   );
 }
