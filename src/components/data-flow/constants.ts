@@ -1,5 +1,5 @@
 // Entity node appearance
-export const ENTITY_NODE_WIDTH = 300;
+export const ENTITY_NODE_WIDTH = 288;
 export const ENTITY_NODE_BORDER = '#373F4E';
 export const ENTITY_NODE_BG =
   'linear-gradient(90deg, rgba(16, 24, 40, 0.80) 0%, rgba(15, 23, 43, 0.70) 50%, rgba(16, 24, 40, 0.80) 100%)';
@@ -19,6 +19,11 @@ export const BADGE_TEXT = '#D1D6E0';
 // Action colors (entity body)
 export const ACTION_COLOR = '#7EE081';
 export const ACTION_GRAY = '#D1D6E0';
+
+// Handle circle colors
+export const HANDLE_PURPLE = '#5E66FF';
+export const HANDLE_GREEN = '#7EE081';
+export const HANDLE_GRAY = '#667085';
 
 // Edge
 export const EDGE_COLOR = '#AFB7C8';
