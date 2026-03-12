@@ -2,7 +2,7 @@
 
 import type { NodeProps } from '@xyflow/react';
 
-import { memo } from 'react';
+import { memo, useRef, useState, useEffect } from 'react';
 import { Handle, Position } from '@xyflow/react';
 
 import Box from '@mui/material/Box';
@@ -151,17 +151,15 @@ function EntityNodeBody({ actions }: { actions: DataFlowAction[] }) {
               >
                 {formatParam(action.param)}
               </Typography>
-              <Typography
-                component="span"
+              <Box
                 sx={{
-                  fontSize: 12,
-                  lineHeight: '18px',
-                  color: circleColor,
+                  width: 10,
+                  height: 10,
+                  borderRadius: '50%',
+                  border: `1.5px solid ${circleColor}`,
                   flexShrink: 0,
                 }}
-              >
-                ○
-              </Typography>
+              />
             </Box>
           </Box>
         );
@@ -175,6 +173,17 @@ function EntityNodeBody({ actions }: { actions: DataFlowAction[] }) {
 function DataFlowNodeComponent({ data }: NodeProps) {
   const nodeData = data as DataFlowNodeData;
   const isRecv = nodeData.nodeType === 'recv';
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const [handleTop, setHandleTop] = useState<number | undefined>(undefined);
+
+  useEffect(() => {
+    if (isRecv && headerRef.current && bodyRef.current) {
+      const headerH = headerRef.current.offsetHeight;
+      const bodyH = bodyRef.current.offsetHeight;
+      setHandleTop(headerH + bodyH / 2);
+    }
+  }, [isRecv, nodeData.channels]);
 
   if (isRecv) {
     return (
@@ -197,6 +206,7 @@ function DataFlowNodeComponent({ data }: NodeProps) {
         >
           {/* Header: badge (left) + label (right) */}
           <Stack
+            ref={headerRef}
             direction="row"
             alignItems="center"
             spacing={1}
@@ -246,27 +256,28 @@ function DataFlowNodeComponent({ data }: NodeProps) {
 
           {/* Body: channel list */}
           {nodeData.channels && nodeData.channels.length > 0 && (
-            <Box sx={{ borderRadius: '0 0 12px 12px', overflow: 'hidden' }}>
+            <Box ref={bodyRef} sx={{ borderRadius: '0 0 12px 12px', position: 'relative' }}>
               <RecvNodeBody channels={nodeData.channels} />
+              {/* Purple circle — vertically centered within body */}
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: '50%',
+                  right: 8,
+                  transform: 'translateY(-50%)',
+                  width: 10,
+                  height: 10,
+                  borderRadius: '50%',
+                  border: `1.5px solid ${HANDLE_PURPLE}`,
+                }}
+              />
             </Box>
           )}
 
-          {/* Purple circle — vertically centered, right side inside node */}
-          <Box
-            sx={{
-              position: 'absolute',
-              top: '50%',
-              right: 8,
-              transform: 'translateY(-50%)',
-              width: 10,
-              height: 10,
-              borderRadius: '50%',
-              backgroundColor: HANDLE_PURPLE,
-            }}
-          />
+
         </Box>
 
-        {/* Source handle — positioned at the purple circle (center-right of node) */}
+        {/* Source handle — dynamically positioned at the purple circle center */}
         <Handle
           type="source"
           position={Position.Right}
@@ -274,7 +285,8 @@ function DataFlowNodeComponent({ data }: NodeProps) {
             opacity: 0,
             width: 1,
             height: 1,
-            right: 12,
+            ...(handleTop !== undefined && { top: handleTop }),
+            right: 14,
           }}
         />
       </>
