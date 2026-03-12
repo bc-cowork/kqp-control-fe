@@ -3,7 +3,7 @@
 import type { NodeProps } from '@xyflow/react';
 
 import { memo, useRef, useState, useEffect } from 'react';
-import { Handle, Position } from '@xyflow/react';
+import { Handle, Position, useUpdateNodeInternals } from '@xyflow/react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -73,106 +73,119 @@ function RecvNodeBody({ channels }: { channels: number[] }) {
 
 // ----------------------------------------------------------------------
 
-function EntityNodeBody({ actions }: { actions: DataFlowAction[] }) {
+function ActionRow({
+  action,
+  idx,
+}: {
+  action: DataFlowAction;
+  idx: number;
+}) {
+  const isRouting = action.act === 'route' || action.act === 'kpass';
+  const circleColor = isRouting ? HANDLE_GREEN : HANDLE_GRAY;
   return (
-    <Stack sx={{ px: 1.5, pt: 0.5, pb: 0.5 }}>
-      {actions.map((action, idx) => {
-        const isRouting = action.act === 'route' || action.act === 'kpass';
-        const circleColor = isRouting ? HANDLE_GREEN : HANDLE_GRAY;
-        return (
-          <Box
-            key={idx}
-            sx={{
-              alignSelf: 'stretch',
-              display: 'flex',
-              alignItems: 'center',
-              borderRadius: '4px',
-              minHeight: 26,
-              overflow: 'hidden',
-              minWidth: 0,
-            }}
-          >
-            {/* Left col: act 'name', */}
-            <Box sx={{ width: 105, display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-              <Typography
-                component="span"
-                sx={{
-                  fontSize: 15,
-                  fontFamily: 'Roboto, sans-serif',
-                  fontWeight: 400,
-                  lineHeight: '22.5px',
-                  color: ACTION_GRAY,
-                }}
-              >
-                {'act '}
-              </Typography>
-              <Typography
-                component="span"
-                sx={{
-                  fontSize: 15,
-                  fontFamily: 'Roboto, sans-serif',
-                  fontWeight: 400,
-                  lineHeight: '22.5px',
-                  color: ACTION_COLOR,
-                  marginLeft: 0.5,
-                }}
-              >
-                {`'${action.act}'`}
-              </Typography>
-              <Typography
-                component="span"
-                sx={{
-                  fontSize: 15,
-                  fontFamily: 'Roboto, sans-serif',
-                  fontWeight: 400,
-                  lineHeight: '22.5px',
-                  color: ACTION_GRAY,
-                }}
-              >
-                ,
-              </Typography>
-            </Box>
+    <Box
+      sx={{
+        alignSelf: 'stretch',
+        display: 'flex',
+        alignItems: 'flex-start',
+        borderRadius: '4px',
+        minWidth: 0,
+      }}
+    >
+      {/* Left col: act 'name', */}
+      <Box sx={{ width: 105, display: 'flex', alignItems: 'flex-start', flexShrink: 0 }}>
+        <Typography
+          component="span"
+          sx={{
+            fontSize: 15,
+            fontFamily: 'Roboto, sans-serif',
+            fontWeight: 400,
+            lineHeight: '22.5px',
+            color: ACTION_GRAY,
+          }}
+        >
+          {'act '}
+        </Typography>
+        <Typography
+          component="span"
+          sx={{
+            fontSize: 15,
+            fontFamily: 'Roboto, sans-serif',
+            fontWeight: 400,
+            lineHeight: '22.5px',
+            color: ACTION_COLOR,
+            marginLeft: 0.5,
+          }}
+        >
+          {`'${action.act}'`}
+        </Typography>
+        <Typography
+          component="span"
+          sx={{
+            fontSize: 15,
+            fontFamily: 'Roboto, sans-serif',
+            fontWeight: 400,
+            lineHeight: '22.5px',
+            color: ACTION_GRAY,
+          }}
+        >
+          ,
+        </Typography>
+      </Box>
 
-            {/* Right col: {params} + circle indicator */}
-            <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', gap: 0.5, minWidth: 0 }}>
-              <Typography
-                sx={{
-                  flex: 1,
-                  minWidth: 0,
-                  fontSize: 15,
-                  fontFamily: 'Roboto, sans-serif',
-                  fontWeight: 400,
-                  lineHeight: '22.5px',
-                  color: ACTION_GRAY,
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                {formatParam(action.param)}
-              </Typography>
-              <Box
-                sx={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: '50%',
-                  border: `1.5px solid ${circleColor}`,
-                  flexShrink: 0,
-                }}
-              />
-            </Box>
-          </Box>
-        );
-      })}
-    </Stack>
+      {/* Right col: {params} + circle indicator with handle */}
+      <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', gap: 0.5, minWidth: 0 }}>
+        <Typography
+          sx={{
+            flex: 1,
+            minWidth: 0,
+            fontSize: 15,
+            fontFamily: 'Roboto, sans-serif',
+            fontWeight: 400,
+            lineHeight: '22.5px',
+            color: ACTION_GRAY,
+            wordWrap: 'break-word',
+          }}
+        >
+          {formatParam(action.param)}
+        </Typography>
+        {/* Circle with Handle placed directly on it */}
+        <Box sx={{ position: 'relative', flexShrink: 0, width: 10, height: 10 }}>
+          <Box
+            sx={{
+              width: 10,
+              height: 10,
+              borderRadius: '50%',
+              border: `1.5px solid ${circleColor}`,
+            }}
+          />
+          {isRouting && (
+            <Handle
+              type="source"
+              position={Position.Right}
+              id={`action-${idx}`}
+              style={{
+                opacity: 0,
+                width: 1,
+                height: 1,
+                position: 'absolute',
+                top: '50%',
+                right: 8,
+              }}
+            />
+          )}
+        </Box>
+      </Box>
+    </Box>
   );
 }
 
 // ----------------------------------------------------------------------
 
-function DataFlowNodeComponent({ data }: NodeProps) {
+function DataFlowNodeComponent({ id, data }: NodeProps) {
   const nodeData = data as DataFlowNodeData;
   const isRecv = nodeData.nodeType === 'recv';
+  const updateNodeInternals = useUpdateNodeInternals();
   const bodyRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const [handleTop, setHandleTop] = useState<number | undefined>(undefined);
@@ -182,8 +195,9 @@ function DataFlowNodeComponent({ data }: NodeProps) {
       const headerH = headerRef.current.offsetHeight;
       const bodyH = bodyRef.current.offsetHeight;
       setHandleTop(headerH + bodyH / 2);
+      updateNodeInternals(id);
     }
-  }, [isRecv, nodeData.channels]);
+  }, [isRecv, nodeData.channels, id, updateNodeInternals]);
 
   if (isRecv) {
     return (
@@ -294,11 +308,6 @@ function DataFlowNodeComponent({ data }: NodeProps) {
   }
 
   // Entity node
-  // Header height: p=1.5 (12px) + lineHeight 22.5px + p=1.5 (12px) + 1px border = 48px
-  // Body top padding: pt=0.5 = 4px; each action row: 26px
-  const HEADER_H = 48;
-  const BODY_PT = 4;
-  const ROW_H = 26;
   const actions = nodeData.actions || [];
 
   return (
@@ -311,7 +320,7 @@ function DataFlowNodeComponent({ data }: NodeProps) {
           opacity: 0,
           width: 1,
           height: 1,
-          top: HEADER_H / 2,
+          top: 24,
         }}
       />
 
@@ -319,7 +328,7 @@ function DataFlowNodeComponent({ data }: NodeProps) {
         sx={{
           width: ENTITY_NODE_WIDTH,
           borderRadius: '12px',
-          overflow: 'hidden',
+          overflow: 'visible',
           background: ENTITY_NODE_BG,
           position: 'relative',
           '&::before': {
@@ -391,27 +400,14 @@ function DataFlowNodeComponent({ data }: NodeProps) {
         </Stack>
 
         {/* Body: action rows */}
-        {actions.length > 0 && <EntityNodeBody actions={actions} />}
+        {actions.length > 0 && (
+          <Stack spacing={0.5} sx={{ px: 1.5, pt: 0.5, pb: 0.5 }}>
+            {actions.map((action, idx) => (
+              <ActionRow key={idx} action={action} idx={idx} />
+            ))}
+          </Stack>
+        )}
       </Box>
-
-      {/* Source handles — positioned at each routing action's circle (inside node) */}
-      {actions.map((action, idx) =>
-        action.act === 'route' || action.act === 'kpass' ? (
-          <Handle
-            key={`action-${idx}`}
-            type="source"
-            position={Position.Right}
-            id={`action-${idx}`}
-            style={{
-              opacity: 0,
-              width: 1,
-              height: 1,
-              top: HEADER_H + BODY_PT + idx * ROW_H + ROW_H / 2,
-              right: 20,
-            }}
-          />
-        ) : null
-      )}
 
       {/* Fallback source handle for non-route edges */}
       <Handle
