@@ -35,6 +35,24 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
 
   const chartData: ChartDataPoint[] = graphData?.metrics ? processChartData(graphData.metrics) : [];
 
+  const latestPoint = chartData.length > 0 ? chartData[chartData.length - 1] : null;
+
+  const formatBytes = (value: number): string => {
+    if (value >= 1_000_000_000) return `${(value / 1_000_000_000).toFixed(1)}GB`;
+    if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}MB`;
+    if (value >= 1_000) return `${(value / 1_000).toFixed(1)}KB`;
+    return `${value}B`;
+  };
+
+  const getSubTitle = (
+    metric: keyof ChartDataPoint
+  ): string => {
+    if (!latestPoint) return '-';
+    const value = latestPoint[metric] as number;
+    if (metric === 'cpu' || metric === 'memory') return `${value}%`;
+    if (metric === 'inbound_bytes' || metric === 'outbound_bytes') return formatBytes(value);
+    return value.toLocaleString();
+  };
 
   const responsiveChartHeight = {
     xs: '300px',
@@ -69,7 +87,7 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
           <ChartArea
             title="CPU"
             titleString={t('graph.cpu')}
-            subTitle="10% 4.26GHz"
+            subTitle={getSubTitle('cpu')}
             data={chartData}
             metric="cpu"
             threshold={50}
@@ -89,7 +107,7 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
           <ChartArea
             title="Memory"
             titleString={t('graph.memory')}
-            subTitle="10% 4.26GHz"
+            subTitle={getSubTitle('memory')}
             data={chartData}
             metric="memory"
             height="100%"
@@ -109,7 +127,7 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
           <ChartArea
             title="Inbound"
             titleString={t('graph.inbound')}
-            subTitle="10% 4.26GHz"
+            subTitle={getSubTitle(inboundTabs.value === 'count' ? 'inbound_count' : 'inbound_bytes')}
             data={chartData}
             metric={inboundTabs.value === 'count' ? 'inbound_count' : 'inbound_bytes'}
             height="100%"
@@ -132,7 +150,7 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
           <ChartArea
             title="Outbound"
             titleString={t('graph.outbound')}
-            subTitle="10% 4.26GHz"
+            subTitle={getSubTitle(outboundTabs.value === 'count' ? 'outbound_count' : 'outbound_bytes')}
             data={chartData}
             metric={outboundTabs.value === 'count' ? 'outbound_count' : 'outbound_bytes'}
             height="100%"
