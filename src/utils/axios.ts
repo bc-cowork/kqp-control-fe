@@ -139,6 +139,7 @@ export const endpoints = {
     info: (node: string) => `/apik/${node}/replay/info`,
   },
   nodes: {
+    info: (node: string) => `/apik/${node}/node/info`,
     channelInbound: {
       list: (node: string) => `/apik/${node}/channel/list`,
     },

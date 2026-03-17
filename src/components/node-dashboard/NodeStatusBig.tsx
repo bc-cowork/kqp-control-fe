@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import { Chip, Stack, SvgIcon, LinearProgress, CircularProgress } from '@mui/material';
 
 import { useTranslate } from 'src/locales';
-import { useGetDiskMetrics, useGetStatus } from 'src/actions/dashboard';
+import { useGetDiskMetrics } from 'src/actions/dashboard';
 import { grey, error, common, success } from 'src/theme/core';
 
 // ----------------------------------------------------------------------
@@ -16,16 +16,17 @@ import { grey, error, common, success } from 'src/theme/core';
 type Props = {
   selectedNodeParam: string;
   selectedNode: INodeItem;
+  nodeStatusLoading: boolean;
+  nodeStatusError?: any;
 };
 
-export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
+export function NodeStatusBig({ selectedNodeParam, selectedNode, nodeStatusLoading, nodeStatusError }: Props) {
   const { t } = useTranslate('node-dashboard');
-  const { status, statusLoading, statusError } = useGetStatus(selectedNodeParam);
   const { diskMetricsData } = useGetDiskMetrics(selectedNodeParam);
 
 
   const theme = useTheme();
-  const isOnline = status?.service_status?.okay;
+  const isOnline = selectedNode?.online_status;
 
   return (
     <Box
@@ -35,9 +36,9 @@ export function NodeStatusBig({ selectedNodeParam, selectedNode }: Props) {
         padding: theme.palette.mode === 'dark' ? '0px' : '4px'
       }}
     >
-      {statusLoading ? (
+      {nodeStatusLoading ? (
         <CircularProgress />
-      ) : statusError ? (
+      ) : nodeStatusError ? (
         <Typography>Error Fetching Status</Typography>
       ) : (
         <Box

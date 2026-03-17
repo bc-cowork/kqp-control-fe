@@ -332,6 +332,18 @@ interface MemoryGraphData {
 
 type MemoryGraphResponse = ApiResponse<MemoryGraphData>;
 
+// ---- useGetNodeInfo ----
+interface NodeInfoData {
+  id: string;
+  name: string;
+  desc: string;
+  emittable: boolean;
+  emit_count: number;
+  online_status: boolean;
+}
+
+type GetNodeInfoResponse = ApiResponse<NodeInfoData>;
+
 // Export all types
 export type {
   GetNodesResponse,
@@ -347,6 +359,7 @@ export type {
   GetAuditLogFrameResponse,
   GetAuditFrameListResponse,
   GetIssueItemQuotesResponse,
+  GetNodeInfoResponse,
   GetDiskMetricsResponse,
   GetMemoryMetricsResponse
 };

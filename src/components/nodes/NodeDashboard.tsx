@@ -1,6 +1,8 @@
 'use client';
 
-import { Grid } from '@mui/material';
+import { Grid, CircularProgress, Typography } from '@mui/material';
+
+import { useGetNodeInfo } from 'src/actions/nodes';
 
 import { NodeStatusBig } from '../node-dashboard/NodeStatusBig';
 import { NodeGraphsBig } from '../node-dashboard/NodeGraphsBig';
@@ -12,14 +14,25 @@ type Props = {
 };
 
 export function NodeDashboard({ selectedNodeId }: Props) {
-  const selectedNode = {
+  const { nodeInfo, nodeInfoLoading, nodeInfoError } = useGetNodeInfo(selectedNodeId);
+
+  const selectedNode = nodeInfo || {
     id: selectedNodeId,
-    name: 'Node 1',
-    desc: 'Node 1 Description',
-    emittable: true,
-    emit_count: 3761797,
-    online_status: true,
+    name: '',
+    desc: '',
+    emittable: false,
+    emit_count: 0,
+    online_status: false,
   };
+
+
+  if (nodeInfoLoading) {
+    return <CircularProgress />;
+  }
+
+  if (nodeInfoError) {
+    return <Typography color="error">Failed to load node info</Typography>;
+  }
 
   return (
     <Grid container>
@@ -31,7 +44,7 @@ export function NodeDashboard({ selectedNodeId }: Props) {
           marginBottom: { xs: '20px', md: 0 },
         }}
       >
-        <NodeStatusBig selectedNodeParam={selectedNodeId} selectedNode={selectedNode} />
+        <NodeStatusBig selectedNodeParam={selectedNodeId} selectedNode={selectedNode} nodeStatusLoading={nodeInfoLoading} nodeStatusError={nodeInfoError} />
       </Grid>
 
       <Grid

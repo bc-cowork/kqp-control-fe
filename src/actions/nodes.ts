@@ -2,6 +2,7 @@ import type { IChannelItem, IAuditLogItem, IPaginationMeta } from 'src/types/nod
 import type {
   GetIssuesResponse,
   MemoryGraphResponse,
+  GetNodeInfoResponse,
   GetChannelListResponse,
   GetAuditLogListResponse,
   GetAuditLogFrameResponse,
@@ -30,6 +31,33 @@ const DEFAULT_PAGINATION_META = {
   has_previous_page: false,
   total_pages: 0,
 };
+
+// ----------------------------------------------------------------------
+
+/** **************************************
+ * Node Info
+ *************************************** */
+export function useGetNodeInfo(node: string) {
+  const url = node ? endpoints.nodes.info(node) : '';
+
+  const { data, isLoading, error, isValidating } = useSWR<GetNodeInfoResponse>(
+    url,
+    fetcher,
+    swrOptions
+  );
+
+  const memoizedValue = useMemo(
+    () => ({
+      nodeInfo: data?.data || null,
+      nodeInfoLoading: isLoading,
+      nodeInfoError: error,
+      nodeInfoValidating: isValidating,
+    }),
+    [data?.data, error, isLoading, isValidating]
+  );
+
+  return memoizedValue;
+}
 
 // ----------------------------------------------------------------------
 
