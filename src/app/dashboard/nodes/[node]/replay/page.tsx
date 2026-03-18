@@ -585,16 +585,14 @@ export default function Page({ params }: Props) {
                                                                 }
                                                                 const BASE_URL = `${CONFIG.serverUrl}/apik/${node}/replay`;
 
-                                                                const paramsLocal = new URLSearchParams(replayData).toString();
-                                                                const fullUrl = `${BASE_URL}?${paramsLocal}`;
-
-
                                                                 try {
-                                                                    const response = await fetch(fullUrl, {
-                                                                        method: 'GET',
+                                                                    const response = await fetch(BASE_URL, {
+                                                                        method: 'POST',
                                                                         headers: {
+                                                                            'Content-Type': 'application/json',
                                                                             'accept': 'application/json',
                                                                         },
+                                                                        body: JSON.stringify(replayData),
                                                                     });
 
                                                                     if (!response.ok) {
