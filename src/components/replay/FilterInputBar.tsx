@@ -18,6 +18,11 @@ const customColors = {
 export const FilterInputBar = ({ expression, setExpression }: any) => {
     const { t } = useTranslate('replay');
     const [inputExpression, setInputExpression] = React.useState(expression);
+
+    React.useEffect(() => {
+        setInputExpression(expression);
+    }, [expression]);
+
     const handleClearExpression = () => {
         setInputExpression('');
     }
