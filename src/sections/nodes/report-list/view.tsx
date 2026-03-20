@@ -37,7 +37,7 @@ export function ReportListView({ nodeId }: Props) {
     const { t } = useTranslate('daily-report-list');
     const router = useRouter();
 
-    const url = endpoints.function.list(nodeId);
+    const url = endpoints.report.list(nodeId);
     const { data, error, isLoading } = useSWR(url, fetcher);
 
     const rows: ReportItem[] = (data && data.data && data.data.list) || [];

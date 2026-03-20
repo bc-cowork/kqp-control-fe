@@ -28,12 +28,12 @@ export default function Page({ params }: Props) {
     const decodedLayout = decodeURIComponent(layout);
 
 
-    const url = endpoints.layouts.detail(node, decodedLayout);
+    const url = endpoints.report.detail(node, decodedLayout);
     const { data, isLoading, error } = useSWR(url, fetcher);
 
-    const reportItem = data?.data?.detail || {};
-    const layoutEmpty = data?.data?.detail == null;
-    const layoutDefinition = data?.data?.layout_definition || '';
+    const reportItem = data?.data?.report || {};
+    const reportEmpty = data?.data?.report == null;
+    const reportDefinition = data?.data?.contents || '';
 
     return (
         <DashboardContent maxWidth="xl">
@@ -70,7 +70,7 @@ export default function Page({ params }: Props) {
                                     <CircularProgress />
                                 </TableCell>
                             </TableRow>
-                        ) : layoutEmpty ? (
+                        ) : reportEmpty ? (
                             <TableRow>
                                 <TableCell colSpan={8}>No Process Found</TableCell>
                             </TableRow>
@@ -85,8 +85,8 @@ export default function Page({ params }: Props) {
                             >
                                 <TableCell align="left">{ }</TableCell>
                                 <TableCell align="left">{reportItem.name}</TableCell>
-                                <TableCell align='left'>{reportItem.timestamp}</TableCell>
-                                <TableCell align="left">{reportItem.channel_in}</TableCell>
+                                <TableCell align='left'>{reportItem.job_at}</TableCell>
+                                <TableCell align="left">{reportItem.last_exec}</TableCell>
                                 <TableCell align="left">{ }</TableCell>
                                 <TableCell align="left">{ }</TableCell>
                                 <TableCell align="left">{reportItem?.desc}</TableCell>
@@ -121,7 +121,7 @@ export default function Page({ params }: Props) {
 
                             }}
                         >
-                            {layoutDefinition}
+                            {reportDefinition}
                         </SyntaxHighlighter>
                     </Box>
                 </Box>

@@ -121,6 +121,10 @@ export const endpoints = {
     list: (node: string) => `/apik/${node}/function/list`,
     detail: (node: string, identifyId: string) => `/apik/${node}/function/${identifyId}`,
   },
+  report: {
+    list: (node: string) => `/apik/${node}/report/list`,
+    detail: (node: string, reportName: string) => `/apik/${node}/report/${reportName}`,
+  },
   alert: {
     list: (node: string) => `/apik/${node}/alert/list`,
     detail: (node: string, identifyId: string) => `/apik/${node}/alert/${identifyId}`,
