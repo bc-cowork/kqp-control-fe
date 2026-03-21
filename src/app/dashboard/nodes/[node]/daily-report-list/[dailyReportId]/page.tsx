@@ -18,14 +18,14 @@ import { grey } from '@mui/material/colors';
 type Props = {
     params: {
         node: string;
-        layout: string;
+        dailyReportId: string;
     };
 };
 
 export default function Page({ params }: Props) {
-    const { node, layout } = params;
+    const { node, dailyReportId } = params;
     const { t } = useTranslate('daily-report-list');
-    const decodedLayout = decodeURIComponent(layout);
+    const decodedLayout = decodeURIComponent(dailyReportId);
 
 
     const url = endpoints.report.detail(node, decodedLayout);
