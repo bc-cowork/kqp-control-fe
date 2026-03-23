@@ -3,7 +3,7 @@ set -euo pipefail
 
 # 배포용 분할 압축 스크립트
 # 프로젝트 디렉터리를 99MB 이하로 분할 압축합니다.
-# 제외 대상: CLAUDE.md, .git/, .github/, .gitignore, scripts/
+# 제외 대상: CLAUDE.md, .git/, .github/, .gitignore, scripts/, .env.local, .claude/
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
@@ -33,6 +33,8 @@ tar czf - \
   --exclude="${PROJECT_NAME}/.github" \
   --exclude="${PROJECT_NAME}/.gitignore" \
   --exclude="${PROJECT_NAME}/scripts" \
+  --exclude="${PROJECT_NAME}/.env.local" \
+  --exclude="${PROJECT_NAME}/.claude" \
   --exclude="${PROJECT_NAME}/deploy-output" \
   "$PROJECT_NAME" \
   | split -b "$SPLIT_SIZE" -a 2 - "$OUTPUT_DIR/${FILE_PREFIX}"
