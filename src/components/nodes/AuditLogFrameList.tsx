@@ -180,7 +180,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
               </TableContainer>
             </Box>
           </Grid>
-          <Grid md={12} lg={3.5} sx={{ pl: 1.5, mb: '24px' }}>
+          <Grid md={12} lg={3.5} sx={{ pl: 1.5, mb: '24px', mt: { lg: 2 } }}>
             <Box sx={{ borderRadius: '12px', backgroundColor: grey[900], p: 1 }}>
               <Grid container rowSpacing='8px' columnSpacing='24px'>
                 <Grid xs={12} md={6} lg={12} xl={12}>
