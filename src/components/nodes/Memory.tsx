@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 import {
   Box,
@@ -28,15 +28,13 @@ import { useTranslate } from 'src/locales';
 import { grey, common } from 'src/theme/core';
 import { useGetIssues, useGetIssueGraph } from 'src/actions/nodes';
 
-import AddFilter from '../common/AddFilter';
 import FadingDivider from '../common/FadingDivider';
 import { TableEmptyRows } from '../table/table-empty-rows';
 import { TableErrorRows } from '../table/table-error-rows';
 import { ChartAreaDark } from '../memory-page/ChartAreaDark';
 import { TableLoadingRows } from '../table/table-loading-rows';
+import { MemorySearchBar } from '../memory-page/MemorySearchBar';
 import TablePaginationCustom from '../common/TablePaginationCustom';
-
-import type { Filter } from '../common/AddFilter';
 
 // ----------------------------------------------------------------------
 
@@ -60,34 +58,18 @@ export function Memory({ selectedNodeId }: Props) {
 
   const { issueGraphData, issueGraphDataLoading } = useGetIssueGraph(selectedNodeId);
 
-  const [filters, setFilters] = useState<Filter | null>(null);
-
   const graphTabs = useTabs('%');
 
-  useEffect(() => {
-    if (filters) {
-      const filterCode = Array.isArray(filters)
-        ? filters.find((filter: { code: any }) => filter.code)?.code
-        : null;
-      if (!filterCode) {
-        setCode('');
-      }
-    } else {
-      setCode('');
-    }
-  }, [filters]);
-
-  const handleSearch = (filter: any) => {
-    if (filter?.code) {
-      setCode(filter.code);
-    }
+  // Update the search term and jump back to the first page so results aren't
+  // shown against a stale page offset. `debouncedCode` feeds the search API.
+  const handleSearchChange = (value: string) => {
+    setCode(value);
+    setOffset(1);
   };
 
-  const onKeyDown = (enteredCode?: string | boolean) => {
-    console.log('onKeyDown', enteredCode);
-    if (enteredCode) {
-      setCode(enteredCode as string);
-    }
+  const handleResetSearch = () => {
+    setCode('');
+    setOffset(1);
   };
 
   const onChangeRowsPerPage = useCallback((newRowsPerPage: number) => {
@@ -240,13 +222,10 @@ export function Memory({ selectedNodeId }: Props) {
           pl: { xs: 0, lg: 1.25 }
         }}
       >
-        <AddFilter
-          filters={filters}
-          setFilters={setFilters}
-          page="Memory"
-          onApply={handleSearch}
-          onCodeEnter={onKeyDown}
-          count={issues.max_issue_count}
+        <MemorySearchBar
+          value={code}
+          onChange={handleSearchChange}
+          onReset={handleResetSearch}
         />
         <Box
           sx={{

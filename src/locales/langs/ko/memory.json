@@ -15,7 +15,11 @@
     "code": "종목 코드",
     "reset": "초기화",
     "search": "검색",
-    "go_to_page": "이동할 페이지"
+    "go_to_page": "이동할 페이지",
+    "search_column": "검색 컬럼",
+    "search_column_code": "종목코드",
+    "search_term": "검색어",
+    "search_placeholder": "검색어 입력"
   },
   "table": {
     "rows_per_page": "페이지당 종목 수",

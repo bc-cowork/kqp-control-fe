@@ -15,7 +15,11 @@
     "code": "Code",
     "reset": "Reset",
     "search": "Search",
-    "go_to_page": "Go to page"
+    "go_to_page": "Go to page",
+    "search_column": "Search Column",
+    "search_column_code": "Issue Code",
+    "search_term": "Search Term",
+    "search_placeholder": "Enter search term"
   },
   "table": {
     "rows_per_page": "Rows per page",
