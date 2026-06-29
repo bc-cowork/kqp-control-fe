@@ -150,11 +150,54 @@ interface FrameSpec {
   size: number;
 }
 
+// ---- Layout flow visualization (added under the frame Data section) ----
+interface LayoutFlowAction {
+  act: string;
+  args: Record<string, unknown>;
+}
+
+interface LayoutFlowEntity {
+  desc?: string;
+  recv2r?: number[];
+  topics?: {
+    inbound?: LayoutFlowAction[];
+    outbound?: LayoutFlowAction[];
+  };
+}
+
+interface LayoutFlowDataChange {
+  step: number;
+  layoutNode: string;
+  action: string;
+  args: Record<string, unknown>;
+  dataBefore: string;
+  dataAfter: string;
+  change: string;
+}
+
+interface LayoutFlow {
+  layoutName: string;
+  process: string;
+  topic: string;
+  matchedBy: {
+    frameRid: number;
+    layoutNode: string;
+    condition: string;
+  };
+  layoutSubset: Record<string, LayoutFlowEntity>;
+  diagram?: {
+    nodes: Array<{ id: string; label: string; type: string; summary?: string }>;
+    edges: Array<{ from: string; to: string; label?: string }>;
+  };
+  dataChanges?: LayoutFlowDataChange[];
+}
+
 interface AuditLogFrameData {
   file: string;
   nodeId: string;
   desc: string;
   spec: FrameSpec;
+  layoutFlow?: LayoutFlow;
 }
 
 type GetAuditLogFrameResponse = ApiResponse<AuditLogFrameData>;
@@ -361,5 +404,7 @@ export type {
   GetIssueItemQuotesResponse,
   GetNodeInfoResponse,
   GetDiskMetricsResponse,
-  GetMemoryMetricsResponse
+  GetMemoryMetricsResponse,
+  LayoutFlow,
+  LayoutFlowDataChange,
 };
