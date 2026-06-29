@@ -20,7 +20,7 @@ import { useTabs, useRouter } from 'src/routes/hooks';
 
 import { useDebounce } from 'src/hooks/use-debounce';
 
-import { fDate } from 'src/utils/format-time';
+import { fDate, formatDateCustom } from 'src/utils/format-time';
 import { formatNumber } from 'src/utils/helper';
 import { processMemoryChartData } from 'src/utils/process-chart-data';
 
@@ -283,7 +283,11 @@ export function Memory({ selectedNodeId }: Props) {
                         <TableCell align="right">{formatNumber(issue.seq)}</TableCell>
                         <TableCell>{issue.code}</TableCell>
                         <TableCell>{issue.name}</TableCell>
-                        <TableCell>{`[${issue.daily_info_dates.join(' / ')}]`}</TableCell>
+                        <TableCell>
+                          {`[${issue.daily_info_dates
+                            .map((d: number) => (d ? formatDateCustom(d.toString()) : '-'))
+                            .join(' / ')}]`}
+                        </TableCell>
                         <TableCell align="right">{fDate(issue.compet, 'YYYY-MM-DD')}</TableCell>
                       </TableRow>
                     )

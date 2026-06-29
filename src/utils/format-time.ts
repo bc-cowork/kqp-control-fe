@@ -273,7 +273,7 @@ export function formatDateCustom(dateStr?: string) {
 
   const date = dayjs(dateStr);
   if (date.isValid()) {
-    const formattedDate = date.format('YYYY/MM/DD');
+    const formattedDate = date.format('YYYY-MM-DD');
     return formattedDate;
   }
   return '';

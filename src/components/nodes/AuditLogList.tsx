@@ -20,6 +20,7 @@ import {
 import { useRouter } from 'src/routes/hooks';
 
 import { formatBytes } from 'src/utils/helper';
+import { formatDateCustom } from 'src/utils/format-time';
 
 import { useTranslate } from 'src/locales';
 import { useAuditLogList } from 'src/actions/nodes';
@@ -159,7 +160,7 @@ export function AuditLogList({ selectedNodeId }: Props) {
                 sx={{ cursor: 'pointer' }}
               >
                 <TableCell align="right">{auditLog.id}</TableCell>
-                <TableCell align="right">{auditLog.date}</TableCell>
+                <TableCell align="right">{formatDateCustom(auditLog.date?.toString())}</TableCell>
                 <TableCell>{auditLog.kind}</TableCell>
                 <TableCell align='right'>{auditLog?.desc || '-'}</TableCell>
                 <TableCell align="right">{formatBytes(auditLog.size)}</TableCell>
