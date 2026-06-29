@@ -3,6 +3,7 @@
 import Grid from '@mui/material/Unstable_Grid2';
 import { Box, SvgIcon, useTheme, Typography } from '@mui/material';
 
+import { formatBytes } from 'src/utils/helper';
 import { formatDateCustom } from 'src/utils/format-time';
 
 import { grey } from 'src/theme/core';
@@ -116,7 +117,7 @@ export function AuditLogFrameTop({ selectedFile, auditFrame, onMaxFrameRefresh }
           }}
         >
           <Typography variant="caption">File Size</Typography>
-          <Typography variant="subtitle1">{auditFrame?.file_size?.toLocaleString()}</Typography>
+          <Typography variant="subtitle1">{formatBytes(auditFrame?.file_size)}</Typography>
         </Grid>
         <Grid
           md={1.2}
@@ -171,7 +172,7 @@ export function AuditLogFrameTop({ selectedFile, auditFrame, onMaxFrameRefresh }
           }}
         >
           <Typography variant="caption">Size</Typography>
-          <Typography variant="subtitle1">{auditFrame?.size?.toLocaleString()}</Typography>
+          <Typography variant="subtitle1">{formatBytes(auditFrame?.size)}</Typography>
         </Grid>
         <Grid
           md={0.8}

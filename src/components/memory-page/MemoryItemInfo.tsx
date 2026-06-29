@@ -3,6 +3,9 @@
 import { Box, Stack, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 
+import { fDate } from 'src/utils/format-time';
+import { formatNumber } from 'src/utils/helper';
+
 import { useTranslate } from 'src/locales';
 
 // ----------------------------------------------------------------------
@@ -42,7 +45,7 @@ export function MemoryItemInfo({ issueInfo }: Props) {
         border: `1px solid ${grey[700]}`,
       }}
     >
-      <LabelValueRow label={t('item.left.seq')} value={issueInfo?.seq?.toLocaleString()} />
+      <LabelValueRow label={t('item.left.seq')} value={formatNumber(issueInfo?.seq)} />
       <LabelValueRow label={t('item.left.code')} value={issueInfo.code} />
       <LabelValueRow label={t('item.left.name')} value={issueInfo.name} />
       <LabelValueRow
@@ -53,7 +56,7 @@ export function MemoryItemInfo({ issueInfo }: Props) {
             : issueInfo.g1_ssn_id
         }
       />
-      <LabelValueRow label={t('item.left.compet')} value={issueInfo.compet?.toLocaleString()} />
+      <LabelValueRow label={t('item.left.compet')} value={fDate(issueInfo.compet, 'YYYY-MM-DD') ?? undefined} />
     </Box>
   );
 }

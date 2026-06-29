@@ -5,6 +5,50 @@
 
 // ----------------------------------------------------------------------
 
+/**
+ * Format a numeric value with standard thousands grouping (e.g. 2889371 -> "2,889,371").
+ * API values are often typed loosely (string | number), and calling `.toLocaleString()`
+ * directly on a string is a no-op — so we coerce to a number first. Uses the `en-US`
+ * locale so grouping is consistent (commas at thousands, never for 3-digit numbers).
+ * Non-numeric / empty values are returned unchanged.
+ */
+export function formatNumber(
+  value: string | number | null | undefined
+): string | number | undefined {
+  if (value === undefined || value === null || value === '') return undefined;
+  const num = Number(value);
+  return Number.isNaN(num) ? value : num.toLocaleString('en-US');
+}
+
+/**
+ * Format a byte count into a human-readable size with units (B, KB, MB, GB, TB, ...).
+ * Uses 1024 as the base (binary). API values may be string-typed, so we coerce first.
+ * Non-numeric / empty values are returned unchanged; non-finite numbers are passed through.
+ * e.g. 1024 -> "1 KB", 1572864 -> "1.5 MB", 0 -> "0 B"
+ */
+export function formatBytes(
+  value: string | number | null | undefined,
+  decimals = 2
+): string | number | undefined {
+  if (value === undefined || value === null || value === '') return undefined;
+  const bytes = Number(value);
+  if (Number.isNaN(bytes) || !Number.isFinite(bytes)) return value;
+  if (bytes === 0) return '0 B';
+
+  const base = 1024;
+  const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB'];
+  const exponent = Math.min(
+    Math.floor(Math.log(Math.abs(bytes)) / Math.log(base)),
+    units.length - 1
+  );
+  // parseFloat drops insignificant trailing zeros (1.50 -> 1.5, 1.00 -> 1)
+  const amount = parseFloat((bytes / base ** exponent).toFixed(decimals));
+
+  return `${amount} ${units[exponent]}`;
+}
+
+// ----------------------------------------------------------------------
+
 export function flattenArray<T>(list: T[], key = 'children'): T[] {
   let children: T[] = [];
 

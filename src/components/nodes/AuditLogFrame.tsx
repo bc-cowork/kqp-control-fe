@@ -24,6 +24,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 
+import { formatBytes, formatNumber } from 'src/utils/helper';
 import { formatDateCustom } from 'src/utils/format-time';
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
@@ -529,7 +530,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
               >
                 <Typography sx={{ color: grey[200], fontSize: 15 }}>File Size</Typography>
                 <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                  {auditFrame?.file_size?.toLocaleString()}
+                  {formatBytes(auditFrame?.file_size)}
                 </Typography>
               </Box>
               <Box
@@ -570,7 +571,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                 >
                   <Typography sx={{ color: grey[200], fontSize: 15 }}>Seq</Typography>
                   <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                    {auditFrame?.seq?.toLocaleString()}
+                    {formatNumber(auditFrame?.seq)}
                   </Typography>
                 </Box>
 
@@ -621,7 +622,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                     >
                       <Typography sx={{ color: grey[200], fontSize: 15 }}>Size</Typography>
                       <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                        {auditFrame?.size?.toLocaleString()}
+                        {formatBytes(auditFrame?.size)}
                       </Typography>
                     </Box>
                   </Grid>

@@ -19,7 +19,7 @@ const swrOptions = {
   revalidateIfStale: true,
   revalidateOnFocus: false,
   revalidateOnReconnect: false,
-  dedupingInterval: 0,
+  shouldRetryOnError: false,
 };
 
 // ----------------------------------------------------------------------

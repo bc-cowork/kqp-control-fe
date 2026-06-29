@@ -8,11 +8,22 @@ import mockData from '../mocks/mock-data.json'; // Import the mock data
 
 // ----------------------------------------------------------------------
 
-const axiosInstance = axios.create({ baseURL: CONFIG.serverUrl });
+const axiosInstance = axios.create({
+  baseURL: CONFIG.serverUrl,
+  // Fail slow requests as a timeout instead of letting them hang indefinitely.
+  timeout: CONFIG.apiTimeout,
+  timeoutErrorMessage: 'No result returned due to timeout',
+});
 
 axiosInstance.interceptors.response.use(
   (response) => response,
-  (error) => Promise.reject((error.response && error.response.data) || 'Something went wrong!')
+  (error) => {
+    // A timeout (slow/high-CPU backend) is not retried — surface it as a clear message.
+    if (error.code === 'ECONNABORTED') {
+      return Promise.reject('No result returned due to timeout');
+    }
+    return Promise.reject((error.response && error.response.data) || 'Something went wrong!');
+  }
 );
 
 export default axiosInstance;

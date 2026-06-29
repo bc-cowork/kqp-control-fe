@@ -18,6 +18,7 @@ import { Breadcrumb } from 'src/components/common/Breadcrumb';
 import { useTranslate } from 'src/locales';
 import { paths } from 'src/routes/paths';
 import { fetcher, endpoints } from 'src/utils/axios';
+import { formatBytes } from 'src/utils/helper';
 import Chip from '@mui/material/Chip';
 import { useRouter } from 'next/navigation';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -106,7 +107,7 @@ export default function Page({ params }: Props) {
                                 <TableCell align='left'>{specItem.timestamp}</TableCell>
                                 <TableCell align="left">{specItem.ref_identifies}</TableCell>
                                 <TableCell align="left">{specItem.frags?.toLocaleString()}</TableCell>
-                                <TableCell align="left">{specItem.size?.toLocaleString()}</TableCell>
+                                <TableCell align="left">{formatBytes(specItem.size)}</TableCell>
                                 <TableCell align="left">{specItem?.desc}</TableCell>
                                 <TableCell align="left">{ }</TableCell>
 

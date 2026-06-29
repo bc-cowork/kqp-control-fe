@@ -19,6 +19,8 @@ import {
 
 import { useRouter } from 'src/routes/hooks';
 
+import { formatBytes } from 'src/utils/helper';
+
 import { useTranslate } from 'src/locales';
 import { useAuditLogList } from 'src/actions/nodes';
 import { grey, common } from 'src/theme/core/palette';
@@ -160,7 +162,7 @@ export function AuditLogList({ selectedNodeId }: Props) {
                 <TableCell align="right">{auditLog.date}</TableCell>
                 <TableCell>{auditLog.kind}</TableCell>
                 <TableCell align='right'>{auditLog?.desc || '-'}</TableCell>
-                <TableCell align="right">{auditLog.size?.toLocaleString()}</TableCell>
+                <TableCell align="right">{formatBytes(auditLog.size)}</TableCell>
               </TableRow>
             ))
           )}

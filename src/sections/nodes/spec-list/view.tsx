@@ -17,6 +17,7 @@ import { DashboardContent } from "src/layouts/dashboard";
 import useSWR from "swr";
 import { Breadcrumb } from "src/components/common/Breadcrumb";
 import { fetcher, endpoints } from "src/utils/axios";
+import { formatBytes } from "src/utils/helper";
 import { useRouter } from 'next/navigation';
 import { paths } from 'src/routes/paths';
 
@@ -98,7 +99,7 @@ export function SpecListView({ nodeId }: Props) {
                                     <TableCell>{row.timestamp}</TableCell>
                                     <TableCell>{row.ref_identifies}</TableCell>
                                     <TableCell>{row.frags?.toLocaleString()}</TableCell>
-                                    <TableCell>{row.size?.toLocaleString()}</TableCell>
+                                    <TableCell>{formatBytes(row.size)}</TableCell>
                                     <TableCell>{row.desc}</TableCell>
                                     <TableCell align="right">{ }</TableCell>
                                 </TableRow>

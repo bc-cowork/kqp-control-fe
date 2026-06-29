@@ -20,6 +20,8 @@ import { useTabs, useRouter } from 'src/routes/hooks';
 
 import { useDebounce } from 'src/hooks/use-debounce';
 
+import { fDate } from 'src/utils/format-time';
+import { formatNumber } from 'src/utils/helper';
 import { processMemoryChartData } from 'src/utils/process-chart-data';
 
 import { useTranslate } from 'src/locales';
@@ -283,7 +285,9 @@ export function Memory({ selectedNodeId }: Props) {
                 ) : issuesEmpty ? (
                   <TableEmptyRows text="No data for memory logs" />
                 ) : issuesError ? (
-                  <TableErrorRows />
+                  <TableErrorRows
+                    text={typeof issuesError === 'string' ? issuesError : 'Error fetching list'}
+                  />
                 ) : (
                   issues.issueList.map(
                     (
@@ -297,11 +301,11 @@ export function Memory({ selectedNodeId }: Props) {
                         }
                         sx={{ cursor: 'pointer' }}
                       >
-                        <TableCell align="right">{issue.seq?.toLocaleString()}</TableCell>
+                        <TableCell align="right">{formatNumber(issue.seq)}</TableCell>
                         <TableCell>{issue.code}</TableCell>
                         <TableCell>{issue.name}</TableCell>
                         <TableCell>{`[${issue.daily_info_dates.join(' / ')}]`}</TableCell>
-                        <TableCell align="right">{issue.compet?.toLocaleString()}</TableCell>
+                        <TableCell align="right">{fDate(issue.compet, 'YYYY-MM-DD')}</TableCell>
                       </TableRow>
                     )
                   )

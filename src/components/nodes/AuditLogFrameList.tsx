@@ -23,6 +23,7 @@ import {
 
 import { useRouter } from 'src/routes/hooks';
 
+import { formatBytes, formatNumber } from 'src/utils/helper';
 import { formatDateCustom } from 'src/utils/format-time';
 
 import { useTranslate } from 'src/locales';
@@ -182,10 +183,10 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                             }}
                             sx={{ cursor: 'pointer' }}
                           >
-                            <TableCell align="right">{auditFrame.seq?.toLocaleString()}</TableCell>
+                            <TableCell align="right">{formatNumber(auditFrame.seq)}</TableCell>
                             <TableCell align="right">{auditFrame.head}</TableCell>
                             <TableCell align="right">{auditFrame.rid?.toLocaleString()}</TableCell>
-                            <TableCell align="right">{auditFrame.size?.toLocaleString()}</TableCell>
+                            <TableCell align="right">{formatBytes(auditFrame.size)}</TableCell>
                           </TableRow>
                         )
                       )
@@ -272,7 +273,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                       {t('right_side_audit_log_list.file_size')}
                     </Typography>
                     <Typography sx={{ color: theme.palette.common.white, fontSize: 17, fontWeight: 500 }}>
-                      {auditFrameList?.file_size?.toLocaleString()}
+                      {formatBytes(auditFrameList?.file_size)}
                     </Typography>
                   </Box>
 

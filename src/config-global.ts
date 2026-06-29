@@ -9,6 +9,7 @@ export type ConfigValue = {
   appVersion: string;
   apiDataType: string;
   serverUrl: string;
+  apiTimeout: number;
   assetsDir: string;
   isStaticExport: boolean;
   auth: {
@@ -38,6 +39,7 @@ export const CONFIG: ConfigValue = {
   appVersion: packageJson.version,
   apiDataType: 'real',
   serverUrl: process.env.NEXT_PUBLIC_SERVER_URL ?? '',
+  apiTimeout: Number(process.env.NEXT_PUBLIC_API_TIMEOUT) || 30000,
   assetsDir: process.env.NEXT_PUBLIC_ASSETS_DIR ?? '',
   isStaticExport: JSON.parse(`${process.env.BUILD_STATIC_EXPORT}`),
   /**
