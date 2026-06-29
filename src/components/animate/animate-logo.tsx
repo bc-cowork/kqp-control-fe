@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 
 import { varAlpha } from 'src/theme/styles';
 
-import { Logo } from '../logo';
+import { LogoAnimated } from '../logo';
 
 // ----------------------------------------------------------------------
 
@@ -37,9 +37,22 @@ export function AnimateLogo1({ logo, sx, ...other }: AnimateLogoProps) {
           repeat: Infinity,
           ease: 'easeInOut',
         }}
-        sx={{ display: 'inline-flex' }}
+        sx={{
+          inset: 0,
+          display: 'flex',
+          position: 'absolute',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
       >
-        {logo ?? <Logo disableLink width={64} height={64} />}
+        {logo ?? (
+          <LogoAnimated
+            disableLink
+            width={64}
+            height={64}
+            sx={{ justifyContent: 'center', alignItems: 'center', '& img': { ml: 0 } }}
+          />
+        )}
       </Box>
 
       <Box
@@ -52,10 +65,12 @@ export function AnimateLogo1({ logo, sx, ...other }: AnimateLogoProps) {
         }}
         transition={{ ease: 'linear', duration: 3.2, repeat: Infinity }}
         sx={{
+          inset: 0,
+          margin: 'auto',
           position: 'absolute',
           width: 'calc(100% - 20px)',
           height: 'calc(100% - 20px)',
-          border: (theme) => `solid 3px ${varAlpha(theme.vars.palette.primary.darkChannel, 0.24)}`,
+          border: () => `solid 3px rgba(3, 73, 197, 0.43)`,
         }}
       />
 
@@ -72,7 +87,7 @@ export function AnimateLogo1({ logo, sx, ...other }: AnimateLogoProps) {
           width: 1,
           height: 1,
           position: 'absolute',
-          border: (theme) => `solid 8px ${varAlpha(theme.vars.palette.primary.darkChannel, 0.24)}`,
+          border: () => `solid 8px rgba(3, 73, 197, 0.43)`,
         }}
       />
     </Box>
@@ -97,7 +112,7 @@ export function AnimateLogo2({ logo, sx, ...other }: AnimateLogoProps) {
       }}
       {...other}
     >
-      {logo ?? <Logo sx={{ zIndex: 9 }} />}
+      {logo ?? <LogoAnimated sx={{ zIndex: 9 }} />}
 
       <Box
         component={m.div}
