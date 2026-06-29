@@ -30,12 +30,9 @@ import { useTranslate } from 'src/locales';
 import { grey, common } from 'src/theme/core';
 import { useAuditFrameList } from 'src/actions/nodes';
 
-import AddFilter from '../common/AddFilter';
 import FadingDivider from '../common/FadingDivider';
 import TablePaginationCustom from '../common/TablePaginationCustom';
 import { CustomTextFieldDark } from '../audit-log-page/CustomTextFieldDark';
-
-import type { Filter } from '../common/AddFilter';
 
 // ----------------------------------------------------------------------
 
@@ -53,8 +50,6 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
   const [offset, setOffset] = useState<number>(0);
   const [refreshKey, setRefreshKey] = useState<number>(0);
   const [frameSeq, setFrameSeq] = useState<number | null>(null);
-
-  const [filters, setFilters] = useState<Filter | null>(null);
 
   const {
     auditFrameList,
@@ -100,10 +95,6 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
     setPage(0);
   };
 
-  const handleSearch = (filter: any) => {
-    console.log('Applying filter:', filter);
-  };
-
   function handleMoveToFrame(event: React.KeyboardEvent<HTMLDivElement>): void {
     if (event.key === 'Enter') {
       if (frameSeq) {
@@ -127,13 +118,6 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
               lg: 0
             }}
           >
-            <AddFilter
-              filters={filters}
-              setFilters={setFilters}
-              page="Audit Frame List"
-              onApply={handleSearch}
-              count={auditFrameList?.max_frame || 0}
-            />
             <Box
               sx={{
                 borderBottomRightRadius: '12px',
