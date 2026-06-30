@@ -34,11 +34,14 @@ import { useGetAuditLogFrame } from 'src/actions/nodes';
 import { grey, error, common, primary } from 'src/theme/core';
 
 import { Iconify } from '../iconify';
+import AddFilter from '../common/AddFilter';
 import FadingDivider from '../common/FadingDivider';
 import { TableErrorRows } from '../table/table-error-rows';
 import { DUMMY_LAYOUT_FLOW } from '../audit-log-page/dummy-layout-flow';
 import TablePaginationCustomShort from '../common/TablePaginationCustomShort';
 import { AuditFrameLayoutFlow } from '../audit-log-page/AuditFrameLayoutFlow';
+
+import type { Filter } from '../common/AddFilter';
 
 
 // ----------------------------------------------------------------------
@@ -67,6 +70,8 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
 
   const { auditFrame, auditFrameLayoutFlow, auditFrameError, auditFrameLoading, auditFrameFragsEmpty } =
     useGetAuditLogFrame(selectedNodeId, selectedFile, apiSeq, side, count, cond, refreshKey);
+
+  const [filters, setFilters] = useState<Filter | null>(null);
 
   useEffect(() => {
     if (auditFrame?.seq !== undefined && auditFrame.seq !== seq) {
@@ -153,6 +158,84 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
     setDialogMessage('');
   };
 
+  const onFilterApply = () => {
+    if (filters) {
+      const filterCount = Array.isArray(filters)
+        ? filters.find((filter: { count: any }) => filter.count)?.count
+        : null;
+
+      const filterSide = Array.isArray(filters)
+        ? filters.find((filter: { side: any }) => filter.side)?.side
+        : null;
+
+      const filterCond = Array.isArray(filters)
+        ? filters.find((filter: { cond: any }) => filter.cond)?.cond
+        : null;
+
+      if (auditFrame?.seq !== undefined && auditFrame?.seq !== apiSeq) {
+        setSeq(auditFrame.seq);
+        setApiSeq(auditFrame.seq);
+      }
+
+      if (!filterCount) {
+        setCount(10000);
+      }
+
+      if (!filterSide) {
+        setSide('next');
+      }
+
+      if (!filterCond) {
+        setCond(undefined);
+      }
+    } else {
+      setCount(undefined);
+      setSide(undefined);
+      setCond(undefined);
+    }
+    resetCache();
+  };
+
+  const handleSearch = (filter: any) => {
+    onFilterApply();
+
+    if (filter?.count !== undefined) setCount(Number(filter.count));
+    if (filter?.side !== undefined) setSide(filter.side);
+    if (filter?.cond !== undefined) setCond(filter.cond);
+
+    // Explicitly fetch:
+    setRefreshKey((k) => k + 1);
+  };
+
+  // NEW: called by Reset button click (from AddFilter)
+  const handleResetClick = () => {
+    onFilterApply();
+    // Clear filter params but DO NOT touch pagination
+    setCount(undefined);
+    setSide(undefined);
+    setCond(undefined);
+    setRefreshKey((k) => k + 1); // fetch
+  };
+
+  // NEW: called by single pill remove (from AddFilter). Keep your prior defaults.
+  const handleRemovePillClick = (key: string) => {
+    onFilterApply();
+    switch (key) {
+      case 'cond':
+        setCond(undefined);
+        break;
+      case 'count':
+        setCount(10000); // your previous convention
+        break;
+      case 'side':
+        setSide('next'); // your previous convention
+        break;
+      default:
+        break;
+    }
+    setRefreshKey((k) => k + 1); // fetch
+  };
+
   return (
     <>
       <Grid container>
@@ -168,6 +251,16 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
             </Box>
           ) : auditFrame?.frags && auditFrame.frags.length > 0 ? (
             <>
+              <AddFilter
+                filters={filters}
+                setFilters={setFilters}
+                page="Audit Frame"
+                onApply={handleSearch}
+                count={auditFrame?.max_frame || 0}
+                onResetClick={handleResetClick}
+                onRemovePillClick={handleRemovePillClick}
+                popoverWidth="430px"
+              />
               <Box
                 sx={{
                   borderBottomRightRadius: '12px',
