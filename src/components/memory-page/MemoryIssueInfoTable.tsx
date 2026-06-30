@@ -9,7 +9,8 @@ import { useTranslate } from 'src/locales';
 // Styled components for custom styling
 const LabelBox = styled(Box)(({ theme }) => ({
   width: '25%',
-  color: theme.palette.grey[400],
+  // Brighter labels in dark mode; stay dark enough to read on the light background.
+  color: theme.palette.mode === 'dark' ? theme.palette.grey[100] : theme.palette.grey[700],
   fontSize: 15,
   fontWeight: 400,
   display: 'flex',
@@ -189,7 +190,13 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
                   <circle cx="8" cy="8" r="3" fill="#00A41E" />
                 </svg>
               </SvgIcon>
-              <Typography variant="body2" sx={{ color: (theme) => theme.palette.grey[400] }}>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: (theme) =>
+                    theme.palette.mode === 'dark' ? theme.palette.grey[100] : theme.palette.grey[700],
+                }}
+              >
                 {t('item.left.open')}
               </Typography>
             </Box>
@@ -222,7 +229,13 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
                   />
                 </svg>
               </SvgIcon>
-              <Typography variant="body2" sx={{ color: (theme) => theme.palette.grey[400] }}>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: (theme) =>
+                    theme.palette.mode === 'dark' ? theme.palette.grey[100] : theme.palette.grey[700],
+                }}
+              >
                 {t('item.left.high')}
               </Typography>
             </Box>
@@ -260,7 +273,13 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
                   />
                 </svg>
               </SvgIcon>
-              <Typography variant="body2" sx={{ color: (theme) => theme.palette.grey[400] }}>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: (theme) =>
+                    theme.palette.mode === 'dark' ? theme.palette.grey[100] : theme.palette.grey[700],
+                }}
+              >
                 {t('item.left.low')}
               </Typography>
             </Box>

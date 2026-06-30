@@ -58,10 +58,10 @@ export function MemorySearchBar({ value, onChange, onReset }: Props) {
       }}
     >
       {/* Search column — currently the API only supports searching by issue code (q) */}
-      <Box sx={{ ...fieldSx, width: 210, flexShrink: 0 }}>
+      <Box sx={{ ...fieldSx, width: 240, flexShrink: 0 }}>
         <Typography sx={labelSx}>{t('search_ui.search_column')}</Typography>
         <Typography sx={dividerSx}>|</Typography>
-        <Typography sx={{ color: VALUE_COLOR, fontSize: 15, flex: 1 }}>
+        <Typography sx={{ color: VALUE_COLOR, fontSize: 15, flex: 1, whiteSpace: 'nowrap' }}>
           {t('search_ui.search_column_code')}
         </Typography>
       </Box>
