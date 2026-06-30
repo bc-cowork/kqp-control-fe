@@ -20,7 +20,7 @@ axiosInstance.interceptors.response.use(
   (error) => {
     // A timeout (slow/high-CPU backend) is not retried — surface it as a clear message.
     if (error.code === 'ECONNABORTED') {
-      return Promise.reject('No result returned due to timeout');
+      return Promise.reject(new Error('No result returned due to timeout'));
     }
     return Promise.reject((error.response && error.response.data) || 'Something went wrong!');
   }
