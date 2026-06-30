@@ -3,6 +3,8 @@
 import type { AuditLogFrameFragItem } from 'src/types/node';
 
 import React, { useState, useEffect, useCallback } from 'react';
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 import Grid from '@mui/material/Unstable_Grid2';
 import {
@@ -26,18 +28,16 @@ import {
 
 import { formatBytes } from 'src/utils/helper';
 import { formatDateCustom } from 'src/utils/format-time';
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 import { useTranslate } from 'src/locales';
 import { useGetAuditLogFrame } from 'src/actions/nodes';
 import { grey, error, common, primary } from 'src/theme/core';
 
 import { Iconify } from '../iconify';
-import AddFilter from '../common/AddFilter';
 import FadingDivider from '../common/FadingDivider';
 import { TableErrorRows } from '../table/table-error-rows';
 import { DUMMY_LAYOUT_FLOW } from '../audit-log-page/dummy-layout-flow';
+import AuditFrameFilterBar from '../audit-log-page/AuditFrameFilterBar';
 import TablePaginationCustomShort from '../common/TablePaginationCustomShort';
 import { AuditFrameLayoutFlow } from '../audit-log-page/AuditFrameLayoutFlow';
 
@@ -217,25 +217,6 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
     setRefreshKey((k) => k + 1); // fetch
   };
 
-  // NEW: called by single pill remove (from AddFilter). Keep your prior defaults.
-  const handleRemovePillClick = (key: string) => {
-    onFilterApply();
-    switch (key) {
-      case 'cond':
-        setCond(undefined);
-        break;
-      case 'count':
-        setCount(10000); // your previous convention
-        break;
-      case 'side':
-        setSide('next'); // your previous convention
-        break;
-      default:
-        break;
-    }
-    setRefreshKey((k) => k + 1); // fetch
-  };
-
   return (
     <>
       <Grid container>
@@ -251,15 +232,11 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
             </Box>
           ) : auditFrame?.frags && auditFrame.frags.length > 0 ? (
             <>
-              <AddFilter
+              <AuditFrameFilterBar
                 filters={filters}
                 setFilters={setFilters}
-                page="Audit Frame"
                 onApply={handleSearch}
-                count={auditFrame?.max_frame || 0}
                 onResetClick={handleResetClick}
-                onRemovePillClick={handleRemovePillClick}
-                popoverWidth="430px"
               />
               <Box
                 sx={{
