@@ -29,9 +29,15 @@ export const viewport: Viewport = {
 
 export const metadata = {
   icons: [
+    // Default (also used for dark mode and browsers with no color-scheme preference).
     {
       rel: 'icon',
       url: `${CONFIG.assetsDir}/favicon.ico`,
+    },
+    {
+      rel: 'icon',
+      url: `${CONFIG.assetsDir}/favicon-light.ico`,
+      media: '(prefers-color-scheme: light)',
     },
   ],
 };
