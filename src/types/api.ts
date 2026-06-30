@@ -167,29 +167,29 @@ interface LayoutFlowEntity {
 
 interface LayoutFlowDataChange {
   step: number;
-  layoutNode: string;
+  layout_node: string;
   action: string;
   args: Record<string, unknown>;
-  dataBefore: string;
-  dataAfter: string;
+  data_before: string;
+  data_after: string;
   change: string;
 }
 
 interface LayoutFlow {
-  layoutName: string;
+  layout_name: string;
   process: string;
   topic: string;
-  matchedBy: {
-    frameRid: number;
-    layoutNode: string;
+  matched_by: {
+    frame_rid: number;
+    layout_node: string;
     condition: string;
   };
-  layoutSubset: Record<string, LayoutFlowEntity>;
+  layout_subset: Record<string, LayoutFlowEntity>;
   diagram?: {
     nodes: Array<{ id: string; label: string; type: string; summary?: string }>;
     edges: Array<{ from: string; to: string; label?: string }>;
   };
-  dataChanges?: LayoutFlowDataChange[];
+  data_changes?: LayoutFlowDataChange[];
 }
 
 interface AuditLogFrameData {
@@ -197,7 +197,7 @@ interface AuditLogFrameData {
   nodeId: string;
   desc: string;
   spec: FrameSpec;
-  layoutFlow?: LayoutFlow;
+  layout_flow?: LayoutFlow;
 }
 
 type GetAuditLogFrameResponse = ApiResponse<AuditLogFrameData>;

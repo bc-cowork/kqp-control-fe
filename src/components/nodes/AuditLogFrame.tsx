@@ -36,7 +36,6 @@ import { grey, error, common, primary } from 'src/theme/core';
 import { Iconify } from '../iconify';
 import FadingDivider from '../common/FadingDivider';
 import { TableErrorRows } from '../table/table-error-rows';
-import { DUMMY_LAYOUT_FLOW } from '../audit-log-page/dummy-layout-flow';
 import AuditFrameFilterBar from '../audit-log-page/AuditFrameFilterBar';
 import TablePaginationCustomShort from '../common/TablePaginationCustomShort';
 import { AuditFrameLayoutFlow } from '../audit-log-page/AuditFrameLayoutFlow';
@@ -645,10 +644,8 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
       </Grid>
 
       {/* Full-width layout-flow visualization for the selected frame (under the Data section).
-          Falls back to the backend-provided sample until the frame API returns `layoutFlow`. */}
-      {!auditFrameLoading && (
-        <AuditFrameLayoutFlow layoutFlow={auditFrameLayoutFlow ?? DUMMY_LAYOUT_FLOW} />
-      )}
+          Renders only when the frame API returns `layout_flow` (renders null otherwise). */}
+      {!auditFrameLoading && <AuditFrameLayoutFlow layoutFlow={auditFrameLayoutFlow} />}
 
       <Dialog
         open={dialogOpen}

@@ -35,13 +35,13 @@ const ROUTING_ACTS = new Set(['route', 'kpass']);
 const NODE_TYPES = { dataFlow_node: DataFlowNode };
 
 /**
- * Convert the frame's `layoutFlow.layoutSubset` into the `DataFlowDefinition`
+ * Convert the frame's `layoutFlow.layout_subset` into the `DataFlowDefinition`
  * shape consumed by the shared data-flow graph (same node renderer/builder as
  * the layout screen). `topics.inbound[].args` maps to `actions[].param`, and
  * routing actions whose target exists in the subset become graph relations.
  */
 function buildDefinition(layoutFlow: LayoutFlow): DataFlowDefinition {
-  const subset = layoutFlow.layoutSubset || {};
+  const subset = layoutFlow.layout_subset || {};
   const relations: Record<string, { to: string[] }> = {};
   const definition: DataFlowDefinition = { relations };
 

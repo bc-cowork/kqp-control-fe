@@ -200,7 +200,7 @@ export function useGetAuditLogFrame(
 
   return {
     auditFrame: processedData,
-    auditFrameLayoutFlow: data?.data?.layoutFlow,
+    auditFrameLayoutFlow: data?.data?.layout_flow,
     auditFrameLoading: isLoading,
     auditFrameFragsEmpty: !isLoading && !data?.data?.spec?.frags?.length,
     auditFrameError: data?.okay === false || error,
