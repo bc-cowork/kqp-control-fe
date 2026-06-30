@@ -265,7 +265,11 @@ export function Memory({ selectedNodeId }: Props) {
                   <TableEmptyRows text="No data for memory logs" />
                 ) : issuesError ? (
                   <TableErrorRows
-                    text={typeof issuesError === 'string' ? issuesError : 'Error fetching list'}
+                    text={
+                      typeof issuesError === 'string'
+                        ? issuesError
+                        : issuesError?.message || 'Error fetching list'
+                    }
                   />
                 ) : (
                   issues.issueList.map(

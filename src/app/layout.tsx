@@ -4,6 +4,8 @@ import 'src/global.css';
 
 import type { Viewport } from 'next';
 
+import { SWRConfig } from 'swr';
+
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 
 import { CONFIG } from 'src/config-global';
@@ -55,21 +57,23 @@ export default async function RootLayout({ children }: Props) {
           defaultMode={schemeConfig.defaultMode}
           modeStorageKey={schemeConfig.modeStorageKey}
         />
-        <I18nProvider lang={CONFIG.isStaticExport ? undefined : lang}>
-          <LocalizationProvider>
-            <AuthProvider>
-              <SettingsProvider settings={defaultSettings}>
-                <ThemeProvider>
-                  <MotionLazy>
-                    <ProgressBar />
-                    <SettingsDrawer />
-                    {children}
-                  </MotionLazy>
-                </ThemeProvider>
-              </SettingsProvider>
-            </AuthProvider>
-          </LocalizationProvider>
-        </I18nProvider>
+        <SWRConfig value={{ shouldRetryOnError: false }}>
+          <I18nProvider lang={CONFIG.isStaticExport ? undefined : lang}>
+            <LocalizationProvider>
+              <AuthProvider>
+                <SettingsProvider settings={defaultSettings}>
+                  <ThemeProvider>
+                    <MotionLazy>
+                      <ProgressBar />
+                      <SettingsDrawer />
+                      {children}
+                    </MotionLazy>
+                  </ThemeProvider>
+                </SettingsProvider>
+              </AuthProvider>
+            </LocalizationProvider>
+          </I18nProvider>
+        </SWRConfig>
       </body>
     </html>
   );
