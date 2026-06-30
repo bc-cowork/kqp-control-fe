@@ -28,9 +28,22 @@ export default function Page({ params }: Props) {
     const { data, error, isLoading } = useSWR(url, fetcher);
 
     const detail = data?.data?.item || {};
-    const keys: string[] = Array.isArray(detail.keys) ? detail.keys : [];
     const specList: Array<{ name: string; ref_count: number, url: string }> = detail.related_specs || [];
     const script: string = detail.spec_def || '';
+
+    // `keys` is not on the item directly — it lives inside the `spec_def` script,
+    // e.g. `keys: { 'A301S', 'A301Q' }` (array) or `keys: 'A301S'` (single string).
+    const parseKeys = (def: string): string[] => {
+        if (!def) return [];
+        const braceMatch = def.match(/keys\s*:\s*\{([^}]*)\}/);
+        if (braceMatch) {
+            return Array.from(braceMatch[1].matchAll(/['"]([^'"]+)['"]/g)).map((m) => m[1]);
+        }
+        const singleMatch = def.match(/keys\s*:\s*['"]([^'"]+)['"]/);
+        return singleMatch ? [singleMatch[1]] : [];
+    };
+    const keys: string[] = parseKeys(script);
+    const keysTitle = keys.length ? keys.join(', ') : detail?.name || '-';
 
 
     return (
@@ -44,7 +57,7 @@ export default function Page({ params }: Props) {
             />
 
             <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2, mb: 2 }}>
-                IDENTIFIER: {detail?.name || '-'}
+                {keysTitle}
             </Typography>
 
             <TableContainer component={Paper}>
