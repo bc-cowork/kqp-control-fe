@@ -20,7 +20,7 @@ import { useTabs, useRouter } from 'src/routes/hooks';
 
 import { useDebounce } from 'src/hooks/use-debounce';
 
-import { fDate, formatDateCustom } from 'src/utils/format-time';
+import { formatDateCustom } from 'src/utils/format-time';
 import { formatNumber } from 'src/utils/helper';
 import { processMemoryChartData } from 'src/utils/process-chart-data';
 
@@ -288,7 +288,9 @@ export function Memory({ selectedNodeId }: Props) {
                             .map((d: number) => (d ? formatDateCustom(d.toString()) : '-'))
                             .join(' / ')}]`}
                         </TableCell>
-                        <TableCell align="right">{fDate(issue.compet, 'YYYY-MM-DD')}</TableCell>
+                        <TableCell align="right">
+                          {issue.compet ? formatDateCustom(issue.compet.toString()) : '-'}
+                        </TableCell>
                       </TableRow>
                     )
                   )

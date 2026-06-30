@@ -16,7 +16,7 @@
   "table_header": {
     "frame_seq": "Frame Seq",
     "head": "HEAD",
-    "rid": "RID",
+    "rid": "Channel ID",
     "size": "Size"
   },
   "right_side_audit_log_list": {
@@ -32,6 +32,6 @@
     "time": "Time",
     "size": "Size",
     "head": "Head",
-    "rid": "RID"
+    "rid": "Channel ID"
   }
 }

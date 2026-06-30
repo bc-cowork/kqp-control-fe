@@ -3,7 +3,7 @@
 import { Box, Stack, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
 
-import { fDate } from 'src/utils/format-time';
+import { formatDateCustom } from 'src/utils/format-time';
 import { formatNumber } from 'src/utils/helper';
 
 import { useTranslate } from 'src/locales';
@@ -56,7 +56,10 @@ export function MemoryItemInfo({ issueInfo }: Props) {
             : issueInfo.g1_ssn_id
         }
       />
-      <LabelValueRow label={t('item.left.compet')} value={fDate(issueInfo.compet, 'YYYY-MM-DD') ?? undefined} />
+      <LabelValueRow
+        label={t('item.left.compet')}
+        value={issueInfo.compet ? formatDateCustom(issueInfo.compet.toString()) : '-'}
+      />
     </Box>
   );
 }
