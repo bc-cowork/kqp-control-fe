@@ -20,7 +20,8 @@ const LabelBox = styled(Box)(({ theme }) => ({
 
 const ValueBox = styled(Box)(({ theme }) => ({
   width: '25%',
-  color: theme.palette.grey[600],
+  // Keep values fully readable — never use the disabled text color, even when there is no data (value is 0/'-').
+  color: theme.palette.text.primary,
   fontSize: 15,
   fontWeight: 400,
   padding: '0 12px',
