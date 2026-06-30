@@ -59,11 +59,11 @@ export function getNavData(t: any, nodes: string[] = [],) {
                 path: paths.dashboard.nodes.channelsOutbound(node),
               },
               {
-                title: t('tab_option.layout_list') || 'Layout List',
+                title: t('tab_option.layout_list') || 'Layouts',
                 path: paths.dashboard.nodes.layoutList(node),
               },
               {
-                title: t('tab_option.action_list') || 'Action List',
+                title: t('tab_option.action_list') || 'Actions',
                 path: paths.dashboard.nodes.actionList(node),
               },
               {
@@ -71,15 +71,15 @@ export function getNavData(t: any, nodes: string[] = [],) {
                 path: paths.dashboard.nodes.rules(node),
               },
               {
-                title: t('tab_option.spec_list') || 'SPEC List',
+                title: t('tab_option.spec_list') || 'SPECs',
                 path: paths.dashboard.nodes.specList(node),
               },
               {
-                title: t('tab_option.identify_list') || 'Identifier List',
+                title: t('tab_option.identify_list') || 'Identifiers',
                 path: paths.dashboard.nodes.identifyList(node),
               },
               {
-                title: t('tab_option.function_list') || 'Function List',
+                title: t('tab_option.function_list') || 'User Functions',
                 path: paths.dashboard.nodes.functionList(node),
               },
               {

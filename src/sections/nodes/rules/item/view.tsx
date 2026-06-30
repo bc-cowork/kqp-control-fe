@@ -22,7 +22,7 @@ export function RuleDetailView({ nodeId, code }: Props) {
       <Breadcrumb
         node={nodeId}
         pages={[
-          { pageName: 'Rule List', link: `/dashboard/nodes/${nodeId}/rules` },
+          { pageName: 'Rules', link: `/dashboard/nodes/${nodeId}/rules` },
           { pageName: 'Rule Detail' },
         ]}
       />

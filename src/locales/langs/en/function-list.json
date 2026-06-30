@@ -1,22 +1,22 @@
 {
-    "top": {
-        "function_list": "Function List"
-    },
-    "table": {
-        "id": "ID",
-        "function_name": "Function Name",
-        "path": "Path",
-        "timestamp": "Timestamp",
-        "ref_identifies": "Ref. Identifier",
-        "desc": "Description"
-    },
-    "detail_table": {
-        "script_title": "User Function Definition",
-        "no": "No",
-        "related_identifier": "Related Identifier",
-        "ref_freq": "Ref. Frequency"
-    },
-    "loading": "Loading...",
-    "error": "Failed to load",
-    "empty": "No identities"
+  "top": {
+    "function_list": "User Functions"
+  },
+  "table": {
+    "id": "ID",
+    "function_name": "Function Name",
+    "path": "Path",
+    "timestamp": "Timestamp",
+    "ref_identifies": "Ref. Identifier",
+    "desc": "Description"
+  },
+  "detail_table": {
+    "script_title": "User Function Definition",
+    "no": "No",
+    "related_identifier": "Related Identifier",
+    "ref_freq": "Ref. Frequency"
+  },
+  "loading": "Loading...",
+  "error": "Failed to load",
+  "empty": "No identities"
 }

@@ -1,22 +1,22 @@
 {
-    "top": {
-        "identify_list": "Identifier List"
-    },
-    "table": {
-        "id": "ID",
-        "identity_name": "Identifier Name",
-        "path": "Path",
-        "timestamp": "Timestamp",
-        "ref_specs": "Ref. SPECs",
-        "explanation": "Description"
-    },
-    "detail_table": {
-        "script_title": "Identifier Definition",
-        "no": "No",
-        "related_spec": "Related SPEC",
-        "ref_freq": "Ref. Frequency"
-    },
-    "loading": "Loading...",
-    "error": "Failed to load",
-    "empty": "No identities"
+  "top": {
+    "identify_list": "Identifiers"
+  },
+  "table": {
+    "id": "ID",
+    "identity_name": "Identifier Name",
+    "path": "Path",
+    "timestamp": "Timestamp",
+    "ref_specs": "Ref. SPECs",
+    "explanation": "Description"
+  },
+  "detail_table": {
+    "script_title": "Identifier Definition",
+    "no": "No",
+    "related_spec": "Related SPEC",
+    "ref_freq": "Ref. Frequency"
+  },
+  "loading": "Loading...",
+  "error": "Failed to load",
+  "empty": "No identities"
 }
