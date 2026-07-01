@@ -531,7 +531,11 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                   background: 'linear-gradient(180deg, #202838 80%, #373F4E 100%)',
                   p: 1,
                   height: `calc(100vh - 610px)`,
-                  overflowY: 'auto'
+                  overflowY: 'auto',
+                  // Keep it scrollable but hide the scrollbar (cross-browser).
+                  scrollbarWidth: 'none', // Firefox
+                  msOverflowStyle: 'none', // IE/Edge legacy
+                  '&::-webkit-scrollbar': { display: 'none' }, // Chrome/Safari
                 }}
               >
                 <Typography sx={{ color: grey[300], fontSize: 15, mb: 1, mt: 0.5 }}>
