@@ -19,6 +19,8 @@ export function TableLoadingRows({
     <TableRow
       sx={{
         ...(height && { height: height * loadingRows }),
+        // Non-interactive placeholder: suppress the global blue row-hover from the theme.
+        '&:hover': { backgroundColor: 'transparent' },
       }}
     >
       <TableCell colSpan={columns} sx={{ border: 'none' }}>

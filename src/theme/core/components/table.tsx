@@ -38,6 +38,10 @@ const MuiTableRow: Components<Theme>['MuiTableRow'] = {
       },
       '&:hover': { backgroundColor: theme.palette.mode === 'dark' ? theme.palette.primary.main : 'rgba(0,0,0,0.1)', color: 'red' },
       '&:active': { backgroundColor: theme.palette.mode === 'dark' ? theme.palette.primary.main : 'rgba(0,0,0,0.1)', color: 'red' },
+      // Placeholder rows (loading / empty / error) span all columns via a colSpan cell.
+      // Data rows never use colSpan, so this suppresses the blue row-hover only for
+      // those non-interactive placeholders. Degrades gracefully where :has is unsupported.
+      '&:has(td[colspan]):hover, &:has(td[colspan]):active': { backgroundColor: 'transparent' },
       [`&.${tableRowClasses.selected}`]: {
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.primary.contrastText,

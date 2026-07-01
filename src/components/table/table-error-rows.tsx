@@ -9,7 +9,7 @@ export type TableErrorRowsProps = {
 
 export function TableErrorRows({ text = 'Error fetching list' }: TableErrorRowsProps) {
   return (
-    <TableRow>
+    <TableRow sx={{ '&:hover': { backgroundColor: 'transparent' } }}>
       <TableCell colSpan={9}>{text}</TableCell>
     </TableRow>
   );

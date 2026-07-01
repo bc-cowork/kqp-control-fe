@@ -9,7 +9,7 @@ export type TableEmptyRowsProps = {
 
 export function TableEmptyRows({ text = 'No data to show' }: TableEmptyRowsProps) {
   return (
-    <TableRow>
+    <TableRow sx={{ '&:hover': { backgroundColor: 'transparent' } }}>
       <TableCell colSpan={9}>{text}</TableCell>
     </TableRow>
   );

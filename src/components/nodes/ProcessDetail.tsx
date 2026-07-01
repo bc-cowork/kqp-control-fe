@@ -58,17 +58,17 @@ export function ProcessDetail({ selectedNodeId, page = 'process' }: Props) {
         </TableHead>
         <TableBody>
           {processLoading ? (
-            <TableRow>
+            <TableRow sx={{ '&:hover': { backgroundColor: 'transparent' } }}>
               <TableCell colSpan={9} align="center">
                 <CircularProgress />
               </TableCell>
             </TableRow>
           ) : processesEmpty ? (
-            <TableRow>
+            <TableRow sx={{ '&:hover': { backgroundColor: 'transparent' } }}>
               <TableCell colSpan={6}>No Processes Found</TableCell>
             </TableRow>
           ) : processError ? (
-            <TableRow>
+            <TableRow sx={{ '&:hover': { backgroundColor: 'transparent' } }}>
               <TableCell colSpan={6}>Error Fetching Process List</TableCell>
             </TableRow>
           ) : (
