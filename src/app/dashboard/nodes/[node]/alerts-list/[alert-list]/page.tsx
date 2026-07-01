@@ -157,7 +157,7 @@ export default function Page({ params }: Props) {
         pages={[
           { pageName: t('top.title'), link: paths.dashboard.nodes.alertsList(node) },
           {
-            pageName: `ALERT: ${decodedAlertId}`,
+            pageName: `${t('top.title_prefix')}: ${decodedAlertId}`,
             link: paths.dashboard.nodes.alertsDetail(node, decodedAlertId),
           },
         ]}
@@ -173,7 +173,7 @@ export default function Page({ params }: Props) {
             lineHeight: '33.6px',
           }}
         >
-          ALERT: {decodedAlertId}
+          {t('top.title_prefix')}: {decodedAlertId}
         </Typography>
         <Box
           sx={{

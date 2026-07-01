@@ -202,10 +202,10 @@ export function AlertFormView({ nodeId, alertId }: Props) {
         } else {
           await axiosInstance.post(endpoints.alert.add(nodeId), { name: values.name, ...base });
         }
-        toast.success(isEdit ? 'Alert updated' : 'Alert created');
+        toast.success(isEdit ? 'Watch updated' : 'Watch created');
         router.push(paths.dashboard.nodes.alertsList(nodeId));
       } catch (err) {
-        toast.error('Failed to save alert');
+        toast.error('Failed to save watch');
       }
     },
     [startTime, endTime, isActive, cronDays, isEdit, alertId, nodeId, router]

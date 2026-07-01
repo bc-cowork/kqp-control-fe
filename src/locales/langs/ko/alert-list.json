@@ -1,11 +1,12 @@
 {
   "top": {
-    "title": "감시 (Watches)"
+    "title": "감시 (Watches)",
+    "title_prefix": "감시"
   },
   "table": {
     "id": "ID",
     "surv_name": "이름",
-    "alert_name": "경고 이름",
+    "alert_name": "감시 이름",
     "schedule": "일정",
     "start_at": "시작 시각",
     "end_at": "종료 시각",
@@ -18,10 +19,10 @@
     "add": "항목 추가"
   },
   "loading": "로딩 중...",
-  "empty": "알림 항목 없음",
+  "empty": "감시 항목 없음",
   "detail": {
-    "empty": "알림을 찾을 수 없음",
-    "error": "알림 불러오기 오류",
+    "empty": "감시를 찾을 수 없음",
+    "error": "감시 불러오기 오류",
     "info_title": "상세 정보",
     "item_name": "감시 아이템명",
     "desc": "설명",
@@ -35,9 +36,9 @@
     "interval_fmt": "{{interval}}초 간격",
     "btn_edit": "편집",
     "btn_delete": "삭제",
-    "delete_confirm": "이 알림을 삭제하시겠습니까?",
-    "delete_success": "알림이 삭제되었습니다",
-    "delete_error": "알림 삭제에 실패했습니다"
+    "delete_confirm": "이 감시를 삭제하시겠습니까?",
+    "delete_success": "감시가 삭제되었습니다",
+    "delete_error": "감시 삭제에 실패했습니다"
   },
   "alert": "감시",
   "form": {

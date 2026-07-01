@@ -1,11 +1,12 @@
 {
   "top": {
-    "title": "Watches"
+    "title": "Watches",
+    "title_prefix": "WATCH"
   },
   "table": {
     "id": "ID",
     "surv_name": "Name",
-    "alert_name": "Alert Name",
+    "alert_name": "Watch Name",
     "schedule": "Schedule",
     "start_at": "Start At",
     "end_at": "End At",
@@ -18,12 +19,12 @@
     "add": "Add Item"
   },
   "loading": "Loading...",
-  "empty": "No alert items",
+  "empty": "No watch items",
   "detail": {
-    "empty": "No alert found",
-    "error": "Error loading alert",
+    "empty": "No watch found",
+    "error": "Error loading watch",
     "info_title": "Details",
-    "item_name": "Alert Item Name",
+    "item_name": "Watch Item Name",
     "desc": "Description",
     "schedule": "Operation Schedule",
     "timezone": "Operation hours",
@@ -35,16 +36,16 @@
     "interval_fmt": "{{interval}} sec interval",
     "btn_edit": "Edit",
     "btn_delete": "Delete",
-    "delete_confirm": "Are you sure you want to delete this alert?",
-    "delete_success": "Alert deleted",
-    "delete_error": "Failed to delete alert"
+    "delete_confirm": "Are you sure you want to delete this watch?",
+    "delete_success": "Watch deleted",
+    "delete_error": "Failed to delete watch"
   },
-  "alert": "Alert",
+  "alert": "Watch",
   "form": {
     "page_title": "Item Setting Form",
-    "title_add": "Register Alert Item",
+    "title_add": "Register Watch Item",
     "title_add_breadcrump": "Add Item",
-    "title_edit": "Register Alert Item",
+    "title_edit": "Register Watch Item",
     "name": "Item Name",
     "desc": "Description",
     "schedule": "Operation Schedule",
