@@ -1,8 +1,9 @@
 'use client';
 
 import useSWR from 'swr';
-import dynamic from 'next/dynamic';
 import { useCallback } from 'react';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -23,8 +24,6 @@ import { toast } from 'src/components/snackbar';
 import { Breadcrumb } from 'src/components/common/Breadcrumb';
 
 // ----------------------------------------------------------------------
-
-const MonacoEditor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
 
 // ----------------------------------------------------------------------
 
@@ -224,9 +223,16 @@ export default function Page({ params }: Props) {
       </Stack>
 
       {/* ── Summary Table ── */}
-      <Box sx={{ mt: 3.5, borderRadius: '8px', overflow: 'hidden' }}>
+      <Box
+        sx={{
+          mt: 3.5,
+          borderRadius: '8px',
+          overflow: 'hidden',
+          border: `1px solid ${isDark ? '#2A3142' : '#D1D6E0'}`,
+        }}
+      >
         {/* Header row */}
-        <Stack direction="row" sx={{ bgcolor: '#667085' }}>
+        <Stack direction="row" sx={{ bgcolor: isDark ? '#667085' : '#1D2654' }}>
           {TABLE_COLUMNS.map((col) => (
             <Box
               key={col.key}
@@ -346,10 +352,11 @@ export default function Page({ params }: Props) {
               bgcolor: isDark ? '#202838' : '#FFFFFF',
               borderRadius: '8px',
               overflow: 'hidden',
+              border: `1px solid ${isDark ? '#2A3142' : '#D1D6E0'}`,
             }}
           >
             {/* Card header */}
-            <Box sx={{ px: 2, py: 1, bgcolor: '#667085' }}>
+            <Box sx={{ px: 2, py: 1, bgcolor: isDark ? '#667085' : '#1D2654' }}>
               <Typography
                 sx={{
                   color: isDark ? '#E0E4EB' : '#FFFFFF',
@@ -505,20 +512,22 @@ export default function Page({ params }: Props) {
             overflow: 'hidden',
             display: 'flex',
             flexDirection: 'column',
+            // Light theme frames the (dark) code viewer with a 2px blackish border.
+            border: isDark ? '1px solid #2A3142' : '3px solid #1A2030',
           }}
         >
-          {/* Script header */}
+          {/* Script header — light-gray strip (design), like the other detail pages */}
           <Box
             sx={{
               px: 1.5,
               py: 1.5,
-              bgcolor: '#667085',
-              borderBottom: '1px solid #373F4E',
+              bgcolor: isDark ? '#667085' : '#E0E4EB',
+              borderBottom: `1px solid ${isDark ? '#373F4E' : 'transparent'}`,
             }}
           >
             <Typography
               sx={{
-                color: isDark ? '#E0E4EB' : '#FFFFFF',
+                color: isDark ? grey[300] : '#4E576A',
                 fontSize: 15,
                 fontWeight: 400,
                 lineHeight: '22.5px',
@@ -528,12 +537,12 @@ export default function Page({ params }: Props) {
             </Typography>
           </Box>
 
-          {/* Filename subheader */}
+          {/* Filename subheader — part of the dark code viewer in both themes */}
           <Box
             sx={{
               px: 2,
               py: 1,
-              bgcolor: isDark ? '#1A2030' : grey[100],
+              bgcolor: '#1A2030',
               borderBottom: '1px solid #373F4E',
             }}
           >
@@ -544,51 +553,25 @@ export default function Page({ params }: Props) {
             </Typography>
           </Box>
 
-          {/* Code body */}
-          <Box sx={{ flex: 1, minHeight: 400, bgcolor: isDark ? '#202838' : '#FFFFFF' }}>
-            <MonacoEditor
-              height="100%"
-              language="lua"
-              theme="alert-transparent"
-              value={alertCode}
-              beforeMount={(monaco) => {
-                monaco.editor.defineTheme('alert-transparent', {
-                  base: 'vs-dark',
-                  inherit: true,
-                  rules: [],
-                  colors: {
-                    'editor.background': '#00000000',
-                    'editorStickyScroll.background': '#202838',
-                    'editorStickyScrollHover.background': '#2A3142',
-                  },
-                });
-              }}
-              options={{
-                readOnly: true,
-                minimap: { enabled: false },
-                lineNumbers: 'off',
-                glyphMargin: false,
-                folding: false,
-                lineDecorationsWidth: 16,
-                lineNumbersMinChars: 0,
-                guides: { indentation: false, bracketPairs: false },
-                renderLineHighlight: 'none',
-                fontSize: 17,
-                fontFamily: 'Pretendard, Roboto, monospace',
-                lineHeight: 25.5,
-                padding: { top: 16 },
-                scrollBeyondLastLine: false,
-                automaticLayout: true,
-                tabSize: 2,
-                wordWrap: 'on',
-                scrollbar: {
-                  verticalScrollbarSize: 8,
-                  horizontalScrollbarSize: 8,
-                  verticalSliderSize: 8,
-                  horizontalSliderSize: 8,
-                },
-              }}
-            />
+          {/* Code body — dark code viewer (a11yDark) in both themes, matching the other detail pages. */}
+          <Box sx={{ flex: 1, minHeight: 400, bgcolor: '#202838', overflowY: 'auto' }}>
+            <Box
+              component="pre"
+              sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: 15, color: '#AFB7C8', m: 0 }}
+            >
+              <SyntaxHighlighter
+                language="moonscript"
+                style={a11yDark}
+                customStyle={{
+                  background: 'transparent',
+                  whiteSpace: 'pre-wrap',
+                  padding: '16px',
+                  fontSize: 15,
+                }}
+              >
+                {alertCode}
+              </SyntaxHighlighter>
+            </Box>
           </Box>
         </Box>
       </Stack>

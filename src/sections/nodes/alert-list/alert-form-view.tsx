@@ -930,8 +930,10 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                             },
                           });
                         }}
-                        onMount={(ed) => {
+                        onMount={(ed, monaco) => {
                           editorRef.current = ed;
+                          // Monaco themes are global; force the correct one on mount.
+                          monaco.editor.setTheme(isDark ? 'alert-transparent' : 'alert-transparent-light');
                         }}
                         options={{
                           readOnly: !isScriptEditing,
