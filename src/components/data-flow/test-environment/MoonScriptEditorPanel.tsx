@@ -11,7 +11,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { useTranslate } from 'src/locales';
 
-import { CANVAS_BG, HEADER_BG, HEADER_BORDER, TEXT_SECONDARY } from '../constants';
+import { TEXT_SECONDARY } from '../constants';
 
 // Lazy load Monaco to avoid SSR issues
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
@@ -44,8 +44,9 @@ export function MoonScriptEditorPanel({
         width: isHorizontal ? '50%' : '100%',
         borderRadius: '12px',
         overflow: 'hidden',
-        border: '1.2px solid #667085',
-        backgroundColor: CANVAS_BG,
+        border: (theme) =>
+          `1.2px solid ${theme.palette.mode === 'dark' ? '#667085' : '#D1D6E0'}`,
+        backgroundColor: '#202838',
         display: 'flex',
         flexDirection: 'column',
       }}
@@ -57,8 +58,10 @@ export function MoonScriptEditorPanel({
         spacing={1}
         sx={{
           p: 1.5,
-          backgroundColor: HEADER_BG,
-          borderBottom: `1px solid ${HEADER_BORDER}`,
+          backgroundColor: '#373F4E',
+          borderBottom: '1px solid',
+          borderImage:
+            'linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0)) 1',
         }}
       >
         {/* MOON DSL badge */}
@@ -139,7 +142,7 @@ export function MoonScriptEditorPanel({
           flex: 1,
           position: 'relative',
           overflow: 'hidden',
-          backgroundColor: CANVAS_BG,
+          backgroundColor: '#202838',
           '& .monaco-scrollable-element > .scrollbar > .slider': {
             backgroundColor: 'rgba(255, 255, 255, 0.2) !important',
             borderRadius: '4px !important',
@@ -165,8 +168,16 @@ export function MoonScriptEditorPanel({
         <MonacoEditor
           height="100%"
           language="lua"
-          theme="vs-dark"
+          theme="moon-dark"
           defaultValue={layoutDefinition}
+          beforeMount={(monaco) => {
+            monaco.editor.defineTheme('moon-dark', {
+              base: 'vs-dark',
+              inherit: true,
+              rules: [],
+              colors: { 'editor.background': '#202838' },
+            });
+          }}
           onMount={(ed) => {
             editorRef.current = ed;
             ed.onDidBlurEditorText(() => setIsActive(false));

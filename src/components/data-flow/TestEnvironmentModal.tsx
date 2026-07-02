@@ -185,7 +185,7 @@ function ModalContent({
         right: 20,
         bottom: 20,
         overflowY: 'auto',
-        bgcolor: '#0A0E15',
+        bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#0A0E15' : '#202838'),
         borderRadius: '16px',
         outline: '5px solid #373F4E',
         outlineOffset: '-5px',

@@ -23,15 +23,7 @@ import { RevertIcon } from './icons';
 import { DataFlowNode } from '../nodes/DataFlowNode';
 import { buildDataFlowGraph } from '../graph-builder';
 import { computeDataFlowLayout } from '../layout-algorithm';
-import {
-  CANVAS_BG,
-  HEADER_BG,
-  HEADER_BORDER,
-  TEXT_TERTIARY,
-  TEXT_SECONDARY,
-  GRID_LINE_COLOR,
-  HELP_TEXT_COLOR,
-} from '../constants';
+import { TEXT_TERTIARY, TEXT_SECONDARY, HELP_TEXT_COLOR } from '../constants';
 
 import type { DataFlowDefinition, DataFlowNodeInstance } from '../types';
 
@@ -107,8 +99,9 @@ export function DataFlowPreviewPanel({
         width: isHorizontal ? '50%' : '100%',
         borderRadius: '12px',
         overflow: 'hidden',
-        border: '1.2px solid #667085',
-        backgroundColor: CANVAS_BG,
+        border: (theme) =>
+          `1.2px solid ${theme.palette.mode === 'dark' ? '#667085' : '#D1D6E0'}`,
+        backgroundColor: '#202838',
         display: 'flex',
         flexDirection: 'column',
       }}
@@ -120,8 +113,10 @@ export function DataFlowPreviewPanel({
         spacing={1}
         sx={{
           p: 1.5,
-          backgroundColor: HEADER_BG,
-          borderBottom: `1px solid ${HEADER_BORDER}`,
+          backgroundColor: '#373F4E',
+          borderBottom: '1px solid',
+          borderImage:
+            'linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0)) 1',
         }}
       >
         {/* PREVIEW badge */}
@@ -254,10 +249,11 @@ export function DataFlowPreviewPanel({
           panOnDrag
         >
           <Background
+            id="dataflow-preview-grid"
             variant={BackgroundVariant.Lines}
             gap={50}
             lineWidth={0.5}
-            color={GRID_LINE_COLOR}
+            color="#667085"
           />
 
           {/* Help text */}
