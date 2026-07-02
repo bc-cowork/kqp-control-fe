@@ -263,13 +263,14 @@ export function AlertListView({ nodeId }: Props) {
           direction="row"
           alignItems="center"
           justifyContent="space-between"
-          sx={{ px: 1.5, bgcolor: (theme) => theme.palette.mode === 'dark' ? '#667085' : grey[200], minHeight: 46.5 }}
+          sx={{ px: 1.5, bgcolor: (theme) => theme.palette.mode === 'dark' ? '#667085' : '#1D2654', minHeight: 46.5 }}
         >
           <Stack direction="row" alignItems="center" gap={1} sx={{ flex: 1, px: 1.5 }}>
-            <Typography sx={{ color: (theme) => theme.palette.mode === 'dark' ? '#E0E4EB' : '#373F4E', fontSize: 15, fontWeight: 400, lineHeight: '22.5px' }}>
+            {/* Header sits on a dark navy strip in both themes -> light text. */}
+            <Typography sx={{ color: '#E0E4EB', fontSize: 15, fontWeight: 400, lineHeight: '22.5px' }}>
               {t('top.title')}
             </Typography>
-            <Typography sx={{ color: (theme) => theme.palette.mode === 'dark' ? '#AFB7C8' : grey[500], fontSize: 13, fontWeight: 400, lineHeight: '19.5px' }}>
+            <Typography sx={{ color: '#AFB7C8', fontSize: 13, fontWeight: 400, lineHeight: '19.5px' }}>
               ({rows.length})
             </Typography>
           </Stack>
@@ -295,7 +296,18 @@ export function AlertListView({ nodeId }: Props) {
         </Stack>
 
         {/* List body */}
-        <Box sx={{ bgcolor: (theme) => theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF', border: (theme) => `1px solid ${theme.palette.mode === 'dark' ? '#202838' : grey[200]}` }}>
+        <Box
+          sx={{
+            bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF'),
+            border: (theme) => `1px solid ${theme.palette.mode === 'dark' ? '#202838' : grey[200]}`,
+            // Round the bottom corners to match the container's radius so the bottom
+            // border follows the curve instead of being clipped at the corners.
+            borderBottomLeftRadius: '8px',
+            borderBottomRightRadius: '8px',
+            // Last row's divider coincides with this Box's bottom edge — drop it to avoid a doubled line.
+            '& > div:last-of-type': { borderBottom: 'none' },
+          }}
+        >
           {isLoading && (
             <Typography sx={{ p: 2, color: (theme) => theme.palette.mode === 'dark' ? '#AFB7C8' : grey[500], fontSize: 15 }}>{t('loading')}</Typography>
           )}
