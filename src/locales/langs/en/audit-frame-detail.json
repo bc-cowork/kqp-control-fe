@@ -36,6 +36,8 @@
     "size": "Size",
     "head": "Head",
     "rid": "Channel ID",
-    "data_definition": "Data Definition"
+    "data_definition": "Data Definition",
+    "title": "Audit Log Frame Detail",
+    "frame_seq": "Frame Seq"
   }
 }

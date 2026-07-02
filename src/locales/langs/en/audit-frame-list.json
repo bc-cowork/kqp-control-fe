@@ -23,7 +23,7 @@
     "filename": "Filename",
     "audit_log_list": "Audit Log List",
     "desc": "Desc",
-    "max_frame_seq": "Max FRAME Seq",
+    "max_frame_seq": "Max Frame Seq",
     "file_size": "File Size",
     "date": "Date"
   },
@@ -32,6 +32,8 @@
     "time": "Time",
     "size": "Size",
     "head": "Head",
-    "rid": "Channel ID"
+    "rid": "Channel ID",
+    "title": "Audit Log Frame Detail",
+    "frame_seq": "Frame Seq"
   }
 }

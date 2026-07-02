@@ -428,7 +428,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                       />
                     </svg>
                   </SvgIcon>
-                  <Typography sx={{ color: grey[200], fontSize: 15 }}>Filename</Typography>
+                  <Typography sx={{ color: grey[200], fontSize: 15 }}>{t('right_side_audit_log_list.filename')}</Typography>
                 </Stack>
                 <Typography sx={{ color: common.white, fontSize: 20, fontWeight: 500 }}>
                   {selectedFile}
@@ -436,7 +436,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
               </Box>
               <FadingDivider sx={{ my: 1.5 }} />
 
-              <Typography sx={{ color: grey[300], fontSize: 15, mb: 1 }}>Audit Log List</Typography>
+              <Typography sx={{ color: grey[300], fontSize: 15, mb: 1 }}>{t('right_side_audit_log_list.audit_log_list')}</Typography>
               <Box
                 sx={{
                   py: 1,
@@ -446,7 +446,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                   mb: 1,
                 }}
               >
-                <Typography sx={{ color: grey[200], fontSize: 15 }}>Desc</Typography>
+                <Typography sx={{ color: grey[200], fontSize: 15 }}>{t('right_side_audit_log_list.desc')}</Typography>
                 <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
                   {auditFrame?.desc}
                 </Typography>
@@ -463,7 +463,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                 <Box
                   sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
                 >
-                  <Typography sx={{ color: grey[200], fontSize: 15 }}>Max Frame Seq</Typography>
+                  <Typography sx={{ color: grey[200], fontSize: 15 }}>{t('right_side_audit_log_list.max_frame_seq')}</Typography>
                   <SvgIcon
                     sx={{
                       height: 24,
@@ -506,7 +506,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                   mb: 1,
                 }}
               >
-                <Typography sx={{ color: grey[200], fontSize: 15 }}>File Size</Typography>
+                <Typography sx={{ color: grey[200], fontSize: 15 }}>{t('right_side_audit_log_list.file_size')}</Typography>
                 <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
                   {formatBytes(auditFrame?.file_size)}
                 </Typography>
@@ -520,7 +520,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                   mb: 1,
                 }}
               >
-                <Typography sx={{ color: grey[200], fontSize: 15 }}>Date</Typography>
+                <Typography sx={{ color: grey[200], fontSize: 15 }}>{t('right_side_audit_log_list.date')}</Typography>
                 <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
                   {formatDateCustom(auditFrame?.date?.toString())}
                 </Typography>
@@ -539,7 +539,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                 }}
               >
                 <Typography sx={{ color: grey[300], fontSize: 15, mb: 1, mt: 0.5 }}>
-                  Audit Log Frame Detail
+                  {t('audit_log_frame_detail.title')}
                 </Typography>
 
                 <Box
@@ -551,7 +551,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                     mb: 1,
                   }}
                 >
-                  <Typography sx={{ color: grey[200], fontSize: 15 }}>Seq</Typography>
+                  <Typography sx={{ color: grey[200], fontSize: 15 }}>{t('audit_log_frame_detail.seq')}</Typography>
                   <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
                     {auditFrame?.seq}
                   </Typography>
@@ -566,7 +566,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                     mb: 1,
                   }}
                 >
-                  <Typography sx={{ color: grey[200], fontSize: 15 }}>Time</Typography>
+                  <Typography sx={{ color: grey[200], fontSize: 15 }}>{t('audit_log_frame_detail.time')}</Typography>
                   <Typography
                     sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}
                     display="inline"
@@ -602,7 +602,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                         mb: 1,
                       }}
                     >
-                      <Typography sx={{ color: grey[200], fontSize: 15 }}>Size</Typography>
+                      <Typography sx={{ color: grey[200], fontSize: 15 }}>{t('audit_log_frame_detail.size')}</Typography>
                       <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
                         {formatBytes(auditFrame?.size)}
                       </Typography>
@@ -618,7 +618,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                         mb: 1,
                       }}
                     >
-                      <Typography sx={{ color: grey[200], fontSize: 15 }}>Head</Typography>
+                      <Typography sx={{ color: grey[200], fontSize: 15 }}>{t('audit_log_frame_detail.head')}</Typography>
                       <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
                         {auditFrame?.head}
                       </Typography>
@@ -634,7 +634,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                         mb: 1,
                       }}
                     >
-                      <Typography sx={{ color: grey[200], fontSize: 15 }}>Channel ID</Typography>
+                      <Typography sx={{ color: grey[200], fontSize: 15 }}>{t('audit_log_frame_detail.rid')}</Typography>
                       <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
                         {auditFrame?.rid}
                       </Typography>

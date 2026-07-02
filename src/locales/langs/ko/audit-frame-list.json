@@ -28,10 +28,12 @@
     "date": "날짜"
   },
   "audit_log_frame_detail": {
-    "seq": "프레일 번호",
+    "seq": "프레임 번호",
     "time": "시간",
     "size": "크기",
     "head": "전문 유형",
-    "rid": "전문 식별자"
+    "rid": "전문 식별자",
+    "title": "증적 로그 프레임 상세",
+    "frame_seq": "프레임 번호"
   }
 }

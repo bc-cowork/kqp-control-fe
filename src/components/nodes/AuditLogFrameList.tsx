@@ -291,10 +291,10 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                     }}
                   >
                     <Typography sx={{ color: theme.palette.grey[300], fontSize: 15 }}>
-                      Audit Log Frame Detail
+                      {t('audit_log_frame_detail.title')}
                     </Typography>
                     <CustomTextFieldDark
-                      label="Frame Seq"
+                      label={t('audit_log_frame_detail.frame_seq')}
                       value={frameSeq}
                       setValue={setFrameSeq}
                       type="number"
