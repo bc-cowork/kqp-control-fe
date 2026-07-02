@@ -193,7 +193,7 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
       sx={{
         borderRadius: '12px',
         overflow: 'hidden',
-        border: '1.2px solid #667085',
+        border: (theme) => `1.2px solid ${theme.palette.mode === 'dark' ? '#667085' : '#D1D6E0'}`,
         backgroundColor: CANVAS_BG,
         height: isFullscreen ? '100vh' : 800,
         display: 'flex',

@@ -3,6 +3,7 @@
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { useTranslate } from 'src/locales';
@@ -31,6 +32,9 @@ export function DataFlowToolbar({
   onTestEnvClick,
 }: DataFlowToolbarProps) {
   const { t } = useTranslate('data-flow');
+  const theme = useTheme();
+  const isDark = theme.palette.mode === 'dark';
+  const titleColor = isDark ? TEXT_SECONDARY : '#373F4E';
 
   return (
     <Stack
@@ -39,10 +43,14 @@ export function DataFlowToolbar({
       spacing={1}
       sx={{
         p: 1.5,
-        backgroundColor: HEADER_BG,
-        // Use borderBottom to define the width, then borderImage for the gradient
-        borderBottom: '1px solid',
-        borderImage: `linear-gradient(to right, rgba(55, 63, 78, 0.00), rgb(170, 170, 170) 50%, rgba(55, 63, 78, 0.00)) 1`,
+        // White header bar in light mode (the diagram below stays dark in both themes).
+        backgroundColor: isDark ? HEADER_BG : '#FFFFFF',
+        ...(isDark
+          ? {
+              borderBottom: '1px solid',
+              borderImage: `linear-gradient(to right, rgba(55, 63, 78, 0.00), rgb(170, 170, 170) 50%, rgba(55, 63, 78, 0.00)) 1`,
+            }
+          : { borderBottom: '1px solid #D1D6E0' }),
       }}
     >
       {/* Preview badge */}
@@ -51,9 +59,9 @@ export function DataFlowToolbar({
           px: 1.5,
           pl: 1,
           py: 0,
-          backgroundColor: '#1D2F20',
+          backgroundColor: isDark ? '#1D2F20' : '#EBFBE9',
           borderRadius: '100px',
-          border: '1px solid #36573C',
+          border: `1px solid ${isDark ? '#36573C' : '#DDF4DA'}`,
           display: 'flex',
           alignItems: 'center',
           gap: 0.5,
@@ -64,7 +72,7 @@ export function DataFlowToolbar({
             width: 8,
             height: 8,
             borderRadius: '50%',
-            backgroundColor: '#4FCB53',
+            backgroundColor: isDark ? '#4FCB53' : '#00A41E',
           }}
         />
         <Typography
@@ -73,7 +81,7 @@ export function DataFlowToolbar({
             fontFamily: 'Roboto, sans-serif',
             fontWeight: 400,
             lineHeight: '22.5px',
-            color: '#7EE081',
+            color: isDark ? '#7EE081' : '#05811B',
           }}
         >
           {t('toolbar.preview')}
@@ -88,7 +96,7 @@ export function DataFlowToolbar({
           fontFamily: 'Roboto, sans-serif',
           fontWeight: 400,
           lineHeight: '22.5px',
-          color: TEXT_SECONDARY,
+          color: titleColor,
         }}
       >
         {t('toolbar.title')}
@@ -102,7 +110,7 @@ export function DataFlowToolbar({
           fontFamily: 'Roboto, sans-serif',
           fontWeight: 400,
           lineHeight: '22.5px',
-          color: TEXT_SECONDARY,
+          color: titleColor,
         }}
       >
         {fileName}
@@ -118,15 +126,15 @@ export function DataFlowToolbar({
           sx={{
             px: 1.5,
             py: 0.5,
-            backgroundColor: '#373F4E',
+            backgroundColor: '#5E66FF',
             borderRadius: '4px',
-            color: TEXT_TERTIARY,
+            color: 'white',
             fontSize: 15,
             fontWeight: 400,
             textTransform: 'none',
             lineHeight: '22.5px',
             justifySelf: 'flex-end',
-            '&:hover': { backgroundColor: '#5E66FF' },
+            '&:hover': { backgroundColor: '#4A3BFF' },
           }}
         >
           테스트 환경 접속
@@ -137,9 +145,9 @@ export function DataFlowToolbar({
           sx={{
             px: 1.5,
             py: 0.5,
-            backgroundColor: '#373F4E',
+            backgroundColor: isDark ? '#373F4E' : '#F4F4F8',
             borderRadius: '4px',
-            color: TEXT_TERTIARY,
+            color: isDark ? TEXT_TERTIARY : '#667085',
             fontSize: 15,
             fontWeight: 400,
             textTransform: 'none',
@@ -157,9 +165,9 @@ export function DataFlowToolbar({
           sx={{
             px: 1.5,
             py: 0.5,
-            backgroundColor: '#373F4E',
+            backgroundColor: isDark ? '#373F4E' : '#F4F4F8',
             borderRadius: '4px',
-            color: TEXT_TERTIARY,
+            color: isDark ? TEXT_TERTIARY : '#667085',
             fontSize: 15,
             fontWeight: 400,
             textTransform: 'none',
@@ -177,9 +185,9 @@ export function DataFlowToolbar({
           sx={{
             px: 1.5,
             py: 0.5,
-            backgroundColor: '#373F4E',
+            backgroundColor: isDark ? '#373F4E' : '#F4F4F8',
             borderRadius: '4px',
-            color: TEXT_TERTIARY,
+            color: isDark ? TEXT_TERTIARY : '#667085',
             fontSize: 15,
             fontWeight: 400,
             textTransform: 'none',
