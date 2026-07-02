@@ -112,7 +112,7 @@ export function ChartArea({
     <Box
       sx={{
         border: 1,
-        borderColor: theme.palette.mode === 'dark' ? theme.palette.grey[500] : theme.palette.grey[50],
+        borderColor: theme.palette.mode === 'dark' ? theme.palette.grey[500] : '#F0F1F5',
         bgcolor: theme.palette.mode === 'dark' ? '#141C2A' : '#F9FAFB',
         borderRadius: 1,
         height,

@@ -171,6 +171,7 @@ const ArrowSelector = () => {
           mr: 0.5,
           color: theme.palette.common.white,
           backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#FFFFFF',
+          border: theme.palette.mode === 'dark' ? 'none' : '1px solid #D1D6E0',
 
           '&:hover': {
             backgroundColor: theme.palette.mode === 'dark' ? bgColors.hover : grey[200],
@@ -208,6 +209,7 @@ const ArrowSelector = () => {
           mr: 0.5,
           color: theme.palette.common.white,
           backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#FFFFFF',
+          border: theme.palette.mode === 'dark' ? 'none' : '1px solid #D1D6E0',
 
           '&:hover': {
             backgroundColor: theme.palette.mode === 'dark' ? bgColors.hover : grey[200],

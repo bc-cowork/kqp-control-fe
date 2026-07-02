@@ -71,6 +71,7 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
         p: 1.5,
         pr: '4px',
         borderRadius: '12px',
+        border: theme.palette.mode === 'dark' ? 'none' : '1px solid #D1D6E0',
         boxSizing: 'border-box',
       }}
     >

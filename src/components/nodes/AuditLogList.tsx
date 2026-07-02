@@ -15,6 +15,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
+  TableContainer,
 } from '@mui/material';
 
 import { useRouter } from 'src/routes/hooks';
@@ -23,8 +24,8 @@ import { formatBytes } from 'src/utils/helper';
 import { formatDateCustom } from 'src/utils/format-time';
 
 import { useTranslate } from 'src/locales';
+import { grey } from 'src/theme/core/palette';
 import { useAuditLogList } from 'src/actions/nodes';
-import { grey, common } from 'src/theme/core/palette';
 
 import { TableEmptyRows } from '../table/table-empty-rows';
 import { TableErrorRows } from '../table/table-error-rows';
@@ -133,7 +134,8 @@ export function AuditLogList({ selectedNodeId }: Props) {
           sx={{ pl: 2, pr: 0.5 }}
         />
       </Stack>
-      <Table size="small">
+      <TableContainer>
+        <Table size="small">
         <TableHead>
           <TableRow>
             <TableCell align="right">{t('table_header.no')}</TableCell>
@@ -168,7 +170,8 @@ export function AuditLogList({ selectedNodeId }: Props) {
             ))
           )}
         </TableBody>
-      </Table>
+        </Table>
+      </TableContainer>
     </Box>
   );
 }

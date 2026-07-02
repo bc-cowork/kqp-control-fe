@@ -11,6 +11,11 @@ const MuiTableContainer: Components<Theme>['MuiTableContainer'] = {
     root: ({ theme }) => ({
       position: 'relative',
       scrollbarWidth: 'thin',
+      // Light mode: wrap tables in an outer border matching the rounded corners.
+      ...(theme.palette.mode !== 'dark' && {
+        border: '1px solid #D1D6E0',
+        borderRadius: '8px',
+      }),
     }),
   },
 };

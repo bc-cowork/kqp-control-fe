@@ -178,6 +178,7 @@ export function DashboardView() {
                 px: 1.5,
                 borderRadius: 1.5,
                 backgroundColor: theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF',
+                border: theme.palette.mode === 'dark' ? 'none' : '1px solid #D1D6E0',
               }}
             >
               <Stack
