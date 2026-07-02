@@ -137,20 +137,27 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
               lg: 0
             }}
           >
-            <AuditFrameListFilterBar
-              value={frameSeq}
-              setValue={setFrameSeq}
-              onSearch={handleFrameSearch}
-              onReset={handleFrameReset}
-            />
             <Box
               sx={{
-                borderBottomRightRadius: '12px',
-                borderBottomLeftRadius: '12px',
-                backgroundColor: theme.palette.mode === 'dark' ? 'transparent' : 'white',
-                p: 1,
+                borderRadius: '12px',
+                overflow: 'hidden',
+                border: theme.palette.mode === 'dark' ? 'none' : '1px solid #D1D6E0',
+                backgroundColor: theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF',
+                // Inset shadow rising from the bottom edge (over the table's last rows).
+                boxShadow: 'inset 0 -12px 12px -10px rgba(16, 24, 40, 0.18)',
               }}
             >
+              <AuditFrameListFilterBar
+                value={frameSeq}
+                setValue={setFrameSeq}
+                onSearch={handleFrameSearch}
+                onReset={handleFrameReset}
+              />
+              <Box
+                sx={{
+                  p: 1,
+                }}
+              >
               {searchedSeq == null && (
                 <TablePaginationCustom
                   rowsPerPage={rowsPerPage}
@@ -163,7 +170,10 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                   sx={{ mb: 1, mt: 2, overflowX: 'auto' }}
                 />
               )}
-              <TableContainer component={Paper} sx={{ height: '660px' }}>
+              <TableContainer
+                component={Paper}
+                sx={{ height: '660px', border: 'none', borderRadius: 0, backgroundColor: 'transparent' }}
+              >
                 <Table size="small">
                   <TableHead>
                     <TableRow>
@@ -209,6 +219,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                   </TableBody>
                 </Table>
               </TableContainer>
+              </Box>
             </Box>
           </Grid>
           <Grid md={12} lg={3.5} sx={{ pl: 1.5, mb: '24px', mt: { lg: 2 } }}>

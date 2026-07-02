@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, InputBase, Typography } from '@mui/material';
+import { Box, InputBase, Typography, useTheme } from '@mui/material';
 
 import { useTranslate } from 'src/locales';
 
@@ -14,32 +14,38 @@ type Props = {
   onReset: () => void;
 };
 
-// Field colors come straight from the design spec (dark theme).
-const FIELD_BG = '#202838';
-const FIELD_OUTLINE = '#33343F';
+// Neutral colors that read on both themes.
 const LABEL_COLOR = '#6A6878';
-const DIVIDER_COLOR = '#33343F';
-const VALUE_COLOR = '#E9E6EF';
 const PLACEHOLDER_COLOR = '#757575';
 const RESET_COLOR = '#A8AABA';
 
-const fieldSx = {
-  height: 38,
-  px: '12px',
-  gap: '8px',
-  display: 'flex',
-  alignItems: 'center',
-  borderRadius: '6px',
-  backgroundColor: FIELD_BG,
-  outline: `1px solid ${FIELD_OUTLINE}`,
-  outlineOffset: '-1px',
-};
-
-const labelSx = { color: LABEL_COLOR, fontSize: 15, whiteSpace: 'nowrap' };
-const dividerSx = { color: DIVIDER_COLOR, fontSize: 15 };
-
 export function MemorySearchBar({ value, onChange, onReset }: Props) {
   const { t } = useTranslate('memory');
+  const theme = useTheme();
+  const isDark = theme.palette.mode === 'dark';
+
+  // Field/accent colors — dark spec with light-mode equivalents.
+  const containerBg = isDark ? '#212447' : '#EFF6FF';
+  const containerBorder = isDark ? '#1D2654' : '#DFEAFF';
+  const fieldBg = isDark ? '#202838' : '#FFFFFF';
+  const fieldOutline = isDark ? '#33343F' : '#E0E4EB';
+  const dividerColor = isDark ? '#33343F' : '#E0E4EB';
+  const valueColor = isDark ? '#E9E6EF' : '#373F4E';
+
+  const fieldSx = {
+    height: 38,
+    px: '12px',
+    gap: '8px',
+    display: 'flex',
+    alignItems: 'center',
+    borderRadius: '6px',
+    backgroundColor: fieldBg,
+    outline: `1px solid ${fieldOutline}`,
+    outlineOffset: '-1px',
+  };
+
+  const labelSx = { color: LABEL_COLOR, fontSize: 15, whiteSpace: 'nowrap' };
+  const dividerSx = { color: dividerColor, fontSize: 15 };
 
   return (
     <Box
@@ -50,18 +56,16 @@ export function MemorySearchBar({ value, onChange, onReset }: Props) {
         gap: '10px',
         display: 'flex',
         alignItems: 'center',
-        backgroundColor: '#212447',
-        borderTopLeftRadius: 8,
-        borderTopRightRadius: 8,
-        outline: '1px solid #1D2654',
-        outlineOffset: '-1px',
+        // Accent strip inside the shared table container (keeps its own bg + border).
+        backgroundColor: containerBg,
+        borderBottom: `1px solid ${containerBorder}`,
       }}
     >
       {/* Search column — currently the API only supports searching by issue code (q) */}
       <Box sx={{ ...fieldSx, width: 240, flexShrink: 0 }}>
         <Typography sx={labelSx}>{t('search_ui.search_column')}</Typography>
         <Typography sx={dividerSx}>|</Typography>
-        <Typography sx={{ color: VALUE_COLOR, fontSize: 15, flex: 1, whiteSpace: 'nowrap' }}>
+        <Typography sx={{ color: valueColor, fontSize: 15, flex: 1, whiteSpace: 'nowrap' }}>
           {t('search_ui.search_column_code')}
         </Typography>
       </Box>
@@ -77,7 +81,7 @@ export function MemorySearchBar({ value, onChange, onReset }: Props) {
           placeholder={t('search_ui.search_placeholder')}
           sx={{
             flex: 1,
-            color: VALUE_COLOR,
+            color: valueColor,
             fontSize: 15,
             '& input::placeholder': { color: PLACEHOLDER_COLOR, opacity: 1 },
           }}

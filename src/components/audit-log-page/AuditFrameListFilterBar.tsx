@@ -24,6 +24,7 @@ const AuditFrameListFilterBar: React.FC<Props> = ({ value, setValue, onSearch, o
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
 
+  // Accent strip inside the shared table container (keeps its own bg + border).
   const containerBg = isDark ? '#212447' : '#EFF6FF';
   const containerBorder = isDark ? '#1D2654' : '#DFEAFF';
   const fieldBg = isDark ? '#202838' : '#FFFFFF';
@@ -71,9 +72,7 @@ const AuditFrameListFilterBar: React.FC<Props> = ({ value, setValue, onSearch, o
         px: 1.5,
         py: 2,
         bgcolor: containerBg,
-        border: `1px solid ${containerBorder}`,
-        borderTopLeftRadius: '8px',
-        borderTopRightRadius: '8px',
+        borderBottom: `1px solid ${containerBorder}`,
         display: 'flex',
         alignItems: 'center',
         gap: 1.5,

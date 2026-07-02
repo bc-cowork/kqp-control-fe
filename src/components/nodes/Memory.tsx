@@ -20,12 +20,12 @@ import { useTabs, useRouter } from 'src/routes/hooks';
 
 import { useDebounce } from 'src/hooks/use-debounce';
 
-import { formatDateCustom } from 'src/utils/format-time';
 import { formatNumber } from 'src/utils/helper';
+import { formatDateCustom } from 'src/utils/format-time';
 import { processMemoryChartData } from 'src/utils/process-chart-data';
 
+import { common } from 'src/theme/core';
 import { useTranslate } from 'src/locales';
-import { grey, common } from 'src/theme/core';
 import { useGetIssues, useGetIssueGraph } from 'src/actions/nodes';
 
 import FadingDivider from '../common/FadingDivider';
@@ -222,20 +222,27 @@ export function Memory({ selectedNodeId }: Props) {
           pl: { xs: 0, lg: 1.25 }
         }}
       >
-        <MemorySearchBar
-          value={code}
-          onChange={handleSearchChange}
-          onReset={handleResetSearch}
-        />
         <Box
           sx={{
-            pb: 1.5,
-            px: 1.5,
-            borderBottomLeftRadius: '12px',
-            borderBottomRightRadius: '12px',
-            backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'transparent' : 'white',
+            borderRadius: '12px',
+            overflow: 'hidden',
+            border: (theme) => (theme.palette.mode === 'dark' ? 'none' : '1px solid #D1D6E0'),
+            backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF'),
+            // Inset shadow rising from the bottom edge (over the table's last rows).
+            boxShadow: 'inset 0 -12px 12px -10px rgba(16, 24, 40, 0.18)',
           }}
         >
+          <MemorySearchBar
+            value={code}
+            onChange={handleSearchChange}
+            onReset={handleResetSearch}
+          />
+          <Box
+            sx={{
+              pb: 1.5,
+              px: 1.5,
+            }}
+          >
           <Box sx={{ py: 1, overflow: 'auto' }}>
             <TablePaginationCustom
               rowsPerPage={limit}
@@ -247,7 +254,10 @@ export function Memory({ selectedNodeId }: Props) {
               onRowsPerPageChange={onChangeRowsPerPage}
             />
           </Box>
-          <TableContainer component={Paper} sx={{ height: 'calc(100vh - 310px)', width: 'auto', overflow: 'auto' }}>
+          <TableContainer
+            component={Paper}
+            sx={{ height: 'calc(100vh - 310px)', width: 'auto', overflow: 'auto', border: 'none', borderRadius: 0, backgroundColor: 'transparent' }}
+          >
             <Table size="small">
               <TableHead>
                 <TableRow>
@@ -302,6 +312,7 @@ export function Memory({ selectedNodeId }: Props) {
               </TableBody>
             </Table>
           </TableContainer>
+          </Box>
         </Box>
       </Grid>
     </Grid>

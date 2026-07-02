@@ -230,21 +230,27 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
               <CircularProgress color='primary' />
             </Box>
           ) : auditFrame?.frags && auditFrame.frags.length > 0 ? (
-            <>
-              <AuditFrameFilterBar
-                filters={filters}
-                setFilters={setFilters}
-                onApply={handleSearch}
-                onResetClick={handleResetClick}
-              />
-              <Box
+            <Box
                 sx={{
-                  borderBottomRightRadius: '12px',
-                  borderBottomLeftRadius: '12px',
-                  backgroundColor: (theme) => (theme.palette.mode === 'dark' ? 'transparent' : 'white'),
-                  p: 1,
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  border: (theme) => (theme.palette.mode === 'dark' ? 'none' : '1px solid #D1D6E0'),
+                  backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF'),
+                  // Inset shadow rising from the bottom edge (over the table's last rows).
+                  boxShadow: 'inset 0 -12px 12px -10px rgba(16, 24, 40, 0.18)',
                 }}
               >
+                <AuditFrameFilterBar
+                  filters={filters}
+                  setFilters={setFilters}
+                  onApply={handleSearch}
+                  onResetClick={handleResetClick}
+                />
+                <Box
+                  sx={{
+                    p: 1,
+                  }}
+                >
                 <TablePaginationCustomShort
                   rowsPerPage={count || 40}
                   page={5}
@@ -261,7 +267,10 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                   sx={{ mb: 1 }}
                 />
 
-                <TableContainer component={Paper} sx={{ height: 'calc(100vh - 300px)' }}>
+                <TableContainer
+                  component={Paper}
+                  sx={{ height: 'calc(100vh - 300px)', border: 'none', borderRadius: 0, backgroundColor: 'transparent' }}
+                >
                   <Table size="small">
                     <TableHead>
                       <TableRow>
@@ -342,8 +351,8 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                     </TableBody>
                   </Table>
                 </TableContainer>
+                </Box>
               </Box>
-            </>
           ) : (
             <Paper
               sx={{

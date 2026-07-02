@@ -50,6 +50,7 @@ const AuditFrameFilterBar: React.FC<Props> = ({ filters, setFilters, onApply, on
   };
 
   // Design tokens (dark spec from design, with light-mode fallbacks).
+  // Accent strip inside the shared table container (keeps its own bg + border).
   const containerBg = isDark ? '#212447' : '#EFF6FF';
   const containerBorder = isDark ? '#1D2654' : '#DFEAFF';
   const fieldBg = isDark ? '#202838' : '#FFFFFF';
@@ -111,9 +112,7 @@ const AuditFrameFilterBar: React.FC<Props> = ({ filters, setFilters, onApply, on
         px: 1.5,
         py: 1.5,
         bgcolor: containerBg,
-        border: `1px solid ${containerBorder}`,
-        borderTopLeftRadius: '8px',
-        borderTopRightRadius: '8px',
+        borderBottom: `1px solid ${containerBorder}`,
         display: 'flex',
         alignItems: 'center',
         gap: 1,
