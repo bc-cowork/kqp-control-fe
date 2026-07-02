@@ -38,6 +38,8 @@ module.exports = {
     'import/prefer-default-export': 0,
     'prefer-destructuring': [1, { object: true, array: false }],
     // typescript
+    'no-shadow': 0,
+    '@typescript-eslint/no-shadow': 0,
     '@typescript-eslint/naming-convention': 0,
     '@typescript-eslint/no-use-before-define': 0,
     '@typescript-eslint/consistent-type-exports': 1,
