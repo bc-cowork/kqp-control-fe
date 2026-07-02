@@ -26,13 +26,13 @@ import { useRouter } from 'src/routes/hooks';
 import { formatBytes } from 'src/utils/helper';
 import { formatDateCustom } from 'src/utils/format-time';
 
+import { grey } from 'src/theme/core';
 import { useTranslate } from 'src/locales';
-import { grey, common } from 'src/theme/core';
 import { useAuditFrameList } from 'src/actions/nodes';
 
 import FadingDivider from '../common/FadingDivider';
 import TablePaginationCustom from '../common/TablePaginationCustom';
-import { CustomTextFieldDark } from '../audit-log-page/CustomTextFieldDark';
+import AuditFrameListFilterBar from '../audit-log-page/AuditFrameListFilterBar';
 
 // ----------------------------------------------------------------------
 
@@ -50,6 +50,8 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
   const [offset, setOffset] = useState<number>(0);
   const [refreshKey, setRefreshKey] = useState<number>(0);
   const [frameSeq, setFrameSeq] = useState<number | null>(null);
+  // The seq currently applied via Search — when set, only that frame is shown.
+  const [searchedSeq, setSearchedSeq] = useState<number | null>(null);
 
   const {
     auditFrameList,
@@ -95,13 +97,30 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
     setPage(0);
   };
 
-  function handleMoveToFrame(event: React.KeyboardEvent<HTMLDivElement>): void {
-    if (event.key === 'Enter') {
-      if (frameSeq) {
-        router.push(`/dashboard/nodes/${selectedNodeId}/audit-log/${selectedFile}/${frameSeq}`);
-      }
+  // Filter the list in-place: `last-offset` = the searched seq makes the list
+  // start at that frame (shown at the top), instead of navigating to its detail.
+  const handleFrameSearch = () => {
+    if (frameSeq) {
+      setSearchedSeq(frameSeq);
+      setPage(0);
+      setOffset(frameSeq);
+      resetCache();
     }
-  }
+  };
+
+  const handleFrameReset = () => {
+    setFrameSeq(null);
+    setSearchedSeq(null);
+    setPage(0);
+    setOffset(0);
+    resetCache();
+  };
+
+  // When a search is applied, show only the matching frame; otherwise the full page.
+  const displayedFrames =
+    searchedSeq != null
+      ? (auditFrameList?.frame_list ?? []).filter((f) => f.seq === searchedSeq)
+      : auditFrameList?.frame_list ?? [];
 
   return (
     <>
@@ -118,6 +137,12 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
               lg: 0
             }}
           >
+            <AuditFrameListFilterBar
+              value={frameSeq}
+              setValue={setFrameSeq}
+              onSearch={handleFrameSearch}
+              onReset={handleFrameReset}
+            />
             <Box
               sx={{
                 borderBottomRightRadius: '12px',
@@ -126,16 +151,18 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                 p: 1,
               }}
             >
-              <TablePaginationCustom
-                rowsPerPage={rowsPerPage}
-                currentPage={auditFrameListPagination?.current_page || 1}
-                totalPages={auditFrameListPagination?.total_pages || 1}
-                hasNextPage={auditFrameListPagination?.has_next_page || false}
-                hasPreviousPage={auditFrameListPagination?.has_previous_page || false}
-                onPageChange={onChangePage}
-                onRowsPerPageChange={onChangeRowsPerPage}
-                sx={{ mb: 1, mt: 2, overflowX: 'auto' }}
-              />
+              {searchedSeq == null && (
+                <TablePaginationCustom
+                  rowsPerPage={rowsPerPage}
+                  currentPage={auditFrameListPagination?.current_page || 1}
+                  totalPages={auditFrameListPagination?.total_pages || 1}
+                  hasNextPage={auditFrameListPagination?.has_next_page || false}
+                  hasPreviousPage={auditFrameListPagination?.has_previous_page || false}
+                  onPageChange={onChangePage}
+                  onRowsPerPageChange={onChangeRowsPerPage}
+                  sx={{ mb: 1, mt: 2, overflowX: 'auto' }}
+                />
+              )}
               <TableContainer component={Paper} sx={{ height: '660px' }}>
                 <Table size="small">
                   <TableHead>
@@ -155,8 +182,12 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                       <TableRow>
                         <TableCell colSpan={6}>Error Fetching Audit Logs List</TableCell>
                       </TableRow>
+                    ) : displayedFrames.length === 0 ? (
+                      <TableRow>
+                        <TableCell colSpan={6}>No frame found for seq {searchedSeq}</TableCell>
+                      </TableRow>
                     ) : (
-                      auditFrameList?.frame_list.map(
+                      displayedFrames.map(
                         (auditFrame: AuditLogFrameItem, index: number) => (
                           <TableRow
                             key={index}
@@ -268,40 +299,6 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                     <Typography sx={{ color: theme.palette.common.white, fontSize: 17, fontWeight: 500 }}>
                       {formatDateCustom(auditFrameList?.date?.toString())}
                     </Typography>
-                  </Box>
-                </Grid>
-
-
-                <Grid
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'flex-end'
-                  }}
-                  xs={12} sm={12} md={6} lg={12} xl={12}>
-                  <Box
-                    sx={{
-                      borderRadius: '12px',
-                      background: 'linear-gradient(180deg, #202838 80%, #373F4E 100%)',
-                      p: 1,
-                      minHeight: {
-                        xs: '340px',
-                        lg: '348px'
-                      }
-                    }}
-                  >
-                    <Typography sx={{ color: theme.palette.grey[300], fontSize: 15 }}>
-                      {t('audit_log_frame_detail.title')}
-                    </Typography>
-                    <CustomTextFieldDark
-                      label={t('audit_log_frame_detail.frame_seq')}
-                      value={frameSeq}
-                      setValue={setFrameSeq}
-                      type="number"
-                      // eslint-disable-next-line react/jsx-no-bind
-                      onKeyDownHandler={handleMoveToFrame}
-                      sx={{ mt: 1 }}
-                    />
                   </Box>
                 </Grid>
               </Grid>
