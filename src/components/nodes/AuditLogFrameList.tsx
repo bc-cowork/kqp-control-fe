@@ -143,8 +143,6 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                 overflow: 'hidden',
                 border: theme.palette.mode === 'dark' ? 'none' : '1px solid #D1D6E0',
                 backgroundColor: theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF',
-                // Inset shadow rising from the bottom edge (over the table's last rows).
-                boxShadow: 'inset 0 -12px 12px -10px rgba(16, 24, 40, 0.18)',
               }}
             >
               <AuditFrameListFilterBar
@@ -172,7 +170,14 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
               )}
               <TableContainer
                 component={Paper}
-                sx={{ height: '660px', border: 'none', borderRadius: 0, backgroundColor: 'transparent' }}
+                sx={{
+                  height: '660px',
+                  borderRadius: '8px',
+                  backgroundColor: 'transparent',
+                  border: (theme) => (theme.palette.mode === 'dark' ? '1px solid #373F4E' : '1px solid #D1D6E0'),
+                  boxShadow:
+                    'inset 0 -12px 12px -10px rgba(16, 24, 40, 0.18), inset 12px 0 12px -10px rgba(16, 24, 40, 0.18), inset -12px 0 12px -10px rgba(16, 24, 40, 0.18)',
+                }}
               >
                 <Table size="small">
                   <TableHead>

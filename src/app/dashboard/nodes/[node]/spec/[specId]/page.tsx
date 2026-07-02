@@ -178,7 +178,7 @@ export default function Page({ params }: Props) {
                                     fontWeight: 600,
                                 }}>{t('top.prof_definition')}</Typography>
                             </Box>
-                            <TableContainer sx={{ p: 0.5, overflowY: 'auto', maxHeight: 'calc(64vh)' }}>
+                            <TableContainer sx={{ p: 0.5, overflowY: 'auto', maxHeight: 'calc(64vh)', border: 'none' }}>
                                 <Table size="small"
                                 >
                                     <TableHead
