@@ -43,6 +43,11 @@ const dummyData: any[] = [
 
 export function ChartBar({ data = dummyData, loading = false }: ChartBarProps) {
   const theme = useTheme();
+  const isDark = theme.palette.mode === 'dark';
+  // Axis/grid/title colors — light values from the design; dark keeps readable-on-#202838 tones.
+  const gridColor = isDark ? '#373F4E' : '#F0F1F5';
+  const axisNumColor = isDark ? '#667085' : '#AFB7C8';
+  const titleColor = isDark ? '#AFB7C8' : '#667085';
 
   // Format large numbers for the y-axis (e.g., 1000 -> 1k, 1000000 -> 1M)
   const formatLargeNumber = (value: number): string => {
@@ -70,7 +75,7 @@ export function ChartBar({ data = dummyData, loading = false }: ChartBarProps) {
         alignItems="center"
         sx={{ mt: 1, mx: 1 }}
       >
-        <Typography sx={{ fontSize: 15, color: theme.palette.grey[300] }}>Today Count</Typography>
+        <Typography sx={{ fontSize: 15, color: titleColor }}>Today Count</Typography>
       </Stack>
 
       {/* Chart */}
@@ -79,15 +84,15 @@ export function ChartBar({ data = dummyData, loading = false }: ChartBarProps) {
           <CircularProgress />
         ) : (
           <BarChart data={data} margin={{ top: 10, right: 5, left: -20, bottom: 0 }}>
-            <CartesianGrid stroke={theme.palette.grey[400]} fill="transparent" vertical={false} />
+            <CartesianGrid stroke={gridColor} fill="transparent" vertical={false} />
             <XAxis
               dataKey="timestamp"
-              tick={{ fontSize: 12, fill: theme.palette.grey[400] }}
+              tick={{ fontSize: 12, fill: axisNumColor }}
               tickLine={false}
               axisLine={{ stroke: 'transparent' }}
             />
             <YAxis
-              tick={{ fontSize: 12, fill: theme.palette.grey[300] }}
+              tick={{ fontSize: 12, fill: axisNumColor }}
               tickLine={false}
               axisLine={{ stroke: 'transparent' }}
               tickFormatter={formatLargeNumber}
@@ -96,7 +101,7 @@ export function ChartBar({ data = dummyData, loading = false }: ChartBarProps) {
                 angle: -90,
                 position: 'insideLeft',
                 offset: -10,
-                fill: theme.palette.grey[400],
+                fill: axisNumColor,
                 fontSize: 12,
               }}
             />

@@ -177,8 +177,8 @@ export default function Page({ params }: Props) {
                             sx={{
                                 borderRadius: '8px',
                                 height: '264px',
-                                color: 'red',
-                                backgroundColor: '#202838',
+                                backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF',
+                                border: (theme) => theme.palette.mode === 'dark' ? 'none' : '1px solid #D1D6E0',
                                 mt: 2
                             }}
                         >
