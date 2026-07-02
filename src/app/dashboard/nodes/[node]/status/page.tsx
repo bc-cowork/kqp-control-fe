@@ -117,12 +117,14 @@ export default function Page({ params }: Props) {
                         </Grid>
                     </Grid>
 
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={12} md={6} sx={{ display: 'flex', flexDirection: 'column' }}>
                         <HeadRow title={t('table_bottom.ch_inbound')} />
                         <TableContainer component={Paper}
                             sx={{
                                 borderTopLeftRadius: 0,
                                 borderTopRightRadius: 0,
+                                // Fill the stretched Grid item so both tables match the taller one's height.
+                                flex: 1,
                             }}
                         >
                             <Table size="small"
@@ -162,12 +164,14 @@ export default function Page({ params }: Props) {
                         </TableContainer>
                     </Grid>
 
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={12} md={6} sx={{ display: 'flex', flexDirection: 'column' }}>
                         <HeadRow title={t('table_bottom.ch_outbound')} />
                         <TableContainer component={Paper}
                             sx={{
                                 borderTopLeftRadius: 0,
                                 borderTopRightRadius: 0,
+                                // Fill the stretched Grid item so both tables match the taller one's height.
+                                flex: 1,
                             }}
                         >
                             <Table size="small"
