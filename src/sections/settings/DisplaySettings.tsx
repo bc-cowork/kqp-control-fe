@@ -31,6 +31,7 @@ export const DisplaySettings = () => {
                 alignSelf: 'center',
                 bgcolor: theme.palette.mode === 'dark' ? '#202838' : 'background.paper',
                 borderRadius: 1,
+                border: theme.palette.mode === 'dark' ? 'none' : '1px solid #D1D6E0',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 3,

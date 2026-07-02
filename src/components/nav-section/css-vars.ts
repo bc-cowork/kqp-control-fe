@@ -12,27 +12,29 @@ function colorVars(theme: Theme, variant?: 'vertical' | 'mini' | 'horizontal') {
     vars: { palette },
   } = theme;
 
+  // The sidebar is always dark (#202838) in both themes, so these colors are pinned to
+  // the dark-sidebar design values instead of theme.palette.* (which flip in light mode).
   return {
-    '--nav-item-color': palette.text.secondary,
-    '--nav-item-hover-bg': palette.grey[400],
+    '--nav-item-color': '#F0F1F5',
+    '--nav-item-hover-bg': '#373F4E',
     '--nav-item-pressed-bg': palette.grey[600],
-    '--nav-item-caption-color': palette.text.disabled,
+    '--nav-item-caption-color': '#AFB7C8',
     // root
     '--nav-item-root-active-color': palette.primary.main,
     '--nav-item-root-active-color-on-dark': palette.primary.light,
     '--nav-item-root-active-bg': palette.primary.light,
     '--nav-item-root-active-hover-bg': palette.primary.main,
-    '--nav-item-root-open-color': palette.text.primary,
-    '--nav-item-root-open-bg': palette.action.hover,
+    '--nav-item-root-open-color': '#FFFFFF',
+    '--nav-item-root-open-bg': '#373F4E',
     // sub
-    '--nav-item-sub-active-color': palette.text.primary,
+    '--nav-item-sub-active-color': '#FFFFFF',
     '--nav-item-sub-active-bg': palette.primary.main,
-    '--nav-item-sub-open-color': palette.text.primary,
-    '--nav-item-sub-open-bg': palette.grey[400],
+    '--nav-item-sub-open-color': '#FFFFFF',
+    '--nav-item-sub-open-bg': '#373F4E',
     ...(variant === 'vertical' && {
       '--nav-item-sub-active-bg': palette.primary.main,
-      '--nav-subheader-color': palette.text.disabled,
-      '--nav-subheader-hover-color': palette.text.primary,
+      '--nav-subheader-color': '#AFB7C8',
+      '--nav-subheader-hover-color': '#FFFFFF',
     }),
   };
 }
