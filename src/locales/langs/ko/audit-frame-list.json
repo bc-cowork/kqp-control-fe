@@ -16,7 +16,7 @@
   "table_header": {
     "frame_seq": "프레임 번호",
     "head": "전문 유형",
-    "rid": "전문 식별자",
+    "rid": "채널",
     "size": "크기"
   },
   "right_side_audit_log_list": {
@@ -32,7 +32,7 @@
     "time": "시간",
     "size": "크기",
     "head": "전문 유형",
-    "rid": "전문 식별자",
+    "rid": "채널",
     "title": "증적 로그 프레임 상세",
     "frame_seq": "프레임 번호"
   }

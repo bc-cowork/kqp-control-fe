@@ -73,6 +73,7 @@ export function AuditLogList({ selectedNodeId }: Props) {
   return (
     <Box sx={{
       backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#202838' : 'white',
+      border: (theme) => (theme.palette.mode === 'dark' ? 'none' : '1px solid #D1D6E0'),
       borderRadius: 1.5, p: 1.5
     }}>
       <Stack direction="row" alignItems="center" sx={{ mb: 1 }}>
@@ -134,7 +135,7 @@ export function AuditLogList({ selectedNodeId }: Props) {
           sx={{ pl: 2, pr: 0.5 }}
         />
       </Stack>
-      <TableContainer>
+      <TableContainer sx={{ border: 'none', borderRadius: 0 }}>
         <Table size="small">
         <TableHead>
           <TableRow>
