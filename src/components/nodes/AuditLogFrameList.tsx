@@ -168,6 +168,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                   sx={{ mb: 1, mt: 2, overflowX: 'auto' }}
                 />
               )}
+              <Box sx={{ position: 'relative' }}>
               <TableContainer
                 component={Paper}
                 sx={{
@@ -175,8 +176,6 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                   borderRadius: '8px',
                   backgroundColor: 'transparent',
                   border: (theme) => (theme.palette.mode === 'dark' ? '1px solid #373F4E' : '1px solid #D1D6E0'),
-                  boxShadow:
-                    'inset 0 -12px 12px -10px rgba(16, 24, 40, 0.18), inset 12px 0 12px -10px rgba(16, 24, 40, 0.18), inset -12px 0 12px -10px rgba(16, 24, 40, 0.18)',
                 }}
               >
                 <Table size="small">
@@ -224,6 +223,18 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
                   </TableBody>
                 </Table>
               </TableContainer>
+              <Box
+                sx={{
+                  position: 'absolute',
+                  inset: 0,
+                  pointerEvents: 'none',
+                  borderRadius: '8px',
+                  zIndex: 3,
+                  boxShadow:
+                    'inset 0 -12px 12px -10px rgba(16, 24, 40, 0.18), inset 12px 0 12px -10px rgba(16, 24, 40, 0.18), inset -12px 0 12px -10px rgba(16, 24, 40, 0.18)',
+                }}
+              />
+              </Box>
               </Box>
             </Box>
           </Grid>
