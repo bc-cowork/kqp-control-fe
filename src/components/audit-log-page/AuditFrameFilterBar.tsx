@@ -60,7 +60,7 @@ const AuditFrameFilterBar: React.FC<Props> = ({ filters, setFilters, onApply, on
   const placeholderColor = '#757575';
   const valueColor = isDark ? '#F0F1F5' : '#373F4E';
   const buttonText = '#A8AABA';
-  const arrowSelectedBg = isDark ? '#373F4E' : '#E0E4EB';
+  const arrowSelectedBg = isDark ? '#373F4E' : '#99BDFF';
   const arrowIcon = '#F0F1F5';
   const arrowIconMuted = isDark ? 'rgba(240,241,245,0.25)' : '#A8AABA';
 
