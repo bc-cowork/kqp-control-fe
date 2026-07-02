@@ -217,7 +217,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
   // Shared input styles
   const inputSx = {
     '& .MuiOutlinedInput-root': {
-      bgcolor: (theme: any) => (theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF'),
+      bgcolor: (theme: any) => (theme.palette.mode === 'dark' ? '#202838' : '#F9FAFB'),
       borderRadius: '8px',
       '& fieldset': {
         borderColor: (theme: any) => (theme.palette.mode === 'dark' ? '#4E576A' : grey[300]),
@@ -227,7 +227,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
       },
     },
     '& .MuiOutlinedInput-input': {
-      color: (theme: any) => (theme.palette.mode === 'dark' ? '#D1D6E0' : '#373F4E'),
+      color: (theme: any) => (theme.palette.mode === 'dark' ? '#D1D6E0' : '#4E576A'),
       fontSize: 17,
       fontWeight: 400,
       lineHeight: '25.5px',
@@ -275,6 +275,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
             overflow: 'hidden',
             fontFamily: 'Pretendard',
             bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF'),
+            border: (theme) => `1px solid ${theme.palette.mode === 'dark' ? '#2A3142' : '#D1D6E0'}`,
             '& .MuiTypography-root': { fontFamily: 'Pretendard' },
             '& .MuiOutlinedInput-input': { fontFamily: 'Pretendard' },
             '& .MuiInput-input': { fontFamily: 'Pretendard' },
@@ -406,6 +407,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                   mt: 1.5,
                   p: 2,
                   borderRadius: '12px',
+                  bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#202838' : '#F9FAFB'),
                   border: (theme) =>
                     `1px solid ${theme.palette.mode === 'dark' ? '#4E576A' : grey[300]}`,
                 }}
@@ -444,16 +446,16 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                             textAlign: 'center',
                             bgcolor: (theme) =>
                               selected
-                                ? (theme.palette.mode === 'dark' ? '#212447' : '#EFF6FF')
+                                ? (theme.palette.mode === 'dark' ? '#212447' : '#5E66FF')
                                 : theme.palette.mode === 'dark'
                                   ? '#202838'
-                                  : '#FFFFFF',
+                                  : '#E0E4EB',
                             border: (theme) =>
                               `1px solid ${selected
-                                ? (theme.palette.mode === 'dark' ? '#24306D' : '#6B89FF')
+                                ? (theme.palette.mode === 'dark' ? '#24306D' : '#5E66FF')
                                 : theme.palette.mode === 'dark'
                                   ? '#373F4E'
-                                  : grey[300]
+                                  : '#E0E4EB'
                               }`,
                           }}
                         >
@@ -464,10 +466,10 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                               lineHeight: '25.5px',
                               color: (theme) =>
                                 selected
-                                  ? (theme.palette.mode === 'dark' ? '#FFFFFF' : '#5E66FF')
+                                  ? '#FFFFFF'
                                   : theme.palette.mode === 'dark'
                                     ? '#AFB7C8'
-                                    : grey[500],
+                                    : '#AFB7C8',
                             }}
                           >
                             {t(`form.days.${key}`)}
@@ -477,19 +479,20 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                     })}
                   </Stack>
 
-                  {/* Crontab badge */}
+                  {/* Crontab badge — same solid style as the selected day chips */}
                   {cronDays && (
                     <Box
                       sx={{
                         px: 1.85,
                         py: 0.85,
                         borderRadius: '8px',
-                        bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#212447' : '#EFF6FF'),
-                        border: '1px solid #6B89FF',
+                        bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#212447' : '#5E66FF'),
+                        border: (theme) =>
+                          `1px solid ${theme.palette.mode === 'dark' ? '#24306D' : '#5E66FF'}`,
                       }}
                     >
                       <Typography
-                        sx={{ color: '#6B89FF', fontSize: 17, fontWeight: 400, lineHeight: '25.5px' }}
+                        sx={{ color: '#FFFFFF', fontSize: 17, fontWeight: 400, lineHeight: '25.5px' }}
                       >
                         {cronDays}
                       </Typography>
@@ -537,7 +540,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                   p: 2,
                   py: 1.5,
                   borderRadius: '12px',
-                  bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF'),
+                  bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#202838' : '#F9FAFB'),
                   border: (theme) =>
                     `1px solid ${theme.palette.mode === 'dark' ? '#4E576A' : grey[300]}`,
                 }}
@@ -583,6 +586,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                   px: 2,
                   py: 1,
                   borderRadius: '12px',
+                  bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#202838' : '#F9FAFB'),
                   border: (theme) =>
                     `1px solid ${theme.palette.mode === 'dark' ? '#4E576A' : grey[300]}`,
                 }}
@@ -768,6 +772,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                   mt: 1.5,
                   borderRadius: '12px',
                   overflow: 'hidden',
+                  bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#202838' : '#F9FAFB'),
                   border: (theme) =>
                     `1px solid ${theme.palette.mode === 'dark' ? '#4E576A' : grey[300]}`,
                 }}
@@ -798,8 +803,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                           flex: 1,
                           px: 2,
                           py: 1.5,
-                          bgcolor: (theme) =>
-                            theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF',
+                          bgcolor: 'transparent',
                           borderRadius: '8px',
                         }}
                       >
@@ -898,7 +902,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                         bgcolor: (theme) =>
                           theme.palette.mode === 'dark'
                             ? isScriptEditing ? '#161C25' : 'transparent'
-                            : '#FFFFFF',
+                            : '#F9FAFB',
                       }}
                     >
                       <MonacoEditor
@@ -990,13 +994,13 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                   textTransform: 'none',
                   fontSize: 15,
                   fontWeight: 600,
-                  color: (theme) => (theme.palette.mode === 'dark' ? '#D1D6E0' : '#373F4E'),
-                  bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF'),
+                  color: (theme) => (theme.palette.mode === 'dark' ? '#D1D6E0' : '#667085'),
+                  bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#202838' : '#E0E4EB'),
                   border: (theme) =>
                     `1px solid ${theme.palette.mode === 'dark' ? '#4E576A' : grey[300]}`,
                   '&:hover': {
                     bgcolor: (theme) =>
-                      theme.palette.mode === 'dark' ? '#2A3142' : grey[100],
+                      theme.palette.mode === 'dark' ? '#2A3142' : '#D1D6E0',
                   },
                 }}
               >
@@ -1013,9 +1017,9 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                   fontSize: 15,
                   fontWeight: 600,
                   color: '#FFFFFF',
-                  bgcolor: '#4A3BFF',
-                  '&:hover': { bgcolor: '#3D32D9' },
-                  '&:disabled': { bgcolor: '#4A3BFF', opacity: 0.6 },
+                  bgcolor: '#5E66FF',
+                  '&:hover': { bgcolor: '#4A52E0' },
+                  '&:disabled': { bgcolor: '#5E66FF', opacity: 0.6 },
                 }}
               >
                 {t('form.btn_save')}
