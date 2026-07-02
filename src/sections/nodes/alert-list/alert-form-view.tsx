@@ -10,6 +10,7 @@ import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { paths } from 'src/routes/paths';
@@ -105,6 +106,8 @@ function parseCronDays(cron: string): boolean[] {
 export function AlertFormView({ nodeId, alertId }: Props) {
   const { t } = useTranslate('alert-list');
   const router = useRouter();
+  const theme = useTheme();
+  const isDark = theme.palette.mode === 'dark';
   const isEdit = Boolean(alertId);
 
   // Fetch existing data for edit mode
@@ -286,14 +289,15 @@ export function AlertFormView({ nodeId, alertId }: Props) {
             sx={{
               px: 2,
               py: 0.5,
-              bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#4E576A' : grey[200]),
+              // Navy header strip in both themes (matches the table-header convention).
+              bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#4E576A' : '#1D2654'),
               borderBottom: (theme) =>
                 `1px solid ${theme.palette.mode === 'dark' ? '#4E576A' : grey[300]}`,
             }}
           >
             <Typography
               sx={{
-                color: (theme) => (theme.palette.mode === 'dark' ? '#AFB7C8' : grey[600]),
+                color: (theme) => (theme.palette.mode === 'dark' ? '#AFB7C8' : '#E0E4EB'),
                 fontSize: 22,
                 fontWeight: 500,
                 lineHeight: '26.4px',
@@ -305,23 +309,25 @@ export function AlertFormView({ nodeId, alertId }: Props) {
               <Switch
                 checked={isActive}
                 onChange={(_, checked) => setIsActive(checked)}
-                sx={{
-                  '& .MuiSwitch-switchBase': { color: '#AFB7C8' },
+                sx={(theme) => ({
+                  '& .MuiSwitch-switchBase': {
+                    color: theme.palette.mode === 'dark' ? '#AFB7C8' : '#FFFFFF',
+                  },
                   '& .MuiSwitch-switchBase + .MuiSwitch-track': {
-                    bgcolor: '#373F4E',
+                    backgroundColor: theme.palette.mode === 'dark' ? '#373F4E' : grey[300],
                     opacity: 1,
                   },
                   '& .MuiSwitch-switchBase.Mui-checked': { color: '#fff' },
                   '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-                    bgcolor: '#5E66FF',
+                    backgroundColor: '#5E66FF',
                     opacity: 1,
                   },
-                }}
+                })}
               />
               <Typography
                 sx={{
-                  color: (theme) =>
-                    theme.palette.mode === 'dark' ? '#6B89FF' : '#5E66FF',
+                  // On the navy header strip in both themes -> use the brighter indigo for contrast.
+                  color: '#6B89FF',
                   fontSize: 17,
                   fontWeight: 500,
                   lineHeight: '25.5px',
@@ -363,10 +369,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
 
             {/* ── Description ── */}
             <Box sx={{ px: 2 }}>
-              <Typography sx={{
-                ...labelSx,
-                color: '#AFB7C8'
-              }}>{t('form.desc')}</Typography>
+              <Typography sx={labelSx}>{t('form.desc')}</Typography>
               <Controller
                 name="desc"
                 control={control}
@@ -441,13 +444,13 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                             textAlign: 'center',
                             bgcolor: (theme) =>
                               selected
-                                ? '#212447'
+                                ? (theme.palette.mode === 'dark' ? '#212447' : '#EFF6FF')
                                 : theme.palette.mode === 'dark'
                                   ? '#202838'
                                   : '#FFFFFF',
                             border: (theme) =>
                               `1px solid ${selected
-                                ? '#24306D'
+                                ? (theme.palette.mode === 'dark' ? '#24306D' : '#6B89FF')
                                 : theme.palette.mode === 'dark'
                                   ? '#373F4E'
                                   : grey[300]
@@ -459,10 +462,12 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                               fontSize: 17,
                               fontWeight: 400,
                               lineHeight: '25.5px',
-                              color: selected
-                                ? '#FFFFFF'
-                                : (theme) =>
-                                  theme.palette.mode === 'dark' ? '#AFB7C8' : grey[500],
+                              color: (theme) =>
+                                selected
+                                  ? (theme.palette.mode === 'dark' ? '#FFFFFF' : '#5E66FF')
+                                  : theme.palette.mode === 'dark'
+                                    ? '#AFB7C8'
+                                    : grey[500],
                             }}
                           >
                             {t(`form.days.${key}`)}
@@ -479,7 +484,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                         px: 1.85,
                         py: 0.85,
                         borderRadius: '8px',
-                        bgcolor: '#212447',
+                        bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#212447' : '#EFF6FF'),
                         border: '1px solid #6B89FF',
                       }}
                     >
@@ -899,7 +904,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                       <MonacoEditor
                         height="100%"
                         language="lua"
-                        theme="alert-transparent"
+                        theme={isDark ? 'alert-transparent' : 'alert-transparent-light'}
                         value={field.value}
                         onChange={(v) => field.onChange(v || '')}
                         beforeMount={(monaco) => {
@@ -911,6 +916,17 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                               'editor.background': '#00000000',
                               'editorStickyScroll.background': '#202838',
                               'editorStickyScrollHover.background': '#2A3142',
+                            },
+                          });
+                          // Light theme: dark-on-light syntax colors so code is readable in light mode.
+                          monaco.editor.defineTheme('alert-transparent-light', {
+                            base: 'vs',
+                            inherit: true,
+                            rules: [],
+                            colors: {
+                              'editor.background': '#00000000',
+                              'editorStickyScroll.background': '#FFFFFF',
+                              'editorStickyScrollHover.background': '#F4F4F8',
                             },
                           });
                         }}
