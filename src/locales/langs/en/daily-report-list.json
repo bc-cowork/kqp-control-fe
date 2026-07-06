@@ -7,7 +7,10 @@
     "report_name": "Report Name",
     "job_at": "Job At",
     "last_exec": "last exec.",
-    "desc": "Description"
+    "desc": "Description",
+    "recv_count": "Recv Count",
+    "send_count": "Send Count",
+    "abn_count": "Abnormal Count"
   },
   "empty": "No report items",
   "report": "Report",

@@ -7,7 +7,10 @@
     "report_name": "리포트 이름",
     "job_at": "작업 시간",
     "last_exec": "마지막 실행",
-    "desc": "설명"
+    "desc": "설명",
+    "recv_count": "수신 건수",
+    "send_count": "송출 건수",
+    "abn_count": "이상 건수"
   },
   "empty": "리포트 항목 없음",
   "report": "리포트",

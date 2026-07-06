@@ -142,7 +142,7 @@ function AlertRow({ item, nodeId, t, onDeleted, isLast }: AlertRowProps) {
               color={ACCENT2}
             />
           </Stack>
-          <Typography sx={{ color: T.textSec, fontSize: 15, fontWeight: 350 }}>
+          <Typography sx={{ color: T.textSec, fontSize: 15, fontWeight: 550 }}>
             {item.desc}
           </Typography>
         </Box>
