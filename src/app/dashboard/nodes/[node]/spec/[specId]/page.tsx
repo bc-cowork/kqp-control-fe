@@ -151,13 +151,12 @@ export default function Page({ params }: Props) {
         emptyLabel={t('empty_detail')}
       />
 
-      <Box sx={{ display: 'flex', gap: 2, alignItems: 'stretch' }}>
+      <Box sx={{ display: 'flex', gap: 2, alignItems: 'flex-start' }}>
         <Box sx={{ flex: 5, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
           <SectionLabel>{t('section_identifiers')}</SectionLabel>
           <DataTable<IdentifyRow>
             columns={identifierColumns}
             rows={identifiers}
-            maxHeight="calc(100vh - 400px)"
             loading={isLoading}
             error={!!error}
             emptyLabel={t('empty_identifiers')}
@@ -169,7 +168,7 @@ export default function Page({ params }: Props) {
           <DataTable<FragRow>
             columns={fragColumns}
             rows={frags}
-            maxHeight="calc(100vh - 400px)"
+            maxHeight={490}
             loading={isLoading}
             error={!!error}
             emptyLabel={t('empty_definition')}

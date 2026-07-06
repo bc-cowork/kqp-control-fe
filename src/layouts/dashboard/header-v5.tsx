@@ -96,7 +96,7 @@ export function HeaderV5() {
       {/* Nav arrows */}
       <Stack direction="row" spacing="2px">
         <ArrowBtn icon="back" onClick={() => router.back()} />
-        <ArrowBtn icon="fwd" onClick={() => window.history.forward()} />
+        <ArrowBtn icon="fwd" onClick={() => router.forward()} />
       </Stack>
 
       {/* Search */}
