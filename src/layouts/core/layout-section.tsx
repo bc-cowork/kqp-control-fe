@@ -54,6 +54,11 @@ export function LayoutSection({
               display="flex"
               flex="1 1 auto"
               flexDirection="column"
+              // minHeight:0 lets this content wrapper shrink to the bounded
+              // (100vh) shell instead of growing to its content, so Main and
+              // every PageShell below it get a definite height and scroll={false}
+              // pages can scroll internally.
+              minHeight={0}
               className={layoutClasses.hasSidebar}
             >
               {headerSection}

@@ -268,7 +268,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
       </Box>
 
       {/* Right — Pager + filter bar + frame table */}
-      <Box sx={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+      <Box sx={{ flex: 1, minWidth: 0, minHeight: 0, display: 'flex', flexDirection: 'column', gap: 1.5 }}>
         {searchedSeq == null && (
           <Pager
             page={auditFrameListPagination?.current_page || 1}

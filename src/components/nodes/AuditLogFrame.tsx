@@ -413,7 +413,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
         </Box>
 
         {/* Right — filter bar + frame nav + fragment table */}
-        <Box sx={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+        <Box sx={{ flex: 1, minWidth: 0, minHeight: 0, display: 'flex', flexDirection: 'column', gap: 1.5 }}>
           <AuditFrameFilterBar
             filters={filters}
             setFilters={setFilters}
