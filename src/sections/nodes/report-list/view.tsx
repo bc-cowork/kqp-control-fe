@@ -45,7 +45,7 @@ export function ReportListView({ nodeId }: Props) {
     },
     { key: 'job_at', label: t('table.job_at'), mono: true, align: 'right', color: T.textSec },
     { key: 'last_exec', label: t('table.last_exec'), mono: true, dim: true },
-    { key: 'desc', label: t('table.desc'), dim: true, grow: true },
+    { key: 'desc', label: t('table.desc'), color: T.textSec, weight: 550, grow: true },
   ];
 
   return (

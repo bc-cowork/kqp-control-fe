@@ -222,8 +222,9 @@ export default function Page({ params }: Props) {
                       ) : (
                         <Typography
                           sx={{
-                            color: T.textPrim,
+                            color: T.textSec,
                             fontSize: 15,
+                            fontWeight: 500,
                             lineHeight: 1.5,
                             wordBreak: 'break-word',
                           }}

@@ -282,7 +282,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
       label: t('frag_header.data'),
       render: (r) => <SpecChip tone="amber">{r.data}</SpecChip>,
     },
-    { key: 'desc', label: t('top.description'), dim: true, grow: true },
+    { key: 'desc', label: t('top.description'), color: T.textSec, weight: 550, grow: true },
   ];
 
   return (

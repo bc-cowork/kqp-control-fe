@@ -47,7 +47,7 @@ export function FunctionListView({ nodeId }: Props) {
     { key: 'path', label: t('table.path'), mono: true, dim: true },
     { key: 'timestamp', label: t('table.timestamp'), mono: true, dim: true },
     { key: 'ref_identifies', label: t('table.ref_identifies'), mono: true, align: 'right', color: T.textSec },
-    { key: 'desc', label: t('table.desc'), dim: true, grow: true },
+    { key: 'desc', label: t('table.desc'), color: T.textSec, weight: 550, grow: true },
   ];
 
   return (

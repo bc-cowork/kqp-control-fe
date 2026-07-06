@@ -114,6 +114,7 @@ export type Column<R = any> = {
   grow?: boolean;
   width?: number;
   color?: string;
+  weight?: number;
   render?: (row: R, index: number) => ReactNode;
 };
 
@@ -227,7 +228,7 @@ export function DataTable<R = any>({
                           p: dense ? '12px' : '10px 14px',
                           textAlign: col.align || 'left',
                           fontFamily: col.mono ? FONT_MONO : 'inherit',
-                          fontWeight: bodyWeight,
+                          fontWeight: col.weight ?? bodyWeight,
                           color: col.color || (col.dim ? T.textSec : T.textPrim),
                           whiteSpace: col.grow ? 'normal' : 'nowrap',
                           maxWidth: col.grow ? 380 : undefined,

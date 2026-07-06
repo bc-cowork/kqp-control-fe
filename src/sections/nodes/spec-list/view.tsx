@@ -49,7 +49,7 @@ export function SpecListView({ nodeId }: Props) {
     { key: 'ref_identifies', label: t('table.ref_identifies'), mono: true, align: 'right', color: T.textSec },
     { key: 'frags', label: t('table.frags'), mono: true, align: 'right', color: T.textSec },
     { key: 'size', label: t('table.size'), mono: true, align: 'right', color: T.textSec },
-    { key: 'desc', label: t('table.explanation'), dim: true, grow: true },
+    { key: 'desc', label: t('table.explanation'), color: T.textSec, weight: 550, grow: true },
   ];
 
   return (

@@ -48,7 +48,7 @@ export function LayoutListView({ nodeId }: Props) {
     { key: 'timestamp', label: t('table.timestamp'), mono: true, dim: true },
     { key: 'process', label: t('table.process'), mono: true, align: 'right', color: T.textSec },
     { key: 'channel_in', label: t('table.channel_in'), mono: true, align: 'right', color: T.textSec },
-    { key: 'desc', label: t('table.desc'), dim: true, grow: true },
+    { key: 'desc', label: t('table.desc'), color: T.textSec, weight: 550, grow: true },
   ];
 
   return (

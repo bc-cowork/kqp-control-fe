@@ -98,7 +98,7 @@ export function NodeList({
       ),
     },
     { key: 'name', label: t('node.name'), color: T.textPrim },
-    { key: 'desc', label: t('node.description'), dim: true, grow: true },
+    { key: 'desc', label: t('node.description'), color: T.textSec, weight: 550, grow: true },
     {
       key: 'emittable',
       label: t('node.emittable'),

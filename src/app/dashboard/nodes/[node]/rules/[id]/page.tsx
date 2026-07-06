@@ -61,7 +61,7 @@ export default function Page({ params }: Props) {
     { key: 'ref_layout', label: t('table_header.ref_layout'), mono: true, align: 'right', color: T.textSec },
     { key: 'ref_process', label: t('table_header.ref_process'), mono: true, align: 'right', color: T.textSec },
     { key: 'ref_actions', label: t('table_header.ref_actions'), mono: true, align: 'right', color: T.textSec },
-    { key: 'desc', label: t('table_header.desc'), dim: true, grow: true },
+    { key: 'desc', label: t('table_header.desc'), color: T.textSec, weight: 550, grow: true },
   ];
 
   const refColumns = (

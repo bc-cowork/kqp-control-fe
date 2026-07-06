@@ -47,7 +47,7 @@ export function IdentifyListView({ nodeId }: Props) {
     { key: 'path', label: t('table.path'), mono: true, dim: true },
     { key: 'timestamp', label: t('table.timestamp'), mono: true, dim: true },
     { key: 'ref_specs', label: t('table.ref_specs'), mono: true, align: 'right', color: T.textSec },
-    { key: 'desc', label: t('table.explanation'), dim: true, grow: true },
+    { key: 'desc', label: t('table.explanation'), color: T.textSec, weight: 550, grow: true },
   ];
 
   return (

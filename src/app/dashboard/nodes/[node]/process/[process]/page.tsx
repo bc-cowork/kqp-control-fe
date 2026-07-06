@@ -12,6 +12,7 @@ import { paths } from 'src/routes/paths';
 import { fetcher, endpoints } from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
+import { T } from 'src/theme/tokens';
 
 import { PageShell, DataTable, CodeBlock, SectionLabel } from 'src/components/v5';
 
@@ -47,7 +48,7 @@ export default function Page({ params }: Props) {
     { key: 'timestamp', label: t('process_detail.timestamp'), mono: true, dim: true },
     { key: 'cpu', label: t('process_detail.cpu'), mono: true, align: 'right' },
     { key: 'mem', label: t('process_detail.mem'), mono: true, align: 'right' },
-    { key: 'desc', label: t('process_detail.desc'), dim: true },
+    { key: 'desc', label: t('process_detail.desc'), color: T.textSec, weight: 550 },
   ];
 
   return (
