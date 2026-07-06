@@ -154,7 +154,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
         sx={{
           width: 300,
           flexShrink: 0,
-          alignSelf: 'flex-start',
+          alignSelf: 'stretch',
           maxHeight: '100%',
           bgcolor: T.bgCard,
           border: `1px solid ${T.border}`,
@@ -183,7 +183,7 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
 
         {/* Body */}
         <Box
-          sx={{ p: '18px 16px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '20px' }}
+          sx={{ flex: 1, minHeight: 0, p: '18px 16px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '20px' }}
         >
           <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
             <Box

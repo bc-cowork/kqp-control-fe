@@ -287,13 +287,26 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
 
   return (
     <>
-      <Box sx={{ display: 'flex', gap: '14px', flex: 1, minHeight: 0 }}>
+      {/* Info panel + table fill the full leftover viewport height and scroll
+          internally; the layout-flow graph (when the frame has layout_flow) sits
+          below at its fixed height and is reached by scrolling this container. */}
+      <Box
+        sx={{
+          flex: 1,
+          minHeight: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          overflowY: 'auto',
+          gap: '14px',
+        }}
+      >
+        <Box sx={{ display: 'flex', gap: '14px', flexShrink: 0, height: '100%' }}>
         {/* Left — Frame Info panel */}
         <Box
           sx={{
             width: 300,
             flexShrink: 0,
-            alignSelf: 'flex-start',
+            alignSelf: 'stretch',
             maxHeight: '100%',
             bgcolor: T.bgCard,
             border: `1px solid ${T.border}`,
@@ -321,7 +334,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
           </Box>
 
           {/* Body */}
-          <Box sx={{ p: '18px 16px', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ flex: 1, minHeight: 0, p: '18px 16px', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
             {/* File name */}
             <Box sx={{ mb: '18px' }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: '7px', color: T.textDim, fontSize: 14 }}>
@@ -463,7 +476,8 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
 
       {/* Full-width layout-flow visualization for the selected frame.
           Renders only when the frame API returns `layout_flow` (renders null otherwise). */}
-      {!auditFrameLoading && <AuditFrameLayoutFlow layoutFlow={auditFrameLayoutFlow} />}
+        {!auditFrameLoading && <AuditFrameLayoutFlow layoutFlow={auditFrameLayoutFlow} />}
+      </Box>
 
       <Dialog
         open={dialogOpen}

@@ -117,6 +117,7 @@ export function AuditFrameLayoutFlow({ layoutFlow }: Props) {
         mt: 2,
         width: '100%',
         height: CANVAS_HEIGHT,
+        flexShrink: 0,
         display: 'flex',
         overflow: 'hidden',
         flexDirection: 'column',
