@@ -17,6 +17,7 @@
     "no": "No",
     "date": "날짜",
     "type": "로그 종류",
+    "type_filter": "로그 분류",
     "size": "크기",
     "desc": "설명"
   }

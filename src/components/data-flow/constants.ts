@@ -1,46 +1,73 @@
-// Entity node appearance
+import { T, FLOW } from 'src/theme/tokens';
+
+// ----------------------------------------------------------------------
+// Data-flow visual tokens — ported PIXEL-for-PIXEL from the k-control
+// reference mockup (NodePages.jsx). Colours come from the v5 palette (T)
+// and the FLOW.* graph tokens; no ad-hoc hex where a token exists.
+// ----------------------------------------------------------------------
+
+// Node dimensions (reference: proc 210, source 150, header 30 — kept scaled
+// up ~1.3x to stay legible inside the ReactFlow viewport).
 export const ENTITY_NODE_WIDTH = 288;
-export const ENTITY_NODE_BORDER = '#373F4E';
-export const ENTITY_NODE_BG =
-  'linear-gradient(90deg, rgba(16, 24, 40, 0.80) 0%, rgba(15, 23, 43, 0.70) 50%, rgba(16, 24, 40, 0.80) 100%)';
-export const ENTITY_HEADER_BG =
-  'radial-gradient(ellipse 62.05% 21.26% at 50.00% 100.00%, #36573C 0%, #1D2F20 100%)';
-
-// Recv node appearance
 export const RECV_NODE_WIDTH = 200;
-export const RECV_NODE_BORDER = '#4A3BFF';
-export const RECV_NODE_BG = '#212447';
-export const RECV_HEADER_BG = '#161C25';
+export const HEADER_HEIGHT = 39;
 
-// Shared badge
-export const BADGE_BG = '#212447';
-export const BADGE_TEXT = '#D1D6E0';
+// Graph accent colours (reference FLOW.*)
+export const PROC_GREEN = FLOW.procGreen; // #3FCF6B — processing node border/header
+export const SRC_BLUE = FLOW.srcBlue; // #5B8DEF — source (recv) node border/count
+export const ACT_FN = FLOW.actFn; // #56D364 — action function name
+export const EDGE_COLOR = FLOW.edge; // #AFB7C8 — edges + recv channel text
 
-// Action colors (entity body)
-export const ACTION_COLOR = '#7EE081';
-export const ACTION_GRAY = '#D1D6E0';
+// Processing (entity) node
+export const ENTITY_NODE_WIDTH_PX = ENTITY_NODE_WIDTH;
+export const ENTITY_NODE_BORDER = PROC_GREEN;
+export const ENTITY_NODE_BG = T.bgCard; // #25212E
+export const ENTITY_HEADER_BG = `linear-gradient(180deg, ${PROC_GREEN}26, ${PROC_GREEN}05)`;
+export const ENTITY_HEADER_BORDER = `${PROC_GREEN}33`;
 
-// Handle circle colors
-export const HANDLE_PURPLE = '#5E66FF';
-export const HANDLE_GREEN = '#7EE081';
-export const HANDLE_GRAY = '#667085';
+// Source (recv) node
+export const RECV_NODE_BORDER = SRC_BLUE;
+export const RECV_NODE_BG = T.bgCard;
+export const RECV_HEADER_BG = T.bgCard;
 
-// Edge
-export const EDGE_COLOR = '#AFB7C8';
+// PMR badge (reference bg #C9C6F0 / text #2E2B52)
+export const BADGE_BG = FLOW.pmrBadgeBg;
+export const BADGE_TEXT = FLOW.pmrBadgeText;
 
-// Common
-export const HEADER_BG = '#161C25';
-export const HEADER_BORDER = '#373F4E';
-export const TEXT_SECONDARY = '#E0E4EB';
-export const TEXT_TERTIARY = '#D1D6E0';
-export const CANVAS_BG = '#0A0E15';
-export const GRID_LINE_COLOR = '#202838';
-export const HELP_TEXT_COLOR = '#373F4E';
+// Action-row token colours (reference FlowNode)
+export const ACTION_LABEL = '#C8CDD8'; // "act "
+export const ACTION_FN = ACT_FN; // 'route'
+export const ACTION_COMMA = '#6E7686'; // ,
+export const ACTION_PARAM = '#AEB4C0'; // {params}
+export const ACTION_COLOR = ACT_FN;
+export const ACTION_GRAY = ACTION_PARAM;
 
-// Layout
+// Connection dots / handles — reference draws small grey circles (fill bgCard,
+// stroke #6E7686) at node edges.
+export const HANDLE_STROKE = '#6E7686';
+export const HANDLE_GRAY = HANDLE_STROKE;
+export const HANDLE_GREEN = HANDLE_STROKE;
+export const HANDLE_PURPLE = HANDLE_STROKE;
+
+// Header / dividers
+export const HEADER_BG = T.bgPanel;
+export const HEADER_BORDER = ENTITY_HEADER_BORDER;
+
+// Text tokens
+export const TEXT_PRIMARY = T.textPrim; // #E9E6EF
+export const TEXT_SECONDARY = T.textSec; // #A8AABA
+export const TEXT_TERTIARY = T.textSec;
+export const TEXT_DIM = T.textDim; // #6A6878
+
+// Canvas
+export const CANVAS_BG = FLOW.canvasBg; // #161420
+export const GRID_LINE_COLOR = FLOW.grid; // #2A2552
+export const HELP_TEXT_COLOR = T.textDim; // #6A6878
+
+// Layout spacing
 export const X_GAP = 140;
 export const Y_GAP = 40;
 
-// Legacy aliases (keep for toolbar import compatibility)
+// Legacy aliases
 export const NODE_WIDTH = ENTITY_NODE_WIDTH;
-export const NODE_BODY_BG = BADGE_BG;
+export const NODE_BODY_BG = T.bgCard;

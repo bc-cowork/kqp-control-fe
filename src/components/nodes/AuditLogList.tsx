@@ -79,23 +79,24 @@ export function AuditLogList({ selectedNodeId }: Props) {
 
   return (
     <>
-      <Box sx={{ display: 'flex', alignItems: 'flex-end', gap: 1.5 }}>
+      <Box sx={{ display: 'flex', alignItems: 'flex-end', gap: 1.25, flexShrink: 0 }}>
         <FilterField
-          label={t('table_header.type')}
+          label={t('table_header.type_filter')}
           value={type}
           options={AUDIT_LOG_TYPES}
           onChange={setType}
+          width={160}
         />
-        <Box sx={{ flex: 1, minWidth: 0 }}>
-          <Pager
-            page={auditLogPagination?.current_page || 1}
-            totalPages={auditLogPagination?.total_pages || 1}
-            perPage={rowsPerPage}
-            onPageChange={(p) => onChangePage(p - 1)}
-            onPerPageChange={onChangeRowsPerPage}
-          />
-        </Box>
+        <Box sx={{ flex: 1 }} />
       </Box>
+
+      <Pager
+        page={auditLogPagination?.current_page || 1}
+        totalPages={auditLogPagination?.total_pages || 1}
+        perPage={rowsPerPage}
+        onPageChange={(p) => onChangePage(p - 1)}
+        onPerPageChange={onChangeRowsPerPage}
+      />
 
       <DataTable<IAuditLogItem>
         columns={columns}

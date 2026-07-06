@@ -12,10 +12,11 @@ import Typography from '@mui/material/Typography';
 
 import axiosInstance, { endpoints } from 'src/utils/axios';
 
+import { T, FONT_MONO } from 'src/theme/tokens';
+
 import { useTranslate } from 'src/locales';
 
 import { toast } from 'src/components/snackbar';
-import { Iconify } from 'src/components/iconify';
 import { usePopover } from 'src/components/custom-popover';
 
 import { TEXT_TERTIARY } from './constants';
@@ -185,17 +186,17 @@ function ModalContent({
         right: 20,
         bottom: 20,
         overflowY: 'auto',
-        bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#0A0E15' : '#202838'),
-        borderRadius: '16px',
-        outline: '5px solid #373F4E',
-        outlineOffset: '-5px',
+        bgcolor: T.bg,
+        borderRadius: '14px',
+        border: `1px solid ${T.border}`,
+        boxShadow: '0 24px 70px rgba(0,0,0,0.55)',
         pt: 3,
         px: 4.5,
         display: 'flex',
         flexDirection: 'column',
         gap: 3,
         scrollbarWidth: 'thin',
-        scrollbarColor: '#4E576A #202838',
+        scrollbarColor: `${T.border} ${T.bg}`,
         pb: 6,
       }}
     >
@@ -208,11 +209,10 @@ function ModalContent({
         <Typography
           sx={{
             flex: 1,
-            fontSize: 19,
-            fontFamily: 'Roboto, sans-serif',
-            fontWeight: 400,
+            fontSize: 18,
+            fontWeight: 600,
             lineHeight: '28.5px',
-            color: '#F0F1F5',
+            color: T.textPrim,
           }}
         >
           {t('sandbox.title')}
@@ -222,7 +222,7 @@ function ModalContent({
           {/* Zoom label */}
           <Box sx={{ px: 1.5, py: 0.5, borderRadius: '4px' }}>
             <Typography
-              sx={{ fontSize: 12, fontWeight: 400, lineHeight: '16.8px', color: 'white' }}
+              sx={{ fontSize: 14, fontWeight: 400, lineHeight: '16.8px', color: T.textDim, fontFamily: FONT_MONO }}
             >
               {zoom}%
             </Typography>
@@ -262,13 +262,14 @@ function ModalContent({
             sx={{
               px: 1.5,
               py: '4px',
-              backgroundColor: '#373F4E',
-              borderRadius: '4px',
+              backgroundColor: T.bgCard,
+              border: `1px solid ${T.border}`,
+              borderRadius: '6px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               cursor: 'pointer',
-              '&:hover': { backgroundColor: '#4E576A' },
+              '&:hover': { backgroundColor: T.bgHover },
             }}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill={TEXT_TERTIARY} xmlns="http://www.w3.org/2000/svg">
@@ -282,13 +283,14 @@ function ModalContent({
             sx={{
               px: 1.5,
               py: '4px',
-              backgroundColor: '#373F4E',
-              borderRadius: '4px',
+              backgroundColor: T.bgCard,
+              border: `1px solid ${T.border}`,
+              borderRadius: '6px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               cursor: 'pointer',
-              '&:hover': { backgroundColor: '#4E576A' },
+              '&:hover': { backgroundColor: T.bgHover },
             }}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill={TEXT_TERTIARY} xmlns="http://www.w3.org/2000/svg">

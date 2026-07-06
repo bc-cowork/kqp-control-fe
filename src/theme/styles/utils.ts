@@ -17,8 +17,9 @@ export const mediaQueries = {
  * Set font family
  */
 export function setFont(fontName: string) {
-  return `Roboto`;
-  // return `"${fontName}",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"`; // fallback options
+  // Variable Roboto (100–900) so fractional weights (350/450) render exactly as
+  // in k-control-fe-ui; static Roboto snapped 350 → 300 and looked grey.
+  return `'Roboto Variable', Roboto`;
 }
 
 /**

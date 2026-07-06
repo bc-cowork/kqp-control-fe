@@ -17,6 +17,7 @@
     "ref_freq": "참조 빈도",
     "key_label": "키",
     "today_count": "금일 카운트",
+    "count_unit": "건수",
     "empty_related_specs": "연관 SPEC 없음"
   },
   "loading": "로딩 중...",

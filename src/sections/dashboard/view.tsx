@@ -11,10 +11,11 @@ import Typography from '@mui/material/Typography';
 import { useTabs, useRouter } from 'src/routes/hooks';
 
 import { useTranslate } from 'src/locales';
+import { T, ACCENT2 } from 'src/theme/tokens';
 import { useGetNodes, useGetDiskMetrics } from 'src/actions/dashboard';
 
-import { T, ACCENT2 } from 'src/theme/tokens';
-import { Iconify } from 'src/components/iconify';
+import { KIcon } from 'src/components/k-icons';
+import { DiskUsage } from 'src/components/dashboard/DiskUsage';
 import { NodeList } from 'src/components/dashboard/NodeList';
 import { NodeGraphs } from 'src/components/dashboard/NodeGraphs';
 import { SegmentedButtonGroup } from 'src/components/dashboard/SegmentedButtonGroup';
@@ -40,10 +41,15 @@ export function DashboardView() {
   const onlineNodes = nodes?.filter((node) => node.online_status)?.length || 0;
   const offlineNodes = totalNodes - onlineNodes;
 
-  const handleRefresh = () => setRefreshKey((k) => k + 1);
+  const [spinning, setSpinning] = useState(false);
+  const handleRefresh = () => {
+    setRefreshKey((k) => k + 1);
+    setSpinning(true);
+    setTimeout(() => setSpinning(false), 700);
+  };
 
   return (
-    <Box sx={{ flex: 1, display: 'flex', minHeight: 0, overflow: 'hidden', animation: 'fadeUp .25s ease both' }}>
+    <Box sx={{ flex: 1, display: 'flex', minHeight: 0, overflow: 'hidden' }}>
       {/* ════ LEFT PANEL ════ */}
       <Box
         sx={{
@@ -54,6 +60,7 @@ export function DashboardView() {
           gap: 2.25,
           p: '24px 20px 20px 24px',
           overflow: 'hidden',
+          animation: 'fadeUp .25s ease both',
         }}
       >
         <Typography sx={{ fontSize: 30, fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1, color: T.textPrim }}>
@@ -61,7 +68,7 @@ export function DashboardView() {
         </Typography>
 
         {/* Summary cards */}
-        <Stack direction="row" spacing={1.25} sx={{ mt: 1.5 }}>
+        <Stack direction="row" spacing={1.25} sx={{ mt: '35px' }}>
           <SummaryStat label={t('top.total')} value={totalNodes} />
           <SummaryStat pill="on" value={onlineNodes} />
           <SummaryStat pill="off" value={offlineNodes} />
@@ -107,10 +114,19 @@ export function DashboardView() {
           justifyContent="space-between"
           sx={{ p: '14px 16px', borderBottom: `1px solid ${T.border}` }}
         >
-          <Typography sx={{ fontSize: 16, fontWeight: 500, letterSpacing: '0.02em', color: T.textPrim }}>
-            {t('info.info')}
-          </Typography>
-          <SegmentedButtonGroup tabs={VIEW_TABS} value={viewTabs.value} onChange={viewTabs.onChange} onRefresh={handleRefresh} />
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Typography sx={{ fontSize: 16, fontWeight: 500, letterSpacing: '0.02em', color: T.textPrim }}>
+              {t('info.info')}
+            </Typography>
+            <Box
+              component="button"
+              onClick={handleRefresh}
+              sx={{ border: 'none', background: 'transparent', p: 0, display: 'flex', alignItems: 'center', color: ACCENT2, cursor: 'pointer', animation: spinning ? 'spin .7s ease-in-out' : 'none' }}
+            >
+              <KIcon name="reset" size={18} />
+            </Box>
+          </Stack>
+          <SegmentedButtonGroup tabs={VIEW_TABS} value={viewTabs.value} onChange={viewTabs.onChange} />
         </Stack>
 
         {selectedNode ? (
@@ -118,9 +134,12 @@ export function DashboardView() {
             <NodeInfoCard node={selectedNode} t={t} />
 
             {/* Metrics grid */}
-            <Box sx={{ flex: 1, minHeight: 0, m: '0 12px', display: 'flex' }}>
-              <NodeGraphs selectedNodeParam={selectedNodeParam} selectedTab={viewTabs.value} refreshKey={refreshKey} />
-            </Box>
+            <NodeGraphs
+              selectedNodeParam={selectedNodeParam}
+              selectedTab={viewTabs.value}
+              refreshKey={refreshKey}
+              offline={!selectedNode.online_status}
+            />
 
             <DiskCard node={selectedNodeParam} online={selectedNode.online_status} t={t} />
 
@@ -190,7 +209,7 @@ function NodeInfoCard({ node, t }: { node: INodeItem; t: (k: string) => string }
   return (
     <Box sx={{ m: 1.5, bgcolor: T.bgCard, border: `1px solid ${T.border}`, borderRadius: '6px', overflow: 'hidden' }}>
       <Stack direction="row" alignItems="center" spacing={1.25} sx={{ p: '10px 14px', bgcolor: on ? `${ACCENT2}22` : T.offlineBg, borderBottom: `1px solid ${T.border}` }}>
-        <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5, fontSize: 13, fontWeight: 700, px: 0.875, py: '2px', borderRadius: '3px', letterSpacing: '0.08em', bgcolor: on ? T.onBg : T.offlineBg, color: sc, border: `1px solid ${sc}55` }}>
+        <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5, fontSize: 13, fontWeight: 700, px: 0.875, py: '2px', borderRadius: '3px', letterSpacing: '0.08em', fontFamily: 'Roboto', bgcolor: on ? T.onBg : T.offlineBg, color: sc, border: `1px solid ${sc}55` }}>
           <Box sx={{ width: 5, height: 5, borderRadius: '50%', bgcolor: sc }} />
           {on ? 'ON' : 'OFF'}
         </Box>
@@ -222,7 +241,6 @@ function Row({ label, value, color }: { label: string; value: string; color: str
 
 function DiskCard({ node, online, t }: { node: string; online: boolean; t: (k: string) => string }) {
   const { diskMetricsData } = useGetDiskMetrics(node);
-  const usage = Number(diskMetricsData?.disk_usage) || 0;
   const used = diskMetricsData?.disk_used_size;
   const total = diskMetricsData?.disk_total_size;
 
@@ -232,17 +250,7 @@ function DiskCard({ node, online, t }: { node: string; online: boolean; t: (k: s
         {t('disk.disk')}
       </Typography>
       {online && total != null ? (
-        <>
-          <Stack direction="row" alignItems="baseline" spacing={1}>
-            <Typography sx={{ fontSize: 30, fontWeight: 600, letterSpacing: '-0.03em', color: T.textPrim }}>{usage}%</Typography>
-            <Typography sx={{ fontSize: 14, color: T.textSec }}>
-              <Box component="span" sx={{ color: T.primary, fontWeight: 500 }}>{used} GB</Box> / {total} GB
-            </Typography>
-          </Stack>
-          <Box sx={{ mt: 1, height: 10, borderRadius: '5px', bgcolor: T.bgHover, overflow: 'hidden' }}>
-            <Box sx={{ height: '100%', width: `${Math.min(usage, 100)}%`, bgcolor: usage >= 90 ? T.off : T.primary, opacity: 0.9 }} />
-          </Box>
-        </>
+        <DiskUsage used={Number(used)} total={Number(total)} />
       ) : (
         <Typography sx={{ fontSize: 15, color: T.textDim }}>{t('info.offline')}</Typography>
       )}
@@ -263,7 +271,9 @@ function LinkTile({ label, accent, link }: { label: string; accent: string; link
         <Box sx={{ width: 7, height: 7, borderRadius: '50%', bgcolor: accent, flexShrink: 0 }} />
         {label}
       </Stack>
-      <Iconify icon="eva:chevron-right-fill" width={16} sx={{ color: accent }} />
+      <Box sx={{ color: accent, display: 'flex' }}>
+        <KIcon name="arrowRight" size={14} />
+      </Box>
     </Box>
   );
 }

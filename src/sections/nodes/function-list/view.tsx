@@ -12,7 +12,7 @@ import { fetcher, endpoints } from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
 
-import { T, FONT_MONO } from 'src/theme/tokens';
+import { T } from 'src/theme/tokens';
 import { PageShell, DataTable } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
@@ -38,17 +38,15 @@ export function FunctionListView({ nodeId }: Props) {
   const rows: FunctionItem[] = (data && data.data && data.data.list) || [];
 
   const columns: Column<FunctionItem>[] = [
-    { key: 'id', label: t('table.id'), mono: true, align: 'right', width: 56, render: (_r, i) => i + 1 },
+    { key: 'id', label: t('table.id'), mono: true, align: 'right', width: 56, color: T.textSec, render: (_r, i) => i + 1 },
     {
       key: 'name',
       label: t('table.function_name'),
-      render: (r) => (
-        <span style={{ color: T.primary, fontWeight: 400, fontFamily: FONT_MONO }}>{r.name}</span>
-      ),
+      render: (r) => <span style={{ color: T.primary, fontWeight: 400 }}>{r.name}</span>,
     },
     { key: 'path', label: t('table.path'), mono: true, dim: true },
     { key: 'timestamp', label: t('table.timestamp'), mono: true, dim: true },
-    { key: 'ref_identifies', label: t('table.ref_identifies'), mono: true, align: 'right' },
+    { key: 'ref_identifies', label: t('table.ref_identifies'), mono: true, align: 'right', color: T.textSec },
     { key: 'desc', label: t('table.desc'), dim: true, grow: true },
   ];
 

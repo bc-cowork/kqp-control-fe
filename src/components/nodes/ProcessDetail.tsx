@@ -29,7 +29,7 @@ export function ProcessDetail({ selectedNodeId }: Props) {
   };
 
   const columns: Column<IProcessItem>[] = [
-    { key: 'PID', label: t('table_header.pid'), mono: true, align: 'right', width: 120, color: T.textSec },
+    { key: 'PID', label: t('table_header.pid'), mono: true, width: 120, color: T.textSec },
     { key: 'NAME', label: t('table_header.name'), color: T.textSec },
     { key: 'PARAM', label: t('table_header.param'), mono: true, dim: true, grow: true },
     {

@@ -5,6 +5,8 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
+import { T } from 'src/theme/tokens';
+
 import { useTranslate } from 'src/locales';
 
 import { Iconify } from 'src/components/iconify';
@@ -24,16 +26,16 @@ const SCALE_OPTIONS = [
 ] as const;
 
 const DARK_POPOVER_PAPER_SX = {
-  bgcolor: '#1A2030',
-  border: '1px solid #373F4E',
-  boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
+  bgcolor: T.bgPanel,
+  border: `1px solid ${T.border}`,
+  boxShadow: '0 12px 32px rgba(0,0,0,0.45)',
   '& .MuiMenuItem-root': {
-    color: '#E0E4EB',
+    color: T.textSec,
     marginBottom: 1,
   },
-  '& .MuiMenuItem-root:hover': { bgcolor: '#2A3344' },
-  '& .MuiListItemIcon-root': { color: '#AFB7C8', minWidth: 28 },
-  '& .MuiListItemText-primary': { fontSize: 12, fontWeight: 400 },
+  '& .MuiMenuItem-root:hover': { bgcolor: T.bgHover },
+  '& .MuiListItemIcon-root': { color: T.textSec, minWidth: 28 },
+  '& .MuiListItemText-primary': { fontSize: 14, fontWeight: 400 },
 };
 
 // ----------------------------------------------------------------------

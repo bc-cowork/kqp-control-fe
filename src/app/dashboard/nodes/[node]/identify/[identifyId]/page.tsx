@@ -2,14 +2,13 @@
 
 import type { Column } from 'src/components/v5';
 
-import React from 'react';
 import useSWR from 'swr';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Bar, XAxis, YAxis, Tooltip, BarChart, CartesianGrid, ResponsiveContainer } from 'recharts';
 
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import { paths } from 'src/routes/paths';
@@ -17,8 +16,8 @@ import { paths } from 'src/routes/paths';
 import { fetcher, endpoints } from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
+import { T, FONT_MONO } from 'src/theme/tokens';
 
-import { T, CHART, FONT_MONO } from 'src/theme/tokens';
 import { Panel, CodeBlock, DataTable, PageShell, SectionLabel } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
@@ -81,17 +80,21 @@ export default function Page({ params }: Props) {
 
   // Summary row — single-row light table.
   const summaryColumns: Column<IdentifyDetail>[] = [
-    { key: 'name', label: t('table.identity_name'), color: T.textPrim },
+    {
+      key: 'name',
+      label: t('table.identity_name'),
+      render: (r) => <span style={{ color: T.primary, fontWeight: 400 }}>{r.name}</span>,
+    },
     { key: 'path', label: t('table.path'), mono: true, dim: true },
     { key: 'timestamp', label: t('table.timestamp'), mono: true, dim: true },
-    { key: 'ref_specs', label: t('table.ref_specs'), mono: true, align: 'right' },
+    { key: 'ref_specs', label: t('table.ref_specs'), mono: true, align: 'right', color: T.textSec },
     { key: 'desc', label: t('table.explanation'), dim: true, grow: true },
   ];
   const summaryRows: IdentifyDetail[] = detail?.name ? [detail] : [];
 
   // Related SPEC table.
   const specColumns: Column<SpecRow>[] = [
-    { key: 'no', label: t('detail_table.no'), mono: true, align: 'right', width: 60, render: (_r, i) => i + 1 },
+    { key: 'no', label: t('detail_table.no'), mono: true, align: 'right', width: 60, color: T.textSec, render: (_r, i) => i + 1 },
     {
       key: 'name',
       label: t('detail_table.related_spec'),
@@ -103,13 +106,13 @@ export default function Page({ params }: Props) {
               paths.dashboard.nodes.specDetail(node, r.url.split('/').filter(Boolean).pop() || '')
             )
           }
-          sx={{ color: T.primary, textDecoration: 'underline', cursor: 'pointer' }}
+          sx={{ color: T.primary, fontWeight: 400, fontFamily: FONT_MONO, cursor: 'pointer' }}
         >
           {r.name}
         </Box>
       ),
     },
-    { key: 'ref_count', label: t('detail_table.ref_freq'), mono: true, align: 'right', dim: true },
+    { key: 'ref_count', label: t('detail_table.ref_freq'), mono: true, align: 'right', grow: true, color: T.textSec },
   ];
 
   const scriptFile = detail?.name || decodedId;
@@ -133,15 +136,25 @@ export default function Page({ params }: Props) {
         emptyLabel={t('empty_detail')}
       />
 
-      <Box sx={{ display: 'flex', gap: 1.75, alignItems: 'flex-start' }}>
+      <Box sx={{ display: 'flex', gap: 2, alignItems: 'flex-start' }}>
         <Box sx={{ flex: 7, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1.75 }}>
-          {/* Key box */}
-          <Panel sx={{ p: 2 }}>
-            <Typography sx={{ fontSize: 14, color: T.textDim, mb: 1 }}>{t('detail_table.key_label')}</Typography>
-            <Typography sx={{ fontFamily: FONT_MONO, fontSize: 17, color: T.textPrim }}>
+          {/* Key box — header-less cell-style box (same tone as table body cells) */}
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <SectionLabel>{t('detail_table.key_label')}</SectionLabel>
+            <Box
+              sx={{
+                border: `1px solid ${T.border}`,
+                borderRadius: '6px',
+                bgcolor: T.bgCard,
+                p: '10px 14px',
+                fontFamily: FONT_MONO,
+                fontSize: 17,
+                color: T.textPrim,
+              }}
+            >
               {keyDisplay}
-            </Typography>
-          </Panel>
+            </Box>
+          </Box>
 
           {/* Related SPEC */}
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -156,54 +169,69 @@ export default function Page({ params }: Props) {
           </Box>
 
           {/* Today Count */}
-          <Panel>
-            <Box sx={{ px: 2, py: 1.25, borderBottom: `1px solid ${T.border}` }}>
+          <Box
+            sx={{
+              border: `1px solid ${T.border}`,
+              borderRadius: '6px',
+              bgcolor: T.bgCard,
+              overflow: 'hidden',
+            }}
+          >
+            <Box sx={{ px: '14px', py: '9px', borderBottom: `1px solid ${T.border}` }}>
               <Typography sx={{ fontSize: 15, color: T.textSec, fontWeight: 500 }}>
                 {t('detail_table.today_count')}
               </Typography>
             </Box>
-            <Box sx={{ height: 264, p: 1.5 }}>
+            <Box sx={{ height: 264, p: '10px 10px 6px' }}>
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={todayCountData} margin={{ top: 10, right: 8, left: -12, bottom: 0 }}>
-                  <CartesianGrid stroke={CHART.grid} vertical={false} />
+                <BarChart data={todayCountData} margin={{ top: 6, right: 10, left: 0, bottom: 0 }}>
+                  <CartesianGrid stroke={T.border} strokeWidth={0.5} vertical={false} />
                   <XAxis
                     dataKey="timestamp"
                     tick={{ fill: T.textDim, fontSize: 12 }}
                     tickLine={false}
                     axisLine={{ stroke: T.border }}
+                    minTickGap={8}
                   />
                   <YAxis
                     tick={{ fill: T.textDim, fontSize: 12 }}
                     tickLine={false}
                     axisLine={{ stroke: T.border }}
+                    width={36}
+                    tickFormatter={(v) => Number(v).toLocaleString()}
                   />
                   <Tooltip
-                    cursor={{ fill: T.bgHover }}
+                    cursor={{ fill: `${T.primary}14` }}
                     contentStyle={{
                       background: T.bgPanel,
                       border: `1px solid ${T.border}`,
                       borderRadius: '5px',
+                      fontSize: 14,
                     }}
-                    labelStyle={{ color: T.textSec }}
-                    itemStyle={{ color: T.textPrim }}
+                    labelStyle={{ color: T.textPrim }}
+                    formatter={(v: number) => [Number(v).toLocaleString(), t('detail_table.count_unit')]}
                   />
-                  <Bar dataKey="count" fill={T.primary} radius={[3, 3, 0, 0]} maxBarSize={26} />
+                  <Bar
+                    dataKey="count"
+                    fill={T.primary}
+                    radius={[3, 3, 0, 0]}
+                    maxBarSize={26}
+                    isAnimationActive={false}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </Box>
-          </Panel>
+          </Box>
         </Box>
 
         {/* Identifier Definition */}
         <Box sx={{ flex: 5, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
           <SectionLabel>{t('detail_table.script_title')}</SectionLabel>
-          <Panel sx={{ p: 1.5 }}>
-            <Stack spacing={1}>
-              <Typography sx={{ fontFamily: FONT_MONO, fontSize: 14, color: T.textDim }}>
-                {`-- ${scriptFile}`}
-              </Typography>
-              <CodeBlock theme="moon">{scriptBody}</CodeBlock>
-            </Stack>
+          <Panel sx={{ p: 2 }}>
+            <Typography sx={{ fontFamily: FONT_MONO, fontSize: 13, color: T.textDim, mb: 1.25 }}>
+              {`-- ${scriptFile}.moon`}
+            </Typography>
+            <CodeBlock theme="moon">{scriptBody}</CodeBlock>
           </Panel>
         </Box>
       </Box>

@@ -14,6 +14,10 @@
 @import '@fontsource/roboto/500.css';
 @import '@fontsource/roboto/700.css';
 
+/* Variable Roboto (100–900) so fractional weights like 350/450 render exactly
+   as in k-control-fe-ui (static weights would snap 350 → 300 and look grey). */
+@import '@fontsource-variable/roboto';
+
 @import '@fontsource/pretendard/400.css';
 @import '@fontsource/pretendard/500.css';
 @import '@fontsource/pretendard/600.css';

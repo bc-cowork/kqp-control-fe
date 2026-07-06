@@ -1,21 +1,18 @@
-// components/NodeGraphs.tsx
-
 'use client';
 
-import type { TFunction } from 'i18next';
 import type { ChartDataPoint } from 'src/types/dashboard';
 
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Unstable_Grid2'; // Using Unstable_Grid2 for modern usage
-
-import { useTabs } from 'src/routes/hooks';
 
 import { processChartData } from 'src/utils/process-chart-data';
 
 import { useTranslate } from 'src/locales';
+import { T, CHART } from 'src/theme/tokens';
 import { useGetGraphData } from 'src/actions/dashboard';
 
-import { ChartArea } from './chart-area';
+import { BigMetric } from './chart-area';
+
+import type { MetricDef } from './chart-area';
 
 // ----------------------------------------------------------------------
 
@@ -23,136 +20,58 @@ interface Props {
   selectedNodeParam: string;
   refreshKey: number;
   selectedTab: string;
+  offline?: boolean;
 }
 
-const CPU_MEMORY_TABS = [{ value: '%', label: '%' }];
-
-export const getBoundTabs = (t: TFunction) => [
-  { value: 'count', label: t('graph.count') },
-  { value: 'byte', label: t('graph.byte') },
-];
-
-export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props) {
+export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab, offline = false }: Props) {
   const { t } = useTranslate('dashboard');
 
-  const cpuTabs = useTabs(CPU_MEMORY_TABS[0].value);
-  const memoryTabs = useTabs(CPU_MEMORY_TABS[0].value);
-  const inboundTabs = useTabs(getBoundTabs(t)[0].value);
-  const outboundTabs = useTabs(getBoundTabs(t)[0].value);
-
-  // Fetch graph data
   const { graphData, graphDataLoading } = useGetGraphData(selectedNodeParam, refreshKey);
+  const data: ChartDataPoint[] = graphData?.metrics ? processChartData(graphData.metrics) : [];
 
-  // Process the data for the charts
-  const chartData: ChartDataPoint[] = graphData?.metrics ? processChartData(graphData.metrics) : [];
+  const compact = selectedTab === '1x4';
 
-  const is1x4Layout = selectedTab === '1x4';
-
-  const baseGridXs = is1x4Layout ? 12 : 6;
-
-  const chartGridProps = {
-    xs: 12,
-    sm: baseGridXs,
-  };
-
-  const chartHeight = is1x4Layout ? '121px' : '250px';
+  const metrics: MetricDef[] = [
+    { key: 'cpu', title: t('graph.cpu'), color: CHART.cpu, threshold: 50, variants: [{ metric: 'cpu', fmt: 'percent' }] },
+    { key: 'memory', title: t('graph.memory'), color: CHART.memory, variants: [{ metric: 'memory', fmt: 'percent' }] },
+    {
+      key: 'inbound',
+      title: t('graph.inbound'),
+      color: CHART.inbound,
+      variants: [
+        { label: t('graph.count'), metric: 'inbound_count', fmt: 'count' },
+        { label: t('graph.byte'), metric: 'inbound_bytes', fmt: 'bytes' },
+      ],
+    },
+    {
+      key: 'outbound',
+      title: t('graph.outbound'),
+      color: CHART.outbound,
+      variants: [
+        { label: t('graph.count'), metric: 'outbound_count', fmt: 'count' },
+        { label: t('graph.byte'), metric: 'outbound_bytes', fmt: 'bytes' },
+      ],
+    },
+  ];
 
   return (
     <Box
       sx={{
-        pl: 0.5,
-        boxSizing: 'border-box',
-        minHeight: '500px',
-        width: '100%'
+        display: 'grid',
+        gridTemplateColumns: compact ? '1fr' : '1fr 1fr',
+        gridTemplateRows: compact ? '1fr 1fr 1fr 1fr' : '1fr 1fr',
+        gap: '1px',
+        bgcolor: T.border,
+        m: '0 12px',
+        borderRadius: '6px',
+        overflow: 'hidden',
+        flex: 1,
+        minHeight: 0,
       }}
     >
-      <Grid container spacing={1} sx={{ height: '100%' }}>
-
-        {/* CPU Chart */}
-        <Grid
-          {...chartGridProps}
-          sx={{
-            height: chartHeight,
-            mb: 1 // Margin Bottom for spacing
-          }}
-        >
-          <ChartArea
-            title={t('graph.cpu')}
-            data={chartData}
-            metric="cpu"
-            threshold={50}
-            height="100%"
-            tabs={CPU_MEMORY_TABS}
-            tabValue={cpuTabs.value}
-            onTabChange={cpuTabs.onChange}
-            layout={selectedTab}
-            loading={graphDataLoading}
-          />
-        </Grid>
-
-        {/* Memory Chart */}
-        <Grid
-          {...chartGridProps}
-          sx={{
-            height: chartHeight,
-            mb: 1
-          }}
-        >
-          <ChartArea
-            title={t('graph.memory')}
-            data={chartData}
-            metric="memory"
-            height="100%"
-            tabs={CPU_MEMORY_TABS}
-            tabValue={memoryTabs.value}
-            onTabChange={memoryTabs.onChange}
-            layout={selectedTab}
-            loading={graphDataLoading}
-          />
-        </Grid>
-
-        {/* Inbound Chart */}
-        <Grid
-          {...chartGridProps}
-          sx={{
-            height: chartHeight,
-            mb: (is1x4Layout || !is1x4Layout) ? 1 : 0
-          }}
-        >
-          <ChartArea
-            title={t('graph.inbound')}
-            data={chartData}
-            metric={inboundTabs.value === 'count' ? 'inbound_count' : 'inbound_bytes'}
-            height="100%"
-            tabs={getBoundTabs(t)}
-            tabValue={inboundTabs.value}
-            onTabChange={inboundTabs.onChange}
-            layout={selectedTab}
-            loading={graphDataLoading}
-          />
-        </Grid>
-
-        {/* Outbound Chart */}
-        <Grid
-          {...chartGridProps}
-          sx={{
-            height: chartHeight,
-            mb: 0
-          }}
-        >
-          <ChartArea
-            title={t('graph.outbound')}
-            data={chartData}
-            metric={outboundTabs.value === 'count' ? 'outbound_count' : 'outbound_bytes'}
-            height="100%"
-            tabs={getBoundTabs(t)}
-            tabValue={outboundTabs.value}
-            onTabChange={outboundTabs.onChange}
-            layout={selectedTab}
-            loading={graphDataLoading}
-          />
-        </Grid>
-      </Grid>
+      {metrics.map((m) => (
+        <BigMetric key={m.key} m={m} data={data} compact={compact} offline={offline} loading={graphDataLoading} animKey={selectedNodeParam} />
+      ))}
     </Box>
   );
 }

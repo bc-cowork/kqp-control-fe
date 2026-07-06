@@ -6,6 +6,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import { ErrorOutline as ErrorOutlineIcon } from '@mui/icons-material';
 
+import { T } from 'src/theme/tokens';
+
 import { useTranslate } from 'src/locales';
 
 // ----------------------------------------------------------------------
@@ -26,14 +28,14 @@ export function SaveConfirmDialog({ open, onClose, onConfirm, isSaving }: SaveCo
       onClose={onClose}
       PaperProps={{
         sx: {
-          backgroundColor: '#0A0E15',
-          borderRadius: '8px',
-          border: '1px solid #4E576A',
-          color: '#F0F1F5',
+          backgroundColor: T.bgPanel,
+          borderRadius: '12px',
+          border: `1px solid ${T.border}`,
+          color: T.textPrim,
           width: '100%',
-          maxWidth: 400,
-          p: '12px',
-          boxShadow: 'none',
+          maxWidth: 470,
+          p: '18px',
+          boxShadow: '0 18px 50px rgba(0,0,0,0.5)',
         },
       }}
     >
@@ -47,13 +49,13 @@ export function SaveConfirmDialog({ open, onClose, onConfirm, isSaving }: SaveCo
           height: 32,
         }}
       >
-        <ErrorOutlineIcon />
+        <ErrorOutlineIcon sx={{ color: T.textSec }} />
         <Typography
           variant="body1"
           sx={{
-            color: '#F0F1F5',
-            fontSize: 15,
-            fontWeight: 400,
+            color: T.textPrim,
+            fontSize: 16,
+            fontWeight: 600,
             lineHeight: '22.50px',
           }}
         >
@@ -66,20 +68,20 @@ export function SaveConfirmDialog({ open, onClose, onConfirm, isSaving }: SaveCo
           p: 0,
           mt: '8px',
           minHeight: 108,
-          backgroundColor: '#161C25',
+          backgroundColor: T.bgCard,
           borderRadius: '8px',
-          border: '1px solid #4E576A',
+          border: `1px solid ${T.borderSub}`,
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          px: '12px',
+          px: '18px',
           py: 0,
         }}
       >
         <Typography
           variant="body1"
           sx={{
-            color: '#F0F1F5',
+            color: T.textSec,
             fontSize: 15,
             fontWeight: 400,
             lineHeight: '22.50px',
@@ -104,33 +106,35 @@ export function SaveConfirmDialog({ open, onClose, onConfirm, isSaving }: SaveCo
         <Button
           onClick={onConfirm}
           disabled={isSaving}
+          disableRipple
           sx={{
-            padding: '4px 12px',
-            backgroundColor: '#5E66FF',
-            borderRadius: '4px',
-            color: 'white',
-            fontSize: 15,
-            fontWeight: 400,
+            padding: '7px 17px',
+            backgroundColor: T.primary,
+            borderRadius: '6px',
+            color: T.onFill,
+            fontSize: 14,
+            fontWeight: 500,
             lineHeight: '22.50px',
             textTransform: 'none',
-            '&:hover': { backgroundColor: '#4E57E5' },
+            '&:hover': { backgroundColor: T.primaryHov },
           }}
         >
           {isSaving ? t('sandbox.saving') : t('sandbox.save_confirm_btn')}
         </Button>
         <Button
           onClick={onClose}
+          disableRipple
           sx={{
-            padding: '4px 12px',
-            backgroundColor: '#EFF6FF',
-            borderRadius: '4px',
-            border: '1px solid #DFEAFF',
-            color: '#6B89FF',
-            fontSize: 15,
-            fontWeight: 400,
+            padding: '7px 17px',
+            backgroundColor: T.bgCard,
+            borderRadius: '6px',
+            border: `1px solid ${T.border}`,
+            color: T.textSec,
+            fontSize: 14,
+            fontWeight: 500,
             lineHeight: '22.50px',
             textTransform: 'none',
-            '&:hover': { backgroundColor: '#E0E8FF' },
+            '&:hover': { backgroundColor: T.bgHover, color: T.textPrim },
           }}
         >
           {t('sandbox.save_cancel_btn')}

@@ -9,9 +9,9 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { useTranslate } from 'src/locales';
+import { T, FONT_CODE, FONT_MONO } from 'src/theme/tokens';
 
-import { TEXT_SECONDARY } from '../constants';
+import { useTranslate } from 'src/locales';
 
 // Lazy load Monaco to avoid SSR issues
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
@@ -42,11 +42,10 @@ export function MoonScriptEditorPanel({
       sx={{
         minHeight: isHorizontal ? 600 : 837,
         width: isHorizontal ? '50%' : '100%',
-        borderRadius: '12px',
+        borderRadius: '8px',
         overflow: 'hidden',
-        border: (theme) =>
-          `1.2px solid ${theme.palette.mode === 'dark' ? '#667085' : '#D1D6E0'}`,
-        backgroundColor: '#202838',
+        border: `1px solid ${T.border}`,
+        backgroundColor: T.bgPanel,
         display: 'flex',
         flexDirection: 'column',
       }}
@@ -55,81 +54,68 @@ export function MoonScriptEditorPanel({
       <Stack
         direction="row"
         alignItems="center"
-        spacing={1}
         sx={{
-          p: 1.5,
-          backgroundColor: '#373F4E',
-          borderBottom: '1px solid',
-          borderImage:
-            'linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0)) 1',
+          position: 'relative',
+          gap: '11px',
+          px: '14px',
+          py: '10px',
+          borderBottom: `1px solid ${T.border}`,
         }}
       >
-        {/* MOON DSL badge */}
+        <Typography sx={{ fontSize: 16, fontWeight: 600, color: T.textPrim }}>
+          {t('sandbox.layout_definition')}
+        </Typography>
+
+        {/* Centered MOON DSL chip */}
         <Box
           sx={{
-            px: 1.5,
-            pl: 1,
-            py: 0,
-            backgroundColor: '#212447',
-            borderRadius: '100px',
-            border: '1px solid #1D2654',
+            position: 'absolute',
+            left: 0,
+            right: 0,
             display: 'flex',
             alignItems: 'center',
-            gap: 0.5,
+            justifyContent: 'center',
+            pointerEvents: 'none',
           }}
         >
           <Box
             sx={{
-              width: 8,
-              height: 8,
-              borderRadius: '50%',
-              backgroundColor: '#7AA2FF',
-            }}
-          />
-          <Typography
-            sx={{
-              fontSize: 15,
-              fontFamily: 'Roboto, sans-serif',
-              fontWeight: 400,
-              lineHeight: '22.5px',
-              color: '#7AA2FF',
+              fontSize: 13,
+              fontWeight: 500,
+              px: '9px',
+              py: '2px',
+              borderRadius: '5px',
+              backgroundColor: 'transparent',
+              border: `1px solid ${T.border}`,
+              color: T.textSec,
+              fontFamily: FONT_MONO,
+              letterSpacing: '0.3px',
             }}
           >
             MOON DSL
-          </Typography>
+          </Box>
         </Box>
-
-        <Typography
-          sx={{
-            flex: 1,
-            fontSize: 15,
-            fontFamily: 'Roboto, sans-serif',
-            fontWeight: 400,
-            lineHeight: '22.5px',
-            color: TEXT_SECONDARY,
-          }}
-        >
-          {t('sandbox.layout_definition')}
-        </Typography>
 
         {/* Preview button */}
         <Button
           size="small"
+          disableRipple
           onClick={onPreview}
           disabled={isPreviewing}
           startIcon={isPreviewing ? <CircularProgress size={14} color="inherit" /> : undefined}
           sx={{
-            px: 1.5,
-            py: 0.5,
-            backgroundColor: '#4A3BFF',
-            borderRadius: '4px',
-            color: '#F0F1F5',
-            fontSize: 15,
-            fontWeight: 400,
+            ml: 'auto',
+            height: 30,
+            px: '13px',
+            minWidth: 0,
+            backgroundColor: T.primary,
+            borderRadius: '6px',
+            color: T.onFill,
+            fontSize: 14,
+            fontWeight: 500,
             textTransform: 'none',
-            lineHeight: '22.5px',
-            '&:hover': { backgroundColor: '#3A2BE0' },
-            '&.Mui-disabled': { color: '#9BA3B5', backgroundColor: '#3A2BE0' },
+            '&:hover': { backgroundColor: T.primaryHov },
+            '&.Mui-disabled': { color: T.textDim, backgroundColor: T.primary },
           }}
         >
           {t('sandbox.preview_btn')}
@@ -142,7 +128,7 @@ export function MoonScriptEditorPanel({
           flex: 1,
           position: 'relative',
           overflow: 'hidden',
-          backgroundColor: '#202838',
+          backgroundColor: '#1E1E1E',
           '& .monaco-scrollable-element > .scrollbar > .slider': {
             backgroundColor: 'rgba(255, 255, 255, 0.2) !important',
             borderRadius: '4px !important',
@@ -171,11 +157,20 @@ export function MoonScriptEditorPanel({
           theme="moon-dark"
           defaultValue={layoutDefinition}
           beforeMount={(monaco) => {
+            // .moon (Monokai-family) theme on a #1E1E1E surface — matches the
+            // reference MOON_EDIT_THEME (text #f8f8f2 / str #abe338 / num #f5ab35 / key #ffa07a).
             monaco.editor.defineTheme('moon-dark', {
               base: 'vs-dark',
               inherit: true,
-              rules: [],
-              colors: { 'editor.background': '#202838' },
+              rules: [
+                { token: '', foreground: 'f8f8f2' },
+                { token: 'string', foreground: 'abe338' },
+                { token: 'number', foreground: 'f5ab35' },
+                { token: 'keyword', foreground: 'ffa07a' },
+                { token: 'type', foreground: 'ffa07a' },
+                { token: 'identifier', foreground: 'f8f8f2' },
+              ],
+              colors: { 'editor.background': '#1E1E1E' },
             });
           }}
           onMount={(ed) => {
@@ -185,10 +180,10 @@ export function MoonScriptEditorPanel({
           onChange={(v) => onCodeChange(v || '')}
           options={{
             minimap: { enabled: false },
-            fontSize: 15,
-            fontFamily: 'Roboto, monospace',
-            lineHeight: 22.5,
-            padding: { top: 16 },
+            fontSize: 15.5,
+            fontFamily: FONT_CODE,
+            lineHeight: 23,
+            padding: { top: 12 },
             scrollBeyondLastLine: false,
             automaticLayout: true,
             tabSize: 2,

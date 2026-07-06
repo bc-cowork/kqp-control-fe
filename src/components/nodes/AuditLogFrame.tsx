@@ -20,18 +20,12 @@ import {
 import { formatBytes } from 'src/utils/helper';
 import { formatDateCustom } from 'src/utils/format-time';
 
-import { T } from 'src/theme/tokens';
+import { T, FONT_MONO } from 'src/theme/tokens';
 import { error } from 'src/theme/core';
 import { useTranslate } from 'src/locales';
 import { useGetAuditLogFrame } from 'src/actions/nodes';
 
-import {
-  Panel,
-  SpecChip,
-  DataTable,
-  CodeBlock,
-  SectionLabel,
-} from 'src/components/v5';
+import { SpecChip, DataTable, CodeBlock } from 'src/components/v5';
 
 import { Iconify } from '../iconify';
 import AuditFrameFilterBar from '../audit-log-page/AuditFrameFilterBar';
@@ -54,19 +48,21 @@ function InfoBox({
   value,
   action,
   highlight,
+  mono,
   sx,
 }: {
   label: string;
   value: ReactNode;
   action?: ReactNode;
   highlight?: boolean;
+  mono?: boolean;
   sx?: object;
 }) {
   return (
     <Box
       sx={{
-        bgcolor: highlight ? T.bgRowSel : T.bgHover,
-        border: highlight ? '1px solid #4A3BFF55' : 'none',
+        bgcolor: highlight ? `${T.primary}26` : T.bgHover,
+        border: highlight ? `1px solid ${T.primary}55` : 'none',
         borderRadius: '8px',
         p: '8px 12px',
         mb: 1,
@@ -74,11 +70,30 @@ function InfoBox({
       }}
     >
       <Stack direction="row" alignItems="center" justifyContent="space-between">
-        <Typography sx={{ color: T.textDim, fontSize: 14 }}>{label}</Typography>
+        <Typography sx={{ color: highlight ? T.textSec : T.textDim, fontSize: 14 }}>
+          {label}
+        </Typography>
         {action}
       </Stack>
-      <Typography sx={{ color: T.textPrim, fontSize: 17, fontWeight: 500 }}>{value}</Typography>
+      <Typography
+        sx={{
+          color: T.textPrim,
+          fontSize: 17,
+          fontWeight: 400,
+          mt: '2px',
+          fontFamily: mono ? FONT_MONO : 'inherit',
+        }}
+      >
+        {value}
+      </Typography>
     </Box>
+  );
+}
+
+// Section sub-heading inside the frame-info panel ("증적 로그 목록" / "증적 로그 프레임 상세").
+function PanelSectionLabel({ children, sx }: { children: ReactNode; sx?: object }) {
+  return (
+    <Typography sx={{ color: T.textSec, fontSize: 15, mb: 1, ...sx }}>{children}</Typography>
   );
 }
 
@@ -272,51 +287,93 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
 
   return (
     <>
-      <Box sx={{ display: 'flex', gap: 1.5, flex: 1, minHeight: 0 }}>
-        {/* Left — Frame Info */}
-        <Panel sx={{ width: 300, flexShrink: 0, overflow: 'auto' }}>
-          <Box sx={{ p: 2 }}>
-            <SectionLabel>{t('audit_log_frame_detail.frame_info')}</SectionLabel>
-            <Typography sx={{ color: T.textSec, fontSize: 14, mt: 0.5, mb: 2, wordBreak: 'break-all' }}>
-              {selectedFile}
-            </Typography>
+      <Box sx={{ display: 'flex', gap: '14px', flex: 1, minHeight: 0 }}>
+        {/* Left — Frame Info panel */}
+        <Box
+          sx={{
+            width: 300,
+            flexShrink: 0,
+            alignSelf: 'flex-start',
+            maxHeight: '100%',
+            bgcolor: T.bgCard,
+            border: `1px solid ${T.border}`,
+            borderRadius: '8px',
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+          }}
+        >
+          {/* Header */}
+          <Box
+            sx={{
+              p: '12px 16px',
+              borderBottom: `1px solid ${T.border}`,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1,
+              fontSize: 16,
+              color: T.textSec,
+              fontWeight: 500,
+            }}
+          >
+            <Iconify icon="eva:file-add-outline" width={18} sx={{ color: T.textDim }} />
+            <span>{t('audit_log_frame_detail.frame_info')}</span>
+          </Box>
 
+          {/* Body */}
+          <Box sx={{ p: '18px 16px', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+            {/* File name */}
+            <Box sx={{ mb: '18px' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: '7px', color: T.textDim, fontSize: 14 }}>
+                <Iconify icon="eva:file-outline" width={14} />
+                {t('right_side_audit_log_list.filename')}
+              </Box>
+              <Box sx={{ color: T.textPrim, fontSize: 20, fontWeight: 400, mt: '6px', wordBreak: 'break-all' }}>
+                {selectedFile}
+              </Box>
+            </Box>
+
+            {/* Audit log list group */}
+            <PanelSectionLabel>{t('right_side_audit_log_list.audit_log_list')}</PanelSectionLabel>
             <InfoBox
               label={t('right_side_audit_log_list.max_frame_seq')}
+              mono
               value={auditFrame?.max_frame ?? '—'}
               action={
                 <Box
                   onClick={onMaxFrameRefresh}
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: 22,
-                    height: 22,
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    color: T.textSec,
-                    '&:hover': { bgcolor: T.bgCard, color: T.textPrim },
-                  }}
+                  sx={{ display: 'flex', cursor: 'pointer', color: T.textDim, '&:hover': { color: T.textPrim } }}
                 >
-                  <Iconify icon="eva:refresh-fill" width={15} />
+                  <Iconify icon="eva:refresh-fill" width={16} />
                 </Box>
               }
             />
             <InfoBox
               label={t('right_side_audit_log_list.file_size')}
+              mono
               value={formatBytes(auditFrame?.file_size)}
             />
             <InfoBox
               label={t('right_side_audit_log_list.date')}
+              mono
               value={formatDateCustom(auditFrame?.date?.toString())}
             />
             <InfoBox label={t('right_side_audit_log_list.desc')} value={auditFrame?.desc || '—'} />
 
-            <InfoBox label={t('audit_log_frame_detail.seq')} value={auditFrame?.seq ?? '—'} highlight />
+            {/* Frame detail group */}
+            <PanelSectionLabel sx={{ mt: '14px' }}>
+              {t('audit_log_frame_detail.title')}
+            </PanelSectionLabel>
+            <InfoBox
+              label={t('audit_log_frame_detail.seq')}
+              mono
+              value={auditFrame?.seq ?? '—'}
+              highlight
+            />
 
             <InfoBox
               label={t('audit_log_frame_detail.time')}
+              mono
               value={
                 <Box component="span">
                   {auditFrame?.time} {auditFrame?.time_ms}
@@ -334,34 +391,35 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
             />
             <InfoBox
               label={t('audit_log_frame_detail.size')}
+              mono
               value={formatBytes(auditFrame?.size)}
             />
 
             <Stack direction="row" spacing={1}>
               <InfoBox
                 label={t('audit_log_frame_detail.head')}
+                mono
                 value={auditFrame?.head ?? '—'}
                 sx={{ flex: 1, mb: 0 }}
               />
               <InfoBox
                 label={t('audit_log_frame_detail.rid')}
+                mono
                 value={auditFrame?.rid ?? '—'}
                 sx={{ flex: 1, mb: 0 }}
               />
             </Stack>
           </Box>
-        </Panel>
+        </Box>
 
         {/* Right — filter bar + frame nav + fragment table */}
         <Box sx={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-          <Box sx={{ border: `1px solid ${T.border}`, borderRadius: '8px', overflow: 'hidden' }}>
-            <AuditFrameFilterBar
-              filters={filters}
-              setFilters={setFilters}
-              onApply={handleSearch}
-              onResetClick={handleResetClick}
-            />
-          </Box>
+          <AuditFrameFilterBar
+            filters={filters}
+            setFilters={setFilters}
+            onApply={handleSearch}
+            onResetClick={handleResetClick}
+          />
 
           <TablePaginationCustomShort
             rowsPerPage={count || 40}

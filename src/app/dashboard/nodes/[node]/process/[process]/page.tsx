@@ -9,7 +9,8 @@ import { paths } from 'src/routes/paths';
 
 import { fetcher, endpoints } from 'src/utils/axios';
 
-import { T, FONT_MONO } from 'src/theme/tokens';
+import { useTranslate } from 'src/locales';
+
 import { PageShell, DataTable, CodeBlock, SectionLabel } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
@@ -24,6 +25,7 @@ type Props = {
 export default function Page({ params }: Props) {
   const { node, process } = params;
   const router = useRouter();
+  const { t } = useTranslate('process');
   const decodedProcess = decodeURIComponent(process);
 
   const url = endpoints.dashboard.processDetail(node, decodedProcess);
@@ -37,25 +39,23 @@ export default function Page({ params }: Props) {
   const summaryColumns: Column<any>[] = [
     {
       key: 'name',
-      label: 'Process Name',
-      render: (r) => (
-        <span style={{ color: T.primary, fontWeight: 500, fontFamily: FONT_MONO }}>{r.name}</span>
-      ),
+      label: t('process_detail.process_name'),
+      render: (r) => <span style={{ fontWeight: 500 }}>{r.name}</span>,
     },
-    { key: 'timestamp', label: 'Timestamp', mono: true },
-    { key: 'cpu', label: 'CPU', mono: true, align: 'right' },
-    { key: 'mem', label: 'Memory', mono: true, align: 'right' },
-    { key: 'desc', label: 'Description', dim: true, grow: true },
+    { key: 'timestamp', label: t('process_detail.timestamp'), mono: true, dim: true },
+    { key: 'cpu', label: t('process_detail.cpu'), mono: true, align: 'right' },
+    { key: 'mem', label: t('process_detail.mem'), mono: true, align: 'right' },
+    { key: 'desc', label: t('process_detail.desc'), dim: true },
   ];
 
   return (
     <PageShell
       node={node}
       crumbs={[
-        { label: 'Process', onClick: () => router.push(paths.dashboard.nodes.process(node)) },
+        { label: t('top.process'), onClick: () => router.push(paths.dashboard.nodes.process(node)) },
         { label: decodedProcess },
       ]}
-      title={`Process : ${decodedProcess}`}
+      title={`${t('top.process')} : ${decodedProcess}`}
     >
       <DataTable<any>
         columns={summaryColumns}
@@ -63,10 +63,10 @@ export default function Page({ params }: Props) {
         headerVariant="light"
         loading={isLoading}
         error={!!error}
-        emptyLabel="No process found"
+        emptyLabel={t('empty')}
       />
 
-      <SectionLabel>Process Definition</SectionLabel>
+      <SectionLabel>{t('detail_table.script_title')}</SectionLabel>
       <CodeBlock theme="default">{isLoading ? '' : error ? '' : layoutDefinition}</CodeBlock>
     </PageShell>
   );

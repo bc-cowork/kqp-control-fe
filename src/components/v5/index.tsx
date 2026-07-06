@@ -9,6 +9,9 @@ import Stack from '@mui/material/Stack';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 
+import { KIcon } from 'src/components/k-icons';
+import { useTranslate } from 'src/locales';
+
 import { Iconify } from 'src/components/iconify';
 
 import { T, ACCENT2, SPEC_CHIP, FONT_MONO } from 'src/theme/tokens';
@@ -50,7 +53,9 @@ export function PageShell({ node, crumbs = [], title, actions, scroll = true, ch
           )}
           {crumbs.map((c, i) => (
             <Stack key={i} direction="row" alignItems="center" spacing={1}>
-              <Iconify icon="eva:chevron-right-fill" width={14} sx={{ color: T.textDim }} />
+              <Box sx={{ color: T.textDim, display: 'flex' }}>
+                <KIcon name="fwd" size={11} />
+              </Box>
               <Typography
                 onClick={c.onClick}
                 sx={{
@@ -479,6 +484,7 @@ type PagerProps = {
 };
 
 export function Pager({ page, totalPages, perPage, perPageOptions = [10, 20, 40, 60], onPageChange, onPerPageChange }: PagerProps) {
+  const { t } = useTranslate();
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
   const canPrev = page > 1;
   const canNext = page < totalPages;
@@ -491,7 +497,7 @@ export function Pager({ page, totalPages, perPage, perPageOptions = [10, 20, 40,
   return (
     <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ bgcolor: T.bgCard, border: `1px solid ${T.border}`, borderRadius: '8px', p: '8px 14px' }}>
       <Stack direction="row" alignItems="center" spacing={1}>
-        <Typography sx={{ fontSize: 14, color: T.textSec }}>Rows per page:</Typography>
+        <Typography sx={{ fontSize: 14, color: T.textSec }}>{t('table.rows_per_page')}:</Typography>
         {onPerPageChange && (
           <>
             <Box

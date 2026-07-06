@@ -17,14 +17,15 @@ import {
 } from '@xyflow/react';
 
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+
+import { T, FONT_MONO } from 'src/theme/tokens';
 
 import { DataFlowToolbar } from './DataFlowToolbar';
 import { DataFlowNode } from './nodes/DataFlowNode';
 import { buildDataFlowGraph } from './graph-builder';
-import { CANVAS_BG, GRID_LINE_COLOR, HELP_TEXT_COLOR } from './constants';
 import { computeDataFlowLayout } from './layout-algorithm';
+import { CANVAS_BG, GRID_LINE_COLOR, HELP_TEXT_COLOR } from './constants';
 
 import type { DataFlowDefinition, DataFlowNodeInstance } from './types';
 
@@ -68,51 +69,6 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
     setNodes(initialGraph.nodes);
     setEdges(initialGraph.edges);
   }, [initialGraph, setNodes, setEdges]);
-
-  // Auto Layout
-  const handleAutoLayout = useCallback(() => {
-    const laidOut = computeDataFlowLayout([...nodes], edges);
-    setNodes(laidOut);
-    setTimeout(() => fitView({ padding: 0.05, duration: 300 }), 50);
-  }, [nodes, edges, setNodes, fitView]);
-
-  // Fit View
-  const handleFitView = useCallback(() => {
-    fitView({ padding: 0.05, duration: 300 });
-  }, [fitView]);
-
-  // Export
-  const handleExport = useCallback(async () => {
-    const flowViewport = containerRef.current?.querySelector(
-      '.react-flow__viewport'
-    ) as HTMLElement;
-
-    if (!flowViewport) return;
-
-    try {
-      const { toPng } = await import('html-to-image');
-      const dataUrl = await toPng(flowViewport, {
-        backgroundColor: CANVAS_BG,
-        quality: 1,
-      });
-
-      const link = document.createElement('a');
-      link.download = `${fileName || 'data-flow'}.png`;
-      link.href = dataUrl;
-      link.click();
-    } catch {
-      // silent fail
-    }
-  }, [fileName]);
-
-  // Fullscreen
-  const handleFullscreen = useCallback(() => {
-    if (!document.fullscreenElement) {
-      containerRef.current?.requestFullscreen();
-    } else {
-      document.exitFullscreen();
-    }
-  }, []);
 
   useEffect(() => {
     const handleChange = () =>
@@ -191,24 +147,16 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
     <Box
       ref={containerRef}
       sx={{
-        borderRadius: '12px',
+        borderRadius: '8px',
         overflow: 'hidden',
-        border: (theme) => `1.2px solid ${theme.palette.mode === 'dark' ? '#667085' : '#D1D6E0'}`,
+        border: `1px solid ${T.border}`,
         backgroundColor: CANVAS_BG,
-        height: isFullscreen ? '100vh' : 800,
+        height: isFullscreen ? '100vh' : 820,
         display: 'flex',
         flexDirection: 'column',
       }}
     >
-      <DataFlowToolbar
-        fileName={fileName}
-        onAutoLayout={handleAutoLayout}
-        onFitView={handleFitView}
-        onExport={handleExport}
-        onFullscreen={handleFullscreen}
-        isFullscreen={isFullscreen}
-        onTestEnvClick={onTestEnvClick}
-      />
+      <DataFlowToolbar fileName={fileName} onTestEnvClick={onTestEnvClick} />
 
       <Box sx={{ flex: 1, position: 'relative' }}>
         <ReactFlow
@@ -237,7 +185,7 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
           <Background
             variant={BackgroundVariant.Lines}
             gap={50}
-            lineWidth={0.5}
+            lineWidth={1}
             color={GRID_LINE_COLOR}
           />
 
@@ -246,10 +194,10 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
             <Typography
               sx={{
                 color: HELP_TEXT_COLOR,
-                fontSize: 15,
-                fontFamily: 'Roboto, sans-serif',
+                opacity: 0.65,
+                fontSize: 14,
+                fontFamily: FONT_MONO,
                 fontWeight: 400,
-                lineHeight: '22.5px',
               }}
             >
               ctrl + (+/=) for zoom in and ctrl + (-) for zoom out and ctrl + (0) for reset.
@@ -258,50 +206,66 @@ function DataFlowCanvasInner({ definition, fileName, onTestEnvClick }: DataFlowC
 
           {/* Zoom Controls */}
           <Panel position="bottom-right">
-            <Stack spacing={0.5} alignItems="center">
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                backgroundColor: T.bgCard,
+                border: `1px solid ${T.border}`,
+                borderRadius: '8px',
+                overflow: 'hidden',
+              }}
+            >
               <Box
                 onClick={() => zoomIn({ duration: 200 })}
                 sx={{
-                  width: 40,
-                  height: 32,
+                  width: 30,
+                  height: 28,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  backgroundColor: '#373F4E',
-                  borderRadius: '4px',
+                  fontSize: 17,
+                  color: T.textSec,
                   cursor: 'pointer',
-                  '&:hover': { backgroundColor: '#4E576A' },
+                  '&:hover': { backgroundColor: T.bgHover, color: T.textPrim },
                 }}
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M11.999 3C12.4408 3 12.7987 3.35807 12.7988 3.7998V11.2002H20.2002C20.6419 11.2003 20.9999 11.5583 21 12C21 12.4418 20.6419 12.7997 20.2002 12.7998H12.7988V20.2002C12.7988 20.642 12.4409 21 11.999 21C11.5573 20.9999 11.1992 20.642 11.1992 20.2002V12.7998H3.7998C3.35807 12.7997 3 12.4418 3 12C3.00011 11.5583 3.35813 11.2003 3.7998 11.2002H11.1992V3.7998C11.1993 3.35813 11.5574 3.00011 11.999 3Z" fill="white" />
-                </svg>
-
+                +
               </Box>
 
-              <Typography sx={{ fontSize: 12, color: 'white', fontWeight: 400 }}>
+              <Typography
+                sx={{
+                  fontSize: 13,
+                  color: T.textSec,
+                  fontFamily: FONT_MONO,
+                  py: '3px',
+                  width: '100%',
+                  textAlign: 'center',
+                  borderTop: `1px solid ${T.border}`,
+                  borderBottom: `1px solid ${T.border}`,
+                }}
+              >
                 {zoom}%
               </Typography>
 
               <Box
                 onClick={() => zoomOut({ duration: 200 })}
                 sx={{
-                  width: 40,
-                  height: 32,
+                  width: 30,
+                  height: 28,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  backgroundColor: '#373F4E',
-                  borderRadius: '4px',
+                  fontSize: 17,
+                  color: T.textSec,
                   cursor: 'pointer',
-                  '&:hover': { backgroundColor: '#4E576A' },
+                  '&:hover': { backgroundColor: T.bgHover, color: T.textPrim },
                 }}
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20.2002 11.2002C20.6419 11.2003 20.9999 11.5583 21 12C21 12.4418 20.6419 12.7997 20.2002 12.7998H3.7998C3.35807 12.7997 3 12.4418 3 12C3.00011 11.5583 3.35813 11.2003 3.7998 11.2002H20.2002Z" fill="white" />
-                </svg>
+                −
               </Box>
-            </Stack>
+            </Box>
           </Panel>
         </ReactFlow>
       </Box>

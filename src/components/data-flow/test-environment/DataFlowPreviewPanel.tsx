@@ -17,13 +17,15 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import { T, FONT_MONO } from 'src/theme/tokens';
+
 import { useTranslate } from 'src/locales';
 
 import { RevertIcon } from './icons';
 import { DataFlowNode } from '../nodes/DataFlowNode';
 import { buildDataFlowGraph } from '../graph-builder';
 import { computeDataFlowLayout } from '../layout-algorithm';
-import { TEXT_TERTIARY, TEXT_SECONDARY, HELP_TEXT_COLOR } from '../constants';
+import { CANVAS_BG, GRID_LINE_COLOR, HELP_TEXT_COLOR } from '../constants';
 
 import type { DataFlowDefinition, DataFlowNodeInstance } from '../types';
 
@@ -97,11 +99,10 @@ export function DataFlowPreviewPanel({
       sx={{
         minHeight: isHorizontal ? 600 : 832,
         width: isHorizontal ? '50%' : '100%',
-        borderRadius: '12px',
+        borderRadius: '8px',
         overflow: 'hidden',
-        border: (theme) =>
-          `1.2px solid ${theme.palette.mode === 'dark' ? '#667085' : '#D1D6E0'}`,
-        backgroundColor: '#202838',
+        border: `1px solid ${T.border}`,
+        backgroundColor: T.bgPanel,
         display: 'flex',
         flexDirection: 'column',
       }}
@@ -110,91 +111,66 @@ export function DataFlowPreviewPanel({
       <Stack
         direction="row"
         alignItems="center"
-        spacing={1}
         sx={{
-          p: 1.5,
-          backgroundColor: '#373F4E',
-          borderBottom: '1px solid',
-          borderImage:
-            'linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0)) 1',
+          position: 'relative',
+          gap: '11px',
+          px: '14px',
+          py: '10px',
+          borderBottom: `1px solid ${T.border}`,
         }}
       >
-        {/* PREVIEW badge */}
-        <Box
-          sx={{
-            px: 1.5,
-            pl: 1,
-            py: 0,
-            backgroundColor: '#331B1E',
-            borderRadius: '100px',
-            border: '1px solid #4A2C31',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 0.5,
-          }}
-        >
-          <Box
-            sx={{
-              width: 8,
-              height: 8,
-              borderRadius: '50%',
-              backgroundColor: '#FF5B5B',
-            }}
-          />
-          <Typography
-            sx={{
-              fontSize: 15,
-              fontFamily: 'Roboto, sans-serif',
-              fontWeight: 400,
-              lineHeight: '22.5px',
-              color: '#FF8882',
-            }}
-          >
-            PREVIEW
-          </Typography>
-        </Box>
-
-        <Typography
-          sx={{
-            flex: 1,
-            fontSize: 15,
-            fontFamily: 'Roboto, sans-serif',
-            fontWeight: 400,
-            lineHeight: '22.5px',
-            color: TEXT_SECONDARY,
-          }}
-        >
+        <Typography sx={{ fontSize: 16, fontWeight: 600, color: T.textPrim }}>
           Data Flow
         </Typography>
 
-        <Typography
+        {/* Centered filename + status chip */}
+        <Box
           sx={{
-            flex: 1,
-            fontSize: 15,
-            fontFamily: 'Roboto, sans-serif',
-            fontWeight: 400,
-            lineHeight: '22.5px',
-            color: TEXT_SECONDARY,
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '10px',
+            pointerEvents: 'none',
           }}
         >
-          {fileName}
-        </Typography>
+          <Typography sx={{ fontSize: 14, color: T.textSec, fontFamily: FONT_MONO }}>
+            {fileName}
+          </Typography>
+          <Box
+            sx={{
+              fontSize: 14,
+              fontWeight: 500,
+              px: '10px',
+              py: '3px',
+              borderRadius: '5px',
+              backgroundColor: `${T.primary}26`,
+              color: T.accent,
+            }}
+          >
+            미리보기 중
+          </Box>
+        </Box>
 
         {/* Revert button */}
         <Button
           size="small"
+          disableRipple
           sx={{
-            px: 1.5,
-            py: 0.5,
-            backgroundColor: '#4A3BFF',
-            borderRadius: '4px',
-            color: TEXT_TERTIARY,
+            ml: 'auto',
+            height: 30,
+            px: '13px',
+            minWidth: 0,
+            backgroundColor: T.primary,
+            borderRadius: '6px',
+            color: T.onFill,
             gap: 0.75,
-            fontSize: 15,
-            fontWeight: 400,
+            fontSize: 14,
+            fontWeight: 500,
             textTransform: 'none',
-            lineHeight: '22.5px',
-            '&:hover': { backgroundColor: '#3A2BE0' },
+            '&:hover': { backgroundColor: T.primaryHov },
           }}
         >
           <RevertIcon />
@@ -204,21 +180,23 @@ export function DataFlowPreviewPanel({
         {/* Save button */}
         <Button
           size="small"
+          disableRipple
           onClick={onSaveClick}
           disabled={isSaving}
           startIcon={isSaving ? <CircularProgress size={14} color="inherit" /> : undefined}
           sx={{
-            px: 1.5,
-            py: '15px',
-            backgroundColor: '#373F4E',
-            borderRadius: '4px',
-            color: TEXT_TERTIARY,
-            fontSize: 15,
-            fontWeight: 400,
+            height: 30,
+            px: '15px',
+            minWidth: 0,
+            backgroundColor: T.bgCard,
+            border: `1px solid ${T.border}`,
+            borderRadius: '6px',
+            color: T.textSec,
+            fontSize: 14,
+            fontWeight: 500,
             textTransform: 'none',
-            lineHeight: '22.5px',
-            '&:hover': { backgroundColor: '#4A3BFF' },
-            '&.Mui-disabled': { color: '#6B7280', backgroundColor: '#2A3344' },
+            '&:hover': { backgroundColor: T.bgHover, color: T.textPrim },
+            '&.Mui-disabled': { color: T.textDim, backgroundColor: T.bgCard },
           }}
         >
           {isSaving ? t('sandbox.saving') : t('sandbox.save')}
@@ -226,7 +204,7 @@ export function DataFlowPreviewPanel({
       </Stack>
 
       {/* Canvas */}
-      <Box sx={{ flex: 1, position: 'relative' }}>
+      <Box sx={{ flex: 1, position: 'relative', backgroundColor: CANVAS_BG }}>
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -252,8 +230,8 @@ export function DataFlowPreviewPanel({
             id="dataflow-preview-grid"
             variant={BackgroundVariant.Lines}
             gap={50}
-            lineWidth={0.5}
-            color="#667085"
+            lineWidth={1}
+            color={GRID_LINE_COLOR}
           />
 
           {/* Help text */}
@@ -261,10 +239,10 @@ export function DataFlowPreviewPanel({
             <Typography
               sx={{
                 color: HELP_TEXT_COLOR,
-                fontSize: 15,
-                fontFamily: 'Roboto, sans-serif',
+                opacity: 0.65,
+                fontSize: 14,
+                fontFamily: FONT_MONO,
                 fontWeight: 400,
-                lineHeight: '22.5px',
               }}
             >
               ctrl + (+/=) for zoom in and ctrl + (-) for zoom out and ctrl + (0) for reset.
@@ -273,47 +251,64 @@ export function DataFlowPreviewPanel({
 
           {/* Zoom Controls */}
           <Panel position="bottom-right">
-            <Stack spacing={0.5} alignItems="center">
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                backgroundColor: T.bgCard,
+                border: `1px solid ${T.border}`,
+                borderRadius: '8px',
+                overflow: 'hidden',
+              }}
+            >
               <Box
                 onClick={() => zoomIn({ duration: 200 })}
                 sx={{
-                  width: 40,
-                  height: 32,
+                  width: 30,
+                  height: 28,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  backgroundColor: '#373F4E',
-                  borderRadius: '4px',
+                  fontSize: 17,
+                  color: T.textSec,
                   cursor: 'pointer',
-                  '&:hover': { backgroundColor: '#4E576A' },
+                  '&:hover': { backgroundColor: T.bgHover, color: T.textPrim },
                 }}
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M11.999 3C12.4408 3 12.7987 3.35807 12.7988 3.7998V11.2002H20.2002C20.6419 11.2003 20.9999 11.5583 21 12C21 12.4418 20.6419 12.7997 20.2002 12.7998H12.7988V20.2002C12.7988 20.642 12.4409 21 11.999 21C11.5573 20.9999 11.1992 20.642 11.1992 20.2002V12.7998H3.7998C3.35807 12.7997 3 12.4418 3 12C3.00011 11.5583 3.35813 11.2003 3.7998 11.2002H11.1992V3.7998C11.1993 3.35813 11.5574 3.00011 11.999 3Z" fill="white" />
-                </svg>
+                +
               </Box>
-              <Typography sx={{ fontSize: 12, color: 'white', fontWeight: 400 }}>
+              <Typography
+                sx={{
+                  fontSize: 13,
+                  color: T.textSec,
+                  fontFamily: FONT_MONO,
+                  py: '3px',
+                  width: '100%',
+                  textAlign: 'center',
+                  borderTop: `1px solid ${T.border}`,
+                  borderBottom: `1px solid ${T.border}`,
+                }}
+              >
                 {zoom}%
               </Typography>
               <Box
                 onClick={() => zoomOut({ duration: 200 })}
                 sx={{
-                  width: 40,
-                  height: 32,
+                  width: 30,
+                  height: 28,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  backgroundColor: '#373F4E',
-                  borderRadius: '4px',
+                  fontSize: 17,
+                  color: T.textSec,
                   cursor: 'pointer',
-                  '&:hover': { backgroundColor: '#4E576A' },
+                  '&:hover': { backgroundColor: T.bgHover, color: T.textPrim },
                 }}
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20.2002 11.2002C20.6419 11.2003 20.9999 11.5583 21 12C21 12.4418 20.6419 12.7997 20.2002 12.7998H3.7998C3.35807 12.7997 3 12.4418 3 12C3.00011 11.5583 3.35813 11.2003 3.7998 11.2002H20.2002Z" fill="white" />
-                </svg>
+                −
               </Box>
-            </Stack>
+            </Box>
           </Panel>
         </ReactFlow>
       </Box>

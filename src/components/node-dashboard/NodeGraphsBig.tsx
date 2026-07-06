@@ -1,137 +1,73 @@
-// components/NodeGraphsBig.tsx
-
 'use client';
 
 import type { ChartDataPoint } from 'src/types/dashboard';
 
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Unstable_Grid2';
-
-import { useTabs } from 'src/routes/hooks';
 
 import { processChartData } from 'src/utils/process-chart-data';
 
 import { useTranslate } from 'src/locales';
+import { T, CHART } from 'src/theme/tokens';
 import { useGetGraphData } from 'src/actions/dashboard';
 
-import { T } from 'src/theme/tokens';
+import { BigMetric } from '../dashboard/chart-area';
 
-import { ChartArea } from './chart-area';
-import { getBoundTabs } from '../dashboard/NodeGraphs';
+import type { MetricDef } from '../dashboard/chart-area';
 
 // ----------------------------------------------------------------------
 
 interface Props {
   selectedNodeParam: string;
+  offline?: boolean;
 }
 
-export function NodeGraphsBig({ selectedNodeParam }: Props) {
+export function NodeGraphsBig({ selectedNodeParam, offline = false }: Props) {
   const { t } = useTranslate('node-dashboard');
 
-  const inboundTabs = useTabs(getBoundTabs(t)[0].value);
-  const outboundTabs = useTabs(getBoundTabs(t)[0].value);
-
   const { graphData, graphDataLoading } = useGetGraphData(selectedNodeParam, 1);
+  const data: ChartDataPoint[] = graphData?.metrics ? processChartData(graphData.metrics) : [];
 
-  const chartData: ChartDataPoint[] = graphData?.metrics ? processChartData(graphData.metrics) : [];
-
-  const latestPoint = chartData.length > 0 ? chartData[chartData.length - 1] : null;
-
-  const formatBytes = (value: number): string => {
-    if (value >= 1_000_000_000) return `${(value / 1_000_000_000).toFixed(1)}GB`;
-    if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}MB`;
-    if (value >= 1_000) return `${(value / 1_000).toFixed(1)}KB`;
-    return `${value}B`;
-  };
-
-  const getSubTitle = (metric: keyof ChartDataPoint): string => {
-    if (!latestPoint) return '—';
-    const value = latestPoint[metric] as number;
-    if (metric === 'cpu' || metric === 'memory') return `${value}%`;
-    if (metric === 'inbound_bytes' || metric === 'outbound_bytes') return formatBytes(value);
-    return value.toLocaleString();
-  };
-
-  const responsiveChartHeight = {
-    xs: '300px',
-    md: 'calc((100vh - 240px) / 2)',
-    lg: 'calc((100vh - 200px) / 2)',
-  };
+  const metrics: MetricDef[] = [
+    { key: 'cpu', title: t('graph.cpu'), color: CHART.cpu, threshold: 50, variants: [{ metric: 'cpu', fmt: 'percent' }] },
+    { key: 'memory', title: t('graph.memory'), color: CHART.memory, variants: [{ metric: 'memory', fmt: 'percent' }] },
+    {
+      key: 'inbound',
+      title: t('graph.inbound'),
+      color: CHART.inbound,
+      variants: [
+        { label: t('graph.count'), metric: 'inbound_count', fmt: 'count' },
+        { label: t('graph.byte'), metric: 'inbound_bytes', fmt: 'bytes' },
+      ],
+    },
+    {
+      key: 'outbound',
+      title: t('graph.outbound'),
+      color: CHART.outbound,
+      variants: [
+        { label: t('graph.count'), metric: 'outbound_count', fmt: 'count' },
+        { label: t('graph.byte'), metric: 'outbound_bytes', fmt: 'bytes' },
+      ],
+    },
+  ];
 
   return (
     <Box
       sx={{
-        bgcolor: T.bgPanel,
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+        gridTemplateRows: '1fr 1fr',
+        gap: '1px',
+        bgcolor: T.border,
         border: `1px solid ${T.border}`,
         borderRadius: '8px',
-        minHeight: {
-          xs: 'auto',
-          md: 'calc(100vh - 187px)',
-        },
-        p: 1.5,
-        boxSizing: 'border-box',
+        overflow: 'hidden',
+        height: 1,
+        minHeight: 0,
       }}
     >
-      <Grid container spacing={1.5}>
-        {/* CPU Chart */}
-        <Grid xs={12} md={6} sx={{ height: responsiveChartHeight }}>
-          <ChartArea
-            title="CPU"
-            titleString={t('graph.cpu')}
-            subTitle={getSubTitle('cpu')}
-            data={chartData}
-            metric="cpu"
-            threshold={50}
-            height="100%"
-            loading={graphDataLoading}
-          />
-        </Grid>
-
-        {/* Memory Chart */}
-        <Grid xs={12} md={6} sx={{ height: responsiveChartHeight }}>
-          <ChartArea
-            title="Memory"
-            titleString={t('graph.memory')}
-            subTitle={getSubTitle('memory')}
-            data={chartData}
-            metric="memory"
-            height="100%"
-            loading={graphDataLoading}
-          />
-        </Grid>
-
-        {/* Inbound Chart */}
-        <Grid xs={12} md={6} sx={{ height: responsiveChartHeight, mt: { xs: 2, md: 0 } }}>
-          <ChartArea
-            title="Inbound"
-            titleString={t('graph.inbound')}
-            subTitle={getSubTitle(inboundTabs.value === 'count' ? 'inbound_count' : 'inbound_bytes')}
-            data={chartData}
-            metric={inboundTabs.value === 'count' ? 'inbound_count' : 'inbound_bytes'}
-            height="100%"
-            tabs={getBoundTabs(t)}
-            tabValue={inboundTabs.value}
-            onTabChange={inboundTabs.onChange}
-            loading={graphDataLoading}
-          />
-        </Grid>
-
-        {/* Outbound Chart */}
-        <Grid xs={12} md={6} sx={{ height: responsiveChartHeight, mt: { xs: 2, md: 0 } }}>
-          <ChartArea
-            title="Outbound"
-            titleString={t('graph.outbound')}
-            subTitle={getSubTitle(outboundTabs.value === 'count' ? 'outbound_count' : 'outbound_bytes')}
-            data={chartData}
-            metric={outboundTabs.value === 'count' ? 'outbound_count' : 'outbound_bytes'}
-            height="100%"
-            tabs={getBoundTabs(t)}
-            tabValue={outboundTabs.value}
-            onTabChange={outboundTabs.onChange}
-            loading={graphDataLoading}
-          />
-        </Grid>
-      </Grid>
+      {metrics.map((m) => (
+        <BigMetric key={m.key} m={m} data={data} offline={offline} loading={graphDataLoading} animKey={selectedNodeParam} />
+      ))}
     </Box>
   );
 }

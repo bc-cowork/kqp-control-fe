@@ -16,7 +16,7 @@ import { endpoints, fetcher } from 'src/utils/axios';
 import { useTranslate } from 'src/locales';
 import { Iconify } from 'src/components/iconify';
 import { T, ACCENT2, FONT_MONO } from 'src/theme/tokens';
-import { Panel, PageShell, DataTable, StatusBadge } from 'src/components/v5';
+import { Panel, BtnGhost, PageShell, DataTable, StatusBadge } from 'src/components/v5';
 
 import type { Column } from 'src/components/v5';
 
@@ -28,7 +28,7 @@ type ProcessRow = { pid: string | number; command: string };
 type Option = { value: string; label: string };
 
 // ----------------------------------------------------------------------
-// Small styled field primitives (local, ACCENT2-accented v5 look)
+// Small styled field primitives (local, ACCENT2-accented — mirror FilterField)
 // ----------------------------------------------------------------------
 
 function FieldLabel({ children }: { children: ReactNode }) {
@@ -42,6 +42,7 @@ function RSelect({
   options,
   onChange,
   disabled,
+  invalid,
   width = '100%',
 }: {
   label: string;
@@ -50,6 +51,7 @@ function RSelect({
   options: Option[];
   onChange: (v: string) => void;
   disabled?: boolean;
+  invalid?: boolean;
   width?: number | string;
 }) {
   const { t } = useTranslate('replay');
@@ -60,17 +62,17 @@ function RSelect({
   const hasValue = !!value && value !== '0000-00-00';
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
       <FieldLabel>{label}</FieldLabel>
       <Box
         onClick={(e) => (disabled ? undefined : setAnchor(e.currentTarget))}
         sx={{
-          height: 34,
+          height: 32,
           width,
           boxSizing: 'border-box',
           bgcolor: T.bgCard,
-          border: `1px solid ${open ? ACCENT2 : T.border}`,
-          borderRadius: '6px',
+          border: `1px solid ${open || invalid ? ACCENT2 : T.border}`,
+          borderRadius: '5px',
           px: 1.25,
           fontSize: 15,
           fontFamily: FONT_MONO,
@@ -89,7 +91,7 @@ function RSelect({
         <Iconify
           icon="eva:chevron-down-fill"
           width={16}
-          sx={{ color: T.textSec, flexShrink: 0, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform .15s' }}
+          sx={{ color: T.textDim, flexShrink: 0, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform .15s' }}
         />
       </Box>
       <Popover
@@ -106,7 +108,7 @@ function RSelect({
               bgcolor: T.bgCard,
               border: `1px solid ${T.border}`,
               borderRadius: '6px',
-              boxShadow: '0 10px 28px rgba(0,0,0,0.45)',
+              boxShadow: '0 10px 28px rgba(0,0,0,0.4)',
               p: 0.5,
             },
           },
@@ -147,16 +149,18 @@ function RTextInput({
   value,
   onChange,
   placeholder,
+  invalid,
   width = '100%',
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
   placeholder?: string;
+  invalid?: boolean;
   width?: number | string;
 }) {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
       <FieldLabel>{label}</FieldLabel>
       <Box
         component="input"
@@ -164,12 +168,12 @@ function RTextInput({
         placeholder={placeholder}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
         sx={{
-          height: 34,
+          height: 32,
           width,
           boxSizing: 'border-box',
           bgcolor: T.bgCard,
-          border: `1px solid ${T.border}`,
-          borderRadius: '6px',
+          border: `1px solid ${invalid ? ACCENT2 : T.border}`,
+          borderRadius: '5px',
           px: 1.25,
           fontSize: 15,
           fontFamily: FONT_MONO,
@@ -187,13 +191,15 @@ function RTimeInput({
   label,
   value,
   onChange,
+  invalid,
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
+  invalid?: boolean;
 }) {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
       <FieldLabel>{label}</FieldLabel>
       <Box
         component="input"
@@ -202,12 +208,12 @@ function RTimeInput({
         value={value}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value || '00:00:00')}
         sx={{
-          height: 34,
+          height: 32,
           width: '100%',
           boxSizing: 'border-box',
           bgcolor: T.bgCard,
-          border: `1px solid ${T.border}`,
-          borderRadius: '6px',
+          border: `1px solid ${invalid ? ACCENT2 : T.border}`,
+          borderRadius: '5px',
           px: 1.25,
           fontSize: 15,
           fontFamily: FONT_MONO,
@@ -221,7 +227,7 @@ function RTimeInput({
   );
 }
 
-function RSpeedInput({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+function RSpeedInput({ value, onChange, invalid }: { value: string; onChange: (v: string) => void; invalid?: boolean }) {
   const { t } = useTranslate('replay');
   const STEP = 0.25;
   const setNum = (n: number) => onChange(n.toFixed(2).replace(/\.00$/, ''));
@@ -233,16 +239,16 @@ function RSpeedInput({ value, onChange }: { value: string; onChange: (v: string)
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
       <FieldLabel>{t('audit_log.speed')}</FieldLabel>
       <Box
         sx={{
-          height: 34,
-          width: 110,
+          height: 32,
+          width: '100%',
           boxSizing: 'border-box',
           bgcolor: T.bgCard,
-          border: `1px solid ${T.border}`,
-          borderRadius: '6px',
+          border: `1px solid ${invalid ? ACCENT2 : T.border}`,
+          borderRadius: '5px',
           px: 1.25,
           display: 'flex',
           alignItems: 'center',
@@ -265,8 +271,8 @@ function RSpeedInput({ value, onChange }: { value: string; onChange: (v: string)
           }}
         />
         <Box sx={{ display: 'flex', flexDirection: 'column', ml: 0.5 }}>
-          <Iconify icon="eva:chevron-up-fill" width={16} onClick={inc} sx={{ color: T.textSec, cursor: 'pointer', mb: '-4px', '&:hover': { color: ACCENT2 } }} />
-          <Iconify icon="eva:chevron-down-fill" width={16} onClick={dec} sx={{ color: T.textSec, cursor: 'pointer', mt: '-4px', '&:hover': { color: ACCENT2 } }} />
+          <Iconify icon="eva:chevron-up-fill" width={16} onClick={inc} sx={{ color: T.textDim, cursor: 'pointer', mb: '-4px', '&:hover': { color: ACCENT2 } }} />
+          <Iconify icon="eva:chevron-down-fill" width={16} onClick={dec} sx={{ color: T.textDim, cursor: 'pointer', mt: '-4px', '&:hover': { color: ACCENT2 } }} />
         </Box>
       </Box>
     </Box>
@@ -275,7 +281,7 @@ function RSpeedInput({ value, onChange }: { value: string; onChange: (v: string)
 
 function SubPanel({ children }: { children: ReactNode }) {
   return (
-    <Box sx={{ bgcolor: T.bgPanel, borderRadius: '8px', p: '14px', display: 'flex', flexDirection: 'column', gap: 1.75, minHeight: 150 }}>
+    <Box sx={{ bgcolor: T.bgPanel, border: `1px solid ${T.border}`, borderRadius: '8px', p: '14px', display: 'flex', flexDirection: 'column', gap: 1.75 }}>
       {children}
     </Box>
   );
@@ -345,12 +351,23 @@ export default function Page({ params }: Props) {
     !conditions[5] && t('audit_log.head'),
     !conditions[6] && t('audit_log.channel_number'),
     !conditions[7] && t('audit_log.destination_to'),
+    !conditions[8] && t('audit_log.speed'),
   ].filter(Boolean) as string[];
 
   const selectedProc = processData.find((p) => String(p.pid) === String(toolPid));
   const selectedIndex = processData.findIndex((p) => String(p.pid) === String(toolPid));
 
-  const executeCommand = `replay ${file || '<file>'} ${(date || '').replaceAll('-', '') || '<date>'} ${startTime.replaceAll(':', '')} ${endTime.replaceAll(':', '')} --to ${outboundExpression || '<dest>'} --head ${head} --channel ${channel} --speed ${currentSpeed}`;
+  // 설정값 → 실행 명령어 (buildReplayCmd 참조)
+  const executeCommand = (() => {
+    const p = ['kc play', `name:${file}`];
+    if (date && date !== '0000-00-00') p.push(`date:${date.replaceAll('-', '')}`);
+    if (startTime && endTime) p.push(`time:${startTime.replaceAll(':', '')}~${endTime.replaceAll(':', '')}`);
+    if (head && head !== 'All') p.push(`head:${head}`);
+    if (channel && channel !== 'All') p.push(`ch:${channel}`);
+    if (outboundExpression) p.push(`throw_to:${outboundExpression}`);
+    p.push(`speed:${currentSpeed}`);
+    return p.join(' ');
+  })();
 
   const resetForm = () => {
     setLogType('');
@@ -396,17 +413,17 @@ export default function Page({ params }: Props) {
       key: 'status',
       label: t('top_table.status'),
       width: 120,
-      render: () => <StatusBadge on labelOn={t('play')} color={ACCENT2} />,
+      render: () => <StatusBadge on labelOn="Play" labelOff="Stop" color={ACCENT2} />,
     },
-    { key: 'pid', label: t('top_table.process_id'), mono: true, width: 150 },
+    { key: 'pid', label: t('top_table.process_id'), mono: true, width: 150, color: T.textSec },
     { key: 'command', label: t('top_table.command'), mono: true, dim: true, grow: true },
   ];
 
   return (
     <PageShell node={node} crumbs={[{ label: t('top.title') }]} title={t('top.title')}>
       {/* Top row: process table + Tools panel */}
-      <Box sx={{ display: 'flex', gap: '14px', alignItems: 'stretch', flexWrap: { xs: 'wrap', lg: 'nowrap' } }}>
-        <Box sx={{ flex: 1, minWidth: 0 }}>
+      <Box sx={{ display: 'flex', gap: '14px', alignItems: 'stretch', flexShrink: 0, flexWrap: { xs: 'wrap', lg: 'nowrap' } }}>
+        <Box sx={{ flex: 1, minWidth: 0, maxHeight: 210, display: 'flex', flexDirection: 'column' }}>
           <DataTable<ProcessRow>
             columns={columns}
             rows={processData}
@@ -419,63 +436,59 @@ export default function Page({ params }: Props) {
           />
         </Box>
 
-        <Panel sx={{ width: { xs: '100%', lg: 340 }, flexShrink: 0, p: '16px', display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+        <Panel sx={{ width: { xs: '100%', lg: 340 }, flexShrink: 0, height: 210, boxSizing: 'border-box', bgcolor: T.bgCard, p: '16px 18px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
           <Stack direction="row" alignItems="center" spacing={1}>
-            <Iconify icon="eva:settings-2-outline" width={18} sx={{ color: T.textSec }} />
-            <Typography sx={{ fontSize: 15, color: T.textPrim }}>{t('tool_box.tools')}</Typography>
+            <Iconify icon="eva:settings-2-outline" width={16} sx={{ color: T.textDim }} />
+            <Typography sx={{ fontSize: 16, fontWeight: 500, color: T.textSec }}>{t('tool_box.tools')}</Typography>
           </Stack>
-          <Stack direction="row" alignItems="center" spacing={1}>
+          <Stack direction="row" alignItems="center" spacing={1.25}>
             <Box
               sx={{
                 flex: 1,
-                height: 34,
+                minWidth: 0,
                 display: 'flex',
                 alignItems: 'center',
                 gap: 1,
-                bgcolor: T.bgCard,
-                border: `1px solid ${T.border}`,
-                borderRadius: '6px',
+                height: 30,
                 px: 1.25,
-                fontSize: 15,
+                border: `1px solid ${T.border}`,
+                borderRadius: '5px',
+                bgcolor: T.bg,
               }}
             >
-              <Typography sx={{ fontSize: 14, color: T.textDim, whiteSpace: 'nowrap' }}>
-                {t('tool_box.pid')} |
-              </Typography>
+              <Typography sx={{ fontSize: 14, color: T.textDim, flexShrink: 0 }}>{t('tool_box.pid')}</Typography>
+              <Box sx={{ width: '1px', height: 12, bgcolor: T.border, flexShrink: 0 }} />
               <Typography
                 sx={{
                   flex: 1,
+                  minWidth: 0,
+                  fontSize: 14,
                   fontFamily: FONT_MONO,
-                  color: toolPid ? T.textPrim : T.textFaint,
+                  color: toolPid ? T.textPrim : T.textDim,
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
                 }}
               >
-                {toolPid || t('tool_box.tap_from_list')}
+                {toolPid || t('tool_box.tab_the_list')}
               </Typography>
-              {toolPid && (
-                <Iconify
-                  icon="eva:close-fill"
-                  width={16}
-                  onClick={() => setToolPid('')}
-                  sx={{ color: T.textSec, cursor: 'pointer', '&:hover': { color: T.textPrim } }}
-                />
-              )}
             </Box>
             <Box
               component="button"
               disabled={!toolPid}
               onClick={() => setKillDialogOpen(true)}
               sx={{
-                height: 34,
-                px: 2,
-                borderRadius: '6px',
-                border: 'none',
-                fontSize: 15,
+                height: 30,
+                px: 1.75,
+                borderRadius: '5px',
+                fontSize: 14,
                 fontWeight: 500,
                 fontFamily: 'inherit',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
                 cursor: toolPid ? 'pointer' : 'default',
+                border: `1px solid ${toolPid ? T.border : '#373F4E'}`,
                 ...(toolPid
                   ? { background: `linear-gradient(to top, ${ACCENT2}55, ${ACCENT2}14)`, color: ACCENT2 }
                   : { bgcolor: '#373F4E', color: '#667085' }),
@@ -488,84 +501,89 @@ export default function Page({ params }: Props) {
       </Box>
 
       {/* Replay Interface */}
-      <Panel sx={{ p: '18px', display: 'flex', flexDirection: 'column', gap: 2 }}>
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <Stack direction="row" alignItems="center" spacing={1.5}>
-            <Typography sx={{ fontSize: 17, fontWeight: 500, color: T.textPrim }}>{t('audit_log.replay_interface')}</Typography>
+      <Panel sx={{ bgcolor: T.bgCard, p: '16px 18px' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: '14px' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25 }}>
+            <Typography sx={{ fontSize: 16, fontWeight: 500, color: T.textSec }}>{t('audit_log.replay_interface')}</Typography>
             <Box
               sx={{
-                px: 1.25,
+                px: 1,
                 py: '2px',
                 borderRadius: '10px',
                 fontFamily: FONT_MONO,
-                fontSize: 14,
+                fontSize: 13,
                 bgcolor: `${ACCENT2}22`,
                 color: ACCENT2,
               }}
             >
               {filledCount}/9
             </Box>
-          </Stack>
+          </Box>
           <Box
             component="button"
             disabled={!canReplay}
             onClick={() => setReplayDialogOpen(true)}
+            title={canReplay ? '' : `${t('missing_fields')}: ${missing.join(', ')}`}
             sx={{
-              height: 34,
-              px: 2.25,
-              borderRadius: '6px',
-              border: 'none',
-              fontSize: 15,
-              fontWeight: 500,
-              fontFamily: 'inherit',
               display: 'inline-flex',
               alignItems: 'center',
+              justifyContent: 'center',
               gap: 0.75,
+              width: 71,
+              height: 30,
+              boxSizing: 'border-box',
+              border: 'none',
+              borderRadius: '6px',
+              fontSize: 14,
+              fontWeight: 500,
+              fontFamily: 'inherit',
+              whiteSpace: 'nowrap',
               cursor: canReplay ? 'pointer' : 'default',
               ...(canReplay ? { bgcolor: T.primary, color: T.onFill } : { bgcolor: T.border, color: T.textDim }),
             }}
           >
-            <Iconify icon="eva:play-circle-outline" width={17} />
+            <Iconify icon="eva:arrow-ios-forward-fill" width={14} />
             {t('play')}
           </Box>
-        </Stack>
+        </Box>
 
         <Box
           sx={{
             display: 'grid',
             gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', lg: 'repeat(4, 1fr)' },
-            gap: '14px',
+            gap: '12px',
+            alignItems: 'start',
           }}
         >
           <SubPanel>
-            <RSelect label={t('audit_log.log_type')} value={logType} options={logTypeOptions} onChange={setLogType} />
-            <RSelect label={t('audit_log.file')} value={file} options={fileOptions} onChange={setFile} disabled={!logType} />
+            <RSelect label={t('audit_log.log_type')} value={logType} options={logTypeOptions} onChange={setLogType} invalid={!conditions[0]} />
+            <RSelect label={t('audit_log.file')} value={file} options={fileOptions} onChange={setFile} disabled={!logType} invalid={!conditions[1]} />
           </SubPanel>
 
           <SubPanel>
-            <RSelect label={t('audit_log.date')} value={date} placeholder="0000-00-00" options={dateOptions} onChange={setDate} disabled={!file} />
-            <RTimeInput label={t('audit_log.start_time')} value={startTime} onChange={setStartTime} />
-            <RTimeInput label={t('audit_log.end_time')} value={endTime} onChange={setEndTime} />
+            <RSelect label={t('audit_log.date')} value={date} placeholder="0000-00-00" options={dateOptions} onChange={setDate} disabled={!file} invalid={!conditions[2]} />
+            <RTimeInput label={t('audit_log.start_time')} value={startTime} onChange={setStartTime} invalid={!conditions[3]} />
+            <RTimeInput label={t('audit_log.end_time')} value={endTime} onChange={setEndTime} invalid={!conditions[4]} />
           </SubPanel>
 
           <SubPanel>
-            <RTextInput label={t('audit_log.head')} value={head} onChange={setHead} placeholder="All" />
-            <RTextInput label={t('audit_log.channel_number')} value={channel} onChange={setChannel} placeholder="All" />
+            <RTextInput label={t('audit_log.head')} value={head} onChange={setHead} placeholder="All" invalid={!conditions[5]} />
+            <RTextInput label={t('audit_log.channel_number')} value={channel} onChange={setChannel} placeholder="All" invalid={!conditions[6]} />
           </SubPanel>
 
           <SubPanel>
-            <RTextInput label={t('audit_log.destination_to')} value={outboundExpression} onChange={setOutboundExpression} placeholder="<app>.<inst>" />
-            <RSpeedInput value={currentSpeed} onChange={setCurrentSpeed} />
+            <RTextInput label={t('audit_log.destination_to')} value={outboundExpression} onChange={setOutboundExpression} placeholder="<app>.<inst>" invalid={!conditions[7]} />
+            <RSpeedInput value={currentSpeed} onChange={setCurrentSpeed} invalid={!conditions[8]} />
           </SubPanel>
         </Box>
 
         {!canReplay && (
-          <Stack direction="row" alignItems="center" spacing={1} sx={{ color: ACCENT2 }}>
-            <Iconify icon="eva:alert-circle-outline" width={16} />
-            <Typography sx={{ fontSize: 14, color: ACCENT2 }}>
+          <Box sx={{ mt: '12px', display: 'flex', alignItems: 'center', gap: 0.75, color: ACCENT2 }}>
+            <Box component="span" sx={{ fontWeight: 700 }}>⚠</Box>
+            <Typography sx={{ fontSize: 13, color: ACCENT2 }}>
               {t('missing_fields')}: {missing.join(', ')}
             </Typography>
-          </Stack>
+          </Box>
         )}
       </Panel>
 
@@ -609,7 +627,19 @@ export default function Page({ params }: Props) {
 // Modal shell
 // ----------------------------------------------------------------------
 
-function ModalOverlay({ open, onClose, width, children }: { open: boolean; onClose: () => void; width: number; children: ReactNode }) {
+function ModalOverlay({
+  open,
+  onClose,
+  width,
+  scroll,
+  children,
+}: {
+  open: boolean;
+  onClose: () => void;
+  width: number;
+  scroll?: boolean;
+  children: ReactNode;
+}) {
   if (!open) return null;
   return (
     <Box
@@ -622,7 +652,7 @@ function ModalOverlay({ open, onClose, width, children }: { open: boolean; onClo
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        p: 2,
+        p: 2.5,
       }}
     >
       <Box
@@ -630,12 +660,12 @@ function ModalOverlay({ open, onClose, width, children }: { open: boolean; onClo
         sx={{
           width,
           maxWidth: '100%',
-          bgcolor: T.bgPanel,
+          bgcolor: T.bgCard,
           border: `1px solid ${T.border}`,
           borderRadius: '10px',
-          boxShadow: '0 20px 60px rgba(0,0,0,0.55)',
+          boxShadow: '0 24px 64px rgba(0,0,0,0.55)',
           color: T.textPrim,
-          p: 2.5,
+          ...(scroll ? { maxHeight: '90vh', overflowY: 'auto' } : {}),
         }}
       >
         {children}
@@ -661,87 +691,73 @@ function ConfirmModal({
 }) {
   const { t } = useTranslate('replay');
   return (
-    <ModalOverlay open={open} onClose={onClose} width={460}>
-      <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
-        <Iconify icon="eva:play-circle-outline" width={20} sx={{ color: ACCENT2 }} />
-        <Typography sx={{ fontSize: 17, fontWeight: 500, color: T.textPrim }}>{t('confirm_dialog.title')}</Typography>
-      </Stack>
-
-      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1 }}>
-        {fields.map(([label, value]) => (
-          <Box key={label} sx={{ bgcolor: T.bgHover, borderRadius: '6px', p: '8px 10px' }}>
-            <Typography sx={{ fontSize: 12, color: ACCENT2, mb: 0.25 }}>{label}</Typography>
-            <Typography sx={{ fontSize: 14, fontFamily: FONT_MONO, color: T.textPrim, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-              {value || '-'}
-            </Typography>
-          </Box>
-        ))}
+    <ModalOverlay open={open} onClose={onClose} width={460} scroll>
+      <Box sx={{ p: '16px 20px', borderBottom: `1px solid ${T.border}`, display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Typography sx={{ fontSize: 18, fontWeight: 500, color: T.textPrim }}>{t('confirm_dialog.title')}</Typography>
       </Box>
 
-      <Box sx={{ mt: 2 }}>
-        <Typography sx={{ fontSize: 13, color: T.textDim, mb: 0.75 }}>{t('execute_command')}</Typography>
-        <Box
-          component="pre"
-          sx={{
-            m: 0,
-            bgcolor: T.bgCard,
-            border: `1px solid ${T.border}`,
-            borderRadius: '8px',
-            p: '12px 14px',
-            fontFamily: FONT_MONO,
-            fontSize: 14,
-            lineHeight: 1.6,
-            color: T.primary,
-            whiteSpace: 'pre-wrap',
-            wordBreak: 'break-all',
-          }}
-        >
-          {executeCommand}
+      <Box sx={{ p: '16px 20px' }}>
+        <Typography sx={{ fontSize: 15, color: T.textDim, mb: 1.5 }}>{t('confirm_dialog.description')}</Typography>
+        <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1 }}>
+          {fields.map(([label, value]) => (
+            <Box
+              key={label}
+              sx={{
+                bgcolor: T.bgHover,
+                border: `1px solid ${T.border}`,
+                borderRadius: '6px',
+                p: '8px 11px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: 1.25,
+                minWidth: 0,
+              }}
+            >
+              <Typography sx={{ fontSize: 13, color: ACCENT2, flexShrink: 0 }}>{label}</Typography>
+              <Typography sx={{ fontSize: 15, fontWeight: 500, fontFamily: FONT_MONO, color: T.textPrim, textAlign: 'right', wordBreak: 'break-all', minWidth: 0 }}>
+                {value || '-'}
+              </Typography>
+            </Box>
+          ))}
+        </Box>
+
+        <Box sx={{ mt: 1.75, bgcolor: T.bg, border: `1px solid ${T.border}`, borderRadius: '6px', p: '10px 12px' }}>
+          <Typography sx={{ fontSize: 14, color: T.textDim, mb: 0.5 }}>{t('execute_command')}</Typography>
+          <Typography sx={{ fontSize: 15, fontFamily: FONT_MONO, color: T.accent, wordBreak: 'break-all' }}>{executeCommand}</Typography>
         </Box>
       </Box>
 
-      <Stack direction="row" justifyContent="flex-end" spacing={1.25} sx={{ mt: 2.5 }}>
-        <Box
-          component="button"
-          onClick={onClose}
-          disabled={replaying}
-          sx={{
-            height: 34,
-            px: 2,
-            borderRadius: '6px',
-            bgcolor: T.bgCard,
-            border: `1px solid ${T.border}`,
-            color: T.textSec,
-            fontSize: 15,
-            fontFamily: 'inherit',
-            cursor: 'pointer',
-            '&:hover': { bgcolor: T.bgHover, color: T.textPrim },
-          }}
-        >
+      <Box sx={{ p: '14px 20px', borderTop: `1px solid ${T.border}`, display: 'flex', justifyContent: 'flex-end', gap: 1.25 }}>
+        <BtnGhost onClick={onClose} disabled={replaying}>
           {t('confirm_dialog.cancel')}
-        </Box>
+        </BtnGhost>
         <Box
           component="button"
           onClick={onConfirm}
           disabled={replaying}
           sx={{
-            height: 34,
-            px: 2.25,
-            borderRadius: '6px',
-            border: 'none',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 0.75,
+            height: 32,
+            px: 2,
             bgcolor: T.primary,
-            color: '#fff',
+            border: 'none',
+            borderRadius: '6px',
+            color: T.onFill,
             fontSize: 15,
             fontWeight: 500,
             fontFamily: 'inherit',
             cursor: replaying ? 'default' : 'pointer',
             opacity: replaying ? 0.7 : 1,
-            '&:hover': { bgcolor: T.primaryHov },
           }}
         >
+          <Iconify icon="eva:arrow-ios-forward-fill" width={14} />
           {replaying ? t('confirm_dialog.submitting') : t('confirm_dialog.start')}
         </Box>
-      </Stack>
+      </Box>
     </ModalOverlay>
   );
 }
@@ -789,80 +805,51 @@ function KillModal({
 
   return (
     <ModalOverlay open={open} onClose={onClose} width={420}>
-      <Stack alignItems="center" spacing={2}>
-        <Box
-          sx={{
-            width: 14,
-            height: 14,
-            borderRadius: '50%',
-            bgcolor: T.off,
-            boxShadow: `0 0 12px ${T.off}, 0 0 4px ${T.off}`,
-            mt: 1,
-          }}
-        />
-        <Typography sx={{ fontSize: 15, color: T.textSec }}>{t('kill_dialog.question')}</Typography>
-        <Stack direction="row" alignItems="center" spacing={1}>
-          <Typography sx={{ fontSize: 14, color: T.textDim }}>{t('kill_dialog.pid')}</Typography>
-          <Typography sx={{ fontSize: 24, fontFamily: FONT_MONO, color: T.textPrim }}>{pid}</Typography>
-        </Stack>
-        <Box
-          sx={{
-            width: '100%',
-            bgcolor: T.bgCard,
-            border: `1px solid ${T.border}`,
-            borderRadius: '8px',
-            p: '10px 12px',
-            fontFamily: FONT_MONO,
-            fontSize: 13,
-            color: T.textSec,
-            wordBreak: 'break-all',
-          }}
-        >
-          {command || '-'}
-        </Box>
-      </Stack>
+      <Box sx={{ p: '16px 20px', borderBottom: `1px solid ${T.border}`, display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: T.off, boxShadow: `0 0 6px ${T.off}99`, flexShrink: 0 }} />
+        <Typography sx={{ fontSize: 18, fontWeight: 500, color: T.textPrim }}>{t('kill_dialog.title')}</Typography>
+      </Box>
 
-      <Stack direction="row" justifyContent="flex-end" spacing={1.25} sx={{ mt: 2.5 }}>
-        <Box
-          component="button"
-          onClick={onClose}
-          disabled={terminating}
-          sx={{
-            height: 34,
-            px: 2,
-            borderRadius: '6px',
-            bgcolor: T.bgCard,
-            border: `1px solid ${T.border}`,
-            color: T.textSec,
-            fontSize: 15,
-            fontFamily: 'inherit',
-            cursor: 'pointer',
-            '&:hover': { bgcolor: T.bgHover, color: T.textPrim },
-          }}
-        >
-          {t('kill_dialog.cancel')}
+      <Box sx={{ p: '16px 20px' }}>
+        <Typography sx={{ fontSize: 15, color: T.textDim, mb: 1.5 }}>{t('kill_dialog.description')}</Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1.5, p: '12px 14px', borderRadius: '8px', border: `1px solid ${T.border}` }}>
+          <Typography sx={{ fontSize: 15, color: ACCENT2 }}>{t('kill_dialog.pid')}</Typography>
+          <Typography sx={{ fontSize: 24, fontWeight: 400, fontFamily: FONT_MONO, color: T.textPrim, letterSpacing: '0.02em', lineHeight: 1 }}>{pid || '-'}</Typography>
         </Box>
+        <Box sx={{ mt: 1.75, bgcolor: T.bg, border: `1px solid ${T.border}`, borderRadius: '6px', p: '10px 12px' }}>
+          <Typography sx={{ fontSize: 14, color: T.textDim, mb: 0.5 }}>{t('execute_command')}</Typography>
+          <Typography sx={{ fontSize: 15, fontFamily: FONT_MONO, color: T.textSec, wordBreak: 'break-all' }}>{command || '-'}</Typography>
+        </Box>
+      </Box>
+
+      <Box sx={{ p: '14px 20px', borderTop: `1px solid ${T.border}`, display: 'flex', justifyContent: 'flex-end', gap: 1.25 }}>
+        <BtnGhost onClick={onClose} disabled={terminating}>
+          {t('kill_dialog.cancel')}
+        </BtnGhost>
         <Box
           component="button"
           onClick={handleTerminate}
           disabled={terminating}
           sx={{
-            height: 34,
-            px: 2.25,
-            borderRadius: '6px',
-            border: 'none',
-            background: `linear-gradient(to top, ${ACCENT2}55, ${ACCENT2}14)`,
-            color: ACCENT2,
-            fontSize: 15,
+            height: 30,
+            px: 1.75,
+            borderRadius: '5px',
+            fontSize: 14,
             fontWeight: 500,
             fontFamily: 'inherit',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
             cursor: terminating ? 'default' : 'pointer',
+            border: `1px solid ${T.border}`,
+            background: `linear-gradient(to top, ${ACCENT2}55, ${ACCENT2}14)`,
+            color: ACCENT2,
             opacity: terminating ? 0.7 : 1,
           }}
         >
           {terminating ? t('kill_dialog.submitting') : t('kill_dialog.kill')}
         </Box>
-      </Stack>
+      </Box>
     </ModalOverlay>
   );
 }

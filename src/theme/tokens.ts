@@ -81,7 +81,7 @@ export const FLOW = {
   pmrBadgeText: '#2E2B52',
 };
 
-export const FONT_MONO = 'Roboto, monospace';
+export const FONT_MONO = "'Roboto Variable', Roboto, monospace";
 export const FONT_CODE = "'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace";
 
 export type Tokens = typeof T;

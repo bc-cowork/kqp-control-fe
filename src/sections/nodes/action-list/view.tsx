@@ -12,7 +12,7 @@ import { fetcher, endpoints } from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
 
-import { T, FONT_MONO } from 'src/theme/tokens';
+import { T } from 'src/theme/tokens';
 import { PageShell, DataTable } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
@@ -39,18 +39,16 @@ export function ActionListView({ nodeId }: Props) {
   const rows: ActionItem[] = (data && data.data && data.data.auditLogList) || [];
 
   const columns: Column<ActionItem>[] = [
-    { key: 'id', label: t('table.id'), mono: true, align: 'right', width: 56, render: (_r, i) => i + 1 },
+    { key: 'id', label: t('table.id'), mono: true, align: 'right', width: 56, color: T.textSec, render: (_r, i) => i + 1 },
     {
       key: 'name',
       label: t('table.action_name'),
-      render: (r) => (
-        <span style={{ color: T.primary, fontWeight: 400, fontFamily: FONT_MONO }}>{r.name}</span>
-      ),
+      render: (r) => <span style={{ color: T.primary, fontWeight: 400 }}>{r.name}</span>,
     },
     { key: 'path', label: t('table.path'), mono: true, dim: true },
     { key: 'timestamp', label: t('table.timestamp'), mono: true, dim: true },
-    { key: 'ref_layout', label: t('table.ref_layout'), mono: true, align: 'right' },
-    { key: 'ref_process', label: t('table.ref_process'), mono: true, align: 'right' },
+    { key: 'ref_layout', label: t('table.ref_layout'), mono: true, align: 'right', color: T.textSec },
+    { key: 'ref_process', label: t('table.ref_process'), mono: true, align: 'right', color: T.textSec },
     { key: 'desc', label: t('table.desc'), dim: true, grow: true },
   ];
 

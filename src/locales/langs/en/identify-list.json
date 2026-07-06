@@ -17,6 +17,7 @@
     "ref_freq": "Ref. Frequency",
     "key_label": "Key",
     "today_count": "Today Count",
+    "count_unit": "Count",
     "empty_related_specs": "No related specs"
   },
   "loading": "Loading...",

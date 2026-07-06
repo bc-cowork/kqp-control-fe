@@ -21,6 +21,12 @@
   "list": {
     "watch_items": "Watch Items"
   },
+  "expand": {
+    "start_at": "Start At",
+    "end_at": "End At",
+    "interval": "Interval (sec)",
+    "last_exec": "Last exec."
+  },
   "loading": "Loading...",
   "empty": "No watch items",
   "detail": {
@@ -35,6 +41,8 @@
     "script_file": "Script File",
     "active": "Active",
     "stopped": "Stopped",
+    "badge_active": "active",
+    "badge_inactive": "inactive",
     "crontab": "Crontab",
     "interval_fmt": "{{interval}} sec interval",
     "btn_edit": "Edit",
@@ -56,6 +64,8 @@
     "title_edit": "Register Watch Item",
     "name": "Item Name",
     "desc": "Description",
+    "desc_placeholder": "Description (optional)",
+    "script_file_placeholder": "Script file name",
     "schedule": "Operation Schedule",
     "schedule_help": "Select the days to run.",
     "schedule_cron_help": "Selected days are converted to crontab syntax. e.g.) Mon-Fri →",

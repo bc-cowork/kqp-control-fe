@@ -5,7 +5,7 @@
     "play": "재생",
     "no_processes": "프로세스를 찾을 수 없음",
     "no_options": "옵션 없음",
-    "missing_fields": "누락된 항목",
+    "missing_fields": "미입력 항목",
     "execute_command": "실행 명령어",
     "top_table": {
         "pid": "프로세스 식별자",
@@ -22,14 +22,17 @@
         "kill": "종료"
     },
     "confirm_dialog": {
-        "title": "재생 확인",
+        "title": "재생 설정 확인",
+        "description": "아래 설정으로 재생을 시작합니다. 항목을 확인해 주세요.",
         "cancel": "취소",
         "start": "재생 시작",
         "submitting": "재생 중…"
     },
     "kill_dialog": {
+        "title": "재생 프로세스 종료",
+        "description": "선택한 재생 프로세스를 종료합니다. 이 작업은 되돌릴 수 없습니다.",
         "question": "재생 프로세스를 종료하시겠습니까?",
-        "pid": "식별자",
+        "pid": "프로세스 식별자",
         "cancel": "취소",
         "kill": "종료",
         "submitting": "종료하는 중…"

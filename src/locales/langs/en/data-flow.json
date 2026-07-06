@@ -6,7 +6,8 @@
     "fit_view": "Fit View",
     "export": "Export",
     "fullscreen": "Fullscreen",
-    "exit_fullscreen": "Exit Fullscreen"
+    "exit_fullscreen": "Exit Fullscreen",
+    "test_env": "Access Test Environment"
   },
   "legend": {
     "title": "Connection Types",
@@ -29,13 +30,13 @@
   "sandbox": {
     "title": "Test Environment (SANDBOX)",
     "horizontal_view": "horizontal View",
-    "vertical_view": "Vertical View",
+    "vertical_view": "vertical View",
     "horizontal": "horizontal",
     "vertical": "vertical",
     "save": "Save",
     "revert": "Revert",
     "layout_definition": "Layout Definition",
-    "preview_btn": "Preview",
+    "preview_btn": "Apply Preview",
     "view_screen": "View Screen",
     "interface_scale": "Interface Scale",
     "enter_fullscreen": "Enter Full Screen",
@@ -44,9 +45,9 @@
     "scale_reset": "Reset To Default",
     "scale_larger": "Make Larger",
     "scale_smaller": "Make Smaller",
-    "save_confirm_title": "Save Layout",
-    "save_confirm_message": "Are you sure you want to save changes to this layout?",
-    "save_confirm_btn": "Save",
+    "save_confirm_title": "Save changes?",
+    "save_confirm_message": "Pressing confirm will apply the changes to the live environment.",
+    "save_confirm_btn": "Confirm",
     "save_cancel_btn": "Cancel",
     "save_success": "Layout saved successfully",
     "save_error": "Failed to save layout",

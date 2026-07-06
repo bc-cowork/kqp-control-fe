@@ -1,181 +1,132 @@
+'use client';
+
 import type { ChartDataPoint } from 'src/types/dashboard';
 
+import { useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import {
-  Area,
-  XAxis,
-  YAxis,
-  Tooltip,
-  AreaChart,
-  CartesianGrid,
-  ReferenceArea,
-  ReferenceLine,
-  ResponsiveContainer,
-} from 'recharts';
+import { Area, XAxis, YAxis, Tooltip, AreaChart, CartesianGrid, ReferenceLine, ResponsiveContainer } from 'recharts';
 
-import { Box, Stack, Typography, CircularProgress } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
-import { T, CHART } from 'src/theme/tokens';
+import { T } from 'src/theme/tokens';
 
-import { SegmentedButtonGroupChart } from './SegmentedButtonGroupChart';
+// ----------------------------------------------------------------------
 
-interface ChartAreaProps {
-  data: ChartDataPoint[];
-  height: string;
+type MetricKey = keyof Omit<ChartDataPoint, 'timestamp'>;
+type Fmt = 'percent' | 'count' | 'bytes';
+
+export type MetricDef = {
+  key: string;
   title: string;
-  metric: keyof Pick<
-    ChartDataPoint,
-    'cpu' | 'memory' | 'inbound_bytes' | 'outbound_bytes' | 'inbound_count' | 'outbound_count'
-  >;
-  tabs: {
-    value: string;
-    label: string;
-  }[];
-  tabValue: string;
-  onTabChange: (value: string) => void;
-  layout: string;
-  loading: boolean;
+  color: string;
   threshold?: number;
+  variants: { label?: string; metric: MetricKey; fmt: Fmt }[];
+};
+
+// ----------------------------------------------------------------------
+
+const fmtBytes = (v: number) =>
+  v >= 1e9 ? `${(v / 1e9).toFixed(1)}GB` : v >= 1e6 ? `${Math.round(v / 1e6)}MB` : `${v}`;
+const fmtAxisNum = (v: number) =>
+  v >= 1e6 ? `${Math.round(v / 1e6)}M` : v >= 1e3 ? `${Math.round(v / 1e3)}k` : `${v}`;
+const fmtValue = (v: number, f: Fmt) =>
+  f === 'percent' ? `${v.toFixed(1)}%` : f === 'bytes' ? fmtBytes(v) : Math.round(v).toLocaleString();
+
+function MetricTooltip({ active, payload, label }: any) {
+  if (!active || !payload || !payload.length) return null;
+  const p = payload[0];
+  return (
+    <Box sx={{ bgcolor: T.bgPanel, border: `1px solid ${T.border}`, borderRadius: '5px', p: '8px 12px', fontSize: 14, boxShadow: '0 4px 16px #00000066' }}>
+      <Box sx={{ color: T.textPrim, mb: 0.5 }}>{label}</Box>
+      <Box sx={{ color: T.textSec }}>
+        {p.dataKey} : <Box component="span" sx={{ color: T.textPrim, fontFamily: 'Roboto' }}>{Number(p.value).toLocaleString()}</Box>
+      </Box>
+    </Box>
+  );
 }
 
-export function ChartArea({
-  data,
-  height,
-  title,
-  metric,
-  tabs,
-  tabValue,
-  onTabChange,
-  layout,
-  loading,
-  threshold,
-}: ChartAreaProps) {
-  // Map each metric bucket to a v5 chart series colour.
-  const colorKey: 'cpu' | 'memory' | 'inbound' | 'outbound' = (() => {
-    if (metric === 'cpu') return 'cpu';
-    if (metric === 'memory') return 'memory';
-    if (metric.startsWith('inbound')) return 'inbound';
-    if (metric.startsWith('outbound')) return 'outbound';
-    return 'cpu';
-  })();
+// ----------------------------------------------------------------------
 
-  const seriesColor = CHART[colorKey];
-  const fillOpacity = 0.2;
+type BigMetricProps = {
+  m: MetricDef;
+  data: ChartDataPoint[];
+  compact?: boolean;
+  offline?: boolean;
+  loading?: boolean;
+  animKey?: string | number;
+};
 
-  // Only apply threshold highlighting for the CPU chart
-  const applyThreshold = colorKey === 'cpu' && threshold !== undefined;
-
-  const formatLargeNumber = (value: number): string => {
-    if (value >= 1_000_000) {
-      return `${Math.round(value / 1_000_000)}M`;
-    }
-    if (value >= 1_000) {
-      return `${Math.round(value / 1_000)}k`;
-    }
-    return value.toString();
-  };
-
-  const isPercentMetric = metric === 'cpu' || metric === 'memory';
-  const minValue = 0;
-  const maxValue = isPercentMetric ? 100 : 'auto';
+export function BigMetric({ m, data, compact = false, offline = false, loading = false, animKey }: BigMetricProps) {
+  const [vi, setVi] = useState(0);
+  const v = m.variants[vi];
+  const isPercent = v.fmt === 'percent';
+  const lastVal = data.length ? Number((data[data.length - 1] as any)[v.metric]) || 0 : 0;
 
   return (
-    <Box
-      sx={{
-        border: `1px solid ${T.border}`,
-        borderRadius: 1,
-        backgroundColor: T.bgCard,
-        height,
-        display: 'flex',
-        flexDirection: 'column',
-        mr: 0.5,
-        ...(layout === '1x4' && { pb: 4 }),
-      }}
-    >
-      {/* Chart Header */}
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-        sx={{ my: 1, mx: 1 }}
-      >
-        <Typography sx={{ fontSize: 15, color: T.textSec }}>{title}</Typography>
-        <SegmentedButtonGroupChart
-          tabs={tabs}
-          value={tabValue}
-          onChange={onTabChange}
-          metric={metric}
-        />
-      </Stack>
+    <Box sx={{ bgcolor: T.bgCard, p: compact ? '8px 12px 6px' : '12px 14px 10px', display: 'flex', flexDirection: 'column', gap: 0.5, overflow: 'hidden', minHeight: 0 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', minHeight: 22 }}>
+        <Typography sx={{ fontSize: 16, color: T.textSec }}>{m.title}</Typography>
+        {m.variants.length > 1 ? (
+          <Box sx={{ display: 'flex', border: `1px solid ${T.border}`, borderRadius: '5px', overflow: 'hidden', opacity: offline ? 0.4 : 1, pointerEvents: offline ? 'none' : 'auto' }}>
+            {m.variants.map((vv, i) => (
+              <Box
+                component="button"
+                key={vv.label}
+                onClick={() => setVi(i)}
+                sx={{ fontSize: 13, p: '3px 10px', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontWeight: 500, bgcolor: vi === i ? T.bgHover : 'transparent', color: vi === i ? T.textPrim : T.textDim }}
+              >
+                {vv.label}
+              </Box>
+            ))}
+          </Box>
+        ) : compact && isPercent ? (
+          <Box component="span" sx={{ fontSize: 13, fontWeight: 500, p: '3px 9px', borderRadius: '5px', border: `1px solid ${T.border}`, bgcolor: T.bgHover, color: T.textPrim, opacity: offline ? 0.4 : 1 }}>
+            %
+          </Box>
+        ) : null}
+      </Box>
 
-      {/* Chart */}
-      <ResponsiveContainer width="100%">
-        {loading ? (
-          <CircularProgress />
-        ) : (
-          <AreaChart
-            data={data}
-            margin={{ top: 0, right: 5, left: -20, bottom: layout === '1x4' ? 10 : 0 }}
-          >
-            <CartesianGrid stroke={CHART.grid} fill={T.bgCard} />
-            <XAxis
-              dataKey="timestamp"
-              tick={{ fontSize: 12, fill: T.textDim }}
-              tickLine={false}
-              axisLine={{ stroke: CHART.grid }}
-            />
+      {!compact && (
+        <Typography sx={{ fontSize: 22, fontWeight: 500, color: offline ? T.textDim : m.color, letterSpacing: '-0.02em', lineHeight: 1.3, mb: 0.5 }}>
+          {offline || loading || !data.length ? '—' : fmtValue(lastVal, v.fmt)}
+        </Typography>
+      )}
+
+      <Box sx={{ flex: 1, minHeight: 0, position: 'relative' }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={data} margin={{ top: 4, right: 8, left: -12, bottom: 0 }} style={{ opacity: offline ? 0.6 : 1 }}>
+            <CartesianGrid stroke={T.border} strokeWidth={0.5} />
+            <XAxis dataKey="timestamp" tick={{ fontSize: 13, fill: T.textDim }} tickLine={false} axisLine={{ stroke: T.border }} minTickGap={28} />
             <YAxis
-              tick={{ fontSize: 12, fill: T.textDim }}
+              tick={{ fontSize: 13, fill: T.textDim }}
               tickLine={false}
-              axisLine={{ stroke: CHART.grid }}
-              domain={[minValue, maxValue]}
-              tickFormatter={
-                metric === 'inbound_bytes' ||
-                metric === 'outbound_bytes' ||
-                metric === 'inbound_count' ||
-                metric === 'outbound_count'
-                  ? formatLargeNumber
-                  : undefined
-              }
+              axisLine={{ stroke: T.border }}
+              width={42}
+              domain={isPercent ? [0, 100] : [0, 'auto']}
+              tickFormatter={isPercent ? undefined : fmtAxisNum}
+              tickCount={compact ? 2 : undefined}
             />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: T.bgPanel,
-                borderColor: T.border,
-                borderRadius: 4,
-              }}
-              labelStyle={{ color: T.textSec }}
-              itemStyle={{ color: T.textPrim }}
-              formatter={(value: number) => value.toLocaleString()}
-            />
-
-            {/* Main Area Chart */}
+            {!offline && <Tooltip content={<MetricTooltip />} cursor={{ stroke: T.textDim, strokeWidth: 1 }} />}
             <Area
+              key={`${animKey}-${v.metric}-${offline ? 'off' : 'on'}`}
               type="linear"
-              dataKey={metric}
-              stroke={seriesColor}
-              fill={seriesColor}
-              fillOpacity={fillOpacity}
-              strokeLinecap="butt"
+              dataKey={v.metric}
+              stroke={offline ? 'transparent' : m.color}
+              fill={m.color}
+              fillOpacity={offline ? 0 : 0.2}
+              strokeWidth={1.6}
+              dot={false}
+              isAnimationActive={!offline}
+              animationDuration={700}
+              animationEasing="ease-out"
+              activeDot={offline ? false : { r: 4, fill: m.color, stroke: '#fff', strokeWidth: 1.5 }}
             />
-
-            {/* Highlight the entire area above the threshold for CPU */}
-            {applyThreshold && (
-              <ReferenceArea y1={threshold} y2="auto" fill={`${CHART.threshold}22`} />
-            )}
-
-            {/* Solid reference line at the threshold for CPU */}
-            {applyThreshold && (
-              <ReferenceLine
-                y={threshold}
-                stroke={CHART.threshold}
-                strokeDasharray="4 4"
-                strokeWidth={1}
-              />
-            )}
+            {offline && <ReferenceLine y={0} stroke={T.textDim} strokeWidth={1.4} />}
+            {!offline && m.threshold != null && <ReferenceLine y={m.threshold} stroke="#D9A441" strokeWidth={1} strokeDasharray="4 3" />}
           </AreaChart>
-        )}
-      </ResponsiveContainer>
+        </ResponsiveContainer>
+      </Box>
     </Box>
   );
 }

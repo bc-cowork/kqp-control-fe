@@ -13,7 +13,9 @@ import { useTranslate } from 'src/locales';
 import { signOut } from 'src/auth/context/jwt/action';
 import { useAuthContext } from 'src/auth/hooks';
 
-import { Iconify } from 'src/components/iconify';
+import { KIcon } from 'src/components/k-icons';
+
+import type { KIconName } from 'src/components/k-icons';
 
 import { T } from 'src/theme/tokens';
 
@@ -88,8 +90,8 @@ export function HeaderV5() {
     >
       {/* Nav arrows */}
       <Stack direction="row" spacing="2px">
-        <ArrowBtn icon="eva:arrow-ios-back-fill" onClick={() => router.back()} />
-        <ArrowBtn icon="eva:arrow-ios-forward-fill" onClick={() => window.history.forward()} />
+        <ArrowBtn icon="back" onClick={() => router.back()} />
+        <ArrowBtn icon="fwd" onClick={() => window.history.forward()} />
       </Stack>
 
       {/* Search */}
@@ -107,7 +109,9 @@ export function HeaderV5() {
           px: 1.25,
         }}
       >
-        <Iconify icon="eva:search-fill" width={16} sx={{ color: T.textDim, flexShrink: 0 }} />
+        <Box sx={{ color: T.textDim, display: 'flex', flexShrink: 0 }}>
+          <KIcon name="search" size={16} />
+        </Box>
         <Box
           component="input"
           placeholder={isKo ? '노드 검색, 페이지 이동 ...' : 'Search nodes, pages ...'}
@@ -134,7 +138,9 @@ export function HeaderV5() {
             flexShrink: 0,
           }}
         >
-          <Iconify icon="eva:arrow-forward-fill" width={14} sx={{ color: '#fff' }} />
+          <Box sx={{ color: '#fff', display: 'flex' }}>
+            <KIcon name="arrowRight" size={12} />
+          </Box>
         </Box>
       </Box>
 
@@ -143,7 +149,7 @@ export function HeaderV5() {
       {/* Meta cluster */}
       <Stack direction="row" alignItems="center" spacing={2} sx={{ color: T.textSec, fontSize: 14 }}>
         <Stack direction="row" alignItems="center" spacing={0.75}>
-          <Iconify icon="solar:monitor-linear" width={15} />
+          <KIcon name="monitor" size={13} />
           <span>{isKo ? '로컬' : 'Local'}</span>
         </Stack>
         <Stack direction="row" alignItems="center" spacing={0.75}>
@@ -151,7 +157,7 @@ export function HeaderV5() {
           <span>{isKo ? '본사' : 'HQ'}</span>
         </Stack>
         <Stack direction="row" alignItems="center" spacing={0.75}>
-          <Iconify icon="solar:clock-circle-linear" width={15} />
+          <KIcon name="clock" size={13} />
           <span>{clock}</span>
         </Stack>
       </Stack>
@@ -172,7 +178,7 @@ export function HeaderV5() {
           '&:hover': { bgcolor: T.bgHover, color: T.textPrim },
         }}
       >
-        <Iconify icon="solar:global-linear" width={15} />
+        <KIcon name="globe" size={13} />
         {isKo ? 'KOR' : 'ENG'}
       </Box>
 
@@ -191,7 +197,7 @@ export function HeaderV5() {
           '&:hover': { bgcolor: T.bgHover, color: T.textPrim },
         }}
       >
-        <Iconify icon="solar:bell-linear" width={18} />
+        <KIcon name="bell" size={15} />
       </Box>
 
       {/* User chip */}
@@ -264,14 +270,14 @@ export function HeaderV5() {
           <Typography sx={{ fontSize: 12, color: T.textSec }}>{teamName}</Typography>
         </Box>
         <MenuRow
-          icon="solar:settings-linear"
+          icon="settings"
           label="Settings"
           onClick={() => {
             setUserAnchor(null);
             router.push('/dashboard/settings');
           }}
         />
-        <MenuRow icon="solar:logout-2-linear" label="Logout" danger onClick={handleLogout} />
+        <MenuRow icon="logout" label={isKo ? '로그아웃' : 'Logout'} danger onClick={handleLogout} />
       </Popover>
     </Box>
   );
@@ -279,7 +285,7 @@ export function HeaderV5() {
 
 // ----------------------------------------------------------------------
 
-function ArrowBtn({ icon, onClick }: { icon: string; onClick: () => void }) {
+function ArrowBtn({ icon, onClick }: { icon: KIconName; onClick: () => void }) {
   return (
     <Box
       onClick={onClick}
@@ -296,12 +302,12 @@ function ArrowBtn({ icon, onClick }: { icon: string; onClick: () => void }) {
         '&:hover': { bgcolor: T.bgHover, color: T.textPrim },
       }}
     >
-      <Iconify icon={icon} width={16} />
+      <KIcon name={icon} size={13} />
     </Box>
   );
 }
 
-function MenuRow({ icon, label, danger, onClick }: { icon: string; label: string; danger?: boolean; onClick: () => void }) {
+function MenuRow({ icon, label, danger, onClick }: { icon: KIconName; label: string; danger?: boolean; onClick: () => void }) {
   return (
     <Box
       onClick={onClick}
@@ -318,7 +324,7 @@ function MenuRow({ icon, label, danger, onClick }: { icon: string; label: string
         '&:hover': { bgcolor: danger ? T.offBg : T.bgHover, color: danger ? T.off : T.textPrim },
       }}
     >
-      <Iconify icon={icon} width={16} />
+      <KIcon name={icon} size={15} />
       {label}
     </Box>
   );

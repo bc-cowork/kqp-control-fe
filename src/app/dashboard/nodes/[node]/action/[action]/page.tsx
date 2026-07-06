@@ -13,8 +13,8 @@ import { paths } from 'src/routes/paths';
 import { fetcher, endpoints } from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
-
 import { T, FONT_MONO } from 'src/theme/tokens';
+
 import { Panel, PageShell, DataTable, CodeBlock, SectionLabel } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
@@ -53,27 +53,25 @@ export default function Page({ params }: Props) {
     {
       key: 'name',
       label: t('table.action_name'),
-      render: (r) => (
-        <span style={{ color: T.primary, fontWeight: 500, fontFamily: FONT_MONO }}>{r.name}</span>
-      ),
+      render: (r) => <span style={{ color: T.primary, fontWeight: 400 }}>{r.name}</span>,
     },
     { key: 'path', label: t('table.path'), mono: true, dim: true },
-    { key: 'timestamp', label: t('table.timestamp'), mono: true },
-    { key: 'ref_layout', label: t('table.ref_layout'), mono: true, align: 'right' },
-    { key: 'ref_process', label: t('table.ref_process'), mono: true, align: 'right' },
+    { key: 'timestamp', label: t('table.timestamp'), mono: true, dim: true },
+    { key: 'ref_layout', label: t('table.ref_layout'), mono: true, align: 'right', color: T.textSec },
+    { key: 'ref_process', label: t('table.ref_process'), mono: true, align: 'right', color: T.textSec },
     { key: 'desc', label: t('table.desc'), dim: true, grow: true },
   ];
 
-  const refColumns = (label: string): Column<RefItem>[] => [
-    { key: 'no', label: t('detail_table.layout_no'), mono: true, align: 'right', width: 60, render: (_r, i) => i + 1 },
+  const refColumns = (label: string, freqLabel: string): Column<RefItem>[] => [
+    { key: 'no', label: t('detail_table.layout_no'), mono: true, align: 'right', width: 60, color: T.textSec, render: (_r, i) => i + 1 },
     {
       key: 'name',
       label,
       render: (r) => (
-        <span style={{ color: T.primary, fontFamily: FONT_MONO }}>{r.name}</span>
+        <span style={{ color: T.primary, fontWeight: 400, fontFamily: FONT_MONO }}>{r.name}</span>
       ),
     },
-    { key: 'ref_count', label: t('detail_table.layout_ref_freq'), mono: true, align: 'right', grow: true },
+    { key: 'ref_count', label: freqLabel, mono: true, align: 'right', grow: true, color: T.textSec },
   ];
 
   return (
@@ -102,11 +100,11 @@ export default function Page({ params }: Props) {
           flexWrap: { xs: 'wrap', md: 'nowrap' },
         }}
       >
-        <Box sx={{ flex: '1 1 58%', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <Box sx={{ flex: '1 1 58%', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1.75 }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
             <SectionLabel>{t('detail_table.layouts_title')}</SectionLabel>
             <DataTable<RefItem>
-              columns={refColumns(t('detail_table.layout_name'))}
+              columns={refColumns(t('detail_table.layout_name'), t('detail_table.layout_ref_freq'))}
               rows={layoutList}
               loading={isLoading}
               error={!!error}
@@ -120,7 +118,7 @@ export default function Page({ params }: Props) {
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
             <SectionLabel>{t('detail_table.processes_title')}</SectionLabel>
             <DataTable<RefItem>
-              columns={refColumns(t('detail_table.process_name'))}
+              columns={refColumns(t('detail_table.process_name'), t('detail_table.process_usage_freq'))}
               rows={processList}
               loading={isLoading}
               error={!!error}
@@ -132,9 +130,10 @@ export default function Page({ params }: Props) {
           </Box>
         </Box>
 
-        <Box sx={{ flex: '1 1 42%', minWidth: 0, width: '100%' }}>
+        <Box sx={{ flex: '1 1 42%', minWidth: 0, width: '100%', display: 'flex', flexDirection: 'column', gap: 1 }}>
+          <SectionLabel>{t('detail_table.script_title')}</SectionLabel>
           <Panel sx={{ p: 2 }}>
-            <Typography sx={{ fontFamily: FONT_MONO, fontSize: 14, color: T.textDim, mb: 1.25 }}>
+            <Typography sx={{ fontFamily: FONT_MONO, fontSize: 13, color: T.textDim, mb: 1.25 }}>
               -- {decodedAction}.moon
             </Typography>
             <CodeBlock theme="moon">{isLoading ? '' : error ? '' : script}</CodeBlock>

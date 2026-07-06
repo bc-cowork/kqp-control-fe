@@ -22,14 +22,17 @@
         "kill": "Kill"
     },
     "confirm_dialog": {
-        "title": "Confirm Replay",
+        "title": "Confirm Replay Settings",
+        "description": "Replay will start with the settings below. Please review the items.",
         "cancel": "Cancel",
         "start": "Start Replay",
         "submitting": "Replaying…"
     },
     "kill_dialog": {
+        "title": "Terminate Replay Process",
+        "description": "The selected replay process will be terminated. This action cannot be undone.",
         "question": "Terminate replay process?",
-        "pid": "PID",
+        "pid": "Process ID",
         "cancel": "Cancel",
         "kill": "Kill",
         "submitting": "Terminating…"

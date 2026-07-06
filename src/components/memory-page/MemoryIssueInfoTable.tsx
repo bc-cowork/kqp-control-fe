@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Stack, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 
 import { useTranslate } from 'src/locales';
 import { T, FONT_MONO } from 'src/theme/tokens';
@@ -13,33 +13,47 @@ type Props = {
 
 const fmt = (v: number | undefined) => (v || v === 0 ? v.toLocaleString() : '-');
 
-type QuoteRow = { label: string; uni: string; krx: string; nxt: string };
-
-const cellSx = {
-  flex: 1,
-  textAlign: 'right' as const,
-  fontFamily: FONT_MONO,
-  fontSize: 15,
-  color: T.textPrim,
+type QuoteRow = {
+  label: string;
+  uni: string;
+  krx: string;
+  nxt: string;
+  dot?: string; // leading colour dot
+  arrow?: string; // ▲ / ▼ prefix before each value
+  arrowColor?: string;
 };
 
-const DataRow = ({ row }: { row: QuoteRow }) => (
-  <Stack
-    direction="row"
-    alignItems="center"
-    sx={{ px: 1.5, py: 1, borderTop: `1px solid ${T.borderSub}` }}
-  >
-    <Typography sx={{ flex: 1, fontSize: 14, color: T.textSec }}>{row.label}</Typography>
-    <Typography sx={cellSx}>{row.uni}</Typography>
-    <Typography sx={cellSx}>{row.krx}</Typography>
-    <Typography sx={cellSx}>{row.nxt}</Typography>
-  </Stack>
-);
+const sTh = {
+  color: T.textSec,
+  fontSize: 13.5,
+  fontWeight: 500,
+  textAlign: 'right' as const,
+  p: '8px 10px',
+  width: '24%',
+};
+
+const sLabel = {
+  color: T.textSec,
+  fontSize: 14,
+  textAlign: 'left' as const,
+  p: '8px 10px',
+  whiteSpace: 'nowrap' as const,
+};
+
+const sVal = {
+  color: T.textPrim,
+  fontSize: 14,
+  fontFamily: FONT_MONO,
+  textAlign: 'right' as const,
+  p: '8px 10px',
+  wordBreak: 'break-all' as const,
+  verticalAlign: 'middle' as const,
+};
 
 export function MemoryIssueInfoTable({ issueInfo }: Props) {
   const { t } = useTranslate('memory');
 
-  const rows: { label: string; uni: string; krx: string; nxt: string }[] = [
+  const rows: QuoteRow[] = [
     {
       label: t('item.left.last_price'),
       uni: fmt(issueInfo.last_price?.uni),
@@ -64,55 +78,102 @@ export function MemoryIssueInfoTable({ issueInfo }: Props) {
       krx: fmt(issueInfo.amt_accum?.krx),
       nxt: fmt(issueInfo.amt_accum?.nxt),
     },
-  ];
-
-  const priceRows: { label: string; uni: string; krx: string; nxt: string }[] = [
     {
       label: t('item.left.open'),
       uni: fmt(issueInfo.open?.uni),
       krx: fmt(issueInfo.open?.krx),
       nxt: fmt(issueInfo.open?.nxt),
+      dot: T.on,
     },
     {
       label: t('item.left.high'),
       uni: fmt(issueInfo.high?.uni),
       krx: fmt(issueInfo.high?.krx),
       nxt: fmt(issueInfo.high?.nxt),
+      dot: T.off,
+      arrow: '▲',
+      arrowColor: T.off,
     },
     {
       label: t('item.left.low'),
       uni: fmt(issueInfo.low?.uni),
       krx: fmt(issueInfo.low?.krx),
       nxt: fmt(issueInfo.low?.nxt),
+      dot: T.accent,
+      arrow: '▼',
+      arrowColor: T.accent,
     },
   ];
 
   return (
-    <Box sx={{ mt: 1.5, border: `1px solid ${T.border}`, borderRadius: '8px', overflow: 'hidden' }}>
-      {/* Header row */}
-      <Stack direction="row" alignItems="center" sx={{ px: 1.5, py: 1, bgcolor: T.bgRowSel }}>
-        <Typography sx={{ flex: 1 }} />
-        <Typography sx={{ flex: 1, textAlign: 'right', fontSize: 14, color: T.textSec }}>
-          {t('item.table.uni')}
-        </Typography>
-        <Typography sx={{ flex: 1, textAlign: 'right', fontSize: 14, color: T.textSec }}>
-          {t('item.table.krx')}
-        </Typography>
-        <Typography sx={{ flex: 1, textAlign: 'right', fontSize: 14, color: T.textSec }}>
-          {t('item.table.nxt')}
-        </Typography>
-      </Stack>
-
-      {rows.map((row) => (
-        <DataRow key={row.label} row={row} />
-      ))}
-
-      {/* Spacer between accumulated + price groups */}
-      <Box sx={{ height: 6, bgcolor: T.bgPanel }} />
-
-      {priceRows.map((row) => (
-        <DataRow key={row.label} row={row} />
-      ))}
+    <Box
+      sx={{
+        mt: '14px',
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        border: `1px solid ${T.border}`,
+        borderRadius: '8px',
+        overflow: 'hidden',
+        bgcolor: T.bgCard,
+      }}
+    >
+      <Box
+        component="table"
+        sx={{ width: '100%', height: '100%', borderCollapse: 'collapse', tableLayout: 'fixed' }}
+      >
+        <Box component="thead">
+          <Box component="tr" sx={{ bgcolor: `${T.primary}26` }}>
+            <Box component="th" sx={{ ...sTh, textAlign: 'left', width: '28%' }} />
+            <Box component="th" sx={sTh}>
+              {t('item.table.uni')}
+            </Box>
+            <Box component="th" sx={sTh}>
+              {t('item.table.krx')}
+            </Box>
+            <Box component="th" sx={sTh}>
+              {t('item.table.nxt')}
+            </Box>
+          </Box>
+        </Box>
+        <Box component="tbody">
+          {rows.map((row, i) => (
+            <Box
+              component="tr"
+              key={row.label}
+              sx={{ bgcolor: i % 2 ? 'transparent' : `${T.bgHover}66` }}
+            >
+              <Box component="td" sx={sLabel}>
+                {row.dot && (
+                  <Box
+                    component="span"
+                    sx={{
+                      display: 'inline-block',
+                      width: 9,
+                      height: 9,
+                      borderRadius: '2px',
+                      bgcolor: row.dot,
+                      mr: '7px',
+                      verticalAlign: 'middle',
+                    }}
+                  />
+                )}
+                {row.label}
+              </Box>
+              {[row.uni, row.krx, row.nxt].map((v, j) => (
+                <Box component="td" key={j} sx={sVal}>
+                  {row.arrow && (
+                    <Box component="span" sx={{ color: row.arrowColor, mr: '2px' }}>
+                      {row.arrow}
+                    </Box>
+                  )}
+                  {v}
+                </Box>
+              ))}
+            </Box>
+          ))}
+        </Box>
+      </Box>
     </Box>
   );
 }

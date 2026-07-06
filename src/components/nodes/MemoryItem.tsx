@@ -87,7 +87,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
     >
       <Stack direction="row" spacing={2} sx={{ flex: 1, minHeight: 0 }}>
         {/* LEFT — info card + summary quote table */}
-        <Box sx={{ width: 340, flexShrink: 0, overflow: 'auto' }}>
+        <Box sx={{ width: 340, flexShrink: 0, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
           {infoLoading ? (
             <Box sx={{ p: 2 }}>
               <CircularProgress size={24} />
@@ -131,10 +131,11 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                       bgcolor: T.bgPanel,
                       color: T.textSec,
                       fontWeight: 500,
-                      fontSize: 14,
+                      fontSize: 14.5,
                       textAlign: 'right',
-                      p: '10px 14px',
+                      p: '9px 14px',
                       borderBottom: `1px solid ${T.border}`,
+                      whiteSpace: 'nowrap',
                     }}
                   >
                     {label}
@@ -151,8 +152,9 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                 <>
                   {/* Ask total (indigo top-total row) */}
                   <TotalRow
-                    color={T.primary}
+                    color={T.accent}
                     bg="#4A3BFF1A"
+                    price={num(sumDataAsk.price)}
                     uni={num(sumDataAsk.uni)}
                     krx={num(sumDataAsk.krx)}
                     nxt={num(sumDataAsk.nxt)}
@@ -197,6 +199,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                   <TotalRow
                     color={RED}
                     bg="#331B1E66"
+                    price={num(sumDataBid.price)}
                     uni={num(sumDataBid.uni)}
                     krx={num(sumDataBid.krx)}
                     nxt={num(sumDataBid.nxt)}
@@ -214,7 +217,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
 // ----------------------------------------------------------------------
 
 const bodyCellSx = {
-  p: '9px 14px',
+  p: '7px 14px',
   textAlign: 'right' as const,
   fontFamily: FONT_MONO,
   fontSize: 15.5,
@@ -238,14 +241,11 @@ function LadderRow({
   nxt: ReactNode;
 }) {
   return (
-    <Box
-      component="tr"
-      sx={{ borderBottom: `1px solid ${T.borderSub}`, '&:hover': { bgcolor: T.bgHover } }}
-    >
+    <Box component="tr" sx={{ borderBottom: `1px solid ${T.borderSub}` }}>
       <Box component="td" sx={bodyCellSx}>
         {no}
       </Box>
-      <Box component="td" sx={{ ...bodyCellSx, color: priceColor, fontWeight: 500 }}>
+      <Box component="td" sx={{ ...bodyCellSx, color: priceColor }}>
         {price}
       </Box>
       <Box component="td" sx={bodyCellSx}>
@@ -264,21 +264,25 @@ function LadderRow({
 function TotalRow({
   color,
   bg,
+  price,
   uni,
   krx,
   nxt,
 }: {
   color: string;
   bg: string;
+  price: ReactNode;
   uni: ReactNode;
   krx: ReactNode;
   nxt: ReactNode;
 }) {
-  const totalCellSx = { ...bodyCellSx, color, fontWeight: 600, bgcolor: bg };
+  const totalCellSx = { ...bodyCellSx, color, fontWeight: 500, bgcolor: bg };
   return (
     <Box component="tr">
       <Box component="td" sx={{ ...bodyCellSx, bgcolor: bg }} />
-      <Box component="td" sx={{ ...bodyCellSx, bgcolor: bg }} />
+      <Box component="td" sx={{ ...bodyCellSx, color, bgcolor: bg }}>
+        {price}
+      </Box>
       <Box component="td" sx={totalCellSx}>
         {uni}
       </Box>

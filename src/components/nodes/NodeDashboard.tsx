@@ -55,7 +55,16 @@ export function NodeDashboard({ selectedNodeId }: Props) {
       }}
     >
       {/* Left column — status + disk */}
-      <Box sx={{ width: { xs: '100%', md: 300 }, flexShrink: 0 }}>
+      <Box
+        sx={{
+          width: { xs: '100%', md: 300 },
+          flexShrink: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '12px',
+          overflowY: 'auto',
+        }}
+      >
         <NodeStatusBig
           selectedNodeParam={selectedNodeId}
           selectedNode={selectedNode}
@@ -66,7 +75,7 @@ export function NodeDashboard({ selectedNodeId }: Props) {
 
       {/* Right column — 2×2 metrics grid */}
       <Box sx={{ flex: 1, minWidth: 0, minHeight: 0 }}>
-        <NodeGraphsBig selectedNodeParam={selectedNodeId} />
+        <NodeGraphsBig selectedNodeParam={selectedNodeId} offline={!selectedNode.online_status} />
       </Box>
     </Box>
   );

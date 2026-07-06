@@ -9,24 +9,27 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
+import { FONT_MONO } from 'src/theme/tokens';
+
 import {
   BADGE_BG,
   BADGE_TEXT,
-  ACTION_GRAY,
-  ACTION_COLOR,
-  HANDLE_GRAY,
-  HANDLE_GREEN,
-  HANDLE_PURPLE,
+  SRC_BLUE,
+  ACTION_FN,
+  ACTION_COMMA,
+  ACTION_LABEL,
+  ACTION_PARAM,
+  HANDLE_STROKE,
+  TEXT_PRIMARY,
   TEXT_SECONDARY,
-  HEADER_BORDER,
   RECV_NODE_BG,
-  RECV_HEADER_BG,
   RECV_NODE_WIDTH,
   RECV_NODE_BORDER,
   ENTITY_NODE_BG,
   ENTITY_NODE_WIDTH,
   ENTITY_HEADER_BG,
-  EDGE_COLOR,
+  ENTITY_NODE_BORDER,
+  ENTITY_HEADER_BORDER,
 } from '../constants';
 
 import type { DataFlowAction, DataFlowNodeData } from '../types';
@@ -42,141 +45,60 @@ function formatParam(param: Record<string, unknown>): string {
 
 // ----------------------------------------------------------------------
 
-function RecvNodeBody({ channels }: { channels: number[] }) {
-  return (
-    <Box sx={{ px: 1.5, py: 1 }}>
-      <Typography
-        sx={{
-          color: '#AFB7C8',
-          fontSize: 15,
-          fontFamily: 'Roboto, sans-serif',
-          fontWeight: 400,
-          lineHeight: '22.5px',
-        }}
-      >
-        {channels.join(', ')}
-      </Typography>
-      <Typography
-        sx={{
-          color: '#AFB7C8',
-          fontSize: 15,
-          fontFamily: 'Roboto, sans-serif',
-          fontWeight: 400,
-          lineHeight: '22.5px',
-          textAlign: 'left',
-        }}
-      >
-        {channels.length} channels
-      </Typography>
-    </Box>
-  );
-}
-
-// ----------------------------------------------------------------------
-
-function ActionRow({
-  action,
-  idx,
-}: {
-  action: DataFlowAction;
-  idx: number;
-}) {
+function ActionRow({ action, idx }: { action: DataFlowAction; idx: number }) {
   const isRouting = action.act === 'route' || action.act === 'kpass';
-  const circleColor = isRouting ? HANDLE_GREEN : HANDLE_GRAY;
   return (
     <Box
       sx={{
-        alignSelf: 'stretch',
         display: 'flex',
-        alignItems: 'flex-start',
-        borderRadius: '4px',
+        gap: '6px',
+        fontFamily: FONT_MONO,
+        fontSize: 13,
+        lineHeight: 1.25,
         minWidth: 0,
       }}
     >
-      {/* Left col: act 'name', */}
-      <Box sx={{ width: 105, display: 'flex', alignItems: 'flex-start', flexShrink: 0 }}>
-        <Typography
-          component="span"
-          sx={{
-            fontSize: 15,
-            fontFamily: 'Roboto, sans-serif',
-            fontWeight: 400,
-            lineHeight: '22.5px',
-            color: ACTION_GRAY,
-          }}
-        >
+      {/* act 'name', */}
+      <Box component="span" sx={{ flexShrink: 0, minWidth: 70 }}>
+        <Box component="span" sx={{ color: ACTION_LABEL }}>
           {'act '}
-        </Typography>
-        <Typography
-          component="span"
-          sx={{
-            fontSize: 15,
-            fontFamily: 'Roboto, sans-serif',
-            fontWeight: 400,
-            lineHeight: '22.5px',
-            color: ACTION_COLOR,
-            marginLeft: 0.5,
-          }}
-        >
+        </Box>
+        <Box component="span" sx={{ color: ACTION_FN }}>
           {`'${action.act}'`}
-        </Typography>
-        <Typography
-          component="span"
-          sx={{
-            fontSize: 15,
-            fontFamily: 'Roboto, sans-serif',
-            fontWeight: 400,
-            lineHeight: '22.5px',
-            color: ACTION_GRAY,
-          }}
-        >
+        </Box>
+        <Box component="span" sx={{ color: ACTION_COMMA }}>
           ,
-        </Typography>
-      </Box>
-
-      {/* Right col: {params} + circle indicator with handle */}
-      <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', gap: 0.5, minWidth: 0 }}>
-        <Typography
-          sx={{
-            flex: 1,
-            minWidth: 0,
-            fontSize: 15,
-            fontFamily: 'Roboto, sans-serif',
-            fontWeight: 400,
-            lineHeight: '22.5px',
-            color: ACTION_GRAY,
-            wordWrap: 'break-word',
-          }}
-        >
-          {formatParam(action.param)}
-        </Typography>
-        {/* Circle with Handle placed directly on it */}
-        <Box sx={{ position: 'relative', flexShrink: 0, width: 10, height: 10 }}>
-          <Box
-            sx={{
-              width: 10,
-              height: 10,
-              borderRadius: '50%',
-              border: `1.5px solid ${circleColor}`,
-            }}
-          />
-          {isRouting && (
-            <Handle
-              type="source"
-              position={Position.Right}
-              id={`action-${idx}`}
-              style={{
-                opacity: 0,
-                width: 1,
-                height: 1,
-                position: 'absolute',
-                top: '50%',
-                right: 8,
-              }}
-            />
-          )}
         </Box>
       </Box>
+
+      {/* {params} */}
+      <Box
+        component="span"
+        sx={{ flex: 1, minWidth: 0, color: ACTION_PARAM, wordBreak: 'break-all' }}
+      >
+        {formatParam(action.param)}
+      </Box>
+
+      {/* connection dot + handle (only routing rows emit edges) */}
+      {isRouting && (
+        <Box sx={{ position: 'relative', flexShrink: 0, width: 8, height: 8, alignSelf: 'center' }}>
+          <Box
+            sx={{
+              width: 8,
+              height: 8,
+              borderRadius: '50%',
+              backgroundColor: ENTITY_NODE_BG,
+              border: `1px solid ${HANDLE_STROKE}`,
+            }}
+          />
+          <Handle
+            type="source"
+            position={Position.Right}
+            id={`action-${idx}`}
+            style={{ opacity: 0, width: 1, height: 1, position: 'absolute', top: '50%', right: 4 }}
+          />
+        </Box>
+      )}
     </Box>
   );
 }
@@ -188,111 +110,75 @@ function DataFlowNodeComponent({ id, data }: NodeProps) {
   const isRecv = nodeData.nodeType === 'recv';
   const updateNodeInternals = useUpdateNodeInternals();
   const bodyRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
   const [handleTop, setHandleTop] = useState<number | undefined>(undefined);
 
   useEffect(() => {
-    if (isRecv && headerRef.current && bodyRef.current) {
-      const headerH = headerRef.current.offsetHeight;
-      const bodyH = bodyRef.current.offsetHeight;
-      setHandleTop(headerH + bodyH / 2);
+    if (isRecv && bodyRef.current) {
+      setHandleTop(bodyRef.current.offsetHeight / 2);
       updateNodeInternals(id);
     }
   }, [isRecv, nodeData.channels, id, updateNodeInternals]);
 
+  // ---------- Source (recv) node — single padded column ----------
   if (isRecv) {
     return (
       <>
-        <Handle
-          type="target"
-          position={Position.Left}
-          style={{ opacity: 0, width: 1, height: 1 }}
-        />
+        <Handle type="target" position={Position.Left} style={{ opacity: 0, width: 1, height: 1 }} />
 
         <Box
+          ref={bodyRef}
           sx={{
             width: RECV_NODE_WIDTH,
-            borderRadius: '12px',
-            overflow: 'visible',
+            border: `1.5px solid ${RECV_NODE_BORDER}`,
+            borderRadius: '8px',
             backgroundColor: RECV_NODE_BG,
-            border: `2px solid ${RECV_NODE_BORDER}`,
+            overflow: 'hidden',
             position: 'relative',
+            px: '10px',
+            py: '8px',
+            display: 'flex',
+            flexDirection: 'column',
           }}
         >
-          {/* Header: badge (left) + label (right) */}
-          <Stack
-            ref={headerRef}
-            direction="row"
-            alignItems="center"
-            spacing={1}
+          <Typography sx={{ fontSize: 15, fontWeight: 700, fontFamily: FONT_MONO, color: TEXT_PRIMARY }}>
+            {String(nodeData.badgeLabel || 'recv2r')}
+          </Typography>
+          <Typography sx={{ fontSize: 13, color: TEXT_SECONDARY, mt: '1px' }}>
+            {nodeData.label}
+          </Typography>
+          <Typography
             sx={{
-              p: 1.5,
-              backgroundColor: RECV_HEADER_BG,
-              borderBottom: `1px solid ${HEADER_BORDER}`,
-              borderRadius: '12px 12px 0 0',
+              fontSize: 13,
+              color: '#6A6878',
+              fontFamily: FONT_MONO,
+              mt: '5px',
+              lineHeight: 1.5,
+              flex: 1,
+              wordBreak: 'break-word',
             }}
           >
-            <Box
-              sx={{
-                px: 0.5,
-                backgroundColor: BADGE_BG,
-                borderRadius: '4px',
-                flexShrink: 0,
-              }}
-            >
-              <Typography
-                sx={{
-                  fontSize: 15,
-                  fontFamily: 'Roboto, sans-serif',
-                  fontWeight: 400,
-                  lineHeight: '22.5px',
-                  color: BADGE_TEXT,
-                }}
-              >
-                {String(nodeData.badgeLabel || 'recv2r')}
-              </Typography>
-            </Box>
-            <Typography
-              sx={{
-                flex: 1,
-                fontSize: 15,
-                fontFamily: 'Roboto, sans-serif',
-                fontWeight: 400,
-                lineHeight: '22.5px',
-                color: TEXT_SECONDARY,
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              {nodeData.label}
-            </Typography>
-          </Stack>
+            {(nodeData.channels || []).join(', ')}
+          </Typography>
+          <Typography sx={{ fontSize: 13, color: SRC_BLUE, mt: '2px' }}>
+            {(nodeData.channels || []).length} channels
+          </Typography>
 
-          {/* Body: channel list */}
-          {nodeData.channels && nodeData.channels.length > 0 && (
-            <Box ref={bodyRef} sx={{ borderRadius: '0 0 12px 12px', position: 'relative' }}>
-              <RecvNodeBody channels={nodeData.channels} />
-              {/* Purple circle — vertically centered within body */}
-              <Box
-                sx={{
-                  position: 'absolute',
-                  top: '50%',
-                  right: 8,
-                  transform: 'translateY(-50%)',
-                  width: 10,
-                  height: 10,
-                  borderRadius: '50%',
-                  border: `1.5px solid ${HANDLE_PURPLE}`,
-                }}
-              />
-            </Box>
-          )}
-
-
+          {/* connection dot */}
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              right: 8,
+              transform: 'translateY(-50%)',
+              width: 8,
+              height: 8,
+              borderRadius: '50%',
+              backgroundColor: RECV_NODE_BG,
+              border: `1px solid ${HANDLE_STROKE}`,
+            }}
+          />
         </Box>
 
-        {/* Source handle — dynamically positioned at the purple circle center */}
         <Handle
           type="source"
           position={Position.Right}
@@ -301,63 +187,48 @@ function DataFlowNodeComponent({ id, data }: NodeProps) {
             width: 1,
             height: 1,
             ...(handleTop !== undefined && { top: handleTop }),
-            right: 14,
+            right: 12,
           }}
         />
       </>
     );
   }
 
-  // Entity node
+  // ---------- Processing (entity) node — gradient header + PMR + rows ----------
   const actions = nodeData.actions || [];
 
   return (
     <>
-      {/* Target handle — invisible, positioned at header center */}
-      <Handle
-        type="target"
-        position={Position.Left}
-        style={{
-          opacity: 0,
-          width: 1,
-          height: 1,
-          top: 24,
-        }}
-      />
+      <Handle type="target" position={Position.Left} style={{ opacity: 0, width: 1, height: 1, top: 20 }} />
 
       <Box
         sx={{
           width: ENTITY_NODE_WIDTH,
-          borderRadius: '12px',
-          overflow: 'visible',
+          border: `1.5px solid ${ENTITY_NODE_BORDER}`,
+          borderRadius: '8px',
           background: ENTITY_NODE_BG,
-          border: '2px solid #7EE081',
+          overflow: 'hidden',
           position: 'relative',
         }}
       >
-        {/* Header: name (left, bold) + PMR badge (right) */}
+        {/* Header: id (left, bold) + PMR badge (right) */}
         <Stack
           direction="row"
           alignItems="center"
-          spacing={1}
+          justifyContent="space-between"
           sx={{
-            p: 1.5,
-            borderTopRightRadius: '12px',
-            borderTopLeftRadius: '12px',
+            height: 39,
+            px: '10px',
             background: ENTITY_HEADER_BG,
-            borderBottom: '1px solid',
-            borderImageSource: `linear-gradient(to right, rgba(55,63,78,0), ${EDGE_COLOR} 50%, rgba(55,63,78,0))`,
-            borderImageSlice: 1,
+            borderBottom: `1px solid ${ENTITY_HEADER_BORDER}`,
           }}
         >
           <Typography
             sx={{
-              flex: 1,
               fontSize: 15,
-              fontFamily: 'Roboto, sans-serif',
-              fontWeight: 600,
-              lineHeight: '22.5px',
-              color: TEXT_SECONDARY,
+              fontWeight: 700,
+              fontFamily: FONT_MONO,
+              color: TEXT_PRIMARY,
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap',
@@ -367,41 +238,33 @@ function DataFlowNodeComponent({ id, data }: NodeProps) {
           </Typography>
           <Box
             sx={{
-              px: 0.5,
+              px: '6px',
+              py: '1px',
               backgroundColor: BADGE_BG,
-              borderRadius: '4px',
+              borderRadius: '3px',
               flexShrink: 0,
             }}
           >
-            <Typography
-              sx={{
-                fontSize: 15,
-                fontFamily: 'Roboto, sans-serif',
-                fontWeight: 400,
-                lineHeight: '22.5px',
-                color: BADGE_TEXT,
-              }}
-            >
+            <Typography sx={{ fontSize: 11, fontWeight: 700, color: BADGE_TEXT, lineHeight: 1.4 }}>
               PMR
             </Typography>
           </Box>
         </Stack>
 
-        {/* Body: action rows (always shown, empty body if no actions) */}
-        <Stack spacing={0.5} sx={{ px: 1.5, pt: 0.5, pb: 0.5, minHeight: 32 }}>
-          {actions.map((action, idx) => (
-            <ActionRow key={idx} action={action} idx={idx} />
-          ))}
-        </Stack>
+        {/* Body: action rows */}
+        {actions.length > 0 && (
+          <Stack
+            sx={{ px: '10px', py: '8px', justifyContent: 'space-around', minHeight: 32 }}
+            spacing={0.75}
+          >
+            {actions.map((action, idx) => (
+              <ActionRow key={idx} action={action} idx={idx} />
+            ))}
+          </Stack>
+        )}
       </Box>
 
-      {/* Fallback source handle for non-route edges */}
-      <Handle
-        type="source"
-        position={Position.Right}
-        id="default"
-        style={{ opacity: 0, width: 1, height: 1 }}
-      />
+      <Handle type="source" position={Position.Right} id="default" style={{ opacity: 0, width: 1, height: 1 }} />
     </>
   );
 }

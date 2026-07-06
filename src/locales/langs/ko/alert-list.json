@@ -7,10 +7,10 @@
     "id": "ID",
     "surv_name": "이름",
     "alert_name": "감시 이름",
-    "schedule": "일정",
+    "schedule": "스케줄",
     "start_at": "시작 시각",
     "end_at": "종료 시각",
-    "interval": "인터벌 (초)",
+    "interval": "간격(초)",
     "last_exec": "최근 실행",
     "status": "상태",
     "desc": "설명"
@@ -20,6 +20,12 @@
   },
   "list": {
     "watch_items": "감시 항목"
+  },
+  "expand": {
+    "start_at": "Start At",
+    "end_at": "End At",
+    "interval": "Interval (sec)",
+    "last_exec": "Last exec."
   },
   "loading": "로딩 중...",
   "empty": "감시 항목 없음",
@@ -35,6 +41,8 @@
     "script_file": "스크립트 파일",
     "active": "작동 중",
     "stopped": "중지",
+    "badge_active": "active",
+    "badge_inactive": "inactive",
     "crontab": "Crontab",
     "interval_fmt": "{{interval}}초 간격",
     "btn_edit": "편집",
@@ -56,6 +64,8 @@
     "title_edit": "감시 아이템 편집",
     "name": "감시 아이템명",
     "desc": "설명",
+    "desc_placeholder": "설명 (선택)",
+    "script_file_placeholder": "스크립트 파일명",
     "schedule": "작동 스케줄",
     "schedule_help": "실행할 요일을 선택하세요.",
     "schedule_cron_help": "선택된 요일은 crontab 문법으로 변환됩니다. 예) 월~금 선택 →",

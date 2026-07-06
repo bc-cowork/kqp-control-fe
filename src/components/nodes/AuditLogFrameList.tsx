@@ -7,20 +7,18 @@ import type { AuditLogFrameItem } from 'src/types/node';
 import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 
 import { useRouter } from 'src/routes/hooks';
 
 import { formatBytes } from 'src/utils/helper';
 import { formatDateCustom } from 'src/utils/format-time';
 
-import { T, ACCENT2 } from 'src/theme/tokens';
 import { useTranslate } from 'src/locales';
 import { useAuditFrameList } from 'src/actions/nodes';
+import { T, ACCENT2, FONT_MONO } from 'src/theme/tokens';
 
 import { Iconify } from 'src/components/iconify';
-import { Pager, Panel, DataTable, SectionLabel } from 'src/components/v5';
+import { Pager, DataTable } from 'src/components/v5';
 
 import AuditFrameListFilterBar from '../audit-log-page/AuditFrameListFilterBar';
 
@@ -31,27 +29,21 @@ type Props = {
   selectedFile: string;
 };
 
-function InfoBox({
-  label,
-  value,
-  badge,
-  action,
-}: {
-  label: string;
-  value: ReactNode;
-  badge?: ReactNode;
-  action?: ReactNode;
-}) {
+function InfoField({ label, children }: { label: ReactNode; children: ReactNode }) {
   return (
-    <Box sx={{ bgcolor: T.bgHover, borderRadius: '8px', p: '8px 12px', mb: 1 }}>
-      <Stack direction="row" alignItems="center" justifyContent="space-between">
-        <Stack direction="row" alignItems="center" spacing={1}>
-          <Typography sx={{ color: T.textDim, fontSize: 14 }}>{label}</Typography>
-          {badge}
-        </Stack>
-        {action}
-      </Stack>
-      <Typography sx={{ color: T.textPrim, fontSize: 17, fontWeight: 500 }}>{value}</Typography>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+      <Box
+        sx={{
+          fontSize: 14,
+          color: T.textDim,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '6px',
+        }}
+      >
+        {label}
+      </Box>
+      <Box sx={{ fontSize: 17, color: T.textPrim, fontFamily: FONT_MONO }}>{children}</Box>
     </Box>
   );
 }
@@ -156,89 +148,124 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
       : t('table.empty');
 
   return (
-    <Box sx={{ display: 'flex', gap: 1.5, flex: 1, minHeight: 0 }}>
-      {/* Left — Log Info */}
-      <Panel sx={{ width: 300, flexShrink: 0, overflow: 'auto' }}>
-        <Box sx={{ p: 2 }}>
-          <SectionLabel>{t('right_side_audit_log_list.log_info')}</SectionLabel>
+    <Box sx={{ display: 'flex', gap: '14px', flex: 1, minHeight: 0 }}>
+      {/* Left — Log Info panel */}
+      <Box
+        sx={{
+          width: 300,
+          flexShrink: 0,
+          alignSelf: 'flex-start',
+          maxHeight: '100%',
+          bgcolor: T.bgCard,
+          border: `1px solid ${T.border}`,
+          borderRadius: '8px',
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
+        }}
+      >
+        {/* Header */}
+        <Box
+          sx={{
+            p: '12px 16px',
+            borderBottom: `1px solid ${T.border}`,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
+            fontSize: 16,
+            color: T.textSec,
+            fontWeight: 500,
+          }}
+        >
+          <Iconify icon="eva:file-add-outline" width={18} sx={{ color: T.textDim }} />
+          <span>{t('right_side_audit_log_list.log_info')}</span>
+        </Box>
 
-          <Typography
-            sx={{ color: T.textPrim, fontSize: 22, fontWeight: 500, mt: 1.5, wordBreak: 'break-all' }}
-          >
-            {selectedFile}
-          </Typography>
-
-          <Box
-            component="span"
-            sx={{
-              display: 'inline-block',
-              mt: 1,
-              mb: 2,
-              bgcolor: T.bgHover,
-              color: ACCENT2,
-              border: `1px solid ${T.border}`,
-              borderRadius: '5px',
-              px: 1.25,
-              py: '3px',
-              fontSize: 14,
-            }}
-          >
-            {t('right_side_audit_log_list.inbound_log')}
+        {/* Body */}
+        <Box
+          sx={{ p: '18px 16px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '20px' }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+            <Box
+              sx={{ flex: 1, minWidth: 0, fontSize: 22, fontWeight: 400, wordBreak: 'break-word' }}
+            >
+              {selectedFile}
+            </Box>
+            <Box
+              component="span"
+              sx={{
+                flexShrink: 0,
+                fontSize: 14,
+                fontWeight: 500,
+                p: '3px 10px',
+                borderRadius: '5px',
+                bgcolor: T.bgHover,
+                color: ACCENT2,
+                border: `1px solid ${T.border}`,
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {t('right_side_audit_log_list.inbound_log')}
+            </Box>
           </Box>
 
-          <InfoBox
-            label={t('right_side_audit_log_list.max_frame_seq')}
-            value={auditFrameList?.max_frame ?? '—'}
-            badge={
-              <Box
-                component="span"
-                sx={{
-                  bgcolor: T.bgRowSel,
-                  color: T.primary,
-                  borderRadius: '4px',
-                  px: 0.75,
-                  py: '1px',
-                  fontSize: 12,
-                  fontWeight: 500,
-                }}
-              >
-                MAX
-              </Box>
+          <InfoField
+            label={
+              <>
+                {t('right_side_audit_log_list.max_frame_seq')}
+                <Box
+                  component="span"
+                  sx={{
+                    fontSize: 12,
+                    fontWeight: 700,
+                    p: '1px 6px',
+                    borderRadius: '3px',
+                    bgcolor: `${T.primary}26`,
+                    color: T.accent,
+                    letterSpacing: '0.04em',
+                  }}
+                >
+                  MAX
+                </Box>
+              </>
             }
-            action={
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                bgcolor: T.bg,
+                border: `1px solid ${T.border}`,
+                borderRadius: '6px',
+                p: '8px 12px',
+              }}
+            >
+              <Box component="span" sx={{ fontSize: 16, fontFamily: FONT_MONO }}>
+                {auditFrameList?.max_frame ?? '—'}
+              </Box>
               <Box
                 onClick={onMaxFrameRefresh}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: 22,
-                  height: 22,
-                  borderRadius: '4px',
-                  cursor: 'pointer',
-                  color: T.textSec,
-                  '&:hover': { bgcolor: T.bgCard, color: T.textPrim },
-                }}
+                sx={{ display: 'flex', cursor: 'pointer', color: T.textDim, '&:hover': { color: T.textPrim } }}
               >
-                <Iconify icon="eva:refresh-fill" width={15} />
+                <Iconify icon="eva:refresh-fill" width={16} />
               </Box>
-            }
-          />
+            </Box>
+          </InfoField>
 
-          <InfoBox
-            label={t('right_side_audit_log_list.file_size')}
-            value={formatBytes(auditFrameList?.file_size)}
-          />
-          <InfoBox
-            label={t('right_side_audit_log_list.date')}
-            value={formatDateCustom(auditFrameList?.date?.toString())}
-          />
-          <InfoBox
-            label={t('right_side_audit_log_list.desc')}
-            value={auditFrameList?.desc || '—'}
-          />
+          <InfoField label={t('right_side_audit_log_list.file_size')}>
+            {formatBytes(auditFrameList?.file_size)}
+          </InfoField>
+          <InfoField label={t('right_side_audit_log_list.date')}>
+            {formatDateCustom(auditFrameList?.date?.toString())}
+          </InfoField>
+          <InfoField label={t('right_side_audit_log_list.desc')}>
+            <Box component="span" sx={{ color: T.textSec }}>
+              {auditFrameList?.desc || '—'}
+            </Box>
+          </InfoField>
         </Box>
-      </Panel>
+      </Box>
 
       {/* Right — Pager + filter bar + frame table */}
       <Box sx={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1.5 }}>
@@ -252,14 +279,12 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
           />
         )}
 
-        <Box sx={{ border: `1px solid ${T.border}`, borderRadius: '8px', overflow: 'hidden' }}>
-          <AuditFrameListFilterBar
-            value={frameSeq}
-            setValue={setFrameSeq}
-            onSearch={handleFrameSearch}
-            onReset={handleFrameReset}
-          />
-        </Box>
+        <AuditFrameListFilterBar
+          value={frameSeq}
+          setValue={setFrameSeq}
+          onSearch={handleFrameSearch}
+          onReset={handleFrameReset}
+        />
 
         <Box
           sx={{

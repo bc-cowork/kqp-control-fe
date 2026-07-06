@@ -121,7 +121,7 @@ export function Memory({ selectedNodeId }: Props) {
   return (
     <Stack spacing={1.5} sx={{ flex: 1, minHeight: 0 }}>
       {/* Top row: two summary cards + memory usage chart */}
-      <Stack direction="row" spacing={1.5} sx={{ height: 210, flexShrink: 0 }}>
+      <Stack direction="row" spacing={1.5} sx={{ flexShrink: 0 }}>
         <SummaryCard label={t('left_side.issues')} value={issues?.max_issue_count?.toLocaleString()} />
         <SummaryCard label={t('left_side.compet')} value={issues?.compet_count?.toLocaleString()} />
 
@@ -131,27 +131,38 @@ export function Memory({ selectedNodeId }: Props) {
             minWidth: 0,
             display: 'flex',
             flexDirection: 'column',
+            position: 'relative',
+            overflow: 'hidden',
             bgcolor: T.bgCard,
             border: `1px solid ${T.border}`,
             borderRadius: '6px',
-            p: '12px 14px',
+            p: '12px 16px 8px',
           }}
         >
           <Stack
             direction="row"
             justifyContent="space-between"
-            alignItems="center"
-            sx={{ mb: 0.5 }}
+            alignItems="baseline"
           >
-            <Typography sx={{ fontSize: 15, color: T.textSec }}>{t('graph.memory')}</Typography>
-            <Typography sx={{ fontSize: 14, color: ACCENT2, fontFamily: FONT_MONO }}>
+            <Typography
+              sx={{
+                fontSize: 15,
+                color: ACCENT2,
+                fontWeight: 500,
+                textTransform: 'uppercase',
+                letterSpacing: '0.06em',
+              }}
+            >
+              {t('graph.memory')}
+            </Typography>
+            <Typography sx={{ fontSize: 15, color: T.textSec, fontFamily: FONT_MONO }}>
               {memoryMetricsData?.mem_used_size?.toLocaleString()} /{' '}
               {memoryMetricsData?.mem_total_size?.toLocaleString()}GB ({memoryMetricsData?.mem_usage}
               %)
             </Typography>
           </Stack>
 
-          <Box sx={{ flex: 1, minHeight: 0 }}>
+          <Box sx={{ flex: 1, minHeight: 70, mt: 0.5, position: 'relative', zIndex: 1 }}>
             {issueGraphDataLoading ? (
               <Box
                 sx={{
@@ -176,28 +187,31 @@ export function Memory({ selectedNodeId }: Props) {
               </Box>
             ) : (
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={chartData} margin={{ top: 8, right: 8, left: -18, bottom: 0 }}>
-                  <CartesianGrid stroke={T.border} strokeDasharray="3 3" vertical={false} />
+                <AreaChart data={chartData} margin={{ top: 6, right: 6, left: -22, bottom: 0 }}>
+                  <CartesianGrid stroke={T.border} strokeWidth={0.5} />
                   <XAxis
                     dataKey="timestamp"
-                    tick={{ fontSize: 11, fill: T.textDim }}
+                    tick={{ fontSize: 12, fill: T.textDim }}
                     tickLine={false}
                     axisLine={{ stroke: T.border }}
+                    minTickGap={20}
                   />
                   <YAxis
                     domain={[0, 100]}
-                    tick={{ fontSize: 11, fill: T.textDim }}
+                    tick={{ fontSize: 12, fill: T.textDim }}
                     tickLine={false}
                     axisLine={{ stroke: T.border }}
+                    width={34}
                   />
                   <Tooltip
                     contentStyle={{
                       backgroundColor: T.bgPanel,
                       border: `1px solid ${T.border}`,
-                      borderRadius: 6,
+                      borderRadius: 5,
+                      fontSize: 14,
                       color: T.textPrim,
                     }}
-                    labelStyle={{ color: T.textSec }}
+                    labelStyle={{ color: T.textPrim }}
                     itemStyle={{ color: T.textPrim }}
                   />
                   <Area
@@ -206,12 +220,37 @@ export function Memory({ selectedNodeId }: Props) {
                     stroke={T.primary}
                     fill={T.primary}
                     fillOpacity={0.2}
-                    strokeWidth={1.5}
+                    strokeWidth={1.6}
+                    isAnimationActive={false}
                   />
                 </AreaChart>
               </ResponsiveContainer>
             )}
           </Box>
+
+          {/* Bottom glow + accent bar (matches SummaryCard) */}
+          <Box
+            sx={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              bottom: 0,
+              height: 40,
+              background: `linear-gradient(to top, ${ACCENT2}22, transparent)`,
+              pointerEvents: 'none',
+            }}
+          />
+          <Box
+            sx={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              bottom: 0,
+              height: 2,
+              bgcolor: ACCENT2,
+              opacity: 0.4,
+            }}
+          />
         </Box>
       </Stack>
 

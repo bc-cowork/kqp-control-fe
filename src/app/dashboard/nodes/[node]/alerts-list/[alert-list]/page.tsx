@@ -18,15 +18,25 @@ import { useTranslate } from 'src/locales';
 import { T, ACCENT2, FONT_MONO } from 'src/theme/tokens';
 
 import { toast } from 'src/components/snackbar';
-import {
-  Panel,
-  BtnGhost,
-  BtnDanger,
-  CodeBlock,
-  DataTable,
-  PageShell,
-  StatusBadge,
-} from 'src/components/v5';
+import { Iconify } from 'src/components/iconify';
+import { CodeBlock, DataTable, PageShell, StatusBadge } from 'src/components/v5';
+
+// ----------------------------------------------------------------------
+
+// Detail action button (edit / delete) — ghost outline, red text for delete
+const detailBtnSx = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: 1,
+  height: 32,
+  px: '14px',
+  bgcolor: T.bgCard,
+  border: `1px solid ${T.border}`,
+  borderRadius: '8px',
+  fontSize: 15,
+  fontFamily: 'inherit',
+  cursor: 'pointer',
+} as const;
 
 // ----------------------------------------------------------------------
 
@@ -96,27 +106,45 @@ export default function Page({ params }: Props) {
 
   // ---- summary table ----
   const columns: Column<any>[] = [
-    { key: 'name', label: t('table.alert_name'), color: ACCENT2, render: (r) => r.name },
+    { key: 'name', label: t('table.surv_name'), mono: true, color: T.accent, render: (r) => r.name },
     {
       key: 'schedule',
       label: t('table.schedule'),
-      mono: true,
       color: T.textSec,
       render: () => scheduleText || '—',
     },
-    { key: 'start_at', label: t('table.start_at'), mono: true, render: (r) => r.start_at || '—' },
-    { key: 'end_at', label: t('table.end_at'), mono: true, render: (r) => r.end_at || '—' },
+    {
+      key: 'start_at',
+      label: t('table.start_at'),
+      mono: true,
+      color: T.textSec,
+      render: (r) => r.start_at || '—',
+    },
+    {
+      key: 'end_at',
+      label: t('table.end_at'),
+      mono: true,
+      color: T.textSec,
+      render: (r) => r.end_at || '—',
+    },
     {
       key: 'interval',
       label: t('table.interval'),
       mono: true,
+      color: T.textSec,
       render: (r) => (r.interval_sec ?? '—'),
     },
     {
       key: 'status',
       label: t('table.status'),
+      align: 'right',
       render: () => (
-        <StatusBadge on={isActive} labelOn={t('detail.active')} labelOff={t('detail.stopped')} />
+        <StatusBadge
+          on={isActive}
+          labelOn={t('detail.badge_active')}
+          labelOff={t('detail.badge_inactive')}
+          color={ACCENT2}
+        />
       ),
     },
   ];
@@ -127,15 +155,15 @@ export default function Page({ params }: Props) {
     { label: t('detail.desc'), value: detail.desc || '-' },
     {
       label: t('detail.schedule'),
-      value: scheduleText ? `${scheduleText} — ${t('detail.crontab')}: ${scheduleText}` : '-',
+      value: scheduleText || '-',
     },
     {
       label: t('detail.timezone'),
-      value: `${detail.start_at || '-'} ~ ${detail.end_at || '-'}, ${detail.interval_sec ?? '-'} ${t('form.interval_suffix')}`,
+      value: `${detail.start_at || '-'} ~ ${detail.end_at || '-'}, ${t('detail.interval_fmt', { interval: detail.interval_sec ?? '-' })}`,
     },
     {
       label: t('detail.status'),
-      value: isActive ? t('detail.active') : t('detail.stopped'),
+      value: isActive ? t('detail.badge_active') : t('detail.badge_inactive'),
       isStatus: true,
     },
     { label: t('detail.script_file'), value: scriptFileName },
@@ -152,57 +180,108 @@ export default function Page({ params }: Props) {
         {/* Summary table (single row) */}
         <DataTable<any> headerVariant="light" columns={columns} rows={[detail]} />
 
-        {/* Two columns */}
-        <Stack direction="row" gap={1.75} sx={{ flex: 1, minHeight: 0 }}>
+        {/* Two columns — split 5 / 7 */}
+        <Stack direction="row" gap={2} alignItems="stretch" sx={{ flex: 1, minHeight: 0 }}>
           {/* Left — info + actions */}
-          <Stack sx={{ flex: 5, minWidth: 0, gap: 1.75 }}>
-            <Panel>
-              <Box sx={{ px: 2, py: 1.25, bgcolor: T.bgHover, borderBottom: `1px solid ${T.border}` }}>
-                <Typography sx={{ color: T.textPrim, fontSize: 16, fontWeight: 500 }}>
-                  {t('detail.info_title')}
-                </Typography>
-              </Box>
-              <Stack sx={{ px: 2.5, py: 2.5, gap: 2 }}>
+          <Stack sx={{ flex: 5, minWidth: 0, minHeight: 0 }}>
+            <Typography sx={{ fontSize: 17, fontWeight: 500, color: T.textSec, mb: 1 }}>
+              {t('detail.info_title')}
+            </Typography>
+            <Box
+              sx={{
+                border: `1px solid ${T.border}`,
+                borderRadius: '8px',
+                overflow: 'hidden',
+                bgcolor: T.bgCard,
+                flexShrink: 0,
+              }}
+            >
+              <Stack sx={{ p: 2, gap: 1.75 }}>
                 {infoRows.map((row) => (
                   <Stack key={row.label} direction="row" gap={2} alignItems="flex-start">
-                    <Typography
-                      sx={{ width: 96, flexShrink: 0, color: T.textSec, fontSize: 14, pt: '1px' }}
-                    >
+                    <Typography sx={{ width: 96, flexShrink: 0, color: T.textSec, fontSize: 14 }}>
                       {row.label}
                     </Typography>
                     <Box sx={{ flex: 1, minWidth: 0 }}>
                       {row.isStatus ? (
-                        <StatusBadge on={isActive} labelOn={row.value} labelOff={row.value} />
+                        <Box
+                          component="span"
+                          sx={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: 0.75,
+                            fontSize: 15,
+                            color: isActive ? T.on : T.off,
+                          }}
+                        >
+                          <Box
+                            sx={{ width: 7, height: 7, borderRadius: '50%', bgcolor: 'currentColor' }}
+                          />
+                          {row.value}
+                        </Box>
                       ) : (
-                        <Typography sx={{ color: T.textPrim, fontSize: 15 }}>{row.value}</Typography>
+                        <Typography
+                          sx={{
+                            color: T.textPrim,
+                            fontSize: 15,
+                            lineHeight: 1.5,
+                            wordBreak: 'break-word',
+                          }}
+                        >
+                          {row.value}
+                        </Typography>
                       )}
                     </Box>
                   </Stack>
                 ))}
               </Stack>
-            </Panel>
+            </Box>
 
-            <Stack direction="row" gap={1.25}>
-              <BtnGhost icon="eva:edit-outline" onClick={handleEdit}>
+            <Stack direction="row" gap={1} sx={{ mt: 1.5, flexShrink: 0 }}>
+              <Box component="button" type="button" onClick={handleEdit} sx={{ ...detailBtnSx, color: T.textSec }}>
+                <Iconify icon="solar:pen-linear" width={13} />
                 {t('detail.btn_edit')}
-              </BtnGhost>
-              <BtnDanger icon="eva:trash-2-outline" onClick={handleDelete}>
+              </Box>
+              <Box component="button" type="button" onClick={handleDelete} sx={{ ...detailBtnSx, color: T.off }}>
                 {t('detail.btn_delete')}
-              </BtnDanger>
+              </Box>
             </Stack>
           </Stack>
 
           {/* Right — script viewer */}
-          <Panel sx={{ flex: 7, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
-            <Box sx={{ px: 2, py: 1.25, bgcolor: T.bgHover, borderBottom: `1px solid ${T.border}` }}>
-              <Typography sx={{ color: T.textDim, fontSize: 14, fontFamily: FONT_MONO }}>
-                -- {scriptFileName}
-              </Typography>
+          <Stack sx={{ flex: 7, minWidth: 0, minHeight: 0 }}>
+            <Typography sx={{ fontSize: 17, fontWeight: 500, color: T.textSec, mb: 1 }}>
+              {t('alert')}
+            </Typography>
+            <Box
+              sx={{
+                flex: 1,
+                minHeight: 0,
+                display: 'flex',
+                flexDirection: 'column',
+                border: `1px solid ${T.border}`,
+                borderRadius: '8px',
+                overflow: 'hidden',
+                bgcolor: T.bgCard,
+              }}
+            >
+              <Box
+                sx={{
+                  px: 2,
+                  py: 1,
+                  borderBottom: `1px solid ${T.border}`,
+                  flexShrink: 0,
+                }}
+              >
+                <Typography sx={{ color: T.textDim, fontSize: 13, fontFamily: FONT_MONO }}>
+                  -- {scriptFileName}
+                </Typography>
+              </Box>
+              <Box sx={{ flex: 1, minHeight: 0, p: 1.75, overflow: 'auto' }}>
+                <CodeBlock theme="moon">{alertCode}</CodeBlock>
+              </Box>
             </Box>
-            <Box sx={{ flex: 1, minHeight: 0, p: 1.75, overflow: 'auto' }}>
-              <CodeBlock theme="moon">{alertCode}</CodeBlock>
-            </Box>
-          </Panel>
+          </Stack>
         </Stack>
       </Stack>
     </PageShell>

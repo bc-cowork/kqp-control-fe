@@ -2,21 +2,21 @@
 
 import type { Column } from 'src/components/v5';
 
-import React from 'react';
 import useSWR from 'swr';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 
 import Box from '@mui/material/Box';
 
 import { paths } from 'src/routes/paths';
 
-import { fetcher, endpoints } from 'src/utils/axios';
 import { formatBytes } from 'src/utils/helper';
+import { fetcher, endpoints } from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
+import { T, FONT_MONO } from 'src/theme/tokens';
 
-import { T } from 'src/theme/tokens';
-import { DataTable, PageShell, SpecChip, SectionLabel } from 'src/components/v5';
+import { SpecChip, DataTable, PageShell, SectionLabel } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
 
@@ -58,15 +58,20 @@ export default function Page({ params }: Props) {
 
   // Summary row — single-row light table.
   const summaryColumns: Column<SpecDetail>[] = [
-    { key: 'name', label: t('table.spec_name'), color: T.textPrim },
+    {
+      key: 'name',
+      label: t('table.spec_name'),
+      render: (r) => <span style={{ color: T.primary, fontWeight: 400 }}>{r.name}</span>,
+    },
     { key: 'path', label: t('table.path'), mono: true, dim: true },
     { key: 'timestamp', label: t('table.timestamp'), mono: true, dim: true },
-    { key: 'ref_identifies', label: t('table.ref_identifies'), mono: true, align: 'right' },
+    { key: 'ref_identifies', label: t('table.ref_identifies'), mono: true, align: 'right', color: T.textSec },
     {
       key: 'frags',
       label: t('table.frags'),
       mono: true,
       align: 'right',
+      color: T.textSec,
       render: (r) => r.frags?.toLocaleString() ?? '—',
     },
     {
@@ -83,7 +88,7 @@ export default function Page({ params }: Props) {
 
   // Left — Related Identifiers.
   const identifierColumns: Column<IdentifyRow>[] = [
-    { key: 'no', label: t('left.no'), mono: true, align: 'right', width: 60, render: (_r, i) => i + 1 },
+    { key: 'no', label: t('left.no'), mono: true, align: 'right', width: 60, color: T.textSec, render: (_r, i) => i + 1 },
     {
       key: 'name',
       label: t('left.identifier'),
@@ -95,31 +100,34 @@ export default function Page({ params }: Props) {
               paths.dashboard.nodes.identifyDetail(node, r.url.split('/').filter(Boolean).pop() || '')
             )
           }
-          sx={{ color: T.primary, textDecoration: 'underline', cursor: 'pointer' }}
+          sx={{ color: T.primary, fontWeight: 400, fontFamily: FONT_MONO, cursor: 'pointer' }}
         >
           {r.name}
         </Box>
       ),
     },
-    { key: 'ref_count', label: t('left.ref_count'), mono: true, align: 'right', dim: true },
+    { key: 'ref_count', label: t('left.ref_count'), mono: true, align: 'right', grow: true, color: T.textSec },
   ];
 
   // Right — Spec Definition (tri-colour SpecChips).
   const fragColumns: Column<FragRow>[] = [
-    { key: 'order', label: t('right.order'), mono: true, align: 'right', width: 60 },
+    { key: 'order', label: t('right.order'), mono: true, width: 64, color: T.textSec },
     {
       key: 'offset',
       label: t('right.offset'),
+      width: 96,
       render: (r) => <SpecChip tone="green">{r.offset}</SpecChip>,
     },
     {
       key: 'length',
       label: t('right.len'),
+      width: 84,
       render: (r) => <SpecChip tone="blue">{r.length}</SpecChip>,
     },
     {
       key: 'type',
       label: t('right.type'),
+      width: 88,
       render: (r) => <SpecChip tone="amber">{r.type}</SpecChip>,
     },
     { key: 'desc', label: t('right.desc'), dim: true, grow: true },
@@ -143,7 +151,7 @@ export default function Page({ params }: Props) {
         emptyLabel={t('empty_detail')}
       />
 
-      <Box sx={{ display: 'flex', gap: 1.75, alignItems: 'flex-start' }}>
+      <Box sx={{ display: 'flex', gap: 2, alignItems: 'stretch' }}>
         <Box sx={{ flex: 5, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
           <SectionLabel>{t('section_identifiers')}</SectionLabel>
           <DataTable<IdentifyRow>

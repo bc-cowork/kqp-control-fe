@@ -17,6 +17,7 @@
     "no": "No",
     "date": "Date",
     "type": "Type",
+    "type_filter": "Log Category",
     "size": "Size",
     "desc": "Description"
   }

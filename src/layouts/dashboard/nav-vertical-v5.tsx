@@ -20,7 +20,9 @@ import { useGetStatus, useGetProcesses, useGetMemoryMetrics } from 'src/actions/
 import { useGetChannelList } from 'src/actions/nodes';
 
 import { Logo } from 'src/components/logo';
-import { Iconify } from 'src/components/iconify';
+import { KIcon } from 'src/components/k-icons';
+
+import type { KIconName } from 'src/components/k-icons';
 
 import { T } from 'src/theme/tokens';
 
@@ -149,15 +151,15 @@ export function NavVerticalV5({ nodes }: NavVerticalV5Props) {
       >
         <Logo isSingle={false} isWhite width={110} height={24} disableLink />
         <Box sx={{ width: 24, height: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', color: T.textDim, cursor: 'pointer' }}>
-          <Iconify icon="solar:pin-linear" width={18} />
+          <KIcon name="scrap" size={18} />
         </Box>
       </Box>
 
       {/* Nav list */}
       <Box className="no-scrollbar" sx={{ flex: 1, p: 1.25, display: 'flex', flexDirection: 'column', gap: 0.5, overflowY: 'auto' }}>
-        <NavRow label={t('side_bar.dashboard')} icon="solar:home-2-linear" active={dashActive} onClick={() => router.push(paths.dashboard.root)} />
+        <NavRow label={t('side_bar.dashboard')} icon="home" active={dashActive} onClick={() => router.push(paths.dashboard.root)} />
 
-        <NavRow label={t('side_bar.nodes')} icon="solar:server-square-linear" expandable open={nodeOpen} onClick={() => setNodeOpen((v) => !v)} />
+        <NavRow label={t('side_bar.nodes')} icon="certified" expandable open={nodeOpen} onClick={() => setNodeOpen((v) => !v)} />
 
         {nodeOpen && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, mt: 0.25 }}>
@@ -198,7 +200,7 @@ export function NavVerticalV5({ nodes }: NavVerticalV5Props) {
           onClick={() => router.push('/dashboard/settings')}
           sx={{ display: 'flex', alignItems: 'center', gap: 1.375, px: 1.5, py: 1.125, borderRadius: 1, color: T.textSec, fontSize: 15, cursor: 'pointer', '&:hover': { bgcolor: T.bgHover, color: T.textPrim } }}
         >
-          <Iconify icon="solar:settings-linear" width={16} />
+          <KIcon name="settings" size={16} />
           {t('side_bar.settings')}
         </Box>
 
@@ -214,7 +216,7 @@ export function NavVerticalV5({ nodes }: NavVerticalV5Props) {
             onClick={handleLogout}
             sx={{ width: 30, height: 30, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 1, color: T.textDim, cursor: 'pointer', '&:hover': { bgcolor: T.offBg, color: T.off } }}
           >
-            <Iconify icon="solar:logout-2-linear" width={17} />
+            <KIcon name="logout" size={17} />
           </Box>
         </Box>
       </Box>
@@ -305,7 +307,7 @@ function NodeTiles({ node, nodeOnline, isActive, onNavigate, t }: NodeTilesProps
 
 type NavRowProps = {
   label: string;
-  icon?: string;
+  icon?: KIconName;
   indent?: 0 | 1 | 2;
   active?: boolean;
   expandable?: boolean;
@@ -339,10 +341,16 @@ function NavRow({ label, icon, indent = 0, active, expandable, open, onClick }: 
         '&:hover': active ? undefined : { bgcolor: T.bgHover, color: T.textPrim },
       }}
     >
-      {icon && <Iconify icon={icon} width={15} sx={{ flexShrink: 0 }} />}
-      <Box sx={{ flex: 1 }}>{label}</Box>
+      {icon && (
+        <Box sx={{ width: 16, height: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          <KIcon name={icon} size={15} />
+        </Box>
+      )}
+      <Box sx={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</Box>
       {expandable && (
-        <Iconify icon="eva:chevron-right-fill" width={17} sx={{ opacity: 0.5, transform: open ? 'rotate(90deg)' : 'none', transition: 'transform .15s' }} />
+        <Box component="span" sx={{ fontSize: 17, opacity: 0.5, flexShrink: 0, transform: open ? 'rotate(90deg)' : 'none', transition: 'transform .15s' }}>
+          ›
+        </Box>
       )}
     </Box>
   );
@@ -413,14 +421,14 @@ function NodeStepper({ node, online, canPrev, canNext, onPrev, onNext }: NodeSte
       <Box sx={{ width: 7, height: 7, borderRadius: '50%', flexShrink: 0, bgcolor: online ? T.on : T.offline, boxShadow: `0 0 5px ${online ? T.on : T.offline}99` }} />
       <Typography sx={{ flex: 1, fontSize: 14, fontWeight: 500, color: T.textPrim, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{node || '—'}</Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        <StepBtn icon="eva:chevron-up-fill" disabled={!canPrev} onClick={onPrev} />
-        <StepBtn icon="eva:chevron-down-fill" disabled={!canNext} onClick={onNext} />
+        <StepBtn icon="chevronUp" disabled={!canPrev} onClick={onPrev} />
+        <StepBtn icon="chevronDown" disabled={!canNext} onClick={onNext} />
       </Box>
     </Box>
   );
 }
 
-function StepBtn({ icon, disabled, onClick }: { icon: string; disabled: boolean; onClick: () => void }) {
+function StepBtn({ icon, disabled, onClick }: { icon: KIconName; disabled: boolean; onClick: () => void }) {
   return (
     <Box
       component="button"
@@ -428,7 +436,7 @@ function StepBtn({ icon, disabled, onClick }: { icon: string; disabled: boolean;
       disabled={disabled}
       sx={{ width: 22, height: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', bgcolor: 'transparent', color: T.textSec, opacity: disabled ? 0.25 : 1, cursor: disabled ? 'default' : 'pointer', borderRadius: '3px', '&:hover': disabled ? undefined : { bgcolor: T.bgHover } }}
     >
-      <Iconify icon={icon} width={14} />
+      <KIcon name={icon} size={13} />
     </Box>
   );
 }

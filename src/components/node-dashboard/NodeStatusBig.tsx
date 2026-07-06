@@ -2,8 +2,6 @@
 
 import type { INodeItem } from 'src/types/dashboard';
 
-import { Trans } from 'react-i18next';
-
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -12,8 +10,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useTranslate } from 'src/locales';
 import { useGetDiskMetrics } from 'src/actions/dashboard';
 
-import { T, FONT_MONO } from 'src/theme/tokens';
-import { Panel, StatusBadge } from 'src/components/v5';
+import { T } from 'src/theme/tokens';
+import { DiskUsage } from 'src/components/dashboard/DiskUsage';
 
 // ----------------------------------------------------------------------
 
@@ -23,8 +21,6 @@ type Props = {
   nodeStatusLoading: boolean;
   nodeStatusError?: any;
 };
-
-const DISK_SEGMENTS = 24;
 
 export function NodeStatusBig({
   selectedNodeParam,
@@ -36,109 +32,100 @@ export function NodeStatusBig({
 
   const { diskMetricsData } = useGetDiskMetrics(selectedNodeParam);
 
-  const isOnline = selectedNode?.online_status;
-  const diskUsage = diskMetricsData?.disk_usage ?? 0;
-  const filledSegments = Math.round((Math.min(Math.max(diskUsage, 0), 100) / 100) * DISK_SEGMENTS);
+  const online = selectedNode?.online_status;
+  const sc = online ? T.on : T.offline;
 
   if (nodeStatusLoading) {
     return (
-      <Panel sx={{ p: 3, display: 'flex', justifyContent: 'center' }}>
+      <Box sx={{ border: `1px solid ${T.border}`, borderRadius: '8px', bgcolor: T.bgCard, p: 3, display: 'flex', justifyContent: 'center' }}>
         <CircularProgress sx={{ color: T.primary }} />
-      </Panel>
+      </Box>
     );
   }
 
   if (nodeStatusError) {
     return (
-      <Panel sx={{ p: 3 }}>
+      <Box sx={{ border: `1px solid ${T.border}`, borderRadius: '8px', bgcolor: T.bgCard, p: 3 }}>
         <Typography sx={{ color: T.off, fontSize: 15 }}>{t('errors.fetch_status')}</Typography>
-      </Panel>
+      </Box>
     );
   }
 
   return (
-    <Stack spacing={1.75}>
+    <>
       {/* Status card */}
-      <Panel>
+      <Box sx={{ border: `1px solid ${T.border}`, borderRadius: '8px', overflow: 'hidden', flexShrink: 0 }}>
         {/* Header strip */}
-        <Box sx={{ p: 2, borderBottom: `1px solid ${T.border}`, bgcolor: T.bgCard }}>
-          <StatusBadge on={isOnline} labelOn={t('left_side.online')} labelOff={t('left_side.offline')} />
+        <Box
+          sx={{
+            p: '14px 16px',
+            background: online ? 'linear-gradient(135deg, #9384FF2E, #9384FF10)' : T.offlineBg,
+            borderBottom: `1px solid ${T.border}`,
+          }}
+        >
+          <Box
+            component="span"
+            sx={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '5px',
+              fontSize: 13,
+              fontWeight: 600,
+              p: '2px 8px',
+              borderRadius: '3px',
+              letterSpacing: '0.04em',
+              fontFamily: 'Roboto',
+              background: `${sc}26`,
+              color: sc,
+              border: `1px solid ${sc}55`,
+            }}
+          >
+            <Box sx={{ width: 5, height: 5, borderRadius: '50%', bgcolor: 'currentColor' }} />
+            {online ? 'ON' : 'OFF'}
+          </Box>
 
-          <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 1.5 }}>
-            <Typography sx={{ fontSize: 17, fontWeight: 500, color: T.textPrim }}>
+          <Box sx={{ mt: '10px', fontSize: 17 }}>
+            <Box component="span" sx={{ fontWeight: 500, color: T.textPrim }}>
               {selectedNode.id}
-            </Typography>
+            </Box>
             {selectedNode.name && (
-              <>
-                <Box sx={{ width: '1px', height: 14, bgcolor: T.border }} />
-                <Typography sx={{ fontSize: 15, color: T.textSec }}>
-                  {selectedNode.name}
-                </Typography>
-              </>
+              <Box component="span" sx={{ color: T.textSec }}> | {selectedNode.name}</Box>
             )}
-          </Stack>
+          </Box>
 
           {selectedNode.desc && (
-            <Typography sx={{ mt: 0.75, fontSize: 14, color: T.textDim }}>
-              {selectedNode.desc}
-            </Typography>
+            <Typography sx={{ fontSize: 15, color: T.textSec, mt: '2px' }}>{selectedNode.desc}</Typography>
           )}
         </Box>
 
         {/* Body rows */}
-        <Box sx={{ p: 2 }}>
-          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1.5 }}>
+        <Box sx={{ p: '12px 16px', bgcolor: T.bgCard, display: 'flex', flexDirection: 'column', gap: '9px' }}>
+          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ fontSize: 15 }}>
             <Typography sx={{ fontSize: 15, color: T.textSec }}>{t('left_side.emitable')}</Typography>
-            <Typography
-              sx={{ fontSize: 15, fontWeight: 500, color: selectedNode.emittable ? T.on : T.off }}
-            >
+            <Typography sx={{ fontSize: 15, fontWeight: 500, fontFamily: 'Roboto', color: selectedNode.emittable ? T.on : T.off }}>
               {selectedNode.emittable ? t('left_side.true') : t('left_side.false')}
             </Typography>
           </Stack>
-          <Stack direction="row" alignItems="center" justifyContent="space-between">
+          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ fontSize: 15 }}>
             <Typography sx={{ fontSize: 15, color: T.textSec }}>{t('left_side.emit_count')}</Typography>
-            <Typography sx={{ fontSize: 15, fontFamily: FONT_MONO, color: T.textPrim }}>
+            <Typography sx={{ fontSize: 15, fontWeight: 500, fontFamily: 'Roboto', color: T.textSec }}>
               {selectedNode.emit_count.toLocaleString()}
             </Typography>
           </Stack>
         </Box>
-      </Panel>
+      </Box>
 
       {/* Disk card */}
-      <Panel sx={{ p: 2, bgcolor: T.bgCard }}>
-        <Typography sx={{ fontSize: 15, color: T.textSec }}>{t('left_side.disk_usage')}</Typography>
-        <Typography sx={{ fontSize: 28, fontWeight: 500, color: T.textPrim, lineHeight: 1.4 }}>
-          {diskUsage}%
+      <Box sx={{ border: `1px solid ${T.border}`, borderRadius: '8px', p: '14px 16px', bgcolor: T.bgCard, flexShrink: 0 }}>
+        <Typography sx={{ fontSize: 15, fontWeight: 500, color: T.textSec, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+          {t('left_side.disk_usage')}
         </Typography>
-        <Typography sx={{ fontSize: 14, color: T.textDim, mb: 1.5 }}>
-          <Trans
-            t={t}
-            i18nKey="left_side.disk_detail"
-            values={{
-              used: diskMetricsData?.disk_used_size,
-              total: diskMetricsData?.disk_total_size,
-            }}
-            components={{
-              mono: <Box component="span" sx={{ color: T.textSec, fontFamily: FONT_MONO }} />,
-            }}
-          />
-        </Typography>
-
-        {/* Segmented bar */}
-        <Stack direction="row" spacing={0.5}>
-          {Array.from({ length: DISK_SEGMENTS }).map((_, i) => (
-            <Box
-              key={i}
-              sx={{
-                flex: 1,
-                height: 10,
-                borderRadius: '2px',
-                bgcolor: i < filledSegments ? T.primary : T.bgHover,
-              }}
-            />
-          ))}
-        </Stack>
-      </Panel>
-    </Stack>
+        {online && diskMetricsData?.disk_total_size ? (
+          <DiskUsage used={Number(diskMetricsData.disk_used_size)} total={Number(diskMetricsData.disk_total_size)} />
+        ) : (
+          <Typography sx={{ fontSize: 15, color: T.textDim, mt: '10px' }}>데이터 없음</Typography>
+        )}
+      </Box>
+    </>
   );
 }

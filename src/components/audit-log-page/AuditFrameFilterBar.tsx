@@ -2,8 +2,9 @@
 
 import React from 'react';
 
-import { Box, useTheme, InputBase, IconButton, Typography } from '@mui/material';
+import { Box, InputBase, IconButton, Typography } from '@mui/material';
 
+import { T } from 'src/theme/tokens';
 import { useTranslate } from 'src/locales';
 
 import type { Filter } from '../common/AddFilter';
@@ -24,8 +25,6 @@ type Props = {
  */
 const AuditFrameFilterBar: React.FC<Props> = ({ filters, setFilters, onApply, onResetClick }) => {
   const { t } = useTranslate('audit-frame-detail');
-  const theme = useTheme();
-  const isDark = theme.palette.mode === 'dark';
 
   const side = (filters?.side as string) || 'next';
 
@@ -49,20 +48,17 @@ const AuditFrameFilterBar: React.FC<Props> = ({ filters, setFilters, onApply, on
     }
   };
 
-  // Design tokens (dark spec from design, with light-mode fallbacks).
-  // Accent strip inside the shared table container (keeps its own bg + border).
-  const containerBg = isDark ? '#212447' : '#EFF6FF';
-  const containerBorder = isDark ? '#1D2654' : '#DFEAFF';
-  const fieldBg = isDark ? '#202838' : '#FFFFFF';
-  const fieldBorder = isDark ? '#33343F' : '#E0E4EB';
-  const labelColor = '#6A6878';
-  const dividerColor = isDark ? '#33343F' : '#E0E4EB';
-  const placeholderColor = '#757575';
-  const valueColor = isDark ? '#F0F1F5' : '#373F4E';
-  const buttonText = '#A8AABA';
-  const arrowSelectedBg = isDark ? '#373F4E' : '#99BDFF';
-  const arrowIcon = '#F0F1F5';
-  const arrowIconMuted = isDark ? 'rgba(240,241,245,0.25)' : '#A8AABA';
+  // Indigo-tint filter bar (v5 mauve-dark palette).
+  const fieldBg = T.bg;
+  const fieldBorder = T.border;
+  const labelColor = T.textDim;
+  const dividerColor = T.border;
+  const placeholderColor = T.textFaint;
+  const valueColor = T.textPrim;
+  const buttonText = T.textSec;
+  const arrowSelectedBg = T.bgHover;
+  const arrowIcon = T.textPrim;
+  const arrowIconMuted = T.textDim;
 
   const fieldSx = {
     height: 38,
@@ -79,16 +75,17 @@ const AuditFrameFilterBar: React.FC<Props> = ({ filters, setFilters, onApply, on
 
   const buttonSx = {
     height: 38,
-    px: 1.5,
+    px: 2,
     flexShrink: 0,
-    bgcolor: fieldBg,
-    border: `1px solid ${fieldBorder}`,
+    bgcolor: T.bgPanel,
+    border: `1px solid ${T.border}`,
     borderRadius: '6px',
     display: 'flex',
     alignItems: 'center',
-    gap: 0.75,
+    gap: 0.875,
     cursor: 'pointer',
     color: buttonText,
+    '&:hover': { bgcolor: T.bgHover, color: T.textPrim },
   } as const;
 
   // Explicit CSS sizing so the icon never grows as a flex child.
@@ -109,13 +106,14 @@ const AuditFrameFilterBar: React.FC<Props> = ({ filters, setFilters, onApply, on
     <Box
       sx={{
         width: '100%',
-        px: 1.5,
-        py: 1.5,
-        bgcolor: containerBg,
-        borderBottom: `1px solid ${containerBorder}`,
+        p: '12px 14px',
+        bgcolor: '#4A3BFF0D',
+        border: '1px solid #4A3BFF55',
+        borderRadius: '8px',
+        flexShrink: 0,
         display: 'flex',
         alignItems: 'center',
-        gap: 1,
+        gap: 1.25,
       }}
     >
       {/* Cond */}
