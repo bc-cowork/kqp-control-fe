@@ -1,7 +1,7 @@
 'use client';
 
 import type { NavSectionProps } from 'src/components/nav-section';
-import type { Theme, SxProps, Breakpoint } from '@mui/material/styles';
+import type { Theme, SxProps } from '@mui/material/styles';
 
 import { useTheme } from '@mui/material/styles';
 
@@ -11,7 +11,6 @@ import { useSettingsContext } from 'src/components/settings';
 
 import { Main } from './main';
 import { HeaderV5 } from './header-v5';
-import { layoutClasses } from '../classes';
 import { useNavColorVars } from './styles';
 import { NavVerticalV5 } from './nav-vertical-v5';
 import { LayoutSection } from '../core/layout-section';
@@ -37,8 +36,6 @@ export function DashboardLayout({ sx, children, header, data }: DashboardLayoutP
   const navColorVars = useNavColorVars(theme, settings);
 
   const { nodes } = useGetNodes();
-
-  const layoutQuery: Breakpoint = 'xs';
 
   const isNavMini = settings.navLayout === 'mini';
   const isNavHorizontal = settings.navLayout === 'horizontal';
@@ -73,16 +70,6 @@ export function DashboardLayout({ sx, children, header, data }: DashboardLayoutP
         '--layout-dashboard-content-px': theme.spacing(5),
       }}
       sx={{
-        [`& .${layoutClasses.hasSidebar}`]: {
-          [theme.breakpoints.up(layoutQuery)]: {
-            transition: theme.transitions.create(['padding-left'], {
-              easing: 'var(--layout-transition-easing)',
-              duration: 'var(--layout-transition-duration)',
-            }),
-            pl: isNavMini ? 'var(--layout-nav-mini-width)' : 'var(--layout-nav-vertical-width)',
-          },
-        },
-
         ...sx,
         backgroundColor: '#161420',
         // Bound the shell to the viewport so it behaves as a fixed app-shell

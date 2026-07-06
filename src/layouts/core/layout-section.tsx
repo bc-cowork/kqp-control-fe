@@ -49,21 +49,29 @@ export function LayoutSection({
       <Box id="root__layout" className={layoutClasses.root} sx={sx}>
         {sidebarSection ? (
           <>
-            {sidebarSection}
+            {/* Full-width top bar spanning the whole shell, with the sidebar and
+                content sitting in a row beneath it (matches the reference). */}
+            {headerSection}
             <Box
               display="flex"
               flex="1 1 auto"
-              flexDirection="column"
-              // minHeight:0 lets this content wrapper shrink to the bounded
-              // (100vh) shell instead of growing to its content, so Main and
-              // every PageShell below it get a definite height and scroll={false}
-              // pages can scroll internally.
+              // minHeight:0 lets this row shrink to the bounded (100vh) shell
+              // instead of growing to its content, so Main and every PageShell
+              // below it get a definite height and scroll={false} pages scroll.
               minHeight={0}
               className={layoutClasses.hasSidebar}
             >
-              {headerSection}
-              {children}
-              {footerSection}
+              {sidebarSection}
+              <Box
+                display="flex"
+                flex="1 1 auto"
+                flexDirection="column"
+                minWidth={0}
+                minHeight={0}
+              >
+                {children}
+                {footerSection}
+              </Box>
             </Box>
           </>
         ) : (

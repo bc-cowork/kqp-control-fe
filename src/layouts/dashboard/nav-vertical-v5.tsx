@@ -19,7 +19,6 @@ import { useAuthContext } from 'src/auth/hooks';
 import { useGetStatus, useGetProcesses, useGetMemoryMetrics } from 'src/actions/dashboard';
 import { useGetChannelList } from 'src/actions/nodes';
 
-import { Logo } from 'src/components/logo';
 import { KIcon } from 'src/components/k-icons';
 
 import type { KIconName } from 'src/components/k-icons';
@@ -130,17 +129,13 @@ export function NavVerticalV5({ nodes }: NavVerticalV5Props) {
   return (
     <Box
       sx={{
-        top: 0,
-        left: 0,
-        height: 1,
-        position: 'fixed',
+        flexShrink: 0,
         display: 'flex',
         flexDirection: 'column',
         width: '268px',
         bgcolor: T.bgPanel,
         borderRight: `1px solid ${T.border}`,
         overflow: 'hidden',
-        zIndex: 'var(--layout-nav-zIndex)',
       }}
     >
       {/* Brand header */}
@@ -154,7 +149,12 @@ export function NavVerticalV5({ nodes }: NavVerticalV5Props) {
           justifyContent: 'space-between',
         }}
       >
-        <Logo isSingle={false} isWhite width={110} height={24} disableLink />
+        <Box
+          component="img"
+          src="/logo/pmr-butterfly.png"
+          alt="PMR"
+          sx={{ height: 24, width: 'auto', display: 'block' }}
+        />
         <Box sx={{ width: 24, height: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', color: T.textDim, cursor: 'pointer' }}>
           <KIcon name="scrap" size={18} />
         </Box>
