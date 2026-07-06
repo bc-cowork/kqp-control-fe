@@ -11,13 +11,14 @@ import Typography from '@mui/material/Typography';
 import { paths } from 'src/routes/paths';
 import { usePathname, useRouter } from 'src/routes/hooks';
 
+import { formatBytes } from 'src/utils/helper';
 import { fetcher, endpoints } from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
 import { signOut } from 'src/auth/context/jwt/action';
 import { useAuthContext } from 'src/auth/hooks';
-import { useGetStatus, useGetProcesses, useGetMemoryMetrics } from 'src/actions/dashboard';
-import { useGetChannelList } from 'src/actions/nodes';
+import { useGetProcesses, useGetMemoryMetrics } from 'src/actions/dashboard';
+import { useAuditLogList, useGetChannelList } from 'src/actions/nodes';
 
 import { KIcon } from 'src/components/k-icons';
 
@@ -246,12 +247,15 @@ function NodeTiles({ node, nodeOnline, isActive, onNavigate, t }: NodeTilesProps
   const { channels: inChannels } = useGetChannelList(node, 'inbound') as { channels: any[] };
   const { channels: outChannels } = useGetChannelList(node, 'outbound') as { channels: any[] };
   const { memoryMetricsData } = useGetMemoryMetrics(node);
-  const { status } = useGetStatus(node);
+  const { auditLogs } = useAuditLogList(node, 'all', 1, 1000);
   const { data: layoutData } = useSWR(node ? endpoints.layouts.list(node) : null, fetcher);
 
   const layoutCount = (layoutData?.data?.list?.length ?? layoutData?.data?.layoutList?.length) as number | undefined;
   const memUsage = memoryMetricsData?.mem_usage;
-  const statusOkay = status?.service_status?.okay;
+
+  // Total audit-log disk usage = sum of every audit-log file's size (bytes).
+  const auditTotalBytes = (auditLogs || []).reduce((sum, log) => sum + (Number(log.size) || 0), 0);
+  const auditTotal = auditLogs?.length ? String(formatBytes(auditTotalBytes) ?? '') : '';
 
   const groups = [
     {
@@ -267,8 +271,8 @@ function NodeTiles({ node, nodeOnline, isActive, onNavigate, t }: NodeTilesProps
         { label: t('tab_option.memory'), value: memUsage != null ? `${memUsage}%` : '', path: paths.dashboard.nodes.memory(node) },
         {
           label: t('tab_option.status'),
-          value: statusOkay == null ? '' : statusOkay ? t('tile.normal') : t('tile.abnormal'),
-          tone: statusOkay === false ? 'off' : 'default',
+          value: nodeOnline ? t('tile.normal') : t('tile.abnormal'),
+          tone: nodeOnline ? 'default' : 'off',
           path: paths.dashboard.nodes.status(node),
         },
         { label: t('tab_option.replay'), value: '', tone: 'dim', path: paths.dashboard.nodes.replay(node) },
@@ -277,7 +281,7 @@ function NodeTiles({ node, nodeOnline, isActive, onNavigate, t }: NodeTilesProps
     {
       label: t('group.data'),
       tiles: [
-        { label: t('tab_option.audit_log'), value: '', path: paths.dashboard.nodes.auditLog(node) },
+        { label: t('tab_option.audit_log'), value: auditTotal, path: paths.dashboard.nodes.auditLog(node) },
         { label: t('tab_option.layout_list'), value: layoutCount != null ? String(layoutCount) : '', path: paths.dashboard.nodes.layoutList(node) },
         { label: t('tab_option.channels_inbound'), value: inChannels?.length != null ? String(inChannels.length) : '', path: paths.dashboard.nodes.channelsInbound(node) },
         { label: t('tab_option.channels_outbound'), value: outChannels?.length != null ? String(outChannels.length) : '', path: paths.dashboard.nodes.channelsOutbound(node) },
