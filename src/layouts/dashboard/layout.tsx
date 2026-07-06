@@ -85,6 +85,11 @@ export function DashboardLayout({ sx, children, header, data }: DashboardLayoutP
 
         ...sx,
         backgroundColor: '#161420',
+        // Bound the shell to the viewport so it behaves as a fixed app-shell
+        // (matches the reference): the sidebar/header stay put and each page's
+        // content scrolls inside PageShell rather than growing the whole page.
+        height: '100vh',
+        overflow: 'hidden',
       }}
     >
       <Main isNavHorizontal={isNavHorizontal}>{children}</Main>

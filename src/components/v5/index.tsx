@@ -283,37 +283,10 @@ export function SummaryCard({ label, value }: { label: string; value: ReactNode 
 // StatusBadge
 // ----------------------------------------------------------------------
 
-export function StatusBadge({
-  on,
-  labelOn = 'active',
-  labelOff = 'inactive',
-  color,
-  badged,
-}: {
-  on: boolean;
-  labelOn?: string;
-  labelOff?: string;
-  color?: string;
-  badged?: boolean;
-}) {
+export function StatusBadge({ on, labelOn = 'active', labelOff = 'inactive', color }: { on: boolean; labelOn?: string; labelOff?: string; color?: string }) {
   const c = color || (on ? T.on : T.off);
   return (
-    <Box
-      component="span"
-      sx={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 0.625,
-        fontSize: 14,
-        fontWeight: badged ? 500 : 350,
-        px: badged ? '7px' : 1,
-        py: '2px',
-        borderRadius: '3px',
-        letterSpacing: '0.03em',
-        color: c,
-        ...(badged && { bgcolor: `${c}1F`, border: `1px solid ${c}40` }),
-      }}
-    >
+    <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.625, fontSize: 14, fontWeight: 350, px: 1, py: '2px', borderRadius: '3px', letterSpacing: '0.03em', color: c }}>
       <Box sx={{ width: 5, height: 5, borderRadius: '50%', bgcolor: 'currentColor' }} />
       {on ? labelOn : labelOff}
     </Box>

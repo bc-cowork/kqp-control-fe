@@ -10,7 +10,7 @@ import { endpoints, fetcher } from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
 import { ACCENT2 } from 'src/theme/tokens';
-import { PageShell, DataTable, BtnGhost, StatusBadge, SectionLabel } from 'src/components/v5';
+import { PageShell, DataTable, StatusBadge, SectionLabel } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
 
@@ -23,7 +23,7 @@ export default function Page({ params }: Props) {
   const { t } = useTranslate('status');
   const { node } = params;
   const url = endpoints.status.list(node);
-  const { data, error, isLoading, mutate } = useSWR(url, fetcher);
+  const { data, error, isLoading } = useSWR(url, fetcher);
 
   const serviceSummary = data?.data?.service_status?.summary;
   const traffics = data?.data?.service_status?.traffics;
@@ -60,10 +60,11 @@ export default function Page({ params }: Props) {
       align: 'right',
       render: (r) => {
         const abnormal = r.data?.odd > 0 || !!r.data?.note;
+        // Always surface the English "Abnormal" label in both locales (per design).
         return abnormal ? (
-          <StatusBadge on={false} labelOff={r.data?.note || t('badge.abnormal')} color={ACCENT2} badged />
+          <StatusBadge on={false} labelOff="Abnormal" color={ACCENT2} />
         ) : (
-          <StatusBadge on labelOn={t('badge.normal')} badged />
+          <StatusBadge on labelOn={t('badge.normal')} />
         );
       },
     },
@@ -81,7 +82,6 @@ export default function Page({ params }: Props) {
       scroll={false}
       crumbs={[{ label: t('top.title') }]}
       title={t('top.title')}
-      actions={<BtnGhost icon="solar:refresh-linear" onClick={() => mutate()}>{t('top.refresh')}</BtnGhost>}
     >
       <Box sx={{ flexShrink: 0 }}>
         <DataTable<SummaryRow>
@@ -96,13 +96,13 @@ export default function Page({ params }: Props) {
       <Box sx={{ display: 'flex', gap: 1.75, flex: 1, minHeight: 0 }}>
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0, minHeight: 0 }}>
           <SectionLabel>{t('table_top.ch_inbound')}</SectionLabel>
-          <Box sx={{ flex: 1, minHeight: 0, display: 'flex', '& > *': { flex: 1, minHeight: 0 } }}>
+          <Box sx={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', '& > *': { flex: 1, minHeight: 0 } }}>
             <DataTable<TrafficRow> columns={trafficCols} rows={inbound} dense emptyLabel={t('table_bottom.no_inbound_traffic')} />
           </Box>
         </Box>
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0, minHeight: 0 }}>
           <SectionLabel>{t('table_top.ch_outbound')}</SectionLabel>
-          <Box sx={{ flex: 1, minHeight: 0, display: 'flex', '& > *': { flex: 1, minHeight: 0 } }}>
+          <Box sx={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', '& > *': { flex: 1, minHeight: 0 } }}>
             <DataTable<TrafficRow> columns={trafficCols} rows={outbound} dense emptyLabel={t('table_bottom.no_outbound_traffic')} />
           </Box>
         </Box>

@@ -27,6 +27,11 @@ export function Main({ children, isNavHorizontal, sx, ...other }: MainProps) {
         display: 'flex',
         flex: '1 1 auto',
         flexDirection: 'column',
+        // The shell is bounded to the viewport; give the content region its own
+        // scroll so PageShell pages bound (and scroll internally) while tall
+        // non-PageShell pages scroll here instead of being clipped.
+        minHeight: 0,
+        overflowY: 'auto',
         ...(isNavHorizontal && {
           '--layout-dashboard-content-pt': '40px',
         }),
