@@ -15,7 +15,7 @@ import { fetcher, endpoints } from 'src/utils/axios';
 import { useTranslate } from 'src/locales';
 import { T, FONT_MONO } from 'src/theme/tokens';
 
-import { Panel, PageShell, DataTable, CodeBlock, SectionLabel } from 'src/components/v5';
+import { PageShell, DataTable, CodeBlock, SectionLabel } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
 
@@ -93,7 +93,7 @@ export default function Page({ params }: Props) {
         sx={{
           display: 'flex',
           gap: 2,
-          alignItems: 'flex-start',
+          alignItems: 'stretch',
           flexWrap: { xs: 'wrap', md: 'nowrap' },
         }}
       >
@@ -102,6 +102,7 @@ export default function Page({ params }: Props) {
           <DataTable<RefItem>
             columns={refColumns}
             rows={specList}
+            maxHeight="calc(100vh - 400px)"
             loading={isLoading}
             error={!!error}
             emptyLabel={t('detail_table.empty_related_identifiers')}
@@ -111,14 +112,25 @@ export default function Page({ params }: Props) {
           />
         </Box>
 
-        <Box sx={{ flex: '1 1 42%', minWidth: 0, width: '100%', display: 'flex', flexDirection: 'column', gap: 1 }}>
+        <Box sx={{ flex: '1 1 42%', minWidth: 0, width: '100%', minHeight: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
           <SectionLabel>{t('detail_table.script_title')}</SectionLabel>
-          <Panel sx={{ p: 2 }}>
-            <Typography sx={{ fontFamily: FONT_MONO, fontSize: 13, color: T.textDim, mb: 1.25 }}>
+          <Box
+            sx={{
+              flex: 1,
+              minHeight: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              border: `1px solid ${T.border}`,
+              borderRadius: '8px',
+              overflow: 'hidden',
+              bgcolor: '#161420',
+            }}
+          >
+            <Typography sx={{ fontFamily: FONT_MONO, fontSize: 13, color: T.textDim, px: '16px', py: '10px', borderBottom: `1px solid ${T.border}`, flexShrink: 0 }}>
               -- {fnName}.moon
             </Typography>
-            <CodeBlock theme="moon">{isLoading ? '' : error ? '' : script}</CodeBlock>
-          </Panel>
+            <CodeBlock theme="moon" fill flush>{isLoading ? '' : error ? '' : script}</CodeBlock>
+          </Box>
         </Box>
       </Box>
     </PageShell>

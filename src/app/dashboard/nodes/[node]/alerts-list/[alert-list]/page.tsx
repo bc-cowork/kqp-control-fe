@@ -262,24 +262,13 @@ export default function Page({ params }: Props) {
                 border: `1px solid ${T.border}`,
                 borderRadius: '8px',
                 overflow: 'hidden',
-                bgcolor: T.bgCard,
+                bgcolor: '#161420',
               }}
             >
-              <Box
-                sx={{
-                  px: 2,
-                  py: 1,
-                  borderBottom: `1px solid ${T.border}`,
-                  flexShrink: 0,
-                }}
-              >
-                <Typography sx={{ color: T.textDim, fontSize: 13, fontFamily: FONT_MONO }}>
-                  -- {scriptFileName}
-                </Typography>
-              </Box>
-              <Box sx={{ flex: 1, minHeight: 0, p: 1.75, overflow: 'auto' }}>
-                <CodeBlock theme="moon">{alertCode}</CodeBlock>
-              </Box>
+              <Typography sx={{ fontFamily: FONT_MONO, fontSize: 13, color: T.textDim, px: '16px', py: '10px', borderBottom: `1px solid ${T.border}`, flexShrink: 0 }}>
+                -- {scriptFileName}
+              </Typography>
+              <CodeBlock theme="moon" fill flush>{alertCode}</CodeBlock>
             </Box>
           </Stack>
         </Stack>

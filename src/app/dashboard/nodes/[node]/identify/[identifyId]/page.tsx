@@ -18,7 +18,7 @@ import { fetcher, endpoints } from 'src/utils/axios';
 import { useTranslate } from 'src/locales';
 import { T, FONT_MONO } from 'src/theme/tokens';
 
-import { Panel, CodeBlock, DataTable, PageShell, SectionLabel } from 'src/components/v5';
+import { CodeBlock, DataTable, PageShell, SectionLabel } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
 
@@ -136,7 +136,7 @@ export default function Page({ params }: Props) {
         emptyLabel={t('empty_detail')}
       />
 
-      <Box sx={{ display: 'flex', gap: 2, alignItems: 'flex-start' }}>
+      <Box sx={{ display: 'flex', gap: 2, alignItems: 'stretch' }}>
         <Box sx={{ flex: 7, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1.75 }}>
           {/* Key box — header-less cell-style box (same tone as table body cells) */}
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -162,6 +162,7 @@ export default function Page({ params }: Props) {
             <DataTable<SpecRow>
               columns={specColumns}
               rows={specList}
+              maxHeight={340}
               loading={isLoading}
               error={!!error}
               emptyLabel={t('detail_table.empty_related_specs')}
@@ -225,14 +226,25 @@ export default function Page({ params }: Props) {
         </Box>
 
         {/* Identifier Definition */}
-        <Box sx={{ flex: 5, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
+        <Box sx={{ flex: 5, minWidth: 0, minHeight: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
           <SectionLabel>{t('detail_table.script_title')}</SectionLabel>
-          <Panel sx={{ p: 2 }}>
-            <Typography sx={{ fontFamily: FONT_MONO, fontSize: 13, color: T.textDim, mb: 1.25 }}>
+          <Box
+            sx={{
+              flex: 1,
+              minHeight: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              border: `1px solid ${T.border}`,
+              borderRadius: '8px',
+              overflow: 'hidden',
+              bgcolor: '#161420',
+            }}
+          >
+            <Typography sx={{ fontFamily: FONT_MONO, fontSize: 13, color: T.textDim, px: '16px', py: '10px', borderBottom: `1px solid ${T.border}`, flexShrink: 0 }}>
               {`-- ${scriptFile}.moon`}
             </Typography>
-            <CodeBlock theme="moon">{scriptBody}</CodeBlock>
-          </Panel>
+            <CodeBlock theme="moon" fill flush>{scriptBody}</CodeBlock>
+          </Box>
         </Box>
       </Box>
     </PageShell>

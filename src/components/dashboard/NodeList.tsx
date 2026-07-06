@@ -5,10 +5,12 @@ import type { INodeItem } from 'src/types/dashboard';
 
 import { useEffect } from 'react';
 
+import Box from '@mui/material/Box';
+
 import { useTranslate } from 'src/locales';
 
 import { T, ACCENT2 } from 'src/theme/tokens';
-import { DataTable, StatusBadge } from 'src/components/v5';
+import { DataTable } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
 
@@ -60,9 +62,32 @@ export function NodeList({
       key: 'online_status',
       label: t('node.state'),
       width: 96,
-      render: (row) => (
-        <StatusBadge on={row.online_status} labelOn={t('top.on')} labelOff={t('top.off')} />
-      ),
+      render: (row) => {
+        const on = row.online_status;
+        const c = on ? T.on : T.offline;
+        return (
+          <Box
+            component="span"
+            sx={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '4px',
+              fontSize: 14,
+              fontWeight: 500,
+              px: '7px',
+              py: '2px',
+              borderRadius: '3px',
+              letterSpacing: '0.04em',
+              bgcolor: on ? T.onBg : T.offlineBg,
+              color: c,
+              border: `1px solid ${c}40`,
+            }}
+          >
+            <Box sx={{ width: 5, height: 5, borderRadius: '50%', bgcolor: 'currentColor' }} />
+            {on ? t('top.on') : t('top.off')}
+          </Box>
+        );
+      },
     },
     {
       key: 'id',

@@ -157,6 +157,7 @@ export default function Page({ params }: Props) {
           <DataTable<IdentifyRow>
             columns={identifierColumns}
             rows={identifiers}
+            maxHeight="calc(100vh - 400px)"
             loading={isLoading}
             error={!!error}
             emptyLabel={t('empty_identifiers')}
@@ -168,6 +169,7 @@ export default function Page({ params }: Props) {
           <DataTable<FragRow>
             columns={fragColumns}
             rows={frags}
+            maxHeight="calc(100vh - 400px)"
             loading={isLoading}
             error={!!error}
             emptyLabel={t('empty_definition')}

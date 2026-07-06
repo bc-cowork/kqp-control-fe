@@ -5,6 +5,8 @@ import type { Column } from 'src/components/v5';
 import useSWR from 'swr';
 import { useRouter } from 'next/navigation';
 
+import Box from '@mui/material/Box';
+
 import { paths } from 'src/routes/paths';
 
 import { fetcher, endpoints } from 'src/utils/axios';
@@ -56,18 +58,21 @@ export default function Page({ params }: Props) {
         { label: decodedProcess },
       ]}
       title={`${t('top.process')} : ${decodedProcess}`}
+      scroll={false}
     >
-      <DataTable<any>
-        columns={summaryColumns}
-        rows={summaryRows}
-        headerVariant="light"
-        loading={isLoading}
-        error={!!error}
-        emptyLabel={t('empty')}
-      />
+      <Box sx={{ flexShrink: 0 }}>
+        <DataTable<any>
+          columns={summaryColumns}
+          rows={summaryRows}
+          headerVariant="light"
+          loading={isLoading}
+          error={!!error}
+          emptyLabel={t('empty')}
+        />
+      </Box>
 
       <SectionLabel>{t('detail_table.script_title')}</SectionLabel>
-      <CodeBlock theme="default">{isLoading ? '' : error ? '' : layoutDefinition}</CodeBlock>
+      <CodeBlock theme="default" fill>{isLoading ? '' : error ? '' : layoutDefinition}</CodeBlock>
     </PageShell>
   );
 }

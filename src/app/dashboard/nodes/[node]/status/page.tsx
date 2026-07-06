@@ -61,9 +61,9 @@ export default function Page({ params }: Props) {
       render: (r) => {
         const abnormal = r.data?.odd > 0 || !!r.data?.note;
         return abnormal ? (
-          <StatusBadge on={false} labelOff={r.data?.note || t('badge.abnormal')} color={ACCENT2} />
+          <StatusBadge on={false} labelOff={r.data?.note || t('badge.abnormal')} color={ACCENT2} badged />
         ) : (
-          <StatusBadge on labelOn={t('badge.normal')} />
+          <StatusBadge on labelOn={t('badge.normal')} badged />
         );
       },
     },
@@ -78,26 +78,33 @@ export default function Page({ params }: Props) {
   return (
     <PageShell
       node={node}
+      scroll={false}
       crumbs={[{ label: t('top.title') }]}
       title={t('top.title')}
       actions={<BtnGhost icon="solar:refresh-linear" onClick={() => mutate()}>{t('top.refresh')}</BtnGhost>}
     >
-      <DataTable<SummaryRow>
-        columns={summaryCols}
-        rows={summaryRows}
-        loading={isLoading}
-        error={!!error}
-        emptyLabel={t('table_top.no_data')}
-      />
+      <Box sx={{ flexShrink: 0 }}>
+        <DataTable<SummaryRow>
+          columns={summaryCols}
+          rows={summaryRows}
+          loading={isLoading}
+          error={!!error}
+          emptyLabel={t('table_top.no_data')}
+        />
+      </Box>
 
       <Box sx={{ display: 'flex', gap: 1.75, flex: 1, minHeight: 0 }}>
-        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
+        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0, minHeight: 0 }}>
           <SectionLabel>{t('table_top.ch_inbound')}</SectionLabel>
-          <DataTable<TrafficRow> columns={trafficCols} rows={inbound} dense emptyLabel={t('table_bottom.no_inbound_traffic')} />
+          <Box sx={{ flex: 1, minHeight: 0, display: 'flex', '& > *': { flex: 1, minHeight: 0 } }}>
+            <DataTable<TrafficRow> columns={trafficCols} rows={inbound} dense emptyLabel={t('table_bottom.no_inbound_traffic')} />
+          </Box>
         </Box>
-        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
+        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0, minHeight: 0 }}>
           <SectionLabel>{t('table_top.ch_outbound')}</SectionLabel>
-          <DataTable<TrafficRow> columns={trafficCols} rows={outbound} dense emptyLabel={t('table_bottom.no_outbound_traffic')} />
+          <Box sx={{ flex: 1, minHeight: 0, display: 'flex', '& > *': { flex: 1, minHeight: 0 } }}>
+            <DataTable<TrafficRow> columns={trafficCols} rows={outbound} dense emptyLabel={t('table_bottom.no_outbound_traffic')} />
+          </Box>
         </Box>
       </Box>
     </PageShell>

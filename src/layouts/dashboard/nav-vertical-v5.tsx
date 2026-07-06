@@ -101,8 +101,13 @@ export function NavVerticalV5({ nodes }: NavVerticalV5Props) {
     }
   }, [checkUserSession, router]);
 
-  const displayName = (user?.displayName || user?.name || user?.email?.split('@')[0] || 'User') as string;
-  const teamName = (user?.role || user?.team || 'Team') as string;
+  const displayName = (user?.displayName ||
+    user?.name ||
+    user?.email?.split('@')[0] ||
+    user?.id ||
+    user?.user?.id ||
+    'User') as string;
+  const teamName = (user?.role || user?.user?.role || user?.team || 'Team') as string;
   const initials = displayName
     .split(' ')
     .map((s: string) => s[0])

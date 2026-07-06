@@ -50,8 +50,13 @@ export function HeaderV5() {
   const [userAnchor, setUserAnchor] = useState<HTMLElement | null>(null);
   const [bellAnchor, setBellAnchor] = useState<HTMLElement | null>(null);
 
-  const displayName = (user?.displayName || user?.name || user?.email?.split('@')[0] || 'User') as string;
-  const teamName = (user?.role || user?.team || 'Team') as string;
+  const displayName = (user?.displayName ||
+    user?.name ||
+    user?.email?.split('@')[0] ||
+    user?.id ||
+    user?.user?.id ||
+    'User') as string;
+  const teamName = (user?.role || user?.user?.role || user?.team || 'Team') as string;
   const initials = displayName
     .split(' ')
     .map((s: string) => s[0])

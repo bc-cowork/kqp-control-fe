@@ -3,6 +3,10 @@
 import type { ReactNode } from 'react';
 
 import { useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import SyntaxHighlighter from 'react-syntax-highlighter';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -125,6 +129,7 @@ type DataTableProps<R = any> = {
   loading?: boolean;
   error?: boolean;
   emptyLabel?: string;
+  maxHeight?: number | string;
 };
 
 export function DataTable<R = any>({
@@ -139,6 +144,7 @@ export function DataTable<R = any>({
   loading,
   error,
   emptyLabel = 'No data',
+  maxHeight,
 }: DataTableProps<R>) {
   const light = headerVariant === 'light';
   const showPlaceholder = loading || error || rows.length === 0;
@@ -152,6 +158,7 @@ export function DataTable<R = any>({
         bgcolor: T.bgCard,
         overflow: 'auto',
         minHeight: 0,
+        maxHeight,
       }}
     >
       <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse', fontSize: 17, lineHeight: 1.2 }}>
@@ -276,10 +283,37 @@ export function SummaryCard({ label, value }: { label: string; value: ReactNode 
 // StatusBadge
 // ----------------------------------------------------------------------
 
-export function StatusBadge({ on, labelOn = 'active', labelOff = 'inactive', color }: { on: boolean; labelOn?: string; labelOff?: string; color?: string }) {
+export function StatusBadge({
+  on,
+  labelOn = 'active',
+  labelOff = 'inactive',
+  color,
+  badged,
+}: {
+  on: boolean;
+  labelOn?: string;
+  labelOff?: string;
+  color?: string;
+  badged?: boolean;
+}) {
   const c = color || (on ? T.on : T.off);
   return (
-    <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.625, fontSize: 14, fontWeight: 350, px: 1, py: '2px', borderRadius: '3px', letterSpacing: '0.03em', color: c, bgcolor: `${c}18`, border: `1px solid ${c}40` }}>
+    <Box
+      component="span"
+      sx={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 0.625,
+        fontSize: 14,
+        fontWeight: badged ? 500 : 350,
+        px: badged ? '7px' : 1,
+        py: '2px',
+        borderRadius: '3px',
+        letterSpacing: '0.03em',
+        color: c,
+        ...(badged && { bgcolor: `${c}1F`, border: `1px solid ${c}40` }),
+      }}
+    >
       <Box sx={{ width: 5, height: 5, borderRadius: '50%', bgcolor: 'currentColor' }} />
       {on ? labelOn : labelOff}
     </Box>
@@ -445,27 +479,50 @@ export function SectionLabel({ children }: { children: ReactNode }) {
 // CodeBlock (read-only, lightly tinted)
 // ----------------------------------------------------------------------
 
-export function CodeBlock({ children, theme = 'moon', minHeight }: { children: string; theme?: 'moon' | 'default'; minHeight?: number }) {
-  const bg = theme === 'moon' ? T.bgCard : T.bg;
+export function CodeBlock({
+  children,
+  theme = 'moon',
+  minHeight,
+  fill,
+  flush,
+}: {
+  children: string;
+  theme?: 'moon' | 'default';
+  minHeight?: number;
+  fill?: boolean;
+  flush?: boolean;
+}) {
+  // Single near-black surface with syntax-coloured tokens (matches the reference editors).
+  // The inner highlighter is transparent so the container colour fills every pixel —
+  // no lighter band beneath the last line.
+  const bg = '#161420';
+  const language = theme === 'moon' ? 'moonscript' : 'yaml';
   return (
     <Box
-      component="pre"
       sx={{
-        m: 0,
-        bgcolor: bg,
-        border: `1px solid ${T.border}`,
-        borderRadius: '8px',
-        p: '16px 18px',
-        fontFamily: FONT_MONO,
-        fontSize: 15.5,
-        lineHeight: 1.8,
-        color: theme === 'moon' ? '#f8f8f2' : T.textPrim,
-        whiteSpace: 'pre-wrap',
+        border: flush ? 'none' : `1px solid ${T.border}`,
+        borderRadius: flush ? 0 : '8px',
         overflow: 'auto',
+        bgcolor: bg,
         minHeight,
+        ...(fill && { flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }),
       }}
     >
-      {children}
+      <SyntaxHighlighter
+        language={language}
+        style={a11yDark}
+        customStyle={{
+          margin: 0,
+          background: 'transparent',
+          padding: '16px 18px',
+          fontSize: 15.5,
+          lineHeight: 1.7,
+          ...(fill && { flex: 1, minHeight: '100%' }),
+        }}
+        codeTagProps={{ style: { fontFamily: FONT_MONO, background: 'transparent' } }}
+      >
+        {children}
+      </SyntaxHighlighter>
     </Box>
   );
 }
