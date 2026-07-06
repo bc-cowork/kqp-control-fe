@@ -1,6 +1,7 @@
 {
   "top": {
-    "action_list": "Actions"
+    "action_list": "Actions",
+    "title_prefix": "Action"
   },
   "table": {
     "id": "ID",
@@ -15,7 +16,8 @@
   "error": "Failed to load actions",
   "empty": "No actions found",
   "detail": {
-    "placeholder": "Action details will appear here."
+    "placeholder": "Action details will appear here.",
+    "empty": "No action found"
   },
   "detail_table": {
     "layout_no": "No",
@@ -24,6 +26,10 @@
     "process_no": "No",
     "process_name": "Related Process",
     "process_usage_freq": "Usage Frequency",
-    "script_title": "Action Definition"
+    "script_title": "Action Definition",
+    "layouts_title": "Related Layouts",
+    "processes_title": "Related Processes",
+    "empty_layouts": "No related layouts",
+    "empty_processes": "No related processes"
   }
 }

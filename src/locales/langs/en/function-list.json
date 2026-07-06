@@ -1,6 +1,7 @@
 {
   "top": {
-    "function_list": "User Functions"
+    "function_list": "User Functions",
+    "title_prefix": "Function"
   },
   "table": {
     "id": "ID",
@@ -14,9 +15,12 @@
     "script_title": "User Function Definition",
     "no": "No",
     "related_identifier": "Related Identifier",
-    "ref_freq": "Ref. Frequency"
+    "ref_freq": "Ref. Frequency",
+    "section_identifiers": "Related Identifiers",
+    "empty_related_identifiers": "No related identifiers"
   },
   "loading": "Loading...",
   "error": "Failed to load",
-  "empty": "No identities"
+  "empty": "No functions",
+  "empty_detail": "No function found"
 }

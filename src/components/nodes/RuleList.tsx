@@ -1,22 +1,17 @@
 'use client';
 
+import type { Column } from 'src/components/v5';
 
-import {
-  Table,
-  Paper,
-  TableRow,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableContainer,
-  CircularProgress,
-} from '@mui/material';
+import useSWR from 'swr';
 
 import { useRouter } from 'src/routes/hooks';
 
+import { fetcher, endpoints } from 'src/utils/axios';
+
 import { useTranslate } from 'src/locales';
-import { endpoints, fetcher } from 'src/utils/axios';
-import useSWR from 'swr';
+
+import { T, FONT_MONO } from 'src/theme/tokens';
+import { DataTable } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
 
@@ -24,69 +19,56 @@ type Props = {
   selectedNodeId: string;
 };
 
+type RuleItem = {
+  name: string;
+  path: string;
+  timestamp: string;
+  ref_layout?: string | number;
+  ref_process?: string | number;
+  ref_actions?: string | number;
+  desc?: string;
+};
+
 export function RuleList({ selectedNodeId }: Props) {
-  const { t } = useTranslate('rule-list');
   const router = useRouter();
+  const { t } = useTranslate('rule-list');
   const url = endpoints.rules.list(selectedNodeId);
   const { data, error, isLoading } = useSWR(url, fetcher);
-  const processes: any[] = (data && data.data && data.data.list) || [];
-  const processLoading = isLoading;
-  const processError = error;
-  const processesEmpty = !processLoading && processes.length === 0;
+  const rows: RuleItem[] = (data && data.data && data.data.list) || [];
 
+  const columns: Column<RuleItem>[] = [
+    { key: 'id', label: t('table_header.id'), mono: true, align: 'right', width: 56, render: (_r, i) => i + 1 },
+    {
+      key: 'name',
+      label: t('table_header.name'),
+      render: (r) => (
+        <span style={{ color: T.primary, fontWeight: 400, fontFamily: FONT_MONO }}>{r.name}</span>
+      ),
+    },
+    { key: 'path', label: t('table_header.path'), mono: true, dim: true },
+    { key: 'timestamp', label: t('table_header.timestamp'), mono: true, dim: true },
+    { key: 'ref_layout', label: t('table_header.ref_layout'), mono: true, align: 'right' },
+    {
+      key: 'ref_process',
+      label: t('table_header.ref_process'),
+      mono: true,
+      align: 'right',
+      render: (r) => Number(r?.ref_process)?.toLocaleString(),
+    },
+    { key: 'ref_actions', label: t('table_header.ref_actions'), mono: true, align: 'right' },
+    { key: 'desc', label: t('table_header.desc'), dim: true, grow: true },
+  ];
 
   return (
-    <TableContainer component={Paper}>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell align="left" />
-            <TableCell align="left">{t('table_header.id')}</TableCell>
-            <TableCell>{t('table_header.name')}</TableCell>
-            <TableCell>{t('table_header.path')}</TableCell>
-            <TableCell align="left">{t('table_header.timestamp')}</TableCell>
-            <TableCell align="left">{t('table_header.ref_layout')}</TableCell>
-            <TableCell align="left">{t('table_header.ref_process')}</TableCell>
-            <TableCell align="left">{t('table_header.ref_actions')}</TableCell>
-            <TableCell>{t('table_header.desc')}</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {processLoading ? (
-            <TableRow>
-              <TableCell colSpan={9} align="center">
-                <CircularProgress />
-              </TableCell>
-            </TableRow>
-          ) : processesEmpty ? (
-            <TableRow>
-              <TableCell colSpan={9}>No Processes Found</TableCell>
-            </TableRow>
-          ) : processError ? (
-            <TableRow>
-              <TableCell colSpan={9}>Error Fetching Process List</TableCell>
-            </TableRow>
-          ) : (
-            processes.map((process: any, index: number) => (
-              <TableRow
-                key={process.name}
-                onClick={() => router.push(`/dashboard/nodes/${selectedNodeId}/rules/${process.name}`)}
-                sx={{ cursor: 'pointer' }}
-              >
-                <TableCell align="left" />
-                <TableCell align="left">{index + 1}</TableCell>
-                <TableCell>{process.name}</TableCell>
-                <TableCell>{process.path}</TableCell>
-                <TableCell align="left">{process.timestamp}</TableCell>
-                <TableCell align="left">{process.ref_layout}</TableCell>
-                <TableCell align="left">{Number(process?.ref_process)?.toLocaleString()}</TableCell>
-                <TableCell align="left">{process.ref_actions}</TableCell>
-                <TableCell>{process.desc}</TableCell>
-              </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <DataTable<RuleItem>
+      columns={columns}
+      rows={rows}
+      loading={isLoading}
+      error={!!error}
+      emptyLabel={t('empty')}
+      onRowClick={(row) =>
+        router.push(`/dashboard/nodes/${selectedNodeId}/rules/${row.name}`)
+      }
+    />
   );
 }

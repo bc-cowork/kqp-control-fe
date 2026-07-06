@@ -18,6 +18,9 @@
   "btn": {
     "add": "항목 추가"
   },
+  "list": {
+    "watch_items": "감시 항목"
+  },
   "loading": "로딩 중...",
   "empty": "감시 항목 없음",
   "detail": {
@@ -43,6 +46,11 @@
   "alert": "감시",
   "form": {
     "page_title": "감시 아이템 설정",
+    "title_setup": "감시 아이템 설정",
+    "running": "작동 중",
+    "toast_created": "감시가 생성되었습니다",
+    "toast_updated": "감시가 수정되었습니다",
+    "toast_error": "감시 저장에 실패했습니다",
     "title_add": "감시 아이템 등록",
     "title_add_breadcrump": "아이템 추가",
     "title_edit": "감시 아이템 편집",

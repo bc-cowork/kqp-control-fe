@@ -14,9 +14,13 @@
     "script_title": "Identifier Definition",
     "no": "No",
     "related_spec": "Related SPEC",
-    "ref_freq": "Ref. Frequency"
+    "ref_freq": "Ref. Frequency",
+    "key_label": "Key",
+    "today_count": "Today Count",
+    "empty_related_specs": "No related specs"
   },
   "loading": "Loading...",
   "error": "Failed to load",
-  "empty": "No identities"
+  "empty": "No identifiers",
+  "empty_detail": "No identifier detail"
 }

@@ -83,13 +83,15 @@ export const common = createPaletteChannel(COLORS.common);
 // Text
 export const text = {
   light: createPaletteChannel({ primary: grey[800], secondary: grey[600], disabled: grey[500] }),
-  dark: createPaletteChannel({ primary: '#FFFFFF', secondary: grey[500], disabled: grey[600] }),
+  // v5 dark tokens (textPrim / textSec / textDim)
+  dark: createPaletteChannel({ primary: '#E9E6EF', secondary: '#A8AABA', disabled: '#6A6878' }),
 };
 
 // Background
 export const background = {
   light: createPaletteChannel({ paper: '#FFFFFF', default: '#FFFFFF', neutral: grey[200] }),
-  dark: createPaletteChannel({ paper: grey[800], default: grey[900], neutral: '#28323D' }),
+  // v5 dark tokens (bgPanel / bg / bgCard)
+  dark: createPaletteChannel({ paper: '#1E1B27', default: '#161420', neutral: '#25212E' }),
 };
 
 // Action

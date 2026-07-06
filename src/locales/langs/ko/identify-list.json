@@ -14,9 +14,13 @@
     "script_title": "식별자 정의",
     "no": "No",
     "related_spec": "연관 SPEC",
-    "ref_freq": "참조 빈도"
+    "ref_freq": "참조 빈도",
+    "key_label": "키",
+    "today_count": "금일 카운트",
+    "empty_related_specs": "연관 SPEC 없음"
   },
   "loading": "로딩 중...",
   "error": "불러오기에 실패했습니다",
-  "empty": "아이덴티티가 없습니다"
+  "empty": "식별자 없음",
+  "empty_detail": "식별자 상세 없음"
 }

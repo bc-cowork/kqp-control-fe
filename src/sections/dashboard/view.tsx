@@ -5,29 +5,25 @@ import type { INodeItem } from 'src/types/dashboard';
 import { useState } from 'react';
 
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Unstable_Grid2';
-import { useTheme } from '@mui/material/styles';
+import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { Chip, Stack, styled, Divider, SvgIcon } from '@mui/material';
 
 import { useTabs, useRouter } from 'src/routes/hooks';
 
-import { grey } from 'src/theme/core';
 import { useTranslate } from 'src/locales';
-import { useGetNodes } from 'src/actions/dashboard';
-import { DashboardContent } from 'src/layouts/dashboard';
+import { useGetNodes, useGetDiskMetrics } from 'src/actions/dashboard';
 
+import { T, ACCENT2 } from 'src/theme/tokens';
+import { Iconify } from 'src/components/iconify';
 import { NodeList } from 'src/components/dashboard/NodeList';
-import { Breadcrumb } from 'src/components/common/Breadcrumb';
-import { NodeStatus } from 'src/components/dashboard/NodeStatus';
 import { NodeGraphs } from 'src/components/dashboard/NodeGraphs';
 import { SegmentedButtonGroup } from 'src/components/dashboard/SegmentedButtonGroup';
 
 // ----------------------------------------------------------------------
 
 const VIEW_TABS = [
-  { value: '2x2', label: '2x2' },
-  { value: '1x4', label: '1x4' },
+  { value: '2x2', label: '2×2' },
+  { value: '1x4', label: '1×4' },
 ];
 
 export function DashboardView() {
@@ -40,122 +36,43 @@ export function DashboardView() {
   const [selectedNode, setSelectedNode] = useState<INodeItem | undefined>(undefined);
   const selectedNodeParam = selectedNode?.id || selectedNodeId;
 
-  const theme = useTheme();
-
   const totalNodes = nodes?.length || 0;
   const onlineNodes = nodes?.filter((node) => node.online_status)?.length || 0;
+  const offlineNodes = totalNodes - onlineNodes;
 
-  const handleRefresh = () => {
-    setRefreshKey((prevKey) => prevKey + 1);
-  };
+  const handleRefresh = () => setRefreshKey((k) => k + 1);
 
   return (
-    <DashboardContent maxWidth='xl'>
-      <Breadcrumb />
-      <Typography sx={{
-        fontSize: 28, fontWeight: 600,
-        color: theme.palette.mode === 'dark' ? grey[50] : '#373F4E',
-        mt: 2
-      }}>
-        {t('top.dashboard')}
-      </Typography>
+    <Box sx={{ flex: 1, display: 'flex', minHeight: 0, overflow: 'hidden', animation: 'fadeUp .25s ease both' }}>
+      {/* ════ LEFT PANEL ════ */}
       <Box
         sx={{
-          mt: 3,
-          width: 1,
+          flex: 1,
+          minWidth: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2.25,
+          p: '24px 20px 20px 24px',
+          overflow: 'hidden',
         }}
       >
-        <Grid container>
-          <Grid xs={12}>
-            <Box sx={{ backgroundColor: grey[900], width: '100%', borderRadius: '12px', p: '4px' }}>
-              <Stack direction="row" justifyContent="start" alignItems="center">
-                <Box
-                  sx={{
-                    height: '140px',
-                    width: '140px',
-                    borderRadius: '8px',
-                    background:
-                      'radial-gradient(62.05% 21.26% at 50% 100%, #4A3BFF 0%, #202838 100%)',
-                    color: theme.palette.common.white,
-                    mr: 0.5,
-                  }}
-                >
-                  <Typography sx={{ fontSize: 15, fontWeight: 500, pt: 2, pl: 3 }}>
-                    {t('top.total')}
-                  </Typography>
-                  <FadingDivider />
-                  <Typography
-                    sx={{ fontSize: 28, fontWeight: 500, textAlign: 'right', pr: 2, pt: 2 }}
-                  >
-                    {totalNodes?.toLocaleString()}
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    height: '140px',
-                    width: '140px',
-                    borderRadius: '8px',
-                    backgroundColor: '#202838',
-                    color: grey[600],
-                    mr: 0.5,
-                  }}
-                >
-                  <Box sx={{ pt: 1.8, pl: 2 }}>
-                    <Chip
-                      label={t('top.on')}
-                      color="success"
-                      size="small"
-                      variant="outlined"
-                      sx={{
-                        fontSize: 15,
-                        backgroundColor: '#202838',
-                      }}
-                      icon={
-                        <SvgIcon>
-                          <svg
-                            width="12"
-                            height="13"
-                            viewBox="0 0 12 13"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <circle cx="6" cy="6.30078" r="4" fill={theme.palette.success.main} />
-                          </svg>
-                        </SvgIcon>
-                      }
-                    />
-                  </Box>
-                  <FadingDivider />
-                  <Typography
-                    sx={{ fontSize: 28, fontWeight: 500, textAlign: 'right', pr: 2, pt: 2, color: theme.palette.grey[50] }}
-                  >
-                    {onlineNodes?.toLocaleString()}
-                  </Typography>
-                </Box>
-              </Stack>
-            </Box>
-          </Grid>
-        </Grid>
+        <Typography sx={{ fontSize: 30, fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1, color: T.textPrim }}>
+          {t('top.dashboard')}
+        </Typography>
 
-        <Grid container spacing={3} sx={{ mt: 3 }}>
+        {/* Summary cards */}
+        <Stack direction="row" spacing={1.25} sx={{ mt: 1.5 }}>
+          <SummaryStat label={t('top.total')} value={totalNodes} />
+          <SummaryStat pill="on" value={onlineNodes} />
+          <SummaryStat pill="off" value={offlineNodes} />
+        </Stack>
 
-          <Grid
-            xs={12}
-            md={6}
-            sx={{
-              height: 'auto'
-            }}
-          >
-            <Typography
-              sx={{
-                fontSize: 17,
-                fontWeight: 500,
-                color: theme.palette.mode === 'dark' ? '#AFB7C8' : '#373F4E',
-                mb: 1,
-              }}
-            >
-              {t('node.node')}
-            </Typography>
+        {/* Nodes table */}
+        <Box sx={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+          <Typography sx={{ fontSize: 17, fontWeight: 500, mb: 1.5, letterSpacing: '-0.01em', color: T.textPrim }}>
+            {t('node.node')}
+          </Typography>
+          <Box sx={{ flex: 1, minHeight: 0 }}>
             <NodeList
               selectedNode={selectedNode}
               selectedNodeId={selectedNodeId}
@@ -166,140 +83,187 @@ export function DashboardView() {
               nodesEmpty={nodesEmpty}
               nodesError={nodesError}
             />
-          </Grid>
-
-          <Grid
-            xs={12}
-            md={6}
-          >
-            <Box
-              sx={{
-                py: 2.5,
-                px: 1.5,
-                borderRadius: 1.5,
-                backgroundColor: theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF',
-                border: theme.palette.mode === 'dark' ? 'none' : '1px solid #D1D6E0',
-              }}
-            >
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-                sx={{ mb: 1 }}
-              >
-                <Typography
-                  sx={{
-                    fontSize: 17,
-                    fontWeight: 500,
-                    color: theme.palette.mode === 'dark' ? "#AFB7C8" : "#373F4E",
-                    mb: 1,
-                  }}
-                >
-                  {t('info.info')}
-                </Typography>
-                <Box>
-                  <SegmentedButtonGroup
-                    tabs={VIEW_TABS}
-                    value={viewTabs.value}
-                    onChange={viewTabs.onChange}
-                    onRefresh={handleRefresh}
-                  />
-                </Box>
-              </Stack>
-              {selectedNode ? (
-                <Grid container spacing={1}>
-                  <Grid xs={12} sm={4}>
-                    <NodeStatus selectedNodeParam={selectedNodeParam} selectedNode={selectedNode} />
-                  </Grid>
-                  <Grid xs={12} sm={8}>
-                    <NodeGraphs
-                      selectedNodeParam={selectedNodeParam}
-                      selectedTab={viewTabs.value}
-                      refreshKey={refreshKey}
-                    />
-                  </Grid>
-                </Grid>
-              ) : (
-                <Typography variant="h5">Select a node to see info</Typography>
-              )}
-
-              <Grid container sx={{ mt: 1 }}>
-                <Grid xs={12} sm={6} sx={{ pr: { xs: 0, sm: 0.75 } }}>
-                  <NavigationBox
-                    title={t('navigate.process_list')}
-                    link={`/dashboard/nodes/${selectedNodeId}/process/`}
-                  />
-                </Grid>
-                <Grid xs={12} sm={6} sx={{ pl: { xs: 0, sm: 0.75 }, mt: { xs: 1, sm: 0 } }}>
-                  <NavigationBox
-                    title={t('navigate.channel_inbound')}
-                    link={`/dashboard/nodes/${selectedNodeId}/channels-inbound/`}
-                  />
-                </Grid>
-              </Grid>
-            </Box>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </Box>
-    </DashboardContent>
+
+      {/* ════ RIGHT PANEL (Info) ════ */}
+      <Box
+        sx={{
+          width: 460,
+          flexShrink: 0,
+          bgcolor: T.bgPanel,
+          borderLeft: `1px solid ${T.border}`,
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
+          animation: 'fadeUp .3s ease both',
+        }}
+      >
+        {/* Header */}
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          sx={{ p: '14px 16px', borderBottom: `1px solid ${T.border}` }}
+        >
+          <Typography sx={{ fontSize: 16, fontWeight: 500, letterSpacing: '0.02em', color: T.textPrim }}>
+            {t('info.info')}
+          </Typography>
+          <SegmentedButtonGroup tabs={VIEW_TABS} value={viewTabs.value} onChange={viewTabs.onChange} onRefresh={handleRefresh} />
+        </Stack>
+
+        {selectedNode ? (
+          <>
+            <NodeInfoCard node={selectedNode} t={t} />
+
+            {/* Metrics grid */}
+            <Box sx={{ flex: 1, minHeight: 0, m: '0 12px', display: 'flex' }}>
+              <NodeGraphs selectedNodeParam={selectedNodeParam} selectedTab={viewTabs.value} refreshKey={refreshKey} />
+            </Box>
+
+            <DiskCard node={selectedNodeParam} online={selectedNode.online_status} t={t} />
+
+            {/* Bottom links */}
+            <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1px', bgcolor: T.border, m: 1.5, borderRadius: '6px', overflow: 'hidden' }}>
+              <LinkTile label={t('navigate.process_list')} accent={T.primary} link={`/dashboard/nodes/${selectedNodeParam}/process`} />
+              <LinkTile label={t('navigate.channel_inbound')} accent={ACCENT2} link={`/dashboard/nodes/${selectedNodeParam}/channels-inbound`} />
+            </Box>
+          </>
+        ) : (
+          <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', p: 3 }}>
+            <Typography sx={{ fontSize: 16, color: T.textSec }}>{t('info.select_node')}</Typography>
+          </Box>
+        )}
+      </Box>
+    </Box>
   );
 }
 
 // ----------------------------------------------------------------------
-// NavigationBox and FadingDivider components remain the same
-// ----------------------------------------------------------------------
 
-const NavigationBox = ({ title, link }: { title: string; link: string }) => {
-  const router = useRouter();
-  const theme = useTheme();
-  const fillColor = theme.palette.mode === 'dark' ? "#D1D6E0" : "#4E576A";
-
+function SummaryStat({ label, pill, value }: { label?: string; pill?: 'on' | 'off'; value: number }) {
   return (
-    <Box
-      sx={{
-        py: 2.5,
-        px: 1.5,
-        width: '100%',
-        border: theme.palette.mode === 'dark' ? `1px solid ${grey[700]}` : '1px solid #E0E4EB',
-        borderRadius: '12px',
-        cursor: 'pointer',
-      }}
-      onClick={() => router.push(link)}
-    >
-      <Stack direction="row" alignItems="center">
-        <Typography sx={{
-          fontSize: 17, fontWeight: 500,
-          color: theme.palette.mode === 'dark' ? `#D1D6E0` : '#373F4E',
-        }}>{title}</Typography>
-        <SvgIcon sx={{ width: 20, height: 20, ml: 1 }}>
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+    <Box sx={{ flex: '1 1 0', minWidth: 0, bgcolor: T.bgCard, border: `1px solid ${T.border}`, borderRadius: '6px', p: '11px 16px', position: 'relative', overflow: 'hidden' }}>
+      <Box sx={{ mb: 1, textAlign: 'right' }}>
+        {pill ? (
+          <Box
+            component="span"
+            sx={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 0.5,
+              bgcolor: pill === 'on' ? T.onBg : T.bgHover,
+              border: `1px solid ${pill === 'on' ? `${T.on}55` : T.border}`,
+              color: pill === 'on' ? T.on : T.textSec,
+              fontSize: 13,
+              px: 0.75,
+              py: '1px',
+              borderRadius: '3px',
+              fontWeight: 500,
+              letterSpacing: '0.05em',
+            }}
           >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M7.00414 16.4468C7.25044 16.7205 7.67197 16.7427 7.94565 16.4964L14.6123 10.4966C14.7528 10.3702 14.833 10.1901 14.833 10.0011C14.833 9.81209 14.7528 9.63198 14.6123 9.50555L7.94567 3.50514C7.67201 3.25883 7.25048 3.281 7.00417 3.55466C6.75785 3.82833 6.78002 4.24986 7.05369 4.49617L13.1698 10.001L7.05371 15.5053C6.78004 15.7516 6.75784 16.1731 7.00414 16.4468Z"
-              fill={fillColor}
-            />
-          </svg>
-        </SvgIcon>
-      </Stack>
+            <Box sx={{ width: 5, height: 5, borderRadius: '50%', bgcolor: pill === 'on' ? T.on : T.textSec }} />
+            {pill === 'on' ? 'ON' : 'OFF'}
+          </Box>
+        ) : (
+          <Typography component="span" sx={{ fontSize: 15, fontWeight: 500, letterSpacing: '0.05em', color: T.textSec }}>
+            {label}
+          </Typography>
+        )}
+      </Box>
+      <Typography sx={{ fontSize: 40, fontWeight: 400, letterSpacing: '-0.03em', lineHeight: 1, color: pill === 'on' ? T.on : T.textPrim }}>
+        {value.toLocaleString()}
+      </Typography>
+      <Box sx={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 36, background: `linear-gradient(to top, ${ACCENT2}22, transparent)`, pointerEvents: 'none' }} />
+      <Box sx={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 2, bgcolor: ACCENT2, opacity: 0.4 }} />
     </Box>
   );
-};
+}
 
 // ----------------------------------------------------------------------
 
-const FadingDivider = styled(Divider)(({ theme }) => ({
-  height: '1px',
-  background: `linear-gradient(to right, transparent, ${theme.palette.grey[200]}, transparent)`,
-  border: 'none',
-  margin: '16px 0',
-  '&:before, &:after': {
-    display: 'none',
-  },
-}));
+function NodeInfoCard({ node, t }: { node: INodeItem; t: (k: string) => string }) {
+  const on = node.online_status;
+  const sc = on ? T.on : T.offline;
+  return (
+    <Box sx={{ m: 1.5, bgcolor: T.bgCard, border: `1px solid ${T.border}`, borderRadius: '6px', overflow: 'hidden' }}>
+      <Stack direction="row" alignItems="center" spacing={1.25} sx={{ p: '10px 14px', bgcolor: on ? `${ACCENT2}22` : T.offlineBg, borderBottom: `1px solid ${T.border}` }}>
+        <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5, fontSize: 13, fontWeight: 700, px: 0.875, py: '2px', borderRadius: '3px', letterSpacing: '0.08em', bgcolor: on ? T.onBg : T.offlineBg, color: sc, border: `1px solid ${sc}55` }}>
+          <Box sx={{ width: 5, height: 5, borderRadius: '50%', bgcolor: sc }} />
+          {on ? 'ON' : 'OFF'}
+        </Box>
+        <Box sx={{ minWidth: 0 }}>
+          <Typography sx={{ fontSize: 17, fontWeight: 500, color: T.textPrim }}>
+            {node.id} <Box component="span" sx={{ fontSize: 15, fontWeight: 400, color: T.textSec }}>| {node.name}</Box>
+          </Typography>
+          <Typography sx={{ fontSize: 15, color: T.textSec, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{node.desc}</Typography>
+        </Box>
+      </Stack>
+      <Box sx={{ p: '10px 14px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px 16px' }}>
+        <Row label={t('info.emittable')} value={node.emittable ? t('info.true') : t('info.false')} color={node.emittable ? T.on : T.textDim} />
+        <Row label={t('info.emit_count')} value={String(node.emit_count ?? 0)} color={ACCENT2} />
+      </Box>
+    </Box>
+  );
+}
+
+function Row({ label, value, color }: { label: string; value: string; color: string }) {
+  return (
+    <Stack direction="row" alignItems="center" justifyContent="space-between">
+      <Typography sx={{ fontSize: 15, color: T.textSec }}>{label}</Typography>
+      <Typography sx={{ fontSize: 15, fontWeight: 500, fontFamily: 'Roboto', color }}>{value}</Typography>
+    </Stack>
+  );
+}
+
+// ----------------------------------------------------------------------
+
+function DiskCard({ node, online, t }: { node: string; online: boolean; t: (k: string) => string }) {
+  const { diskMetricsData } = useGetDiskMetrics(node);
+  const usage = Number(diskMetricsData?.disk_usage) || 0;
+  const used = diskMetricsData?.disk_used_size;
+  const total = diskMetricsData?.disk_total_size;
+
+  return (
+    <Box sx={{ m: '8px 12px 0', bgcolor: T.bgCard, border: `1px solid ${T.border}`, borderRadius: '6px', p: '12px 14px' }}>
+      <Typography sx={{ fontSize: 15, fontWeight: 500, color: T.textSec, textTransform: 'uppercase', letterSpacing: '0.07em', mb: 1 }}>
+        {t('disk.disk')}
+      </Typography>
+      {online && total != null ? (
+        <>
+          <Stack direction="row" alignItems="baseline" spacing={1}>
+            <Typography sx={{ fontSize: 30, fontWeight: 600, letterSpacing: '-0.03em', color: T.textPrim }}>{usage}%</Typography>
+            <Typography sx={{ fontSize: 14, color: T.textSec }}>
+              <Box component="span" sx={{ color: T.primary, fontWeight: 500 }}>{used} GB</Box> / {total} GB
+            </Typography>
+          </Stack>
+          <Box sx={{ mt: 1, height: 10, borderRadius: '5px', bgcolor: T.bgHover, overflow: 'hidden' }}>
+            <Box sx={{ height: '100%', width: `${Math.min(usage, 100)}%`, bgcolor: usage >= 90 ? T.off : T.primary, opacity: 0.9 }} />
+          </Box>
+        </>
+      ) : (
+        <Typography sx={{ fontSize: 15, color: T.textDim }}>{t('info.offline')}</Typography>
+      )}
+    </Box>
+  );
+}
+
+// ----------------------------------------------------------------------
+
+function LinkTile({ label, accent, link }: { label: string; accent: string; link: string }) {
+  const router = useRouter();
+  return (
+    <Box
+      onClick={() => router.push(link)}
+      sx={{ bgcolor: T.bgHover, p: '10px 14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer', fontSize: 15.5, fontWeight: 500, color: T.textPrim, borderLeft: `3px solid ${accent}`, transition: 'background .15s', '&:hover': { bgcolor: `${accent}22` } }}
+    >
+      <Stack direction="row" alignItems="center" spacing={1}>
+        <Box sx={{ width: 7, height: 7, borderRadius: '50%', bgcolor: accent, flexShrink: 0 }} />
+        {label}
+      </Stack>
+      <Iconify icon="eva:chevron-right-fill" width={16} sx={{ color: accent }} />
+    </Box>
+  );
+}

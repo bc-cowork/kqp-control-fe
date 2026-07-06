@@ -9,7 +9,9 @@
     "emit_count": "송출 누적 횟수",
     "true": "송출 중",
     "false": "송출 안 됨",
-    "disk": "디스크"
+    "disk": "디스크",
+    "disk_usage": "디스크 사용량",
+    "disk_detail": "총 {{total}} GB 중 <mono>{{used}} GB</mono>"
   },
   "graph": {
     "cpu": "프로세서 사용률",
@@ -18,5 +20,9 @@
     "outbound": "송출",
     "count": "카운트",
     "byte": "바이트"
+  },
+  "errors": {
+    "load_node_info": "노드 정보를 불러오지 못했습니다",
+    "fetch_status": "상태를 불러오는 중 오류가 발생했습니다"
   }
 }

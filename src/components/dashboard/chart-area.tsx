@@ -13,8 +13,9 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-import { useTheme } from '@mui/material/styles';
 import { Box, Stack, Typography, CircularProgress } from '@mui/material';
+
+import { T, CHART } from 'src/theme/tokens';
 
 import { SegmentedButtonGroupChart } from './SegmentedButtonGroupChart';
 
@@ -49,96 +50,27 @@ export function ChartArea({
   loading,
   threshold,
 }: ChartAreaProps) {
-  const theme = useTheme();
-
-  // Define colors for each chart based on tabValue
-  const chartColors: Record<
-    string,
-    Record<
-      'cpu' | 'memory' | 'inbound' | 'outbound',
-      { stroke: string; fill: string; fillOpacity: number }
-    >
-  > = {
-    '1x4': {
-      cpu: {
-        stroke: '#5E66FF', // Blue graph-line
-        fill: '#5E66FF', // Blue graph-fill
-        fillOpacity: 0.2, // 20% opacity
-      },
-      memory: {
-        stroke: '#804CE6', // Violet graph-line
-        fill: '#804CE6', // Violet graph-fill
-        fillOpacity: 0.2, // 20% opacity
-      },
-      inbound: {
-        stroke: '#41B899', // Green graph-line
-        fill: '#41B899', // Green graph-fill
-        fillOpacity: 0.2, // 20% opacity
-      },
-      outbound: {
-        stroke: '#FFC711', // Yellow graph-line
-        fill: '#FFC711', // Yellow graph-fill
-        fillOpacity: 0.2, // 20% opacity
-      },
-    },
-    '2x2': {
-      cpu: {
-        stroke: '#5E66FF', // Blue graph-line
-        fill: '#5E66FF', // Blue graph-fill
-        fillOpacity: 0.2, // 20% opacity
-      },
-      memory: {
-        stroke: '#FFC711', // Yellow graph-line
-        fill: '#FFC711', // Yellow graph-fill
-        fillOpacity: 0.2, // 20% opacity
-      },
-      inbound: {
-        stroke: '#41B899', // Green graph-line
-        fill: '#41B899', // Green graph-fill
-        fillOpacity: 0.2, // 20% opacity
-      },
-      outbound: {
-        stroke: '#059BB8', // Aqua graph-line
-        fill: '#059BB8', // Aqua graph-fill
-        fillOpacity: 0.2, // 20% opacity
-      },
-    },
-  };
-
-  // Get the colors based on the tabValue and title, default to CPU colors if title doesn't match
-  const colorKey = (() => {
-    if (metric === 'cpu') {
-      return 'cpu';
-    }
-    if (metric === 'memory') {
-      return 'memory';
-    }
-    if (metric.startsWith('inbound')) {
-      return 'inbound';
-    }
-    if (metric.startsWith('outbound')) {
-      return 'outbound';
-    }
+  // Map each metric bucket to a v5 chart series colour.
+  const colorKey: 'cpu' | 'memory' | 'inbound' | 'outbound' = (() => {
+    if (metric === 'cpu') return 'cpu';
+    if (metric === 'memory') return 'memory';
+    if (metric.startsWith('inbound')) return 'inbound';
+    if (metric.startsWith('outbound')) return 'outbound';
     return 'cpu';
   })();
 
-  // Get the colors based on the layout and metric bucket, default to CPU colors if none match
-  const { stroke, fill, fillOpacity } = chartColors[layout]?.[colorKey] ||
-    chartColors[layout]?.cpu || {
-    stroke: '#5E66FF',
-    fill: '#5E66FF',
-    fillOpacity: 0.2,
-  };
+  const seriesColor = CHART[colorKey];
+  const fillOpacity = 0.2;
 
   // Only apply threshold highlighting for the CPU chart
   const applyThreshold = colorKey === 'cpu' && threshold !== undefined;
 
   const formatLargeNumber = (value: number): string => {
     if (value >= 1_000_000) {
-      return `${Math.round(value / 1_000_000)}M`; // e.g., 3,456,789 -> 3M
+      return `${Math.round(value / 1_000_000)}M`;
     }
     if (value >= 1_000) {
-      return `${Math.round(value / 1_000)}k`; // e.g., 3,456 -> 3456k
+      return `${Math.round(value / 1_000)}k`;
     }
     return value.toString();
   };
@@ -147,17 +79,12 @@ export function ChartArea({
   const minValue = 0;
   const maxValue = isPercentMetric ? 100 : 'auto';
 
-  const fillColor = theme.palette.mode === 'dark' ? theme.palette.grey[800] : 'white'
-  const strokeColor = theme.palette.mode === 'dark' ? theme.palette.grey[500] : theme.palette.grey[100]
-  const fillXis = theme.palette.mode === 'dark' ? theme.palette.grey[400] : '#AFB7C8'
-
   return (
     <Box
       sx={{
-        border: 1,
-        borderColor: theme.palette.mode === 'dark' ? theme.palette.grey[500] : "#F0F1F5",
+        border: `1px solid ${T.border}`,
         borderRadius: 1,
-        backgroundColor: theme.palette.mode === 'dark' ? '#141C2A' : "#F9FAFB",
+        backgroundColor: T.bgCard,
         height,
         display: 'flex',
         flexDirection: 'column',
@@ -172,10 +99,7 @@ export function ChartArea({
         alignItems="center"
         sx={{ my: 1, mx: 1 }}
       >
-        <Typography sx={{
-          fontSize: 15,
-          color: theme.palette.mode === 'dark' ? theme.palette.grey[100] : '#667085'
-        }}>{title}</Typography>
+        <Typography sx={{ fontSize: 15, color: T.textSec }}>{title}</Typography>
         <SegmentedButtonGroupChart
           tabs={tabs}
           value={tabValue}
@@ -193,36 +117,35 @@ export function ChartArea({
             data={data}
             margin={{ top: 0, right: 5, left: -20, bottom: layout === '1x4' ? 10 : 0 }}
           >
-            <CartesianGrid stroke={strokeColor} fill={fillColor} />
+            <CartesianGrid stroke={CHART.grid} fill={T.bgCard} />
             <XAxis
               dataKey="timestamp"
-              tick={{ fontSize: 12, fill: fillXis }}
+              tick={{ fontSize: 12, fill: T.textDim }}
               tickLine={false}
-              axisLine={{ stroke: strokeColor }}
+              axisLine={{ stroke: CHART.grid }}
             />
             <YAxis
-              tick={{ fontSize: 12, fill: fillXis }}
+              tick={{ fontSize: 12, fill: T.textDim }}
               tickLine={false}
-              axisLine={{ stroke: strokeColor }}
+              axisLine={{ stroke: CHART.grid }}
               domain={[minValue, maxValue]}
               tickFormatter={
                 metric === 'inbound_bytes' ||
-                  metric === 'outbound_bytes' ||
-                  metric === 'inbound_count' ||
-                  metric === 'outbound_count'
+                metric === 'outbound_bytes' ||
+                metric === 'inbound_count' ||
+                metric === 'outbound_count'
                   ? formatLargeNumber
                   : undefined
               }
             />
             <Tooltip
               contentStyle={{
-                backgroundColor: theme.palette.grey[900],
-                borderColor: theme.palette.grey[400],
+                backgroundColor: T.bgPanel,
+                borderColor: T.border,
                 borderRadius: 4,
-                boxShadow: theme.shadows[1],
               }}
-              labelStyle={{ color: theme.palette.grey[100] }}
-              itemStyle={{ color: theme.palette.grey[100] }}
+              labelStyle={{ color: T.textSec }}
+              itemStyle={{ color: T.textPrim }}
               formatter={(value: number) => value.toLocaleString()}
             />
 
@@ -230,26 +153,23 @@ export function ChartArea({
             <Area
               type="linear"
               dataKey={metric}
-              stroke={stroke}
-              fill={fill}
+              stroke={seriesColor}
+              fill={seriesColor}
               fillOpacity={fillOpacity}
               strokeLinecap="butt"
             />
 
-            {/* Highlight the entire area above the threshold for CPU with a gradient */}
+            {/* Highlight the entire area above the threshold for CPU */}
             {applyThreshold && (
-              <ReferenceArea
-                y1={threshold} // Start at the threshold (50)
-                y2="auto" // Extend to the top of the chart
-                fill="url(#thresholdGradient)" // Apply the gradient
-              />
+              <ReferenceArea y1={threshold} y2="auto" fill={`${CHART.threshold}22`} />
             )}
 
-            {/* Draw a straight solid line at the threshold for CPU */}
+            {/* Solid reference line at the threshold for CPU */}
             {applyThreshold && (
               <ReferenceLine
-                y={threshold} // Line at the threshold (50)
-                stroke="#FF5B5B" // Red color for the line
+                y={threshold}
+                stroke={CHART.threshold}
+                strokeDasharray="4 4"
                 strokeWidth={1}
               />
             )}

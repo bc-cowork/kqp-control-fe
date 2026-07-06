@@ -1,6 +1,7 @@
 {
   "top": {
-    "title": "규칙 (Rules)"
+    "title": "규칙 (Rules)",
+    "title_prefix": "규칙"
   },
   "table_header": {
     "id": "ID",
@@ -23,12 +24,19 @@
     "ref_layout": "참조 레이아웃",
     "ref_process": "참조 프로세스",
     "ref_actions": "참조 액션",
-    "related_actions": "연관 액션"
+    "related_actions": "연관 액션",
+    "action_name": "연관 액션",
+    "related_layouts": "연관 레이아웃",
+    "related_processes": "연관 프로세스",
+    "empty_layouts": "연관 레이아웃 없음",
+    "empty_processes": "연관 프로세스 없음",
+    "empty_actions": "연관 액션 없음"
   },
   "loading": "로딩 중...",
   "error": "작업을 불러오지 못했습니다",
-  "empty": "작업이 없습니다",
+  "empty": "규칙이 없습니다",
   "detail": {
-    "placeholder": "작업 상세 내용이 여기에 표시됩니다."
+    "placeholder": "작업 상세 내용이 여기에 표시됩니다.",
+    "empty": "규칙을 찾을 수 없습니다"
   }
 }

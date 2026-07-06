@@ -38,6 +38,23 @@
     "rid": "Channel ID",
     "data_definition": "Data Definition",
     "title": "Audit Log Frame Detail",
+    "frame_info": "Frame Info",
     "frame_seq": "Frame Seq"
+  },
+  "filter_bar": {
+    "cond": "Cond",
+    "count": "Count",
+    "scan": "Scan"
+  },
+  "frag_header": {
+    "id": "ID",
+    "len": "Len",
+    "data": "Data",
+    "empty": "No fragments"
+  },
+  "validation": {
+    "title": "Validation Error",
+    "count_required": "Count is required and must be a positive number.",
+    "side_required": "Scan direction (prev/next) is required."
   }
 }

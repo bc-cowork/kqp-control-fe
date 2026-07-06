@@ -78,20 +78,20 @@ export const typography: TypographyOptions = {
   },
   subtitle1: {
     fontWeight: 500,
-    lineHeight: 1.5,
+    lineHeight: 1.3,
     fontSize: pxToRem(16),
   },
   subtitle2: {
     fontWeight: 600,
-    lineHeight: 22 / 14,
+    lineHeight: 1.3,
     fontSize: pxToRem(14),
   },
   body1: {
-    lineHeight: 1.5,
+    lineHeight: 1.3,
     fontSize: pxToRem(16),
   },
   body2: {
-    lineHeight: 22 / 14,
+    lineHeight: 1.3,
     fontSize: pxToRem(14),
     color: grey[200],
   },

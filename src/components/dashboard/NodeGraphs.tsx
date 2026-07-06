@@ -7,7 +7,6 @@ import type { ChartDataPoint } from 'src/types/dashboard';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2'; // Using Unstable_Grid2 for modern usage
-import { useTheme } from '@mui/material/styles';
 
 import { useTabs } from 'src/routes/hooks';
 
@@ -35,7 +34,6 @@ export const getBoundTabs = (t: TFunction) => [
 
 export function NodeGraphs({ selectedNodeParam, refreshKey, selectedTab }: Props) {
   const { t } = useTranslate('dashboard');
-  const theme = useTheme();
 
   const cpuTabs = useTabs(CPU_MEMORY_TABS[0].value);
   const memoryTabs = useTabs(CPU_MEMORY_TABS[0].value);

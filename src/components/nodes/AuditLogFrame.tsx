@@ -1,47 +1,44 @@
 'use client';
 
+import type { ReactNode } from 'react';
+import type { Column } from 'src/components/v5';
 import type { AuditLogFrameFragItem } from 'src/types/node';
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { useState, useEffect, useCallback } from 'react';
 
-import Grid from '@mui/material/Unstable_Grid2';
 import {
   Box,
-  Table,
-  Paper,
   Stack,
   Dialog,
   SvgIcon,
-  TableRow,
-  TableBody,
-  TableCell,
-  TableHead,
-  Typography,
   IconButton,
+  Typography,
   DialogTitle,
   DialogContent,
-  TableContainer,
-  CircularProgress,
 } from '@mui/material';
 
 import { formatBytes } from 'src/utils/helper';
 import { formatDateCustom } from 'src/utils/format-time';
 
+import { T } from 'src/theme/tokens';
+import { error } from 'src/theme/core';
 import { useTranslate } from 'src/locales';
 import { useGetAuditLogFrame } from 'src/actions/nodes';
-import { grey, error, common, primary } from 'src/theme/core';
+
+import {
+  Panel,
+  SpecChip,
+  DataTable,
+  CodeBlock,
+  SectionLabel,
+} from 'src/components/v5';
 
 import { Iconify } from '../iconify';
-import FadingDivider from '../common/FadingDivider';
-import { TableErrorRows } from '../table/table-error-rows';
 import AuditFrameFilterBar from '../audit-log-page/AuditFrameFilterBar';
 import TablePaginationCustomShort from '../common/TablePaginationCustomShort';
 import { AuditFrameLayoutFlow } from '../audit-log-page/AuditFrameLayoutFlow';
 
 import type { Filter } from '../common/AddFilter';
-
 
 // ----------------------------------------------------------------------
 
@@ -51,6 +48,39 @@ type Props = {
   selectedSeq: string;
   head: string;
 };
+
+function InfoBox({
+  label,
+  value,
+  action,
+  highlight,
+  sx,
+}: {
+  label: string;
+  value: ReactNode;
+  action?: ReactNode;
+  highlight?: boolean;
+  sx?: object;
+}) {
+  return (
+    <Box
+      sx={{
+        bgcolor: highlight ? T.bgRowSel : T.bgHover,
+        border: highlight ? '1px solid #4A3BFF55' : 'none',
+        borderRadius: '8px',
+        p: '8px 12px',
+        mb: 1,
+        ...sx,
+      }}
+    >
+      <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Typography sx={{ color: T.textDim, fontSize: 14 }}>{label}</Typography>
+        {action}
+      </Stack>
+      <Typography sx={{ color: T.textPrim, fontSize: 17, fontWeight: 500 }}>{value}</Typography>
+    </Box>
+  );
+}
 
 export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head }: Props) {
   const { t } = useTranslate('audit-frame-detail');
@@ -135,9 +165,9 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
     let errorMessage = '';
 
     if (countNum === undefined || countNum <= 0) {
-      errorMessage = 'Count is required and must be a positive number.';
+      errorMessage = t('validation.count_required');
     } else if (!sideText) {
-      errorMessage = 'Scan direction (prev/next) is required.';
+      errorMessage = t('validation.side_required');
     }
 
     if (errorMessage) {
@@ -216,463 +246,164 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
     setRefreshKey((k) => k + 1); // fetch
   };
 
+  const hasFrags = !!(auditFrame?.frags && auditFrame.frags.length > 0);
+
+  const columns: Column<AuditLogFrameFragItem>[] = [
+    {
+      key: 'id',
+      label: t('frag_header.id'),
+      width: 90,
+      render: (r) => <SpecChip tone="green">{r.id}</SpecChip>,
+    },
+    {
+      key: 'len',
+      label: t('frag_header.len'),
+      width: 110,
+      align: 'right',
+      render: (r) => <SpecChip tone="blue">{r.len?.toLocaleString()}</SpecChip>,
+    },
+    {
+      key: 'data',
+      label: t('frag_header.data'),
+      render: (r) => <SpecChip tone="amber">{r.data}</SpecChip>,
+    },
+    { key: 'desc', label: t('top.description'), dim: true, grow: true },
+  ];
+
   return (
     <>
-      <Grid container>
-        <Grid md={9} sx={{ pr: 0.5 }}>
-          {auditFrameLoading ? (
-            <Box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              sx={{ height: 'calc(100vh - 300px)' }}
-            >
-              <CircularProgress color='primary' />
-            </Box>
-          ) : auditFrame?.frags && auditFrame.frags.length > 0 ? (
-            <Box
-                sx={{
-                  borderRadius: '12px',
-                  overflow: 'hidden',
-                  border: (theme) => (theme.palette.mode === 'dark' ? 'none' : '1px solid #D1D6E0'),
-                  backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF'),
-                }}
-              >
-                <AuditFrameFilterBar
-                  filters={filters}
-                  setFilters={setFilters}
-                  onApply={handleSearch}
-                  onResetClick={handleResetClick}
-                />
-                <Box
-                  sx={{
-                    p: 1,
-                  }}
-                >
-                <TablePaginationCustomShort
-                  rowsPerPage={count || 40}
-                  page={5}
-                  count={auditFrame?.max_frame || 0}
-                  onPageChange={onChangePage}
-                  onPrev={onPrev}
-                  onNext={onNext}
-                  onFirst={onFirst}
-                  onLast={onLast}
-                  firstDisabled={apiSeq === 1}
-                  lastDisabled={false}
-                  prevDisabled={apiSeq === 1}
-                  nextDisabled={apiSeq === 0 || apiSeq === auditFrame.max_frame}
-                  sx={{ mb: 1 }}
-                />
+      <Box sx={{ display: 'flex', gap: 1.5, flex: 1, minHeight: 0 }}>
+        {/* Left — Frame Info */}
+        <Panel sx={{ width: 300, flexShrink: 0, overflow: 'auto' }}>
+          <Box sx={{ p: 2 }}>
+            <SectionLabel>{t('audit_log_frame_detail.frame_info')}</SectionLabel>
+            <Typography sx={{ color: T.textSec, fontSize: 14, mt: 0.5, mb: 2, wordBreak: 'break-all' }}>
+              {selectedFile}
+            </Typography>
 
-                <Box sx={{ position: 'relative' }}>
-                <TableContainer
-                  component={Paper}
-                  sx={{
-                    height: 'calc(100vh - 300px)',
-                    borderRadius: '8px',
-                    backgroundColor: 'transparent',
-                    border: (theme) => (theme.palette.mode === 'dark' ? '1px solid #373F4E' : '1px solid #D1D6E0'),
-                  }}
-                >
-                  <Table size="small">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell align="right">ID</TableCell>
-                        <TableCell align="right">Len</TableCell>
-                        <TableCell align="right">
-                          Data
-                          <span style={{ fontSize: '22px', marginLeft: '4px', color: '#FFC711' }}>*</span>
-                          <div
-                            style={{
-                              position: 'relative',
-                              right: '10px',
-                              bottom: '-6px',
-                              justifySelf: 'flex-end',
-                              width: '40px',
-                              height: '4px',
-                              backgroundColor: '#FFC711',
-                              borderTopLeftRadius: '2px',
-                              borderTopRightRadius: '2px',
-                            }}
-                          />
-                        </TableCell>
-                        <TableCell>{t('top.description')}</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody sx={{ overflow: 'auto' }}>
-                      {auditFrameError ? (
-                        <TableErrorRows />
-                      ) : (
-                        auditFrame.frags.map((auditFrameFrag: AuditLogFrameFragItem, index: number) => (
-                          <TableRow key={index}>
-                            <TableCell align="right">
-                              <Box
-                                component="span"
-                                sx={{
-                                  backgroundColor: '#1D2F20',
-                                  border: `1px solid #36573C`,
-                                  color: '#7EE081',
-                                  borderRadius: '4px',
-                                  px: 0.5,
-                                }}
-                              >
-                                {auditFrameFrag.id}
-                              </Box>
-                            </TableCell>
-                            <TableCell align="right">
-                              <Box
-                                component="span"
-                                sx={{
-                                  backgroundColor: '#1D2654',
-                                  border: `1px solid #212447`,
-                                  color: '#7AA2FF',
-                                  borderRadius: '4px',
-                                  px: 0.5,
-                                }}
-                              >
-                                {auditFrameFrag.len?.toLocaleString()}
-                              </Box>
-                            </TableCell>
-                            <TableCell align="right">
-                              <Box
-                                component="span"
-                                sx={{
-                                  backgroundColor: '#31291D',
-                                  border: `1px solid #49381F`,
-                                  color: '#FFC711',
-                                  borderRadius: '4px',
-                                  px: 0.5,
-                                }}
-                              >
-                                {auditFrameFrag.data}
-                              </Box>
-                            </TableCell>
-                            <TableCell>{auditFrameFrag.desc}</TableCell>
-                          </TableRow>
-                        ))
-                      )}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
+            <InfoBox
+              label={t('right_side_audit_log_list.max_frame_seq')}
+              value={auditFrame?.max_frame ?? '—'}
+              action={
                 <Box
+                  onClick={onMaxFrameRefresh}
                   sx={{
-                    position: 'absolute',
-                    inset: 0,
-                    pointerEvents: 'none',
-                    borderRadius: '8px',
-                    zIndex: 3,
-                    boxShadow:
-                      'inset 0 -12px 12px -10px rgba(16, 24, 40, 0.18), inset 12px 0 12px -10px rgba(16, 24, 40, 0.18), inset -12px 0 12px -10px rgba(16, 24, 40, 0.18)',
-                  }}
-                />
-                </Box>
-                </Box>
-              </Box>
-          ) : (
-            <Paper
-              sx={{
-                padding: (theme) => (theme.palette.mode === 'dark' ? '0px' : '4px'),
-                backgroundColor: (theme) => (theme.palette.mode === 'dark' ? 'transparent' : 'black'),
-                marginBottom: '12px'
-              }}
-            >
-              <Box
-                sx={{
-                  backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#667085' : '#E0E4EB'),
-                  p: 1.5,
-                  borderTopLeftRadius: 4,
-                  borderTopRightRadius: 4,
-                }}
-              >
-                <Typography
-                  sx={{
-                    fontWeight: 600,
-                    color: (theme) => (theme.palette.mode === 'dark' ? grey[300] : '#4E576A'),
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 22,
+                    height: 22,
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    color: T.textSec,
+                    '&:hover': { bgcolor: T.bgCard, color: T.textPrim },
                   }}
                 >
-                  {t('audit_log_frame_detail.data_definition')}
-                </Typography>
-              </Box>
+                  <Iconify icon="eva:refresh-fill" width={15} />
+                </Box>
+              }
+            />
+            <InfoBox
+              label={t('right_side_audit_log_list.file_size')}
+              value={formatBytes(auditFrame?.file_size)}
+            />
+            <InfoBox
+              label={t('right_side_audit_log_list.date')}
+              value={formatDateCustom(auditFrame?.date?.toString())}
+            />
+            <InfoBox label={t('right_side_audit_log_list.desc')} value={auditFrame?.desc || '—'} />
 
-              <Box sx={{ bgcolor: '#202838', height: 'calc(100vh - 244px)', overflowX: 'hidden', overflowY: 'auto' }}>
-                <Box
-                  component="pre"
-                  sx={{
-                    whiteSpace: 'pre-wrap',
-                    fontFamily: 'monospace',
-                    fontSize: 13,
-                    color: '#AFB7C8',
-                    m: 0
-                  }}
-                >
-                  <SyntaxHighlighter
-                    language="moonscript"
-                    style={a11yDark}
-                    wrapLines
-                    lineProps={{
-                      style: { wordBreak: 'break-all', whiteSpace: 'pre-wrap' }
-                    }}
-                    customStyle={{
-                      background: 'transparent',
-                      whiteSpace: 'pre-wrap',
-                      wordBreak: 'break-all',
-                      padding: '10px',
-                    }}
-                  >
-                    {auditFrame?.data || ''}
-                  </SyntaxHighlighter>
-                </Box>
-              </Box>
-            </Paper>
-          )}
-        </Grid>
-        <Grid md={3} sx={{ pl: 1.5 }}>
-          <Box sx={{ borderRadius: '12px', backgroundColor: grey[900] }}>
-            <Box sx={{ p: 1 }}>
-              <Box
-                sx={{
-                  pt: 1,
-                  px: 1,
-                }}
-              >
-                <Stack direction="row" alignItems="center">
-                  <SvgIcon sx={{ mr: 0.8 }}>
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M8.60749 3.32031C8.78799 3.31997 8.96091 3.39284 9.08674 3.52226L10.2793 4.74889L16.8323 4.74894C17.6607 4.74894 18.3323 5.42051 18.3323 6.24893V15.1656C18.3323 15.994 17.6607 16.6656 16.8323 16.6656H3.16421C2.33584 16.6656 1.6643 15.9941 1.66421 15.1658L1.66309 4.8307C1.663 4.00331 2.33288 3.33209 3.16027 3.33054L8.60749 3.32031ZM8.3276 4.65417L3.16277 4.66387C3.07084 4.66404 2.99641 4.73862 2.99642 4.83056L2.99754 15.1656C2.99755 15.2577 3.07217 15.3323 3.16421 15.3323H16.8323C16.9243 15.3323 16.9989 15.2577 16.9989 15.1656V6.24893C16.9989 6.15689 16.9243 6.08227 16.8323 6.08227L9.99763 6.08222C9.81756 6.08222 9.64515 6.00938 9.51963 5.88027L8.3276 4.65417ZM9.74902 10.8323C9.74902 10.4641 10.0475 10.1656 10.4157 10.1656H11.8337V8.74894C11.8337 8.38075 12.1321 8.08228 12.5003 8.08228C12.8685 8.08228 13.167 8.38075 13.167 8.74894V10.1656H14.5824C14.9505 10.1656 15.249 10.4641 15.249 10.8323C15.249 11.2005 14.9505 11.4989 14.5824 11.4989H13.167V12.9156C13.167 13.2838 12.8685 13.5823 12.5003 13.5823C12.1321 13.5823 11.8337 13.2838 11.8337 12.9156V11.4989H10.4157C10.0475 11.4989 9.74902 11.2005 9.74902 10.8323Z"
-                        fill="#E0E4EB"
-                      />
-                    </svg>
-                  </SvgIcon>
-                  <Typography sx={{ color: grey[200], fontSize: 15 }}>{t('right_side_audit_log_list.filename')}</Typography>
-                </Stack>
-                <Typography sx={{ color: common.white, fontSize: 20, fontWeight: 500 }}>
-                  {selectedFile}
-                </Typography>
-              </Box>
-              <FadingDivider sx={{ my: 1.5 }} />
+            <InfoBox label={t('audit_log_frame_detail.seq')} value={auditFrame?.seq ?? '—'} highlight />
 
-              <Typography sx={{ color: grey[300], fontSize: 15, mb: 1 }}>{t('right_side_audit_log_list.audit_log_list')}</Typography>
-              <Box
-                sx={{
-                  py: 1,
-                  px: 1,
-                  backgroundColor: grey[600],
-                  borderRadius: '8px',
-                  mb: 1,
-                }}
-              >
-                <Typography sx={{ color: grey[200], fontSize: 15 }}>{t('right_side_audit_log_list.desc')}</Typography>
-                <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                  {auditFrame?.desc}
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  py: 1,
-                  px: 1,
-                  backgroundColor: grey[600],
-                  borderRadius: '8px',
-                  mb: 1,
-                }}
-              >
-                <Box
-                  sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
-                >
-                  <Typography sx={{ color: grey[200], fontSize: 15 }}>{t('right_side_audit_log_list.max_frame_seq')}</Typography>
-                  <SvgIcon
-                    sx={{
-                      height: 24,
-                      width: 24,
-                      cursor: 'pointer',
-                      p: 0.5,
-                      borderRadius: '4px',
-                      backgroundColor: grey[500],
-                      '&:hover': { backgroundColor: grey[400] },
-                      '&:active': { backgroundColor: '#D1D6D0', border: '1px solid #667085' },
-                    }}
-                    onClick={onMaxFrameRefresh}
-                  >
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 14 14"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M1.79811 7.00104C1.79811 4.13197 4.13783 1.80104 7.03031 1.80104C8.99489 1.80104 10.7061 2.87693 11.6008 4.46777H9.53301C9.23846 4.46777 8.99967 4.70656 8.99967 5.00111C8.99967 5.29566 9.23846 5.53444 9.53301 5.53444H12.8663C13.1609 5.53444 13.3997 5.29566 13.3997 5.00111V1.66777C13.3997 1.37322 13.1609 1.13444 12.8663 1.13444C12.5718 1.13444 12.333 1.37322 12.333 1.66777V3.61761C11.2127 1.88315 9.25609 0.734375 7.03031 0.734375C3.55436 0.734375 0.731445 3.53724 0.731445 7.00104C0.731445 10.4648 3.55436 13.2677 7.03031 13.2677C10.186 13.2677 12.8023 10.9584 13.2588 7.94082C13.3028 7.64958 13.1025 7.37777 12.8112 7.33371C12.52 7.28965 12.2482 7.49003 12.2041 7.78127C11.826 10.2807 9.65511 12.201 7.03031 12.201C4.13783 12.201 1.79811 9.87009 1.79811 7.00104Z"
-                        fill={grey[300]}
-                      />
-                    </svg>
-                  </SvgIcon>
-                </Box>
-                <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                  {auditFrame?.max_frame}
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  py: 1,
-                  px: 1,
-                  backgroundColor: grey[600],
-                  borderRadius: '8px',
-                  mb: 1,
-                }}
-              >
-                <Typography sx={{ color: grey[200], fontSize: 15 }}>{t('right_side_audit_log_list.file_size')}</Typography>
-                <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                  {formatBytes(auditFrame?.file_size)}
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  py: 1,
-                  px: 1,
-                  backgroundColor: grey[600],
-                  borderRadius: '8px',
-                  mb: 1,
-                }}
-              >
-                <Typography sx={{ color: grey[200], fontSize: 15 }}>{t('right_side_audit_log_list.date')}</Typography>
-                <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                  {formatDateCustom(auditFrame?.date?.toString())}
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  borderRadius: '12px',
-                  background: 'linear-gradient(180deg, #202838 80%, #373F4E 100%)',
-                  p: 1,
-                  height: `calc(100vh - 610px)`,
-                  overflowY: 'auto',
-                  // Keep it scrollable but hide the scrollbar (cross-browser).
-                  scrollbarWidth: 'none', // Firefox
-                  msOverflowStyle: 'none', // IE/Edge legacy
-                  '&::-webkit-scrollbar': { display: 'none' }, // Chrome/Safari
-                }}
-              >
-                <Typography sx={{ color: grey[300], fontSize: 15, mb: 1, mt: 0.5 }}>
-                  {t('audit_log_frame_detail.title')}
-                </Typography>
-
-                <Box
-                  sx={{
-                    py: 1,
-                    px: 1,
-                    backgroundColor: primary.main,
-                    borderRadius: '8px',
-                    mb: 1,
-                  }}
-                >
-                  <Typography sx={{ color: grey[200], fontSize: 15 }}>{t('audit_log_frame_detail.seq')}</Typography>
-                  <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                    {auditFrame?.seq}
-                  </Typography>
-                </Box>
-
-                <Box
-                  sx={{
-                    py: 1,
-                    px: 1,
-                    backgroundColor: grey[600],
-                    borderRadius: '8px',
-                    mb: 1,
-                  }}
-                >
-                  <Typography sx={{ color: grey[200], fontSize: 15 }}>{t('audit_log_frame_detail.time')}</Typography>
-                  <Typography
-                    sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}
-                    display="inline"
-                  >
-                    {auditFrame?.time} &nbsp; {auditFrame?.time_ms}
-                  </Typography>
-                  <Typography
-                    variant="caption"
-                    display="inline"
-                    sx={{ fontSize: 12, ml: 0.3, color: common.white }}
-                  >{`ms `}</Typography>
-                  <Typography
-                    sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}
-                    display="inline"
-                  >{` ${auditFrame?.time_us}`}</Typography>
-                  <Typography
-                    variant="caption"
-                    display="inline"
-                    sx={{ fontSize: 12, ml: 0.3, color: common.white }}
-                  >
+            <InfoBox
+              label={t('audit_log_frame_detail.time')}
+              value={
+                <Box component="span">
+                  {auditFrame?.time} {auditFrame?.time_ms}
+                  <Box component="span" sx={{ fontSize: 12, color: T.textDim }}>
+                    {' '}
+                    ms{' '}
+                  </Box>
+                  {auditFrame?.time_us}
+                  <Box component="span" sx={{ fontSize: 12, color: T.textDim }}>
+                    {' '}
                     us
-                  </Typography>
+                  </Box>
                 </Box>
+              }
+            />
+            <InfoBox
+              label={t('audit_log_frame_detail.size')}
+              value={formatBytes(auditFrame?.size)}
+            />
 
-                <Grid container>
-                  <Grid md={12}>
-                    <Box
-                      sx={{
-                        py: 1,
-                        px: 1,
-                        backgroundColor: grey[600],
-                        borderRadius: '8px',
-                        mb: 1,
-                      }}
-                    >
-                      <Typography sx={{ color: grey[200], fontSize: 15 }}>{t('audit_log_frame_detail.size')}</Typography>
-                      <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                        {formatBytes(auditFrame?.size)}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                  <Grid md={6}>
-                    <Box
-                      sx={{
-                        py: 1,
-                        px: 1,
-                        backgroundColor: grey[600],
-                        borderRadius: '8px',
-                        mb: 1,
-                      }}
-                    >
-                      <Typography sx={{ color: grey[200], fontSize: 15 }}>{t('audit_log_frame_detail.head')}</Typography>
-                      <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                        {auditFrame?.head}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                  <Grid md={6} sx={{ pl: 1 }}>
-                    <Box
-                      sx={{
-                        py: 1,
-                        px: 1,
-                        backgroundColor: grey[600],
-                        borderRadius: '8px',
-                        mb: 1,
-                      }}
-                    >
-                      <Typography sx={{ color: grey[200], fontSize: 15 }}>{t('audit_log_frame_detail.rid')}</Typography>
-                      <Typography sx={{ color: common.white, fontSize: 17, fontWeight: 500 }}>
-                        {auditFrame?.rid}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Box>
-            </Box>
+            <Stack direction="row" spacing={1}>
+              <InfoBox
+                label={t('audit_log_frame_detail.head')}
+                value={auditFrame?.head ?? '—'}
+                sx={{ flex: 1, mb: 0 }}
+              />
+              <InfoBox
+                label={t('audit_log_frame_detail.rid')}
+                value={auditFrame?.rid ?? '—'}
+                sx={{ flex: 1, mb: 0 }}
+              />
+            </Stack>
           </Box>
-        </Grid>
-      </Grid>
+        </Panel>
 
-      {/* Full-width layout-flow visualization for the selected frame (under the Data section).
+        {/* Right — filter bar + frame nav + fragment table */}
+        <Box sx={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+          <Box sx={{ border: `1px solid ${T.border}`, borderRadius: '8px', overflow: 'hidden' }}>
+            <AuditFrameFilterBar
+              filters={filters}
+              setFilters={setFilters}
+              onApply={handleSearch}
+              onResetClick={handleResetClick}
+            />
+          </Box>
+
+          <TablePaginationCustomShort
+            rowsPerPage={count || 40}
+            page={5}
+            count={auditFrame?.max_frame || 0}
+            onPageChange={onChangePage}
+            onPrev={onPrev}
+            onNext={onNext}
+            onFirst={onFirst}
+            onLast={onLast}
+            firstDisabled={apiSeq === 1}
+            lastDisabled={false}
+            prevDisabled={apiSeq === 1}
+            nextDisabled={apiSeq === 0 || apiSeq === auditFrame.max_frame}
+          />
+
+          <Box
+            sx={{
+              flex: 1,
+              minHeight: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              '& > *': { flex: 1, minHeight: 0 },
+            }}
+          >
+            {auditFrameLoading || hasFrags ? (
+              <DataTable<AuditLogFrameFragItem>
+                columns={columns}
+                headerVariant="light"
+                rows={auditFrame?.frags || []}
+                loading={auditFrameLoading}
+                error={auditFrameError}
+                emptyLabel={t('frag_header.empty')}
+              />
+            ) : (
+              <CodeBlock>{auditFrame?.data || ''}</CodeBlock>
+            )}
+          </Box>
+        </Box>
+      </Box>
+
+      {/* Full-width layout-flow visualization for the selected frame.
           Renders only when the frame API returns `layout_flow` (renders null otherwise). */}
       {!auditFrameLoading && <AuditFrameLayoutFlow layoutFlow={auditFrameLayoutFlow} />}
 
@@ -718,7 +449,7 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                 </svg>
               </SvgIcon>
               <Typography sx={{ color: error.dark, fontSize: 15, fontWeight: 500 }}>
-                Validation Error
+                {t('validation.title')}
               </Typography>
             </Stack>
 

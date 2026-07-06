@@ -2,15 +2,37 @@
     "top": {
         "title": "Replay"
     },
+    "play": "Play",
+    "no_processes": "No processes found",
+    "no_options": "No options",
+    "missing_fields": "Missing fields",
+    "execute_command": "Execute Command",
     "top_table": {
         "pid": "PID",
+        "process_id": "Process ID",
+        "status": "Status",
         "command": "Command"
     },
     "tool_box": {
         "tool": "Tool",
+        "tools": "Tools",
         "pid": "PID",
         "tab_the_list": "Tab the list",
+        "tap_from_list": "Tap from list",
         "kill": "Kill"
+    },
+    "confirm_dialog": {
+        "title": "Confirm Replay",
+        "cancel": "Cancel",
+        "start": "Start Replay",
+        "submitting": "Replaying…"
+    },
+    "kill_dialog": {
+        "question": "Terminate replay process?",
+        "pid": "PID",
+        "cancel": "Cancel",
+        "kill": "Kill",
+        "submitting": "Terminating…"
     },
     "audit_log": {
         "title": "Audit Log",

@@ -1,19 +1,20 @@
 {
   "title": {
-    "inbound": "Channel Inbound",
-    "outbound": "Channel Outbound"
+    "inbound": "Channels In",
+    "outbound": "Channels Out"
   },
+  "action_total": "Total <mono>{{count}}</mono> channels",
   "empty": "No channels found",
   "error": "Error loading channels",
   "table": {
     "id": "ID",
     "name": "Name",
     "topic": "Topic",
-    "type": "Type",
-    "u_type": "UType",
+    "type": "Protocol Type",
+    "u_type": "Comm Type",
     "port": "Port",
-    "ip": "IP",
-    "nic": "NIC",
-    "count": "Count"
+    "ip": "Address",
+    "nic": "NIC Address",
+    "count": "Message Count"
   }
 }

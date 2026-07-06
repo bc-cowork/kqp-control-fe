@@ -1,5 +1,3 @@
-import { AuthCenteredLayout } from 'src/layouts/auth-centered';
-
 import { GuestGuard } from 'src/auth/guard';
 
 // ----------------------------------------------------------------------
@@ -9,9 +7,5 @@ type Props = {
 };
 
 export default function Layout({ children }: Props) {
-  return (
-    <GuestGuard>
-      <AuthCenteredLayout>{children}</AuthCenteredLayout>
-    </GuestGuard>
-  );
+  return <GuestGuard>{children}</GuestGuard>;
 }

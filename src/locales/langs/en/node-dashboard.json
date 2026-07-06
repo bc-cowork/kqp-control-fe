@@ -3,13 +3,15 @@
     "node_dashboard": "Node Dashboard"
   },
   "left_side": {
-    "online": "Online",
-    "offline": "Offline",
-    "emitable": "EMITABLE",
+    "online": "ON",
+    "offline": "OFF",
+    "emitable": "Emittable",
     "emit_count": "Emit Count",
     "true": "True",
     "false": "False",
-    "disk": "Disk"
+    "disk": "Disk",
+    "disk_usage": "Disk Usage",
+    "disk_detail": "<mono>{{used}} GB</mono> of {{total}} GB"
   },
   "graph": {
     "cpu": "CPU",
@@ -18,5 +20,9 @@
     "outbound": "Outbound",
     "count": "count",
     "byte": "byte"
+  },
+  "errors": {
+    "load_node_info": "Failed to load node info",
+    "fetch_status": "Error fetching status"
   }
 }

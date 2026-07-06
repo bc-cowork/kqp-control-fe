@@ -1,11 +1,13 @@
 'use client';
 
+import type { Column } from 'src/components/v5';
 import type { IChannelItem } from 'src/types/node';
 
-import { Table, TableRow, TableBody, TableCell, TableHead, CircularProgress, TableContainer } from '@mui/material';
+import { useGetChannelList } from 'src/actions/nodes';
 
 import { useTranslate } from 'src/locales';
-import { useGetChannelList } from 'src/actions/nodes';
+import { T } from 'src/theme/tokens';
+import { DataTable } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
 
@@ -15,57 +17,34 @@ type Props = {
 
 export function ChannelInbound({ selectedNodeId }: Props) {
   const { t } = useTranslate('channels');
-  const { channels, channelsLoading, channelsEmpty, channelsError } =
-    useGetChannelList(selectedNodeId);
+  const { channels, channelsLoading, channelsError } = useGetChannelList(selectedNodeId, 'inbound');
+
+  const columns: Column<IChannelItem>[] = [
+    { key: 'id', label: t('table.id'), mono: true, width: 70, color: T.textSec },
+    { key: 'name', label: t('table.name'), color: T.textSec },
+    { key: 'topic', label: t('table.topic'), color: T.textSec },
+    { key: 'type', label: t('table.type'), dim: true },
+    { key: 'utype', label: t('table.u_type'), dim: true },
+    { key: 'port', label: t('table.port'), mono: true, align: 'right', color: T.textSec },
+    { key: 'mip', label: t('table.ip'), mono: true, color: T.textSec },
+    { key: 'nic', label: t('table.nic'), mono: true, dim: true },
+    {
+      key: 'count',
+      label: t('table.count'),
+      mono: true,
+      align: 'right',
+      color: T.textSec,
+      render: (r) => r.count?.toLocaleString(),
+    },
+  ];
 
   return (
-    <TableContainer>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell align="right">{t('table.id')}</TableCell>
-            <TableCell>{t('table.name')}</TableCell>
-            <TableCell>{t('table.topic')}</TableCell>
-            <TableCell>{t('table.type')}</TableCell>
-            <TableCell>{t('table.u_type')}</TableCell>
-            <TableCell align="right">{t('table.port')}</TableCell>
-            <TableCell align="right">{t('table.ip')}</TableCell>
-            <TableCell align="right">{t('table.nic')}</TableCell>
-            <TableCell align="right">{t('table.count')}</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {channelsLoading ? (
-            <TableRow>
-              <TableCell colSpan={9} align="center">
-                <CircularProgress />
-              </TableCell>
-            </TableRow>
-          ) : channelsEmpty ? (
-            <TableRow>
-              <TableCell colSpan={9}>{t('empty')}</TableCell>
-            </TableRow>
-          ) : channelsError ? (
-            <TableRow>
-              <TableCell colSpan={9}>{t('error')}</TableCell>
-            </TableRow>
-          ) : (
-            channels.map((channel: IChannelItem, index: number) => (
-              <TableRow key={index}>
-                <TableCell align="right">{channel.id}</TableCell>
-                <TableCell>{channel.name}</TableCell>
-                <TableCell>{channel.topic}</TableCell>
-                <TableCell>{channel.type}</TableCell>
-                <TableCell>{channel.utype}</TableCell>
-                <TableCell align="right">{channel.port}</TableCell>
-                <TableCell align="right">{channel.mip}</TableCell>
-                <TableCell align="right">{channel.nic}</TableCell>
-                <TableCell align="right">{channel.count?.toLocaleString()}</TableCell>
-              </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <DataTable<IChannelItem>
+      columns={columns}
+      rows={channels || []}
+      loading={channelsLoading}
+      error={channelsError}
+      emptyLabel={t('empty')}
+    />
   );
 }

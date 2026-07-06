@@ -1,219 +1,105 @@
 'use client';
 
-import React from 'react';
-import { Typography, Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Chip, Stack, tableRowClasses, tableCellClasses } from '@mui/material';
-import { grey } from '@mui/material/colors';
-import { Breadcrumb } from 'src/components/common/Breadcrumb';
-import { DashboardContent } from 'src/layouts/dashboard';
-import { useTranslate } from 'src/locales';
-import { RrefreshButton } from 'src/components/common/RefreshButton';
-import { endpoints, fetcher } from 'src/utils/axios';
+import type { Column } from 'src/components/v5';
+
 import useSWR from 'swr';
+
+import Box from '@mui/material/Box';
+
+import { endpoints, fetcher } from 'src/utils/axios';
+
+import { useTranslate } from 'src/locales';
+import { ACCENT2 } from 'src/theme/tokens';
+import { PageShell, DataTable, BtnGhost, StatusBadge, SectionLabel } from 'src/components/v5';
+
+// ----------------------------------------------------------------------
 
 type Props = { params: { node: string } };
 
-const HeadRow = ({ title }: { title: string }) => (
-    <Box sx={{
-        mb: (theme) => theme.palette.mode === 'dark' ? 0.2 : 0,
-        borderBottom: (theme) => theme.palette.mode === 'dark' ? 'none' : '1px solid black',
-        backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#667085' : '#1D2654',
-        p: 0.5, borderTopLeftRadius: '8px', borderTopRightRadius: '8px',
-        paddingLeft: 1.2
-    }}>
-        <Typography sx={{ fontSize: 17, fontWeight: 600, color: grey[50] }}>
-            {title}
-        </Typography>
-    </Box>
-);
+type SummaryRow = { key: string; item: string; data: { max: number; cur: number; odd: number; note?: string } };
+type TrafficRow = { time: string; channel: string; count: number };
 
 export default function Page({ params }: Props) {
-    const { node } = params;
-    const { t } = useTranslate('status');
-    const url = endpoints.status.list(node);
-    const { data, error, isLoading } = useSWR(url, fetcher);
+  const { t } = useTranslate('status');
+  const { node } = params;
+  const url = endpoints.status.list(node);
+  const { data, error, isLoading, mutate } = useSWR(url, fetcher);
 
+  const serviceSummary = data?.data?.service_status?.summary;
+  const traffics = data?.data?.service_status?.traffics;
 
-    if (isLoading) {
-        return <Typography sx={{ mt: 4 }}>Loading service status...</Typography>;
-    }
+  const summaryRows: SummaryRow[] = serviceSummary
+    ? [
+        { key: 'process', item: t('table_top.process'), data: serviceSummary.process },
+        { key: 'queue', item: t('table_top.que'), data: serviceSummary.queue },
+        { key: 'recv_channel', item: t('table_top.ch_inbound'), data: serviceSummary.recv_channel },
+        { key: 'send_channel', item: t('table_top.ch_outbound'), data: serviceSummary.send_channel },
+      ]
+    : [];
 
-    if (error) {
-        return <Typography color="error" sx={{ mt: 4 }}>Failed to load data: {error.message}</Typography>;
-    }
+  const inbound: TrafficRow[] =
+    traffics?.inbound && Object.keys(traffics.inbound).length > 0 ? traffics.inbound : [];
+  const outbound: TrafficRow[] =
+    traffics?.outbound && Object.keys(traffics.outbound).length > 0 ? traffics.outbound : [];
 
-    const serviceSummary = data?.data?.service_status?.summary;
-    const traffics = data?.data?.service_status?.traffics;
+  const summaryCols: Column<SummaryRow>[] = [
+    { key: 'item', label: t('table_top.item') },
+    { key: 'max', label: t('table_top.max'), mono: true, align: 'right', render: (r) => r.data?.max?.toLocaleString() },
+    { key: 'cur', label: t('table_top.cur'), mono: true, align: 'right', render: (r) => r.data?.cur?.toLocaleString() },
+    {
+      key: 'odd',
+      label: t('table_top.odd'),
+      mono: true,
+      align: 'right',
+      color: ACCENT2,
+      render: (r) => (r.data?.odd > 0 ? r.data.odd.toLocaleString() : ''),
+    },
+    {
+      key: 'status',
+      label: t('table_top.status'),
+      align: 'right',
+      render: (r) => {
+        const abnormal = r.data?.odd > 0 || !!r.data?.note;
+        return abnormal ? (
+          <StatusBadge on={false} labelOff={r.data?.note || t('badge.abnormal')} color={ACCENT2} />
+        ) : (
+          <StatusBadge on labelOn={t('badge.normal')} />
+        );
+      },
+    },
+  ];
 
-    const table1Data = serviceSummary ? [
-        { key: 'process', Item: t('table_top.process'), data: serviceSummary.process },
-        { key: 'queue', Item: t('table_top.que'), data: serviceSummary.queue },
-        { key: 'recv_channel', Item: t('table_top.ch_inbound'), data: serviceSummary.recv_channel },
-        { key: 'send_channel', Item: t('table_top.ch_outbound'), data: serviceSummary.send_channel },
-    ] : [];
+  const trafficCols: Column<TrafficRow>[] = [
+    { key: 'time', label: t('table_bottom.time'), mono: true, align: 'center' },
+    { key: 'channel', label: t('table_bottom.channel'), mono: true, align: 'center' },
+    { key: 'count', label: t('table_bottom.count'), mono: true, align: 'center', render: (r) => r.count?.toLocaleString() },
+  ];
 
-    const table2Data = (traffics?.inbound && Object.keys(traffics.inbound).length > 0)
-        ? traffics.inbound
-        : [];
-    const table3Data = (traffics?.outbound && Object.keys(traffics.outbound).length > 0)
-        ? traffics.outbound
-        : [];
+  return (
+    <PageShell
+      node={node}
+      crumbs={[{ label: t('top.title') }]}
+      title={t('top.title')}
+      actions={<BtnGhost icon="solar:refresh-linear" onClick={() => mutate()}>{t('top.refresh')}</BtnGhost>}
+    >
+      <DataTable<SummaryRow>
+        columns={summaryCols}
+        rows={summaryRows}
+        loading={isLoading}
+        error={!!error}
+        emptyLabel={t('table_top.no_data')}
+      />
 
-    return (
-        <DashboardContent maxWidth="xl">
-            <Breadcrumb node={node} pages={[{ pageName: t('top.title') }]} />
-            <Stack direction="row" alignItems="baseline" justifyContent="space-between">
-                <Typography sx={{ fontSize: 28, fontWeight: 600, color: (theme) => theme.palette.mode === 'dark' ? grey[50] : '#373F4E', mt: 2 }}>
-                    {t('top.title')}
-                </Typography>
-                <RrefreshButton onRefresh={() => console.log("Refreshed!")} />
-            </Stack>
-
-            <Box sx={{ mt: '28px', width: 1 }}>
-                <Grid container spacing='4px' rowSpacing='8px'>
-                    <Grid item xs={12}>
-                        <Grid xs={12} md={8} lg={6}>
-                            <TableContainer component={Paper}>
-                                <Table size='small'>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>{t('table_top.item')}</TableCell>
-                                            <TableCell align='right'>{t('table_top.max')}</TableCell>
-                                            <TableCell align='right'>{t('table_top.cur')}</TableCell>
-                                            <TableCell align='right'>{t('table_top.odd')}</TableCell>
-                                            <TableCell align='right'>{ }</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {table1Data.map((row) => {
-                                            const isAbnormal = row.data.odd > 0 || row.data.note;
-                                            return (
-                                                <TableRow key={row.key} hover>
-                                                    <TableCell>{row.Item}</TableCell>
-                                                    <TableCell align='right'>{row.data.max?.toLocaleString()}</TableCell>
-                                                    <TableCell align='right'>{row.data.cur?.toLocaleString()}</TableCell>
-                                                    <TableCell align='right'>
-                                                        {row.data.odd > 0 ? row.data.odd?.toLocaleString() : ''}
-                                                    </TableCell>
-                                                    <TableCell align='right'>
-                                                        {isAbnormal && (
-                                                            <Chip
-                                                                label={row.data.note || "Abnormal"}
-                                                                color="error"
-                                                                size="small"
-                                                                variant="soft"
-                                                                sx={{
-                                                                    backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#331B1E' : '#FFF2F4',
-                                                                    border: (theme) => theme.palette.mode === 'dark' ? '1px solid #4A2C31' : '1px solid #FFD8D8'
-                                                                }}
-                                                            />
-                                                        )}
-                                                    </TableCell>
-                                                </TableRow>
-                                            );
-                                        })}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
-                        </Grid>
-                    </Grid>
-
-                    <Grid item xs={12} md={6} sx={{ display: 'flex', flexDirection: 'column' }}>
-                        <HeadRow title={t('table_bottom.ch_inbound')} />
-                        <TableContainer component={Paper}
-                            sx={{
-                                borderTopLeftRadius: 0,
-                                borderTopRightRadius: 0,
-                                // Fill the stretched Grid item so both tables match the taller one's height.
-                                flex: 1,
-                            }}
-                        >
-                            <Table size="small"
-                                sx={{
-                                    [`& .${tableRowClasses.root}:last-child .${tableCellClasses.root}`]: {
-                                        borderTopLeftRadius: '0px !important',
-                                        borderTopRightRadius: '0px !important',
-                                    },
-                                }}
-                            >
-                                <TableHead>
-                                    <TableRow
-                                    >
-                                        <TableCell align='center' />
-                                        <TableCell align='center'>{t('table_bottom.time')}</TableCell>
-                                        <TableCell align='center'>{t('table_bottom.ch_inbound')}</TableCell>
-                                        <TableCell align='center'>{t('table_bottom.number_inbound')}</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {table2Data.length > 0 ? table2Data.map((row: any, index: any) => (
-                                        <TableRow hover key={index}>
-                                            <TableCell align='center' />
-                                            <TableCell align='center'>{row.time}</TableCell>
-                                            <TableCell align='center'>{row.channel}</TableCell>
-                                            <TableCell align='center'>{row.count?.toLocaleString()}</TableCell>
-                                        </TableRow>
-                                    )) : (
-                                        <TableRow hover>
-                                            <TableCell colSpan={4}>
-                                                {t('table_bottom.no_inbound_traffic')}
-                                            </TableCell>
-                                        </TableRow>
-                                    )}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </Grid>
-
-                    <Grid item xs={12} md={6} sx={{ display: 'flex', flexDirection: 'column' }}>
-                        <HeadRow title={t('table_bottom.ch_outbound')} />
-                        <TableContainer component={Paper}
-                            sx={{
-                                borderTopLeftRadius: 0,
-                                borderTopRightRadius: 0,
-                                // Fill the stretched Grid item so both tables match the taller one's height.
-                                flex: 1,
-                            }}
-                        >
-                            <Table size="small"
-                                sx={{
-                                    [`& .${tableRowClasses.root}:last-child .${tableCellClasses.root}`]: {
-                                        borderTopLeftRadius: '0px !important',
-                                        borderTopRightRadius: '0px !important',
-                                    },
-                                }}
-                            >
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell align='center'>{ }</TableCell>
-                                        <TableCell align='center'>{t('table_bottom.time')}</TableCell>
-                                        <TableCell align='center'>{t('table_bottom.ch_outbound')}</TableCell>
-                                        <TableCell align='center'>{t('table_bottom.number_outbound')}</TableCell>
-                                        <TableCell align='center'>{ }</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {table3Data.length > 0 ? table3Data.map((row: any, index: number | string) => (
-                                        <TableRow hover key={index}>
-                                            <TableCell align='center'>{ }</TableCell>
-                                            <TableCell align='center'>{row.time}</TableCell>
-                                            <TableCell align='center'>{row.channel}</TableCell>
-                                            <TableCell align='center'>{row.count?.toLocaleString()}</TableCell>
-                                            <TableCell align='center' />
-                                        </TableRow>
-                                    )) : (
-                                        <TableRow hover>
-                                            <TableCell colSpan={5}>
-                                                {t('table_bottom.no_outbound_traffic')}
-                                            </TableCell>
-                                        </TableRow>
-                                    )}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </Grid>
-
-                </Grid>
-            </Box>
-        </DashboardContent>
-    );
+      <Box sx={{ display: 'flex', gap: 1.75, flex: 1, minHeight: 0 }}>
+        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
+          <SectionLabel>{t('table_top.ch_inbound')}</SectionLabel>
+          <DataTable<TrafficRow> columns={trafficCols} rows={inbound} dense emptyLabel={t('table_bottom.no_inbound_traffic')} />
+        </Box>
+        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
+          <SectionLabel>{t('table_top.ch_outbound')}</SectionLabel>
+          <DataTable<TrafficRow> columns={trafficCols} rows={outbound} dense emptyLabel={t('table_bottom.no_outbound_traffic')} />
+        </Box>
+      </Box>
+    </PageShell>
+  );
 }

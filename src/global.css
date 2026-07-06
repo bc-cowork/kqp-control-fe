@@ -81,30 +81,76 @@ input[type='number']::-webkit-inner-spin-button {
 
 /* Chrome, Edge, Safari */
 ::-webkit-scrollbar {
-  width: 2px;
-  height: 10px;
+  width: 4px;
+  height: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f0f0f;
-  /* dark background */
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #667085;
-  /* darker grey */
-  border-radius: 8px;
-  border: 2px solid #0f0f0f;
-  /* matches track for inset look */
+  background-color: #33343f;
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #3d3d3d;
+  background-color: #4e576a;
 }
 
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #667085 #0f0f0f;
-  /* thumb track */
+  scrollbar-color: #33343f transparent;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+/** **************************************
+* App baseline (v5 dark design)
+*************************************** */
+body {
+  background-color: #161420;
+  color: #e9e6ef;
+  line-height: 1.3;
+}
+
+::placeholder {
+  color: #55536a;
+  opacity: 1;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes chipPop {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

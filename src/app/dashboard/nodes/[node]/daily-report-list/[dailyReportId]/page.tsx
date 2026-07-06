@@ -1,133 +1,124 @@
-"use client";
-
-import React from 'react';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import { CircularProgress, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+'use client';
 
 import useSWR from 'swr';
-import { useTranslate } from 'src/locales';
-import { DashboardContent } from 'src/layouts/dashboard';
-import { Breadcrumb } from 'src/components/common/Breadcrumb';
-import { fetcher, endpoints } from 'src/utils/axios';
+import { useRouter } from 'next/navigation';
+
+import Box from '@mui/material/Box';
+
 import { paths } from 'src/routes/paths';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import { grey } from '@mui/material/colors';
+
+import { fetcher, endpoints } from 'src/utils/axios';
+
+import { useTranslate } from 'src/locales';
+
+import { T, FONT_MONO } from 'src/theme/tokens';
+import { Panel, PageShell, CodeBlock, SectionLabel } from 'src/components/v5';
+
+// ----------------------------------------------------------------------
 
 type Props = {
-    params: {
-        node: string;
-        dailyReportId: string;
-    };
+  params: {
+    node: string;
+    dailyReportId: string;
+  };
 };
 
 export default function Page({ params }: Props) {
-    const { node, dailyReportId } = params;
-    const { t } = useTranslate('daily-report-list');
-    const decodedLayout = decodeURIComponent(dailyReportId);
+  const { node, dailyReportId } = params;
+  const router = useRouter();
+  const { t } = useTranslate('daily-report-list');
+  const decodedReport = decodeURIComponent(dailyReportId);
 
+  const url = endpoints.report.detail(node, decodedReport);
+  const { data, isLoading, error } = useSWR(url, fetcher);
 
-    const url = endpoints.report.detail(node, decodedLayout);
-    const { data, isLoading, error } = useSWR(url, fetcher);
+  const reportItem = data?.data?.report || {};
+  const reportEmpty = data?.data?.report == null;
+  const reportDefinition: string = data?.data?.contents || '';
 
-    const reportItem = data?.data?.report || {};
-    const reportEmpty = data?.data?.report == null;
-    const reportDefinition = data?.data?.contents || '';
+  const fields: { label: string; value: any; primary?: boolean; mono?: boolean }[] = [
+    { label: t('table.report_name'), value: reportItem?.name, primary: true },
+    { label: t('table.job_at'), value: reportItem?.job_at, mono: true },
+    { label: t('table.last_exec'), value: reportItem?.last_exec, mono: true },
+    { label: t('table.desc'), value: reportItem?.desc },
+  ];
 
-    return (
-        <DashboardContent maxWidth="xl">
-            <Breadcrumb
-                node={node}
-                pages={[
-                    { pageName: t('top.title'), link: paths.dashboard.nodes.dailyReportList(node) },
-                    { pageName: decodedLayout },
-                ]}
-            />
+  const statusText = isLoading
+    ? t('loading')
+    : error
+      ? t('error')
+      : reportEmpty
+        ? t('empty_detail')
+        : null;
 
-            <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{t('report')}{" : "}{decodedLayout}</Typography>
-            <TableContainer
-                component={Paper}
-                sx={{ height: 'auto', my: 2 }}
-            >
-                <Table size="small">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>{ }</TableCell>
-                            <TableCell>{t('table.report_name')}</TableCell>
-                            <TableCell align="left">{t('table.job_at')}</TableCell>
-                            <TableCell align="left">{t('table.last_exec')}</TableCell>
-                            <TableCell>{ }</TableCell>
-                            <TableCell>{ }</TableCell>
-                            <TableCell align="left">{t('table.desc')}</TableCell>
-                            <TableCell>{ }</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {isLoading ? (
-                            <TableRow>
-                                <TableCell colSpan={8} align="center">
-                                    <CircularProgress />
-                                </TableCell>
-                            </TableRow>
-                        ) : reportEmpty ? (
-                            <TableRow>
-                                <TableCell colSpan={8}>No Process Found</TableCell>
-                            </TableRow>
-                        ) : error ? (
-                            <TableRow>
-                                <TableCell colSpan={8}>Error Fetching Process</TableCell>
-                            </TableRow>
-                        ) : (
-                            <TableRow
-                                key={reportItem.name}
-                                hover
-                            >
-                                <TableCell align="left">{ }</TableCell>
-                                <TableCell align="left">{reportItem.name}</TableCell>
-                                <TableCell align='left'>{reportItem.job_at}</TableCell>
-                                <TableCell align="left">{reportItem.last_exec}</TableCell>
-                                <TableCell align="left">{ }</TableCell>
-                                <TableCell align="left">{ }</TableCell>
-                                <TableCell align="left">{reportItem?.desc}</TableCell>
-                                <TableCell align="left">{ }</TableCell>
-
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <Paper sx={{
-                height: '100%',
-                padding: (theme) => theme.palette.mode === 'dark' ? '0px' : '4px',
-                backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'transparent' : 'black'
-            }} >
-
-                <Box sx={{ backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#667085' : '#E0E4EB', p: 1.5, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
-                    <Typography sx={{
-                        fontWeight: 600,
-                        color: (theme) => theme.palette.mode === 'dark' ? grey[300] : '#4E576A'
-                    }}>{t('report')}</Typography>
+  return (
+    <PageShell
+      node={node}
+      crumbs={[
+        {
+          label: t('top.title'),
+          onClick: () => router.push(paths.dashboard.nodes.dailyReportList(node)),
+        },
+        { label: decodedReport },
+      ]}
+      title={`${t('report')} : ${decodedReport}`}
+    >
+      <Panel>
+        {statusText ? (
+          <Box
+            sx={{
+              p: '28px 14px',
+              textAlign: 'center',
+              color: error ? T.off : T.textDim,
+              fontSize: 15,
+            }}
+          >
+            {statusText}
+          </Box>
+        ) : (
+          <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse', fontSize: 17 }}>
+            <Box component="tbody">
+              {fields.map((f) => (
+                <Box
+                  component="tr"
+                  key={f.label}
+                  sx={{ '&:not(:last-of-type)': { borderBottom: `1px solid ${T.borderSub}` } }}
+                >
+                  <Box
+                    component="td"
+                    sx={{
+                      p: '11px 16px',
+                      width: 200,
+                      color: T.textSec,
+                      fontWeight: 500,
+                      borderRight: `1px solid ${T.borderSub}`,
+                      bgcolor: T.bgPanel,
+                      whiteSpace: 'nowrap',
+                      verticalAlign: 'top',
+                    }}
+                  >
+                    {f.label}
+                  </Box>
+                  <Box
+                    component="td"
+                    sx={{
+                      p: '11px 16px',
+                      fontFamily: f.mono ? FONT_MONO : 'inherit',
+                      color: f.primary ? T.primary : T.textPrim,
+                      fontWeight: f.primary ? 500 : 400,
+                    }}
+                  >
+                    {f.value ?? '—'}
+                  </Box>
                 </Box>
+              ))}
+            </Box>
+          </Box>
+        )}
+      </Panel>
 
-                <Box sx={{ bgcolor: '#202838', height: 'calc(100vh - 48px)', overflowY: 'auto' }}>
-                    <Box component="pre" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: 13, color: '#AFB7C8', m: 0 }}>
-                        <SyntaxHighlighter
-                            language="moonscript"
-                            style={a11yDark}
-                            customStyle={{
-                                background: "transparent",
-                                whiteSpace: "pre-wrap",
-
-                            }}
-                        >
-                            {reportDefinition}
-                        </SyntaxHighlighter>
-                    </Box>
-                </Box>
-            </Paper>
-        </DashboardContent>
-    );
+      <SectionLabel>{t('contents_title')}</SectionLabel>
+      <CodeBlock theme="default">{isLoading ? '' : error ? '' : reportDefinition}</CodeBlock>
+    </PageShell>
+  );
 }
-
-

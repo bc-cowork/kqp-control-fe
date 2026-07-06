@@ -1,6 +1,7 @@
 {
   "top": {
-    "function_list": "사용자 함수"
+    "function_list": "사용자 함수",
+    "title_prefix": "함수"
   },
   "table": {
     "id": "ID",
@@ -14,9 +15,12 @@
     "script_title": "사용자 함수 정의",
     "no": "번호",
     "related_identifier": "연관 식별자",
-    "ref_freq": "참조 빈도"
+    "ref_freq": "참조 빈도",
+    "section_identifiers": "연관 식별자",
+    "empty_related_identifiers": "연관 식별자 없음"
   },
   "loading": "로딩 중...",
   "error": "함수를 불러오지 못했습니다",
-  "empty": "함수가 없습니다"
+  "empty": "함수가 없습니다",
+  "empty_detail": "함수를 찾을 수 없습니다"
 }

@@ -1,6 +1,7 @@
 {
   "top": {
-    "title": "Rules"
+    "title": "Rules",
+    "title_prefix": "Rules"
   },
   "table_header": {
     "id": "ID",
@@ -14,9 +15,10 @@
   },
   "loading": "Loading...",
   "error": "Failed to load actions",
-  "empty": "No actions found",
+  "empty": "No rules found",
   "detail": {
-    "placeholder": "Action details will appear here."
+    "placeholder": "Action details will appear here.",
+    "empty": "No rule found"
   },
   "detail_table": {
     "layout_no": "No",
@@ -29,6 +31,12 @@
     "ref_layout": "Ref. Layout",
     "ref_process": "Ref. Process",
     "ref_actions": "Ref. Actions",
-    "related_actions": "Related Actions"
+    "related_actions": "Related Actions",
+    "action_name": "Related Action",
+    "related_layouts": "Related Layouts",
+    "related_processes": "Related Processes",
+    "empty_layouts": "No related layouts",
+    "empty_processes": "No related processes",
+    "empty_actions": "No related actions"
   }
 }

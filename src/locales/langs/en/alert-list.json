@@ -18,6 +18,9 @@
   "btn": {
     "add": "Add Item"
   },
+  "list": {
+    "watch_items": "Watch Items"
+  },
   "loading": "Loading...",
   "empty": "No watch items",
   "detail": {
@@ -43,6 +46,11 @@
   "alert": "Watch",
   "form": {
     "page_title": "Item Setting Form",
+    "title_setup": "Watch Item Setup",
+    "running": "Running",
+    "toast_created": "Watch created",
+    "toast_updated": "Watch updated",
+    "toast_error": "Failed to save watch",
     "title_add": "Register Watch Item",
     "title_add_breadcrump": "Add Item",
     "title_edit": "Register Watch Item",

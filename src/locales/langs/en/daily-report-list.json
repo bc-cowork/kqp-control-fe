@@ -9,6 +9,10 @@
     "last_exec": "last exec.",
     "desc": "Description"
   },
-  "empty": "No Reports",
-  "report": "Report"
+  "empty": "No report items",
+  "report": "Report",
+  "loading": "Loading…",
+  "error": "Failed to load",
+  "empty_detail": "No report found",
+  "contents_title": "Report Contents"
 }

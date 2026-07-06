@@ -3,12 +3,17 @@
     "memory": "Memory",
     "memory_item": "Issue Item"
   },
+  "common": {
+    "no_data": "No data available",
+    "loading": "Loading…",
+    "load_failed": "Failed to load"
+  },
   "left_side": {
     "issues": "Issues",
     "compet": "Compet"
   },
   "graph": {
-    "memory": "Memory"
+    "memory": "Memory Usage %"
   },
   "search_ui": {
     "add_filter": "Add Filter",
@@ -27,9 +32,11 @@
     "code": "CODE",
     "k_name": "K.Name",
     "daily_info": "Daily Info",
-    "compet": "Compet"
+    "compet": "Compet",
+    "empty": "No data for memory logs"
   },
   "item": {
+    "refresh": "Refresh",
     "table": {
       "no": "No",
       "price": "Price",

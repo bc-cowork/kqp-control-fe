@@ -1,13 +1,15 @@
 'use client';
 
-import Box from '@mui/material/Box';
-import { Typography } from '@mui/material';
+import { Trans } from 'react-i18next';
 
-import { grey } from 'src/theme/core';
+import Typography from '@mui/material/Typography';
+
+import { useGetChannelList } from 'src/actions/nodes';
+
 import { useTranslate } from 'src/locales';
-import { DashboardContent } from 'src/layouts/dashboard';
+import { ACCENT2, FONT_MONO } from 'src/theme/tokens';
+import { PageShell } from 'src/components/v5';
 
-import { Breadcrumb } from 'src/components/common/Breadcrumb';
 import { ChannelOutbound } from 'src/components/nodes/ChannelOutbound';
 
 // ----------------------------------------------------------------------
@@ -18,20 +20,26 @@ type Props = {
 
 export function ChannelOutboundView({ nodeId }: Props) {
   const { t } = useTranslate('channels');
+  const { channels } = useGetChannelList(nodeId, 'outbound');
+  const count = channels?.length ?? 0;
+
   return (
-    <DashboardContent maxWidth="xl">
-      <Breadcrumb node={nodeId} pages={[{ pageName: t('title.outbound') }]} />
-      <Typography sx={{ fontSize: 28, fontWeight: 600, color: (theme) => theme.palette.mode === 'dark' ? grey[50] : '#373F4E', mt: 2 }}>
-        {t('title.outbound')}
-      </Typography>
-      <Box
-        sx={{
-          mt: '28px',
-          width: 1,
-        }}
-      >
-        <ChannelOutbound selectedNodeId={nodeId} />
-      </Box>
-    </DashboardContent>
+    <PageShell
+      node={nodeId}
+      crumbs={[{ label: t('title.outbound') }]}
+      title={t('title.outbound')}
+      actions={
+        <Typography sx={{ fontSize: 15, color: ACCENT2 }}>
+          <Trans
+            i18nKey="action_total"
+            ns="channels"
+            values={{ count }}
+            components={{ mono: <span style={{ fontFamily: FONT_MONO, fontWeight: 500 }} /> }}
+          />
+        </Typography>
+      }
+    >
+      <ChannelOutbound selectedNodeId={nodeId} />
+    </PageShell>
   );
 }

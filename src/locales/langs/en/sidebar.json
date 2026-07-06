@@ -5,6 +5,15 @@
     "settings": "Settings",
     "logout": "Logout"
   },
+  "group": {
+    "monitoring": "Monitoring",
+    "data": "Data",
+    "settings_list": "Settings"
+  },
+  "tile": {
+    "normal": "Normal",
+    "abnormal": "Abnormal"
+  },
   "tab_option": {
     "node_dashboard": "Node Dashboard",
     "process": "Process",

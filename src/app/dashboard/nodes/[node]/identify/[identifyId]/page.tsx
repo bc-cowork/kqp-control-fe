@@ -1,226 +1,212 @@
 'use client';
 
+import type { Column } from 'src/components/v5';
+
 import React from 'react';
-import { DashboardContent } from 'src/layouts/dashboard';
-import { Breadcrumb } from 'src/components/common/Breadcrumb';
-import { Typography, Box, Paper, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { useTranslate } from 'src/locales';
-import { paths } from 'src/routes/paths';
 import useSWR from 'swr';
-import { fetcher, endpoints } from 'src/utils/axios';
-import { ChartBar } from 'src/components/node-dashboard/chart-area-bar';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import { grey } from '@mui/material/colors';
 import { useRouter } from 'next/navigation';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Bar, XAxis, YAxis, Tooltip, BarChart, CartesianGrid, ResponsiveContainer } from 'recharts';
+
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+
+import { paths } from 'src/routes/paths';
+
+import { fetcher, endpoints } from 'src/utils/axios';
+
+import { useTranslate } from 'src/locales';
+
+import { T, CHART, FONT_MONO } from 'src/theme/tokens';
+import { Panel, CodeBlock, DataTable, PageShell, SectionLabel } from 'src/components/v5';
+
+// ----------------------------------------------------------------------
 
 type Props = {
-    params: { node: string; identifyId: string };
+  params: { node: string; identifyId: string };
 };
 
+type SpecRow = { name: string; ref_count: number; url: string };
+
+type IdentifyDetail = {
+  name?: string;
+  path?: string;
+  timestamp?: string;
+  ref_specs?: number;
+  desc?: string;
+  related_specs?: SpecRow[];
+  spec_def?: string;
+};
+
+// Hourly "Today Count" placeholder — mirrors the existing chart data source.
+const todayCountData = Array.from({ length: 25 }, (_, h) => ({
+  timestamp: `${h}H`,
+  count: [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 200, 250, 60, 65, 70, 75, 80, 85, 90, 95, 40, 100, 105, 110, 115][h],
+}));
+
 export default function Page({ params }: Props) {
-    const { node, identifyId } = params;
-    const { t } = useTranslate('identify-list');
-    const decodedId = decodeURIComponent(identifyId);
-    const router = useRouter();
+  const { node, identifyId } = params;
+  const decodedId = decodeURIComponent(identifyId);
+  const router = useRouter();
+  const { t } = useTranslate('identify-list');
 
-    const url = endpoints.identify.detail(node, decodedId);
-    const { data, error, isLoading } = useSWR(url, fetcher);
+  const url = endpoints.identify.detail(node, decodedId);
+  const { data, error, isLoading } = useSWR(url, fetcher);
 
-    const detail = data?.data?.item || {};
-    const specList: Array<{ name: string; ref_count: number, url: string }> = detail.related_specs || [];
-    const script: string = detail.spec_def || '';
+  const detail: IdentifyDetail = data?.data?.item || {};
+  const specList: SpecRow[] = detail.related_specs || [];
+  const script: string = detail.spec_def || '';
 
-    // `keys` is not on the item directly — it lives inside the `spec_def` script,
-    // e.g. `keys: { 'A301S', 'A301Q' }` (array) or `keys: 'A301S'` (single string).
-    const parseKeys = (def: string): string[] => {
-        if (!def) return [];
-        const braceMatch = def.match(/keys\s*:\s*\{([^}]*)\}/);
-        if (braceMatch) {
-            return Array.from(braceMatch[1].matchAll(/['"]([^'"]+)['"]/g)).map((m) => m[1]);
-        }
-        const singleMatch = def.match(/keys\s*:\s*['"]([^'"]+)['"]/);
-        return singleMatch ? [singleMatch[1]] : [];
-    };
-    const keys: string[] = parseKeys(script);
-    const keysTitle = keys.length ? keys.join(', ') : detail?.name || '-';
+  // `keys` is not on the item directly — it lives inside the `spec_def` script,
+  // e.g. `keys: { 'A301S', 'A301Q' }` (array) or `keys: 'A301S'` (single string).
+  const parseKeys = (def: string): string[] => {
+    if (!def) return [];
+    const braceMatch = def.match(/keys\s*:\s*\{([^}]*)\}/);
+    if (braceMatch) {
+      return Array.from(braceMatch[1].matchAll(/['"]([^'"]+)['"]/g)).map((m) => m[1]);
+    }
+    const singleMatch = def.match(/keys\s*:\s*['"]([^'"]+)['"]/);
+    return singleMatch ? [singleMatch[1]] : [];
+  };
+  const keys: string[] = parseKeys(script);
+  const keysTitle = keys.length ? keys.join(', ') : detail?.name || '-';
+  const keyDisplay = isLoading
+    ? t('loading')
+    : error
+      ? t('error')
+      : keys.length
+        ? `'${keys.join("', '")}'`
+        : '-';
 
+  // Summary row — single-row light table.
+  const summaryColumns: Column<IdentifyDetail>[] = [
+    { key: 'name', label: t('table.identity_name'), color: T.textPrim },
+    { key: 'path', label: t('table.path'), mono: true, dim: true },
+    { key: 'timestamp', label: t('table.timestamp'), mono: true, dim: true },
+    { key: 'ref_specs', label: t('table.ref_specs'), mono: true, align: 'right' },
+    { key: 'desc', label: t('table.explanation'), dim: true, grow: true },
+  ];
+  const summaryRows: IdentifyDetail[] = detail?.name ? [detail] : [];
 
-    return (
-        <DashboardContent maxWidth="xl">
-            <Breadcrumb
-                node={node}
-                pages={[
-                    { pageName: t('top.identify_list'), link: paths.dashboard.nodes.identifyList(node) },
-                    { pageName: detail?.name || '-' },
-                ]}
-            />
+  // Related SPEC table.
+  const specColumns: Column<SpecRow>[] = [
+    { key: 'no', label: t('detail_table.no'), mono: true, align: 'right', width: 60, render: (_r, i) => i + 1 },
+    {
+      key: 'name',
+      label: t('detail_table.related_spec'),
+      render: (r) => (
+        <Box
+          component="span"
+          onClick={() =>
+            router.push(
+              paths.dashboard.nodes.specDetail(node, r.url.split('/').filter(Boolean).pop() || '')
+            )
+          }
+          sx={{ color: T.primary, textDecoration: 'underline', cursor: 'pointer' }}
+        >
+          {r.name}
+        </Box>
+      ),
+    },
+    { key: 'ref_count', label: t('detail_table.ref_freq'), mono: true, align: 'right', dim: true },
+  ];
 
-            <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2, mb: 2 }}>
-                {keysTitle}
+  const scriptFile = detail?.name || decodedId;
+  const scriptBody = isLoading ? t('loading') : error ? t('error') : script || '';
+
+  return (
+    <PageShell
+      node={node}
+      crumbs={[
+        { label: t('top.identify_list'), onClick: () => router.push(paths.dashboard.nodes.identifyList(node)) },
+        { label: detail?.name || '-' },
+      ]}
+      title={keysTitle}
+    >
+      <DataTable<IdentifyDetail>
+        headerVariant="light"
+        columns={summaryColumns}
+        rows={summaryRows}
+        loading={isLoading}
+        error={!!error}
+        emptyLabel={t('empty_detail')}
+      />
+
+      <Box sx={{ display: 'flex', gap: 1.75, alignItems: 'flex-start' }}>
+        <Box sx={{ flex: 7, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1.75 }}>
+          {/* Key box */}
+          <Panel sx={{ p: 2 }}>
+            <Typography sx={{ fontSize: 14, color: T.textDim, mb: 1 }}>{t('detail_table.key_label')}</Typography>
+            <Typography sx={{ fontFamily: FONT_MONO, fontSize: 17, color: T.textPrim }}>
+              {keyDisplay}
             </Typography>
+          </Panel>
 
-            <TableContainer component={Paper}>
-                <Table size="small">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>{ }</TableCell>
-                            <TableCell>{t("table.identity_name")}</TableCell>
-                            <TableCell>{t("table.path")}</TableCell>
-                            <TableCell>{t("table.timestamp")}</TableCell>
-                            <TableCell>{t("table.ref_specs")}</TableCell>
-                            <TableCell>{ }</TableCell>
-                            <TableCell>{ }</TableCell>
-                            <TableCell>{ }</TableCell>
-                            <TableCell>{ }</TableCell>
-                            <TableCell>{t("table.explanation")}</TableCell>
-                            <TableCell>{ }</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <TableRow
-                            key={detail.name}
-                            sx={{ cursor: 'pointer' }}
-                        >
-                            <TableCell>{ }</TableCell>
-                            <TableCell>{detail.name}</TableCell>
-                            <TableCell>{detail.path}</TableCell>
-                            <TableCell>{detail.timestamp}</TableCell>
-                            <TableCell>{detail.ref_specs}</TableCell>
-                            <TableCell>{ }</TableCell>
-                            <TableCell>{ }</TableCell>
-                            <TableCell>{ }</TableCell>
-                            <TableCell>{ }</TableCell>
-                            <TableCell>{detail.desc}</TableCell>
-                            <TableCell>{ }</TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            </TableContainer>
+          {/* Related SPEC */}
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <SectionLabel>{t('detail_table.related_spec')}</SectionLabel>
+            <DataTable<SpecRow>
+              columns={specColumns}
+              rows={specList}
+              loading={isLoading}
+              error={!!error}
+              emptyLabel={t('detail_table.empty_related_specs')}
+            />
+          </Box>
 
-            <Grid container spacing={3} sx={{ mt: 3 }}>
-                <Grid item xs={7}>
-                    <Grid >
-                        <Box sx={{ backgroundColor: '#E0E4EB', borderTopLeftRadius: 8, borderTopRightRadius: 8 }}>
-                            <Typography sx={{ p: 1, py: 0.5, color: grey[800] }} variant="body2">
-                                Key
-                            </Typography>
-                            <Box sx={{ backgroundColor: '#5E66FF', p: 1, py: 1.5 }}>
-                                <Typography variant="body2" color="text.light">
-                                    {isLoading ? t('loading') : error ? t('error') : keys.length ? `‘${keys.join("', '")}’` : t('empty')}
-                                </Typography>
-                            </Box>
-                        </Box>
-                    </Grid>
-                    <Grid>
-                        <Box sx={{ mt: 3 }}>
-                            <Paper>
-                                <Grid container>
-                                    <Grid item xs={12}>
-                                        <Box>
-                                            <TableContainer>
-                                                <Table size='small'>
-                                                    <TableHead>
-                                                        <TableRow>
+          {/* Today Count */}
+          <Panel>
+            <Box sx={{ px: 2, py: 1.25, borderBottom: `1px solid ${T.border}` }}>
+              <Typography sx={{ fontSize: 15, color: T.textSec, fontWeight: 500 }}>
+                {t('detail_table.today_count')}
+              </Typography>
+            </Box>
+            <Box sx={{ height: 264, p: 1.5 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={todayCountData} margin={{ top: 10, right: 8, left: -12, bottom: 0 }}>
+                  <CartesianGrid stroke={CHART.grid} vertical={false} />
+                  <XAxis
+                    dataKey="timestamp"
+                    tick={{ fill: T.textDim, fontSize: 12 }}
+                    tickLine={false}
+                    axisLine={{ stroke: T.border }}
+                  />
+                  <YAxis
+                    tick={{ fill: T.textDim, fontSize: 12 }}
+                    tickLine={false}
+                    axisLine={{ stroke: T.border }}
+                  />
+                  <Tooltip
+                    cursor={{ fill: T.bgHover }}
+                    contentStyle={{
+                      background: T.bgPanel,
+                      border: `1px solid ${T.border}`,
+                      borderRadius: '5px',
+                    }}
+                    labelStyle={{ color: T.textSec }}
+                    itemStyle={{ color: T.textPrim }}
+                  />
+                  <Bar dataKey="count" fill={T.primary} radius={[3, 3, 0, 0]} maxBarSize={26} />
+                </BarChart>
+              </ResponsiveContainer>
+            </Box>
+          </Panel>
+        </Box>
 
-                                                            <TableCell align='right'>{t('detail_table.no')}</TableCell>
-                                                            <TableCell>{t('detail_table.related_spec')}</TableCell>
-                                                            <TableCell>{t('detail_table.ref_freq')}</TableCell>
-                                                            <TableCell>{ }</TableCell>
-
-                                                        </TableRow>
-                                                    </TableHead>
-                                                    <TableBody>
-                                                        {isLoading && (
-                                                            <TableRow>
-                                                                <TableCell colSpan={4}>{t('loading')}</TableCell>
-                                                            </TableRow>
-                                                        )}
-                                                        {error && (
-                                                            <TableRow>
-                                                                <TableCell colSpan={4}>{t('error')}</TableCell>
-                                                            </TableRow>
-                                                        )}
-                                                        {!isLoading && !error && specList.length === 0 && (
-                                                            <TableRow>
-                                                                <TableCell colSpan={4}>{t('empty')}</TableCell>
-                                                            </TableRow>
-                                                        )}
-                                                        {specList.map((row, idx) => (
-                                                            <TableRow hover key={idx + 1}
-
-                                                            >
-                                                                <TableCell align='right'>{idx + 1}</TableCell>
-                                                                <TableCell
-                                                                    onClick={() =>
-                                                                        router.push(`${paths.dashboard.nodes.specDetail(node, row.url.split('/')[row.url.split('/').length - 1])}`)
-                                                                    }
-                                                                    sx={{
-                                                                        color: '#4A3BFF',
-                                                                        textDecoration: 'underline',
-                                                                        cursor: 'pointer'
-                                                                    }}
-                                                                >{row.name}</TableCell>
-                                                                <TableCell>{row.ref_count}</TableCell>
-                                                                <TableCell>{ }</TableCell>
-                                                            </TableRow>
-                                                        ))}
-                                                    </TableBody>
-                                                </Table>
-                                            </TableContainer>
-                                        </Box>
-                                    </Grid>
-                                </Grid>
-                            </Paper>
-                        </Box>
-                        <Box
-                            sx={{
-                                borderRadius: '8px',
-                                height: '264px',
-                                backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF',
-                                border: (theme) => theme.palette.mode === 'dark' ? 'none' : '1px solid #D1D6E0',
-                                mt: 2
-                            }}
-                        >
-                            <ChartBar />
-                        </Box>
-                    </Grid>
-                </Grid>
-
-
-                <Grid item xs={12} md={5}>
-                    <Paper sx={{
-                        height: '100%',
-                        padding: (theme) => theme.palette.mode === 'dark' ? '0px' : '4px',
-                        backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'transparent' : 'black'
-                    }}>
-                        <Box sx={{ backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#667085' : '#E0E4EB', p: 1, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
-                            <Typography variant="body2" sx={{
-                                fontWeight: 600,
-                                color: (theme) => theme.palette.mode === 'dark' ? grey[300] : '#4E576A'
-                            }}>{t('detail_table.script_title')}</Typography>
-                        </Box>
-
-                        <Box sx={{ bgcolor: '#202838', height: 'calc(100% - 48px)', overflowY: 'auto' }}>
-                            <Box component="pre" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: 13, color: '#AFB7C8', m: 0 }}>
-                                <SyntaxHighlighter
-                                    language="moonscript"
-                                    style={a11yDark}
-                                    customStyle={{
-                                        background: "transparent",
-                                        whiteSpace: "pre-wrap",
-                                    }}
-                                >
-
-                                    {isLoading ? t('loading') : error ? t('error') : script || ''}
-                                </SyntaxHighlighter>
-                            </Box>
-                        </Box>
-                    </Paper>
-                </Grid>
-            </Grid>
-        </DashboardContent >
-    );
+        {/* Identifier Definition */}
+        <Box sx={{ flex: 5, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
+          <SectionLabel>{t('detail_table.script_title')}</SectionLabel>
+          <Panel sx={{ p: 1.5 }}>
+            <Stack spacing={1}>
+              <Typography sx={{ fontFamily: FONT_MONO, fontSize: 14, color: T.textDim }}>
+                {`-- ${scriptFile}`}
+              </Typography>
+              <CodeBlock theme="moon">{scriptBody}</CodeBlock>
+            </Stack>
+          </Panel>
+        </Box>
+      </Box>
+    </PageShell>
+  );
 }
-
-

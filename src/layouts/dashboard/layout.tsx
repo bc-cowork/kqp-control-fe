@@ -5,18 +5,15 @@ import type { Theme, SxProps, Breakpoint } from '@mui/material/styles';
 
 import { useTheme } from '@mui/material/styles';
 
-import { useBoolean } from 'src/hooks/use-boolean';
-
 import { useGetNodes } from 'src/actions/dashboard';
 
 import { useSettingsContext } from 'src/components/settings';
-import { useTranslate } from 'src/locales';
 
 import { Main } from './main';
+import { HeaderV5 } from './header-v5';
 import { layoutClasses } from '../classes';
 import { useNavColorVars } from './styles';
-import { NavVertical } from './nav-vertical';
-import { getNavData } from '../config-nav-dashboard';
+import { NavVerticalV5 } from './nav-vertical-v5';
 import { LayoutSection } from '../core/layout-section';
 
 // ----------------------------------------------------------------------
@@ -34,19 +31,14 @@ export type DashboardLayoutProps = {
 
 export function DashboardLayout({ sx, children, header, data }: DashboardLayoutProps) {
   const theme = useTheme();
-  const { t } = useTranslate('sidebar');
-
-  const mobileNavOpen = useBoolean();
 
   const settings = useSettingsContext();
 
   const navColorVars = useNavColorVars(theme, settings);
 
-  const { nodes, nodesLoading, nodesEmpty, nodesError } = useGetNodes();
+  const { nodes } = useGetNodes();
 
   const layoutQuery: Breakpoint = 'xs';
-
-  const navData = data?.nav ?? getNavData(t, nodes?.map((node: any) => node.id) || []);
 
   const isNavMini = settings.navLayout === 'mini';
   const isNavHorizontal = settings.navLayout === 'horizontal';
@@ -57,24 +49,11 @@ export function DashboardLayout({ sx, children, header, data }: DashboardLayoutP
       /** **************************************
        * Header
        *************************************** */
-      headerSection={null}
+      headerSection={<HeaderV5 />}
       /** **************************************
        * Sidebar
        *************************************** */
-      sidebarSection={
-        <NavVertical
-          data={navData}
-          isNavMini={isNavMini}
-          layoutQuery={layoutQuery}
-          cssVars={navColorVars.section}
-          onToggleNav={() =>
-            settings.onUpdateField(
-              'navLayout',
-              settings.navLayout === 'vertical' ? 'mini' : 'vertical'
-            )
-          }
-        />
-      }
+      sidebarSection={<NavVerticalV5 nodes={nodes || []} />}
       /** **************************************
        * Footer
        *************************************** */
@@ -87,7 +66,7 @@ export function DashboardLayout({ sx, children, header, data }: DashboardLayoutP
         '--layout-transition-easing': 'linear',
         '--layout-transition-duration': '120ms',
         '--layout-nav-mini-width': '88px',
-        '--layout-nav-vertical-width': '260px',
+        '--layout-nav-vertical-width': '268px',
         '--layout-nav-horizontal-height': '64px',
         '--layout-dashboard-content-pt': theme.spacing(1),
         '--layout-dashboard-content-pb': theme.spacing(8),
@@ -105,7 +84,7 @@ export function DashboardLayout({ sx, children, header, data }: DashboardLayoutP
         },
 
         ...sx,
-        backgroundColor: theme.palette.mode === 'dark' ? '#141C2A' : '#F9FAFB',
+        backgroundColor: '#161420',
       }}
     >
       <Main isNavHorizontal={isNavHorizontal}>{children}</Main>

@@ -1,12 +1,19 @@
 {
     "top": {
-        "title": "상태"
+        "title": "상태",
+        "refresh": "새로고침"
+    },
+    "badge": {
+        "normal": "정상",
+        "abnormal": "이상"
     },
     "table_top": {
         "item": "항목",
         "max": "최대",
         "cur": "현재",
         "odd": "이상",
+        "status": "상태",
+        "no_data": "상태 데이터 없음",
         "process": "프로세스",
         "que": "큐",
         "ch_inbound": "수신 채널",
@@ -14,6 +21,8 @@
     },
     "table_bottom": {
         "time": "시간",
+        "channel": "채널",
+        "count": "건수",
         "ch_inbound": "수신 채널",
         "ch_outbound": "송출 채널",
         "number_inbound": "수신 건수",

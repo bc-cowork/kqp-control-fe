@@ -8,9 +8,6 @@ import { useForm, Controller, FormProvider } from 'react-hook-form';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { paths } from 'src/routes/paths';
@@ -18,12 +15,12 @@ import { useRouter } from 'src/routes/hooks';
 
 import axiosInstance, { fetcher, endpoints } from 'src/utils/axios';
 
-import { grey } from 'src/theme/core';
 import { useTranslate } from 'src/locales';
-import { DashboardContent } from 'src/layouts/dashboard';
+import { T, ACCENT2, FONT_MONO } from 'src/theme/tokens';
 
 import { toast } from 'src/components/snackbar';
-import { Breadcrumb } from 'src/components/common/Breadcrumb';
+import { Iconify } from 'src/components/iconify';
+import { BtnGhost, PageShell, BtnPrimary, CodeBlock } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
 
@@ -103,11 +100,50 @@ function parseCronDays(cron: string): boolean[] {
 
 // ----------------------------------------------------------------------
 
+// Shared field label
+function FieldLabel({ children, required }: { children: React.ReactNode; required?: boolean }) {
+  return (
+    <Typography sx={{ color: T.textSec, fontSize: 15, fontWeight: 500 }}>
+      {children}
+      {required && (
+        <Box component="span" sx={{ color: T.off, ml: 0.5 }}>
+          *
+        </Box>
+      )}
+    </Typography>
+  );
+}
+
+// Sub-box wrapper (schedule / time / script frames)
+const boxSx = {
+  mt: 1.5,
+  borderRadius: '8px',
+  bgcolor: T.bgCard,
+  border: `1px solid ${T.border}`,
+} as const;
+
+// Native input base style (dark)
+const nativeInputSx = {
+  width: '100%',
+  height: 40,
+  boxSizing: 'border-box' as const,
+  bgcolor: T.bg,
+  border: `1px solid ${T.border}`,
+  borderRadius: '6px',
+  px: 1.5,
+  color: T.textPrim,
+  fontSize: 15,
+  fontFamily: 'inherit',
+  outline: 'none',
+  '&:focus': { borderColor: T.primaryMuted },
+  '&::-webkit-calendar-picker-indicator': { filter: 'invert(0.7)' },
+} as const;
+
+// ----------------------------------------------------------------------
+
 export function AlertFormView({ nodeId, alertId }: Props) {
   const { t } = useTranslate('alert-list');
   const router = useRouter();
-  const theme = useTheme();
-  const isDark = theme.palette.mode === 'dark';
   const isEdit = Boolean(alertId);
 
   // Fetch existing data for edit mode
@@ -205,188 +241,110 @@ export function AlertFormView({ nodeId, alertId }: Props) {
         } else {
           await axiosInstance.post(endpoints.alert.add(nodeId), { name: values.name, ...base });
         }
-        toast.success(isEdit ? 'Watch updated' : 'Watch created');
+        toast.success(isEdit ? t('form.toast_updated') : t('form.toast_created'));
         router.push(paths.dashboard.nodes.alertsList(nodeId));
       } catch (err) {
-        toast.error('Failed to save watch');
+        toast.error(t('form.toast_error'));
       }
     },
-    [startTime, endTime, isActive, cronDays, isEdit, alertId, nodeId, router]
+    [startTime, endTime, isActive, cronDays, isEdit, alertId, nodeId, router, t]
   );
 
-  // Shared input styles
-  const inputSx = {
-    '& .MuiOutlinedInput-root': {
-      bgcolor: (theme: any) => (theme.palette.mode === 'dark' ? '#202838' : '#F9FAFB'),
-      borderRadius: '8px',
-      '& fieldset': {
-        borderColor: (theme: any) => (theme.palette.mode === 'dark' ? '#4E576A' : grey[300]),
-      },
-      '&:hover fieldset': {
-        borderColor: (theme: any) => (theme.palette.mode === 'dark' ? '#667085' : grey[400]),
-      },
-    },
-    '& .MuiOutlinedInput-input': {
-      color: (theme: any) => (theme.palette.mode === 'dark' ? '#D1D6E0' : '#4E576A'),
-      fontSize: 17,
-      fontWeight: 400,
-      lineHeight: '25.5px',
-      '&::-webkit-calendar-picker-indicator': {
-        filter: (theme: any) => (theme.palette.mode === 'dark' ? 'invert(0.7)' : 'none'),
-      },
-    },
-  };
-
-  const labelSx = {
-    color: (theme: any) => (theme.palette.mode === 'dark' ? '#AFB7C8' : grey[600]),
-    fontSize: 16,
-    fontWeight: 600,
-    lineHeight: '22.4px',
-  };
+  const goList = () => router.push(paths.dashboard.nodes.alertsList(nodeId));
 
   return (
-    <DashboardContent maxWidth="xl">
-      <Breadcrumb
-        node={nodeId}
-        pages={[
-          { pageName: t('top.title'), link: paths.dashboard.nodes.alertsList(nodeId) },
-          { pageName: t('form.title_add_breadcrump') },
-        ]}
-      />
-
-      <Typography
-        sx={{
-          fontSize: 28,
-          fontWeight: 600,
-          color: (theme) => (theme.palette.mode === 'dark' ? grey[50] : '#373F4E'),
-          mt: 2,
-        }}
-      >
-        {t('form.page_title')}
-      </Typography>
-
+    <PageShell
+      node={nodeId}
+      crumbs={[
+        { label: t('top.title'), onClick: goList },
+        { label: t('form.title_add_breadcrump') },
+      ]}
+      title={t('form.title_setup')}
+    >
       <FormProvider {...methods}>
         <Box
           component="form"
           onSubmit={handleSubmit(onSubmit)}
           sx={{
-            mt: 3,
-            borderRadius: '12px',
+            maxWidth: 1000,
+            width: '100%',
+            borderRadius: '8px',
             overflow: 'hidden',
-            fontFamily: 'Pretendard',
-            bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF'),
-            border: (theme) => `1px solid ${theme.palette.mode === 'dark' ? '#2A3142' : '#D1D6E0'}`,
-            '& .MuiTypography-root': { fontFamily: 'Pretendard' },
-            '& .MuiOutlinedInput-input': { fontFamily: 'Pretendard' },
-            '& .MuiInput-input': { fontFamily: 'Pretendard' },
-            '& .MuiButton-root': { fontFamily: 'Pretendard' },
+            bgcolor: T.bgPanel,
+            border: `1px solid ${T.border}`,
           }}
         >
-          {/* ── Header ── */}
+          {/* ── Header bar ── */}
           <Stack
             direction="row"
             alignItems="center"
             justifyContent="space-between"
             sx={{
-              px: 2,
-              py: 0.5,
-              // Navy header strip in both themes (matches the table-header convention).
-              bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#4E576A' : '#1D2654'),
-              borderBottom: (theme) =>
-                `1px solid ${theme.palette.mode === 'dark' ? '#4E576A' : grey[300]}`,
+              px: 2.5,
+              py: 1.5,
+              bgcolor: T.bgHover,
+              borderBottom: `1px solid ${T.border}`,
             }}
           >
-            <Typography
-              sx={{
-                color: (theme) => (theme.palette.mode === 'dark' ? '#AFB7C8' : '#E0E4EB'),
-                fontSize: 22,
-                fontWeight: 500,
-                lineHeight: '26.4px',
-              }}
-            >
+            <Typography sx={{ color: T.textPrim, fontSize: 18, fontWeight: 500 }}>
               {isEdit ? t('form.title_edit') : t('form.title_add')}
             </Typography>
-            <Stack direction="row" alignItems="center" gap={1} sx={{ px: 2, py: 1.5 }}>
+            <Stack direction="row" alignItems="center" gap={1}>
               <Switch
                 checked={isActive}
                 onChange={(_, checked) => setIsActive(checked)}
-                sx={(theme) => ({
-                  '& .MuiSwitch-switchBase': {
-                    color: theme.palette.mode === 'dark' ? '#AFB7C8' : '#FFFFFF',
-                  },
+                sx={{
+                  '& .MuiSwitch-switchBase': { color: '#fff' },
                   '& .MuiSwitch-switchBase + .MuiSwitch-track': {
-                    backgroundColor: theme.palette.mode === 'dark' ? '#373F4E' : grey[300],
+                    backgroundColor: T.border,
                     opacity: 1,
                   },
                   '& .MuiSwitch-switchBase.Mui-checked': { color: '#fff' },
                   '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-                    backgroundColor: '#5E66FF',
+                    backgroundColor: T.primary,
                     opacity: 1,
                   },
-                })}
-              />
-              <Typography
-                sx={{
-                  // On the navy header strip in both themes -> use the brighter indigo for contrast.
-                  color: '#6B89FF',
-                  fontSize: 17,
-                  fontWeight: 500,
-                  lineHeight: '25.5px',
                 }}
-              >
-                {isActive ? t('form.status_active') : t('form.status_stopped')}
+              />
+              <Typography sx={{ color: isActive ? ACCENT2 : T.textDim, fontSize: 15, fontWeight: 500 }}>
+                {isActive ? t('form.running') : t('form.status_stopped')}
               </Typography>
             </Stack>
           </Stack>
 
-          {/* ── Form Body ── */}
-          <Stack
-            sx={{
-              background: (theme) =>
-                theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF',
-              borderBottomLeftRadius: '8px',
-              borderBottomRightRadius: '8px',
-              gap: '40px',
-              pb: 0,
-            }}
-          >
-            {/* ── Item Name ── */}
-            <Box sx={{ px: 2, pt: 2 }}>
-              <Typography sx={labelSx}>
-                {t('form.name')}{' '}
-                <Typography component="span" sx={{ color: '#F87171', fontSize: 16, fontWeight: 600 }}>
-                  *
-                </Typography>
-              </Typography>
+          {/* ── Body ── */}
+          <Stack sx={{ p: 2.5, gap: 3.5 }}>
+            {/* ── Name ── */}
+            <Box>
+              <FieldLabel required>{t('form.name')}</FieldLabel>
               <Controller
                 name="name"
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (
-                  <TextField {...field} fullWidth size="small" sx={{ mt: 1.5, ...inputSx }} />
+                  <Box component="input" {...field} sx={{ ...nativeInputSx, mt: 1.5 }} />
                 )}
               />
             </Box>
 
             {/* ── Description ── */}
-            <Box sx={{ px: 2 }}>
-              <Typography sx={labelSx}>{t('form.desc')}</Typography>
+            <Box>
+              <FieldLabel>{t('form.desc')}</FieldLabel>
               <Controller
                 name="desc"
                 control={control}
                 render={({ field }) => (
-                  <TextField
+                  <Box
+                    component="textarea"
                     {...field}
-                    fullWidth
-                    multiline
-                    minRows={4}
+                    rows={4}
                     sx={{
+                      ...nativeInputSx,
                       mt: 1.5,
-                      ...inputSx,
-                      '& .MuiOutlinedInput-root': {
-                        ...inputSx['& .MuiOutlinedInput-root'],
-                        borderRadius: '12px',
-                      },
+                      height: 'auto',
+                      py: 1.25,
+                      resize: 'vertical',
+                      lineHeight: 1.6,
                     }}
                   />
                 )}
@@ -394,44 +352,17 @@ export function AlertFormView({ nodeId, alertId }: Props) {
             </Box>
 
             {/* ── Operation Schedule ── */}
-            <Box sx={{ px: 2 }}>
-              <Typography sx={labelSx}>
-                {t('form.schedule')}{' '}
-                <Typography component="span" sx={{ color: '#F87171', fontSize: 16, fontWeight: 600 }}>
-                  *
-                </Typography>
-              </Typography>
+            <Box>
+              <FieldLabel required>{t('form.schedule')}</FieldLabel>
 
-              <Box
-                sx={{
-                  mt: 1.5,
-                  p: 2,
-                  borderRadius: '12px',
-                  bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#202838' : '#F9FAFB'),
-                  border: (theme) =>
-                    `1px solid ${theme.palette.mode === 'dark' ? '#4E576A' : grey[300]}`,
-                }}
-              >
-                {/* Help text */}
-                <Typography
-                  sx={{
-                    color: (theme) => (theme.palette.mode === 'dark' ? '#AFB7C8' : grey[500]),
-                    fontSize: 15,
-                    py: 0.5,
-                    mb: 1.5,
-                  }}
-                >
+              <Box sx={{ ...boxSx, p: 2 }}>
+                <Typography sx={{ color: T.textDim, fontSize: 14, mb: 2 }}>
                   {t('form.schedule_help')}
                 </Typography>
 
-                {/* Day buttons + crontab badge */}
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  justifyContent="space-between"
-                  sx={{ pb: 2 }}
-                >
-                  <Stack direction="row" gap={1}>
+                {/* Day buttons + crontab preview */}
+                <Stack direction="row" alignItems="center" justifyContent="space-between" gap={2} sx={{ pb: 2 }}>
+                  <Stack direction="row" gap={1} sx={{ flexWrap: 'wrap' }}>
                     {DAY_KEYS.map((key, idx) => {
                       const selected = selectedDays[idx];
                       return (
@@ -439,279 +370,150 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                           key={key}
                           onClick={() => toggleDay(idx)}
                           sx={{
-                            px: 2,
-                            py: 1,
-                            borderRadius: '8px',
+                            px: 1.75,
+                            py: 0.75,
+                            borderRadius: '6px',
                             cursor: 'pointer',
-                            textAlign: 'center',
-                            bgcolor: (theme) =>
-                              selected
-                                ? (theme.palette.mode === 'dark' ? '#212447' : '#5E66FF')
-                                : theme.palette.mode === 'dark'
-                                  ? '#202838'
-                                  : '#E0E4EB',
-                            border: (theme) =>
-                              `1px solid ${selected
-                                ? (theme.palette.mode === 'dark' ? '#24306D' : '#5E66FF')
-                                : theme.palette.mode === 'dark'
-                                  ? '#373F4E'
-                                  : '#E0E4EB'
-                              }`,
+                            fontSize: 15,
+                            userSelect: 'none',
+                            bgcolor: selected ? '#5344FF22' : T.bg,
+                            border: `1px solid ${selected ? T.primaryMuted : T.border}`,
+                            color: selected ? T.primaryMuted : T.textDim,
+                            '&:hover': { borderColor: selected ? T.primaryMuted : T.textDim },
                           }}
                         >
-                          <Typography
-                            sx={{
-                              fontSize: 17,
-                              fontWeight: 400,
-                              lineHeight: '25.5px',
-                              color: (theme) =>
-                                selected
-                                  ? '#FFFFFF'
-                                  : theme.palette.mode === 'dark'
-                                    ? '#AFB7C8'
-                                    : '#AFB7C8',
-                            }}
-                          >
-                            {t(`form.days.${key}`)}
-                          </Typography>
+                          {t(`form.days.${key}`)}
                         </Box>
                       );
                     })}
                   </Stack>
 
-                  {/* Crontab badge — same solid style as the selected day chips */}
+                  {/* Crontab preview chip */}
                   {cronDays && (
                     <Box
                       sx={{
-                        px: 1.85,
-                        py: 0.85,
-                        borderRadius: '8px',
-                        bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#212447' : '#5E66FF'),
-                        border: (theme) =>
-                          `1px solid ${theme.palette.mode === 'dark' ? '#24306D' : '#5E66FF'}`,
+                        px: 1.75,
+                        py: 0.75,
+                        borderRadius: '6px',
+                        bgcolor: '#4A3BFF22',
+                        border: `1px solid ${T.primaryMuted}`,
+                        color: T.primaryMuted,
+                        fontSize: 15,
+                        fontFamily: FONT_MONO,
+                        whiteSpace: 'nowrap',
                       }}
                     >
-                      <Typography
-                        sx={{ color: '#FFFFFF', fontSize: 17, fontWeight: 400, lineHeight: '25.5px' }}
-                      >
-                        {cronDays}
-                      </Typography>
+                      {cronDays}
                     </Box>
                   )}
                 </Stack>
 
                 {/* Preset chips */}
                 <Stack direction="row" gap={1}>
-                  {(['weekdays', 'weekend', 'everyday', 'reset'] as const).map((preset) => (
+                  {(['weekdays', 'weekend', 'everyday'] as const).map((preset) => (
                     <Box
                       key={preset}
                       onClick={() => applyPreset(preset)}
                       sx={{
-                        px: 1.75,
-                        py: 0.625,
+                        px: 1.5,
+                        py: 0.5,
                         borderRadius: '6px',
                         cursor: 'pointer',
-                        bgcolor: (theme) =>
-                          theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF',
-                        border: (theme) =>
-                          `1px solid ${theme.palette.mode === 'dark' ? '#373F4E' : grey[300]}`,
+                        fontSize: 13,
+                        color: '#fff',
+                        bgcolor: T.primary,
+                        '&:hover': { bgcolor: T.primaryHov },
                       }}
                     >
-                      <Typography
-                        sx={{
-                          color: (theme) =>
-                            theme.palette.mode === 'dark' ? '#AFB7C8' : grey[500],
-                          fontSize: 12,
-                          fontWeight: 400,
-                          lineHeight: '16.8px',
-                        }}
-                      >
-                        {t(`form.presets.${preset}`)}
-                      </Typography>
+                      {t(`form.presets.${preset}`)}
                     </Box>
                   ))}
+                  <Box
+                    onClick={() => applyPreset('reset')}
+                    sx={{
+                      px: 1.5,
+                      py: 0.5,
+                      borderRadius: '6px',
+                      cursor: 'pointer',
+                      fontSize: 13,
+                      color: T.textSec,
+                      bgcolor: T.bg,
+                      border: `1px solid ${T.border}`,
+                      '&:hover': { bgcolor: T.bgHover, color: T.textPrim },
+                    }}
+                  >
+                    {t('form.presets.reset')}
+                  </Box>
                 </Stack>
               </Box>
 
-              {/* Crontab info box */}
-              <Box
-                sx={{
-                  mt: 1.5,
-                  p: 2,
-                  py: 1.5,
-                  borderRadius: '12px',
-                  bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#202838' : '#F9FAFB'),
-                  border: (theme) =>
-                    `1px solid ${theme.palette.mode === 'dark' ? '#4E576A' : grey[300]}`,
-                }}
-              >
-                <Typography
-                  component="span"
-                  sx={{
-                    color: (theme) => (theme.palette.mode === 'dark' ? '#AFB7C8' : grey[500]),
-                    fontSize: 15,
-                    lineHeight: '22.5px',
-                  }}
-                >
+              {/* Crontab helper note */}
+              <Box sx={{ ...boxSx, p: 1.5 }}>
+                <Typography component="span" sx={{ color: T.textDim, fontSize: 14 }}>
                   {t('form.schedule_cron_help')}{' '}
-                  <Typography
-                    component="span"
-                    sx={{ color: '#5E66FF', fontSize: 15, lineHeight: '22.5px' }}
-                  >
+                  <Box component="span" sx={{ color: T.primaryMuted, fontFamily: FONT_MONO }}>
                     1 - 5
-                  </Typography>{' '}
+                  </Box>{' '}
                   {t('form.schedule_cron_help2')}{' '}
-                  <Typography
-                    component="span"
-                    sx={{ color: '#5E66FF', fontSize: 15, lineHeight: '22.5px' }}
-                  >
+                  <Box component="span" sx={{ color: T.primaryMuted, fontFamily: FONT_MONO }}>
                     1,3,5
-                  </Typography>
+                  </Box>
                 </Typography>
               </Box>
             </Box>
 
-            {/* ── Operation Time Zone ── */}
-            <Box sx={{ px: 2 }}>
-              <Typography sx={labelSx}>
-                {t('form.timezone')}{' '}
-                <Typography component="span" sx={{ color: '#F87171', fontSize: 16, fontWeight: 600 }}>
-                  *
-                </Typography>
-              </Typography>
+            {/* ── Time Range ── */}
+            <Box>
+              <FieldLabel required>{t('form.timezone')}</FieldLabel>
 
-              <Box
-                sx={{
-                  mt: 1.5,
-                  px: 2,
-                  py: 1,
-                  borderRadius: '12px',
-                  bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#202838' : '#F9FAFB'),
-                  border: (theme) =>
-                    `1px solid ${theme.palette.mode === 'dark' ? '#4E576A' : grey[300]}`,
-                }}
-              >
-                <Stack direction="row" alignItems="flex-end" gap={2} sx={{ px: 1, py: 2 }}>
+              <Box sx={{ ...boxSx, p: 2 }}>
+                <Stack direction="row" alignItems="flex-end" gap={2} flexWrap="wrap">
                   {/* Start Time */}
-                  <Stack sx={{ width: 160 }} gap={0.5}>
-                    <Typography
-                      sx={{
-                        color: (theme) => (theme.palette.mode === 'dark' ? '#AFB7C8' : grey[500]),
-                        fontSize: 13,
-                        lineHeight: '19.5px',
-                      }}
-                    >
-                      {t('form.start_time')}
-                    </Typography>
-                    <TextField
+                  <Stack sx={{ width: 160 }} gap={0.75}>
+                    <Typography sx={{ color: T.textDim, fontSize: 13 }}>{t('form.start_time')}</Typography>
+                    <Box
+                      component="input"
                       type="time"
                       value={startTime}
-                      onChange={(e) => setStartTime(e.target.value)}
-                      size="small"
-                      sx={{
-                        ...inputSx,
-                        '& .MuiOutlinedInput-root': {
-                          ...inputSx['& .MuiOutlinedInput-root'],
-                          bgcolor: (theme: any) =>
-                            theme.palette.mode === 'dark' ? '#161C25' : grey[50],
-                        },
-                      }}
-                      inputProps={{ step: 60 }}
+                      onChange={(e: any) => setStartTime(e.target.value)}
+                      sx={nativeInputSx}
                     />
                   </Stack>
 
-                  {/* Separator */}
-                  <Typography
-                    sx={{
-                      color: (theme) => (theme.palette.mode === 'dark' ? '#4E576A' : grey[400]),
-                      fontSize: 20,
-                      pb: 0.5,
-                    }}
-                  >
-                    —
-                  </Typography>
+                  <Typography sx={{ color: T.textDim, fontSize: 18, pb: 1 }}>—</Typography>
 
                   {/* End Time */}
-                  <Stack sx={{ width: 160 }} gap={0.5}>
-                    <Typography
-                      sx={{
-                        color: (theme) => (theme.palette.mode === 'dark' ? '#AFB7C8' : grey[500]),
-                        fontSize: 13,
-                        lineHeight: '19.5px',
-                      }}
-                    >
-                      {t('form.end_time')}
-                    </Typography>
-                    <TextField
+                  <Stack sx={{ width: 160 }} gap={0.75}>
+                    <Typography sx={{ color: T.textDim, fontSize: 13 }}>{t('form.end_time')}</Typography>
+                    <Box
+                      component="input"
                       type="time"
                       value={endTime}
-                      onChange={(e) => setEndTime(e.target.value)}
-                      size="small"
-                      sx={{
-                        ...inputSx,
-                        '& .MuiOutlinedInput-root': {
-                          ...inputSx['& .MuiOutlinedInput-root'],
-                          bgcolor: (theme: any) =>
-                            theme.palette.mode === 'dark' ? '#161C25' : grey[50],
-                        },
-                      }}
-                      inputProps={{ step: 60 }}
+                      onChange={(e: any) => setEndTime(e.target.value)}
+                      sx={nativeInputSx}
                     />
                   </Stack>
 
-                  {/* Vertical divider */}
-                  <Box
-                    sx={{
-                      minWidth: 2,
-                      maxWidth: 1,
-                      height: 56,
-                      bgcolor: (theme) =>
-                        theme.palette.mode === 'dark' ? '#373F4E' : grey[300],
-                    }}
-                  />
+                  <Box sx={{ width: '1px', alignSelf: 'stretch', bgcolor: T.border, mx: 1 }} />
 
                   {/* Interval */}
-                  <Stack sx={{ width: 225 }} gap={0.5}>
-                    <Typography
-                      sx={{
-                        color: (theme) => (theme.palette.mode === 'dark' ? '#AFB7C8' : grey[500]),
-                        fontSize: 13,
-                        lineHeight: '19.5px',
-                      }}
-                    >
-                      {t('form.interval_sec')}
-                    </Typography>
+                  <Stack sx={{ width: 240 }} gap={0.75}>
+                    <Typography sx={{ color: T.textDim, fontSize: 13 }}>{t('form.interval_sec')}</Typography>
                     <Stack direction="row" alignItems="center" gap={1}>
                       <Controller
                         name="interval"
                         control={control}
                         render={({ field }) => (
-                          <TextField
-                            {...field}
+                          <Box
+                            component="input"
                             type="number"
-                            size="small"
-                            onChange={(e) => field.onChange(Number(e.target.value))}
-                            sx={{
-                              flex: 1,
-                              ...inputSx,
-                              '& .MuiOutlinedInput-root': {
-                                ...inputSx['& .MuiOutlinedInput-root'],
-                                bgcolor: (theme: any) =>
-                                  theme.palette.mode === 'dark' ? '#161C25' : grey[50],
-                              },
-                            }}
+                            {...field}
+                            onChange={(e: any) => field.onChange(Number(e.target.value))}
+                            sx={{ ...nativeInputSx, flex: 1 }}
                           />
                         )}
                       />
-                      <Typography
-                        sx={{
-                          color: (theme) =>
-                            theme.palette.mode === 'dark' ? '#667085' : grey[500],
-                          fontSize: 15,
-                          lineHeight: '22.5px',
-                          whiteSpace: 'nowrap',
-                        }}
-                      >
+                      <Typography sx={{ color: T.textDim, fontSize: 14, whiteSpace: 'nowrap' }}>
                         {t('form.interval_suffix')}
                       </Typography>
                     </Stack>
@@ -719,7 +521,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                 </Stack>
 
                 {/* Time presets */}
-                <Stack direction="row" gap={1} sx={{ px: 1, pb: 2 }}>
+                <Stack direction="row" gap={1} sx={{ mt: 2 }}>
                   {([
                     { key: 'time_all_day', start: '00:00', end: '23:59' },
                     { key: 'time_regular_session', start: '08:00', end: '20:00' },
@@ -731,303 +533,187 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                         setEndTime(preset.end);
                       }}
                       sx={{
-                        px: 1.75,
-                        py: 0.625,
+                        px: 1.5,
+                        py: 0.5,
                         borderRadius: '6px',
                         cursor: 'pointer',
-                        bgcolor: (theme) =>
-                          theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF',
-                        border: (theme) =>
-                          `1px solid ${theme.palette.mode === 'dark' ? '#373F4E' : grey[300]}`,
+                        fontSize: 13,
+                        color: T.textSec,
+                        bgcolor: T.bg,
+                        border: `1px solid ${T.border}`,
+                        '&:hover': { bgcolor: T.bgHover, color: T.textPrim },
                       }}
                     >
-                      <Typography
-                        sx={{
-                          color: (theme) =>
-                            theme.palette.mode === 'dark' ? '#AFB7C8' : grey[500],
-                          fontSize: 12,
-                          fontWeight: 400,
-                          lineHeight: '16.8px',
-                        }}
-                      >
-                        {t(`form.${preset.key}`)}
-                      </Typography>
+                      {t(`form.${preset.key}`)}
                     </Box>
                   ))}
                 </Stack>
               </Box>
             </Box>
 
-            {/* ── Running Script ── */}
-            <Box sx={{ px: 2 }}>
-              <Typography sx={labelSx}>
-                {t('form.script')}{' '}
-                <Typography component="span" sx={{ color: '#F87171', fontSize: 16, fontWeight: 600 }}>
-                  *
-                </Typography>
-              </Typography>
+            {/* ── Script ── */}
+            <Box>
+              <FieldLabel required>{t('form.script')}</FieldLabel>
 
-              <Box
-                sx={{
-                  mt: 1.5,
-                  borderRadius: '12px',
-                  overflow: 'hidden',
-                  bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#202838' : '#F9FAFB'),
-                  border: (theme) =>
-                    `1px solid ${theme.palette.mode === 'dark' ? '#4E576A' : grey[300]}`,
-                }}
-              >
+              <Box sx={{ ...boxSx, overflow: 'hidden' }}>
                 {/* Script header */}
                 <Stack
                   direction="row"
                   alignItems="center"
                   gap={1.5}
-                  sx={{
-                    px: 2,
-                    py: 1,
-                    borderBottom: (theme) =>
-                      `1px solid ${theme.palette.mode === 'dark' ? '#4E576A' : grey[300]}`,
-                  }}
+                  sx={{ px: 2, py: 1.25, borderBottom: `1px solid ${T.border}`, bgcolor: T.bgHover }}
                 >
-                  {/* File name */}
+                  {/* Filename input with green dot */}
                   <Controller
                     name="scriptFileName"
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <Stack
-                        direction="row"
-                        alignItems="center"
-                        gap={1}
-                        sx={{
-                          flex: 1,
-                          px: 2,
-                          py: 1.5,
-                          bgcolor: 'transparent',
-                          borderRadius: '8px',
-                        }}
-                      >
+                      <Stack direction="row" alignItems="center" gap={1} sx={{ flex: 1, minWidth: 0 }}>
+                        <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: T.on, flexShrink: 0 }} />
                         <Box
-                          sx={{
-                            width: 8,
-                            height: 8,
-                            borderRadius: '50%',
-                            bgcolor: '#4FCB53',
-                            flexShrink: 0,
-                          }}
-                        />
-                        <TextField
+                          component="input"
                           {...field}
-                          variant="standard"
                           placeholder="script_name.moon"
-                          fullWidth
-                          InputProps={{ disableUnderline: true }}
                           sx={{
-                            '& .MuiInput-input': {
-                              color: (theme: any) =>
-                                theme.palette.mode === 'dark' ? '#D1D6E0' : '#373F4E',
-                              fontSize: 17,
-                              fontWeight: 400,
-                              lineHeight: '25.5px',
-                              p: 0,
-                            },
+                            flex: 1,
+                            minWidth: 0,
+                            bgcolor: 'transparent',
+                            border: 'none',
+                            outline: 'none',
+                            color: T.textPrim,
+                            fontSize: 15,
+                            fontFamily: FONT_MONO,
                           }}
                         />
                       </Stack>
                     )}
                   />
 
-                  {/* View / Edit buttons */}
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    onClick={() => setIsScriptEditing(false)}
-                    sx={{
-                      px: 2,
-                      py: 0.5,
-                      borderRadius: '8px',
-                      textTransform: 'none',
-                      fontSize: 15,
-                      fontWeight: 400,
-                      color: (theme) =>
-                        theme.palette.mode === 'dark' ? '#D1D6E0' : '#373F4E',
-                      borderColor: (theme) =>
-                        theme.palette.mode === 'dark' ? '#373F4E' : grey[300],
-                      bgcolor: (theme) =>
-                        theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF',
-                      '&:hover': {
-                        borderColor: (theme) =>
-                          theme.palette.mode === 'dark' ? '#667085' : grey[400],
-                      },
-                    }}
-                  >
+                  {/* View / Edit toggle */}
+                  <ToggleBtn active={!isScriptEditing} onClick={() => setIsScriptEditing(false)}>
                     {t('form.script_view')}
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    onClick={() => setIsScriptEditing(true)}
-                    sx={{
-                      px: 2,
-                      py: 0.5,
-                      borderRadius: '8px',
-                      textTransform: 'none',
-                      fontSize: 15,
-                      fontWeight: 400,
-                      color: isScriptEditing ? '#FFFFFF' : (theme) =>
-                        theme.palette.mode === 'dark' ? '#D1D6E0' : '#373F4E',
-                      borderColor: isScriptEditing ? '#5E66FF' : (theme) =>
-                        theme.palette.mode === 'dark' ? '#373F4E' : grey[300],
-                      bgcolor: isScriptEditing ? '#5E66FF' : (theme) =>
-                        theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF',
-                      '&:hover': {
-                        borderColor: isScriptEditing ? '#4A3BFF' : (theme) =>
-                          theme.palette.mode === 'dark' ? '#667085' : grey[400],
-                        bgcolor: isScriptEditing ? '#4A3BFF' : undefined,
-                      },
-                    }}
-                  >
+                  </ToggleBtn>
+                  <ToggleBtn active={isScriptEditing} onClick={() => setIsScriptEditing(true)}>
                     {t('form.script_edit')}
-                  </Button>
+                  </ToggleBtn>
                 </Stack>
 
-                {/* Monaco editor */}
+                {/* Editor / viewer */}
                 <Controller
                   name="scriptCode"
                   control={control}
-                  render={({ field }) => (
-                    <Box
-                      sx={{
-                        height: 300,
-                        bgcolor: (theme) =>
-                          theme.palette.mode === 'dark'
-                            ? isScriptEditing ? '#161C25' : 'transparent'
-                            : '#F9FAFB',
-                      }}
-                    >
-                      <MonacoEditor
-                        height="100%"
-                        language="lua"
-                        theme={isDark ? 'alert-transparent' : 'alert-transparent-light'}
-                        value={field.value}
-                        onChange={(v) => field.onChange(v || '')}
-                        beforeMount={(monaco) => {
-                          monaco.editor.defineTheme('alert-transparent', {
-                            base: 'vs-dark',
-                            inherit: true,
-                            rules: [],
-                            colors: {
-                              'editor.background': '#00000000',
-                              'editorStickyScroll.background': '#202838',
-                              'editorStickyScrollHover.background': '#2A3142',
+                  render={({ field }) =>
+                    isScriptEditing ? (
+                      <Box sx={{ height: 320, bgcolor: T.bgCard }}>
+                        <MonacoEditor
+                          height="100%"
+                          language="lua"
+                          theme="watch-dark"
+                          value={field.value}
+                          onChange={(v) => field.onChange(v || '')}
+                          beforeMount={(monaco) => {
+                            monaco.editor.defineTheme('watch-dark', {
+                              base: 'vs-dark',
+                              inherit: true,
+                              rules: [],
+                              colors: {
+                                'editor.background': '#00000000',
+                                'editorStickyScroll.background': '#25212E',
+                                'editorStickyScrollHover.background': '#2E2A3A',
+                              },
+                            });
+                          }}
+                          onMount={(ed, monaco) => {
+                            editorRef.current = ed;
+                            monaco.editor.setTheme('watch-dark');
+                          }}
+                          options={{
+                            minimap: { enabled: false },
+                            lineNumbers: 'off',
+                            glyphMargin: false,
+                            folding: false,
+                            lineDecorationsWidth: 16,
+                            lineNumbersMinChars: 0,
+                            guides: { indentation: false, bracketPairs: false },
+                            renderLineHighlight: 'none',
+                            fontSize: 15,
+                            fontFamily: FONT_MONO,
+                            lineHeight: 24,
+                            padding: { top: 16 },
+                            scrollBeyondLastLine: false,
+                            automaticLayout: true,
+                            tabSize: 2,
+                            wordWrap: 'on',
+                            scrollbar: {
+                              verticalScrollbarSize: 8,
+                              horizontalScrollbarSize: 8,
                             },
-                          });
-                          // Light theme: dark-on-light syntax colors so code is readable in light mode.
-                          monaco.editor.defineTheme('alert-transparent-light', {
-                            base: 'vs',
-                            inherit: true,
-                            rules: [],
-                            colors: {
-                              'editor.background': '#00000000',
-                              'editorStickyScroll.background': '#FFFFFF',
-                              'editorStickyScrollHover.background': '#F4F4F8',
-                            },
-                          });
-                        }}
-                        onMount={(ed, monaco) => {
-                          editorRef.current = ed;
-                          // Monaco themes are global; force the correct one on mount.
-                          monaco.editor.setTheme(isDark ? 'alert-transparent' : 'alert-transparent-light');
-                        }}
-                        options={{
-                          readOnly: !isScriptEditing,
-                          minimap: { enabled: false },
-                          lineNumbers: 'off',
-                          glyphMargin: false,
-                          folding: false,
-                          lineDecorationsWidth: 16,
-                          lineNumbersMinChars: 0,
-                          guides: { indentation: false, bracketPairs: false },
-                          renderLineHighlight: 'none',
-                          fontSize: 17,
-                          fontFamily: 'Pretendard, Roboto, monospace',
-                          lineHeight: 25.5,
-                          padding: { top: 16 },
-                          scrollBeyondLastLine: false,
-                          automaticLayout: true,
-                          tabSize: 2,
-                          wordWrap: 'on',
-                          scrollbar: {
-                            verticalScrollbarSize: 8,
-                            horizontalScrollbarSize: 8,
-                            verticalSliderSize: 8,
-                            horizontalSliderSize: 8,
-                          },
-                        }}
-                      />
-                    </Box>
-                  )}
+                          }}
+                        />
+                      </Box>
+                    ) : (
+                      <Box sx={{ p: 1.75 }}>
+                        <CodeBlock theme="moon" minHeight={288}>
+                          {field.value || ''}
+                        </CodeBlock>
+                      </Box>
+                    )
+                  }
                 />
               </Box>
             </Box>
+          </Stack>
 
-            {/* ── Footer ── */}
-            <Stack
-              direction="row"
-              justifyContent="flex-end"
-              alignItems="center"
-              gap={1.5}
-              sx={{
-                pt: 2,
-                pb: 3,
-                px: 2,
-                borderTop: (theme) =>
-                  `1px solid ${theme.palette.mode === 'dark' ? '#373F4E' : grey[300]}`,
-              }}
-            >
-              <Button
-                onClick={() => router.push(paths.dashboard.nodes.alertsList(nodeId))}
-                sx={{
-                  px: 3,
-                  py: 1.2,
-                  borderRadius: '8px',
-                  textTransform: 'none',
-                  fontSize: 15,
-                  fontWeight: 600,
-                  color: (theme) => (theme.palette.mode === 'dark' ? '#D1D6E0' : '#667085'),
-                  bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#202838' : '#E0E4EB'),
-                  border: (theme) =>
-                    `1px solid ${theme.palette.mode === 'dark' ? '#4E576A' : grey[300]}`,
-                  '&:hover': {
-                    bgcolor: (theme) =>
-                      theme.palette.mode === 'dark' ? '#2A3142' : '#D1D6E0',
-                  },
-                }}
-              >
-                {t('form.btn_cancel')}
-              </Button>
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                sx={{
-                  px: 3,
-                  py: 1.2,
-                  borderRadius: '8px',
-                  textTransform: 'none',
-                  fontSize: 15,
-                  fontWeight: 600,
-                  color: '#FFFFFF',
-                  bgcolor: '#5E66FF',
-                  '&:hover': { bgcolor: '#4A52E0' },
-                  '&:disabled': { bgcolor: '#5E66FF', opacity: 0.6 },
-                }}
-              >
-                {t('form.btn_save')}
-              </Button>
-            </Stack>
+          {/* ── Footer ── */}
+          <Stack
+            direction="row"
+            justifyContent="flex-end"
+            alignItems="center"
+            gap={1.25}
+            sx={{ px: 2.5, py: 2, borderTop: `1px solid ${T.border}` }}
+          >
+            <BtnGhost onClick={goList}>{t('form.btn_cancel')}</BtnGhost>
+            <BtnPrimary icon="eva:checkmark-fill" type="submit" disabled={isSubmitting}>
+              {t('form.btn_save')}
+            </BtnPrimary>
           </Stack>
         </Box>
       </FormProvider>
-    </DashboardContent>
+    </PageShell>
+  );
+}
+
+// ----------------------------------------------------------------------
+
+function ToggleBtn({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <Box
+      component="button"
+      type="button"
+      onClick={onClick}
+      sx={{
+        px: 1.75,
+        height: 28,
+        borderRadius: '5px',
+        cursor: 'pointer',
+        fontSize: 14,
+        fontFamily: 'inherit',
+        color: active ? '#fff' : T.textSec,
+        bgcolor: active ? T.primary : T.bg,
+        border: `1px solid ${active ? T.primary : T.border}`,
+        '&:hover': { bgcolor: active ? T.primaryHov : T.bgHover },
+      }}
+    >
+      {children}
+    </Box>
   );
 }

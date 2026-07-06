@@ -1,190 +1,125 @@
 'use client';
 
-import React from 'react';
-import { DashboardContent } from 'src/layouts/dashboard';
-import { Breadcrumb } from 'src/components/common/Breadcrumb';
-import { Typography, Box, Paper, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { useTranslate } from 'src/locales';
-import { paths } from 'src/routes/paths';
+import type { Column } from 'src/components/v5';
+
 import useSWR from 'swr';
-import { fetcher, endpoints } from 'src/utils/axios';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import { grey } from '@mui/material/colors';
 import { useRouter } from 'next/navigation';
 
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+
+import { paths } from 'src/routes/paths';
+
+import { fetcher, endpoints } from 'src/utils/axios';
+
+import { useTranslate } from 'src/locales';
+
+import { T, FONT_MONO } from 'src/theme/tokens';
+import { Panel, PageShell, DataTable, CodeBlock, SectionLabel } from 'src/components/v5';
+
+// ----------------------------------------------------------------------
+
 type Props = {
-    params: { node: string; identifyId: string };
+  params: { node: string; identifyId: string };
+};
+
+type RefItem = { name: string; ref_count?: number; url: string };
+
+const lastSeg = (url: string) => {
+  const parts = url.split('/');
+  return parts[parts.length - 1];
 };
 
 export default function Page({ params }: Props) {
-    const { node, identifyId } = params;
-    const { t } = useTranslate('function-list');
-    const decodedId = decodeURIComponent(identifyId);
-    const router = useRouter();
+  const { node, identifyId } = params;
+  const router = useRouter();
+  const { t } = useTranslate('function-list');
+  const decodedId = decodeURIComponent(identifyId);
 
-    const url = endpoints.function.detail(node, decodedId);
-    const { data, error, isLoading } = useSWR(url, fetcher);
+  const url = endpoints.function.detail(node, decodedId);
+  const { data, error, isLoading } = useSWR(url, fetcher);
 
-    const detail = data?.data || {};
-    const specList: Array<{ name: string; ref_count: number, url: string }> = detail.related_identifies || [];
-    const script: string = detail.definition || '';
+  const detail = data?.data || {};
+  const fn = detail?.function || {};
+  const specList: RefItem[] = detail.related_identifies || [];
+  const script: string = detail.definition || '';
 
+  const fnName = fn?.name || '-';
+  const summaryRows = !isLoading && !error && fn?.name ? [fn] : [];
 
-    return (
-        <DashboardContent maxWidth="xl">
-            <Breadcrumb
-                node={node}
-                pages={[
-                    { pageName: t('top.function_list'), link: paths.dashboard.nodes.functionList(node) },
-                    { pageName: detail?.function?.name || '-' },
-                ]}
-            />
+  const summaryColumns: Column<any>[] = [
+    {
+      key: 'name',
+      label: t('table.function_name'),
+      render: (r) => (
+        <span style={{ color: T.primary, fontWeight: 500, fontFamily: FONT_MONO }}>{r.name}</span>
+      ),
+    },
+    { key: 'path', label: t('table.path'), mono: true, dim: true },
+    { key: 'timestamp', label: t('table.timestamp'), mono: true },
+    { key: 'ref_identifies', label: t('table.ref_identifies'), mono: true, align: 'right' },
+    { key: 'desc', label: t('table.desc'), dim: true, grow: true },
+  ];
 
-            <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2, mb: 2 }}>
-                FUNCTION: {detail?.function?.name || '-'}
+  const refColumns: Column<RefItem>[] = [
+    { key: 'no', label: t('detail_table.no'), mono: true, align: 'right', width: 60, render: (_r, i) => i + 1 },
+    {
+      key: 'name',
+      label: t('detail_table.related_identifier'),
+      render: (r) => <span style={{ color: T.primary, fontFamily: FONT_MONO }}>{r.name}</span>,
+    },
+    { key: 'ref_count', label: t('detail_table.ref_freq'), mono: true, align: 'right', grow: true },
+  ];
+
+  return (
+    <PageShell
+      node={node}
+      crumbs={[
+        { label: t('top.function_list'), onClick: () => router.push(paths.dashboard.nodes.functionList(node)) },
+        { label: fnName },
+      ]}
+      title={`${t('top.title_prefix')} : ${fnName}`}
+    >
+      <DataTable<any>
+        columns={summaryColumns}
+        rows={summaryRows}
+        headerVariant="light"
+        loading={isLoading}
+        error={!!error}
+        emptyLabel={t('empty_detail')}
+      />
+
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 2,
+          alignItems: 'flex-start',
+          flexWrap: { xs: 'wrap', md: 'nowrap' },
+        }}
+      >
+        <Box sx={{ flex: '1 1 58%', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
+          <SectionLabel>{t('detail_table.section_identifiers')}</SectionLabel>
+          <DataTable<RefItem>
+            columns={refColumns}
+            rows={specList}
+            loading={isLoading}
+            error={!!error}
+            emptyLabel={t('detail_table.empty_related_identifiers')}
+            onRowClick={(row) =>
+              router.push(paths.dashboard.nodes.specDetail(node, lastSeg(row.url)))
+            }
+          />
+        </Box>
+
+        <Box sx={{ flex: '1 1 42%', minWidth: 0, width: '100%' }}>
+          <Panel sx={{ p: 2 }}>
+            <Typography sx={{ fontFamily: FONT_MONO, fontSize: 14, color: T.textDim, mb: 1.25 }}>
+              -- {fnName}.moon
             </Typography>
-
-            <TableContainer component={Paper}>
-                <Table size="small">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>{ }</TableCell>
-                            <TableCell>{t("table.function_name")}</TableCell>
-                            <TableCell>{t("table.path")}</TableCell>
-                            <TableCell>{t("table.timestamp")}</TableCell>
-                            <TableCell>{t("table.ref_identifies")}</TableCell>
-                            <TableCell>{ }</TableCell>
-                            <TableCell>{ }</TableCell>
-                            <TableCell>{ }</TableCell>
-                            <TableCell>{t("table.desc")}</TableCell>
-                            <TableCell>{ }</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <TableRow
-                            key={detail?.name}
-                            sx={{ cursor: 'pointer' }}
-                            tabIndex={0}
-                        >
-                            <TableCell>{ }</TableCell>
-                            <TableCell>{detail?.function?.name}</TableCell>
-                            <TableCell>{detail?.function?.path}</TableCell>
-                            <TableCell>{detail?.function?.timestamp}</TableCell>
-                            <TableCell>{detail?.function?.ref_identifies}</TableCell>
-                            <TableCell>{ }</TableCell>
-                            <TableCell>{ }</TableCell>
-                            <TableCell>{ }</TableCell>
-                            <TableCell>{detail?.function?.desc}</TableCell>
-                            <TableCell>{ }</TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            </TableContainer>
-
-            <Grid container spacing={3} sx={{ mt: 3 }}>
-                <Grid item xs={7}>
-                    <Grid>
-                        <Box >
-                            <Paper>
-                                <Grid container>
-                                    <Grid item xs={12}>
-                                        <Box>
-                                            <TableContainer>
-                                                <Table size='small'>
-                                                    <TableHead>
-                                                        <TableRow>
-                                                            <TableCell align='right'>{ }</TableCell>
-                                                            <TableCell align='right'>{t('detail_table.no')}</TableCell>
-                                                            <TableCell>{t('detail_table.related_identifier')}</TableCell>
-                                                            <TableCell>{t('detail_table.ref_freq')}</TableCell>
-                                                        </TableRow>
-                                                    </TableHead>
-                                                    <TableBody>
-                                                        {isLoading && (
-                                                            <TableRow>
-                                                                <TableCell colSpan={5}>{t('loading')}</TableCell>
-                                                            </TableRow>
-                                                        )}
-                                                        {error && (
-                                                            <TableRow>
-                                                                <TableCell colSpan={5}>{t('error')}</TableCell>
-                                                            </TableRow>
-                                                        )}
-                                                        {!isLoading && !error && specList.length === 0 && (
-                                                            <TableRow>
-                                                                <TableCell colSpan={5}>{t('empty')}</TableCell>
-                                                            </TableRow>
-                                                        )}
-                                                        {specList.map((row, idx) => (
-                                                            <TableRow hover key={idx + 1}
-
-                                                            >
-                                                                <TableCell align='right'>{ }</TableCell>
-                                                                <TableCell
-                                                                    align='right'
-                                                                >{idx + 1}</TableCell>
-                                                                <TableCell
-                                                                    onClick={() =>
-                                                                        router.push(`${paths.dashboard.nodes.specDetail(node, row.url.split('/')[row.url.split('/').length - 1])}`)
-                                                                    }
-                                                                    sx={{
-                                                                        color: '#4A3BFF',
-                                                                        textDecoration: 'underline',
-                                                                        cursor: 'pointer'
-                                                                    }}
-                                                                >{row.name}</TableCell>
-                                                                <TableCell>{row.ref_count}</TableCell>
-                                                            </TableRow>
-                                                        ))}
-                                                    </TableBody>
-                                                </Table>
-                                            </TableContainer>
-                                        </Box>
-                                    </Grid>
-                                </Grid>
-                            </Paper>
-                        </Box>
-                    </Grid>
-                </Grid>
-
-
-                <Grid item xs={12} md={5}>
-                    <Paper sx={{
-                        height: '100%', p: 0.5,
-                        padding: (theme) => theme.palette.mode === 'dark' ? '0px' : '4px',
-                        backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'transparent' : 'black'
-                    }}>
-                        <Box sx={{
-                            backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#667085' : '#E0E4EB',
-                            p: 1, borderTopLeftRadius: 4, borderTopRightRadius: 4
-                        }}>
-                            <Typography variant="body2" sx={{
-                                fontWeight: 600,
-                                color: (theme) => theme.palette.mode === 'dark' ? grey[300] : '#4E576A'
-                            }}>{t('detail_table.script_title')}</Typography>
-                        </Box>
-
-                        <Box sx={{ bgcolor: '#202838', height: 'calc(100% - 48px)', overflowY: 'auto' }}>
-                            <Box component="pre" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: 13, color: '#AFB7C8', m: 0 }}>
-                                <SyntaxHighlighter
-                                    language="moonscript"
-                                    style={a11yDark}
-                                    customStyle={{
-                                        background: "transparent",
-                                        whiteSpace: "pre-wrap",
-                                    }}
-                                >
-
-                                    {isLoading ? t('loading') : error ? t('error') : script || ''}
-                                </SyntaxHighlighter>
-                            </Box>
-                        </Box>
-                    </Paper>
-                </Grid>
-            </Grid>
-        </DashboardContent >
-    );
+            <CodeBlock theme="moon">{isLoading ? '' : error ? '' : script}</CodeBlock>
+          </Panel>
+        </Box>
+      </Box>
+    </PageShell>
+  );
 }
-
-

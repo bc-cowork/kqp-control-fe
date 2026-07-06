@@ -1,1017 +1,900 @@
 'use client';
 
+import type { ReactNode } from 'react';
+
 import React, { useEffect } from 'react';
-import {
-    Dialog, DialogTitle, DialogContent, DialogActions, Divider,
-    Box,
-    Typography,
-    Chip,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Button,
-    Grid,
-    Stack,
-    tableRowClasses,
-    tableCellClasses,
-} from '@mui/material';
-import { CONFIG } from 'src/config-global';
-
-
-import {
-    ChevronRight as ChevronRightIcon,
-    ErrorOutline as ErrorOutlineIcon,
-    PlayArrowOutlined,
-} from '@mui/icons-material';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-
-// Assuming these imports are correctly defined in your project
-import { useTranslate } from 'src/locales';
-import { grey } from '@mui/material/colors';
-import { Breadcrumb } from 'src/components/common/Breadcrumb';
-import { DashboardContent } from 'src/layouts/dashboard';
-import { endpoints, fetcher } from 'src/utils/axios';
 import useSWR from 'swr';
-import { LoadingScreen } from 'src/components/loading-screen';
-import { CustomTextField, darkColors, DateTimeMuiField, SelectField, WideTextField } from 'src/components/replay';
-import { FilterDialog } from 'src/components/replay/FilterDialog'; // Ensure this is the updated version
-import { AddReplayDialog } from 'src/components/replay/AddReplayDialog';
-import { FilterInputBar } from 'src/components/replay/FilterInputBar';
-import { SpeedInputFilter } from 'src/components/replay/SpeedInputFilter';
-import { AuditLogGrid } from 'src/components/replay/AuditLogGrid';
 
-const Gear = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/settings/gear.svg`} alt="gear" {...props}
-    sx={{
-        display: (theme) => theme.palette.mode === 'dark' ? 'inline' : 'none'
-    }}
-/>;
-const GearGrey = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/settings/gearGrey.svg`} alt="gear" {...props}
-    sx={{
-        display: (theme) => theme.palette.mode === 'dark' ? 'none' : 'inline'
-    }}
-/>
-const Time = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/custom/time.svg`} alt="time" {...props} />;
-const Archive = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/custom/archive.svg`} alt="archive" {...props} />;
-const Calendar = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/custom/calendar.svg`} alt="calendar" {...props} />;
-const AuditLogIcon = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/custom/audit-log.svg`} alt="audit-log" {...props} />;
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Popover from '@mui/material/Popover';
+import Typography from '@mui/material/Typography';
 
-// --- TYPE DEFINITIONS (from original code) ---
+import { CONFIG } from 'src/config-global';
+import { endpoints, fetcher } from 'src/utils/axios';
+
+import { useTranslate } from 'src/locales';
+import { Iconify } from 'src/components/iconify';
+import { T, ACCENT2, FONT_MONO } from 'src/theme/tokens';
+import { Panel, PageShell, DataTable, StatusBadge } from 'src/components/v5';
+
+import type { Column } from 'src/components/v5';
+
+// ----------------------------------------------------------------------
+
 type Props = { params: { node: string } };
 
-const panelStyle = {
-    p: 1.5,
-    borderRadius: '8px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 1,
-    background: `linear-gradient(180deg, ${darkColors.gray0} 80%, ${darkColors.gray1} 100%)`,
-    height: {
-        sx: '280px',
-        sm: '300px',
-        md: '340px',
-        lg: '446px'
-    }
-};
+type ProcessRow = { pid: string | number; command: string };
+type Option = { value: string; label: string };
 
-// --- MAIN PAGE COMPONENT ---
+// ----------------------------------------------------------------------
+// Small styled field primitives (local, ACCENT2-accented v5 look)
+// ----------------------------------------------------------------------
+
+function FieldLabel({ children }: { children: ReactNode }) {
+  return <Typography sx={{ fontSize: 14, color: T.textDim }}>{children}</Typography>;
+}
+
+function RSelect({
+  label,
+  value,
+  placeholder,
+  options,
+  onChange,
+  disabled,
+  width = '100%',
+}: {
+  label: string;
+  value: string;
+  placeholder?: string;
+  options: Option[];
+  onChange: (v: string) => void;
+  disabled?: boolean;
+  width?: number | string;
+}) {
+  const { t } = useTranslate('replay');
+  const ph = placeholder ?? t('audit_log.select');
+  const [anchor, setAnchor] = React.useState<HTMLElement | null>(null);
+  const open = !!anchor && !disabled;
+  const selected = options.find((o) => o.value === value);
+  const hasValue = !!value && value !== '0000-00-00';
+
+  return (
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
+      <FieldLabel>{label}</FieldLabel>
+      <Box
+        onClick={(e) => (disabled ? undefined : setAnchor(e.currentTarget))}
+        sx={{
+          height: 34,
+          width,
+          boxSizing: 'border-box',
+          bgcolor: T.bgCard,
+          border: `1px solid ${open ? ACCENT2 : T.border}`,
+          borderRadius: '6px',
+          px: 1.25,
+          fontSize: 15,
+          fontFamily: FONT_MONO,
+          color: hasValue ? T.textPrim : T.textFaint,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 1,
+          cursor: disabled ? 'not-allowed' : 'pointer',
+          opacity: disabled ? 0.55 : 1,
+        }}
+      >
+        <Box component="span" sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          {selected?.label ?? (hasValue ? value : ph)}
+        </Box>
+        <Iconify
+          icon="eva:chevron-down-fill"
+          width={16}
+          sx={{ color: T.textSec, flexShrink: 0, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform .15s' }}
+        />
+      </Box>
+      <Popover
+        open={open}
+        anchorEl={anchor}
+        onClose={() => setAnchor(null)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        slotProps={{
+          paper: {
+            sx: {
+              mt: 0.5,
+              minWidth: anchor?.offsetWidth,
+              maxHeight: 260,
+              bgcolor: T.bgCard,
+              border: `1px solid ${T.border}`,
+              borderRadius: '6px',
+              boxShadow: '0 10px 28px rgba(0,0,0,0.45)',
+              p: 0.5,
+            },
+          },
+        }}
+      >
+        {options.length === 0 ? (
+          <Box sx={{ p: '8px 10px', fontSize: 14, color: T.textDim }}>{t('no_options')}</Box>
+        ) : (
+          options.map((o) => (
+            <Box
+              key={o.value}
+              onClick={() => {
+                onChange(o.value);
+                setAnchor(null);
+              }}
+              sx={{
+                p: '7px 10px',
+                borderRadius: '4px',
+                fontSize: 15,
+                fontFamily: FONT_MONO,
+                color: o.value === value ? ACCENT2 : T.textPrim,
+                bgcolor: o.value === value ? `${ACCENT2}1f` : 'transparent',
+                cursor: 'pointer',
+                '&:hover': { bgcolor: o.value === value ? `${ACCENT2}1f` : T.bgHover },
+              }}
+            >
+              {o.label}
+            </Box>
+          ))
+        )}
+      </Popover>
+    </Box>
+  );
+}
+
+function RTextInput({
+  label,
+  value,
+  onChange,
+  placeholder,
+  width = '100%',
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+  width?: number | string;
+}) {
+  return (
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
+      <FieldLabel>{label}</FieldLabel>
+      <Box
+        component="input"
+        value={value}
+        placeholder={placeholder}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
+        sx={{
+          height: 34,
+          width,
+          boxSizing: 'border-box',
+          bgcolor: T.bgCard,
+          border: `1px solid ${T.border}`,
+          borderRadius: '6px',
+          px: 1.25,
+          fontSize: 15,
+          fontFamily: FONT_MONO,
+          color: T.textPrim,
+          outline: 'none',
+          '&:focus': { borderColor: ACCENT2 },
+          '&::placeholder': { color: T.textFaint },
+        }}
+      />
+    </Box>
+  );
+}
+
+function RTimeInput({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  return (
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
+      <FieldLabel>{label}</FieldLabel>
+      <Box
+        component="input"
+        type="time"
+        step={1}
+        value={value}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value || '00:00:00')}
+        sx={{
+          height: 34,
+          width: '100%',
+          boxSizing: 'border-box',
+          bgcolor: T.bgCard,
+          border: `1px solid ${T.border}`,
+          borderRadius: '6px',
+          px: 1.25,
+          fontSize: 15,
+          fontFamily: FONT_MONO,
+          color: T.textPrim,
+          outline: 'none',
+          colorScheme: 'dark',
+          '&:focus': { borderColor: ACCENT2 },
+        }}
+      />
+    </Box>
+  );
+}
+
+function RSpeedInput({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const { t } = useTranslate('replay');
+  const STEP = 0.25;
+  const setNum = (n: number) => onChange(n.toFixed(2).replace(/\.00$/, ''));
+  const inc = () => setNum((parseFloat(value) || 0) + STEP);
+  const dec = () => setNum(Math.max(0.1, (parseFloat(value) || 0) - STEP));
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const v = e.target.value;
+    if (v === '' || /^\d*\.?\d*$/.test(v)) onChange(v);
+  };
+
+  return (
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
+      <FieldLabel>{t('audit_log.speed')}</FieldLabel>
+      <Box
+        sx={{
+          height: 34,
+          width: 110,
+          boxSizing: 'border-box',
+          bgcolor: T.bgCard,
+          border: `1px solid ${T.border}`,
+          borderRadius: '6px',
+          px: 1.25,
+          display: 'flex',
+          alignItems: 'center',
+          '&:focus-within': { borderColor: ACCENT2 },
+        }}
+      >
+        <Box
+          component="input"
+          value={value}
+          onChange={handleChange}
+          sx={{
+            flex: 1,
+            width: '100%',
+            bgcolor: 'transparent',
+            border: 'none',
+            outline: 'none',
+            fontSize: 15,
+            fontFamily: FONT_MONO,
+            color: T.textPrim,
+          }}
+        />
+        <Box sx={{ display: 'flex', flexDirection: 'column', ml: 0.5 }}>
+          <Iconify icon="eva:chevron-up-fill" width={16} onClick={inc} sx={{ color: T.textSec, cursor: 'pointer', mb: '-4px', '&:hover': { color: ACCENT2 } }} />
+          <Iconify icon="eva:chevron-down-fill" width={16} onClick={dec} sx={{ color: T.textSec, cursor: 'pointer', mt: '-4px', '&:hover': { color: ACCENT2 } }} />
+        </Box>
+      </Box>
+    </Box>
+  );
+}
+
+function SubPanel({ children }: { children: ReactNode }) {
+  return (
+    <Box sx={{ bgcolor: T.bgPanel, borderRadius: '8px', p: '14px', display: 'flex', flexDirection: 'column', gap: 1.75, minHeight: 150 }}>
+      {children}
+    </Box>
+  );
+}
+
+// ----------------------------------------------------------------------
+
 export default function Page({ params }: Props) {
-    const { node } = params;
-    const { t } = useTranslate('replay');
-    const url = endpoints.replay.info(node);
-    const { data, error, isLoading, mutate } = useSWR(url, fetcher);
+  const { node } = params;
+  const { t } = useTranslate('replay');
+  const url = endpoints.replay.info(node);
+  const { data, error, isLoading, mutate } = useSWR(url, fetcher);
 
-    const processData = Array.isArray(
-        data?.data?.replay_status?.process_list
-    )
-        ? data.data.replay_status.process_list
-        : [];
+  const processData: ProcessRow[] = Array.isArray(data?.data?.replay_status?.process_list)
+    ? data.data.replay_status.process_list
+    : [];
 
-    const logTypeList = data?.data?.replay_interface?.log_type_list || [];
+  const logTypeList = data?.data?.replay_interface?.log_type_list || [];
+  const fileTree = data?.data?.replay_interface?.file_tree;
 
-    const [logType, setLogType] = React.useState('');
-    const [file, setFile] = React.useState('');
-    const [date, setDate] = React.useState('0000-00-00');
-    const [startTime, setStartTime] = React.useState('00:00:00');
-    const [endTime, setEndTime] = React.useState('00:00:00');
-    // Initialize head and channel to 'All' or '' depending on your default filter view
-    // Using 'All' makes sense if that's the default state.
-    const [head, setHead] = React.useState('All');
-    const [channel, setChannel] = React.useState('All');
+  const [logType, setLogType] = React.useState('');
+  const [file, setFile] = React.useState('');
+  const [date, setDate] = React.useState('0000-00-00');
+  const [startTime, setStartTime] = React.useState('00:00:00');
+  const [endTime, setEndTime] = React.useState('00:00:00');
+  const [head, setHead] = React.useState('All');
+  const [channel, setChannel] = React.useState('All');
+  const [outboundExpression, setOutboundExpression] = React.useState('');
+  const [currentSpeed, setCurrentSpeed] = React.useState('1.0');
 
-    const [toolPid, setToolPid] = React.useState('');
-    const [killDialogOpen, setKillDialogOpen] = React.useState(false);
-    const [replayDialogOpen, setReplayDialogOpen] = React.useState(false);
-    const [currentSpeed, setCurrentSpeed] = React.useState('1.0');
+  const [toolPid, setToolPid] = React.useState('');
+  const [killDialogOpen, setKillDialogOpen] = React.useState(false);
+  const [replayDialogOpen, setReplayDialogOpen] = React.useState(false);
+  const [replaying, setReplaying] = React.useState(false);
 
-
-    // --- Filter Dialog State Management (FIXED) ---
-
-    // 1. Separate state for dialog input/mode/error (generic to the open dialog)
-    const [filterDialogOpen, setFilterDialogOpen] = React.useState(false);
-    const [filterTarget, setFilterTarget] = React.useState<'HEAD' | 'CHANNEL' | null>(null);
-    const [dialogMode, setDialogMode] = React.useState('Typing');
-    const [dialogExpression, setDialogExpression] = React.useState('');
-    const [filterError, setFilterError] = React.useState('');
-    const [outboundExpression, setOutboundExpression] = React.useState('');
-    const [replaying, setReplaying] = React.useState(false);
-
-    // --- END Filter Dialog State Management ---
-
-
-    const handleOpenFilterDialog = (target: 'HEAD' | 'CHANNEL') => {
-        // Toggle: if the same dialog is open, close it; otherwise open and initialize
-        if (filterDialogOpen && filterTarget === target) {
-            handleCloseFilterDialog();
-            return;
-        }
-
-        setFilterTarget(target);
-        setFilterDialogOpen(true);
-        setFilterError('');
-
-        // Use the saved value for initialization
-        const savedValue = target === 'HEAD' ? head : channel;
-
-        // 2. Initialize dialog state based on saved value
-        if (savedValue === 'All') {
-            setDialogMode('Typing');
-            setDialogExpression('');
-        } else {
-            setDialogMode('Typing');
-            setDialogExpression(savedValue);
-        }
-    };
-
-    const handleCloseFilterDialog = () => {
-        setFilterDialogOpen(false);
-        setFilterTarget(null);
-        setFilterError('');
-    };
-
-    const handleFilterConfirm = () => {
-        // Allow confirming either with a typed expression or 'All' mode.
-        // If dialogMode is 'All' or expression is empty, store 'All'.
-        const trimmed = dialogExpression.trim();
-        const finalValue = dialogMode === 'All' || !trimmed ? 'All' : trimmed;
-
-        if (filterTarget === 'HEAD') {
-            setHead(finalValue);
-        } else if (filterTarget === 'CHANNEL') {
-            setChannel(finalValue);
-        }
-
-        // Clear any previous error and close the dialog
-        setFilterError('');
-        handleCloseFilterDialog();
-    };
-
-    const handleFilterReset = () => {
-        // Reset dialog internal state to 'All'
-        setDialogExpression('');
-        setDialogMode('Typing');
-        setFilterError('');
-
-        // Optional: Also reset the persistent state to 'All' immediately upon Reset click
-        if (filterTarget === 'HEAD') {
-            setHead('All');
-        } else if (filterTarget === 'CHANNEL') {
-            setChannel('All');
-        }
-    };
-
-
-    const canReplay = React.useMemo(() =>
-    (
-        logType && logType !== '' &&
-        file && file !== '' &&
-        date && date !== '0000-00-00' &&
-        startTime && startTime !== '00:00:00' &&
-        endTime && endTime !== '00:00:00' &&
-        head && head !== '' &&
-        channel && channel !== '' &&
-        outboundExpression && outboundExpression !== ''
-    ), [logType, file, date, startTime, endTime, head, channel, outboundExpression]);
-
-
-    const handleReplay = () => {
-        setReplayDialogOpen(true);
+  useEffect(() => {
+    if (!logType) {
+      setDate('');
+      setFile('');
     }
+  }, [logType]);
 
-    useEffect(() => {
-        if (!logType) {
-            setDate('');
-            setFile('');
-        }
-    }, [logType]);
+  const logTypeOptions: Option[] = logTypeList.map((i: any) => ({ value: i.label, label: i.label }));
+  const fileOptions: Option[] = getKeysFromSelectedValue(fileTree, logTypeList, logType);
+  const dateOptions: Option[] = getDatesFromSelectedValue(fileTree, logTypeList, logType, file);
 
-    const revalidateOnKill = () => {
-        setToolPid('');
-        mutate();
-    }
+  const conditions = [
+    !!(logType && logType !== ''),
+    !!(file && file !== ''),
+    !!(date && date !== '0000-00-00' && date !== ''),
+    !!(startTime && startTime !== '00:00:00'),
+    !!(endTime && endTime !== '00:00:00'),
+    !!(head && head !== ''),
+    !!(channel && channel !== ''),
+    !!(outboundExpression && outboundExpression !== ''),
+    !!(currentSpeed && currentSpeed !== ''),
+  ];
+  const filledCount = conditions.filter(Boolean).length;
+  const canReplay = conditions.every(Boolean);
 
-    const borderAtLarge = {
-        borderBottom: { xl: '0.5px solid' },
-        borderImageSlice: { xl: 0.5 },
-        borderImageSource: {
-            xl: 'linear-gradient(to right, #1b1c1dff 0%, #667085 50%, #1b1c1dff 100%)'
-        },
-    }
+  const missing: string[] = [
+    !conditions[0] && t('audit_log.log_type'),
+    !conditions[1] && t('audit_log.file'),
+    !conditions[2] && t('audit_log.date'),
+    !conditions[3] && t('audit_log.start_time'),
+    !conditions[4] && t('audit_log.end_time'),
+    !conditions[5] && t('audit_log.head'),
+    !conditions[6] && t('audit_log.channel_number'),
+    !conditions[7] && t('audit_log.destination_to'),
+  ].filter(Boolean) as string[];
 
-    return (
-        <DashboardContent maxWidth="xl">
+  const selectedProc = processData.find((p) => String(p.pid) === String(toolPid));
+  const selectedIndex = processData.findIndex((p) => String(p.pid) === String(toolPid));
 
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
+  const executeCommand = `replay ${file || '<file>'} ${(date || '').replaceAll('-', '') || '<date>'} ${startTime.replaceAll(':', '')} ${endTime.replaceAll(':', '')} --to ${outboundExpression || '<dest>'} --head ${head} --channel ${channel} --speed ${currentSpeed}`;
 
-                <Breadcrumb node={node} pages={[{ pageName: t('top.title') }]} />
-                <Stack direction="row" alignItems="baseline" justifyContent="space-between">
-                    <Typography sx={{
-                        fontSize: 28, fontWeight: 500,
-                        color: (theme) => theme.palette.mode === 'dark' ? grey[50] : '#373F4E',
-                        mt: 2, mb: 6
-                    }}>
-                        {t('top.title')}
-                    </Typography>
-                </Stack>
-                {
-                    isLoading ? (
-                        <LoadingScreen />
-                    ) : (
-                        <Box>
-                            <Grid container alignItems="baseline"
-                                sx={{
-                                    marginBottom: 2,
-                                }}
-                                spacing={3}>
-                                <Grid item xs={12} lg={8}
-                                    order={{
-                                        xs: 1,
-                                        lg: 0
-                                    }}
-                                >
-                                    <TableContainer
-                                        sx={{
-                                            borderRadius: '8px',
-                                            height: 174,
-                                        }}
-                                    >
-                                        <Table size="small"
-                                            sx={{
-                                                [`& .${tableRowClasses.root}:last-child .${tableCellClasses.root}`]: {
-                                                    borderBottomLeftRadius: '0px !important',
-                                                    borderBottomRightRadius: '0px !important',
-                                                },
-                                            }}
-                                        >
-                                            <TableHead >
-                                                <TableRow>
-                                                    {['', t('top_table.pid'), t('top_table.command'), ''].map((header, index) => (
-                                                        <TableCell
-                                                            key={index}
-                                                            align='left'
-                                                        >
-                                                            {header}
-                                                        </TableCell>
-                                                    ))}
-                                                </TableRow>
-                                            </TableHead>
-                                            <TableBody sx={{ flex: '1 1 0', overflowY: 'auto' }}>
-                                                {
-                                                    processData.length === 0 && (
-                                                        <TableRow>
-                                                            <TableCell colSpan={4}>
-                                                                <Typography sx={{ color: darkColors.textSecondary }}>No Processes Found</Typography>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                    )
-                                                }
-                                                {processData?.map((row: any, index: number) => (
-                                                    <TableRow
-                                                        key={index}
-                                                        sx={{
-                                                            backgroundColor: index % 2 === 0 ? darkColors.tableFill1 : darkColors.tableFill2,
-                                                            '&:last-child td, &:last-child th': { border: 0 },
-                                                            cursor: 'pointer',
-                                                        }}
-                                                        onClick={() => setToolPid(row.pid)}
-                                                    >
-                                                        <TableCell sx={{ p: '8px 12px', border: 'none' }}>
-                                                            <Chip label="Play"
-                                                                icon={<Box sx={{
-                                                                    backgroundColor: (theme) => theme.palette.mode === 'dark' ? darkColors.successText : '#00A41E',
-                                                                    width: 8, height: 8, borderRadius: 4
-                                                                }} />}
-                                                                color="success" size="small" variant="outlined" sx={{
-                                                                    backgroundColor: (theme) => theme.palette.mode === 'dark' ? darkColors.successFill : '#EBFBE9',
-                                                                    borderColor: (theme) => theme.palette.mode === 'dark' ? '#36573C' : '#DDF4DA',
-                                                                    borderRadius: '12px',
-                                                                    color: (theme) => theme.palette.mode === 'dark' ? darkColors.successText : '#05811B',
-                                                                    fontWeight: 600,
-                                                                    padding: '4px 8px',
-                                                                }} />
-                                                        </TableCell>
-                                                        <TableCell align='left' sx={{ color: (theme) => theme.palette.mode === 'dark' ? darkColors.textSecondary : '#667085', fontSize: 15, border: 'none' }}>
-                                                            {row.pid}
-                                                        </TableCell>
-                                                        <TableCell sx={{
-                                                            color: (theme) => theme.palette.mode === 'dark' ? darkColors.textSecondary : '#667085',
-                                                            fontSize: 15, border: 'none',
-                                                            whiteSpace: 'nowrap',
-                                                            overflow: 'hidden',
-                                                            textOverflow: 'ellipsis',
-                                                            maxWidth: '200px',
-                                                        }}>
-                                                            {row.command}
-                                                        </TableCell>
-                                                        <TableCell sx={{ p: '8px 12px', border: 'none' }} align="right" />
-                                                    </TableRow>
-                                                ))}
-                                            </TableBody>
-                                        </Table>
-                                    </TableContainer>
-                                </Grid>
+  const resetForm = () => {
+    setLogType('');
+    setFile('');
+    setDate('0000-00-00');
+    setStartTime('00:00:00');
+    setEndTime('00:00:00');
+    setOutboundExpression('');
+  };
 
-                                <Grid item lg={4} xs={12} sm={8} md={6}>
-                                    <Box
-                                        sx={{
-                                            borderRadius: '8px',
-                                            border: (theme) => theme.palette.mode === 'dark' ? `1px solid ${darkColors.border}` : '1px solid #E0E4EB',
-                                            backgroundColor: (theme) => theme.palette.mode === 'dark' ? `transparent` : 'white',
-                                            p: 2,
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            gap: 1.5,
-                                            sx: {
-                                                minWidth: '300px',
-                                            },
-                                            height: {
-                                                xs: "128px",
-                                                lg: '189px'
-                                            }
-                                        }}
-                                    >
-                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                            <Gear
-                                            />
-                                            <GearGrey />
-                                            <Typography variant="body1" sx={{
-                                                color: (theme) => theme.palette.mode === 'dark' ? darkColors.textPrimary : '#373F4E',
-                                                fontFamily: 'Roboto, sans-serif !important', fontSize: '15px'
-                                            }}>
-                                                {t('tool_box.tool')}
-                                            </Typography>
-                                        </Box>
-                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                            <CustomTextField toolPid={toolPid} setToolPid={setToolPid} />
-                                            <Button
-                                                variant="contained"
-                                                disabled={!toolPid}
-                                                sx={{
-                                                    height: 32,
-                                                    p: '4px 12px',
-                                                    backgroundColor: (theme) => toolPid ? (theme.palette.mode === 'dark' ? '#4A2C31 !important' : '#FFF2F4 !important') : (theme.palette.mode === 'dark' ? '#331B1E !important' : '#FFF2F4 !important'),
-                                                    border: (theme) => theme.palette.mode === 'dark' ? `2px solid ${toolPid ? '#FF3D4A !important' : '#4A2C31 !important'}` : '1px solid red',
-                                                    color: (theme) => theme.palette.mode === 'dark' ? toolPid ? '#FF3D4A !important' : '#4A2C31 !important' : '#FF3D4A !important',
-                                                    "&:hover": {
-                                                        backgroundColor: toolPid ? '#5E66FF !important' : '#331B1E !important',
-                                                        borderColor: toolPid ? '#4E57E5 !important' : '#4A2C31 !important',
-                                                        color: toolPid ? '#FFFFFF !important' : '#4A2C31 !important',
-                                                    }
-                                                }}
-                                                onClick={() => setKillDialogOpen(true)}
-                                            >
-                                                {t('tool_box.kill')}
-
-                                            </Button>
-                                            <TerminatedDialog
-                                                open={killDialogOpen}
-                                                handleClose={() => setKillDialogOpen(false)}
-                                                refresh={revalidateOnKill}
-                                                pid={toolPid}
-                                                nodeId={node}
-                                            />
-                                        </Box>
-                                    </Box>
-                                </Grid>
-                            </Grid>
-
-                            <Box
-                                sx={{
-                                    alignSelf: 'stretch',
-                                    display: 'flex',
-                                    minHeight: '673px',
-                                    gap: 28,
-                                }}
-                            >
-                                <Box
-                                    sx={{
-                                        flex: '1 1 0',
-                                        backgroundColor: darkColors.black,
-                                        borderRadius: '12px',
-                                        boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.05)',
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                    }}
-                                >
-                                    <Box
-                                        sx={{
-                                            p: '20px 16px',
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            gap: 1.5,
-                                        }}
-                                    >
-
-                                        <Box sx={{
-                                            alignItems: 'center', gap: 1,
-                                            display: { xs: 'none', xl: 'flex' }
-                                        }}>
-                                            <AuditLogIcon />
-                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>
-                                                {t('audit_log.title')}
-                                            </Typography>
-                                        </Box>
-
-                                        <Grid container spacing={2} sx={{
-                                            mt: 1.5,
-                                            display: { xs: 'none', xl: 'flex' }
-                                        }}>
-                                            <Grid item xs={12} sm={12} md={6} lg={2.5}>
-                                                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, }}>
-
-                                                    <Box sx={{
-                                                        display: 'flex', gap: 1.5, alignItems: 'center',
-                                                    }}>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 900, fontSize: '20px', }}>{logType || '-'}{' : '}{file || '-'}</Typography>
-                                                    </Box>
-                                                    <Box sx={{
-                                                        display: 'flex', gap: 1.5, alignItems: 'center',
-                                                        ...borderAtLarge,
-                                                        paddingBottom: '12px'
-                                                    }}>
-                                                        <Calendar />
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{t('audit_log.date')} </Typography>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{date || '0000-00-00'}</Typography>
-                                                    </Box>
-                                                </Box>
-                                            </Grid>
-                                            <Grid item xs={12} sm={12} md={6} lg={2.5}>
-                                                <Box sx={{
-                                                    display: 'flex', flexDirection: 'column', gap: 1.5,
-
-                                                }}>
-                                                    <Box sx={{
-                                                        display: 'flex', gap: 1.5, alignItems: 'center',
-                                                        ...borderAtLarge,
-                                                        paddingBottom: '12px'
-
-                                                    }}>
-                                                        <Time />
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{t('audit_log.start_time')} </Typography>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{startTime || '00:00:00'}</Typography>
-                                                    </Box>
-                                                    <Box sx={{
-                                                        display: 'flex', gap: 1.5, alignItems: 'center',
-                                                        ...borderAtLarge,
-                                                        paddingBottom: '12px'
-                                                    }}>
-                                                        <Time />
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{t('audit_log.end_time')} </Typography>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{endTime || '00:00:00'}</Typography>
-                                                    </Box>
-                                                </Box>
-                                            </Grid>
-                                            <Grid item xs={12} sm={12} md={6} lg={3.2}>
-                                                <Box sx={{
-                                                    display: 'flex', flexDirection: 'column', gap: 1.5,
-                                                }}>
-                                                    <Box sx={{
-                                                        display: 'flex', gap: 1.5, alignItems: 'center',
-                                                        ...borderAtLarge,
-                                                        paddingBottom: '12px'
-                                                    }}>
-                                                        <Archive />
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{t('audit_log.head')} </Typography>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{head || '-'}</Typography>
-                                                    </Box>
-                                                    <Box sx={{
-                                                        display: 'flex', gap: 1.5, alignItems: 'center',
-                                                        ...borderAtLarge,
-                                                        paddingBottom: '12px'
-                                                    }}>
-                                                        <Archive />
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{t('audit_log.channel_number')} </Typography>
-                                                        <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{channel || '-'}</Typography>
-                                                    </Box>
-                                                </Box>
-                                            </Grid>
-
-                                            <Grid item xs={12} sm={12} md={6} lg={3.7}>
-                                                <Grid sx={{
-                                                    display: 'flex',
-                                                    direction: 'row',
-                                                    justifyContent: 'space-between',
-                                                }}>
-                                                    <Box sx={{
-                                                        display: 'flex', flexDirection: 'column', gap: 1.5,
-                                                        minWidth: '257px',
-                                                    }}>
-                                                        <Box sx={{
-                                                            display: 'flex', gap: 1.5, alignItems: 'center',
-                                                            ...borderAtLarge,
-                                                            paddingBottom: '12px'
-                                                        }}>
-                                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <path d="M8.00019 1.33337C5.28495 1.33337 3.23828 2.35718 3.23828 3.71433L3.23828 12.2858C3.23828 13.6429 5.28495 14.6667 8.00019 14.6667C10.7154 14.6667 12.7621 13.6429 12.7621 12.2858L12.7621 3.71433C12.7621 2.35718 10.7154 1.33337 8.00019 1.33337ZM8.00019 2.28576C10.3249 2.28576 11.8097 3.13147 11.8097 3.71433C11.8097 4.29718 10.3249 5.1429 8.00019 5.1429C5.67542 5.1429 4.19066 4.29718 4.19066 3.71433C4.19066 3.13147 5.67447 2.28576 8.00019 2.28576ZM8.00019 13.7143C5.67447 13.7143 4.19066 12.8677 4.19066 12.2858L4.19066 5.1629C5.34671 5.82788 6.6677 6.15119 8.00019 6.09528C9.33267 6.15119 10.6537 5.82788 11.8097 5.1629L11.8097 12.2858C11.8097 12.8677 10.3249 13.7143 8.00019 13.7143Z" fill="#F4F4F8" />
-                                                            </svg>
-                                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{t('audit_log.destination_to')} </Typography>
-                                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{outboundExpression || '-'}</Typography>
-                                                        </Box>
-                                                        <Box sx={{
-                                                            display: 'flex', gap: 1.5, alignItems: 'center',
-                                                            ...borderAtLarge,
-                                                            paddingBottom: '12px'
-                                                        }}>
-                                                            <PlayArrowOutlined sx={{ color: darkColors.textPrimary, fontSize: 18 }} />
-                                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontWeight: 600, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{t('audit_log.speed')} </Typography>
-                                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>{currentSpeed || '-'}</Typography>
-                                                        </Box>
-                                                    </Box>
-                                                    <Box sx={{
-                                                        alignSelf: 'flex-end',
-                                                        display: {
-                                                            xs: 'none',
-                                                            sm: 'none',
-                                                            md: 'none',
-                                                            lg: 'none',
-                                                            xl: 'inline-flex'
-                                                        }
-                                                    }}>
-                                                        <Button
-                                                            // Conditional Activation
-                                                            disabled={!canReplay}
-                                                            endIcon={<ChevronRightIcon sx={{ fontSize: 24 }} />}
-                                                            sx={{
-                                                                color: canReplay ? darkColors.textPrimary : darkColors.textDisabled,
-                                                                backgroundColor: canReplay ? '#5E66FF' : 'transparent',
-                                                                fontSize: 17,
-                                                                py: 1,
-                                                                px: 2,
-                                                                '&.Mui-disabled': {
-                                                                    color: darkColors.textDisabled,
-                                                                },
-                                                                "&:hover": {
-                                                                    backgroundColor: canReplay ? '#4E57E5' : 'transparent',
-                                                                },
-
-                                                            }}
-                                                            onClick={() => handleReplay()}
-                                                        >{t('audit_log.replay')}</Button>
-                                                        <AddReplayDialog
-                                                            replaying={replaying}
-                                                            open={replayDialogOpen} onConfirm={async () => {
-                                                                setReplaying(true);
-                                                                const replayData = {
-                                                                    name: file,
-                                                                    date: date.replaceAll('-', ''),
-                                                                    start_hhmmss: startTime.replaceAll(':', ''),
-                                                                    end_hhmmss: endTime.replaceAll(':', ''),
-                                                                    throw_to: outboundExpression,
-                                                                    head,
-                                                                    speed: currentSpeed,
-                                                                }
-                                                                const BASE_URL = `${CONFIG.serverUrl}/apik/${node}/replay`;
-
-                                                                try {
-                                                                    const response = await fetch(BASE_URL, {
-                                                                        method: 'POST',
-                                                                        headers: {
-                                                                            'Content-Type': 'application/json',
-                                                                            'accept': 'application/json',
-                                                                        },
-                                                                        body: JSON.stringify(replayData),
-                                                                    });
-
-                                                                    if (!response.ok) {
-                                                                        throw new Error(`HTTP error! status: ${response.status}`);
-                                                                    }
-
-                                                                    const replayRespData = await response.json();
-                                                                    console.log('Replay request successful:', replayRespData);
-
-                                                                    setReplayDialogOpen(false);
-
-                                                                } catch (e) {
-                                                                    console.error('Failed to initiate replay request:', e);
-
-                                                                } finally {
-                                                                    mutate()
-                                                                    setLogType('');
-                                                                    setDate("0000-00-00");
-                                                                    setStartTime('00:00:00')
-                                                                    setEndTime('00:00:00');
-                                                                    setOutboundExpression('')
-                                                                    setFile('');
-                                                                    setReplaying(false);
-                                                                }
-                                                            }} onClose={() => { setReplayDialogOpen(false) }} />
-                                                    </Box>
-                                                </Grid>
-                                            </Grid>
-                                        </Grid>
-
-                                        <AuditLogGrid
-                                            t={t}
-                                            styles={{ darkColors }}
-                                            data={{
-                                                logType, file, date, startTime, endTime,
-                                                head, channel, outboundExpression, currentSpeed
-                                            }}
-                                            actions={{
-                                                canReplay,
-                                                handleReplay: () => handleReplay(),
-                                            }}
-                                        />
-
-                                    </Box>
-
-                                    <Box sx={{ p: 1.5, flex: '1 1 0', alignSelf: 'stretch', height: '100%' }}>
-                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-                                            <Typography variant="body1" sx={{ color: darkColors.textPrimary, fontFamily: 'Roboto, sans-serif !important', fontSize: '15px' }}>
-                                                {t('audit_log.replay_interface')}
-                                            </Typography>
-                                        </Box>
-                                        <Grid container spacing={1} sx={{ width: '100%' }}>
-                                            <Grid item xs={12} sm={12} md={5.9} lg={2.5}>
-                                                <Box sx={{ ...panelStyle }}>
-                                                    <SelectField
-                                                        label={t('audit_log.log_type')}
-                                                        placeholder={t('audit_log.select')}
-                                                        value={logType}
-                                                        onChange={(e: any) => setLogType(e.target.value)}
-                                                        options={logTypeList}
-                                                        setValue={setLogType}
-                                                    />
-                                                    <SelectField
-                                                        label={t('audit_log.file')}
-                                                        placeholder={t('audit_log.select')}
-                                                        value={file}
-                                                        onChange={(e: any) => setFile(e.target.value)}
-                                                        options={[...getKeysFromSelectedValue(data?.data?.replay_interface?.file_tree, logTypeList, logType)]}
-                                                        setValue={setFile}
-                                                    />
-                                                </Box>
-                                            </Grid>
-
-                                            <Grid item xs={12} sm={12} md={5.9} lg={2.5}>
-                                                <Box sx={{ ...panelStyle }}>
-                                                    <SelectField
-                                                        label={t('audit_log.date')}
-                                                        placeholder="0000-00-00"
-                                                        value={date}
-                                                        onChange={(e: any) => setDate(e.target.value)}
-                                                        options={[...getDatesFromSelectedValue(data?.data?.replay_interface?.file_tree, logTypeList, logType, file)]}
-                                                        setValue={setDate}
-                                                        width='120px'
-                                                    />
-                                                    <DateTimeMuiField
-                                                        label={t('audit_log.start_time')}
-                                                        type="time"
-                                                        value={startTime}
-                                                        onChange={(e: any) => setStartTime(e.target.value)}
-                                                    />
-                                                    <DateTimeMuiField
-                                                        label={t('audit_log.end_time')}
-                                                        value={endTime}
-                                                        type="time"
-                                                        onChange={(e: any) => setEndTime(e.target.value)}
-                                                    />
-                                                </Box>
-                                            </Grid>
-
-                                            <Grid item xs={12} sm={12} md={5.9} lg={3.2}>
-                                                <Box sx={{ ...panelStyle }}>
-
-                                                    <WideTextField
-                                                        label={t('audit_log.head')}
-                                                        value={head}
-                                                        onClick={() => handleOpenFilterDialog('HEAD')}
-                                                        onClose={() => {
-                                                            setHead('');
-                                                        }}
-                                                    />
-                                                    {filterTarget === 'HEAD' && (
-                                                        <FilterDialog
-                                                            open={filterDialogOpen}
-                                                            onClose={handleCloseFilterDialog}
-                                                            mode={dialogMode}
-                                                            setMode={setDialogMode} // This setter updates the generic dialog mode state
-                                                            expression={dialogExpression}
-                                                            setExpression={setDialogExpression} // This setter updates the generic dialog expression state
-                                                            handleReset={handleFilterReset}
-                                                            handleConfirm={handleFilterConfirm}
-                                                            errorMessage={filterError}
-                                                            setValue={setHead}
-                                                        />
-                                                    )}
-
-                                                    <WideTextField
-                                                        label={t('audit_log.channel_number')}
-                                                        value={channel}
-                                                        onClick={() => handleOpenFilterDialog('CHANNEL')}
-                                                        onClose={() => {
-                                                            setChannel('')
-                                                        }}
-
-
-                                                    />
-                                                    {filterTarget === 'CHANNEL' && (
-                                                        <FilterDialog
-                                                            open={filterDialogOpen}
-                                                            onClose={handleCloseFilterDialog}
-                                                            mode={dialogMode}
-                                                            setMode={setDialogMode} // This setter updates the generic dialog mode state
-                                                            expression={dialogExpression}
-                                                            setExpression={setDialogExpression} // This setter updates the generic dialog expression state
-                                                            handleReset={handleFilterReset}
-                                                            handleConfirm={handleFilterConfirm}
-                                                            errorMessage={filterError}
-                                                            setValue={setChannel}
-
-                                                        />
-                                                    )}
-                                                </Box>
-                                            </Grid>
-                                            <Grid item xs={12} sm={12} md={5.9} lg={3.7}>
-                                                <Box sx={{ ...panelStyle }}>
-                                                    <FilterInputBar
-                                                        expression={outboundExpression}
-                                                        setExpression={setOutboundExpression}
-                                                    />
-                                                    <SpeedInputFilter
-                                                        currentSpeed={currentSpeed}
-                                                        setCurrentSpeed={setCurrentSpeed}
-                                                    />
-                                                </Box>
-                                            </Grid>
-                                        </Grid>
-                                    </Box>
-                                </Box>
-                            </Box >
-                        </Box >
-                    )
-                }
-
-                {/* 3. Filter Dialog Rendering: Renders only when open, uses generic state */}
-
-            </LocalizationProvider >
-        </DashboardContent >
-
-    );
-};
-
-// --- TerminatedDialog Component (remains the same) ---
-const TerminatedDialog = ({ open, handleClose, pid, nodeId, refresh }: {
-    open: boolean;
-    handleClose: () => void;
-    pid: string | number;
-    nodeId: string | number;
-    refresh: any
-}) => {
-    const { t } = useTranslate('replay');
-    const [isTerminating, setIsTerminating] = React.useState(false);
-
-    const handleTerminate = async () => {
-        setIsTerminating(true);
-        const url = `${CONFIG.serverUrl}/apik/${nodeId}/replay/terminate`;
-
-        try {
-            const response = await fetch(url, {
-                method: 'DELETE',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    pid,
-                }),
-            });
-
-            if (!response.ok) {
-                // Handle non-2xx responses (e.g., server error)
-                const errorData = await response.json().catch(() => ({ message: 'No message available' }));
-                console.error('Termination failed:', errorData);
-                alert(`Error terminating PID ${pid}: ${errorData.message || response.statusText}`);
-                return;
-            }
-
-            // Handle successful termination
-            console.log(`PID ${pid} terminated successfully.`);
-            handleClose(); // Close the dialog on success
-
-        } catch (error) {
-            // Handle network errors
-            console.error('Network or unexpected error during termination:', error);
-            alert('A network error occurred. Please try again.');
-        } finally {
-            // Ensure the button state is reset regardless of success or failure
-            refresh()
-            setIsTerminating(false);
-        }
+  const handleConfirmReplay = async () => {
+    setReplaying(true);
+    const replayData = {
+      name: file,
+      date: date.replaceAll('-', ''),
+      start_hhmmss: startTime.replaceAll(':', ''),
+      end_hhmmss: endTime.replaceAll(':', ''),
+      throw_to: outboundExpression,
+      head,
+      speed: currentSpeed,
     };
+    const BASE_URL = `${CONFIG.serverUrl}/apik/${node}/replay`;
+    try {
+      const response = await fetch(BASE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', accept: 'application/json' },
+        body: JSON.stringify(replayData),
+      });
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      await response.json();
+      setReplayDialogOpen(false);
+    } catch (e) {
+      console.error('Failed to initiate replay request:', e);
+    } finally {
+      mutate();
+      resetForm();
+      setReplaying(false);
+    }
+  };
 
-    return (
-        <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="custom-dialog-title"
-            PaperProps={{
-                style: {
-                    backgroundColor: '#0A0E15',
-                    borderRadius: 8,
-                    border: '1px solid #4E576A',
-                    color: '#F0F1F5',
-                    minWidth: '400px',
-                    minHeight: '220px',
-                },
+  const columns: Column<ProcessRow>[] = [
+    {
+      key: 'status',
+      label: t('top_table.status'),
+      width: 120,
+      render: () => <StatusBadge on labelOn={t('play')} color={ACCENT2} />,
+    },
+    { key: 'pid', label: t('top_table.process_id'), mono: true, width: 150 },
+    { key: 'command', label: t('top_table.command'), mono: true, dim: true, grow: true },
+  ];
+
+  return (
+    <PageShell node={node} crumbs={[{ label: t('top.title') }]} title={t('top.title')}>
+      {/* Top row: process table + Tools panel */}
+      <Box sx={{ display: 'flex', gap: '14px', alignItems: 'stretch', flexWrap: { xs: 'wrap', lg: 'nowrap' } }}>
+        <Box sx={{ flex: 1, minWidth: 0 }}>
+          <DataTable<ProcessRow>
+            columns={columns}
+            rows={processData}
+            headerVariant="light"
+            selectedIndex={selectedIndex < 0 ? null : selectedIndex}
+            onRowClick={(row) => setToolPid(String(row.pid))}
+            loading={isLoading}
+            error={!!error}
+            emptyLabel={t('no_processes')}
+          />
+        </Box>
+
+        <Panel sx={{ width: { xs: '100%', lg: 340 }, flexShrink: 0, p: '16px', display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Iconify icon="eva:settings-2-outline" width={18} sx={{ color: T.textSec }} />
+            <Typography sx={{ fontSize: 15, color: T.textPrim }}>{t('tool_box.tools')}</Typography>
+          </Stack>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Box
+              sx={{
+                flex: 1,
+                height: 34,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+                bgcolor: T.bgCard,
+                border: `1px solid ${T.border}`,
+                borderRadius: '6px',
+                px: 1.25,
+                fontSize: 15,
+              }}
+            >
+              <Typography sx={{ fontSize: 14, color: T.textDim, whiteSpace: 'nowrap' }}>
+                {t('tool_box.pid')} |
+              </Typography>
+              <Typography
+                sx={{
+                  flex: 1,
+                  fontFamily: FONT_MONO,
+                  color: toolPid ? T.textPrim : T.textFaint,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {toolPid || t('tool_box.tap_from_list')}
+              </Typography>
+              {toolPid && (
+                <Iconify
+                  icon="eva:close-fill"
+                  width={16}
+                  onClick={() => setToolPid('')}
+                  sx={{ color: T.textSec, cursor: 'pointer', '&:hover': { color: T.textPrim } }}
+                />
+              )}
+            </Box>
+            <Box
+              component="button"
+              disabled={!toolPid}
+              onClick={() => setKillDialogOpen(true)}
+              sx={{
+                height: 34,
+                px: 2,
+                borderRadius: '6px',
+                border: 'none',
+                fontSize: 15,
+                fontWeight: 500,
+                fontFamily: 'inherit',
+                cursor: toolPid ? 'pointer' : 'default',
+                ...(toolPid
+                  ? { background: `linear-gradient(to top, ${ACCENT2}55, ${ACCENT2}14)`, color: ACCENT2 }
+                  : { bgcolor: '#373F4E', color: '#667085' }),
+              }}
+            >
+              {t('tool_box.kill')}
+            </Box>
+          </Stack>
+        </Panel>
+      </Box>
+
+      {/* Replay Interface */}
+      <Panel sx={{ p: '18px', display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <Stack direction="row" alignItems="center" justifyContent="space-between">
+          <Stack direction="row" alignItems="center" spacing={1.5}>
+            <Typography sx={{ fontSize: 17, fontWeight: 500, color: T.textPrim }}>{t('audit_log.replay_interface')}</Typography>
+            <Box
+              sx={{
+                px: 1.25,
+                py: '2px',
+                borderRadius: '10px',
+                fontFamily: FONT_MONO,
+                fontSize: 14,
+                bgcolor: `${ACCENT2}22`,
+                color: ACCENT2,
+              }}
+            >
+              {filledCount}/9
+            </Box>
+          </Stack>
+          <Box
+            component="button"
+            disabled={!canReplay}
+            onClick={() => setReplayDialogOpen(true)}
+            sx={{
+              height: 34,
+              px: 2.25,
+              borderRadius: '6px',
+              border: 'none',
+              fontSize: 15,
+              fontWeight: 500,
+              fontFamily: 'inherit',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 0.75,
+              cursor: canReplay ? 'pointer' : 'default',
+              ...(canReplay ? { bgcolor: T.primary, color: T.onFill } : { bgcolor: T.border, color: T.textDim }),
             }}
+          >
+            <Iconify icon="eva:play-circle-outline" width={17} />
+            {t('play')}
+          </Box>
+        </Stack>
+
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', lg: 'repeat(4, 1fr)' },
+            gap: '14px',
+          }}
         >
-            <DialogTitle
-                id="custom-dialog-title"
-                sx={{
-                    padding: '12px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                }}
-            >
-                <ErrorOutlineIcon />
-                <Typography
-                    variant="subtitle1"
-                    fontWeight="400"
-                    lineHeight="22.50px"
-                    sx={{ color: 'inherit' }}
-                >
-                    {t('terminate_dialog.confirm')}
-                </Typography>
-            </DialogTitle>
+          <SubPanel>
+            <RSelect label={t('audit_log.log_type')} value={logType} options={logTypeOptions} onChange={setLogType} />
+            <RSelect label={t('audit_log.file')} value={file} options={fileOptions} onChange={setFile} disabled={!logType} />
+          </SubPanel>
 
-            <DialogContent
-                sx={{
-                    margin: '0 12px',
-                    background: '#161C25',
-                    borderRadius: '8px',
-                    border: '1px solid #4E576A',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    gap: '8px',
-                }}
-            >
-                <Box
-                    sx={{
-                        display: 'flex',
-                        gap: '8px',
-                    }}
-                >
-                    <Typography
-                        variant="h6"
-                        fontWeight="600"
-                        lineHeight="25.50px"
-                        textAlign="center"
-                        sx={{ color: 'inherit' }}
-                    >
-                        PID
-                    </Typography>
-                    <Divider orientation="vertical" flexItem sx={{ width: '1px', height: '12px', backgroundColor: '#4E576A', alignSelf: 'center' }} />
-                    <Typography
-                        variant="h6"
-                        fontWeight="600"
-                        lineHeight="25.50px"
-                        textAlign="center"
-                        sx={{ color: 'inherit' }}
-                    >
-                        {pid}
-                    </Typography>
-                </Box>
+          <SubPanel>
+            <RSelect label={t('audit_log.date')} value={date} placeholder="0000-00-00" options={dateOptions} onChange={setDate} disabled={!file} />
+            <RTimeInput label={t('audit_log.start_time')} value={startTime} onChange={setStartTime} />
+            <RTimeInput label={t('audit_log.end_time')} value={endTime} onChange={setEndTime} />
+          </SubPanel>
 
-                <Typography
-                    variant="body1"
-                    fontWeight="400"
-                    lineHeight="22.50px"
-                    textAlign="center"
-                    sx={{ color: 'inherit' }}
-                >
-                    {t('terminate_dialog.terminate')}
-                </Typography>
-            </DialogContent>
+          <SubPanel>
+            <RTextInput label={t('audit_log.head')} value={head} onChange={setHead} placeholder="All" />
+            <RTextInput label={t('audit_log.channel_number')} value={channel} onChange={setChannel} placeholder="All" />
+          </SubPanel>
 
-            <DialogActions
-                sx={{
-                    padding: '20px 12px',
-                    justifyContent: 'flex-end',
-                    gap: '10px',
-                }}
-            >
-                {/* '확인' Button: Calls handleTerminate and shows loading state */}
-                <Button
-                    onClick={handleTerminate}
-                    disabled={isTerminating}
-                    sx={{
-                        padding: '4px 12px',
-                        background: '#5E66FF',
-                        borderRadius: '4px',
-                        color: 'white',
-                        fontSize: '15px',
-                        fontFamily: 'Roboto',
-                        fontWeight: '400',
-                        lineHeight: '22.50px',
-                        textTransform: 'none',
-                        '&:hover': {
-                            backgroundColor: '#4E57E5',
-                        },
-                        '&.Mui-disabled': {
-                            background: '#5E66FF80',
-                            color: 'white',
-                        }
-                    }}
-                >
-                    {/* Change button text based on state */}
-                    {isTerminating ? t('terminate_dialog.submitting') : t('terminate_dialog.submit')}
-                </Button>
+          <SubPanel>
+            <RTextInput label={t('audit_log.destination_to')} value={outboundExpression} onChange={setOutboundExpression} placeholder="<app>.<inst>" />
+            <RSpeedInput value={currentSpeed} onChange={setCurrentSpeed} />
+          </SubPanel>
+        </Box>
 
-                {/* '취소' Button: Disabled while terminating is active */}
-                <Button
-                    onClick={handleClose}
-                    disabled={isTerminating}
-                    sx={{
-                        padding: '4px 12px',
-                        background: '#EFF6FF',
-                        borderRadius: '4px',
-                        border: '1px solid #DFEAFF',
-                        color: '#6B89FF',
-                        fontSize: '15px',
-                        fontFamily: 'Roboto',
-                        fontWeight: '400',
-                        lineHeight: '22.50px',
-                        textTransform: 'none',
-                        '&:hover': {
-                            backgroundColor: '#E0E8FF',
-                        },
-                        '&.Mui-disabled': {
-                            color: '#6B89FF80',
-                            border: '1px solid #DFEAFF80',
-                        }
-                    }}
-                >
-                    {t('terminate_dialog.cancel')}
-                </Button>
-            </DialogActions>
-        </Dialog>
-    );
-};
+        {!canReplay && (
+          <Stack direction="row" alignItems="center" spacing={1} sx={{ color: ACCENT2 }}>
+            <Iconify icon="eva:alert-circle-outline" width={16} />
+            <Typography sx={{ fontSize: 14, color: ACCENT2 }}>
+              {t('missing_fields')}: {missing.join(', ')}
+            </Typography>
+          </Stack>
+        )}
+      </Panel>
 
-const getKeysFromSelectedValue = (fileTree: any, log_tree: any, selectedKey: string) => {
-    const filteredValue = log_tree.filter((item: any) => item.label === selectedKey);
-    if (!fileTree || typeof fileTree !== 'object' || !fileTree[filteredValue[0]?.key]) {
-        return [];
+      {/* Confirm modal */}
+      <ConfirmModal
+        open={replayDialogOpen}
+        replaying={replaying}
+        executeCommand={executeCommand}
+        fields={[
+          [t('audit_log.log_type'), logType],
+          [t('audit_log.file'), file],
+          [t('audit_log.date'), date],
+          [t('audit_log.start_time'), startTime],
+          [t('audit_log.end_time'), endTime],
+          [t('audit_log.head'), head],
+          [t('audit_log.channel_number'), channel],
+          [t('audit_log.destination_to'), outboundExpression],
+          [t('audit_log.speed'), currentSpeed],
+        ]}
+        onClose={() => setReplayDialogOpen(false)}
+        onConfirm={handleConfirmReplay}
+      />
+
+      {/* Kill modal */}
+      <KillModal
+        open={killDialogOpen}
+        pid={toolPid}
+        command={selectedProc?.command || ''}
+        nodeId={node}
+        onClose={() => setKillDialogOpen(false)}
+        onKilled={() => {
+          setToolPid('');
+          mutate();
+        }}
+      />
+    </PageShell>
+  );
+}
+
+// ----------------------------------------------------------------------
+// Modal shell
+// ----------------------------------------------------------------------
+
+function ModalOverlay({ open, onClose, width, children }: { open: boolean; onClose: () => void; width: number; children: ReactNode }) {
+  if (!open) return null;
+  return (
+    <Box
+      onClick={onClose}
+      sx={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 1300,
+        bgcolor: 'rgba(0,0,0,0.55)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        p: 2,
+      }}
+    >
+      <Box
+        onClick={(e) => e.stopPropagation()}
+        sx={{
+          width,
+          maxWidth: '100%',
+          bgcolor: T.bgPanel,
+          border: `1px solid ${T.border}`,
+          borderRadius: '10px',
+          boxShadow: '0 20px 60px rgba(0,0,0,0.55)',
+          color: T.textPrim,
+          p: 2.5,
+        }}
+      >
+        {children}
+      </Box>
+    </Box>
+  );
+}
+
+function ConfirmModal({
+  open,
+  replaying,
+  executeCommand,
+  fields,
+  onClose,
+  onConfirm,
+}: {
+  open: boolean;
+  replaying: boolean;
+  executeCommand: string;
+  fields: [string, string][];
+  onClose: () => void;
+  onConfirm: () => void;
+}) {
+  const { t } = useTranslate('replay');
+  return (
+    <ModalOverlay open={open} onClose={onClose} width={460}>
+      <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
+        <Iconify icon="eva:play-circle-outline" width={20} sx={{ color: ACCENT2 }} />
+        <Typography sx={{ fontSize: 17, fontWeight: 500, color: T.textPrim }}>{t('confirm_dialog.title')}</Typography>
+      </Stack>
+
+      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1 }}>
+        {fields.map(([label, value]) => (
+          <Box key={label} sx={{ bgcolor: T.bgHover, borderRadius: '6px', p: '8px 10px' }}>
+            <Typography sx={{ fontSize: 12, color: ACCENT2, mb: 0.25 }}>{label}</Typography>
+            <Typography sx={{ fontSize: 14, fontFamily: FONT_MONO, color: T.textPrim, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {value || '-'}
+            </Typography>
+          </Box>
+        ))}
+      </Box>
+
+      <Box sx={{ mt: 2 }}>
+        <Typography sx={{ fontSize: 13, color: T.textDim, mb: 0.75 }}>{t('execute_command')}</Typography>
+        <Box
+          component="pre"
+          sx={{
+            m: 0,
+            bgcolor: T.bgCard,
+            border: `1px solid ${T.border}`,
+            borderRadius: '8px',
+            p: '12px 14px',
+            fontFamily: FONT_MONO,
+            fontSize: 14,
+            lineHeight: 1.6,
+            color: T.primary,
+            whiteSpace: 'pre-wrap',
+            wordBreak: 'break-all',
+          }}
+        >
+          {executeCommand}
+        </Box>
+      </Box>
+
+      <Stack direction="row" justifyContent="flex-end" spacing={1.25} sx={{ mt: 2.5 }}>
+        <Box
+          component="button"
+          onClick={onClose}
+          disabled={replaying}
+          sx={{
+            height: 34,
+            px: 2,
+            borderRadius: '6px',
+            bgcolor: T.bgCard,
+            border: `1px solid ${T.border}`,
+            color: T.textSec,
+            fontSize: 15,
+            fontFamily: 'inherit',
+            cursor: 'pointer',
+            '&:hover': { bgcolor: T.bgHover, color: T.textPrim },
+          }}
+        >
+          {t('confirm_dialog.cancel')}
+        </Box>
+        <Box
+          component="button"
+          onClick={onConfirm}
+          disabled={replaying}
+          sx={{
+            height: 34,
+            px: 2.25,
+            borderRadius: '6px',
+            border: 'none',
+            bgcolor: T.primary,
+            color: '#fff',
+            fontSize: 15,
+            fontWeight: 500,
+            fontFamily: 'inherit',
+            cursor: replaying ? 'default' : 'pointer',
+            opacity: replaying ? 0.7 : 1,
+            '&:hover': { bgcolor: T.primaryHov },
+          }}
+        >
+          {replaying ? t('confirm_dialog.submitting') : t('confirm_dialog.start')}
+        </Box>
+      </Stack>
+    </ModalOverlay>
+  );
+}
+
+function KillModal({
+  open,
+  pid,
+  command,
+  nodeId,
+  onClose,
+  onKilled,
+}: {
+  open: boolean;
+  pid: string | number;
+  command: string;
+  nodeId: string | number;
+  onClose: () => void;
+  onKilled: () => void;
+}) {
+  const { t } = useTranslate('replay');
+  const [terminating, setTerminating] = React.useState(false);
+
+  const handleTerminate = async () => {
+    setTerminating(true);
+    const url = `${CONFIG.serverUrl}/apik/${nodeId}/replay/terminate`;
+    try {
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pid }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ message: 'No message available' }));
+        console.error('Termination failed:', errorData);
+        return;
+      }
+      onClose();
+    } catch (e) {
+      console.error('Network or unexpected error during termination:', e);
+    } finally {
+      onKilled();
+      setTerminating(false);
     }
+  };
 
-    const selectedObject = fileTree[filteredValue[0]?.key];
-    const keys = Object.keys(selectedObject);
-    const options = keys.map((key) => ({ label: key, value: key }));
-    return options;
-};
+  return (
+    <ModalOverlay open={open} onClose={onClose} width={420}>
+      <Stack alignItems="center" spacing={2}>
+        <Box
+          sx={{
+            width: 14,
+            height: 14,
+            borderRadius: '50%',
+            bgcolor: T.off,
+            boxShadow: `0 0 12px ${T.off}, 0 0 4px ${T.off}`,
+            mt: 1,
+          }}
+        />
+        <Typography sx={{ fontSize: 15, color: T.textSec }}>{t('kill_dialog.question')}</Typography>
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <Typography sx={{ fontSize: 14, color: T.textDim }}>{t('kill_dialog.pid')}</Typography>
+          <Typography sx={{ fontSize: 24, fontFamily: FONT_MONO, color: T.textPrim }}>{pid}</Typography>
+        </Stack>
+        <Box
+          sx={{
+            width: '100%',
+            bgcolor: T.bgCard,
+            border: `1px solid ${T.border}`,
+            borderRadius: '8px',
+            p: '10px 12px',
+            fontFamily: FONT_MONO,
+            fontSize: 13,
+            color: T.textSec,
+            wordBreak: 'break-all',
+          }}
+        >
+          {command || '-'}
+        </Box>
+      </Stack>
 
-const getDatesFromSelectedValue = (fileTree: any, log_tree: any, selectedKey: any, selectedFile: any) => {
-    const filteredValue = log_tree.filter((item: any) => item.label === selectedKey);
-    const fileTreeKey = filteredValue[0]?.key;
+      <Stack direction="row" justifyContent="flex-end" spacing={1.25} sx={{ mt: 2.5 }}>
+        <Box
+          component="button"
+          onClick={onClose}
+          disabled={terminating}
+          sx={{
+            height: 34,
+            px: 2,
+            borderRadius: '6px',
+            bgcolor: T.bgCard,
+            border: `1px solid ${T.border}`,
+            color: T.textSec,
+            fontSize: 15,
+            fontFamily: 'inherit',
+            cursor: 'pointer',
+            '&:hover': { bgcolor: T.bgHover, color: T.textPrim },
+          }}
+        >
+          {t('kill_dialog.cancel')}
+        </Box>
+        <Box
+          component="button"
+          onClick={handleTerminate}
+          disabled={terminating}
+          sx={{
+            height: 34,
+            px: 2.25,
+            borderRadius: '6px',
+            border: 'none',
+            background: `linear-gradient(to top, ${ACCENT2}55, ${ACCENT2}14)`,
+            color: ACCENT2,
+            fontSize: 15,
+            fontWeight: 500,
+            fontFamily: 'inherit',
+            cursor: terminating ? 'default' : 'pointer',
+            opacity: terminating ? 0.7 : 1,
+          }}
+        >
+          {terminating ? t('kill_dialog.submitting') : t('kill_dialog.kill')}
+        </Box>
+      </Stack>
+    </ModalOverlay>
+  );
+}
 
-    if (!fileTree || typeof fileTree !== 'object' || !fileTree[fileTreeKey] || !fileTree[fileTreeKey][selectedFile]) {
-        return [];
-    }
+// ----------------------------------------------------------------------
+// Data helpers (preserved from original)
+// ----------------------------------------------------------------------
 
-    const selectedObject = fileTree[fileTreeKey];
-    const dateArray = selectedObject[selectedFile];
+function getKeysFromSelectedValue(fileTree: any, logTree: any, selectedKey: string): Option[] {
+  const filteredValue = logTree.filter((item: any) => item.label === selectedKey);
+  if (!fileTree || typeof fileTree !== 'object' || !fileTree[filteredValue[0]?.key]) {
+    return [];
+  }
+  const selectedObject = fileTree[filteredValue[0]?.key];
+  const keys = Object.keys(selectedObject);
+  return keys.map((key) => ({ label: key, value: key }));
+}
 
-    const selectedDateOptions = dateArray.map((dateString: any) => {
-
-        const year = dateString.substring(0, 4);
-        const month = dateString.substring(4, 6);
-        const day = dateString.substring(6, 8);
-
-        const dateObject = `${year}-${month}-${day}`;
-
-
-        return {
-            label: dateObject,
-            value: dateObject
-        };
-    }) || [];
-
-    return selectedDateOptions;
-};
+function getDatesFromSelectedValue(fileTree: any, logTree: any, selectedKey: any, selectedFile: any): Option[] {
+  const filteredValue = logTree.filter((item: any) => item.label === selectedKey);
+  const fileTreeKey = filteredValue[0]?.key;
+  if (!fileTree || typeof fileTree !== 'object' || !fileTree[fileTreeKey] || !fileTree[fileTreeKey][selectedFile]) {
+    return [];
+  }
+  const dateArray = fileTree[fileTreeKey][selectedFile];
+  return (
+    dateArray.map((dateString: any) => {
+      const year = dateString.substring(0, 4);
+      const month = dateString.substring(4, 6);
+      const day = dateString.substring(6, 8);
+      const dateObject = `${year}-${month}-${day}`;
+      return { label: dateObject, value: dateObject };
+    }) || []
+  );
+}

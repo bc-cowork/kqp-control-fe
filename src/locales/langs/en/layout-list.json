@@ -1,7 +1,8 @@
 {
   "top": {
     "layout_list": "Layouts",
-    "layout": "Layout"
+    "layout": "Layout",
+    "title_prefix": "Layout"
   },
   "table": {
     "id": "ID",
@@ -24,6 +25,8 @@
     "timestamp": "Timestamp",
     "process": "Process",
     "channel_in": "Channel.IN",
-    "description": "Description"
+    "description": "Description",
+    "empty": "No Process Found",
+    "error": "Error Fetching Process"
   }
 }

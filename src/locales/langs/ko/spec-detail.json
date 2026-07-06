@@ -1,7 +1,8 @@
 {
   "top": {
     "spec_list": "SPEC 목록",
-    "prof_definition": "전문 정의"
+    "prof_definition": "전문 정의",
+    "title_prefix": "SPEC"
   },
   "left": {
     "no": "No",
@@ -27,6 +28,11 @@
     "type": "유형",
     "desc": "설명"
   },
+  "section_identifiers": "연관 식별자",
+  "section_definition": "전문 정의",
+  "empty_detail": "SPEC 상세 없음",
+  "empty_identifiers": "연관 식별자 없음",
+  "empty_definition": "전문 정의 없음",
   "loading": "로딩 중...",
   "error": "불러오기 실패.",
   "empty": "데이터 없음."

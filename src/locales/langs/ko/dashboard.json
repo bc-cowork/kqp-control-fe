@@ -2,7 +2,8 @@
   "top": {
     "dashboard": "대시보드",
     "total": "전체 서버 수",
-    "on": "기동 중"
+    "on": "기동 중",
+    "off": "중지됨"
   },
   "node": {
     "node": "노드",
@@ -13,7 +14,8 @@
     "emittable": "송출 상태",
     "emit_count": "송출 누적 횟수",
     "yes": "송출 중",
-    "no": "송출 안 됨"
+    "no": "송출 안 됨",
+    "empty": "노드를 찾을 수 없습니다"
   },
   "info": {
     "info": "정보",
@@ -22,7 +24,8 @@
     "emittable": "송출 상태",
     "emit_count": "송출 누적 횟수",
     "true": "송출 중",
-    "false": "송출 안 됨"
+    "false": "송출 안 됨",
+    "select_node": "정보를 보려면 노드를 선택하세요"
   },
   "graph": {
     "cpu": "프로세서 사용률",
@@ -33,7 +36,8 @@
     "byte": "바이트"
   },
   "disk": {
-    "disk": "디스크 사용률"
+    "disk": "디스크 사용률",
+    "usage": "전체 {{total}} GB 중 <mono>{{used}} GB</mono>"
   },
   "navigate": {
     "process_list": "프로세스 상태 목록",

@@ -1,113 +1,83 @@
-"use client";
+'use client';
 
-import React from "react";
-import Box from "@mui/material/Box";
-import Paper from '@mui/material/Paper';
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import { Typography } from "@mui/material";
+import type { Column } from 'src/components/v5';
 
-import { grey } from "src/theme/core";
-import { useTranslate } from "src/locales";
-import { DashboardContent } from "src/layouts/dashboard";
-import useSWR from "swr";
-import { Breadcrumb } from "src/components/common/Breadcrumb";
-import { fetcher, endpoints } from "src/utils/axios";
-import { formatBytes } from "src/utils/helper";
+import useSWR from 'swr';
+
 import { useRouter } from 'next/navigation';
+
 import { paths } from 'src/routes/paths';
+
+import { formatBytes } from 'src/utils/helper';
+import { fetcher, endpoints } from 'src/utils/axios';
+
+import { useTranslate } from 'src/locales';
+
+import { T, FONT_MONO } from 'src/theme/tokens';
+import { PageShell, DataTable } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
 
 type SpecItem = {
-    id: string;
-    name: string;
-    path: string;
-    timestamp: string;
-    ref_identifies?: string;
-    frags?: number;
-    size?: number;
-    desc?: string;
+  id: string;
+  name: string;
+  path: string;
+  timestamp: string;
+  ref_identifies?: string;
+  frags?: number;
+  size?: number;
+  desc?: string;
 };
 
 type Props = { nodeId: string };
 
 export function SpecListView({ nodeId }: Props) {
-    const { t } = useTranslate("spec-list");
-    const router = useRouter();
-    const url = endpoints.spec.list(nodeId);
-    const { data, error, isLoading } = useSWR(url, fetcher);
-    const rows: SpecItem[] = (data && data.data && data.data.list) || [];
+  const router = useRouter();
+  const { t } = useTranslate('spec-list');
+  const url = endpoints.spec.list(nodeId);
+  const { data, error, isLoading } = useSWR(url, fetcher);
+  const rows: SpecItem[] = (data && data.data && data.data.list) || [];
 
-    return (
-        <DashboardContent maxWidth="xl">
-            <Breadcrumb node={nodeId} pages={[{ pageName: t("top.spec_list") }]} />
-            <Typography sx={{ fontSize: 28, fontWeight: 600, color: (theme) => theme.palette.mode === 'dark' ? grey[50] : '#373F4E', mt: 2 }}>{t("top.spec_list")}</Typography>
-            <Box sx={{ mt: 3 }}>
-                <TableContainer component={Paper}>
-                    <Table size="small">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="right">{ }</TableCell>
-                                <TableCell align="right">{t("table.id")}</TableCell>
-                                <TableCell>{t("table.spec_name")}</TableCell>
-                                <TableCell>{t("table.path")}</TableCell>
-                                <TableCell>{t("table.timestamp")}</TableCell>
-                                <TableCell>{t("table.ref_identifies")}</TableCell>
-                                <TableCell>{t("table.frags")}</TableCell>
-                                <TableCell>{t("table.size")}</TableCell>
-                                <TableCell>{t("table.explanation")}</TableCell>
-                                <TableCell align="right">{ }</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {isLoading && (
-                                <TableRow>
-                                    <TableCell colSpan={10}>{t("loading") || "Loading..."}</TableCell>
-                                </TableRow>
-                            )}
-                            {error && (
-                                <TableRow>
-                                    <TableCell colSpan={10}>{t("error") || "Failed to load"}</TableCell>
-                                </TableRow>
-                            )}
-                            {!isLoading && !error && rows.length === 0 && (
-                                <TableRow>
-                                    <TableCell colSpan={10}>{t("empty") || "No specs"}</TableCell>
-                                </TableRow>
-                            )}
-                            {rows.map((row, index) => (
-                                <TableRow
-                                    key={row.name}
-                                    tabIndex={0}
-                                    sx={{ cursor: 'pointer' }}
-                                    onClick={() => router.push(paths.dashboard.nodes.specDetail(nodeId, String(row.name)))}
-                                    onKeyDown={(e) => {
-                                        if (e.key === 'Enter' || e.key === ' ') {
-                                            router.push(paths.dashboard.nodes.specDetail(nodeId, String(row.name)));
-                                        }
-                                    }}
-                                >
-                                    <TableCell align="right">{ }</TableCell>
-                                    <TableCell align="right">{index + 1}</TableCell>
-                                    <TableCell>{row.name}</TableCell>
-                                    <TableCell>{row.path}</TableCell>
-                                    <TableCell>{row.timestamp}</TableCell>
-                                    <TableCell>{row.ref_identifies}</TableCell>
-                                    <TableCell>{row.frags?.toLocaleString()}</TableCell>
-                                    <TableCell>{formatBytes(row.size)}</TableCell>
-                                    <TableCell>{row.desc}</TableCell>
-                                    <TableCell align="right">{ }</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </Box>
-        </DashboardContent>
-    );
+  const columns: Column<SpecItem>[] = [
+    { key: 'id', label: t('table.id'), mono: true, align: 'right', width: 56, render: (_r, i) => i + 1 },
+    {
+      key: 'name',
+      label: t('table.spec_name'),
+      render: (r) => (
+        <span style={{ color: T.primary, fontWeight: 400, fontFamily: FONT_MONO }}>{r.name}</span>
+      ),
+    },
+    { key: 'path', label: t('table.path'), mono: true, dim: true },
+    { key: 'timestamp', label: t('table.timestamp'), mono: true, dim: true },
+    { key: 'ref_identifies', label: t('table.ref_identifies'), mono: true, align: 'right' },
+    {
+      key: 'frags',
+      label: t('table.frags'),
+      mono: true,
+      align: 'right',
+      render: (r) => r.frags?.toLocaleString(),
+    },
+    {
+      key: 'size',
+      label: t('table.size'),
+      mono: true,
+      align: 'right',
+      dim: true,
+      render: (r) => formatBytes(r.size),
+    },
+    { key: 'desc', label: t('table.explanation'), dim: true, grow: true },
+  ];
+
+  return (
+    <PageShell node={nodeId} crumbs={[{ label: t('top.spec_list') }]} title={t('top.spec_list')}>
+      <DataTable<SpecItem>
+        columns={columns}
+        rows={rows}
+        loading={isLoading}
+        error={!!error}
+        emptyLabel={t('empty')}
+        onRowClick={(row) => router.push(paths.dashboard.nodes.specDetail(nodeId, String(row.name)))}
+      />
+    </PageShell>
+  );
 }

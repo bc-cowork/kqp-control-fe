@@ -3,17 +3,18 @@
     "process": "Process"
   },
   "table_header": {
-    "pid": "PID",
-    "name": "NAME",
-    "param": "PARAM",
+    "pid": "Process ID",
+    "name": "Name",
+    "param": "Parameters",
     "cpu": "CPU",
-    "mem": "MEM",
-    "ppid": "PPID",
-    "command": "COMMAND"
+    "mem": "Memory",
+    "ppid": "Parent PID",
+    "command": "Command"
   },
+  "action_total": "Total <mono>{{count}}</mono> processes",
   "loading": "Loading...",
   "error": "Failed to load process",
-  "empty": "No process found",
+  "empty": "No processes found",
   "detail_table": {
     "action_title": "Related Actions",
     "process_title": "Related Processes",

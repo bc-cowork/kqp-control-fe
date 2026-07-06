@@ -1,7 +1,8 @@
 {
   "top": {
     "spec_list": "SPEC List",
-    "prof_definition": "Specification Definition"
+    "prof_definition": "Specification Definition",
+    "title_prefix": "SPEC"
   },
   "left": {
     "no": "No",
@@ -27,6 +28,11 @@
     "type": "Type",
     "desc": "Description"
   },
+  "section_identifiers": "Related Identifiers",
+  "section_definition": "Spec Definition",
+  "empty_detail": "No spec detail",
+  "empty_identifiers": "No related identifiers",
+  "empty_definition": "No spec definition",
   "loading": "Loading...",
   "error": "Failed to load.",
   "empty": "No data."

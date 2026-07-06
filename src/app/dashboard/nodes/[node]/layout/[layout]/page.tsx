@@ -14,15 +14,16 @@ import IconButton from '@mui/material/IconButton';
 import { Table, TableRow, TableBody, TableCell, TableHead, Typography, TableContainer, CircularProgress } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
+import { useRouter } from 'src/routes/hooks';
 
 import { useBoolean } from 'src/hooks/use-boolean';
+
+import { PageShell } from 'src/components/v5';
 
 import { fetcher, endpoints } from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
-import { DashboardContent } from 'src/layouts/dashboard';
 
-import { Breadcrumb } from 'src/components/common/Breadcrumb';
 import { DataFlowCanvas, DataFlowJsonEditor, TestEnvironmentModal } from 'src/components/data-flow';
 
 const demoLayoutDefinifinition: DataFlowDefinition = {
@@ -562,6 +563,7 @@ type Props = {
 };
 
 export default function Page({ params }: Props) {
+  const router = useRouter();
   const { node, layout } = params;
   const { t } = useTranslate('layout-list');
   const decodedLayout = decodeURIComponent(layout);
@@ -621,16 +623,14 @@ export default function Page({ params }: Props) {
   }, []);
 
   return (
-    <DashboardContent maxWidth="xl" sx={{ position: 'relative' }}>
-      <Breadcrumb
-        node={node}
-        pages={[
-          { pageName: t('top.layout_list'), link: paths.dashboard.nodes.layoutList(node) },
-          { pageName: decodedLayout },
-        ]}
-      />
-
-      <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{t('top.layout')}{" : "}{decodedLayout}</Typography>
+    <PageShell
+      node={node}
+      crumbs={[
+        { label: t('top.layout'), onClick: () => router.push(paths.dashboard.nodes.layoutList(node)) },
+        { label: decodedLayout },
+      ]}
+      title={`${t('top.title_prefix')} : ${decodedLayout}`}
+    >
       <TableContainer
         component={Paper}
         sx={{ height: 'auto', my: 2 }}
@@ -659,11 +659,11 @@ export default function Page({ params }: Props) {
               </TableRow>
             ) : layoutEmpty ? (
               <TableRow>
-                <TableCell colSpan={8}>No Process Found</TableCell>
+                <TableCell colSpan={8}>{t('detail_table.empty')}</TableCell>
               </TableRow>
             ) : error ? (
               <TableRow>
-                <TableCell colSpan={8}>Error Fetching Process</TableCell>
+                <TableCell colSpan={8}>{t('detail_table.error')}</TableCell>
               </TableRow>
             ) : (
               <TableRow
@@ -765,7 +765,7 @@ export default function Page({ params }: Props) {
         />
       )}
 
-    </DashboardContent>
+    </PageShell>
   );
 }
 

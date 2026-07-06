@@ -1,22 +1,22 @@
 'use client';
 
+import type { Column } from 'src/components/v5';
+
 import { useState, useCallback } from 'react';
-
+// eslint-disable-next-line import/no-extraneous-dependencies
 import {
-  Box,
-  Grid,
-  Table,
-  Paper,
-  TableRow,
-  TableHead,
-  TableCell,
-  TableBody,
-  Typography,
-  TableContainer,
-  CircularProgress,
-} from '@mui/material';
+  Area,
+  XAxis,
+  YAxis,
+  Tooltip,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+} from 'recharts';
 
-import { useTabs, useRouter } from 'src/routes/hooks';
+import { Box, Stack, Typography, CircularProgress } from '@mui/material';
+
+import { useRouter } from 'src/routes/hooks';
 
 import { useDebounce } from 'src/hooks/use-debounce';
 
@@ -24,17 +24,14 @@ import { formatNumber } from 'src/utils/helper';
 import { formatDateCustom } from 'src/utils/format-time';
 import { processMemoryChartData } from 'src/utils/process-chart-data';
 
-import { common } from 'src/theme/core';
 import { useTranslate } from 'src/locales';
+import { T, ACCENT2, FONT_MONO } from 'src/theme/tokens';
+import { useGetMemoryMetrics } from 'src/actions/dashboard';
 import { useGetIssues, useGetIssueGraph } from 'src/actions/nodes';
 
-import FadingDivider from '../common/FadingDivider';
-import { TableEmptyRows } from '../table/table-empty-rows';
-import { TableErrorRows } from '../table/table-error-rows';
-import { ChartAreaDark } from '../memory-page/ChartAreaDark';
-import { TableLoadingRows } from '../table/table-loading-rows';
+import { Pager, DataTable, SummaryCard } from 'src/components/v5';
+
 import { MemorySearchBar } from '../memory-page/MemorySearchBar';
-import TablePaginationCustom from '../common/TablePaginationCustom';
 
 // ----------------------------------------------------------------------
 
@@ -45,11 +42,13 @@ type Props = {
 export function Memory({ selectedNodeId }: Props) {
   const { t } = useTranslate('memory');
   const router = useRouter();
+
   const [code, setCode] = useState<string>('');
   const debouncedCode = useDebounce(code);
   const [offset, setOffset] = useState<number>(1);
   const [limit, setLimit] = useState<number>(40);
-  const { issues, issuesPagination, issuesLoading, issuesEmpty, issuesError } = useGetIssues(
+
+  const { issues, issuesPagination, issuesLoading, issuesError } = useGetIssues(
     selectedNodeId,
     offset,
     limit,
@@ -57,8 +56,9 @@ export function Memory({ selectedNodeId }: Props) {
   );
 
   const { issueGraphData, issueGraphDataLoading } = useGetIssueGraph(selectedNodeId);
+  const { memoryMetricsData } = useGetMemoryMetrics(selectedNodeId);
 
-  const graphTabs = useTabs('%');
+  const chartData = processMemoryChartData(issueGraphData) || [];
 
   // Update the search term and jump back to the first page so results aren't
   // shown against a stale page offset. `debouncedCode` feeds the search API.
@@ -77,244 +77,167 @@ export function Memory({ selectedNodeId }: Props) {
     setLimit(newRowsPerPage);
   }, []);
 
+  // Pager is 1-based; offset is a 1-based record offset (limit * pageIndex + 1).
   const onChangePage = useCallback(
     (newPage: number) => {
-      setOffset(limit * newPage + 1);
+      setOffset(limit * (newPage - 1) + 1);
     },
     [limit]
   );
 
-  const chartHeight = `380px`;
-
-  const chartData = processMemoryChartData(issueGraphData);
+  const columns: Column<any>[] = [
+    {
+      key: 'seq',
+      label: t('table.seq'),
+      mono: true,
+      align: 'right',
+      width: 60,
+      color: T.textSec,
+      render: (r) => formatNumber(r.seq),
+    },
+    { key: 'code', label: t('table.code'), mono: true, color: T.textSec },
+    { key: 'name', label: t('table.k_name') },
+    {
+      key: 'daily_info',
+      label: t('table.daily_info'),
+      mono: true,
+      dim: true,
+      grow: true,
+      render: (r) =>
+        `[${(r.daily_info_dates || [])
+          .map((d: number) => (d ? formatDateCustom(d.toString()) : '-'))
+          .join(' / ')}]`,
+    },
+    {
+      key: 'compet',
+      label: t('table.compet'),
+      mono: true,
+      align: 'right',
+      dim: true,
+      render: (r) => (r.compet ? formatDateCustom(r.compet.toString()) : '-'),
+    },
+  ];
 
   return (
-    <Grid container>
-      {/* LEFT SECTION: Always 12 columns up to lg, then 3 columns from lg up.
-        The left-side padding (pr) is removed for xs screens when stacked vertically.
-      */}
-      <Grid
-        xs={12}
-        lg={3}
-        sx={{ pr: { xs: 0, lg: 1.25 } }}
-      >
-        <Box sx={{ p: 0, borderRadius: 1.5, mb: { xs: 2, lg: 0 } }}>
-          <Grid
-            container
-          >
-            {issuesLoading ? (
-              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 5 }}>
-                <CircularProgress />
-              </Box>
-            ) : (
-              <Grid
-                container
-                lg={12}
-                xs={12}
-                sm={10}
-                md={6}
-                sx={{
-                  backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'transparent' : 'black',
-                  padding: '4px',
-                  borderRadius: '12px'
-                }}
-              >
-                {/* STAT BOX 1 */}
-                <Grid item xs={6} sm={6} lg={6}
-                  sx={{
-                    pr: '4px',
-                    pb: '4px'
-                  }}
-                >
-                  <Box
-                    sx={{
-                      background: 'linear-gradient(180deg, #202838 80%, #373F4E 100%)',
-                      borderRadius: '8px',
-                      border: '1px solid #4E576A',
-                      p: 1.5,
-                      height: '100%', // Ensures consistent height
-                    }}
-                  >
-                    <Typography sx={{ fontSize: 15, fontWeight: 500, color: common.white }}>
-                      {t('left_side.issues')}
-                    </Typography>
-                    <FadingDivider />
-                    <Typography
-                      sx={{
-                        fontSize: 28,
-                        fontWeight: 400,
-                        color: common.white,
-                        textAlign: 'right',
-                      }}
-                    >
-                      {issues?.max_issue_count?.toLocaleString()}
-                    </Typography>
-                  </Box>
-                </Grid>
+    <Stack spacing={1.5} sx={{ flex: 1, minHeight: 0 }}>
+      {/* Top row: two summary cards + memory usage chart */}
+      <Stack direction="row" spacing={1.5} sx={{ height: 210, flexShrink: 0 }}>
+        <SummaryCard label={t('left_side.issues')} value={issues?.max_issue_count?.toLocaleString()} />
+        <SummaryCard label={t('left_side.compet')} value={issues?.compet_count?.toLocaleString()} />
 
-                {/* STAT BOX 2 */}
-                <Grid item xs={6} sm={6} lg={6}
-                  sx={{
-                    pb: '4px'
-                  }}
-                >
-                  <Box
-                    sx={{
-                      background: 'linear-gradient(180deg, #202838 80%, #373F4E 100%)',
-                      borderRadius: '8px',
-                      border: '1px solid #4E576A',
-                      p: 1.5,
-                      height: '100%', // Ensures consistent height
-                    }}
-                  >
-                    <Typography sx={{ fontSize: 15, fontWeight: 500, color: common.white }}>
-                      {t('left_side.compet')}
-                    </Typography>
-                    <FadingDivider />
-                    <Typography
-                      sx={{
-                        fontSize: 28,
-                        fontWeight: 400,
-                        color: common.white,
-                        textAlign: 'right',
-                      }}
-                    >
-                      {issues?.compet_count?.toLocaleString()}
-                    </Typography>
-                  </Box>
-                </Grid>
-
-                {/* CHART */}
-                <Grid item xs={12} sm={12} lg={12}>
-                  <Box
-                    sx={{
-                      borderRadius: '8px',
-                      height: chartHeight,
-                      backgroundColor: '#202838',
-                      border: '1px solid #4E576A',
-                    }}
-                  >
-                    <ChartAreaDark
-                      selectedNodeId={selectedNodeId}
-                      title={t('graph.memory')}
-                      data={chartData}
-                      height="100%"
-                      tabs={[{ value: '%', label: '%' }]}
-                      tabValue={graphTabs.value}
-                      onTabChange={graphTabs.onChange}
-                      loading={issueGraphDataLoading}
-                    />
-                  </Box>
-                </Grid>
-              </Grid>
-            )}
-          </Grid>
-        </Box>
-      </Grid>
-
-      {/* RIGHT SECTION (TABLE): Always 12 columns up to lg, then 9 columns from lg up.
-        The right-side padding (pl) is removed for xs screens when stacked vertically.
-      */}
-      <Grid
-        xs={12}
-        lg={9}
-        sx={{
-          pl: { xs: 0, lg: 1.25 }
-        }}
-      >
         <Box
           sx={{
-            borderRadius: '12px',
-            overflow: 'hidden',
-            border: (theme) => (theme.palette.mode === 'dark' ? 'none' : '1px solid #D1D6E0'),
-            backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#202838' : '#FFFFFF'),
-            // Inset shadow rising from the bottom edge (over the table's last rows).
-            boxShadow: 'inset 0 -12px 12px -10px rgba(16, 24, 40, 0.18)',
+            flex: 1.4,
+            minWidth: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            bgcolor: T.bgCard,
+            border: `1px solid ${T.border}`,
+            borderRadius: '6px',
+            p: '12px 14px',
           }}
         >
-          <MemorySearchBar
-            value={code}
-            onChange={handleSearchChange}
-            onReset={handleResetSearch}
-          />
-          <Box
-            sx={{
-              pb: 1.5,
-              px: 1.5,
-            }}
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            sx={{ mb: 0.5 }}
           >
-          <Box sx={{ py: 1, overflow: 'auto' }}>
-            <TablePaginationCustom
-              rowsPerPage={limit}
-              currentPage={issuesPagination?.current_page || 1}
-              totalPages={issuesPagination?.total_pages || 1}
-              hasNextPage={issuesPagination?.has_next_page || false}
-              hasPreviousPage={issuesPagination?.has_previous_page || false}
-              onPageChange={onChangePage}
-              onRowsPerPageChange={onChangeRowsPerPage}
-            />
-          </Box>
-          <TableContainer
-            component={Paper}
-            sx={{ height: 'calc(100vh - 310px)', width: 'auto', overflow: 'auto', border: 'none', borderRadius: 0, backgroundColor: 'transparent' }}
-          >
-            <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="right">{t('table.seq')}</TableCell>
-                  <TableCell>{t('table.code')}</TableCell>
-                  <TableCell>{t('table.k_name')}</TableCell>
-                  <TableCell>{t('table.daily_info')}</TableCell>
-                  <TableCell align="right">{t('table.compet')}</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {issuesLoading ? (
-                  <TableLoadingRows height={20} loadingRows={10} />
-                ) : issuesEmpty ? (
-                  <TableEmptyRows text="No data for memory logs" />
-                ) : issuesError ? (
-                  <TableErrorRows
-                    text={
-                      typeof issuesError === 'string'
-                        ? issuesError
-                        : issuesError?.message || 'Error fetching list'
-                    }
+            <Typography sx={{ fontSize: 15, color: T.textSec }}>{t('graph.memory')}</Typography>
+            <Typography sx={{ fontSize: 14, color: ACCENT2, fontFamily: FONT_MONO }}>
+              {memoryMetricsData?.mem_used_size?.toLocaleString()} /{' '}
+              {memoryMetricsData?.mem_total_size?.toLocaleString()}GB ({memoryMetricsData?.mem_usage}
+              %)
+            </Typography>
+          </Stack>
+
+          <Box sx={{ flex: 1, minHeight: 0 }}>
+            {issueGraphDataLoading ? (
+              <Box
+                sx={{
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <CircularProgress size={24} />
+              </Box>
+            ) : chartData.length === 0 ? (
+              <Box
+                sx={{
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Typography sx={{ fontSize: 14, color: T.textDim }}>{t('common.no_data')}</Typography>
+              </Box>
+            ) : (
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={chartData} margin={{ top: 8, right: 8, left: -18, bottom: 0 }}>
+                  <CartesianGrid stroke={T.border} strokeDasharray="3 3" vertical={false} />
+                  <XAxis
+                    dataKey="timestamp"
+                    tick={{ fontSize: 11, fill: T.textDim }}
+                    tickLine={false}
+                    axisLine={{ stroke: T.border }}
                   />
-                ) : (
-                  issues.issueList.map(
-                    (
-                      issue: any, // TODO: Fix type
-                      index: number
-                    ) => (
-                      <TableRow
-                        key={index}
-                        onClick={() =>
-                          router.push(`/dashboard/nodes/${selectedNodeId}/memory/${String(issue.code)}`)
-                        }
-                        sx={{ cursor: 'pointer' }}
-                      >
-                        <TableCell align="right">{formatNumber(issue.seq)}</TableCell>
-                        <TableCell>{issue.code}</TableCell>
-                        <TableCell>{issue.name}</TableCell>
-                        <TableCell>
-                          {`[${issue.daily_info_dates
-                            .map((d: number) => (d ? formatDateCustom(d.toString()) : '-'))
-                            .join(' / ')}]`}
-                        </TableCell>
-                        <TableCell align="right">
-                          {issue.compet ? formatDateCustom(issue.compet.toString()) : '-'}
-                        </TableCell>
-                      </TableRow>
-                    )
-                  )
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                  <YAxis
+                    domain={[0, 100]}
+                    tick={{ fontSize: 11, fill: T.textDim }}
+                    tickLine={false}
+                    axisLine={{ stroke: T.border }}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: T.bgPanel,
+                      border: `1px solid ${T.border}`,
+                      borderRadius: 6,
+                      color: T.textPrim,
+                    }}
+                    labelStyle={{ color: T.textSec }}
+                    itemStyle={{ color: T.textPrim }}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="memory"
+                    stroke={T.primary}
+                    fill={T.primary}
+                    fillOpacity={0.2}
+                    strokeWidth={1.5}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            )}
           </Box>
         </Box>
-      </Grid>
-    </Grid>
+      </Stack>
+
+      {/* Search bar */}
+      <MemorySearchBar value={code} onChange={handleSearchChange} onReset={handleResetSearch} />
+
+      {/* Pagination */}
+      <Pager
+        page={issuesPagination?.current_page || 1}
+        totalPages={issuesPagination?.total_pages || 1}
+        perPage={limit}
+        onPageChange={onChangePage}
+        onPerPageChange={onChangeRowsPerPage}
+      />
+
+      {/* Issues table */}
+      <DataTable<any>
+        columns={columns}
+        rows={issues?.issueList || []}
+        loading={issuesLoading}
+        error={!!issuesError}
+        emptyLabel={t('table.empty')}
+        onRowClick={(row) =>
+          router.push(`/dashboard/nodes/${selectedNodeId}/memory/${String(row.code)}`)
+        }
+      />
+    </Stack>
   );
 }

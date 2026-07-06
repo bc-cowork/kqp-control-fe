@@ -1,8 +1,13 @@
 'use client';
 
-import { Grid, CircularProgress, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
 
+import { useTranslate } from 'src/locales';
 import { useGetNodeInfo } from 'src/actions/nodes';
+
+import { T } from 'src/theme/tokens';
 
 import { NodeStatusBig } from '../node-dashboard/NodeStatusBig';
 import { NodeGraphsBig } from '../node-dashboard/NodeGraphsBig';
@@ -14,6 +19,8 @@ type Props = {
 };
 
 export function NodeDashboard({ selectedNodeId }: Props) {
+  const { t } = useTranslate('node-dashboard');
+
   const { nodeInfo, nodeInfoLoading, nodeInfoError } = useGetNodeInfo(selectedNodeId);
 
   const selectedNode = nodeInfo || {
@@ -25,38 +32,42 @@ export function NodeDashboard({ selectedNodeId }: Props) {
     online_status: false,
   };
 
-
   if (nodeInfoLoading) {
-    return <CircularProgress />;
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+        <CircularProgress sx={{ color: T.primary }} />
+      </Box>
+    );
   }
 
   if (nodeInfoError) {
-    return <Typography color="error">Failed to load node info</Typography>;
+    return <Typography sx={{ color: T.off }}>{t('errors.load_node_info')}</Typography>;
   }
 
   return (
-    <Grid container>
-      <Grid
-        xs={12}
-        md={3}
-        sx={{
-          paddingRight: { xs: 0, md: '10px' },
-          marginBottom: { xs: '20px', md: 0 },
-        }}
-      >
-        <NodeStatusBig selectedNodeParam={selectedNodeId} selectedNode={selectedNode} nodeStatusLoading={nodeInfoLoading} nodeStatusError={nodeInfoError} />
-      </Grid>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: { xs: 'column', md: 'row' },
+        gap: 1.75,
+        flex: 1,
+        minHeight: 0,
+      }}
+    >
+      {/* Left column — status + disk */}
+      <Box sx={{ width: { xs: '100%', md: 300 }, flexShrink: 0 }}>
+        <NodeStatusBig
+          selectedNodeParam={selectedNodeId}
+          selectedNode={selectedNode}
+          nodeStatusLoading={nodeInfoLoading}
+          nodeStatusError={nodeInfoError}
+        />
+      </Box>
 
-      <Grid
-        xs={12}
-        md={9}
-        sx={{
-          paddingLeft: { xs: 0, md: '10px' },
-          height: 'auto'
-        }}
-      >
+      {/* Right column — 2×2 metrics grid */}
+      <Box sx={{ flex: 1, minWidth: 0, minHeight: 0 }}>
         <NodeGraphsBig selectedNodeParam={selectedNodeId} />
-      </Grid>
-    </Grid>
+      </Box>
+    </Box>
   );
 }

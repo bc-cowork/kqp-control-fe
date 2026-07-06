@@ -1,53 +1,9 @@
 'use client';
 
-import { styled } from '@mui/material/styles';
-import { Box, Stack, SvgIcon, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 
-import { grey } from 'src/theme/core';
 import { useTranslate } from 'src/locales';
-
-// Styled components for custom styling
-const LabelBox = styled(Box)(({ theme }) => ({
-  width: '25%',
-  // Brighter labels in dark mode; stay dark enough to read on the light background.
-  color: theme.palette.mode === 'dark' ? theme.palette.grey[100] : theme.palette.grey[700],
-  fontSize: 15,
-  fontWeight: 400,
-  display: 'flex',
-  alignItems: 'center',
-  gap: '8px',
-  padding: '0 12px',
-}));
-
-const ValueBox = styled(Box)(({ theme }) => ({
-  width: '25%',
-  // Keep values fully readable — never use the disabled text color, even when there is no data (value is 0/'-').
-  color: theme.palette.text.primary,
-  fontSize: 15,
-  fontWeight: 400,
-  padding: '0 12px',
-  textAlign: 'right',
-}));
-
-const HeaderBox = styled(Box)(({ theme }) => ({
-  width: '25%',
-  color: theme.palette.grey[50],
-  fontSize: 15,
-  fontWeight: 400,
-  padding: '0 12px',
-  textAlign: 'right',
-}));
-
-const RowStack = styled(Stack)(({ theme }) => ({
-  height: '80px',
-  alignItems: 'center',
-  gap: 0,
-}));
-
-const RowStackWide = styled(Stack)(({ theme }) => ({
-  height: '80px',
-  alignItems: 'center',
-}));
+import { T, FONT_MONO } from 'src/theme/tokens';
 
 // ----------------------------------------------------------------------
 
@@ -55,292 +11,108 @@ type Props = {
   issueInfo: any;
 };
 
+const fmt = (v: number | undefined) => (v || v === 0 ? v.toLocaleString() : '-');
+
+type QuoteRow = { label: string; uni: string; krx: string; nxt: string };
+
+const cellSx = {
+  flex: 1,
+  textAlign: 'right' as const,
+  fontFamily: FONT_MONO,
+  fontSize: 15,
+  color: T.textPrim,
+};
+
+const DataRow = ({ row }: { row: QuoteRow }) => (
+  <Stack
+    direction="row"
+    alignItems="center"
+    sx={{ px: 1.5, py: 1, borderTop: `1px solid ${T.borderSub}` }}
+  >
+    <Typography sx={{ flex: 1, fontSize: 14, color: T.textSec }}>{row.label}</Typography>
+    <Typography sx={cellSx}>{row.uni}</Typography>
+    <Typography sx={cellSx}>{row.krx}</Typography>
+    <Typography sx={cellSx}>{row.nxt}</Typography>
+  </Stack>
+);
+
 export function MemoryIssueInfoTable({ issueInfo }: Props) {
   const { t } = useTranslate('memory');
-  const tableData = {
-    lastPrice: {
-      uni: issueInfo.last_price?.uni?.toLocaleString() || '-',
-      krx: issueInfo.last_price?.krx?.toLocaleString() || '-',
-      nxt: issueInfo.last_price?.nxt?.toLocaleString() || '-',
-    },
-    lastVol: {
-      uni: issueInfo.last_vol?.uni?.toLocaleString() || '-',
-      krx: issueInfo.last_vol?.krx?.toLocaleString() || '-',
-      nxt: issueInfo.last_vol?.nxt?.toLocaleString() || '-',
-    },
-    volAccum: {
-      uni: issueInfo.vol_accum?.uni?.toLocaleString() || '-',
-      krx: issueInfo.vol_accum?.krx?.toLocaleString() || '-',
-      nxt: issueInfo.vol_accum?.nxt?.toLocaleString() || '-',
-    },
-    amtAccum: {
-      uni: issueInfo.amt_accum?.uni?.toLocaleString() || '-',
-      krx: issueInfo.amt_accum?.krx?.toLocaleString() || '-',
-      nxt: issueInfo.amt_accum?.nxt?.toLocaleString() || '-',
-    },
-    open: {
-      uni: issueInfo.open?.uni?.toLocaleString() || '-',
-      krx: issueInfo.open?.krx?.toLocaleString() || '-',
-      nxt: issueInfo.open?.nxt?.toLocaleString() || '-',
-    },
-    high: {
-      uni: issueInfo.high?.uni?.toLocaleString() || '-',
-      krx: issueInfo.high?.krx?.toLocaleString() || '-',
-      nxt: issueInfo.high?.nxt?.toLocaleString() || '-',
-    },
-    low: {
-      uni: issueInfo.low?.uni?.toLocaleString() || '-',
-      krx: issueInfo.low?.krx?.toLocaleString() || '-',
-      nxt: issueInfo.low?.nxt?.toLocaleString() || '-',
-    },
-  };
 
-  const tableFill1 = '#202838';
-  const tableFill2 = '#141C2A';
-  const tableFillLight1 = '#FFFFFF';
-  const tableFillLight2 = '#F9FAFB';
+  const rows: { label: string; uni: string; krx: string; nxt: string }[] = [
+    {
+      label: t('item.left.last_price'),
+      uni: fmt(issueInfo.last_price?.uni),
+      krx: fmt(issueInfo.last_price?.krx),
+      nxt: fmt(issueInfo.last_price?.nxt),
+    },
+    {
+      label: t('item.left.last_vol'),
+      uni: fmt(issueInfo.last_vol?.uni),
+      krx: fmt(issueInfo.last_vol?.krx),
+      nxt: fmt(issueInfo.last_vol?.nxt),
+    },
+    {
+      label: t('item.left.vol_accum'),
+      uni: fmt(issueInfo.vol_accum?.uni),
+      krx: fmt(issueInfo.vol_accum?.krx),
+      nxt: fmt(issueInfo.vol_accum?.nxt),
+    },
+    {
+      label: t('item.left.amt_accum'),
+      uni: fmt(issueInfo.amt_accum?.uni),
+      krx: fmt(issueInfo.amt_accum?.krx),
+      nxt: fmt(issueInfo.amt_accum?.nxt),
+    },
+  ];
+
+  const priceRows: { label: string; uni: string; krx: string; nxt: string }[] = [
+    {
+      label: t('item.left.open'),
+      uni: fmt(issueInfo.open?.uni),
+      krx: fmt(issueInfo.open?.krx),
+      nxt: fmt(issueInfo.open?.nxt),
+    },
+    {
+      label: t('item.left.high'),
+      uni: fmt(issueInfo.high?.uni),
+      krx: fmt(issueInfo.high?.krx),
+      nxt: fmt(issueInfo.high?.nxt),
+    },
+    {
+      label: t('item.left.low'),
+      uni: fmt(issueInfo.low?.uni),
+      krx: fmt(issueInfo.low?.krx),
+      nxt: fmt(issueInfo.low?.nxt),
+    },
+  ];
 
   return (
-    <Box sx={{
-      mt: 0.5,
-    }}>
-      {/* Header Row */}
-      <RowStack
-        direction="row"
-        sx={{
-          height: '32px',
-          backgroundColor: (theme) => theme.palette.mode === 'dark' ? grey[400] : '#1D2654',
-          borderTopLeftRadius: '8px',
-          borderTopRightRadius: '8px'
-        }}
-      >
-        <HeaderBox />
-        <HeaderBox>{t('item.table.uni')}</HeaderBox>
-        <HeaderBox>{t('item.table.krx')}</HeaderBox>
-        <HeaderBox>{t('item.table.nxt')}</HeaderBox>
-      </RowStack>
-
-      {/* Data Rows */}
-      <Stack direction="column">
-        {/* Last.Price Row */}
-        <RowStack
-          direction="row"
-          sx={{
-            backgroundColor: (theme) => theme.palette.mode === 'dark' ? tableFill1 : tableFillLight1,
-            borderTopLeftRadius: (theme) => theme.palette.mode === 'dark' ? '8px' : '0px',
-            borderTopRightRadius: (theme) => theme.palette.mode === 'dark' ? '8px' : '0px',
-          }}
-        >
-          <LabelBox>{t('item.left.last_price')}</LabelBox>
-          <ValueBox>{tableData.lastPrice.uni}</ValueBox>
-          <ValueBox>{tableData.lastPrice.krx}</ValueBox>
-          <ValueBox>{tableData.lastPrice.nxt}</ValueBox>
-        </RowStack>
-
-        {/* Last.Vol Row */}
-        <RowStack direction="row" sx={{
-          backgroundColor: (theme) => theme.palette.mode === 'dark' ? tableFill2 : tableFillLight2,
-        }}>
-          <LabelBox>{t('item.left.last_vol')}</LabelBox>
-          <ValueBox>{tableData.lastVol.uni}</ValueBox>
-          <ValueBox>{tableData.lastVol.krx}</ValueBox>
-          <ValueBox>{tableData.lastVol.nxt}</ValueBox>
-        </RowStack>
-
-        {/* Vol.Accum Row */}
-        <RowStack direction="row" sx={{
-          backgroundColor: (theme) => theme.palette.mode === 'dark' ? tableFill1 : tableFillLight1,
-        }}>
-          <LabelBox>{t('item.left.vol_accum')}</LabelBox>
-          <ValueBox>{tableData.volAccum.uni}</ValueBox>
-          <ValueBox>{tableData.volAccum.krx}</ValueBox>
-          <ValueBox>{tableData.volAccum.nxt}</ValueBox>
-        </RowStack>
-
-        {/* Amt.Accum Row */}
-        <RowStack direction="row" sx={{
-          backgroundColor: (theme) => theme.palette.mode === 'dark' ? tableFill2 : tableFillLight2,
-        }}>
-          <LabelBox>{t('item.left.amt_accum')}</LabelBox>
-          <ValueBox>{tableData.amtAccum.uni}</ValueBox>
-          <ValueBox>{tableData.amtAccum.krx}</ValueBox>
-          <ValueBox>{tableData.amtAccum.nxt}</ValueBox>
-        </RowStack>
-
-        <Box sx={{
-          backgroundColor: (theme) => theme.palette.mode === 'dark' ? grey[900] : '#F4F4F8',
-          height: '8px'
-        }} />
-
-        {/* Open Row */}
-        <RowStackWide direction="row" sx={{
-          backgroundColor: (theme) => theme.palette.mode === 'dark' ? tableFill1 : tableFillLight1,
-        }}>
-          <LabelBox>
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
-              <SvgIcon sx={{ mr: 0.5, height: 16, width: 16 }}>
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect width="16" height="16" rx="4" fill="#DDF4DA" />
-                  <circle cx="8" cy="8" r="3" fill="#00A41E" />
-                </svg>
-              </SvgIcon>
-              <Typography
-                variant="body2"
-                sx={{
-                  color: (theme) =>
-                    theme.palette.mode === 'dark' ? theme.palette.grey[100] : theme.palette.grey[700],
-                }}
-              >
-                {t('item.left.open')}
-              </Typography>
-            </Box>
-          </LabelBox>
-          <ValueBox>{tableData.open.uni}</ValueBox>
-          <ValueBox>{tableData.open.krx}</ValueBox>
-          <ValueBox>{tableData.open.nxt}</ValueBox>
-        </RowStackWide>
-
-        {/* High Row */}
-        <RowStackWide direction="row" sx={{
-          backgroundColor: (theme) => theme.palette.mode === 'dark' ? tableFill2 : tableFillLight2,
-        }}>
-          <LabelBox>
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
-              <SvgIcon sx={{ mr: 0.5, height: 16, width: 16 }}>
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect width="16" height="16" rx="4" fill="#FFD8D8" />
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M1.64645 11.8536C1.45118 11.6583 1.45118 11.3417 1.64645 11.1464L6.64645 6.14645C6.84171 5.95118 7.15829 5.95118 7.35355 6.14645L9.5 8.29289L13.1464 4.64645C13.3417 4.45118 13.6583 4.45118 13.8536 4.64645C14.0488 4.84171 14.0488 5.15829 13.8536 5.35355L9.85355 9.35355C9.65829 9.54882 9.34171 9.54882 9.14645 9.35355L7 7.20711L2.35355 11.8536C2.15829 12.0488 1.84171 12.0488 1.64645 11.8536Z"
-                    fill="#F01B3E"
-                  />
-                </svg>
-              </SvgIcon>
-              <Typography
-                variant="body2"
-                sx={{
-                  color: (theme) =>
-                    theme.palette.mode === 'dark' ? theme.palette.grey[100] : theme.palette.grey[700],
-                }}
-              >
-                {t('item.left.high')}
-              </Typography>
-            </Box>
-          </LabelBox>
-          <HighValueBox value={tableData.high.uni} />
-          <HighValueBox value={tableData.high.krx} />
-          <HighValueBox value={tableData.high.nxt} />
-        </RowStackWide>
-
-        {/* Low Row */}
-        <RowStackWide
-          direction="row"
-          sx={{
-            backgroundColor: (theme) => theme.palette.mode === 'dark' ? tableFill1 : tableFillLight1,
-            borderBottomLeftRadius: '8px',
-            borderBottomRightRadius: '8px',
-          }}
-        >
-          <LabelBox>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <SvgIcon sx={{ mr: 0.5, height: 16, width: 16 }}>
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect width="16" height="16" rx="4" fill="#C7DBFF" />
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M1.64645 4.64645C1.45118 4.84171 1.45118 5.15829 1.64645 5.35355L6.64645 10.3536C6.84171 10.5488 7.15829 10.5488 7.35355 10.3536L9.5 8.20711L13.1464 11.8536C13.3417 12.0488 13.6583 12.0488 13.8536 11.8536C14.0488 11.6583 14.0488 11.3417 13.8536 11.1464L9.85355 7.14645C9.65829 6.95118 9.34171 6.95118 9.14645 7.14645L7 9.29289L2.35355 4.64645C2.15829 4.45118 1.84171 4.45118 1.64645 4.64645Z"
-                    fill="#5E66FF"
-                  />
-                </svg>
-              </SvgIcon>
-              <Typography
-                variant="body2"
-                sx={{
-                  color: (theme) =>
-                    theme.palette.mode === 'dark' ? theme.palette.grey[100] : theme.palette.grey[700],
-                }}
-              >
-                {t('item.left.low')}
-              </Typography>
-            </Box>
-          </LabelBox>
-          <LowValueBox value={tableData.low.uni} />
-          <LowValueBox value={tableData.low.krx} />
-          <LowValueBox value={tableData.low.nxt} />
-        </RowStackWide>
+    <Box sx={{ mt: 1.5, border: `1px solid ${T.border}`, borderRadius: '8px', overflow: 'hidden' }}>
+      {/* Header row */}
+      <Stack direction="row" alignItems="center" sx={{ px: 1.5, py: 1, bgcolor: T.bgRowSel }}>
+        <Typography sx={{ flex: 1 }} />
+        <Typography sx={{ flex: 1, textAlign: 'right', fontSize: 14, color: T.textSec }}>
+          {t('item.table.uni')}
+        </Typography>
+        <Typography sx={{ flex: 1, textAlign: 'right', fontSize: 14, color: T.textSec }}>
+          {t('item.table.krx')}
+        </Typography>
+        <Typography sx={{ flex: 1, textAlign: 'right', fontSize: 14, color: T.textSec }}>
+          {t('item.table.nxt')}
+        </Typography>
       </Stack>
+
+      {rows.map((row) => (
+        <DataRow key={row.label} row={row} />
+      ))}
+
+      {/* Spacer between accumulated + price groups */}
+      <Box sx={{ height: 6, bgcolor: T.bgPanel }} />
+
+      {priceRows.map((row) => (
+        <DataRow key={row.label} row={row} />
+      ))}
     </Box>
   );
 }
-
-// ----------------------------------------------------------------------
-
-type LowValueBoxProps = {
-  value: string | number;
-};
-
-const LowValueBox = ({ value }: LowValueBoxProps) => (
-  <ValueBox sx={{ display: 'flex', direction: 'row', justifyContent: 'end', alignItems: 'center' }}>
-    <SvgIcon sx={{ mr: 0.5, height: 16, width: 16 }}>
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M7.74747 11.7068L2.74043 5.88466C2.55457 5.66855 2.70812 5.33398 2.99316 5.33398H13.0082C13.2932 5.33398 13.4467 5.66858 13.2609 5.88469L8.25291 11.7068C8.1199 11.8615 7.88046 11.8614 7.74747 11.7068Z"
-          fill="#5E66FF"
-        />
-      </svg>
-    </SvgIcon>
-    {value}
-  </ValueBox>
-);
-
-// ----------------------------------------------------------------------
-
-type HighValueBoxProps = {
-  value: string | number;
-};
-
-const HighValueBox = ({ value }: HighValueBoxProps) => (
-  <ValueBox sx={{ display: 'flex', direction: 'row', justifyContent: 'end', alignItems: 'center' }}>
-    <SvgIcon sx={{ mr: 0.5, height: 16, width: 16 }}>
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M8.25384 4.29372L13.2609 10.1159C13.4467 10.332 13.2932 10.6665 13.0082 10.6665L2.99316 10.6665C2.7081 10.6665 2.55456 10.332 2.74045 10.1158L7.7484 4.2937C7.88141 4.13907 8.12085 4.13908 8.25384 4.29372Z"
-          fill="#FF3D4A"
-        />
-      </svg>
-    </SvgIcon>
-    {value}
-  </ValueBox>
-);

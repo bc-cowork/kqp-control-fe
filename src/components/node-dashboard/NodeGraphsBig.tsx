@@ -1,4 +1,4 @@
-// components/NodeGraphs.tsx
+// components/NodeGraphsBig.tsx
 
 'use client';
 
@@ -6,7 +6,6 @@ import type { ChartDataPoint } from 'src/types/dashboard';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
-import { useTheme } from '@mui/material/styles';
 
 import { useTabs } from 'src/routes/hooks';
 
@@ -14,6 +13,8 @@ import { processChartData } from 'src/utils/process-chart-data';
 
 import { useTranslate } from 'src/locales';
 import { useGetGraphData } from 'src/actions/dashboard';
+
+import { T } from 'src/theme/tokens';
 
 import { ChartArea } from './chart-area';
 import { getBoundTabs } from '../dashboard/NodeGraphs';
@@ -26,7 +27,6 @@ interface Props {
 
 export function NodeGraphsBig({ selectedNodeParam }: Props) {
   const { t } = useTranslate('node-dashboard');
-  const theme = useTheme();
 
   const inboundTabs = useTabs(getBoundTabs(t)[0].value);
   const outboundTabs = useTabs(getBoundTabs(t)[0].value);
@@ -44,10 +44,8 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
     return `${value}B`;
   };
 
-  const getSubTitle = (
-    metric: keyof ChartDataPoint
-  ): string => {
-    if (!latestPoint) return '-';
+  const getSubTitle = (metric: keyof ChartDataPoint): string => {
+    if (!latestPoint) return '—';
     const value = latestPoint[metric] as number;
     if (metric === 'cpu' || metric === 'memory') return `${value}%`;
     if (metric === 'inbound_bytes' || metric === 'outbound_bytes') return formatBytes(value);
@@ -63,28 +61,20 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
   return (
     <Box
       sx={{
-        bgcolor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : theme.palette.primary.contrastText,
+        bgcolor: T.bgPanel,
+        border: `1px solid ${T.border}`,
+        borderRadius: '8px',
         minHeight: {
           xs: 'auto',
           md: 'calc(100vh - 187px)',
         },
         p: 1.5,
-        pr: '4px',
-        borderRadius: '12px',
-        border: theme.palette.mode === 'dark' ? 'none' : '1px solid #D1D6E0',
         boxSizing: 'border-box',
       }}
     >
-      <Grid container spacing={2}>
-
+      <Grid container spacing={1.5}>
         {/* CPU Chart */}
-        <Grid
-          xs={12}
-          md={6}
-          sx={{
-            height: responsiveChartHeight,
-          }}
-        >
+        <Grid xs={12} md={6} sx={{ height: responsiveChartHeight }}>
           <ChartArea
             title="CPU"
             titleString={t('graph.cpu')}
@@ -98,13 +88,7 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
         </Grid>
 
         {/* Memory Chart */}
-        <Grid
-          xs={12}
-          md={6}
-          sx={{
-            height: responsiveChartHeight,
-          }}
-        >
+        <Grid xs={12} md={6} sx={{ height: responsiveChartHeight }}>
           <ChartArea
             title="Memory"
             titleString={t('graph.memory')}
@@ -117,14 +101,7 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
         </Grid>
 
         {/* Inbound Chart */}
-        <Grid
-          xs={12}
-          md={6}
-          sx={{
-            height: responsiveChartHeight,
-            mt: { xs: 2, md: 0 },
-          }}
-        >
+        <Grid xs={12} md={6} sx={{ height: responsiveChartHeight, mt: { xs: 2, md: 0 } }}>
           <ChartArea
             title="Inbound"
             titleString={t('graph.inbound')}
@@ -140,14 +117,7 @@ export function NodeGraphsBig({ selectedNodeParam }: Props) {
         </Grid>
 
         {/* Outbound Chart */}
-        <Grid
-          xs={12}
-          md={6}
-          sx={{
-            height: responsiveChartHeight,
-            mt: { xs: 2, md: 0 },
-          }}
-        >
+        <Grid xs={12} md={6} sx={{ height: responsiveChartHeight, mt: { xs: 2, md: 0 } }}>
           <ChartArea
             title="Outbound"
             titleString={t('graph.outbound')}

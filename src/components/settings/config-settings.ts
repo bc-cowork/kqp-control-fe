@@ -4,7 +4,7 @@ import type { SettingsState } from './types';
 
 // ----------------------------------------------------------------------
 
-export const STORAGE_KEY = 'app-settings';
+export const STORAGE_KEY = 'app-settings-v5';
 
 export const defaultSettings: SettingsState = {
   colorScheme: 'dark',

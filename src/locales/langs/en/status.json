@@ -1,24 +1,33 @@
 {
     "top": {
-        "title": "Status"
+        "title": "Status",
+        "refresh": "Refresh"
+    },
+    "badge": {
+        "normal": "Normal",
+        "abnormal": "Abnormal"
     },
     "table_top": {
         "item": "Item",
         "max": "Max",
-        "cur": "Cur",
-        "odd": "Odd",
+        "cur": "Current",
+        "odd": "Abnormal",
+        "status": "Status",
+        "no_data": "No status data",
         "process": "Process",
-        "que": "Que",
-        "ch_inbound": "Ch.Inbound",
-        "ch_outbound": "Ch.Outbound"
+        "que": "Queue",
+        "ch_inbound": "Inbound Channel",
+        "ch_outbound": "Outbound Channel"
     },
     "table_bottom": {
         "time": "Time",
+        "channel": "Channel",
+        "count": "Count",
         "ch_inbound": "Channel Inbound",
         "ch_outbound": "Channel Outbound",
         "number_inbound": "Number Inbound",
         "number_outbound": "Number Outbound",
-        "no_inbound_traffic": "No Inbound Traffic",
-        "no_outbound_traffic": "No Outbound Traffic"
+        "no_inbound_traffic": "No inbound traffic",
+        "no_outbound_traffic": "No outbound traffic"
     }
 }

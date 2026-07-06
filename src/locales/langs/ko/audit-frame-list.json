@@ -11,7 +11,9 @@
   },
   "table": {
     "rows_per_page": "페이지당 항목 수",
-    "go_to_page": "이동할 페이지"
+    "go_to_page": "이동할 페이지",
+    "empty": "증적 로그 목록이 비어 있습니다",
+    "no_frame_for_seq": "번호 {{seq}}에 해당하는 프레임이 없습니다"
   },
   "table_header": {
     "frame_seq": "프레임 번호",
@@ -22,6 +24,8 @@
   "right_side_audit_log_list": {
     "filename": "파일이름",
     "audit_log_list": "증적 로그 목록",
+    "log_info": "로그 정보",
+    "inbound_log": "수신 로그",
     "desc": "설명",
     "max_frame_seq": "가장 큰 프레임 번호",
     "file_size": "파일 크기",

@@ -120,7 +120,7 @@ const AuditFrameFilterBar: React.FC<Props> = ({ filters, setFilters, onApply, on
     >
       {/* Cond */}
       <Box sx={{ ...fieldSx, flex: 1, minWidth: 0 }}>
-        <Typography sx={labelSx}>Cond</Typography>
+        <Typography sx={labelSx}>{t('filter_bar.cond')}</Typography>
         {divider}
         <InputBase
           value={(filters?.cond as string) || ''}
@@ -138,7 +138,7 @@ const AuditFrameFilterBar: React.FC<Props> = ({ filters, setFilters, onApply, on
 
       {/* Count */}
       <Box sx={{ ...fieldSx, flex: 1, minWidth: 0 }}>
-        <Typography sx={labelSx}>Count</Typography>
+        <Typography sx={labelSx}>{t('filter_bar.count')}</Typography>
         {divider}
         <InputBase
           type="number"
@@ -157,7 +157,7 @@ const AuditFrameFilterBar: React.FC<Props> = ({ filters, setFilters, onApply, on
 
       {/* Scan */}
       <Box sx={{ ...fieldSx, width: 152, flexShrink: 0, gap: 1 }}>
-        <Typography sx={labelSx}>Scan</Typography>
+        <Typography sx={labelSx}>{t('filter_bar.scan')}</Typography>
         {divider}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, ml: 'auto' }}>
           <IconButton

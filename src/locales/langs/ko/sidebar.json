@@ -5,6 +5,15 @@
     "settings": "설정",
     "logout": "로그아웃"
   },
+  "group": {
+    "monitoring": "모니터링",
+    "data": "데이터",
+    "settings_list": "설정 목록"
+  },
+  "tile": {
+    "normal": "정상",
+    "abnormal": "이상"
+  },
   "tab_option": {
     "node_dashboard": "노드 대시보드",
     "process": "프로세스",

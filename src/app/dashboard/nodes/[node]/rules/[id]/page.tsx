@@ -1,19 +1,23 @@
-"use client";
+'use client';
 
-import React from 'react';
-import { Typography, Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, CircularProgress } from '@mui/material';
+import type { Column } from 'src/components/v5';
+
 import useSWR from 'swr';
-
-import { DashboardContent } from 'src/layouts/dashboard';
-import { Breadcrumb } from 'src/components/common/Breadcrumb';
-import { useTranslate } from 'src/locales';
-import { paths } from 'src/routes/paths';
-import { fetcher, endpoints } from 'src/utils/axios';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { useRouter } from 'next/navigation';
-import { grey } from '@mui/material/colors';
 
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+
+import { paths } from 'src/routes/paths';
+
+import { fetcher, endpoints } from 'src/utils/axios';
+
+import { useTranslate } from 'src/locales';
+
+import { T, FONT_MONO } from 'src/theme/tokens';
+import { Panel, PageShell, DataTable, CodeBlock, SectionLabel } from 'src/components/v5';
+
+// ----------------------------------------------------------------------
 
 type Props = {
   params: {
@@ -22,299 +26,137 @@ type Props = {
   };
 };
 
+type RefItem = { name: string; ref_count?: number; usage_count?: number; url: string };
+
+const lastSeg = (url: string) => {
+  const parts = url.split('/');
+  return parts[parts.length - 1];
+};
+
 export default function Page({ params }: Props) {
   const { node, id } = params;
+  const router = useRouter();
   const { t } = useTranslate('rule-list');
-  const decodedAction = decodeURIComponent(id);
+  const decodedRule = decodeURIComponent(id);
 
-  const url = endpoints.rules.detail(node, decodedAction);
+  const url = endpoints.rules.detail(node, decodedRule);
   const { data, error, isLoading } = useSWR(url, fetcher);
 
   const ruleItem = data?.data?.detail || {};
-  const layoutList = data?.data?.detail?.related_layouts || [];
-  const processList = data?.data?.detail?.related_processes || [];
-  const actionList = data?.data?.detail?.related_actions || [];
-  const script = data?.data?.detail?.function_def?.code || '';
+  const layoutList: RefItem[] = data?.data?.detail?.related_layouts || [];
+  const processList: RefItem[] = data?.data?.detail?.related_processes || [];
+  const actionList: RefItem[] = data?.data?.detail?.related_actions || [];
+  const script: string = data?.data?.detail?.function_def?.code || '';
 
+  const summaryRows = !isLoading && !error && ruleItem?.name ? [ruleItem] : [];
+
+  const summaryColumns: Column<any>[] = [
+    {
+      key: 'name',
+      label: t('table_header.name'),
+      render: (r) => (
+        <span style={{ color: T.primary, fontWeight: 500, fontFamily: FONT_MONO }}>{r.name}</span>
+      ),
+    },
+    { key: 'path', label: t('table_header.path'), mono: true, dim: true },
+    { key: 'timestamp', label: t('table_header.timestamp'), mono: true },
+    { key: 'ref_layout', label: t('table_header.ref_layout'), mono: true, align: 'right' },
+    { key: 'ref_process', label: t('table_header.ref_process'), mono: true, align: 'right' },
+    { key: 'ref_actions', label: t('table_header.ref_actions'), mono: true, align: 'right' },
+    { key: 'desc', label: t('table_header.desc'), dim: true, grow: true },
+  ];
+
+  const refColumns = (label: string, countKey: 'ref_count' | 'usage_count'): Column<RefItem>[] => [
+    { key: 'no', label: t('detail_table.layout_no'), mono: true, align: 'right', width: 60, render: (_r, i) => i + 1 },
+    {
+      key: 'name',
+      label,
+      render: (r) => (
+        <span style={{ color: T.primary, fontFamily: FONT_MONO }}>{r.name}</span>
+      ),
+    },
+    { key: countKey, label: t('detail_table.layout_ref_freq'), mono: true, align: 'right', grow: true },
+  ];
 
   return (
-    <DashboardContent maxWidth="xl">
-      <Breadcrumb
-        node={node}
-        pages={[
-          { pageName: t('top.title'), link: paths.dashboard.nodes.rules(node) },
-          { pageName: decodedAction },
-        ]}
+    <PageShell
+      node={node}
+      crumbs={[
+        { label: t('top.title'), onClick: () => router.push(paths.dashboard.nodes.rules(node)) },
+        { label: decodedRule },
+      ]}
+      title={`${t('top.title_prefix')} : ${decodedRule}`}
+    >
+      <DataTable<any>
+        columns={summaryColumns}
+        rows={summaryRows}
+        headerVariant="light"
+        loading={isLoading}
+        error={!!error}
+        emptyLabel={t('detail.empty')}
       />
 
-      <Typography sx={{ fontSize: 28, fontWeight: 500, mt: 2 }}>{"RULE: "}{decodedAction}</Typography>
-      <TableContainer
-        component={Paper}
-        sx={{ height: 'auto', my: 2 }}
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 2,
+          alignItems: 'flex-start',
+          flexWrap: { xs: 'wrap', md: 'nowrap' },
+        }}
       >
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell>{ }</TableCell>
-              <TableCell>{t('table_header.name')}</TableCell>
-              <TableCell>{t('table_header.path')}</TableCell>
-              <TableCell align="left">{t('table_header.timestamp')}</TableCell>
-              <TableCell align="left">{t('table_header.ref_layout')}</TableCell>
-              <TableCell>{t('table_header.ref_process')}</TableCell>
-              <TableCell>{t('table_header.ref_actions')}</TableCell>
-              <TableCell>{ }</TableCell>
-              <TableCell align="left">{t('table_header.desc')}</TableCell>
-              <TableCell>{ }</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {isLoading ? (
-              <TableRow>
-                <TableCell colSpan={10} align="center">
-                  <CircularProgress />
-                </TableCell>
-              </TableRow>
-            ) : ruleItem == null ? (
-              <TableRow>
-                <TableCell colSpan={10}>No Action Rule</TableCell>
-              </TableRow>
-            ) : error ? (
-              <TableRow>
-                <TableCell colSpan={10}>Error Fetching Rule</TableCell>
-              </TableRow>
-            ) : (
-              <TableRow
-                key={ruleItem.name}
-                hover
-              >
-                <TableCell align="left">{ }</TableCell>
-                <TableCell align="left">{ruleItem.name}</TableCell>
-                <TableCell>{ruleItem.path}</TableCell>
-                <TableCell align='left'>{ruleItem.timestamp}</TableCell>
-                <TableCell align="left">{ruleItem.ref_layout}</TableCell>
-                <TableCell align="left">{ruleItem.ref_process}</TableCell>
-                <TableCell align="left">{ruleItem.ref_actions}</TableCell>
-                <TableCell align="left">{ }</TableCell>
-                <TableCell align="left">{ruleItem?.desc}</TableCell>
-                <TableCell align="left">{ }</TableCell>
-
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Box sx={{ mt: 3 }}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={7}>
-            <StackOfTables
-              layoutList={layoutList}
-              processList={processList}
-              actionList={actionList}
-              t={t}
+        <Box sx={{ flex: '1 1 58%', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <SectionLabel>{t('detail_table.related_layouts')}</SectionLabel>
+            <DataTable<RefItem>
+              columns={refColumns(t('detail_table.layout_name'), 'ref_count')}
+              rows={layoutList}
               loading={isLoading}
-              error={error}
-              node={node}
+              error={!!error}
+              emptyLabel={t('detail_table.empty_layouts')}
+              onRowClick={(row) =>
+                router.push(paths.dashboard.nodes.layoutDetail(node, lastSeg(row.url)))
+              }
             />
-          </Grid>
+          </Box>
 
-          <Grid item xs={12} md={5}>
-            <Paper sx={{
-              height: '100%',
-              padding: (theme) => theme.palette.mode === 'dark' ? '0px' : '4px',
-              backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'transparent' : 'black'
-            }} >
-              <Box sx={{ backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#667085' : '#E0E4EB', p: 1.5, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
-                <Typography sx={{
-                  fontWeight: 600,
-                  color: (theme) => theme.palette.mode === 'dark' ? grey[300] : '#4E576A'
-                }}>{t('detail_table.script_title')}</Typography>
-              </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <SectionLabel>{t('detail_table.related_processes')}</SectionLabel>
+            <DataTable<RefItem>
+              columns={refColumns(t('detail_table.process_name'), 'usage_count')}
+              rows={processList}
+              loading={isLoading}
+              error={!!error}
+              emptyLabel={t('detail_table.empty_processes')}
+              onRowClick={(row) =>
+                router.push(paths.dashboard.nodes.processDetail(node, lastSeg(row.url)))
+              }
+            />
+          </Box>
 
-              <Box sx={{ bgcolor: '#202838', height: 'calc(100% - 48px)', overflowY: 'auto' }}>
-                <Box component="pre" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: 13, m: 0 }}>
-                  <SyntaxHighlighter
-                    language="moonscript"
-                    style={a11yDark}
-                    customStyle={{
-                      background: "transparent",
-                      whiteSpace: "pre-wrap",
-                    }}
-                  >
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <SectionLabel>{t('detail_table.related_actions')}</SectionLabel>
+            <DataTable<RefItem>
+              columns={refColumns(t('detail_table.action_name'), 'usage_count')}
+              rows={actionList}
+              loading={isLoading}
+              error={!!error}
+              emptyLabel={t('detail_table.empty_actions')}
+              onRowClick={(row) =>
+                router.push(paths.dashboard.nodes.actionDetail(node, lastSeg(row.url)))
+              }
+            />
+          </Box>
+        </Box>
 
-                    {isLoading ? t('loading') : error ? t('error') : script || t('detail.placeholder')}
-                  </SyntaxHighlighter>
-                </Box>
-              </Box>
-            </Paper>
-          </Grid>
-        </Grid>
+        <Box sx={{ flex: '1 1 42%', minWidth: 0, width: '100%' }}>
+          <Panel sx={{ p: 2 }}>
+            <Typography sx={{ fontFamily: FONT_MONO, fontSize: 14, color: T.textDim, mb: 1.25 }}>
+              -- {decodedRule}.moon
+            </Typography>
+            <CodeBlock theme="moon">{isLoading ? '' : error ? '' : script}</CodeBlock>
+          </Panel>
+        </Box>
       </Box>
-    </DashboardContent >
-  );
-}
-
-function StackOfTables({ layoutList, processList, actionList, t, loading, error, node }: any) {
-  const router = useRouter();
-  return (
-    <Box>
-      <TableContainer component={Paper} sx={{ mb: 4 }}>
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell>{ }</TableCell>
-              <TableCell align='right'>{t('detail_table.layout_no')}</TableCell>
-              <TableCell>{t('detail_table.layout_name')}</TableCell>
-              <TableCell>{t('detail_table.layout_ref_freq')}</TableCell>
-              <TableCell>{ }</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {loading && (
-              <TableRow>
-                <TableCell colSpan={5}>{t('loading')}</TableCell>
-              </TableRow>
-            )}
-            {error && (
-              <TableRow>
-                <TableCell colSpan={5}>{t('error')}</TableCell>
-              </TableRow>
-            )}
-            {!loading && !error && layoutList.length === 0 && (
-              <TableRow>
-                <TableCell colSpan={5}>{t('empty')}</TableCell>
-              </TableRow>
-            )}
-            {layoutList.map((item: any, idx: number) => (
-              <TableRow
-                hover
-                key={idx}
-
-              >
-                <TableCell>{ }</TableCell>
-                <TableCell
-                  align='right'
-                >{idx + 1}</TableCell>
-                <TableCell
-                  onClick={() =>
-                    router.push(`${paths.dashboard.nodes.layoutDetail(node, item.url.split('/')[item.url.split('/').length - 1])}`)
-                  }
-                  sx={{
-                    color: '#4A3BFF',
-                    textDecoration: 'underline',
-                    cursor: 'pointer'
-                  }}
-                >{item.name}</TableCell>
-                <TableCell>{item.ref_count}</TableCell>
-                <TableCell>{ }</TableCell>
-
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TableContainer sx={{ my: 4 }} component={Paper}>
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell>{ }</TableCell>
-              <TableCell align='right'>{t('detail_table.process_no')}</TableCell>
-              <TableCell>{t('detail_table.process_name')}</TableCell>
-              <TableCell>{t('detail_table.process_usage_freq')}</TableCell>
-              <TableCell>{ }</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {loading && (
-              <TableRow>
-                <TableCell colSpan={5}>{t('loading')}</TableCell>
-              </TableRow>
-            )}
-            {error && (
-              <TableRow>
-                <TableCell colSpan={5}>{t('error')}</TableCell>
-              </TableRow>
-            )}
-            {!loading && !error && processList.length === 0 && (
-              <TableRow>
-                <TableCell colSpan={5}>{t('empty')}</TableCell>
-              </TableRow>
-            )}
-            {processList.map((item: any, idx: number) => (
-              <TableRow
-                hover
-                key={idx}
-
-              >
-                <TableCell>{ }</TableCell>
-                <TableCell align='right'>{idx + 1}</TableCell>
-                <TableCell
-                  onClick={() =>
-                    router.push(`${paths.dashboard.nodes.processDetail(node, item.url.split('/')[item.url.split('/').length - 1])}`)
-                  }
-                  sx={{
-                    color: '#4A3BFF',
-                    textDecoration: 'underline',
-                    cursor: 'pointer'
-                  }}
-                >{item.name}</TableCell>
-                <TableCell>{item.usage_count}</TableCell>
-                <TableCell>{ }</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TableContainer sx={{ my: 4 }} component={Paper}>
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell>{ }</TableCell>
-              <TableCell align='right'>{t('detail_table.process_no')}</TableCell>
-              <TableCell>{t('detail_table.related_actions')}</TableCell>
-              <TableCell>{t('detail_table.process_usage_freq')}</TableCell>
-              <TableCell>{ }</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {loading && (
-              <TableRow>
-                <TableCell colSpan={5}>{t('loading')}</TableCell>
-              </TableRow>
-            )}
-            {error && (
-              <TableRow>
-                <TableCell colSpan={5}>{t('error')}</TableCell>
-              </TableRow>
-            )}
-            {!loading && !error && actionList.length === 0 && (
-              <TableRow>
-                <TableCell colSpan={5}>{t('empty')}</TableCell>
-              </TableRow>
-            )}
-            {actionList.map((item: any, idx: number) => (
-              <TableRow
-                hover
-                key={idx}
-              >
-                <TableCell>{ }</TableCell>
-                <TableCell align='right'>{idx + 1}</TableCell>
-                <TableCell
-                  onClick={() =>
-                    router.push(`${paths.dashboard.nodes.actionDetail(node, item.url.split('/')[item.url.split('/').length - 1])}`)
-                  }
-                  sx={{
-                    color: '#4A3BFF',
-                    textDecoration: 'underline',
-                    cursor: 'pointer'
-                  }}
-                >{item.name}</TableCell>
-                <TableCell>{item.usage_count}</TableCell>
-                <TableCell>{ }</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
+    </PageShell>
   );
 }

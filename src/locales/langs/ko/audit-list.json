@@ -10,7 +10,8 @@
   },
   "table": {
     "rows_per_page": "페이지당 파일 수",
-    "go_to_page": "이동할 페이지"
+    "go_to_page": "이동할 페이지",
+    "empty": "증적 로그가 없습니다"
   },
   "table_header": {
     "no": "No",

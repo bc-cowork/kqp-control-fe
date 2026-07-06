@@ -16,6 +16,7 @@ import { ThemeProvider } from 'src/theme/theme-provider';
 import { I18nProvider, LocalizationProvider } from 'src/locales';
 
 import { ProgressBar } from 'src/components/progress-bar';
+import { ViewportZoom } from 'src/components/viewport-zoom';
 import { MotionLazy } from 'src/components/animate/motion-lazy';
 import { SettingsDrawer, defaultSettings, SettingsProvider } from 'src/components/settings';
 
@@ -64,8 +65,9 @@ export default async function RootLayout({ children }: Props) {
                 <SettingsProvider settings={defaultSettings}>
                   <ThemeProvider>
                     <MotionLazy>
+                      <ViewportZoom />
                       <ProgressBar />
-                      <SettingsDrawer />
+                      <SettingsDrawer hideColorScheme />
                       {children}
                     </MotionLazy>
                   </ThemeProvider>

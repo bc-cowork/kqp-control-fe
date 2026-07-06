@@ -1,104 +1,66 @@
 'use client';
 
+import type { Column } from 'src/components/v5';
 import type { IProcessItem } from 'src/types/dashboard';
 
-import {
-  Table,
-  Paper,
-  TableRow,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableContainer,
-  CircularProgress,
-} from '@mui/material';
+import { useRouter } from 'next/navigation';
+
+import { paths } from 'src/routes/paths';
+
+import { useGetProcesses } from 'src/actions/dashboard';
 
 import { useTranslate } from 'src/locales';
-import { useGetProcesses } from 'src/actions/dashboard';
-import { paths } from 'src/routes/paths';
-import { useRouter } from 'next/navigation';
+import { T } from 'src/theme/tokens';
+import { DataTable } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
 
 type Props = {
   selectedNodeId: string;
-  page?: string;
 };
 
-export function ProcessDetail({ selectedNodeId, page = 'process' }: Props) {
-  const { t } = useTranslate('process');
+export function ProcessDetail({ selectedNodeId }: Props) {
   const router = useRouter();
-  const { processes, processLoading, processesEmpty, processError } = useGetProcesses(
-    selectedNodeId
-  ) as {
+  const { t } = useTranslate('process');
+  const { processes, processLoading, processError } = useGetProcesses(selectedNodeId) as {
     processes: IProcessItem[];
     processLoading: boolean;
-    processesEmpty: boolean;
     processError: boolean;
   };
 
-  const isDashboardPage = page === 'dashboard';
+  const columns: Column<IProcessItem>[] = [
+    { key: 'PID', label: t('table_header.pid'), mono: true, align: 'right', width: 120, color: T.textSec },
+    { key: 'NAME', label: t('table_header.name'), color: T.textSec },
+    { key: 'PARAM', label: t('table_header.param'), mono: true, dim: true, grow: true },
+    {
+      key: 'CPU',
+      label: t('table_header.cpu'),
+      mono: true,
+      align: 'right',
+      render: (r) => <span style={{ color: Number(r.CPU) > 0 ? T.primary : T.textSec }}>{r.CPU}</span>,
+    },
+    {
+      key: 'MEM',
+      label: t('table_header.mem'),
+      mono: true,
+      align: 'right',
+      color: T.textSec,
+      render: (r) => Number(r?.MEM)?.toLocaleString(),
+    },
+    { key: 'PPID', label: t('table_header.ppid'), mono: true, align: 'right', dim: true },
+    { key: 'COMMAND', label: t('table_header.command'), mono: true, dim: true, grow: true },
+  ];
 
   return (
-    <TableContainer
-      component={Paper}
-      sx={{ ...(isDashboardPage && { height: 'calc(100vh - 380px)' }) }}
-    >
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell align="right">{t('table_header.pid')}</TableCell>
-            <TableCell>{t('table_header.name')}</TableCell>
-            <TableCell>{t('table_header.param')}</TableCell>
-            <TableCell align="right">{t('table_header.cpu')}</TableCell>
-            <TableCell align="right">{t('table_header.mem')}</TableCell>
-            <TableCell align="right">{t('table_header.ppid')}</TableCell>
-            <TableCell align='right'>{t('table_header.command')}</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {processLoading ? (
-            <TableRow sx={{ '&:hover': { backgroundColor: 'transparent' } }}>
-              <TableCell colSpan={9} align="center">
-                <CircularProgress />
-              </TableCell>
-            </TableRow>
-          ) : processesEmpty ? (
-            <TableRow sx={{ '&:hover': { backgroundColor: 'transparent' } }}>
-              <TableCell colSpan={6}>No Processes Found</TableCell>
-            </TableRow>
-          ) : processError ? (
-            <TableRow sx={{ '&:hover': { backgroundColor: 'transparent' } }}>
-              <TableCell colSpan={6}>Error Fetching Process List</TableCell>
-            </TableRow>
-          ) : (
-            processes.map((process: IProcessItem, index: number) => (
-              <TableRow
-                key={index}
-                sx={{ cursor: 'pointer' }}
-                onClick={() => router.push(
-                  `${paths.dashboard.nodes.processDetail(selectedNodeId, String(process.APPCODE))}`
-                )}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    router.push(
-                      `${paths.dashboard.nodes.processDetail(selectedNodeId, String(process.APPCODE))}`
-                    );
-                  }
-                }}
-              >
-                <TableCell align="right">{process.PID}</TableCell>
-                <TableCell>{process.NAME}</TableCell>
-                <TableCell>{process.PARAM}</TableCell>
-                <TableCell align="right">{process.CPU}</TableCell>
-                <TableCell align="right">{Number(process?.MEM)?.toLocaleString()}</TableCell>
-                <TableCell align="right">{process.PPID}</TableCell>
-                <TableCell align='right'>{process.COMMAND}</TableCell>
-              </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <DataTable<IProcessItem>
+      columns={columns}
+      rows={processes || []}
+      loading={processLoading}
+      error={processError}
+      emptyLabel={t('empty')}
+      onRowClick={(row) =>
+        router.push(paths.dashboard.nodes.processDetail(selectedNodeId, String(row.APPCODE)))
+      }
+    />
   );
 }

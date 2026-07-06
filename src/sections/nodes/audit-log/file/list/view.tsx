@@ -1,13 +1,10 @@
 'use client';
 
-import Box from '@mui/material/Box';
-import { Typography } from '@mui/material';
+import { useRouter } from 'src/routes/hooks';
 
-import { grey } from 'src/theme/core';
 import { useTranslate } from 'src/locales';
-import { DashboardContent } from 'src/layouts/dashboard';
 
-import { Breadcrumb } from 'src/components/common/Breadcrumb';
+import { PageShell } from 'src/components/v5';
 import { AuditLogFrameList } from 'src/components/nodes/AuditLogFrameList';
 
 // ----------------------------------------------------------------------
@@ -19,26 +16,21 @@ type Props = {
 
 export function AuditFrameListView({ nodeId, file }: Props) {
   const { t } = useTranslate('audit-frame-list');
+  const router = useRouter();
   return (
-    <DashboardContent maxWidth="xl">
-      <Breadcrumb
-        node={nodeId}
-        pages={[
-          { pageName: t('top.audit_logs'), link: `/dashboard/nodes/${nodeId}/audit-log` },
-          { pageName: file },
-        ]}
-      />
-      <Typography sx={{ fontSize: 28, fontWeight: 600, color: (theme) => theme.palette.mode === 'dark' ? grey[50] : '#373F4E', mt: 2 }}>
-        {file}
-      </Typography>
-      <Box
-        sx={{
-          mt: '28px',
-          width: 1,
-        }}
-      >
-        <AuditLogFrameList selectedNodeId={nodeId} selectedFile={file} />
-      </Box>
-    </DashboardContent>
+    <PageShell
+      node={nodeId}
+      crumbs={[
+        {
+          label: t('top.audit_logs'),
+          onClick: () => router.push(`/dashboard/nodes/${nodeId}/audit-log`),
+        },
+        { label: file },
+      ]}
+      title={file}
+      scroll={false}
+    >
+      <AuditLogFrameList selectedNodeId={nodeId} selectedFile={file} />
+    </PageShell>
   );
 }

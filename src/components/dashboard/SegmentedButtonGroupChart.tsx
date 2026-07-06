@@ -2,6 +2,8 @@ import { styled } from '@mui/material/styles';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
+import { T } from 'src/theme/tokens';
+
 type SegmentedButtonGroupProps = {
   tabs: { label: string; value: string }[];
   value: string;
@@ -9,15 +11,15 @@ type SegmentedButtonGroupProps = {
   metric: string; // Add metric prop to determine if it's a percentage
 };
 
-// Conditionally style the ToggleButtonGroup based on the metric
-const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
+const StyledToggleButtonGroup = styled(ToggleButtonGroup)(() => ({
   borderRadius: '6px',
-  backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[900] : '#E0E4EB',
-  padding: 0,
+  backgroundColor: T.bgPanel,
+  border: `1px solid ${T.border}`,
+  padding: 2,
   '& .MuiToggleButtonGroup-grouped': {
-    margin: 0.5,
+    margin: 0,
     border: 0,
-    borderRadius: '6px',
+    borderRadius: '5px',
     '&:not(:first-of-type)': {
       borderLeft: 0,
     },
@@ -26,32 +28,27 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 
 const StyledToggleButton = styled(ToggleButton, {
   shouldForwardProp: (prop) => prop !== 'metric', // Prevent metric prop from being passed to DOM
-})<{ metric: string }>(({ theme, metric }) => {
-  const isPercentageMetric = ['cpu', 'memory'].includes(metric);
-  return {
-    fontSize: 11,
-    fontWeight: 400,
-    color: theme.palette.grey[400],
-    padding: '2px 8px',
-    '&.Mui-selected': {
-      backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[600] : 'white',
-      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
-      color: isPercentageMetric ? (theme.palette.mode === 'dark' ? theme.palette.text.primary : '#D1D6E0') : theme.palette.text.primary,
-
-      '&:hover': {
-        backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : 'white',
-      },
+})<{ metric: string }>(() => ({
+  fontSize: 11,
+  fontWeight: 400,
+  color: T.textSec,
+  padding: '2px 8px',
+  '&.Mui-selected': {
+    backgroundColor: T.primary,
+    color: '#fff',
+    '&:hover': {
+      backgroundColor: T.primaryHov,
     },
-    '&:not(.Mui-selected)': {
-      backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[900] : 'transparent',
-      color: theme.palette.mode === 'dark' ? theme.palette.grey[50] : '#667085',
-      '&:hover': {
-        backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[50] : 'transparent',
-        color: isPercentageMetric ? theme.palette.error.main : theme.palette.primary.main,
-      },
+  },
+  '&:not(.Mui-selected)': {
+    backgroundColor: 'transparent',
+    color: T.textSec,
+    '&:hover': {
+      backgroundColor: T.bgHover,
+      color: T.textPrim,
     },
-  };
-});
+  },
+}));
 
 export function SegmentedButtonGroupChart({
   tabs,

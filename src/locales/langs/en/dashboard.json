@@ -1,19 +1,21 @@
 {
   "top": {
     "dashboard": "Dashboard",
-    "total": "Total",
-    "on": "ON"
+    "total": "Total Servers",
+    "on": "ON",
+    "off": "OFF"
   },
   "node": {
     "node": "Nodes",
-    "state": "State",
+    "state": "Status",
     "id": "ID",
     "name": "Name",
     "description": "Description",
-    "emittable": "Emittable",
+    "emittable": "Emit Status",
     "emit_count": "Emit Count",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "empty": "No Nodes Found"
   },
   "info": {
     "info": "Info",
@@ -22,7 +24,8 @@
     "emittable": "Emittable",
     "emit_count": "Emit Count",
     "true": "True",
-    "false": "False"
+    "false": "False",
+    "select_node": "Select a node to see info"
   },
   "graph": {
     "cpu": "CPU",
@@ -33,7 +36,8 @@
     "byte": "byte"
   },
   "disk": {
-    "disk": "Disk"
+    "disk": "Disk",
+    "usage": "<mono>{{used}} GB</mono> of {{total}} GB"
   },
   "navigate": {
     "process_list": "Process List",

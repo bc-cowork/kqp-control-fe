@@ -1,45 +1,22 @@
 'use client';
 
-import type { TFunction } from 'i18next';
+import type { Column } from 'src/components/v5';
 import type { IAuditLogItem } from 'src/types/node';
 
 import { useState, useCallback } from 'react';
 
-import {
-  Box,
-  Table,
-  Stack,
-  Select,
-  TableRow,
-  MenuItem,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableContainer,
-} from '@mui/material';
+import Box from '@mui/material/Box';
 
 import { useRouter } from 'src/routes/hooks';
 
 import { formatBytes } from 'src/utils/helper';
 import { formatDateCustom } from 'src/utils/format-time';
 
+import { T } from 'src/theme/tokens';
 import { useTranslate } from 'src/locales';
-import { grey } from 'src/theme/core/palette';
 import { useAuditLogList } from 'src/actions/nodes';
 
-import { TableEmptyRows } from '../table/table-empty-rows';
-import { TableErrorRows } from '../table/table-error-rows';
-import { TableLoadingRows } from '../table/table-loading-rows';
-import TablePaginationCustom from '../common/TablePaginationCustom';
-
-// ----------------------------------------------------------------------
-
-const getAuditLogTypes = (t: TFunction) => [
-  { value: 'inbound', label: t('table_option.inbound') },
-  { value: 'outbound', label: t('table_option.outbound') },
-  { value: 'other', label: t('table_option.other') },
-  { value: 'all', label: t('table_option.all') },
-];
+import { Pager, DataTable, FilterField } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
 
@@ -50,7 +27,15 @@ type Props = {
 export function AuditLogList({ selectedNodeId }: Props) {
   const { t } = useTranslate('audit-list');
   const router = useRouter();
-  const [type, setType] = useState<string>(getAuditLogTypes(t)[0].value);
+
+  const AUDIT_LOG_TYPES = [
+    { value: 'inbound', label: t('table_option.inbound') },
+    { value: 'outbound', label: t('table_option.outbound') },
+    { value: 'other', label: t('table_option.other') },
+    { value: 'all', label: t('table_option.all') },
+  ];
+
+  const [type, setType] = useState<string>(AUDIT_LOG_TYPES[0].value);
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(40);
 
@@ -66,113 +51,62 @@ export function AuditLogList({ selectedNodeId }: Props) {
     setPage(newPage);
   }, []);
 
-  const handleTypeChange = (event: { target: { value: string } }) => {
-    setType(event.target.value);
-  };
+  const columns: Column<IAuditLogItem>[] = [
+    { key: 'id', label: t('table_header.no'), mono: true, align: 'right', width: 56 },
+    {
+      key: 'date',
+      label: t('table_header.date'),
+      mono: true,
+      width: 120,
+      render: (r) => formatDateCustom(r.date?.toString()),
+    },
+    { key: 'kind', label: t('table_header.type'), color: T.primary },
+    {
+      key: 'desc',
+      label: t('table_header.desc'),
+      dim: true,
+      grow: true,
+      render: (r) => r?.desc || '-',
+    },
+    {
+      key: 'size',
+      label: t('table_header.size'),
+      mono: true,
+      align: 'right',
+      render: (r) => formatBytes(r.size),
+    },
+  ];
 
   return (
-    <Box sx={{
-      backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#202838' : 'white',
-      border: (theme) => (theme.palette.mode === 'dark' ? 'none' : '1px solid #D1D6E0'),
-      borderRadius: 1.5, p: 1.5
-    }}>
-      <Stack direction="row" alignItems="center" sx={{ mb: 1 }}>
-        <Select
+    <>
+      <Box sx={{ display: 'flex', alignItems: 'flex-end', gap: 1.5 }}>
+        <FilterField
+          label={t('table_header.type')}
           value={type}
-          onChange={handleTypeChange}
-          inputProps={{ sx: { color: grey[400] } }}
-          sx={{
-            height: "32px",
-            borderRadius: "4px",
-            backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#202838' : 'white',
-            color: (theme) => theme.palette.mode === 'dark' ? 'white' : 'green',
-
-            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-              borderColor: (theme) => theme.palette.mode === 'dark' ? "#4E576A" : '#E0E4EB !important', // Keep it the same as the default border color
-              borderWidth: "1px",
-            },
-
-            "& .MuiSelect-select:focus": {
-              outline: "none",
-              border: 'none'
-            },
-
-            "& .MuiSelect-select": {
-              backgroundColor: "transparent !important",
-              color: (theme) => theme.palette.mode === 'dark' ? 'white' : '#667085',
-              padding: "4px 8px",
-            },
-            "& fieldset": {
-              borderColor: (theme) => theme.palette.mode === 'dark' ? "#4E576A" : '#E0E4EB !important',
-            },
-            "&:hover fieldset": {
-              borderColor: (theme) => theme.palette.mode === 'dark' ? "#4E576A" : `#E0E4EB !important`, // Force hover color
-            },
-          }}
-        >
-          {getAuditLogTypes(t).map((logType) => (
-            <MenuItem key={logType.value}
-              sx={{
-                backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#202838' : 'white',
-                ":hover": {
-                  backgroundColor: (theme) => theme.palette.mode === 'dark' ? grey[400] : '#E0E4EB',
-                },
-              }}
-              value={logType.value}>
-              {logType.label}
-            </MenuItem>
-          ))}
-        </Select>
-
-        <TablePaginationCustom
-          rowsPerPage={rowsPerPage}
-          currentPage={auditLogPagination?.current_page || 1}
-          totalPages={auditLogPagination?.total_pages || 1}
-          hasNextPage={auditLogPagination?.has_next_page || false}
-          hasPreviousPage={auditLogPagination?.has_previous_page || false}
-          onPageChange={onChangePage}
-          onRowsPerPageChange={onChangeRowsPerPage}
-          sx={{ pl: 2, pr: 0.5 }}
+          options={AUDIT_LOG_TYPES}
+          onChange={setType}
         />
-      </Stack>
-      <TableContainer sx={{ border: 'none', borderRadius: 0 }}>
-        <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell align="right">{t('table_header.no')}</TableCell>
-            <TableCell align="right">{t('table_header.date')}</TableCell>
-            <TableCell>{t('table_header.type')}</TableCell>
-            <TableCell align="right">{t('table_header.desc')}</TableCell>
-            <TableCell align="right">{t('table_header.size')}</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {auditLogsLoading ? (
-            <TableLoadingRows height={20} loadingRows={10} />
-          ) : auditLogsEmpty ? (
-            <TableEmptyRows />
-          ) : auditLogsError ? (
-            <TableErrorRows />
-          ) : (
-            auditLogs.map((auditLog: IAuditLogItem, index: number) => (
-              <TableRow
-                key={index}
-                onClick={() => {
-                  router.push(`/dashboard/nodes/${selectedNodeId}/audit-log/${auditLog.fname}`);
-                }}
-                sx={{ cursor: 'pointer' }}
-              >
-                <TableCell align="right">{auditLog.id}</TableCell>
-                <TableCell align="right">{formatDateCustom(auditLog.date?.toString())}</TableCell>
-                <TableCell>{auditLog.kind}</TableCell>
-                <TableCell align='right'>{auditLog?.desc || '-'}</TableCell>
-                <TableCell align="right">{formatBytes(auditLog.size)}</TableCell>
-              </TableRow>
-            ))
-          )}
-        </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
+        <Box sx={{ flex: 1, minWidth: 0 }}>
+          <Pager
+            page={auditLogPagination?.current_page || 1}
+            totalPages={auditLogPagination?.total_pages || 1}
+            perPage={rowsPerPage}
+            onPageChange={(p) => onChangePage(p - 1)}
+            onPerPageChange={onChangeRowsPerPage}
+          />
+        </Box>
+      </Box>
+
+      <DataTable<IAuditLogItem>
+        columns={columns}
+        rows={auditLogsEmpty ? [] : auditLogs}
+        loading={auditLogsLoading}
+        error={auditLogsError}
+        emptyLabel={t('table.empty')}
+        onRowClick={(row) =>
+          router.push(`/dashboard/nodes/${selectedNodeId}/audit-log/${row.fname}`)
+        }
+      />
+    </>
   );
 }

@@ -2,14 +2,18 @@
 
 import type { INodeItem } from 'src/types/dashboard';
 
+import { Trans } from 'react-i18next';
+
 import Box from '@mui/material/Box';
-import { useTheme } from '@mui/material/styles';
+import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { Chip, Stack, SvgIcon, LinearProgress, CircularProgress } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import { useTranslate } from 'src/locales';
 import { useGetDiskMetrics } from 'src/actions/dashboard';
-import { grey, error, common, success } from 'src/theme/core';
+
+import { T, FONT_MONO } from 'src/theme/tokens';
+import { Panel, StatusBadge } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
 
@@ -20,190 +24,121 @@ type Props = {
   nodeStatusError?: any;
 };
 
-export function NodeStatusBig({ selectedNodeParam, selectedNode, nodeStatusLoading, nodeStatusError }: Props) {
+const DISK_SEGMENTS = 24;
+
+export function NodeStatusBig({
+  selectedNodeParam,
+  selectedNode,
+  nodeStatusLoading,
+  nodeStatusError,
+}: Props) {
   const { t } = useTranslate('node-dashboard');
+
   const { diskMetricsData } = useGetDiskMetrics(selectedNodeParam);
 
-
-  const theme = useTheme();
   const isOnline = selectedNode?.online_status;
+  const diskUsage = diskMetricsData?.disk_usage ?? 0;
+  const filledSegments = Math.round((Math.min(Math.max(diskUsage, 0), 100) / 100) * DISK_SEGMENTS);
+
+  if (nodeStatusLoading) {
+    return (
+      <Panel sx={{ p: 3, display: 'flex', justifyContent: 'center' }}>
+        <CircularProgress sx={{ color: T.primary }} />
+      </Panel>
+    );
+  }
+
+  if (nodeStatusError) {
+    return (
+      <Panel sx={{ p: 3 }}>
+        <Typography sx={{ color: T.off, fontSize: 15 }}>{t('errors.fetch_status')}</Typography>
+      </Panel>
+    );
+  }
 
   return (
-    <Box
-      sx={{
-        borderRadius: '12px',
-        backgroundColor: theme.palette.mode === 'dark' ? 'transparent' : theme.palette.grey[800],
-        padding: theme.palette.mode === 'dark' ? '0px' : '4px'
-      }}
-    >
-      {nodeStatusLoading ? (
-        <CircularProgress />
-      ) : nodeStatusError ? (
-        <Typography>Error Fetching Status</Typography>
-      ) : (
-        <Box
-        >
-          <Box
-            sx={{
-              p: 2,
-              background: `radial-gradient(100% 100% at 0% 100%, ${isOnline ? success.dark : error.dark} 0%, ${isOnline ? '#1D2F20' : '#331B1E'} 100%)`,
-              mb: theme.palette.mode === 'dark' ? '12px' : '4px',
-              borderRadius: '8px',
-              border: `1px solid ${isOnline ? '#36573C' : '#4A2C31'}`,
-            }}
-          >
-            <Stack direction="row" alignItems="center" sx={{ mb: 1 }}>
-              <Chip
-                label={isOnline ? t('left_side.online') : t('left_side.offline')}
-                color={isOnline ? 'success' : 'error'}
-                size="small"
-                variant="status"
-                sx={{
-                  fontSize: 17,
-                  border: `1px solid ${isOnline ? '#1D2F20' : '#331B1E'}`,
-                  backgroundColor: isOnline ? '#1D2F20' : '#331B1E',
-                  boxShadow: isOnline ? '2px 2px 8px 0 rgba(27, 240, 27, 0.50)' : '2px 2px 8px 0 rgba(240, 27, 62, 0.50)'
-                }}
-                icon={
-                  <SvgIcon>
-                    <svg
-                      width="12"
-                      height="13"
-                      viewBox="0 0 12 13"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <circle
-                        cx="6"
-                        cy="6.30078"
-                        r="4"
-                        fill={isOnline ? theme.palette.success.main : theme.palette.error.main}
-                      />
-                    </svg>
-                  </SvgIcon>
-                }
-              />
-            </Stack>
+    <Stack spacing={1.75}>
+      {/* Status card */}
+      <Panel>
+        {/* Header strip */}
+        <Box sx={{ p: 2, borderBottom: `1px solid ${T.border}`, bgcolor: T.bgCard }}>
+          <StatusBadge on={isOnline} labelOn={t('left_side.online')} labelOff={t('left_side.offline')} />
 
-            <Stack direction="row" alignItems="center" sx={{ mb: '12px' }}>
-              <Typography sx={{ fontSize: 19, fontWeight: 500, color: common.white }}>
-                {selectedNode.id}
-              </Typography>
-              <SvgIcon sx={{ width: '1px', height: '12px', mx: 1 }}>
-                <svg
-                  width="1"
-                  height="12"
-                  viewBox="0 0 1 12"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect width="1" height="12" fill={isOnline ? success.lighter : error.lighter} />
-                </svg>
-              </SvgIcon>
-              <Typography variant="body2" sx={{ color: common.white }}>
-                {selectedNode.name}
-              </Typography>
-            </Stack>
+          <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 1.5 }}>
+            <Typography sx={{ fontSize: 17, fontWeight: 500, color: T.textPrim }}>
+              {selectedNode.id}
+            </Typography>
+            {selectedNode.name && (
+              <>
+                <Box sx={{ width: '1px', height: 14, bgcolor: T.border }} />
+                <Typography sx={{ fontSize: 15, color: T.textSec }}>
+                  {selectedNode.name}
+                </Typography>
+              </>
+            )}
+          </Stack>
 
-            <Typography variant="body2" sx={{ color: common.white }}>
+          {selectedNode.desc && (
+            <Typography sx={{ mt: 0.75, fontSize: 14, color: T.textDim }}>
               {selectedNode.desc}
             </Typography>
-          </Box>
-
-          <Box
-            sx={{
-              p: 2,
-              mb: theme.palette.mode === 'dark' ? '12px' : '4px',
-              borderRadius: '8px',
-              backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : theme.palette.primary.contrastText,
-              height: theme.palette.mode === 'dark' ? 'calc(100vh - 475px)' : 'calc(100vh - 464px)'
-            }}
-          >
-            <Stack direction="row" sx={{ mb: 1.5 }}>
-              <Typography variant="subtitle2" sx={{ width: '60%', color: theme.palette.mode === 'dark' ? grey[400] : grey[800] }}>
-                {t('left_side.emitable')}
-              </Typography>
-              <Typography variant="body2">
-                {selectedNode.emittable ? (
-                  <Chip label={t('left_side.true')} color="success" size="small" variant="outlined" />
-                ) : (
-                  <Chip label={t('left_side.false')} color="error" size="small" variant="outlined" />
-                )}
-              </Typography>
-            </Stack>
-            <Stack direction="row" sx={{ mb: 1.5 }}>
-              <Typography variant="subtitle2" sx={{ width: '60%', color: theme.palette.mode === 'dark' ? grey[400] : grey[800] }}>
-                {t('left_side.emit_count')}
-              </Typography>
-              <Typography variant="body2"
-                style={{
-                  color: theme.palette.mode === 'dark' ? grey[50] : grey[400]
-                }}
-              >
-                {selectedNode.emit_count.toLocaleString()}
-              </Typography>
-            </Stack>
-          </Box>
-
-          <Box sx={{
-            p: 2, borderRadius: '8px',
-            backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : theme.palette.primary.contrastText,
-          }}>
-            <Typography sx={{
-              fontSize: 17, fontWeight: 500,
-              color: theme.palette.mode === 'dark' ? '#AFB7C8' : grey[800]
-            }}>
-              {t('left_side.disk')}
-            </Typography>
-            <Typography sx={{
-              fontSize: 28, fontWeight: 500,
-              color: theme.palette.mode === 'dark' ? grey[50] : grey[800]
-            }}>{diskMetricsData?.disk_usage}%</Typography>
-            <Typography sx={{
-              fontSize: 16, fontWeight: 400, color: theme.palette.mode === 'dark' ? '#D1D6E0' : '#667085'
-            }}>
-              <Box component="span" sx={{
-                fontWeight: 500,
-                color: theme.palette.mode === 'dark' ? grey[50] : grey[400]
-              }}>
-                {diskMetricsData?.disk_used_size} GB
-              </Box>{' '}
-              of {diskMetricsData?.disk_total_size} GB
-            </Typography>
-
-            {/* Progress Bar */}
-            <Box sx={{ position: 'relative', width: '100%' }}>
-              {/* Main Progress Bar */}
-              <LinearProgress
-                variant="determinate"
-                value={diskMetricsData?.disk_usage}
-                sx={{
-                  height: 10,
-                  borderRadius: 5,
-                  backgroundColor: '#e0e0e0', // Gray unfilled section
-                  '& .MuiLinearProgress-bar': {
-                    backgroundColor: '#4A3BFF', // Blue filled section
-                    borderRadius: 5,
-                  },
-                }}
-              />
-
-              {/* Red Warning Section at 90% */}
-              <Box
-                sx={{
-                  position: 'absolute',
-                  top: 0,
-                  left: '90%',
-                  width: '10%',
-                  height: 10,
-                  backgroundColor: '#FFEBEE', // Light red for warning
-                  borderRadius: '0 5px 5px 0',
-                }}
-              />
-            </Box>
-          </Box>
+          )}
         </Box>
-      )}
-    </Box>
+
+        {/* Body rows */}
+        <Box sx={{ p: 2 }}>
+          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1.5 }}>
+            <Typography sx={{ fontSize: 15, color: T.textSec }}>{t('left_side.emitable')}</Typography>
+            <Typography
+              sx={{ fontSize: 15, fontWeight: 500, color: selectedNode.emittable ? T.on : T.off }}
+            >
+              {selectedNode.emittable ? t('left_side.true') : t('left_side.false')}
+            </Typography>
+          </Stack>
+          <Stack direction="row" alignItems="center" justifyContent="space-between">
+            <Typography sx={{ fontSize: 15, color: T.textSec }}>{t('left_side.emit_count')}</Typography>
+            <Typography sx={{ fontSize: 15, fontFamily: FONT_MONO, color: T.textPrim }}>
+              {selectedNode.emit_count.toLocaleString()}
+            </Typography>
+          </Stack>
+        </Box>
+      </Panel>
+
+      {/* Disk card */}
+      <Panel sx={{ p: 2, bgcolor: T.bgCard }}>
+        <Typography sx={{ fontSize: 15, color: T.textSec }}>{t('left_side.disk_usage')}</Typography>
+        <Typography sx={{ fontSize: 28, fontWeight: 500, color: T.textPrim, lineHeight: 1.4 }}>
+          {diskUsage}%
+        </Typography>
+        <Typography sx={{ fontSize: 14, color: T.textDim, mb: 1.5 }}>
+          <Trans
+            t={t}
+            i18nKey="left_side.disk_detail"
+            values={{
+              used: diskMetricsData?.disk_used_size,
+              total: diskMetricsData?.disk_total_size,
+            }}
+            components={{
+              mono: <Box component="span" sx={{ color: T.textSec, fontFamily: FONT_MONO }} />,
+            }}
+          />
+        </Typography>
+
+        {/* Segmented bar */}
+        <Stack direction="row" spacing={0.5}>
+          {Array.from({ length: DISK_SEGMENTS }).map((_, i) => (
+            <Box
+              key={i}
+              sx={{
+                flex: 1,
+                height: 10,
+                borderRadius: '2px',
+                bgcolor: i < filledSegments ? T.primary : T.bgHover,
+              }}
+            />
+          ))}
+        </Stack>
+      </Panel>
+    </Stack>
   );
 }

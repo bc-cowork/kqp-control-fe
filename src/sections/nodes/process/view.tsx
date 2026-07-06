@@ -1,13 +1,15 @@
 'use client';
 
-import Box from '@mui/material/Box';
-import { Typography } from '@mui/material';
+import { Trans } from 'react-i18next';
 
-import { grey } from 'src/theme/core';
+import Typography from '@mui/material/Typography';
+
+import { useGetProcesses } from 'src/actions/dashboard';
+
 import { useTranslate } from 'src/locales';
-import { DashboardContent } from 'src/layouts/dashboard';
+import { ACCENT2, FONT_MONO } from 'src/theme/tokens';
+import { PageShell } from 'src/components/v5';
 
-import { Breadcrumb } from 'src/components/common/Breadcrumb';
 import { ProcessDetail } from 'src/components/nodes/ProcessDetail';
 
 // ----------------------------------------------------------------------
@@ -18,20 +20,26 @@ type Props = {
 
 export function ProcessView({ nodeId }: Props) {
   const { t } = useTranslate('process');
+  const { processes } = useGetProcesses(nodeId) as { processes: any[] };
+  const count = processes?.length ?? 0;
+
   return (
-    <DashboardContent maxWidth="xl">
-      <Breadcrumb node={nodeId} pages={[{ pageName: t('top.process') }]} />
-      <Typography sx={{ fontSize: 28, fontWeight: 600, color: (theme) => theme.palette.mode === 'dark' ? grey[50] : '#373F4E', mt: 2 }}>
-        {t('top.process')}
-      </Typography>
-      <Box
-        sx={{
-          mt: '28px',
-          width: 1,
-        }}
-      >
-        <ProcessDetail selectedNodeId={nodeId} />
-      </Box>
-    </DashboardContent>
+    <PageShell
+      node={nodeId}
+      crumbs={[{ label: t('top.process') }]}
+      title={t('top.process')}
+      actions={
+        <Typography sx={{ fontSize: 15, color: ACCENT2 }}>
+          <Trans
+            i18nKey="action_total"
+            ns="process"
+            values={{ count }}
+            components={{ mono: <span style={{ fontFamily: FONT_MONO, fontWeight: 500 }} /> }}
+          />
+        </Typography>
+      }
+    >
+      <ProcessDetail selectedNodeId={nodeId} />
+    </PageShell>
   );
 }
