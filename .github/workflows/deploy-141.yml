@@ -1,0 +1,59 @@
+name: Deploy to 141 server
+
+on:
+  push:
+    branches: [main]   
+  workflow_dispatch:        
+
+concurrency:
+  group: deploy-141         
+  cancel-in-progress: false 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create zip (same as your manual zip step)
+        run: |
+          zip -r kqp-control-fe.zip . -x ".git/*" -x ".github/*"
+
+      - name: Copy zip to server (replaces manual scp)
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: 22
+          source: "kqp-control-fe.zip"
+          target: "/home/user02/kuanta-offline-install/"
+          overwrite: true
+
+      - name: Run deploy scripts (replaces manual ssh session)
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: 22
+          command_timeout: 30m
+          script: |
+            set -e
+            # mirrors: cd kuanta-offline-install && unzip && ./script1
+            cd /home/user02/kuanta-offline-install
+            unzip -o kqp-control-fe.zip
+            chmod +x script1-online-env.sh
+            ./script1-online-env.sh
+
+            # mirrors: cd .. && pm2 stop kuanta-frontend && ./script2
+            cd /home/user02
+            pm2 stop kuanta-frontend || true
+            chmod +x script2-offline-env.sh
+            ./script2-offline-env.sh
+
+            # quick sanity check that the app came back up
+            sleep 5
+            pm2 status kuanta-frontend
