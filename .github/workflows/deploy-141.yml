@@ -44,7 +44,7 @@ jobs:
             set -e
             # mirrors: cd kuanta-offline-install && unzip && ./script1
             cd /home/user02/kuanta-offline-install
-            unzip -o kqp-control-fe.zip
+            unzip -o kqp-control-fe.zip -d kqp-control-fe
             chmod +x script1-online-env.sh
             ./script1-online-env.sh
 
