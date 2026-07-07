@@ -144,10 +144,6 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
     setPage(0);
   }, []);
 
-  const onChangePage = useCallback((newPage: number) => {
-    setPage(newPage);
-  }, []);
-
   const onNext = () => {
     resetSearch();
     const newSeq = seq + 1;
@@ -427,18 +423,10 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
 
         {/* Right — filter bar + frame nav + fragment table */}
         <Box sx={{ flex: 1, minWidth: 0, minHeight: 0, display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-          <AuditFrameFilterBar
-            filters={filters}
-            setFilters={setFilters}
-            onApply={handleSearch}
-            onResetClick={handleResetClick}
-          />
-
           <TablePaginationCustomShort
             rowsPerPage={count || 40}
             page={5}
             count={auditFrame?.max_frame || 0}
-            onPageChange={onChangePage}
             onPrev={onPrev}
             onNext={onNext}
             onFirst={onFirst}
@@ -447,6 +435,13 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
             lastDisabled={false}
             prevDisabled={apiSeq === 1}
             nextDisabled={apiSeq === 0 || apiSeq === auditFrame.max_frame}
+          />
+
+          <AuditFrameFilterBar
+            filters={filters}
+            setFilters={setFilters}
+            onApply={handleSearch}
+            onResetClick={handleResetClick}
           />
 
           <Box

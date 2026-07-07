@@ -42,7 +42,6 @@ function RSelect({
   options,
   onChange,
   disabled,
-  invalid,
   width = '100%',
 }: {
   label: string;
@@ -51,7 +50,6 @@ function RSelect({
   options: Option[];
   onChange: (v: string) => void;
   disabled?: boolean;
-  invalid?: boolean;
   width?: number | string;
 }) {
   const { t } = useTranslate('replay');
@@ -71,7 +69,7 @@ function RSelect({
           width,
           boxSizing: 'border-box',
           bgcolor: T.bgCard,
-          border: `1px solid ${open || invalid ? ACCENT2 : T.border}`,
+          border: `1px solid ${open ? ACCENT2 : T.border}`,
           borderRadius: '5px',
           px: 1.25,
           fontSize: 15,
@@ -149,14 +147,12 @@ function RTextInput({
   value,
   onChange,
   placeholder,
-  invalid,
   width = '100%',
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
   placeholder?: string;
-  invalid?: boolean;
   width?: number | string;
 }) {
   return (
@@ -172,7 +168,7 @@ function RTextInput({
           width,
           boxSizing: 'border-box',
           bgcolor: T.bgCard,
-          border: `1px solid ${invalid ? ACCENT2 : T.border}`,
+          border: `1px solid ${T.border}`,
           borderRadius: '5px',
           px: 1.25,
           fontSize: 15,
@@ -191,12 +187,10 @@ function RTimeInput({
   label,
   value,
   onChange,
-  invalid,
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
-  invalid?: boolean;
 }) {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
@@ -212,7 +206,7 @@ function RTimeInput({
           width: '100%',
           boxSizing: 'border-box',
           bgcolor: T.bgCard,
-          border: `1px solid ${invalid ? ACCENT2 : T.border}`,
+          border: `1px solid ${T.border}`,
           borderRadius: '5px',
           px: 1.25,
           fontSize: 15,
@@ -227,7 +221,7 @@ function RTimeInput({
   );
 }
 
-function RSpeedInput({ value, onChange, invalid }: { value: string; onChange: (v: string) => void; invalid?: boolean }) {
+function RSpeedInput({ value, onChange }: { value: string; onChange: (v: string) => void }) {
   const { t } = useTranslate('replay');
   const STEP = 0.25;
   const setNum = (n: number) => onChange(n.toFixed(2).replace(/\.00$/, ''));
@@ -247,7 +241,7 @@ function RSpeedInput({ value, onChange, invalid }: { value: string; onChange: (v
           width: '100%',
           boxSizing: 'border-box',
           bgcolor: T.bgCard,
-          border: `1px solid ${invalid ? ACCENT2 : T.border}`,
+          border: `1px solid ${T.border}`,
           borderRadius: '5px',
           px: 1.25,
           display: 'flex',
@@ -556,24 +550,24 @@ export default function Page({ params }: Props) {
           }}
         >
           <SubPanel>
-            <RSelect label={t('audit_log.log_type')} value={logType} options={logTypeOptions} onChange={setLogType} invalid={!conditions[0]} />
-            <RSelect label={t('audit_log.file')} value={file} options={fileOptions} onChange={setFile} disabled={!logType} invalid={!conditions[1]} />
+            <RSelect label={t('audit_log.log_type')} value={logType} options={logTypeOptions} onChange={setLogType} />
+            <RSelect label={t('audit_log.file')} value={file} options={fileOptions} onChange={setFile} disabled={!logType} />
           </SubPanel>
 
           <SubPanel>
-            <RSelect label={t('audit_log.date')} value={date} placeholder="0000-00-00" options={dateOptions} onChange={setDate} disabled={!file} invalid={!conditions[2]} />
-            <RTimeInput label={t('audit_log.start_time')} value={startTime} onChange={setStartTime} invalid={!conditions[3]} />
-            <RTimeInput label={t('audit_log.end_time')} value={endTime} onChange={setEndTime} invalid={!conditions[4]} />
+            <RSelect label={t('audit_log.date')} value={date} placeholder="0000-00-00" options={dateOptions} onChange={setDate} disabled={!file} />
+            <RTimeInput label={t('audit_log.start_time')} value={startTime} onChange={setStartTime} />
+            <RTimeInput label={t('audit_log.end_time')} value={endTime} onChange={setEndTime} />
           </SubPanel>
 
           <SubPanel>
-            <RTextInput label={t('audit_log.head')} value={head} onChange={setHead} placeholder="All" invalid={!conditions[5]} />
-            <RTextInput label={t('audit_log.channel_number')} value={channel} onChange={setChannel} placeholder="All" invalid={!conditions[6]} />
+            <RTextInput label={t('audit_log.head')} value={head} onChange={setHead} placeholder="All" />
+            <RTextInput label={t('audit_log.channel_number')} value={channel} onChange={setChannel} placeholder="All" />
           </SubPanel>
 
           <SubPanel>
-            <RTextInput label={t('audit_log.destination_to')} value={outboundExpression} onChange={setOutboundExpression} placeholder="<app>.<inst>" invalid={!conditions[7]} />
-            <RSpeedInput value={currentSpeed} onChange={setCurrentSpeed} invalid={!conditions[8]} />
+            <RTextInput label={t('audit_log.destination_to')} value={outboundExpression} onChange={setOutboundExpression} placeholder="<app>.<inst>" />
+            <RSpeedInput value={currentSpeed} onChange={setCurrentSpeed} />
           </SubPanel>
         </Box>
 

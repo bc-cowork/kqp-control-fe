@@ -100,7 +100,7 @@ export default function Page({ params }: Props) {
                 p: '11px 14px',
                 width: 110,
                 color: T.textSec,
-                fontSize: 14.5,
+                fontSize: 16,
                 fontWeight: 500,
                 textAlign: 'left',
                 borderRight: `1px solid ${T.borderSub}`,
@@ -157,7 +157,7 @@ export default function Page({ params }: Props) {
             {statusText}
           </Box>
         ) : (
-          <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse', fontSize: 17 }}>
+          <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse', fontSize: 16 }}>
             <Box component="tbody">
               {renderRow(row1, !hasCounts)}
               {hasCounts && renderRow(row2, true)}
