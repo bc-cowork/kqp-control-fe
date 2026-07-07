@@ -6,6 +6,8 @@ import useSWR from 'swr';
 import { useMemo, useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 
 import { paths } from 'src/routes/paths';
@@ -80,15 +82,6 @@ export function NavVerticalV5({ nodes }: NavVerticalV5Props) {
       }
     },
     [pathname, router]
-  );
-
-  const stepNode = useCallback(
-    (dir: 1 | -1) => {
-      const idx = nodeIds.indexOf(activeNode);
-      const next = nodeIds[idx + dir];
-      if (next) switchNode(next);
-    },
-    [nodeIds, activeNode, switchNode]
   );
 
   const handleLogout = useCallback(async () => {
@@ -169,13 +162,11 @@ export function NavVerticalV5({ nodes }: NavVerticalV5Props) {
 
         {nodeOpen && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, mt: 0.25 }}>
-            <NodeStepper
-              node={activeNode}
+            <NodeCombo
+              nodes={nodes}
+              activeNode={activeNode}
               online={nodeOnline}
-              canPrev={nodeIds.indexOf(activeNode) > 0}
-              canNext={nodeIds.indexOf(activeNode) < nodeIds.length - 1}
-              onPrev={() => stepNode(-1)}
-              onNext={() => stepNode(1)}
+              onSelect={switchNode}
             />
 
             {activeNode && (
@@ -415,37 +406,135 @@ function MenuTile({ label, value, tone = 'default', active, onClick }: MenuTileP
   );
 }
 
-type NodeStepperProps = {
-  node: string;
+type NodeComboProps = {
+  nodes: INodeItem[];
+  activeNode: string;
   online: boolean;
-  canPrev: boolean;
-  canNext: boolean;
-  onPrev: () => void;
-  onNext: () => void;
+  onSelect: (node: string) => void;
 };
 
-function NodeStepper({ node, online, canPrev, canNext, onPrev, onNext }: NodeStepperProps) {
-  return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, pl: 1.5, pr: 0.75, py: 0.625, borderRadius: '5px', bgcolor: T.bgCard, border: `1px solid ${T.border}` }}>
-      <Box sx={{ width: 7, height: 7, borderRadius: '50%', flexShrink: 0, bgcolor: online ? T.on : T.offline, boxShadow: `0 0 5px ${online ? T.on : T.offline}99` }} />
-      <Typography sx={{ flex: 1, fontSize: 14, fontWeight: 500, color: T.textPrim, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{node || '—'}</Typography>
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        <StepBtn icon="chevronUp" disabled={!canPrev} onClick={onPrev} />
-        <StepBtn icon="chevronDown" disabled={!canNext} onClick={onNext} />
-      </Box>
-    </Box>
-  );
-}
+function NodeCombo({ nodes, activeNode, online, onSelect }: NodeComboProps) {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
 
-function StepBtn({ icon, disabled, onClick }: { icon: KIconName; disabled: boolean; onClick: () => void }) {
+  const handleClose = useCallback(() => setAnchorEl(null), []);
+  const handleSelect = useCallback(
+    (id: string) => {
+      onSelect(id);
+      setAnchorEl(null);
+    },
+    [onSelect]
+  );
+
   return (
-    <Box
-      component="button"
-      onClick={disabled ? undefined : onClick}
-      disabled={disabled}
-      sx={{ width: 22, height: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', bgcolor: 'transparent', color: T.textSec, opacity: disabled ? 0.25 : 1, cursor: disabled ? 'default' : 'pointer', borderRadius: '3px', '&:hover': disabled ? undefined : { bgcolor: T.bgHover } }}
-    >
-      <KIcon name={icon} size={13} />
-    </Box>
+    <>
+      <Box
+        component="button"
+        onClick={(e) => setAnchorEl(e.currentTarget)}
+        sx={{
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 1.5,
+          pl: 1.5,
+          pr: 1,
+          py: 0.75,
+          borderRadius: '5px',
+          bgcolor: T.bgCard,
+          border: `1px solid ${open ? T.primary : T.border}`,
+          cursor: 'pointer',
+          textAlign: 'left',
+          transition: 'border-color .12s, background .12s',
+          '&:hover': { bgcolor: T.bgHover },
+        }}
+      >
+        <Box
+          sx={{
+            width: 7,
+            height: 7,
+            borderRadius: '50%',
+            flexShrink: 0,
+            bgcolor: online ? T.on : T.offline,
+            boxShadow: `0 0 5px ${online ? T.on : T.offline}99`,
+          }}
+        />
+        <Typography
+          sx={{
+            flex: 1,
+            fontSize: 14,
+            fontWeight: 500,
+            color: T.textPrim,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {activeNode || '—'}
+        </Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            color: T.textSec,
+            transform: open ? 'rotate(180deg)' : 'none',
+            transition: 'transform .15s',
+          }}
+        >
+          <KIcon name="chevronDown" size={14} />
+        </Box>
+      </Box>
+
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+        slotProps={{
+          paper: {
+            sx: {
+              mt: 0.5,
+              minWidth: 200,
+              maxHeight: 320,
+              bgcolor: T.bgCard,
+              border: `1px solid ${T.border}`,
+              boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
+            },
+          },
+        }}
+      >
+        {nodes.map((n) => {
+          const isSel = n.id === activeNode;
+          const nOnline = n.online_status ?? false;
+          return (
+            <MenuItem
+              key={n.id}
+              selected={isSel}
+              onClick={() => handleSelect(n.id)}
+              sx={{
+                gap: 1.25,
+                fontSize: 14,
+                color: T.textPrim,
+                '&:hover': { bgcolor: T.bgHover },
+                '&.Mui-selected': { bgcolor: T.deep },
+                '&.Mui-selected:hover': { bgcolor: T.deep },
+              }}
+            >
+              <Box
+                sx={{
+                  width: 7,
+                  height: 7,
+                  borderRadius: '50%',
+                  flexShrink: 0,
+                  bgcolor: nOnline ? T.on : T.offline,
+                }}
+              />
+              <Box sx={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {n.id}
+              </Box>
+            </MenuItem>
+          );
+        })}
+      </Menu>
+    </>
   );
 }
