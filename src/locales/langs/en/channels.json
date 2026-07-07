@@ -1,7 +1,7 @@
 {
   "title": {
-    "inbound": "Channels In",
-    "outbound": "Channels Out"
+    "inbound": "Channel Inbound",
+    "outbound": "Channel Outbound"
   },
   "action_total": "Total <mono>{{count}}</mono> channels",
   "empty": "No channels found",
@@ -10,11 +10,11 @@
     "id": "ID",
     "name": "Name",
     "topic": "Topic",
-    "type": "Protocol Type",
-    "u_type": "Comm Type",
+    "type": "Type",
+    "u_type": "UType",
     "port": "Port",
-    "ip": "Address",
-    "nic": "NIC Address",
-    "count": "Message Count"
+    "ip": "IP",
+    "nic": "NIC",
+    "count": "Count"
   }
 }

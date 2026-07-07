@@ -3,13 +3,13 @@
     "process": "Process"
   },
   "table_header": {
-    "pid": "Process ID",
-    "name": "Name",
-    "param": "Parameters",
+    "pid": "PID",
+    "name": "NAME",
+    "param": "PARAM",
     "cpu": "CPU",
-    "mem": "Memory",
-    "ppid": "Parent PID",
-    "command": "Command"
+    "mem": "MEM",
+    "ppid": "PPID",
+    "command": "COMMAND"
   },
   "action_total": "Total <mono>{{count}}</mono> processes",
   "loading": "Loading...",

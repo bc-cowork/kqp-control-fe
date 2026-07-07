@@ -10,14 +10,14 @@
     "table_top": {
         "item": "Item",
         "max": "Max",
-        "cur": "Current",
-        "odd": "Abnormal",
+        "cur": "Cur",
+        "odd": "Odd",
         "status": "Status",
         "no_data": "No status data",
         "process": "Process",
-        "que": "Queue",
-        "ch_inbound": "Inbound Channel",
-        "ch_outbound": "Outbound Channel"
+        "que": "Que",
+        "ch_inbound": "Ch.Inbound",
+        "ch_outbound": "Ch.Outbound"
     },
     "table_bottom": {
         "time": "Time",

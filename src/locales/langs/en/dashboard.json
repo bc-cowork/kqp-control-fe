@@ -7,7 +7,7 @@
   },
   "node": {
     "node": "Nodes",
-    "state": "Status",
+    "state": "State",
     "id": "ID",
     "name": "Name",
     "description": "Description",
