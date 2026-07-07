@@ -6,9 +6,9 @@ import useSWR from 'swr';
 import { useMemo, useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import Autocomplete from '@mui/material/Autocomplete';
 
 import { paths } from 'src/routes/paths';
 import { usePathname, useRouter } from 'src/routes/hooks';
@@ -413,128 +413,120 @@ type NodeComboProps = {
   onSelect: (node: string) => void;
 };
 
-function NodeCombo({ nodes, activeNode, online, onSelect }: NodeComboProps) {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+// Small status dot shared by the input adornment and the option rows.
+function StatusDot({ online, glow = false }: { online: boolean; glow?: boolean }) {
+  const color = online ? T.on : T.offline;
+  return (
+    <Box
+      sx={{
+        width: 7,
+        height: 7,
+        borderRadius: '50%',
+        flexShrink: 0,
+        bgcolor: color,
+        ...(glow && { boxShadow: `0 0 5px ${color}99` }),
+      }}
+    />
+  );
+}
 
-  const handleClose = useCallback(() => setAnchorEl(null), []);
-  const handleSelect = useCallback(
-    (id: string) => {
-      onSelect(id);
-      setAnchorEl(null);
-    },
-    [onSelect]
+function NodeCombo({ nodes, activeNode, online, onSelect }: NodeComboProps) {
+  const activeObj = useMemo(
+    () => nodes.find((n) => n.id === activeNode) ?? null,
+    [nodes, activeNode]
   );
 
   return (
-    <>
-      <Box
-        component="button"
-        onClick={(e) => setAnchorEl(e.currentTarget)}
-        sx={{
-          width: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 1.5,
-          pl: 1.5,
-          pr: 1,
-          py: 0.75,
-          borderRadius: '5px',
-          bgcolor: T.bgCard,
-          border: `1px solid ${open ? T.primary : T.border}`,
-          cursor: 'pointer',
-          textAlign: 'left',
-          transition: 'border-color .12s, background .12s',
-          '&:hover': { bgcolor: T.bgHover },
-        }}
-      >
-        <Box
-          sx={{
-            width: 7,
-            height: 7,
-            borderRadius: '50%',
-            flexShrink: 0,
-            bgcolor: online ? T.on : T.offline,
-            boxShadow: `0 0 5px ${online ? T.on : T.offline}99`,
+    <Autocomplete
+      fullWidth
+      size="small"
+      autoHighlight
+      openOnFocus
+      options={nodes}
+      value={activeObj}
+      isOptionEqualToValue={(o, v) => o.id === v.id}
+      getOptionLabel={(o) => o.id}
+      onChange={(_, newValue) => {
+        if (newValue) onSelect(newValue.id);
+      }}
+      popupIcon={<KIcon name="chevronDown" size={14} />}
+      renderOption={(props, option) => {
+        // eslint-disable-next-line react/prop-types
+        const { key, ...rest } = props as typeof props & { key: string };
+        const nOnline = option.online_status ?? false;
+        return (
+          <Box
+            component="li"
+            key={key}
+            {...rest}
+            sx={{
+              gap: 1.25,
+              fontSize: 14,
+              color: T.textPrim,
+              '&:hover': { bgcolor: T.bgHover },
+              '&[aria-selected="true"]': { bgcolor: T.deep },
+              '&.Mui-focused': { bgcolor: T.bgHover },
+              '&[aria-selected="true"].Mui-focused': { bgcolor: T.deep },
+            }}
+          >
+            <StatusDot online={nOnline} />
+            <Box sx={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {option.id}
+            </Box>
+          </Box>
+        );
+      }}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          placeholder={activeNode || '—'}
+          InputProps={{
+            ...params.InputProps,
+            startAdornment: <StatusDot online={online} glow />,
           }}
         />
-        <Typography
-          sx={{
-            flex: 1,
-            fontSize: 14,
-            fontWeight: 500,
-            color: T.textPrim,
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-          }}
-        >
-          {activeNode || '—'}
-        </Typography>
-        <Box
-          sx={{
-            display: 'flex',
-            color: T.textSec,
-            transform: open ? 'rotate(180deg)' : 'none',
-            transition: 'transform .15s',
-          }}
-        >
-          <KIcon name="chevronDown" size={14} />
-        </Box>
-      </Box>
-
-      <Menu
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-        slotProps={{
-          paper: {
-            sx: {
-              mt: 0.5,
-              minWidth: 200,
-              maxHeight: 320,
-              bgcolor: T.bgCard,
-              border: `1px solid ${T.border}`,
-              boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
-            },
+      )}
+      slotProps={{
+        paper: {
+          sx: {
+            mt: 0.5,
+            bgcolor: T.bgCard,
+            border: `1px solid ${T.border}`,
+            boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
           },
-        }}
-      >
-        {nodes.map((n) => {
-          const isSel = n.id === activeNode;
-          const nOnline = n.online_status ?? false;
-          return (
-            <MenuItem
-              key={n.id}
-              selected={isSel}
-              onClick={() => handleSelect(n.id)}
-              sx={{
-                gap: 1.25,
-                fontSize: 14,
-                color: T.textPrim,
-                '&:hover': { bgcolor: T.bgHover },
-                '&.Mui-selected': { bgcolor: T.deep },
-                '&.Mui-selected:hover': { bgcolor: T.deep },
-              }}
-            >
-              <Box
-                sx={{
-                  width: 7,
-                  height: 7,
-                  borderRadius: '50%',
-                  flexShrink: 0,
-                  bgcolor: nOnline ? T.on : T.offline,
-                }}
-              />
-              <Box sx={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                {n.id}
-              </Box>
-            </MenuItem>
-          );
-        })}
-      </Menu>
-    </>
+        },
+        clearIndicator: { sx: { display: 'none' } },
+      }}
+      sx={{
+        '& .MuiAutocomplete-listbox': { maxHeight: 320, py: 0.5 },
+        '& .MuiOutlinedInput-root': {
+          gap: 1,
+          pl: 1.5,
+          pr: 1,
+          py: 0.25,
+          borderRadius: '5px',
+          bgcolor: T.bgCard,
+          transition: 'border-color .12s, background .12s',
+          '&:hover': { bgcolor: T.bgHover },
+          '& .MuiOutlinedInput-notchedOutline': { borderColor: T.border },
+          '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: T.border },
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderColor: T.primary,
+            borderWidth: 1,
+          },
+        },
+        '& .MuiOutlinedInput-input': {
+          fontSize: 14,
+          fontWeight: 500,
+          color: T.textPrim,
+          '&::placeholder': { color: T.textPrim, opacity: 1 },
+        },
+        '& .MuiAutocomplete-endAdornment': { right: 8 },
+        '& .MuiAutocomplete-popupIndicator': {
+          color: T.textSec,
+          transition: 'transform .15s',
+        },
+      }}
+    />
   );
 }

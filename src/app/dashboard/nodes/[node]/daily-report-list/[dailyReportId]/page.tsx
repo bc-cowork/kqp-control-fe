@@ -65,7 +65,7 @@ export default function Page({ params }: Props) {
     { label: t('table.report_name'), value: reportItem?.name, color: T.primary, weight: 400 },
     { label: t('table.job_at'), value: reportItem?.job_at, color: T.textSec, mono: true },
     { label: t('table.last_exec'), value: reportItem?.last_exec, color: T.textSec, mono: true },
-    { label: t('table.desc'), value: reportItem?.desc, color: T.textSec, weight: 550, grow: true },
+    { label: t('table.desc'), value: reportItem?.desc, color: T.textSec, grow: true },
   ];
   const row2: Cell[] = [
     { label: t('table.recv_count'), value: recv.text, color: T.textSec, mono: true },

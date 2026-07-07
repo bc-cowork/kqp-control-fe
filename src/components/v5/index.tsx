@@ -162,7 +162,7 @@ export function DataTable<R = any>({
         maxHeight,
       }}
     >
-      <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse', fontSize: 17, lineHeight: 1.2 }}>
+      <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse', fontSize: 16, lineHeight: 1.2 }}>
         <Box component="thead">
           <Box component="tr">
             {columns.map((col) => (
@@ -180,7 +180,7 @@ export function DataTable<R = any>({
                   p: dense ? '12px 12px' : '11px 14px',
                   borderBottom: `1px solid ${T.border}`,
                   whiteSpace: 'nowrap',
-                  fontSize: light ? 16 : 14.5,
+                  fontSize: 16,
                   textTransform: light ? 'none' : 'uppercase',
                   letterSpacing: light ? 0 : '0.05em',
                   width: col.width,

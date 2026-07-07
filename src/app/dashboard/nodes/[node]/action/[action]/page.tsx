@@ -59,7 +59,7 @@ export default function Page({ params }: Props) {
     { key: 'timestamp', label: t('table.timestamp'), mono: true, dim: true },
     { key: 'ref_layout', label: t('table.ref_layout'), mono: true, align: 'right', color: T.textSec },
     { key: 'ref_process', label: t('table.ref_process'), mono: true, align: 'right', color: T.textSec },
-    { key: 'desc', label: t('table.desc'), color: T.textSec, weight: 550, grow: true },
+    { key: 'desc', label: t('table.desc'), color: T.textSec, grow: true },
   ];
 
   const refColumns = (label: string, freqLabel: string): Column<RefItem>[] => [

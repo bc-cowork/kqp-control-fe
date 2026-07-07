@@ -82,7 +82,7 @@ export default function Page({ params }: Props) {
       color: T.textSec,
       render: (r) => (r.size != null ? formatBytes(r.size) : '—'),
     },
-    { key: 'desc', label: t('table.explanation'), color: T.textSec, weight: 550, grow: true },
+    { key: 'desc', label: t('table.explanation'), color: T.textSec, grow: true },
   ];
   const summaryRows: SpecDetail[] = specName ? [detail] : [];
 
@@ -130,7 +130,7 @@ export default function Page({ params }: Props) {
       width: 88,
       render: (r) => <SpecChip tone="amber">{r.type}</SpecChip>,
     },
-    { key: 'desc', label: t('right.desc'), color: T.textSec, weight: 550, grow: true },
+    { key: 'desc', label: t('right.desc'), color: T.textSec, grow: true },
   ];
 
   return (

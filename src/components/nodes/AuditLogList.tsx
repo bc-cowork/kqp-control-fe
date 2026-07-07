@@ -65,7 +65,6 @@ export function AuditLogList({ selectedNodeId }: Props) {
       key: 'desc',
       label: t('table_header.desc'),
       color: T.textSec,
-      weight: 550,
       grow: true,
       render: (r) => r?.desc || '-',
     },
