@@ -11,8 +11,8 @@
     "id": "ID",
     "name": "Name",
     "description": "Description",
-    "emittable": "Emit Status",
-    "emit_count": "Emit Count",
+    "emittable": "Emittable",
+    "emit_count": "Count",
     "yes": "Yes",
     "no": "No",
     "empty": "No Nodes Found"
