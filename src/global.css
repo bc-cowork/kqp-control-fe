@@ -23,6 +23,40 @@
 @import '@fontsource/pretendard/600.css';
 @import '@fontsource/pretendard/700.css';
 
+/* Spoqa Han Sans Neo — self-hosted (public/fonts/spoqa). Static weights: 300/400/500/700. */
+@font-face {
+  font-family: 'Spoqa Han Sans Neo';
+  font-weight: 300;
+  font-display: swap;
+  src:
+    local('Spoqa Han Sans Neo Light'),
+    url('/fonts/spoqa/SpoqaHanSansNeo-Light.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Spoqa Han Sans Neo';
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local('Spoqa Han Sans Neo Regular'),
+    url('/fonts/spoqa/SpoqaHanSansNeo-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Spoqa Han Sans Neo';
+  font-weight: 500;
+  font-display: swap;
+  src:
+    local('Spoqa Han Sans Neo Medium'),
+    url('/fonts/spoqa/SpoqaHanSansNeo-Medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Spoqa Han Sans Neo';
+  font-weight: 700;
+  font-display: swap;
+  src:
+    local('Spoqa Han Sans Neo Bold'),
+    url('/fonts/spoqa/SpoqaHanSansNeo-Bold.woff2') format('woff2');
+}
+
 /** **************************************
 * Fonts: options
 *************************************** */

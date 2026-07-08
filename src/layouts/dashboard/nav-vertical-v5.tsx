@@ -333,7 +333,7 @@ function NavRow({ label, icon, indent = 0, active, expandable, open, onClick }: 
         py: 1,
         borderRadius: 1,
         fontSize,
-        fontWeight: active ? 500 : 450,
+        fontWeight: active ? 500 : 400,
         color,
         background,
         cursor: 'pointer',

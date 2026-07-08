@@ -193,7 +193,7 @@ function GhostBtn({
         borderRadius: '8px',
         fontSize: 15,
         fontFamily: 'inherit',
-        fontWeight: on ? 500 : 450,
+        fontWeight: on ? 500 : 400,
         cursor: 'pointer',
         bgcolor: on ? c : T.bgCard,
         border: `1px solid ${on ? c : T.border}`,

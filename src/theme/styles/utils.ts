@@ -17,9 +17,11 @@ export const mediaQueries = {
  * Set font family
  */
 export function setFont(fontName: string) {
-  // Variable Roboto (100–900) so fractional weights (350/450) render exactly as
-  // in k-control-fe-ui; static Roboto snapped 350 → 300 and looked grey.
-  return `'Roboto Variable', Roboto`;
+  // Font test — swap the returned family to compare:
+  //   Spoqa: `'Spoqa Han Sans Neo', 'Roboto Variable', Roboto, sans-serif`
+  //   Pretendard: `'Pretendard', 'Roboto Variable', Roboto, sans-serif`
+  //   Roboto (original): `'Roboto Variable', Roboto`
+  return `'Spoqa Han Sans Neo', 'Roboto Variable', Roboto, sans-serif`;
 }
 
 /**

@@ -139,7 +139,7 @@ export function DataTable<R = any>({
   dense,
   headerVariant = 'default',
   flush,
-  bodyWeight = 350,
+  bodyWeight = 300,
   selectedIndex = null,
   onRowClick,
   loading,
@@ -287,7 +287,7 @@ export function SummaryCard({ label, value }: { label: string; value: ReactNode 
 export function StatusBadge({ on, labelOn = 'active', labelOff = 'inactive', color, fontSize = 14 }: { on: boolean; labelOn?: string; labelOff?: string; color?: string; fontSize?: number }) {
   const c = color || (on ? T.on : T.off);
   return (
-    <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.625, fontSize, fontWeight: 350, px: 1, py: '2px', borderRadius: '3px', letterSpacing: '0.03em', color: c }}>
+    <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.625, fontSize, fontWeight: 300, px: 1, py: '2px', borderRadius: '3px', letterSpacing: '0.03em', color: c }}>
       <Box sx={{ width: 5, height: 5, borderRadius: '50%', bgcolor: 'currentColor' }} />
       {on ? labelOn : labelOff}
     </Box>

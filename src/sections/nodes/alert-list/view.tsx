@@ -142,7 +142,7 @@ function AlertRow({ item, nodeId, t, onDeleted, isLast }: AlertRowProps) {
           {/* Name + status + description */}
           <Box sx={{ flex: 1, minWidth: 0 }}>
             <Stack direction="row" alignItems="center" gap={1.25} sx={{ mb: '3px' }}>
-              <Typography sx={{ color: T.textPrim, fontSize: 16, fontWeight: 350, fontFamily: FONT_MONO }}>
+              <Typography sx={{ color: T.textPrim, fontSize: 16, fontWeight: 300, fontFamily: FONT_MONO }}>
                 {item.name}
               </Typography>
               <StatusBadge

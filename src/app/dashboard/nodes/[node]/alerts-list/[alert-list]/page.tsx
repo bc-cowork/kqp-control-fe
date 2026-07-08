@@ -225,7 +225,7 @@ export default function Page({ params }: Props) {
                           sx={{
                             color: T.textPrim,
                             fontSize: 16,
-                            fontWeight: 350,
+                            fontWeight: 300,
                             lineHeight: 1.5,
                             wordBreak: 'break-word',
                           }}
