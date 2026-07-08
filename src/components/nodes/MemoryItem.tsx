@@ -221,6 +221,7 @@ const bodyCellSx = {
   textAlign: 'right' as const,
   fontFamily: FONT_MONO,
   fontSize: 16,
+  fontWeight: 350,
   color: T.textPrim,
   whiteSpace: 'nowrap' as const,
 };

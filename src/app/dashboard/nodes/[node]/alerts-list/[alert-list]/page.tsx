@@ -144,6 +144,7 @@ export default function Page({ params }: Props) {
           labelOn={t('detail.badge_active')}
           labelOff={t('detail.badge_inactive')}
           color={ACCENT2}
+          fontSize={16}
         />
       ),
     },
@@ -224,7 +225,7 @@ export default function Page({ params }: Props) {
                           sx={{
                             color: T.textPrim,
                             fontSize: 16,
-                            fontWeight: 400,
+                            fontWeight: 350,
                             lineHeight: 1.5,
                             wordBreak: 'break-word',
                           }}

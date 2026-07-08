@@ -151,14 +151,6 @@ export function HeaderV5() {
 
       <Box sx={{ flex: 1 }} />
 
-      {/* Meta cluster */}
-      <Stack direction="row" alignItems="center" spacing={2} sx={{ color: T.textSec, fontSize: 14 }}>
-        <Stack direction="row" alignItems="center" spacing={0.75}>
-          <KIcon name="clock" size={13} />
-          <span>{clock}</span>
-        </Stack>
-      </Stack>
-
       {/* Notifications */}
       <Box
         onClick={(e) => setBellAnchor(e.currentTarget)}
@@ -197,6 +189,14 @@ export function HeaderV5() {
         <KIcon name="globe" size={13} />
         {isKo ? 'KOR' : 'ENG'}
       </Box>
+
+      {/* Meta cluster */}
+      <Stack direction="row" alignItems="center" spacing={2} sx={{ color: T.textSec, fontSize: 14 }}>
+        <Stack direction="row" alignItems="center" spacing={0.75}>
+          <KIcon name="clock" size={13} />
+          <span>{clock}</span>
+        </Stack>
+      </Stack>
 
       {/* User chip */}
       <Box

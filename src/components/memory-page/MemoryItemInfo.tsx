@@ -24,7 +24,7 @@ const LabelValueRow = ({ label, value }: LabelValueRowProps) => (
       sx={{
         color: T.textPrim,
         fontSize: 16,
-        fontWeight: 400,
+        fontWeight: 350,
         fontFamily: FONT_MONO,
         wordBreak: 'break-all',
         minWidth: 0,
