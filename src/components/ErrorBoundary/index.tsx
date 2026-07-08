@@ -27,7 +27,6 @@ import {
 } from '@mui/icons-material';
 import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
-import { Breadcrumb } from '../common/Breadcrumb';
 
 interface Props {
     children: ReactNode;
@@ -95,7 +94,6 @@ class ErrorBoundary extends Component<Props, State> {
 
             return (
                 <DashboardContent maxWidth="xl">
-                    <Breadcrumb />
                     <Box
                         sx={{
                             minHeight: '80vh',
