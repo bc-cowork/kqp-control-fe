@@ -7,8 +7,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import { Table, TableRow, TableBody, TableCell, TableHead, Typography, TableContainer, CircularProgress } from '@mui/material';
+import Typography from '@mui/material/Typography';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
@@ -16,7 +15,7 @@ import { useRouter } from 'src/routes/hooks';
 import { useBoolean } from 'src/hooks/use-boolean';
 
 import { T, FONT_MONO } from 'src/theme/tokens';
-import { PageShell } from 'src/components/v5';
+import { PageShell, DataTable } from 'src/components/v5';
 
 import { fetcher, endpoints } from 'src/utils/axios';
 
@@ -623,61 +622,26 @@ export default function Page({ params }: Props) {
       ]}
       title={`${t('top.title_prefix')} : ${decodedLayout}`}
     >
-      <TableContainer
-        component={Paper}
-        sx={{ height: 'auto', my: 2 }}
-      >
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell>{ }</TableCell>
-              <TableCell>{t('detail_table.layout_name')}</TableCell>
-              <TableCell>{t('detail_table.path')}</TableCell>
-              <TableCell align="left">{t('detail_table.timestamp')}</TableCell>
-              <TableCell align="left">{t('detail_table.process')}</TableCell>
-              <TableCell>{t('detail_table.channel_in')}</TableCell>
-              <TableCell>{ }</TableCell>
-              <TableCell>{ }</TableCell>
-              <TableCell align="left">{t('detail_table.description')}</TableCell>
-              <TableCell>{ }</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {isLoading ? (
-              <TableRow>
-                <TableCell colSpan={8} align="center">
-                  <CircularProgress />
-                </TableCell>
-              </TableRow>
-            ) : layoutEmpty ? (
-              <TableRow>
-                <TableCell colSpan={8}>{t('detail_table.empty')}</TableCell>
-              </TableRow>
-            ) : error ? (
-              <TableRow>
-                <TableCell colSpan={8}>{t('detail_table.error')}</TableCell>
-              </TableRow>
-            ) : (
-              <TableRow
-                key={layoutItem.name}
-                hover
-              >
-                <TableCell align="left">{ }</TableCell>
-                <TableCell align="left">{layoutItem.name}</TableCell>
-                <TableCell>{layoutItem.path}</TableCell>
-                <TableCell align='left'>{layoutItem.timestamp}</TableCell>
-                <TableCell align="left">{layoutItem.process}</TableCell>
-                <TableCell align="left">{layoutItem.channel_in}</TableCell>
-                <TableCell align="left">{ }</TableCell>
-                <TableCell align="left">{ }</TableCell>
-                <TableCell align="left">{layoutItem?.desc}</TableCell>
-                <TableCell align="left">{ }</TableCell>
-
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {/* Layout Detail (single-row summary table) */}
+      {/* flexShrink: 0 is required — PageShell's body is a fixed-height flex column,
+          and DataTable (minHeight: 0, overflow: auto) collapses to a sliver without it */}
+      <Box sx={{ flexShrink: 0 }}>
+        <DataTable
+          headerVariant="light"
+          columns={[
+            { key: 'name', label: t('detail_table.layout_name'), weight: 500, color: T.textPrim },
+            { key: 'path', label: t('detail_table.path'), mono: true, dim: true },
+            { key: 'timestamp', label: t('detail_table.timestamp'), mono: true, dim: true },
+            { key: 'process', label: t('detail_table.process') },
+            { key: 'channel_in', label: t('detail_table.channel_in'), mono: true },
+            { key: 'desc', label: t('detail_table.description'), grow: true, dim: true },
+          ]}
+          rows={layoutEmpty ? [] : [layoutItem]}
+          loading={isLoading}
+          error={!!error}
+          emptyLabel={t('detail_table.empty')}
+        />
+      </Box>
 
       {/* Data Flow Visualization */}
       {dataFlowDefinition && (
@@ -749,5 +713,3 @@ export default function Page({ params }: Props) {
     </PageShell>
   );
 }
-
-
