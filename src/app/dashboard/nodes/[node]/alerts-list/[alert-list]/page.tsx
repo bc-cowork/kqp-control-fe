@@ -199,7 +199,7 @@ export default function Page({ params }: Props) {
               <Stack sx={{ p: 2, gap: 1.75 }}>
                 {infoRows.map((row) => (
                   <Stack key={row.label} direction="row" gap={2} alignItems="flex-start">
-                    <Typography sx={{ width: 96, flexShrink: 0, color: T.textSec, fontSize: 14 }}>
+                    <Typography sx={{ width: 96, flexShrink: 0, color: T.textSec, fontSize: 16, lineHeight: 1.5 }}>
                       {row.label}
                     </Typography>
                     <Box sx={{ flex: 1, minWidth: 0 }}>
@@ -210,7 +210,7 @@ export default function Page({ params }: Props) {
                             display: 'inline-flex',
                             alignItems: 'center',
                             gap: 0.75,
-                            fontSize: 15,
+                            fontSize: 16,
                             color: isActive ? T.on : T.off,
                           }}
                         >
@@ -222,9 +222,9 @@ export default function Page({ params }: Props) {
                       ) : (
                         <Typography
                           sx={{
-                            color: T.textSec,
-                            fontSize: 15,
-                            fontWeight: 500,
+                            color: T.textPrim,
+                            fontSize: 16,
+                            fontWeight: 400,
                             lineHeight: 1.5,
                             wordBreak: 'break-word',
                           }}

@@ -112,60 +112,69 @@ function AlertRow({ item, nodeId, t, onDeleted, isLast }: AlertRowProps) {
   return (
     <Box sx={{ borderBottom: isLast ? 'none' : `1px solid ${T.borderSub}` }}>
       {/* Row header */}
-      <Stack
-        onClick={() => router.push(paths.dashboard.nodes.alertsDetail(nodeId, item.name))}
-        direction="row"
-        alignItems="center"
-        gap={1.75}
+      <Box
         sx={{
-          px: 2,
-          py: 1.5,
-          cursor: 'pointer',
-          transition: 'background .12s',
+          display: 'flex',
+          alignItems: 'stretch',
           bgcolor: expanded ? T.bgHover : 'transparent',
-          '&:hover': { bgcolor: T.bgHover },
         }}
       >
-        {/* Lead file icon */}
-        <Iconify icon="solar:file-linear" width={16} sx={{ color: T.textDim, flexShrink: 0 }} />
-
-        {/* Name + status + description */}
-        <Box sx={{ flex: 1, minWidth: 0 }}>
-          <Stack direction="row" alignItems="center" gap={1.25} sx={{ mb: '3px' }}>
-            <Typography sx={{ color: T.textPrim, fontSize: 17, fontFamily: FONT_MONO }}>
-              {item.name}
-            </Typography>
-            <StatusBadge
-              on={isActive}
-              labelOn={t('detail.badge_active')}
-              labelOff={t('detail.badge_inactive')}
-              color={ACCENT2}
-            />
-          </Stack>
-          <Typography sx={{ color: T.textSec, fontSize: 15, fontWeight: 550 }}>
-            {item.desc}
-          </Typography>
-        </Box>
-
-        {/* Filename */}
-        <Typography sx={{ color: T.textDim, fontSize: 15, fontFamily: FONT_MONO, mr: 0.75 }}>
-          {fileName}
-        </Typography>
-
-        {/* Expand chevron */}
-        <Box
-          onClick={(e) => {
-            e.stopPropagation();
-            setExpanded((p) => !p);
-          }}
+        {/* Navigation area — hover highlights only this region */}
+        <Stack
+          onClick={() => router.push(paths.dashboard.nodes.alertsDetail(nodeId, item.name))}
+          direction="row"
+          alignItems="center"
+          gap={1.75}
           sx={{
-            width: 26,
-            height: 26,
+            flex: 1,
+            minWidth: 0,
+            px: 2,
+            py: 1.5,
+            cursor: 'pointer',
+            transition: 'background .12s',
+            '&:hover': { bgcolor: T.bgHover },
+          }}
+        >
+          {/* Lead file icon */}
+          <Iconify icon="solar:file-linear" width={16} sx={{ color: T.textDim, flexShrink: 0 }} />
+
+          {/* Name + status + description */}
+          <Box sx={{ flex: 1, minWidth: 0 }}>
+            <Stack direction="row" alignItems="center" gap={1.25} sx={{ mb: '3px' }}>
+              <Typography sx={{ color: T.textPrim, fontSize: 16, fontWeight: 350, fontFamily: FONT_MONO }}>
+                {item.name}
+              </Typography>
+              <StatusBadge
+                on={isActive}
+                labelOn={t('detail.badge_active')}
+                labelOff={t('detail.badge_inactive')}
+                color={ACCENT2}
+              />
+            </Stack>
+            <Typography sx={{ color: T.textSec, fontSize: 15 }}>
+              {item.desc}
+            </Typography>
+          </Box>
+
+          {/* Filename */}
+          <Typography sx={{ color: T.textDim, fontSize: 15, fontFamily: FONT_MONO }}>
+            {fileName}
+          </Typography>
+        </Stack>
+
+        {/* Dropdown button area — divider + independent hover */}
+        <Box
+          onClick={() => setExpanded((p) => !p)}
+          sx={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            px: 1.75,
+            borderLeft: `1px solid ${T.borderSub}`,
             cursor: 'pointer',
             color: '#667085',
+            transition: 'background .12s, color .12s',
+            '&:hover': { bgcolor: T.bgHover, color: T.textSec },
           }}
         >
           <Iconify
@@ -177,7 +186,7 @@ function AlertRow({ item, nodeId, t, onDeleted, isLast }: AlertRowProps) {
             }}
           />
         </Box>
-      </Stack>
+      </Box>
 
       {/* Expanded schedule grid */}
       <Collapse in={expanded} unmountOnExit>
@@ -261,7 +270,7 @@ export function AlertListView({ nodeId }: Props) {
             borderBottom: `1px solid ${T.border}`,
           }}
         >
-          <Typography sx={{ color: T.textPrim, fontSize: 16, fontWeight: 500 }}>
+          <Typography sx={{ color: T.textSec, fontSize: 16, fontWeight: 500 }}>
             {t('list.watch_items')}
           </Typography>
           <BtnPrimary icon="eva:plus-fill" onClick={goAdd}>

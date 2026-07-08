@@ -131,7 +131,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                       bgcolor: T.bgPanel,
                       color: T.textSec,
                       fontWeight: 500,
-                      fontSize: 14.5,
+                      fontSize: 16,
                       textAlign: 'right',
                       p: '9px 14px',
                       borderBottom: `1px solid ${T.border}`,
@@ -220,7 +220,7 @@ const bodyCellSx = {
   p: '7px 14px',
   textAlign: 'right' as const,
   fontFamily: FONT_MONO,
-  fontSize: 15.5,
+  fontSize: 16,
   color: T.textPrim,
   whiteSpace: 'nowrap' as const,
 };

@@ -25,7 +25,7 @@ type QuoteRow = {
 
 const sTh = {
   color: T.textSec,
-  fontSize: 13.5,
+  fontSize: 16,
   fontWeight: 500,
   textAlign: 'right' as const,
   p: '8px 10px',
@@ -34,7 +34,7 @@ const sTh = {
 
 const sLabel = {
   color: T.textSec,
-  fontSize: 14,
+  fontSize: 16,
   textAlign: 'left' as const,
   p: '8px 10px',
   whiteSpace: 'nowrap' as const,
@@ -42,7 +42,8 @@ const sLabel = {
 
 const sVal = {
   color: T.textPrim,
-  fontSize: 14,
+  fontSize: 16,
+  fontWeight: 400,
   fontFamily: FONT_MONO,
   textAlign: 'right' as const,
   p: '8px 10px',

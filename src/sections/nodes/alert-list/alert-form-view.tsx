@@ -193,12 +193,13 @@ function GhostBtn({
         borderRadius: '8px',
         fontSize: 15,
         fontFamily: 'inherit',
-        fontWeight: 500,
+        fontWeight: on ? 500 : 450,
         cursor: 'pointer',
-        bgcolor: on ? `${c}22` : T.bgCard,
-        border: `1px solid ${on ? T.primaryMuted : T.border}`,
-        color: on ? color || T.primaryMuted : T.textSec,
+        bgcolor: on ? c : T.bgCard,
+        border: `1px solid ${on ? c : T.border}`,
+        color: on ? '#fff' : T.textSec,
         transition: 'all .12s',
+        '&:hover': on ? undefined : { bgcolor: T.bgHover, color: T.textPrim },
       }}
     >
       {children}
@@ -247,7 +248,15 @@ function TimePicker({ value, onChange }: { value: string; onChange: (v: string) 
   const [h, m] = (value || '00:00').split(':');
   const hours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, '0'));
   const mins = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'));
-  const colSx = { flex: 1, maxHeight: 208, overflowY: 'auto', p: '5px' } as const;
+  const colSx = {
+    flex: 1,
+    maxHeight: 208,
+    overflowY: 'auto',
+    p: '5px',
+    scrollbarWidth: 'none',
+    msOverflowStyle: 'none',
+    '&::-webkit-scrollbar': { display: 'none' },
+  } as const;
   const itemSx = (sel: boolean) =>
     ({
       py: '7px',
@@ -464,7 +473,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
                 py: '13px',
               }}
             >
-              <Typography sx={{ color: T.textPrim, fontSize: 17, fontWeight: 500 }}>
+              <Typography sx={{ color: T.textSec, fontSize: 16, fontWeight: 500 }}>
                 {isEdit ? t('form.title_edit') : t('form.title_add')}
               </Typography>
               <Stack direction="row" alignItems="center" gap={1.25}>

@@ -154,38 +154,10 @@ export function HeaderV5() {
       {/* Meta cluster */}
       <Stack direction="row" alignItems="center" spacing={2} sx={{ color: T.textSec, fontSize: 14 }}>
         <Stack direction="row" alignItems="center" spacing={0.75}>
-          <KIcon name="monitor" size={13} />
-          <span>{isKo ? '로컬' : 'Local'}</span>
-        </Stack>
-        <Stack direction="row" alignItems="center" spacing={0.75}>
-          <Box sx={{ width: 7, height: 7, borderRadius: '50%', bgcolor: T.on }} />
-          <span>{isKo ? '본사' : 'HQ'}</span>
-        </Stack>
-        <Stack direction="row" alignItems="center" spacing={0.75}>
           <KIcon name="clock" size={13} />
           <span>{clock}</span>
         </Stack>
       </Stack>
-
-      {/* Locale toggle */}
-      <Box
-        onClick={() => onChangeLang(isKo ? 'en' : 'ko')}
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 0.5,
-          px: 0.75,
-          py: 0.5,
-          borderRadius: '4px',
-          color: T.textSec,
-          fontSize: 14,
-          cursor: 'pointer',
-          '&:hover': { bgcolor: T.bgHover, color: T.textPrim },
-        }}
-      >
-        <KIcon name="globe" size={13} />
-        {isKo ? 'KOR' : 'ENG'}
-      </Box>
 
       {/* Notifications */}
       <Box
@@ -203,6 +175,27 @@ export function HeaderV5() {
         }}
       >
         <KIcon name="bell" size={15} />
+      </Box>
+
+      {/* Locale toggle */}
+      <Box
+        onClick={() => onChangeLang(isKo ? 'en' : 'ko')}
+        sx={{
+          ml: -0.75,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 0.5,
+          px: 0.75,
+          py: 0.5,
+          borderRadius: '4px',
+          color: T.textSec,
+          fontSize: 14,
+          cursor: 'pointer',
+          '&:hover': { bgcolor: T.bgHover, color: T.textPrim },
+        }}
+      >
+        <KIcon name="globe" size={13} />
+        {isKo ? 'KOR' : 'ENG'}
       </Box>
 
       {/* User chip */}

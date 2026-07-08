@@ -17,14 +17,14 @@ type LabelValueRowProps = {
 
 const LabelValueRow = ({ label, value }: LabelValueRowProps) => (
   <Stack direction="row" spacing="14px" alignItems="flex-start">
-    <Typography sx={{ color: T.textSec, fontSize: 14, width: 96, flexShrink: 0 }}>
+    <Typography sx={{ color: T.textSec, fontSize: 16, width: 96, flexShrink: 0 }}>
       {label}
     </Typography>
     <Typography
       sx={{
-        color: T.textSec,
+        color: T.textPrim,
         fontSize: 16,
-        fontWeight: 500,
+        fontWeight: 400,
         fontFamily: FONT_MONO,
         wordBreak: 'break-all',
         minWidth: 0,

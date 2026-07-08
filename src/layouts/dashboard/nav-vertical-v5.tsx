@@ -390,6 +390,7 @@ function MenuTile({ label, value, tone = 'default', active, onClick }: MenuTileP
       sx={{
         flex: '1 1 calc(50% - 4px)',
         minWidth: 'calc(50% - 4px)',
+        maxWidth: 'calc(50% - 4px)',
         textAlign: 'left',
         border: 'none',
         p: '10px 11px',
