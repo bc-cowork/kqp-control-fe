@@ -139,7 +139,7 @@ export function DataTable<R = any>({
   dense,
   headerVariant = 'default',
   flush,
-  bodyWeight = 300,
+  bodyWeight = 400,
   selectedIndex = null,
   onRowClick,
   loading,
@@ -304,6 +304,7 @@ type BtnProps = {
   onClick?: () => void;
   disabled?: boolean;
   type?: 'button' | 'submit';
+  weight?: number;
 };
 
 const btnBase = {
@@ -321,9 +322,9 @@ const btnBase = {
   transition: 'background .12s, color .12s',
 } as const;
 
-export function BtnPrimary({ children, icon, onClick, disabled, type = 'button' }: BtnProps) {
+export function BtnPrimary({ children, icon, onClick, disabled, type = 'button', weight }: BtnProps) {
   return (
-    <Box component="button" type={type} onClick={onClick} disabled={disabled} sx={{ ...btnBase, bgcolor: T.primary, color: '#fff', '&:hover': { bgcolor: T.primaryHov }, '&:disabled': { bgcolor: '#373F4E', color: '#667085', cursor: 'default' } }}>
+    <Box component="button" type={type} onClick={onClick} disabled={disabled} sx={{ ...btnBase, ...(weight != null && { fontWeight: weight }), bgcolor: T.primary, color: '#fff', '&:hover': { bgcolor: T.primaryHov }, '&:disabled': { bgcolor: '#373F4E', color: '#667085', cursor: 'default' } }}>
       {icon && <Iconify icon={icon} width={15} />}
       {children}
     </Box>

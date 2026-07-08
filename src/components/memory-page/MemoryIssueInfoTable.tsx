@@ -43,7 +43,7 @@ const sLabel = {
 const sVal = {
   color: T.textPrim,
   fontSize: 16,
-  fontWeight: 300,
+  fontWeight: 400,
   fontFamily: FONT_MONO,
   textAlign: 'right' as const,
   p: '8px 10px',

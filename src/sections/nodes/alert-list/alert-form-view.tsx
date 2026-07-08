@@ -193,7 +193,7 @@ function GhostBtn({
         borderRadius: '8px',
         fontSize: 15,
         fontFamily: 'inherit',
-        fontWeight: on ? 500 : 400,
+        fontWeight: 400,
         cursor: 'pointer',
         bgcolor: on ? c : T.bgCard,
         border: `1px solid ${on ? c : T.border}`,
@@ -798,7 +798,7 @@ export function AlertFormView({ nodeId, alertId }: Props) {
           {/* ── Buttons ── */}
           <Stack direction="row" justifyContent="flex-end" alignItems="center" gap={1.25} sx={{ mt: 1 }}>
             <BtnGhost onClick={goList}>{t('form.btn_cancel')}</BtnGhost>
-            <BtnPrimary icon="eva:checkmark-fill" type="submit" disabled={isSubmitting}>
+            <BtnPrimary icon="eva:checkmark-fill" type="submit" disabled={isSubmitting} weight={400}>
               {t('form.btn_save')}
             </BtnPrimary>
           </Stack>
