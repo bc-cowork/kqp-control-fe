@@ -304,6 +304,9 @@ type BtnProps = {
   onClick?: () => void;
   disabled?: boolean;
   type?: 'button' | 'submit';
+};
+
+type BtnPrimaryProps = BtnProps & {
   weight?: number;
 };
 
@@ -322,7 +325,7 @@ const btnBase = {
   transition: 'background .12s, color .12s',
 } as const;
 
-export function BtnPrimary({ children, icon, onClick, disabled, type = 'button', weight }: BtnProps) {
+export function BtnPrimary({ children, icon, onClick, disabled, type = 'button', weight }: BtnPrimaryProps) {
   return (
     <Box component="button" type={type} onClick={onClick} disabled={disabled} sx={{ ...btnBase, ...(weight != null && { fontWeight: weight }), bgcolor: T.primary, color: '#fff', '&:hover': { bgcolor: T.primaryHov }, '&:disabled': { bgcolor: '#373F4E', color: '#667085', cursor: 'default' } }}>
       {icon && <Iconify icon={icon} width={15} />}
