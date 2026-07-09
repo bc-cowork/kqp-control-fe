@@ -29,31 +29,27 @@ export function ProcessDetail({ selectedNodeId }: Props) {
   };
 
   const columns: Column<IProcessItem>[] = [
-    { key: 'PID', label: t('table_header.pid'), mono: true, width: 120, color: T.textSec },
+    { key: 'PID', label: t('table_header.pid'), width: 120, color: T.textSec },
     { key: 'NAME', label: t('table_header.name'), color: T.textSec },
-    { key: 'PARAM', label: t('table_header.param'), mono: true, dim: true, grow: true },
-    {
-      key: 'CPU',
-      label: t('table_header.cpu'),
-      mono: true,
-      align: 'right',
-      render: (r) => <span style={{ color: Number(r.CPU) > 0 ? T.primary : T.textSec }}>{r.CPU}</span>,
-    },
+    { key: 'PARAM', label: t('table_header.param'), grow: true, color: T.textSec },
+    { key: 'CPU', label: t('table_header.cpu'), align: 'right', color: T.textSec },
     {
       key: 'MEM',
       label: t('table_header.mem'),
-      mono: true,
       align: 'right',
       color: T.textSec,
       render: (r) => Number(r?.MEM)?.toLocaleString(),
     },
-    { key: 'PPID', label: t('table_header.ppid'), mono: true, align: 'right', dim: true },
-    { key: 'COMMAND', label: t('table_header.command'), mono: true, dim: true, grow: true },
+    { key: 'PPID', label: t('table_header.ppid'), align: 'right', color: T.textSec },
+    { key: 'COMMAND', label: t('table_header.command'), grow: true, color: T.textSec },
   ];
 
   return (
     <DataTable<IProcessItem>
       columns={columns}
+      bodyWeight={300}
+      headerWeight={400}
+      headerSize={17}
       rows={processes || []}
       loading={processLoading}
       error={processError}

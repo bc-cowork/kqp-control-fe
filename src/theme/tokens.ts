@@ -9,6 +9,7 @@ export const T = {
   primary: '#4A3BFF', // main action / buttons / active leaf nav / selection accent
   primaryHov: '#5344FF', // button hover
   primaryMuted: '#5344FF', // selected-state input border
+  link: '#9384FF', // bright indigo (= ACCENT2) for clickable name links in tables
   secondary: '#4A3BFF',
   deep: '#494453', // mauve — active (expandable/parent) menu background
   accent: '#4A3BFF', // link / highlight

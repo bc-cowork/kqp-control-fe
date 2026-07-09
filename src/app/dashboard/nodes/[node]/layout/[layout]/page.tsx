@@ -617,7 +617,7 @@ export default function Page({ params }: Props) {
     <PageShell
       node={node}
       crumbs={[
-        { label: t('top.layout'), onClick: () => router.push(paths.dashboard.nodes.layoutList(node)) },
+        { label: t('top.layout_list'), onClick: () => router.push(paths.dashboard.nodes.layoutList(node)) },
         { label: decodedLayout },
       ]}
       title={`${t('top.title_prefix')} : ${decodedLayout}`}
@@ -628,12 +628,15 @@ export default function Page({ params }: Props) {
       <Box sx={{ flexShrink: 0 }}>
         <DataTable
           headerVariant="light"
+          bodyWeight={300}
+          headerWeight={400}
+          headerSize={17}
           columns={[
-            { key: 'name', label: t('detail_table.layout_name'), weight: 500, color: T.textPrim },
-            { key: 'path', label: t('detail_table.path'), mono: true, dim: true },
-            { key: 'timestamp', label: t('detail_table.timestamp'), mono: true, dim: true },
-            { key: 'process', label: t('detail_table.process') },
-            { key: 'channel_in', label: t('detail_table.channel_in'), mono: true },
+            { key: 'name', label: t('detail_table.layout_name'), color: T.primary },
+            { key: 'path', label: t('detail_table.path'), dim: true },
+            { key: 'timestamp', label: t('detail_table.timestamp'), dim: true },
+            { key: 'process', label: t('detail_table.process'), color: T.textSec },
+            { key: 'channel_in', label: t('detail_table.channel_in'), color: T.textSec },
             { key: 'desc', label: t('detail_table.description'), grow: true, dim: true },
           ]}
           rows={layoutEmpty ? [] : [layoutItem]}
@@ -665,15 +668,16 @@ export default function Page({ params }: Props) {
       )}
 
       {/* Layout Definition (.moon) — section label + Monokai/moon code block */}
-      <Box sx={{ mb: 3 }}>
-        <Typography sx={{ fontSize: 17, fontWeight: 500, color: T.textSec, mb: 1 }}>
-          {t('detail_table.script_title')}
-        </Typography>
+      <Box sx={{ mb: 3, borderRadius: '8px', overflow: 'hidden', border: `1px solid ${T.border}` }}>
+        {/* Header bar — matches Data Flow / JSON Definition */}
+        <Box sx={{ p: 1.5, backgroundColor: T.bgPanel, borderBottom: `1px solid ${T.border}` }}>
+          <Typography sx={{ fontSize: 17, fontWeight: 400, lineHeight: '22.5px', color: T.textSec }}>
+            {t('detail_table.script_title')}
+          </Typography>
+        </Box>
         <Box
           sx={{
             backgroundColor: T.bgCard,
-            border: `1px solid ${T.border}`,
-            borderRadius: '8px',
             overflow: 'auto',
             p: '16px 18px',
           }}

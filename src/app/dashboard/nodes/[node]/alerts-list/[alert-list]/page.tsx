@@ -185,7 +185,7 @@ export default function Page({ params }: Props) {
         <Stack direction="row" gap={2} alignItems="stretch" sx={{ flex: 1, minHeight: 0 }}>
           {/* Left — info + actions */}
           <Stack sx={{ flex: 5, minWidth: 0, minHeight: 0 }}>
-            <Typography sx={{ fontSize: 17, fontWeight: 500, color: T.textSec, mb: 1 }}>
+            <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textDim, mb: 1 }}>
               {t('detail.info_title')}
             </Typography>
             <Box
@@ -200,7 +200,7 @@ export default function Page({ params }: Props) {
               <Stack sx={{ p: 2, gap: 1.75 }}>
                 {infoRows.map((row) => (
                   <Stack key={row.label} direction="row" gap={2} alignItems="flex-start">
-                    <Typography sx={{ width: 96, flexShrink: 0, color: T.textSec, fontSize: 16, lineHeight: 1.5 }}>
+                    <Typography sx={{ width: 140, flexShrink: 0, color: T.textSec, fontSize: 16, fontWeight: 400, lineHeight: 1.5 }}>
                       {row.label}
                     </Typography>
                     <Box sx={{ flex: 1, minWidth: 0 }}>
@@ -223,7 +223,7 @@ export default function Page({ params }: Props) {
                       ) : (
                         <Typography
                           sx={{
-                            color: T.textPrim,
+                            color: T.textSec,
                             fontSize: 16,
                             fontWeight: 300,
                             lineHeight: 1.5,
@@ -252,7 +252,7 @@ export default function Page({ params }: Props) {
 
           {/* Right — script viewer */}
           <Stack sx={{ flex: 7, minWidth: 0, minHeight: 0 }}>
-            <Typography sx={{ fontSize: 17, fontWeight: 500, color: T.textSec, mb: 1 }}>
+            <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textDim, mb: 1 }}>
               {t('alert')}
             </Typography>
             <Box

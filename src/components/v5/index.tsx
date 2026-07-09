@@ -125,6 +125,8 @@ type DataTableProps<R = any> = {
   headerVariant?: 'default' | 'light';
   flush?: boolean;
   bodyWeight?: number;
+  headerWeight?: number;
+  headerSize?: number;
   selectedIndex?: number | null;
   onRowClick?: (row: R, index: number) => void;
   loading?: boolean;
@@ -139,7 +141,9 @@ export function DataTable<R = any>({
   dense,
   headerVariant = 'default',
   flush,
-  bodyWeight = 400,
+  bodyWeight = 300,
+  headerWeight = 400,
+  headerSize = 17,
   selectedIndex = null,
   onRowClick,
   loading,
@@ -175,12 +179,12 @@ export function DataTable<R = any>({
                   zIndex: 1,
                   bgcolor: T.bgPanel,
                   color: T.textSec,
-                  fontWeight: 500,
+                  fontWeight: headerWeight,
                   textAlign: col.align || 'left',
                   p: dense ? '12px 12px' : '11px 14px',
                   borderBottom: `1px solid ${T.border}`,
                   whiteSpace: 'nowrap',
-                  fontSize: 16,
+                  fontSize: headerSize,
                   textTransform: light ? 'none' : 'uppercase',
                   letterSpacing: light ? 0 : '0.05em',
                   width: col.width,
@@ -227,9 +231,9 @@ export function DataTable<R = any>({
                         sx={{
                           p: dense ? '12px' : '10px 14px',
                           textAlign: col.align || 'left',
-                          fontFamily: col.mono ? FONT_MONO : 'inherit',
+                          fontFamily: 'inherit',
                           fontWeight: col.weight ?? bodyWeight,
-                          color: col.color || (col.dim ? T.textSec : T.textPrim),
+                          color: col.color || T.textSec,
                           whiteSpace: col.grow ? 'normal' : 'nowrap',
                           maxWidth: col.grow ? 380 : undefined,
                           overflow: col.grow ? 'hidden' : undefined,
@@ -284,10 +288,10 @@ export function SummaryCard({ label, value }: { label: string; value: ReactNode 
 // StatusBadge
 // ----------------------------------------------------------------------
 
-export function StatusBadge({ on, labelOn = 'active', labelOff = 'inactive', color, fontSize = 14 }: { on: boolean; labelOn?: string; labelOff?: string; color?: string; fontSize?: number }) {
+export function StatusBadge({ on, labelOn = 'active', labelOff = 'inactive', color, fontSize = 14, fontWeight = 300 }: { on: boolean; labelOn?: string; labelOff?: string; color?: string; fontSize?: number; fontWeight?: number }) {
   const c = color || (on ? T.on : T.off);
   return (
-    <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.625, fontSize, fontWeight: 300, px: 1, py: '2px', borderRadius: '3px', letterSpacing: '0.03em', color: c }}>
+    <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.625, fontSize, fontWeight, px: 1, py: '2px', borderRadius: '3px', letterSpacing: '0.03em', color: c }}>
       <Box sx={{ width: 5, height: 5, borderRadius: '50%', bgcolor: 'currentColor' }} />
       {on ? labelOn : labelOff}
     </Box>
@@ -311,7 +315,7 @@ type BtnPrimaryProps = BtnProps & {
 };
 
 const btnBase = {
-  height: 30,
+  height: 32,
   border: 'none',
   borderRadius: '5px',
   px: 1.75,

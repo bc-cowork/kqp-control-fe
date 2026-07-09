@@ -15,7 +15,7 @@ import { fetcher, endpoints } from 'src/utils/axios';
 import { useTranslate } from 'src/locales';
 import { T, FONT_MONO } from 'src/theme/tokens';
 
-import { PageShell, DataTable, CodeBlock, SectionLabel } from 'src/components/v5';
+import { PageShell, DataTable, CodeBlock } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
 
@@ -51,7 +51,7 @@ export default function Page({ params }: Props) {
     {
       key: 'name',
       label: t('table.function_name'),
-      render: (r) => <span style={{ color: T.primary, fontWeight: 400 }}>{r.name}</span>,
+      render: (r) => <span style={{ color: T.primary }}>{r.name}</span>,
     },
     { key: 'path', label: t('table.path'), mono: true, dim: true },
     { key: 'timestamp', label: t('table.timestamp'), mono: true, dim: true },
@@ -65,7 +65,7 @@ export default function Page({ params }: Props) {
       key: 'name',
       label: t('detail_table.related_identifier'),
       render: (r) => (
-        <span style={{ color: T.primary, fontWeight: 400, fontFamily: FONT_MONO }}>{r.name}</span>
+        <span style={{ color: T.primary }}>{r.name}</span>
       ),
     },
     { key: 'ref_count', label: t('detail_table.ref_freq'), mono: true, align: 'right', grow: true, color: T.textSec },
@@ -80,14 +80,16 @@ export default function Page({ params }: Props) {
       ]}
       title={`${t('top.title_prefix')} : ${fnName}`}
     >
-      <DataTable<any>
-        columns={summaryColumns}
-        rows={summaryRows}
-        headerVariant="light"
-        loading={isLoading}
-        error={!!error}
-        emptyLabel={t('empty_detail')}
-      />
+      <Box sx={{ flexShrink: 0 }}>
+        <DataTable<any>
+          columns={summaryColumns}
+          rows={summaryRows}
+          headerVariant="light"
+          loading={isLoading}
+          error={!!error}
+          emptyLabel={t('empty_detail')}
+        />
+      </Box>
 
       <Box
         sx={{
@@ -98,7 +100,7 @@ export default function Page({ params }: Props) {
         }}
       >
         <Box sx={{ flex: '1 1 58%', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
-          <SectionLabel>{t('detail_table.section_identifiers')}</SectionLabel>
+          <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textDim }}>{t('detail_table.section_identifiers')}</Typography>
           <DataTable<RefItem>
             columns={refColumns}
             rows={specList}
@@ -113,7 +115,7 @@ export default function Page({ params }: Props) {
         </Box>
 
         <Box sx={{ flex: '1 1 42%', minWidth: 0, width: '100%', minHeight: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
-          <SectionLabel>{t('detail_table.script_title')}</SectionLabel>
+          <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textDim }}>{t('detail_table.script_title')}</Typography>
           <Box
             sx={{
               flex: 1,

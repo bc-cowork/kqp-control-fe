@@ -5,12 +5,13 @@ import type { Column } from 'src/components/v5';
 import useSWR from 'swr';
 
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 import { endpoints, fetcher } from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
-import { ACCENT2 } from 'src/theme/tokens';
-import { PageShell, DataTable, StatusBadge, SectionLabel } from 'src/components/v5';
+import { T, ACCENT2 } from 'src/theme/tokens';
+import { PageShell, DataTable, StatusBadge } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
 
@@ -43,9 +44,9 @@ export default function Page({ params }: Props) {
     traffics?.outbound && Object.keys(traffics.outbound).length > 0 ? traffics.outbound : [];
 
   const summaryCols: Column<SummaryRow>[] = [
-    { key: 'item', label: t('table_top.item') },
-    { key: 'max', label: t('table_top.max'), mono: true, align: 'right', render: (r) => r.data?.max?.toLocaleString() },
-    { key: 'cur', label: t('table_top.cur'), mono: true, align: 'right', render: (r) => r.data?.cur?.toLocaleString() },
+    { key: 'item', label: t('table_top.item'), color: T.textSec },
+    { key: 'max', label: t('table_top.max'), mono: true, align: 'right', color: T.textSec, render: (r) => r.data?.max?.toLocaleString() },
+    { key: 'cur', label: t('table_top.cur'), mono: true, align: 'right', color: T.textSec, render: (r) => r.data?.cur?.toLocaleString() },
     {
       key: 'odd',
       label: t('table_top.odd'),
@@ -62,18 +63,18 @@ export default function Page({ params }: Props) {
         const abnormal = r.data?.odd > 0 || !!r.data?.note;
         // Always surface the English "Abnormal" label in both locales (per design).
         return abnormal ? (
-          <StatusBadge on={false} labelOff="Abnormal" color={ACCENT2} />
+          <StatusBadge on={false} labelOff="Abnormal" color={ACCENT2} fontSize={16} fontWeight={400} />
         ) : (
-          <StatusBadge on labelOn={t('badge.normal')} />
+          <StatusBadge on labelOn={t('badge.normal')} fontSize={16} fontWeight={400} />
         );
       },
     },
   ];
 
   const trafficCols: Column<TrafficRow>[] = [
-    { key: 'time', label: t('table_bottom.time'), mono: true, align: 'center' },
-    { key: 'channel', label: t('table_bottom.channel'), mono: true, align: 'center' },
-    { key: 'count', label: t('table_bottom.count'), mono: true, align: 'center', render: (r) => r.count?.toLocaleString() },
+    { key: 'time', label: t('table_bottom.time'), mono: true, align: 'center', color: T.textSec },
+    { key: 'channel', label: t('table_bottom.channel'), mono: true, align: 'center', color: T.textSec },
+    { key: 'count', label: t('table_bottom.count'), mono: true, align: 'center', color: T.textSec, render: (r) => r.count?.toLocaleString() },
   ];
 
   return (
@@ -95,13 +96,13 @@ export default function Page({ params }: Props) {
 
       <Box sx={{ display: 'flex', gap: 1.75, flex: 1, minHeight: 0 }}>
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0, minHeight: 0 }}>
-          <SectionLabel>{t('table_top.ch_inbound')}</SectionLabel>
+          <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textDim }}>{t('table_top.ch_inbound')}</Typography>
           <Box sx={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', '& > *': { flex: 1, minHeight: 0 } }}>
             <DataTable<TrafficRow> columns={trafficCols} rows={inbound} dense emptyLabel={t('table_bottom.no_inbound_traffic')} />
           </Box>
         </Box>
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0, minHeight: 0 }}>
-          <SectionLabel>{t('table_top.ch_outbound')}</SectionLabel>
+          <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textDim }}>{t('table_top.ch_outbound')}</Typography>
           <Box sx={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', '& > *': { flex: 1, minHeight: 0 } }}>
             <DataTable<TrafficRow> columns={trafficCols} rows={outbound} dense emptyLabel={t('table_bottom.no_outbound_traffic')} />
           </Box>

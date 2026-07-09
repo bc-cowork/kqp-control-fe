@@ -7,6 +7,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 import { paths } from 'src/routes/paths';
 
@@ -14,9 +15,9 @@ import { formatBytes } from 'src/utils/helper';
 import { fetcher, endpoints } from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
-import { T, FONT_MONO } from 'src/theme/tokens';
+import { T } from 'src/theme/tokens';
 
-import { SpecChip, DataTable, PageShell, SectionLabel } from 'src/components/v5';
+import { SpecChip, DataTable, PageShell } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
 
@@ -61,7 +62,7 @@ export default function Page({ params }: Props) {
     {
       key: 'name',
       label: t('table.spec_name'),
-      render: (r) => <span style={{ color: T.primary, fontWeight: 400 }}>{r.name}</span>,
+      render: (r) => <span style={{ color: T.primary }}>{r.name}</span>,
     },
     { key: 'path', label: t('table.path'), mono: true, dim: true },
     { key: 'timestamp', label: t('table.timestamp'), mono: true, dim: true },
@@ -100,7 +101,7 @@ export default function Page({ params }: Props) {
               paths.dashboard.nodes.identifyDetail(node, r.url.split('/').filter(Boolean).pop() || '')
             )
           }
-          sx={{ color: T.primary, fontWeight: 400, fontFamily: FONT_MONO, cursor: 'pointer' }}
+          sx={{ color: T.primary, cursor: 'pointer' }}
         >
           {r.name}
         </Box>
@@ -153,7 +154,7 @@ export default function Page({ params }: Props) {
 
       <Box sx={{ display: 'flex', gap: 2, alignItems: 'flex-start' }}>
         <Box sx={{ flex: 5, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
-          <SectionLabel>{t('section_identifiers')}</SectionLabel>
+          <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textDim }}>{t('section_identifiers')}</Typography>
           <DataTable<IdentifyRow>
             columns={identifierColumns}
             rows={identifiers}
@@ -164,7 +165,7 @@ export default function Page({ params }: Props) {
         </Box>
 
         <Box sx={{ flex: 7, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
-          <SectionLabel>{t('section_definition')}</SectionLabel>
+          <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textDim }}>{t('section_definition')}</Typography>
           <DataTable<FragRow>
             columns={fragColumns}
             rows={frags}

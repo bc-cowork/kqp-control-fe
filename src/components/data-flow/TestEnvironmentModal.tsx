@@ -203,16 +203,16 @@ function ModalContent({
       {/* ========== Modal Header ========== */}
       <Stack direction="row" alignItems="center" spacing={1} sx={{ pb: 2 }}>
         <Box sx={{ width: 24, height: 24, position: 'relative' }}>
-          <DataFlowIcon />
+          <DataFlowIcon color={T.link} />
         </Box>
 
         <Typography
           sx={{
             flex: 1,
             fontSize: 18,
-            fontWeight: 600,
+            fontWeight: 400,
             lineHeight: '28.5px',
-            color: T.textPrim,
+            color: T.link,
           }}
         >
           {t('sandbox.title')}

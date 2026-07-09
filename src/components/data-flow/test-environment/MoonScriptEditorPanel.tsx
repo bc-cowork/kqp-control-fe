@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { T, FONT_CODE, FONT_MONO } from 'src/theme/tokens';
+import { T, ACCENT2, FONT_CODE, FONT_MONO } from 'src/theme/tokens';
 
 import { useTranslate } from 'src/locales';
 
@@ -62,7 +62,7 @@ export function MoonScriptEditorPanel({
           borderBottom: `1px solid ${T.border}`,
         }}
       >
-        <Typography sx={{ fontSize: 16, fontWeight: 600, color: T.textPrim }}>
+        <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textSec }}>
           {t('sandbox.layout_definition')}
         </Typography>
 
@@ -105,17 +105,18 @@ export function MoonScriptEditorPanel({
           startIcon={isPreviewing ? <CircularProgress size={14} color="inherit" /> : undefined}
           sx={{
             ml: 'auto',
-            height: 30,
-            px: '13px',
+            height: 32,
+            px: '14px',
             minWidth: 0,
-            backgroundColor: T.primary,
+            background: `linear-gradient(to top, ${ACCENT2}55, ${ACCENT2}14)`,
+            border: `1px solid ${T.border}`,
             borderRadius: '6px',
-            color: T.onFill,
-            fontSize: 14,
+            color: ACCENT2,
+            fontSize: 15,
             fontWeight: 500,
             textTransform: 'none',
-            '&:hover': { backgroundColor: T.primaryHov },
-            '&.Mui-disabled': { color: T.textDim, backgroundColor: T.primary },
+            '&:hover': { background: `linear-gradient(to top, ${ACCENT2}77, ${ACCENT2}22)` },
+            '&.Mui-disabled': { color: T.textDim },
           }}
         >
           {t('sandbox.preview_btn')}
@@ -128,7 +129,7 @@ export function MoonScriptEditorPanel({
           flex: 1,
           position: 'relative',
           overflow: 'hidden',
-          backgroundColor: '#1E1E1E',
+          backgroundColor: T.bgPanel,
           '& .monaco-scrollable-element > .scrollbar > .slider': {
             backgroundColor: 'rgba(255, 255, 255, 0.2) !important',
             borderRadius: '4px !important',
@@ -157,8 +158,8 @@ export function MoonScriptEditorPanel({
           theme="moon-dark"
           defaultValue={layoutDefinition}
           beforeMount={(monaco) => {
-            // .moon (Monokai-family) theme on a #1E1E1E surface — matches the
-            // reference MOON_EDIT_THEME (text #f8f8f2 / str #abe338 / num #f5ab35 / key #ffa07a).
+            // .moon (Monokai-family) theme on the app surface (T.bgPanel)
+            // (text #f8f8f2 / str #abe338 / num #f5ab35 / key #ffa07a).
             monaco.editor.defineTheme('moon-dark', {
               base: 'vs-dark',
               inherit: true,
@@ -170,7 +171,7 @@ export function MoonScriptEditorPanel({
                 { token: 'type', foreground: 'ffa07a' },
                 { token: 'identifier', foreground: 'f8f8f2' },
               ],
-              colors: { 'editor.background': '#1E1E1E' },
+              colors: { 'editor.background': T.bgPanel },
             });
           }}
           onMount={(ed) => {

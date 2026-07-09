@@ -16,9 +16,9 @@ import { paths } from 'src/routes/paths';
 import { fetcher, endpoints } from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
-import { T, FONT_MONO } from 'src/theme/tokens';
+import { T, ACCENT2, FONT_MONO } from 'src/theme/tokens';
 
-import { CodeBlock, DataTable, PageShell, SectionLabel } from 'src/components/v5';
+import { CodeBlock, DataTable, PageShell } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
 
@@ -83,7 +83,7 @@ export default function Page({ params }: Props) {
     {
       key: 'name',
       label: t('table.identity_name'),
-      render: (r) => <span style={{ color: T.primary, fontWeight: 400 }}>{r.name}</span>,
+      render: (r) => <span style={{ color: T.primary }}>{r.name}</span>,
     },
     { key: 'path', label: t('table.path'), mono: true, dim: true },
     { key: 'timestamp', label: t('table.timestamp'), mono: true, dim: true },
@@ -106,7 +106,7 @@ export default function Page({ params }: Props) {
               paths.dashboard.nodes.specDetail(node, r.url.split('/').filter(Boolean).pop() || '')
             )
           }
-          sx={{ color: T.primary, fontWeight: 400, fontFamily: FONT_MONO, cursor: 'pointer' }}
+          sx={{ color: T.primary, cursor: 'pointer' }}
         >
           {r.name}
         </Box>
@@ -140,15 +140,15 @@ export default function Page({ params }: Props) {
         <Box sx={{ flex: 7, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1.75 }}>
           {/* Key box — header-less cell-style box (same tone as table body cells) */}
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <SectionLabel>{t('detail_table.key_label')}</SectionLabel>
+            <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textDim }}>{t('detail_table.key_label')}</Typography>
             <Box
               sx={{
                 border: `1px solid ${T.border}`,
                 borderRadius: '6px',
                 bgcolor: T.bgCard,
                 p: '10px 14px',
-                fontFamily: FONT_MONO,
                 fontSize: 17,
+                fontWeight: 400,
                 color: T.textPrim,
               }}
             >
@@ -158,7 +158,7 @@ export default function Page({ params }: Props) {
 
           {/* Related SPEC */}
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <SectionLabel>{t('detail_table.related_spec')}</SectionLabel>
+            <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textDim }}>{t('detail_table.related_spec')}</Typography>
             <DataTable<SpecRow>
               columns={specColumns}
               rows={specList}
@@ -179,13 +179,19 @@ export default function Page({ params }: Props) {
             }}
           >
             <Box sx={{ px: '14px', py: '9px', borderBottom: `1px solid ${T.border}` }}>
-              <Typography sx={{ fontSize: 15, color: T.textSec, fontWeight: 500 }}>
+              <Typography sx={{ fontSize: 17, color: T.textSec, fontWeight: 400 }}>
                 {t('detail_table.today_count')}
               </Typography>
             </Box>
             <Box sx={{ height: 264, p: '10px 10px 6px' }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={todayCountData} margin={{ top: 6, right: 10, left: 0, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="todayCountBar" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stopColor={ACCENT2} stopOpacity={0.2} />
+                      <stop offset="1" stopColor={ACCENT2} stopOpacity={0.5} />
+                    </linearGradient>
+                  </defs>
                   <CartesianGrid stroke={T.border} strokeWidth={0.5} vertical={false} />
                   <XAxis
                     dataKey="timestamp"
@@ -214,7 +220,7 @@ export default function Page({ params }: Props) {
                   />
                   <Bar
                     dataKey="count"
-                    fill={T.primary}
+                    fill="url(#todayCountBar)"
                     radius={[3, 3, 0, 0]}
                     maxBarSize={26}
                     isAnimationActive={false}
@@ -227,7 +233,7 @@ export default function Page({ params }: Props) {
 
         {/* Identifier Definition */}
         <Box sx={{ flex: 5, minWidth: 0, minHeight: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
-          <SectionLabel>{t('detail_table.script_title')}</SectionLabel>
+          <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textDim }}>{t('detail_table.script_title')}</Typography>
           <Box
             sx={{
               flex: 1,

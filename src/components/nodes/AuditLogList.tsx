@@ -52,12 +52,12 @@ export function AuditLogList({ selectedNodeId }: Props) {
   }, []);
 
   const columns: Column<IAuditLogItem>[] = [
-    { key: 'id', label: t('table_header.no'), mono: true, align: 'right', width: 56 },
+    { key: 'id', label: t('table_header.no'), align: 'right', width: 56, color: T.textSec },
     {
       key: 'date',
       label: t('table_header.date'),
-      mono: true,
       width: 120,
+      color: T.textSec,
       render: (r) => formatDateCustom(r.date?.toString()),
     },
     { key: 'kind', label: t('table_header.type'), color: T.primary },
@@ -71,8 +71,8 @@ export function AuditLogList({ selectedNodeId }: Props) {
     {
       key: 'size',
       label: t('table_header.size'),
-      mono: true,
       align: 'right',
+      color: T.textSec,
       render: (r) => formatBytes(r.size),
     },
   ];
@@ -100,6 +100,9 @@ export function AuditLogList({ selectedNodeId }: Props) {
 
       <DataTable<IAuditLogItem>
         columns={columns}
+        bodyWeight={300}
+        headerWeight={400}
+        headerSize={17}
         rows={auditLogsEmpty ? [] : auditLogs}
         loading={auditLogsLoading}
         error={auditLogsError}

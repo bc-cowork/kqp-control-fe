@@ -17,7 +17,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { T, FONT_MONO } from 'src/theme/tokens';
+import { T, ACCENT2, FONT_MONO } from 'src/theme/tokens';
 
 import { useTranslate } from 'src/locales';
 
@@ -119,7 +119,7 @@ export function DataFlowPreviewPanel({
           borderBottom: `1px solid ${T.border}`,
         }}
       >
-        <Typography sx={{ fontSize: 16, fontWeight: 600, color: T.textPrim }}>
+        <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textSec }}>
           Data Flow
         </Typography>
 
@@ -160,17 +160,18 @@ export function DataFlowPreviewPanel({
           disableRipple
           sx={{
             ml: 'auto',
-            height: 30,
-            px: '13px',
+            height: 32,
+            px: '14px',
             minWidth: 0,
-            backgroundColor: T.primary,
+            background: `linear-gradient(to top, ${ACCENT2}55, ${ACCENT2}14)`,
+            border: `1px solid ${T.border}`,
             borderRadius: '6px',
-            color: T.onFill,
+            color: ACCENT2,
             gap: 0.75,
-            fontSize: 14,
+            fontSize: 15,
             fontWeight: 500,
             textTransform: 'none',
-            '&:hover': { backgroundColor: T.primaryHov },
+            '&:hover': { background: `linear-gradient(to top, ${ACCENT2}77, ${ACCENT2}22)` },
           }}
         >
           <RevertIcon />
@@ -185,18 +186,17 @@ export function DataFlowPreviewPanel({
           disabled={isSaving}
           startIcon={isSaving ? <CircularProgress size={14} color="inherit" /> : undefined}
           sx={{
-            height: 30,
-            px: '15px',
+            height: 32,
+            px: '14px',
             minWidth: 0,
-            backgroundColor: T.bgCard,
-            border: `1px solid ${T.border}`,
+            backgroundColor: T.primary,
             borderRadius: '6px',
-            color: T.textSec,
-            fontSize: 14,
+            color: '#fff',
+            fontSize: 15,
             fontWeight: 500,
             textTransform: 'none',
-            '&:hover': { backgroundColor: T.bgHover, color: T.textPrim },
-            '&.Mui-disabled': { color: T.textDim, backgroundColor: T.bgCard },
+            '&:hover': { backgroundColor: T.primaryHov },
+            '&.Mui-disabled': { color: T.textDim, backgroundColor: T.primary },
           }}
         >
           {isSaving ? t('sandbox.saving') : t('sandbox.save')}

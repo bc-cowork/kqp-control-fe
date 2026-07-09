@@ -129,15 +129,15 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
       : auditFrameList?.frame_list ?? [];
 
   const columns: Column<AuditLogFrameItem>[] = [
-    { key: 'seq', label: t('table_header.frame_seq'), mono: true, width: 150 },
-    { key: 'head', label: t('table_header.head'), mono: true, align: 'center' },
-    { key: 'rid', label: t('table_header.rid'), mono: true, align: 'right', width: 90 },
+    { key: 'seq', label: t('table_header.frame_seq'), width: 150, color: T.textSec },
+    { key: 'head', label: t('table_header.head'), align: 'center', color: T.textSec },
+    { key: 'rid', label: t('table_header.rid'), align: 'right', width: 90, color: T.textSec },
     {
       key: 'size',
       label: t('table_header.size'),
-      mono: true,
       align: 'right',
       width: 150,
+      color: T.textSec,
       render: (r) => formatBytes(r.size),
     },
   ];
@@ -298,6 +298,9 @@ export function AuditLogFrameList({ selectedNodeId, selectedFile }: Props) {
           <DataTable<AuditLogFrameItem>
             columns={columns}
             headerVariant="light"
+            bodyWeight={300}
+            headerWeight={400}
+            headerSize={17}
             rows={displayedFrames}
             loading={auditFrameListLoading}
             error={auditFrameListError}

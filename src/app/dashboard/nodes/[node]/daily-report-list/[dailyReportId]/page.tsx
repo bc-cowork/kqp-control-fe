@@ -100,8 +100,8 @@ export default function Page({ params }: Props) {
                 p: '11px 14px',
                 width: 110,
                 color: T.textSec,
-                fontSize: 16,
-                fontWeight: 500,
+                fontSize: 17,
+                fontWeight: 400,
                 textAlign: 'left',
                 borderRight: `1px solid ${T.borderSub}`,
                 borderBottom: lastRow ? 'none' : `1px solid ${T.border}`,
@@ -119,8 +119,8 @@ export default function Page({ params }: Props) {
                 borderRight: lastCell ? 'none' : `1px solid ${T.borderSub}`,
                 borderBottom: lastRow ? 'none' : `1px solid ${T.border}`,
                 fontFamily: c.mono ? FONT_MONO : 'inherit',
-                color: c.color || T.textSec,
-                fontWeight: c.weight ?? 350,
+                color: T.textSec,
+                fontWeight: 300,
               }}
             >
               {c.value ?? '—'}

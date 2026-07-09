@@ -42,7 +42,7 @@ export function SpecListView({ nodeId }: Props) {
     {
       key: 'name',
       label: t('table.spec_name'),
-      render: (r) => <span style={{ color: T.primary, fontWeight: 400 }}>{r.name}</span>,
+      render: (r) => <span style={{ color: T.link }}>{r.name}</span>,
     },
     { key: 'path', label: t('table.path'), mono: true, dim: true },
     { key: 'timestamp', label: t('table.timestamp'), mono: true, dim: true },
