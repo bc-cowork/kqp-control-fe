@@ -6,6 +6,7 @@ import useSWR from 'swr';
 import { useRouter } from 'next/navigation';
 
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 import { paths } from 'src/routes/paths';
 
@@ -14,7 +15,7 @@ import { fetcher, endpoints } from 'src/utils/axios';
 import { useTranslate } from 'src/locales';
 import { T } from 'src/theme/tokens';
 
-import { PageShell, DataTable, CodeBlock, SectionLabel } from 'src/components/v5';
+import { PageShell, DataTable, CodeBlock } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
 
@@ -43,7 +44,7 @@ export default function Page({ params }: Props) {
     {
       key: 'name',
       label: t('process_detail.process_name'),
-      render: (r) => <span style={{ fontWeight: 500 }}>{r.name}</span>,
+      render: (r) => <span>{r.name}</span>,
     },
     { key: 'timestamp', label: t('process_detail.timestamp'), mono: true, dim: true },
     { key: 'cpu', label: t('process_detail.cpu'), mono: true, align: 'right' },
@@ -72,7 +73,7 @@ export default function Page({ params }: Props) {
         />
       </Box>
 
-      <SectionLabel>{t('detail_table.script_title')}</SectionLabel>
+      <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textDim }}>{t('detail_table.script_title')}</Typography>
       <CodeBlock theme="default" fill>{isLoading ? '' : error ? '' : layoutDefinition}</CodeBlock>
     </PageShell>
   );

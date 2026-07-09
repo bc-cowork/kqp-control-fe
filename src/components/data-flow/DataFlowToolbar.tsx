@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-import { T, FONT_MONO } from 'src/theme/tokens';
+import { T, ACCENT2, FONT_MONO } from 'src/theme/tokens';
 
 import { useTranslate } from 'src/locales';
 
@@ -32,13 +32,13 @@ export function DataFlowToolbar({ fileName, onTestEnvClick }: DataFlowToolbarPro
       }}
     >
       {/* Title */}
-      <Typography sx={{ fontSize: 17, fontWeight: 600, color: T.textPrim }}>
+      <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textSec }}>
         {t('toolbar.title')}
       </Typography>
 
       {/* Filename + preview-mode chip (centered) */}
       <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-        <Typography sx={{ fontSize: 15, color: T.textSec, fontFamily: FONT_MONO }}>
+        <Typography sx={{ fontSize: 15, color: T.textDim, fontFamily: FONT_MONO }}>
           {fileName}
         </Typography>
         <Box
@@ -61,17 +61,17 @@ export function DataFlowToolbar({ fileName, onTestEnvClick }: DataFlowToolbarPro
         disableRipple
         onClick={onTestEnvClick}
         sx={{
-          height: 30,
-          px: '12px',
+          height: 32,
+          px: '14px',
           minWidth: 0,
-          backgroundColor: T.bgCard,
+          background: `linear-gradient(to top, ${ACCENT2}55, ${ACCENT2}14)`,
           border: `1px solid ${T.border}`,
           borderRadius: '6px',
-          color: T.textSec,
+          color: ACCENT2,
           fontSize: 15,
           fontWeight: 500,
           textTransform: 'none',
-          '&:hover': { backgroundColor: T.bgHover, color: T.textPrim },
+          '&:hover': { background: `linear-gradient(to top, ${ACCENT2}77, ${ACCENT2}22)` },
         }}
       >
         {t('toolbar.test_env')}

@@ -41,7 +41,7 @@ export function RuleList({ selectedNodeId }: Props) {
     {
       key: 'name',
       label: t('table_header.name'),
-      render: (r) => <span style={{ color: T.primary, fontWeight: 400 }}>{r.name}</span>,
+      render: (r) => <span style={{ color: T.link }}>{r.name}</span>,
     },
     { key: 'path', label: t('table_header.path'), mono: true, dim: true },
     { key: 'timestamp', label: t('table_header.timestamp'), mono: true, dim: true },

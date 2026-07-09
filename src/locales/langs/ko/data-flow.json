@@ -28,7 +28,7 @@
     "title": "JSON Definition"
   },
   "sandbox": {
-    "title": "Test Environment (SANDBOX)",
+    "title": "테스트 환경 (SANDBOX)",
     "horizontal_view": "horizontal View",
     "vertical_view": "vertical View",
     "horizontal": "horizontal",

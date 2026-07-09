@@ -15,7 +15,7 @@ import { fetcher, endpoints } from 'src/utils/axios';
 import { useTranslate } from 'src/locales';
 import { T, FONT_MONO } from 'src/theme/tokens';
 
-import { PageShell, DataTable, CodeBlock, SectionLabel } from 'src/components/v5';
+import { PageShell, DataTable, CodeBlock } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
 
@@ -54,7 +54,7 @@ export default function Page({ params }: Props) {
     {
       key: 'name',
       label: t('table_header.name'),
-      render: (r) => <span style={{ color: T.primary, fontWeight: 400 }}>{r.name}</span>,
+      render: (r) => <span style={{ color: T.primary }}>{r.name}</span>,
     },
     { key: 'path', label: t('table_header.path'), mono: true, dim: true },
     { key: 'timestamp', label: t('table_header.timestamp'), mono: true, dim: true },
@@ -74,7 +74,7 @@ export default function Page({ params }: Props) {
       key: 'name',
       label,
       render: (r) => (
-        <span style={{ color: T.primary, fontWeight: 400, fontFamily: FONT_MONO }}>{r.name}</span>
+        <span style={{ color: T.primary }}>{r.name}</span>
       ),
     },
     { key: countKey, label: freqLabel, mono: true, align: 'right', grow: true, color: T.textSec },
@@ -108,7 +108,7 @@ export default function Page({ params }: Props) {
       >
         <Box sx={{ flex: '1 1 58%', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1.75 }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <SectionLabel>{t('detail_table.related_layouts')}</SectionLabel>
+            <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textDim }}>{t('detail_table.related_layouts')}</Typography>
             <DataTable<RefItem>
               columns={refColumns(t('detail_table.layout_name'), 'ref_count', t('detail_table.layout_ref_freq'))}
               rows={layoutList}
@@ -123,7 +123,7 @@ export default function Page({ params }: Props) {
           </Box>
 
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <SectionLabel>{t('detail_table.related_processes')}</SectionLabel>
+            <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textDim }}>{t('detail_table.related_processes')}</Typography>
             <DataTable<RefItem>
               columns={refColumns(t('detail_table.process_name'), 'usage_count', t('detail_table.process_usage_freq'))}
               rows={processList}
@@ -138,7 +138,7 @@ export default function Page({ params }: Props) {
           </Box>
 
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <SectionLabel>{t('detail_table.related_actions')}</SectionLabel>
+            <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textDim }}>{t('detail_table.related_actions')}</Typography>
             <DataTable<RefItem>
               columns={refColumns(t('detail_table.action_name'), 'usage_count', t('detail_table.process_usage_freq'))}
               rows={actionList}
@@ -154,7 +154,7 @@ export default function Page({ params }: Props) {
         </Box>
 
         <Box sx={{ flex: '1 1 42%', minWidth: 0, width: '100%', minHeight: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
-          <SectionLabel>{t('detail_table.script_title')}</SectionLabel>
+          <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textDim }}>{t('detail_table.script_title')}</Typography>
           <Box
             sx={{
               flex: 1,

@@ -54,8 +54,8 @@ export function SaveConfirmDialog({ open, onClose, onConfirm, isSaving }: SaveCo
           variant="body1"
           sx={{
             color: T.textPrim,
-            fontSize: 16,
-            fontWeight: 600,
+            fontSize: 17,
+            fontWeight: 400,
             lineHeight: '22.50px',
           }}
         >
@@ -81,7 +81,7 @@ export function SaveConfirmDialog({ open, onClose, onConfirm, isSaving }: SaveCo
         <Typography
           variant="body1"
           sx={{
-            color: T.textSec,
+            color: T.textDim,
             fontSize: 15,
             fontWeight: 400,
             lineHeight: '22.50px',
@@ -95,49 +95,49 @@ export function SaveConfirmDialog({ open, onClose, onConfirm, isSaving }: SaveCo
       <DialogActions
         sx={{
           p: 0,
-          mt: '8px',
+          mt: '20px',
           justifyContent: 'flex-end',
           alignItems: 'center',
           gap: '10px',
-          pt: '20px',
-          pb: '20px',
         }}
       >
-        <Button
-          onClick={onConfirm}
-          disabled={isSaving}
-          disableRipple
-          sx={{
-            padding: '7px 17px',
-            backgroundColor: T.primary,
-            borderRadius: '6px',
-            color: T.onFill,
-            fontSize: 14,
-            fontWeight: 500,
-            lineHeight: '22.50px',
-            textTransform: 'none',
-            '&:hover': { backgroundColor: T.primaryHov },
-          }}
-        >
-          {isSaving ? t('sandbox.saving') : t('sandbox.save_confirm_btn')}
-        </Button>
         <Button
           onClick={onClose}
           disableRipple
           sx={{
-            padding: '7px 17px',
+            height: 32,
+            px: '14px',
+            minWidth: 0,
             backgroundColor: T.bgCard,
             borderRadius: '6px',
             border: `1px solid ${T.border}`,
             color: T.textSec,
-            fontSize: 14,
+            fontSize: 15,
             fontWeight: 500,
-            lineHeight: '22.50px',
             textTransform: 'none',
             '&:hover': { backgroundColor: T.bgHover, color: T.textPrim },
           }}
         >
           {t('sandbox.save_cancel_btn')}
+        </Button>
+        <Button
+          onClick={onConfirm}
+          disabled={isSaving}
+          disableRipple
+          sx={{
+            height: 32,
+            px: '14px',
+            minWidth: 0,
+            backgroundColor: T.primary,
+            borderRadius: '6px',
+            color: '#fff',
+            fontSize: 15,
+            fontWeight: 500,
+            textTransform: 'none',
+            '&:hover': { backgroundColor: T.primaryHov },
+          }}
+        >
+          {isSaving ? t('sandbox.saving') : t('sandbox.save_confirm_btn')}
         </Button>
       </DialogActions>
     </Dialog>

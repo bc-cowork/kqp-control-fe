@@ -304,7 +304,7 @@ export function AlertListView({ nodeId }: Props) {
             borderBottom: `1px solid ${T.border}`,
           }}
         >
-          <Typography sx={{ color: T.textSec, fontSize: 16, fontWeight: 500 }}>
+          <Typography sx={{ color: T.textSec, fontSize: 17, fontWeight: 400 }}>
             {t('list.watch_items')}
           </Typography>
           <BtnPrimary icon="eva:plus-fill" onClick={goAdd}>

@@ -81,7 +81,7 @@ export function DataFlowJsonEditor({ value, onChange }: DataFlowJsonEditorProps)
           sx={{
             flex: 1,
             fontSize: 17,
-            fontWeight: 500,
+            fontWeight: 400,
             lineHeight: '22.5px',
             color: T.textSec,
           }}
