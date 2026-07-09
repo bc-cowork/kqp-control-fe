@@ -647,8 +647,10 @@ export default function Page({ params }: Props) {
       </Box>
 
       {/* Data Flow Visualization */}
+      {/* flexShrink: 0 on all sections below — PageShell's body is a fixed-height
+          flex column, so any child without it gets compressed to fit the viewport */}
       {dataFlowDefinition && (
-        <Box sx={{ mb: 3 }}>
+        <Box sx={{ mb: 3, flexShrink: 0 }}>
           <DataFlowCanvas
             definition={dataFlowDefinition}
             fileName={`${decodedLayout}.moon`}
@@ -659,7 +661,7 @@ export default function Page({ params }: Props) {
 
       {/* JSON Definition Editor */}
       {jsonValue && (
-        <Box sx={{ mb: 3 }}>
+        <Box sx={{ mb: 3, flexShrink: 0 }}>
           <DataFlowJsonEditor
             value={jsonValue}
             onChange={handleJsonChange}
@@ -668,7 +670,7 @@ export default function Page({ params }: Props) {
       )}
 
       {/* Layout Definition (.moon) — section label + Monokai/moon code block */}
-      <Box sx={{ mb: 3, borderRadius: '8px', overflow: 'hidden', border: `1px solid ${T.border}` }}>
+      <Box sx={{ mb: 3, flexShrink: 0, borderRadius: '8px', overflow: 'hidden', border: `1px solid ${T.border}` }}>
         {/* Header bar — matches Data Flow / JSON Definition */}
         <Box sx={{ p: 1.5, backgroundColor: T.bgPanel, borderBottom: `1px solid ${T.border}` }}>
           <Typography sx={{ fontSize: 17, fontWeight: 400, lineHeight: '22.5px', color: T.textSec }}>

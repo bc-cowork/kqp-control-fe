@@ -69,16 +69,16 @@ export default function Page({ params }: Props) {
     countKey: 'ref_count' | 'usage_count',
     freqLabel: string
   ): Column<RefItem>[] => [
-    { key: 'no', label: t('detail_table.layout_no'), mono: true, align: 'right', width: 60, color: T.textSec, render: (_r, i) => i + 1 },
-    {
-      key: 'name',
-      label,
-      render: (r) => (
-        <span style={{ color: T.primary }}>{r.name}</span>
-      ),
-    },
-    { key: countKey, label: freqLabel, mono: true, align: 'right', grow: true, color: T.textSec },
-  ];
+      { key: 'no', label: t('detail_table.layout_no'), mono: true, align: 'right', width: 60, color: T.textSec, render: (_r, i) => i + 1 },
+      {
+        key: 'name',
+        label,
+        render: (r) => (
+          <span style={{ color: T.primary }}>{r.name}</span>
+        ),
+      },
+      { key: countKey, label: freqLabel, mono: true, align: 'right', grow: true, color: T.textSec },
+    ];
 
   return (
     <PageShell
@@ -89,14 +89,19 @@ export default function Page({ params }: Props) {
       ]}
       title={`${t('top.title_prefix')} : ${decodedRule}`}
     >
-      <DataTable<any>
-        columns={summaryColumns}
-        rows={summaryRows}
-        headerVariant="light"
-        loading={isLoading}
-        error={!!error}
-        emptyLabel={t('detail.empty')}
-      />
+      {/* Summary table (single row) */}
+      {/* flexShrink: 0 is required — PageShell's body is a fixed-height flex column,
+          and DataTable (minHeight: 0, overflow: auto) collapses to a sliver without it */}
+      <Box sx={{ flexShrink: 0 }}>
+        <DataTable<any>
+          columns={summaryColumns}
+          rows={summaryRows}
+          headerVariant="light"
+          loading={isLoading}
+          error={!!error}
+          emptyLabel={t('detail.empty')}
+        />
+      </Box>
 
       <Box
         sx={{
@@ -104,6 +109,8 @@ export default function Page({ params }: Props) {
           gap: 2,
           alignItems: 'stretch',
           flexWrap: { xs: 'wrap', md: 'nowrap' },
+          flex: 1,
+          minHeight: 0,
         }}
       >
         <Box sx={{ flex: '1 1 58%', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1.75 }}>
