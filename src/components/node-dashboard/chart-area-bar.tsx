@@ -87,12 +87,12 @@ export function ChartBar({ data = dummyData, loading = false }: ChartBarProps) {
             <CartesianGrid stroke={gridColor} fill="transparent" vertical={false} />
             <XAxis
               dataKey="timestamp"
-              tick={{ fontSize: 12, fill: axisNumColor }}
+              tick={{ fontSize: 12, fill: axisNumColor, fontFamily: 'Roboto' }}
               tickLine={false}
               axisLine={{ stroke: 'transparent' }}
             />
             <YAxis
-              tick={{ fontSize: 12, fill: axisNumColor }}
+              tick={{ fontSize: 12, fill: axisNumColor, fontFamily: 'Roboto' }}
               tickLine={false}
               axisLine={{ stroke: 'transparent' }}
               tickFormatter={formatLargeNumber}
@@ -107,6 +107,7 @@ export function ChartBar({ data = dummyData, loading = false }: ChartBarProps) {
             />
             <Tooltip
               contentStyle={{
+                fontFamily: 'Roboto',
                 backgroundColor: theme.palette.common.white,
                 borderColor: theme.palette.grey[200],
                 borderRadius: 4,

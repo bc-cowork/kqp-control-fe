@@ -4,27 +4,31 @@
 /* eslint-disable class-methods-use-this */
 
 
-import React, { Component, ReactNode } from 'react';
+import type { ReactNode } from 'react';
+
+import React, { Component } from 'react';
 import { usePathname } from 'next/navigation';
+
 import {
-    Box,
-    Container,
-    Typography,
-    Button,
-    Paper,
-    Stack,
-    Collapse,
-    Alert,
-    Avatar,
-    useTheme,
-} from '@mui/material';
-import {
-    ErrorOutline,
-    Refresh,
     Home,
+    Refresh,
     ExpandMore,
     ExpandLess,
+    ErrorOutline,
 } from '@mui/icons-material';
+import {
+    Box,
+    Paper,
+    Stack,
+    Alert,
+    Button,
+    Avatar,
+    Collapse,
+    useTheme,
+    Container,
+    Typography,
+} from '@mui/material';
+
 import { useTranslate } from 'src/locales';
 import { DashboardContent } from 'src/layouts/dashboard';
 

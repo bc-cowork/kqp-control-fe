@@ -4,12 +4,11 @@ import { Trans } from 'react-i18next';
 
 import Typography from '@mui/material/Typography';
 
-import { useGetChannelList } from 'src/actions/nodes';
-
 import { useTranslate } from 'src/locales';
+import { useGetChannelList } from 'src/actions/nodes';
 import { ACCENT2, FONT_MONO } from 'src/theme/tokens';
-import { PageShell } from 'src/components/v5';
 
+import { PageShell } from 'src/components/v5';
 import { ChannelInbound } from 'src/components/nodes/ChannelInbound';
 
 // ----------------------------------------------------------------------

@@ -8,8 +8,8 @@ import { useEffect } from 'react';
 import Box from '@mui/material/Box';
 
 import { useTranslate } from 'src/locales';
-
 import { T, ACCENT2 } from 'src/theme/tokens';
+
 import { DataTable } from 'src/components/v5';
 
 // ----------------------------------------------------------------------

@@ -15,8 +15,8 @@ import { T, ACCENT2 } from 'src/theme/tokens';
 import { useGetNodes, useGetDiskMetrics } from 'src/actions/dashboard';
 
 import { KIcon } from 'src/components/k-icons';
-import { DiskUsage } from 'src/components/dashboard/DiskUsage';
 import { NodeList } from 'src/components/dashboard/NodeList';
+import { DiskUsage } from 'src/components/dashboard/DiskUsage';
 import { NodeGraphs } from 'src/components/dashboard/NodeGraphs';
 import { SegmentedButtonGroup } from 'src/components/dashboard/SegmentedButtonGroup';
 
@@ -76,7 +76,7 @@ export function DashboardView() {
 
         {/* Nodes table */}
         <Box sx={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
-          <Typography sx={{ fontSize: 17, fontWeight: 500, mb: 1.5, letterSpacing: '-0.01em', color: T.textPrim }}>
+          <Typography sx={{ fontSize: 17, fontWeight: 400, mb: 1.5, letterSpacing: '-0.01em', color: T.textSec }}>
             {t('node.node')}
           </Typography>
           <Box sx={{ flex: 1, minHeight: 0 }}>
@@ -115,7 +115,7 @@ export function DashboardView() {
           sx={{ p: '14px 16px', borderBottom: `1px solid ${T.border}` }}
         >
           <Stack direction="row" alignItems="center" spacing={1}>
-            <Typography sx={{ fontSize: 16, fontWeight: 500, letterSpacing: '0.02em', color: T.textPrim }}>
+            <Typography sx={{ fontSize: 17, fontWeight: 400, letterSpacing: '0.02em', color: T.textSec }}>
               {t('info.info')}
             </Typography>
             <Box
@@ -187,7 +187,7 @@ function SummaryStat({ label, pill, value }: { label?: string; pill?: 'on' | 'of
             {pill === 'on' ? 'ON' : 'OFF'}
           </Box>
         ) : (
-          <Typography component="span" sx={{ fontSize: 15, fontWeight: 500, letterSpacing: '0.05em', color: T.textSec }}>
+          <Typography component="span" sx={{ fontSize: 17, fontWeight: 400, letterSpacing: '0.05em', color: T.textSec }}>
             {label}
           </Typography>
         )}
@@ -209,7 +209,7 @@ function NodeInfoCard({ node, t }: { node: INodeItem; t: (k: string) => string }
   return (
     <Box sx={{ m: 1.5, bgcolor: T.bgCard, border: `1px solid ${T.border}`, borderRadius: '6px', overflow: 'hidden' }}>
       <Stack direction="row" alignItems="center" spacing={1.25} sx={{ p: '10px 14px', bgcolor: on ? `${ACCENT2}22` : T.offlineBg, borderBottom: `1px solid ${T.border}` }}>
-        <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5, fontSize: 13, fontWeight: 700, px: 0.875, py: '2px', borderRadius: '3px', letterSpacing: '0.08em', fontFamily: 'Roboto', bgcolor: on ? T.onBg : T.offlineBg, color: sc, border: `1px solid ${sc}55` }}>
+        <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5, fontSize: 13, fontWeight: 700, px: 0.875, py: '2px', borderRadius: '3px', letterSpacing: '0.08em', bgcolor: on ? T.onBg : T.offlineBg, color: sc, border: `1px solid ${sc}55` }}>
           <Box sx={{ width: 5, height: 5, borderRadius: '50%', bgcolor: sc }} />
           {on ? 'ON' : 'OFF'}
         </Box>
@@ -231,8 +231,8 @@ function NodeInfoCard({ node, t }: { node: INodeItem; t: (k: string) => string }
 function Row({ label, value, color }: { label: string; value: string; color: string }) {
   return (
     <Stack direction="row" alignItems="center" justifyContent="space-between">
-      <Typography sx={{ fontSize: 15, color: T.textSec }}>{label}</Typography>
-      <Typography sx={{ fontSize: 15, fontWeight: 500, fontFamily: 'Roboto', color }}>{value}</Typography>
+      <Typography sx={{ fontSize: 16, fontWeight: 400, color: T.textSec }}>{label}</Typography>
+      <Typography sx={{ fontSize: 15, fontWeight: 500, color }}>{value}</Typography>
     </Stack>
   );
 }
@@ -246,7 +246,7 @@ function DiskCard({ node, online, t }: { node: string; online: boolean; t: (k: s
 
   return (
     <Box sx={{ m: '8px 12px 0', bgcolor: T.bgCard, border: `1px solid ${T.border}`, borderRadius: '6px', p: '12px 14px' }}>
-      <Typography sx={{ fontSize: 15, fontWeight: 500, color: T.textSec, textTransform: 'uppercase', letterSpacing: '0.07em', mb: 1 }}>
+      <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textSec, textTransform: 'uppercase', letterSpacing: '0.07em', mb: 1 }}>
         {t('disk.disk')}
       </Typography>
       {online && total != null ? (
@@ -265,7 +265,7 @@ function LinkTile({ label, accent, link }: { label: string; accent: string; link
   return (
     <Box
       onClick={() => router.push(link)}
-      sx={{ bgcolor: T.bgHover, p: '10px 14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer', fontSize: 15.5, fontWeight: 500, color: T.textPrim, borderLeft: `3px solid ${accent}`, transition: 'background .15s', '&:hover': { bgcolor: `${accent}22` } }}
+      sx={{ bgcolor: T.bgHover, p: '10px 14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer', fontSize: 17, fontWeight: 400, color: T.textSec, borderLeft: `3px solid ${accent}`, transition: 'background .15s', '&:hover': { bgcolor: `${accent}22` } }}
     >
       <Stack direction="row" alignItems="center" spacing={1}>
         <Box sx={{ width: 7, height: 7, borderRadius: '50%', bgcolor: accent, flexShrink: 0 }} />

@@ -1,7 +1,7 @@
 'use client';
 
-import type { NavSectionProps } from 'src/components/nav-section';
 import type { Theme, SxProps } from '@mui/material/styles';
+import type { NavSectionProps } from 'src/components/nav-section';
 
 import { useTheme } from '@mui/material/styles';
 

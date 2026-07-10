@@ -3,16 +3,15 @@
 import type { Column } from 'src/components/v5';
 
 import useSWR from 'swr';
-
 import { useRouter } from 'next/navigation';
 
 import { paths } from 'src/routes/paths';
 
 import { fetcher, endpoints } from 'src/utils/axios';
 
+import { T } from 'src/theme/tokens';
 import { useTranslate } from 'src/locales';
 
-import { T } from 'src/theme/tokens';
 import { PageShell, DataTable } from 'src/components/v5';
 
 // ----------------------------------------------------------------------

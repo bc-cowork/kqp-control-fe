@@ -7,10 +7,11 @@ import useSWR from 'swr';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import { endpoints, fetcher } from 'src/utils/axios';
+import { fetcher, endpoints } from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
 import { T, ACCENT2 } from 'src/theme/tokens';
+
 import { PageShell, DataTable, StatusBadge } from 'src/components/v5';
 
 // ----------------------------------------------------------------------

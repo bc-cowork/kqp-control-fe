@@ -43,10 +43,10 @@ export function DiskUsage({ used, total }: { used: number; total: number }) {
 
   return (
     <>
-      <Typography sx={{ fontSize: 32, fontWeight: 600, letterSpacing: '-0.03em', lineHeight: 1, mt: 1, color: T.textPrim }}>
+      <Typography sx={{ fontSize: 32, fontWeight: 600, fontFamily: 'Roboto', letterSpacing: '-0.03em', lineHeight: 1, mt: 1, color: T.textPrim }}>
         {label}%
       </Typography>
-      <Typography sx={{ fontSize: 14, color: T.textSec, m: '4px 0 10px' }}>
+      <Typography sx={{ fontSize: 14, fontFamily: 'Roboto', color: T.textSec, m: '4px 0 10px' }}>
         <Box component="span" sx={{ color: DISK_COLOR, fontWeight: 500, fontFamily: 'Roboto' }}>{used} GB</Box> / {total} GB
       </Typography>
       <DiskBar pct={pct} />

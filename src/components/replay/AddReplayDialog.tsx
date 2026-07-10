@@ -1,15 +1,16 @@
 import {
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogActions,
-    Box,
-    Typography,
-    Button
-} from '@mui/material';
-import {
     HelpOutline as HelpOutlineIcon
 } from '@mui/icons-material';
+import {
+    Box,
+    Dialog,
+    Button,
+    Typography,
+    DialogTitle,
+    DialogContent,
+    DialogActions
+} from '@mui/material';
+
 import { useTranslate } from 'src/locales';
 
 const customDialogColors = {

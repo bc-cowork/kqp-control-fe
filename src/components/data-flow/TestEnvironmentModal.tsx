@@ -12,9 +12,8 @@ import Typography from '@mui/material/Typography';
 
 import axiosInstance, { endpoints } from 'src/utils/axios';
 
-import { T, FONT_MONO } from 'src/theme/tokens';
-
 import { useTranslate } from 'src/locales';
+import { T, FONT_MONO } from 'src/theme/tokens';
 
 import { toast } from 'src/components/snackbar';
 import { usePopover } from 'src/components/custom-popover';

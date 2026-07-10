@@ -1,4 +1,5 @@
 import type { Edge } from '@xyflow/react';
+
 import { MarkerType } from '@xyflow/react';
 
 import { EDGE_COLOR } from './constants';

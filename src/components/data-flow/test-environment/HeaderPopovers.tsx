@@ -6,7 +6,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
 import { T } from 'src/theme/tokens';
-
 import { useTranslate } from 'src/locales';
 
 import { Iconify } from 'src/components/iconify';

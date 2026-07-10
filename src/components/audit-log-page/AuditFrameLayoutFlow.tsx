@@ -2,8 +2,8 @@
 
 import '@xyflow/react/dist/style.css';
 
-import type { DataFlowDefinition } from 'src/components/data-flow';
 import type { LayoutFlow } from 'src/types/api';
+import type { DataFlowDefinition } from 'src/components/data-flow';
 
 import { useMemo } from 'react';
 import {
@@ -17,8 +17,8 @@ import { Box } from '@mui/material';
 
 import { DataFlowNode } from 'src/components/data-flow/nodes/DataFlowNode';
 import { buildDataFlowGraph } from 'src/components/data-flow/graph-builder';
-import { CANVAS_BG, HEADER_BG, GRID_LINE_COLOR } from 'src/components/data-flow/constants';
 import { computeDataFlowLayout } from 'src/components/data-flow/layout-algorithm';
+import { CANVAS_BG, HEADER_BG, GRID_LINE_COLOR } from 'src/components/data-flow/constants';
 
 // ----------------------------------------------------------------------
 

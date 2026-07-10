@@ -195,13 +195,13 @@ export default function Page({ params }: Props) {
                   <CartesianGrid stroke={T.border} strokeWidth={0.5} vertical={false} />
                   <XAxis
                     dataKey="timestamp"
-                    tick={{ fill: T.textDim, fontSize: 12 }}
+                    tick={{ fill: T.textDim, fontSize: 12, fontFamily: 'Roboto' }}
                     tickLine={false}
                     axisLine={{ stroke: T.border }}
                     minTickGap={8}
                   />
                   <YAxis
-                    tick={{ fill: T.textDim, fontSize: 12 }}
+                    tick={{ fill: T.textDim, fontSize: 12, fontFamily: 'Roboto' }}
                     tickLine={false}
                     axisLine={{ stroke: T.border }}
                     width={36}

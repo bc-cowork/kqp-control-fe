@@ -21,7 +21,7 @@ declare module '@mui/material/styles' {
 
 // ----------------------------------------------------------------------
 
-export const defaultFont = "'Roboto Variable', Roboto";
+export const defaultFont = "'Spoqa Han Sans Neo', 'Roboto Variable', Roboto, sans-serif";
 
 export const primaryFont = defaultFont;
 

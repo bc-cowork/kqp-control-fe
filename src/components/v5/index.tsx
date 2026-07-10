@@ -13,12 +13,11 @@ import Stack from '@mui/material/Stack';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 
-import { KIcon } from 'src/components/k-icons';
 import { useTranslate } from 'src/locales';
-
-import { Iconify } from 'src/components/iconify';
-
 import { T, ACCENT2, SPEC_CHIP, FONT_MONO } from 'src/theme/tokens';
+
+import { KIcon } from 'src/components/k-icons';
+import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 // PageShell — breadcrumb + title + body (every screen wrapper)

@@ -61,7 +61,7 @@ export const TEXT_DIM = T.textDim; // #6A6878
 
 // Canvas
 export const CANVAS_BG = FLOW.canvasBg; // #161420
-export const GRID_LINE_COLOR = FLOW.grid; // #2A2552
+export const GRID_LINE_COLOR = T.border; // #33343F — Border/Default (color guide; was bluish FLOW.grid #2A2552)
 export const HELP_TEXT_COLOR = T.textDim; // #6A6878
 
 // Layout spacing

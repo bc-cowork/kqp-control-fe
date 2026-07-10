@@ -1,9 +1,12 @@
 import React from "react";
-import { Box, Button, TextField, Typography, Grid, IconButton } from "@mui/material"; // Ensure Grid is imported
-import { useTranslate } from "src/locales";
+
+import { Box, Grid, Button, TextField, Typography, IconButton } from "@mui/material"; // Ensure Grid is imported
 import {
     Cancel as CancelIcon,
 } from '@mui/icons-material';
+
+import { useTranslate } from "src/locales";
+
 import { LogTag } from "./Logtag";
 
 const customColors = {

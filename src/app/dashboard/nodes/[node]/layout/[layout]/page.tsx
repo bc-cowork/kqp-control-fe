@@ -7,6 +7,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 import { paths } from 'src/routes/paths';
@@ -14,13 +15,12 @@ import { useRouter } from 'src/routes/hooks';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import { T, FONT_MONO } from 'src/theme/tokens';
-import { PageShell, DataTable } from 'src/components/v5';
-
 import { fetcher, endpoints } from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
+import { T, ACCENT2, FONT_MONO } from 'src/theme/tokens';
 
+import { PageShell, DataTable } from 'src/components/v5';
 import { DataFlowCanvas, DataFlowJsonEditor, TestEnvironmentModal } from 'src/components/data-flow';
 
 // .moon (YAML) syntax palette — mirrors the reference CodeBlock `theme="moon"`
@@ -575,6 +575,7 @@ export default function Page({ params }: Props) {
   const router = useRouter();
   const { node, layout } = params;
   const { t } = useTranslate('layout-list');
+  const { t: tFlow } = useTranslate('data-flow');
   const decodedLayout = decodeURIComponent(layout);
   const testEnvModal = useBoolean();
 
@@ -622,9 +623,9 @@ export default function Page({ params }: Props) {
       ]}
       title={`${t('top.title_prefix')} : ${decodedLayout}`}
     >
-      {/* Layout Detail (single-row summary table) */}
-      {/* flexShrink: 0 is required — PageShell's body is a fixed-height flex column,
-          and DataTable (minHeight: 0, overflow: auto) collapses to a sliver without it */}
+      {/* Layout Detail (single-row summary table) — normal flow, scrolls away.
+          flexShrink: 0 is required — PageShell's body is a fixed-height flex column,
+          and DataTable (minHeight: 0, overflow: auto) collapses to a sliver without it. */}
       <Box sx={{ flexShrink: 0 }}>
         <DataTable
           headerVariant="light"
@@ -646,6 +647,48 @@ export default function Page({ params }: Props) {
         />
       </Box>
 
+      {/* Test-environment button — home position sits right above the Data Flow
+          section. position: sticky keeps it here at rest and pins it to the top of
+          the scrolling body once you scroll down to it. The row is a transparent,
+          click-through strip (no full-width background band — that would clip the
+          Data Flow card's top border/corners as it scrolls underneath); only the
+          button floats, and it carries its own opaque base so content doesn't show
+          through its translucent accent gradient. */}
+      <Box
+        sx={{
+          flexShrink: 0,
+          position: 'sticky',
+          top: 0,
+          zIndex: 3,
+          display: 'flex',
+          justifyContent: 'flex-end',
+          pt: 1,
+          pb: 0,
+          pointerEvents: 'none',
+        }}
+      >
+        <Button
+          disableRipple
+          onClick={testEnvModal.onTrue}
+          sx={{
+            pointerEvents: 'auto',
+            height: 32,
+            px: '14px',
+            minWidth: 0,
+            background: `linear-gradient(to top, ${ACCENT2}55, ${ACCENT2}14), ${T.bg}`,
+            border: `1px solid ${T.border}`,
+            borderRadius: '6px',
+            color: ACCENT2,
+            fontSize: 15,
+            fontWeight: 500,
+            textTransform: 'none',
+            '&:hover': { background: `linear-gradient(to top, ${ACCENT2}77, ${ACCENT2}22), ${T.bg}` },
+          }}
+        >
+          {tFlow('toolbar.test_env')}
+        </Button>
+      </Box>
+
       {/* Data Flow Visualization */}
       {/* flexShrink: 0 on all sections below — PageShell's body is a fixed-height
           flex column, so any child without it gets compressed to fit the viewport */}
@@ -654,7 +697,6 @@ export default function Page({ params }: Props) {
           <DataFlowCanvas
             definition={dataFlowDefinition}
             fileName={`${decodedLayout}.moon`}
-            onTestEnvClick={testEnvModal.onTrue}
           />
         </Box>
       )}
@@ -681,6 +723,7 @@ export default function Page({ params }: Props) {
           sx={{
             backgroundColor: T.bgCard,
             overflow: 'auto',
+            maxHeight: 480,
             p: '16px 18px',
           }}
         >

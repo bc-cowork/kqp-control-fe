@@ -1,5 +1,7 @@
 'use client';
 
+import type { KIconName } from 'src/components/k-icons';
+
 import { useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
@@ -9,15 +11,13 @@ import Typography from '@mui/material/Typography';
 
 import { useRouter } from 'src/routes/hooks';
 
+import { T } from 'src/theme/tokens';
 import { useTranslate } from 'src/locales';
-import { signOut } from 'src/auth/context/jwt/action';
-import { useAuthContext } from 'src/auth/hooks';
 
 import { KIcon } from 'src/components/k-icons';
 
-import type { KIconName } from 'src/components/k-icons';
-
-import { T } from 'src/theme/tokens';
+import { useAuthContext } from 'src/auth/hooks';
+import { signOut } from 'src/auth/context/jwt/action';
 
 // ----------------------------------------------------------------------
 

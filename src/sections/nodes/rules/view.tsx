@@ -3,7 +3,6 @@
 import { useTranslate } from 'src/locales';
 
 import { PageShell } from 'src/components/v5';
-
 import { RuleList } from 'src/components/nodes/RuleList';
 
 // ----------------------------------------------------------------------
