@@ -374,6 +374,10 @@ export function TestEnvironmentModal({
     <Modal
       open={open}
       onClose={onClose}
+      // Opaque backdrop so the page behind the floating card is fully hidden
+      // (the default MUI backdrop is only 50% black, letting the previous
+      // screen show through the 20px inset around the card).
+      slotProps={{ backdrop: { sx: { backgroundColor: '#0B0A10' } } }}
     >
       <ReactFlowProvider>
         <ModalContent
