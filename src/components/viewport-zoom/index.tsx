@@ -13,14 +13,22 @@ const BASE_W = 1536;
 const BASE_H = 864;
 const MIN = 0.7;
 
+// The root `zoom` factor currently applied to <html>. 1 on the reference-sized
+// (or larger) desktop, down to MIN on smaller viewports. Exported so components
+// that are incompatible with an ancestor CSS `zoom` (e.g. React Flow, which
+// ignores it when measuring handles/edges) can read and counteract it.
+export function getViewportScale() {
+  if (typeof window === 'undefined') return 1;
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  return Math.min(1, Math.max(MIN, Math.min(w / BASE_W, h / BASE_H)));
+}
+
 export function ViewportZoom() {
   useEffect(() => {
     const apply = () => {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      const scale = Math.min(1, Math.max(MIN, Math.min(w / BASE_W, h / BASE_H)));
       // `zoom` (not transform) so fixed/sticky positioning still works.
-      (document.documentElement.style as any).zoom = String(scale);
+      (document.documentElement.style as any).zoom = String(getViewportScale());
     };
     apply();
     window.addEventListener('resize', apply);
