@@ -34,7 +34,14 @@ type PageShellProps = {
   children: ReactNode;
 };
 
-export function PageShell({ node, crumbs = [], title, actions, scroll = true, children }: PageShellProps) {
+export function PageShell({
+  node,
+  crumbs = [],
+  title,
+  actions,
+  scroll = true,
+  children,
+}: PageShellProps) {
   return (
     <Box
       sx={{
@@ -47,10 +54,23 @@ export function PageShell({ node, crumbs = [], title, actions, scroll = true, ch
       }}
     >
       {(node || crumbs.length > 0) && (
-        <Stack direction="row" alignItems="center" spacing={1} sx={{ px: 3, pt: 2.75, fontSize: 15, lineHeight: 1 }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          spacing={1}
+          sx={{ px: 3, pt: 2.75, fontSize: 15, lineHeight: 1 }}
+        >
           {node && (
             <>
-              <Box sx={{ width: 7, height: 7, borderRadius: '50%', bgcolor: T.on, boxShadow: `0 0 5px ${T.on}99` }} />
+              <Box
+                sx={{
+                  width: 7,
+                  height: 7,
+                  borderRadius: '50%',
+                  bgcolor: T.on,
+                  boxShadow: `0 0 5px ${T.on}99`,
+                }}
+              />
               <Typography sx={{ color: T.textPrim, fontSize: 15 }}>{node}</Typography>
             </>
           )}
@@ -75,8 +95,21 @@ export function PageShell({ node, crumbs = [], title, actions, scroll = true, ch
         </Stack>
       )}
 
-      <Stack direction="row" alignItems="flex-end" justifyContent="space-between" sx={{ px: 3, py: 2 }}>
-        <Typography sx={{ fontSize: 30, fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1, color: T.textPrim }}>
+      <Stack
+        direction="row"
+        alignItems="flex-end"
+        justifyContent="space-between"
+        sx={{ px: 3, py: 2 }}
+      >
+        <Typography
+          sx={{
+            fontSize: 30,
+            fontWeight: 500,
+            letterSpacing: '-0.02em',
+            lineHeight: 1,
+            color: T.textPrim,
+          }}
+        >
           {title}
         </Typography>
         {actions}
@@ -165,7 +198,20 @@ export function DataTable<R = any>({
         maxHeight,
       }}
     >
-      <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse', fontSize: 16, lineHeight: 1.2 }}>
+      <Box
+        component="table"
+        sx={{
+          width: '100%',
+          // Don't let the table compress below its natural content width — the
+          // flexible (grow) column would otherwise be the only one to shrink and
+          // collapse. Instead the table keeps its column widths and the wrapper
+          // scrolls horizontally (scrollbar is hover-reveal, so it's unobtrusive).
+          minWidth: 'max-content',
+          borderCollapse: 'collapse',
+          fontSize: 16,
+          lineHeight: 1.2,
+        }}
+      >
         <Box component="thead">
           <Box component="tr">
             {columns.map((col) => (
@@ -200,7 +246,12 @@ export function DataTable<R = any>({
               <Box
                 component="td"
                 colSpan={columns.length}
-                sx={{ p: '28px 14px', textAlign: 'center', color: error ? T.off : T.textDim, fontSize: 15 }}
+                sx={{
+                  p: '28px 14px',
+                  textAlign: 'center',
+                  color: error ? T.off : T.textDim,
+                  fontSize: 15,
+                }}
               >
                 {placeholderText}
               </Box>
@@ -237,7 +288,8 @@ export function DataTable<R = any>({
                           maxWidth: col.grow ? 380 : undefined,
                           overflow: col.grow ? 'hidden' : undefined,
                           textOverflow: col.grow ? 'ellipsis' : undefined,
-                          boxShadow: selected && ci === 0 ? `inset 2px 0 0 0 ${T.primary}` : undefined,
+                          boxShadow:
+                            selected && ci === 0 ? `inset 2px 0 0 0 ${T.primary}` : undefined,
                         }}
                       >
                         {col.render ? col.render(row, ri) : (raw ?? '—')}
@@ -260,25 +312,105 @@ export function DataTable<R = any>({
 
 export function StatCard({ label, value }: { label: string; value: ReactNode }) {
   return (
-    <Box sx={{ flex: 1, bgcolor: T.bgCard, border: `1px solid ${T.border}`, borderRadius: '6px', p: '14px 18px', position: 'relative', overflow: 'hidden' }}>
-      <Typography sx={{ fontSize: 15, color: T.textSec, fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.06em', mb: 1.25 }}>
+    <Box
+      sx={{
+        flex: 1,
+        bgcolor: T.bgCard,
+        border: `1px solid ${T.border}`,
+        borderRadius: '6px',
+        p: '14px 18px',
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+    >
+      <Typography
+        sx={{
+          fontSize: 15,
+          color: T.textSec,
+          fontWeight: 500,
+          textTransform: 'uppercase',
+          letterSpacing: '0.06em',
+          mb: 1.25,
+        }}
+      >
         {label}
       </Typography>
-      <Typography sx={{ fontSize: 34, fontWeight: 400, letterSpacing: '-0.03em', fontFamily: FONT_MONO, color: T.textPrim }}>
+      <Typography
+        sx={{
+          fontSize: 34,
+          fontWeight: 400,
+          letterSpacing: '-0.03em',
+          fontFamily: FONT_MONO,
+          color: T.textPrim,
+        }}
+      >
         {value}
       </Typography>
-      <Box sx={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 2, bgcolor: T.primary, opacity: 0.35 }} />
+      <Box
+        sx={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: 2,
+          bgcolor: T.primary,
+          opacity: 0.35,
+        }}
+      />
     </Box>
   );
 }
 
 export function SummaryCard({ label, value }: { label: string; value: ReactNode }) {
   return (
-    <Box sx={{ flex: 1, bgcolor: T.bgCard, border: `1px solid ${T.border}`, borderRadius: '6px', p: '14px 16px', position: 'relative', overflow: 'hidden' }}>
-      <Typography sx={{ fontSize: 15, color: ACCENT2, fontWeight: 500, letterSpacing: '0.05em', mb: 1.5 }}>{label}</Typography>
-      <Typography sx={{ fontSize: 46, fontWeight: 400, letterSpacing: '-0.03em', color: T.textPrim, lineHeight: 1 }}>{value}</Typography>
-      <Box sx={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 40, background: `linear-gradient(to top, ${ACCENT2}22, transparent)` }} />
-      <Box sx={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 2, bgcolor: ACCENT2, opacity: 0.4 }} />
+    <Box
+      sx={{
+        flex: 1,
+        bgcolor: T.bgCard,
+        border: `1px solid ${T.border}`,
+        borderRadius: '6px',
+        p: '14px 16px',
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+    >
+      <Typography
+        sx={{ fontSize: 15, color: ACCENT2, fontWeight: 500, letterSpacing: '0.05em', mb: 1.5 }}
+      >
+        {label}
+      </Typography>
+      <Typography
+        sx={{
+          fontSize: 46,
+          fontWeight: 400,
+          letterSpacing: '-0.03em',
+          color: T.textPrim,
+          lineHeight: 1,
+        }}
+      >
+        {value}
+      </Typography>
+      <Box
+        sx={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: 40,
+          background: `linear-gradient(to top, ${ACCENT2}22, transparent)`,
+        }}
+      />
+      <Box
+        sx={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: 2,
+          bgcolor: ACCENT2,
+          opacity: 0.4,
+        }}
+      />
     </Box>
   );
 }
@@ -287,10 +419,38 @@ export function SummaryCard({ label, value }: { label: string; value: ReactNode 
 // StatusBadge
 // ----------------------------------------------------------------------
 
-export function StatusBadge({ on, labelOn = 'active', labelOff = 'inactive', color, fontSize = 14, fontWeight = 300 }: { on: boolean; labelOn?: string; labelOff?: string; color?: string; fontSize?: number; fontWeight?: number }) {
+export function StatusBadge({
+  on,
+  labelOn = 'active',
+  labelOff = 'inactive',
+  color,
+  fontSize = 14,
+  fontWeight = 300,
+}: {
+  on: boolean;
+  labelOn?: string;
+  labelOff?: string;
+  color?: string;
+  fontSize?: number;
+  fontWeight?: number;
+}) {
   const c = color || (on ? T.on : T.off);
   return (
-    <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.625, fontSize, fontWeight, px: 1, py: '2px', borderRadius: '3px', letterSpacing: '0.03em', color: c }}>
+    <Box
+      component="span"
+      sx={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 0.625,
+        fontSize,
+        fontWeight,
+        px: 1,
+        py: '2px',
+        borderRadius: '3px',
+        letterSpacing: '0.03em',
+        color: c,
+      }}
+    >
       <Box sx={{ width: 5, height: 5, borderRadius: '50%', bgcolor: 'currentColor' }} />
       {on ? labelOn : labelOff}
     </Box>
@@ -328,9 +488,29 @@ const btnBase = {
   transition: 'background .12s, color .12s',
 } as const;
 
-export function BtnPrimary({ children, icon, onClick, disabled, type = 'button', weight }: BtnPrimaryProps) {
+export function BtnPrimary({
+  children,
+  icon,
+  onClick,
+  disabled,
+  type = 'button',
+  weight,
+}: BtnPrimaryProps) {
   return (
-    <Box component="button" type={type} onClick={onClick} disabled={disabled} sx={{ ...btnBase, ...(weight != null && { fontWeight: weight }), bgcolor: T.primary, color: '#fff', '&:hover': { bgcolor: T.primaryHov }, '&:disabled': { bgcolor: '#373F4E', color: '#667085', cursor: 'default' } }}>
+    <Box
+      component="button"
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      sx={{
+        ...btnBase,
+        ...(weight != null && { fontWeight: weight }),
+        bgcolor: T.primary,
+        color: '#fff',
+        '&:hover': { bgcolor: T.primaryHov },
+        '&:disabled': { bgcolor: '#373F4E', color: '#667085', cursor: 'default' },
+      }}
+    >
       {icon && <Iconify icon={icon} width={15} />}
       {children}
     </Box>
@@ -339,7 +519,20 @@ export function BtnPrimary({ children, icon, onClick, disabled, type = 'button',
 
 export function BtnGhost({ children, icon, onClick, disabled, type = 'button' }: BtnProps) {
   return (
-    <Box component="button" type={type} onClick={onClick} disabled={disabled} sx={{ ...btnBase, bgcolor: T.bgCard, border: `1px solid ${T.border}`, color: T.textSec, '&:hover': { bgcolor: T.bgHover, color: T.textPrim }, '&:disabled': { bgcolor: '#373F4E', color: '#667085', cursor: 'default' } }}>
+    <Box
+      component="button"
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      sx={{
+        ...btnBase,
+        bgcolor: T.bgCard,
+        border: `1px solid ${T.border}`,
+        color: T.textSec,
+        '&:hover': { bgcolor: T.bgHover, color: T.textPrim },
+        '&:disabled': { bgcolor: '#373F4E', color: '#667085', cursor: 'default' },
+      }}
+    >
       {icon && <Iconify icon={icon} width={15} />}
       {children}
     </Box>
@@ -348,7 +541,20 @@ export function BtnGhost({ children, icon, onClick, disabled, type = 'button' }:
 
 export function BtnDanger({ children, icon, onClick, disabled, type = 'button' }: BtnProps) {
   return (
-    <Box component="button" type={type} onClick={onClick} disabled={disabled} sx={{ ...btnBase, fontSize: 14, bgcolor: T.off, color: '#fff', '&:hover': { opacity: 0.9 }, '&:disabled': { bgcolor: '#373F4E', color: '#667085', cursor: 'default' } }}>
+    <Box
+      component="button"
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      sx={{
+        ...btnBase,
+        fontSize: 14,
+        bgcolor: T.off,
+        color: '#fff',
+        '&:hover': { opacity: 0.9 },
+        '&:disabled': { bgcolor: '#373F4E', color: '#667085', cursor: 'default' },
+      }}
+    >
       {icon && <Iconify icon={icon} width={15} />}
       {children}
     </Box>
@@ -368,7 +574,14 @@ type FilterFieldProps = {
   accent?: string;
 };
 
-export function FilterField({ label, value, options, onChange, width = 180, accent = T.primary }: FilterFieldProps) {
+export function FilterField({
+  label,
+  value,
+  options,
+  onChange,
+  width = 180,
+  accent = T.primary,
+}: FilterFieldProps) {
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
   const open = !!anchor;
   const selected = options.find((o) => o.value === value);
@@ -396,14 +609,34 @@ export function FilterField({ label, value, options, onChange, width = 180, acce
         }}
       >
         {selected?.label ?? value}
-        <Iconify icon="eva:chevron-down-fill" width={16} sx={{ color: T.textSec, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform .15s' }} />
+        <Iconify
+          icon="eva:chevron-down-fill"
+          width={16}
+          sx={{
+            color: T.textSec,
+            transform: open ? 'rotate(180deg)' : 'none',
+            transition: 'transform .15s',
+          }}
+        />
       </Box>
       <Popover
         open={open}
         anchorEl={anchor}
         onClose={() => setAnchor(null)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-        slotProps={{ paper: { sx: { mt: 0.5, width, bgcolor: T.bgCard, border: `1px solid ${T.border}`, borderRadius: '6px', boxShadow: '0 10px 28px rgba(0,0,0,0.4)', p: 0.5 } } }}
+        slotProps={{
+          paper: {
+            sx: {
+              mt: 0.5,
+              width,
+              bgcolor: T.bgCard,
+              border: `1px solid ${T.border}`,
+              borderRadius: '6px',
+              boxShadow: '0 10px 28px rgba(0,0,0,0.4)',
+              p: 0.5,
+            },
+          },
+        }}
       >
         {options.map((o) => (
           <Box
@@ -435,10 +668,29 @@ export function FilterField({ label, value, options, onChange, width = 180, acce
 // SpecChip (tri-colour field chip)
 // ----------------------------------------------------------------------
 
-export function SpecChip({ tone, children }: { tone: 'green' | 'blue' | 'amber'; children: ReactNode }) {
+export function SpecChip({
+  tone,
+  children,
+}: {
+  tone: 'green' | 'blue' | 'amber';
+  children: ReactNode;
+}) {
   const c = SPEC_CHIP[tone];
   return (
-    <Box component="span" sx={{ display: 'inline-block', px: 1.25, py: '2px', borderRadius: '5px', fontSize: 14, fontFamily: FONT_MONO, bgcolor: c.bg, color: c.text, border: `1px solid ${c.text}40` }}>
+    <Box
+      component="span"
+      sx={{
+        display: 'inline-block',
+        px: 1.25,
+        py: '2px',
+        borderRadius: '5px',
+        fontSize: 14,
+        fontFamily: FONT_MONO,
+        bgcolor: c.bg,
+        color: c.text,
+        border: `1px solid ${c.text}40`,
+      }}
+    >
       {children}
     </Box>
   );
@@ -449,11 +701,25 @@ export function SpecChip({ tone, children }: { tone: 'green' | 'blue' | 'amber';
 // ----------------------------------------------------------------------
 
 export function Panel({ children, sx }: { children: ReactNode; sx?: object }) {
-  return <Box sx={{ border: `1px solid ${T.border}`, borderRadius: '8px', bgcolor: T.bgPanel, overflow: 'hidden', ...sx }}>{children}</Box>;
+  return (
+    <Box
+      sx={{
+        border: `1px solid ${T.border}`,
+        borderRadius: '8px',
+        bgcolor: T.bgPanel,
+        overflow: 'hidden',
+        ...sx,
+      }}
+    >
+      {children}
+    </Box>
+  );
 }
 
 export function SectionLabel({ children }: { children: ReactNode }) {
-  return <Typography sx={{ fontSize: 17, fontWeight: 500, color: T.textSec }}>{children}</Typography>;
+  return (
+    <Typography sx={{ fontSize: 17, fontWeight: 500, color: T.textSec }}>{children}</Typography>
+  );
 }
 
 // ----------------------------------------------------------------------
@@ -521,7 +787,14 @@ type PagerProps = {
   onPerPageChange?: (n: number) => void;
 };
 
-export function Pager({ page, totalPages, perPage, perPageOptions = [10, 20, 40, 60], onPageChange, onPerPageChange }: PagerProps) {
+export function Pager({
+  page,
+  totalPages,
+  perPage,
+  perPageOptions = [10, 20, 40, 60],
+  onPageChange,
+  onPerPageChange,
+}: PagerProps) {
   const { t } = useTranslate();
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
   const canPrev = page > 1;
@@ -533,21 +806,73 @@ export function Pager({ page, totalPages, perPage, perPageOptions = [10, 20, 40,
   for (let i = start; i <= Math.min(totalPages, start + 4); i += 1) pages.push(i);
 
   return (
-    <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ bgcolor: T.bgCard, border: `1px solid ${T.border}`, borderRadius: '8px', p: '8px 14px' }}>
+    <Stack
+      direction="row"
+      alignItems="center"
+      justifyContent="space-between"
+      sx={{
+        bgcolor: T.bgCard,
+        border: `1px solid ${T.border}`,
+        borderRadius: '8px',
+        p: '8px 14px',
+      }}
+    >
       <Stack direction="row" alignItems="center" spacing={1}>
         <Typography sx={{ fontSize: 14, color: T.textSec }}>{t('table.rows_per_page')}:</Typography>
         {onPerPageChange && (
           <>
             <Box
               onClick={(e) => setAnchor(e.currentTarget)}
-              sx={{ height: 30, px: 1, display: 'flex', alignItems: 'center', gap: 0.5, bgcolor: T.bgPanel, border: `1px solid ${T.border}`, borderRadius: '5px', fontSize: 14, color: T.textPrim, cursor: 'pointer' }}
+              sx={{
+                height: 30,
+                px: 1,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 0.5,
+                bgcolor: T.bgPanel,
+                border: `1px solid ${T.border}`,
+                borderRadius: '5px',
+                fontSize: 14,
+                color: T.textPrim,
+                cursor: 'pointer',
+              }}
             >
               {perPage}
               <Iconify icon="eva:chevron-down-fill" width={14} sx={{ color: T.textSec }} />
             </Box>
-            <Popover open={!!anchor} anchorEl={anchor} onClose={() => setAnchor(null)} slotProps={{ paper: { sx: { mt: 0.5, bgcolor: T.bgCard, border: `1px solid ${T.border}`, borderRadius: '6px', p: 0.5 } } }}>
+            <Popover
+              open={!!anchor}
+              anchorEl={anchor}
+              onClose={() => setAnchor(null)}
+              slotProps={{
+                paper: {
+                  sx: {
+                    mt: 0.5,
+                    bgcolor: T.bgCard,
+                    border: `1px solid ${T.border}`,
+                    borderRadius: '6px',
+                    p: 0.5,
+                  },
+                },
+              }}
+            >
               {perPageOptions.map((n) => (
-                <Box key={n} onClick={() => { onPerPageChange(n); setAnchor(null); }} sx={{ px: 1.5, py: 0.75, borderRadius: '4px', fontSize: 14, color: n === perPage ? T.primary : T.textPrim, cursor: 'pointer', '&:hover': { bgcolor: T.bgHover } }}>
+                <Box
+                  key={n}
+                  onClick={() => {
+                    onPerPageChange(n);
+                    setAnchor(null);
+                  }}
+                  sx={{
+                    px: 1.5,
+                    py: 0.75,
+                    borderRadius: '4px',
+                    fontSize: 14,
+                    color: n === perPage ? T.primary : T.textPrim,
+                    cursor: 'pointer',
+                    '&:hover': { bgcolor: T.bgHover },
+                  }}
+                >
                   {n}
                 </Box>
               ))}
@@ -557,8 +882,16 @@ export function Pager({ page, totalPages, perPage, perPageOptions = [10, 20, 40,
       </Stack>
 
       <Stack direction="row" alignItems="center" spacing={0.5}>
-        <PagerArrow icon="eva:arrowhead-left-fill" disabled={!canPrev} onClick={() => onPageChange(1)} />
-        <PagerArrow icon="eva:arrow-ios-back-fill" disabled={!canPrev} onClick={() => onPageChange(page - 1)} />
+        <PagerArrow
+          icon="eva:arrowhead-left-fill"
+          disabled={!canPrev}
+          onClick={() => onPageChange(1)}
+        />
+        <PagerArrow
+          icon="eva:arrow-ios-back-fill"
+          disabled={!canPrev}
+          onClick={() => onPageChange(page - 1)}
+        />
         {pages.map((p) => (
           <Box
             key={p}
@@ -580,14 +913,30 @@ export function Pager({ page, totalPages, perPage, perPageOptions = [10, 20, 40,
             {p}
           </Box>
         ))}
-        <PagerArrow icon="eva:arrow-ios-forward-fill" disabled={!canNext} onClick={() => onPageChange(page + 1)} />
-        <PagerArrow icon="eva:arrowhead-right-fill" disabled={!canNext} onClick={() => onPageChange(totalPages)} />
+        <PagerArrow
+          icon="eva:arrow-ios-forward-fill"
+          disabled={!canNext}
+          onClick={() => onPageChange(page + 1)}
+        />
+        <PagerArrow
+          icon="eva:arrowhead-right-fill"
+          disabled={!canNext}
+          onClick={() => onPageChange(totalPages)}
+        />
       </Stack>
     </Stack>
   );
 }
 
-function PagerArrow({ icon, disabled, onClick }: { icon: string; disabled: boolean; onClick: () => void }) {
+function PagerArrow({
+  icon,
+  disabled,
+  onClick,
+}: {
+  icon: string;
+  disabled: boolean;
+  onClick: () => void;
+}) {
   return (
     <Box
       component="button"

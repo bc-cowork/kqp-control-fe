@@ -105,8 +105,9 @@ const MuiDataGrid: Components<Theme>['MuiDataGrid'] = {
         '--DataGrid-containerBackground': theme.vars.palette.background.neutral,
         '--unstable_DataGrid-headWeight': theme.typography.fontWeightSemiBold,
         borderWidth: 0,
+        // Scrollbar colour deferred to the global hover-reveal rule (invisible
+        // at rest, shown on hover); keep the thin width.
         scrollbarWidth: 'thin',
-        scrollbarColor: `${varAlpha(theme.vars.palette.text.disabledChannel, 0.4)} ${varAlpha(theme.vars.palette.text.disabledChannel, 0.08)}`,
         '& .MuiDataGrid-filler > div': { borderTopStyle: 'dashed' },
         '& .MuiDataGrid-topContainer::after': { height: 0 },
         '& .MuiDataGrid-virtualScrollerContent': {
