@@ -41,7 +41,7 @@ export function MemorySearchBar({ value, onChange, onReset }: Props) {
       }}
     >
       {/* Search column — inline dropdown */}
-      <Box sx={{ position: 'relative', width: 210, flexShrink: 0 }}>
+      <Box sx={{ position: 'relative', minWidth: 210, flexShrink: 0 }}>
         <Box
           onClick={(e) => setAnchor(e.currentTarget)}
           sx={{
@@ -61,7 +61,7 @@ export function MemorySearchBar({ value, onChange, onReset }: Props) {
             {t('search_ui.search_column')}
           </Typography>
           <Box sx={{ color: T.border }}>|</Box>
-          <Typography sx={{ flex: 1, fontSize: 15, color: T.textPrim }}>
+          <Typography sx={{ flex: 1, fontSize: 15, color: T.textPrim, whiteSpace: 'nowrap' }}>
             {selected.label}
           </Typography>
           <Iconify
