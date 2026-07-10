@@ -23,6 +23,7 @@ import { useAuditLogList, useGetChannelList } from 'src/actions/nodes';
 import { useGetProcesses, useGetMemoryMetrics } from 'src/actions/dashboard';
 
 import { KIcon } from 'src/components/k-icons';
+import { useIsDesktopViewport } from 'src/components/viewport-zoom';
 
 import { useAuthContext } from 'src/auth/hooks';
 import { signOut } from 'src/auth/context/jwt/action';
@@ -38,6 +39,12 @@ export function NavVerticalV5({ nodes }: NavVerticalV5Props) {
   const pathname = usePathname();
   const router = useRouter();
   const { user, checkUserSession } = useAuthContext();
+
+  // Below the desktop breakpoint (1200px) the sidebar switches to the compact
+  // 140px rail (per Figma): a node stepper instead of the combo, single-column
+  // stat tiles, and a narrower shell. Everything else is shared.
+  const isDesktop = useIsDesktopViewport();
+  const compact = !isDesktop;
 
   const nodeIds = useMemo(() => nodes.map((n) => n.id), [nodes]);
 
@@ -113,7 +120,10 @@ export function NavVerticalV5({ nodes }: NavVerticalV5Props) {
     { label: t('tab_option.spec_list'), path: paths.dashboard.nodes.specList(activeNode) },
     { label: t('tab_option.identify_list'), path: paths.dashboard.nodes.identifyList(activeNode) },
     { label: t('tab_option.function_list'), path: paths.dashboard.nodes.functionList(activeNode) },
-    { label: t('tab_option.daily_report_list'), path: paths.dashboard.nodes.dailyReportList(activeNode) },
+    {
+      label: t('tab_option.daily_report_list'),
+      path: paths.dashboard.nodes.dailyReportList(activeNode),
+    },
     { label: t('tab_option.alerts_list'), path: paths.dashboard.nodes.alertsList(activeNode) },
   ];
 
@@ -125,7 +135,7 @@ export function NavVerticalV5({ nodes }: NavVerticalV5Props) {
         flexShrink: 0,
         display: 'flex',
         flexDirection: 'column',
-        width: '268px',
+        width: compact ? '140px' : '268px',
         bgcolor: T.bgPanel,
         borderRight: `1px solid ${T.border}`,
         overflow: 'hidden',
@@ -148,25 +158,67 @@ export function NavVerticalV5({ nodes }: NavVerticalV5Props) {
           alt="PMR"
           sx={{ height: 24, width: 'auto', display: 'block' }}
         />
-        <Box sx={{ width: 24, height: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', color: T.textDim, cursor: 'pointer' }}>
-          <KIcon name="scrap" size={18} />
-        </Box>
+        {!compact && (
+          <Box
+            sx={{
+              width: 24,
+              height: 24,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: T.textDim,
+              cursor: 'pointer',
+            }}
+          >
+            <KIcon name="scrap" size={18} />
+          </Box>
+        )}
       </Box>
 
       {/* Nav list */}
-      <Box className="no-scrollbar" sx={{ flex: 1, p: 1.25, display: 'flex', flexDirection: 'column', gap: 0.5, overflowY: 'auto' }}>
-        <NavRow label={t('side_bar.dashboard')} icon="home" active={dashActive} onClick={() => router.push(paths.dashboard.root)} />
+      <Box
+        className="no-scrollbar"
+        sx={{
+          flex: 1,
+          p: 1.25,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 0.5,
+          overflowY: 'auto',
+        }}
+      >
+        <NavRow
+          label={t('side_bar.dashboard')}
+          icon="home"
+          active={dashActive}
+          onClick={() => router.push(paths.dashboard.root)}
+        />
 
-        <NavRow label={t('side_bar.nodes')} icon="certified" expandable open={nodeOpen} onClick={() => setNodeOpen((v) => !v)} />
+        <NavRow
+          label={t('side_bar.nodes')}
+          icon="certified"
+          expandable
+          open={nodeOpen}
+          onClick={() => setNodeOpen((v) => !v)}
+        />
 
         {nodeOpen && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, mt: 0.25 }}>
-            <NodeCombo
-              nodes={nodes}
-              activeNode={activeNode}
-              online={nodeOnline}
-              onSelect={switchNode}
-            />
+            {compact ? (
+              <NodeStepper
+                nodes={nodes}
+                activeNode={activeNode}
+                online={nodeOnline}
+                onSelect={switchNode}
+              />
+            ) : (
+              <NodeCombo
+                nodes={nodes}
+                activeNode={activeNode}
+                online={nodeOnline}
+                onSelect={switchNode}
+              />
+            )}
 
             {activeNode && (
               <NodeTiles
@@ -174,6 +226,7 @@ export function NavVerticalV5({ nodes }: NavVerticalV5Props) {
                 nodeOnline={nodeOnline}
                 isActive={isActive}
                 onNavigate={(p) => router.push(p)}
+                columns={compact ? 1 : 2}
                 t={t}
               />
             )}
@@ -182,7 +235,13 @@ export function NavVerticalV5({ nodes }: NavVerticalV5Props) {
               <Box>
                 <GroupHeader label={t('group.settings_list')} />
                 {listMenu.map((item) => (
-                  <NavRow key={item.path} label={item.label} indent={2} active={isActive(item.path)} onClick={() => router.push(item.path)} />
+                  <NavRow
+                    key={item.path}
+                    label={item.label}
+                    indent={2}
+                    active={isActive(item.path)}
+                    onClick={() => router.push(item.path)}
+                  />
                 ))}
               </Box>
             )}
@@ -191,26 +250,92 @@ export function NavVerticalV5({ nodes }: NavVerticalV5Props) {
       </Box>
 
       {/* Bottom block */}
-      <Box sx={{ borderTop: `1px solid ${T.border}`, p: 1, display: 'flex', flexDirection: 'column', gap: 0.25 }}>
+      <Box
+        sx={{
+          borderTop: `1px solid ${T.border}`,
+          p: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 0.25,
+        }}
+      >
         <Box
           onClick={() => router.push('/dashboard/settings')}
-          sx={{ display: 'flex', alignItems: 'center', gap: 1.375, px: 1.5, py: 1.125, borderRadius: 1, color: T.textSec, fontSize: 15, cursor: 'pointer', '&:hover': { bgcolor: T.bgHover, color: T.textPrim } }}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1.375,
+            px: 1.5,
+            py: 1.125,
+            borderRadius: 1,
+            color: T.textSec,
+            fontSize: 15,
+            cursor: 'pointer',
+            '&:hover': { bgcolor: T.bgHover, color: T.textPrim },
+          }}
         >
           <KIcon name="settings" size={16} />
           {t('side_bar.settings')}
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.125, px: 1.25, py: 1, borderRadius: 1 }}>
-          <Box sx={{ width: 28, height: 28, borderRadius: '50%', background: `linear-gradient(135deg, ${T.primary}, ${T.primary})`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 500, color: T.onFill, flexShrink: 0 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1.125,
+            px: 1.25,
+            py: 1,
+            borderRadius: 1,
+          }}
+        >
+          <Box
+            sx={{
+              width: 28,
+              height: 28,
+              borderRadius: '50%',
+              background: `linear-gradient(135deg, ${T.primary}, ${T.primary})`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: 13,
+              fontWeight: 500,
+              color: T.onFill,
+              flexShrink: 0,
+            }}
+          >
             {initials}
           </Box>
           <Box sx={{ flex: 1, minWidth: 0 }}>
-            <Typography sx={{ fontSize: 14, fontWeight: 500, color: T.textPrim, lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{displayName}</Typography>
-            <Typography sx={{ fontSize: 12, color: T.textSec, lineHeight: 1.3 }}>{teamName}</Typography>
+            <Typography
+              sx={{
+                fontSize: 14,
+                fontWeight: 500,
+                color: T.textPrim,
+                lineHeight: 1.3,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {displayName}
+            </Typography>
+            <Typography sx={{ fontSize: 12, color: T.textSec, lineHeight: 1.3 }}>
+              {teamName}
+            </Typography>
           </Box>
           <Box
             onClick={handleLogout}
-            sx={{ width: 30, height: 30, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 1, color: T.textDim, cursor: 'pointer', '&:hover': { bgcolor: T.offBg, color: T.off } }}
+            sx={{
+              width: 30,
+              height: 30,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: 1,
+              color: T.textDim,
+              cursor: 'pointer',
+              '&:hover': { bgcolor: T.offBg, color: T.off },
+            }}
           >
             <KIcon name="logout" size={17} />
           </Box>
@@ -229,10 +354,11 @@ type NodeTilesProps = {
   nodeOnline: boolean;
   isActive: (path: string) => boolean;
   onNavigate: (path: string) => void;
+  columns?: 1 | 2;
   t: (key: string) => string;
 };
 
-function NodeTiles({ node, nodeOnline, isActive, onNavigate, t }: NodeTilesProps) {
+function NodeTiles({ node, nodeOnline, isActive, onNavigate, columns = 2, t }: NodeTilesProps) {
   const { processes } = useGetProcesses(node) as { processes: any[] };
   const { channels: inChannels } = useGetChannelList(node, 'inbound') as { channels: any[] };
   const { channels: outChannels } = useGetChannelList(node, 'outbound') as { channels: any[] };
@@ -240,7 +366,9 @@ function NodeTiles({ node, nodeOnline, isActive, onNavigate, t }: NodeTilesProps
   const { auditLogs } = useAuditLogList(node, 'all', 1, 1000);
   const { data: layoutData } = useSWR(node ? endpoints.layouts.list(node) : null, fetcher);
 
-  const layoutCount = (layoutData?.data?.list?.length ?? layoutData?.data?.layoutList?.length) as number | undefined;
+  const layoutCount = (layoutData?.data?.list?.length ?? layoutData?.data?.layoutList?.length) as
+    | number
+    | undefined;
   const memUsage = memoryMetricsData?.mem_usage;
 
   // Total audit-log disk usage = sum of every audit-log file's size (bytes).
@@ -257,24 +385,53 @@ function NodeTiles({ node, nodeOnline, isActive, onNavigate, t }: NodeTilesProps
           tone: nodeOnline ? 'on' : 'dim',
           path: paths.dashboard.nodes.dashboard(node),
         },
-        { label: t('tab_option.process'), value: processes?.length != null ? String(processes.length) : '', path: paths.dashboard.nodes.process(node) },
-        { label: t('tab_option.memory'), value: memUsage != null ? `${memUsage}%` : '', path: paths.dashboard.nodes.memory(node) },
+        {
+          label: t('tab_option.process'),
+          value: processes?.length != null ? String(processes.length) : '',
+          path: paths.dashboard.nodes.process(node),
+        },
+        {
+          label: t('tab_option.memory'),
+          value: memUsage != null ? `${memUsage}%` : '',
+          path: paths.dashboard.nodes.memory(node),
+        },
         {
           label: t('tab_option.status'),
           value: nodeOnline ? t('tile.normal') : t('tile.abnormal'),
           tone: nodeOnline ? 'default' : 'off',
           path: paths.dashboard.nodes.status(node),
         },
-        { label: t('tab_option.replay'), value: '', tone: 'dim', path: paths.dashboard.nodes.replay(node) },
+        {
+          label: t('tab_option.replay'),
+          value: '',
+          tone: 'dim',
+          path: paths.dashboard.nodes.replay(node),
+        },
       ],
     },
     {
       label: t('group.data'),
       tiles: [
-        { label: t('tab_option.audit_log'), value: auditTotal, path: paths.dashboard.nodes.auditLog(node) },
-        { label: t('tab_option.layout_list'), value: layoutCount != null ? String(layoutCount) : '', path: paths.dashboard.nodes.layoutList(node) },
-        { label: t('tab_option.channels_inbound'), value: inChannels?.length != null ? String(inChannels.length) : '', path: paths.dashboard.nodes.channelsInbound(node) },
-        { label: t('tab_option.channels_outbound'), value: outChannels?.length != null ? String(outChannels.length) : '', path: paths.dashboard.nodes.channelsOutbound(node) },
+        {
+          label: t('tab_option.audit_log'),
+          value: auditTotal,
+          path: paths.dashboard.nodes.auditLog(node),
+        },
+        {
+          label: t('tab_option.layout_list'),
+          value: layoutCount != null ? String(layoutCount) : '',
+          path: paths.dashboard.nodes.layoutList(node),
+        },
+        {
+          label: t('tab_option.channels_inbound'),
+          value: inChannels?.length != null ? String(inChannels.length) : '',
+          path: paths.dashboard.nodes.channelsInbound(node),
+        },
+        {
+          label: t('tab_option.channels_outbound'),
+          value: outChannels?.length != null ? String(outChannels.length) : '',
+          path: paths.dashboard.nodes.channelsOutbound(node),
+        },
       ],
     },
   ];
@@ -292,6 +449,7 @@ function NodeTiles({ node, nodeOnline, isActive, onNavigate, t }: NodeTilesProps
                 value={tile.value}
                 tone={(tile as any).tone || 'default'}
                 active={isActive(tile.path)}
+                columns={columns}
                 onClick={() => onNavigate(tile.path)}
               />
             ))}
@@ -341,13 +499,33 @@ function NavRow({ label, icon, indent = 0, active, expandable, open, onClick }: 
       }}
     >
       {icon && (
-        <Box sx={{ width: 16, height: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+        <Box
+          sx={{
+            width: 16,
+            height: 16,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0,
+          }}
+        >
           <KIcon name={icon} size={15} />
         </Box>
       )}
-      <Box sx={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</Box>
+      <Box sx={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+        {label}
+      </Box>
       {expandable && (
-        <Box component="span" sx={{ fontSize: 17, opacity: 0.5, flexShrink: 0, transform: open ? 'rotate(90deg)' : 'none', transition: 'transform .15s' }}>
+        <Box
+          component="span"
+          sx={{
+            fontSize: 17,
+            opacity: 0.5,
+            flexShrink: 0,
+            transform: open ? 'rotate(90deg)' : 'none',
+            transition: 'transform .15s',
+          }}
+        >
           ›
         </Box>
       )}
@@ -357,7 +535,17 @@ function NavRow({ label, icon, indent = 0, active, expandable, open, onClick }: 
 
 function GroupHeader({ label }: { label: string }) {
   return (
-    <Typography sx={{ fontSize: 12, fontWeight: 500, color: T.textDim, letterSpacing: '0.04em', px: 0.5, pt: 1.25, pb: 0.5 }}>
+    <Typography
+      sx={{
+        fontSize: 12,
+        fontWeight: 500,
+        color: T.textDim,
+        letterSpacing: '0.04em',
+        px: 0.5,
+        pt: 1.25,
+        pb: 0.5,
+      }}
+    >
       {label}
     </Typography>
   );
@@ -368,10 +556,11 @@ type MenuTileProps = {
   value?: string;
   tone?: string;
   active?: boolean;
+  columns?: 1 | 2;
   onClick?: () => void;
 };
 
-function MenuTile({ label, value, tone = 'default', active, onClick }: MenuTileProps) {
+function MenuTile({ label, value, tone = 'default', active, columns = 2, onClick }: MenuTileProps) {
   const valueColor = active
     ? '#FFFFFF'
     : tone === 'on'
@@ -382,14 +571,18 @@ function MenuTile({ label, value, tone = 'default', active, onClick }: MenuTileP
           ? T.textDim
           : T.textPrim;
 
+  // Single-column (compact rail) tiles span the full width; the default 2-up
+  // grid keeps each tile at half width minus the row gap.
+  const basis = columns === 1 ? '100%' : 'calc(50% - 4px)';
+
   return (
     <Box
       component="button"
       onClick={onClick}
       sx={{
-        flex: '1 1 calc(50% - 4px)',
-        minWidth: 'calc(50% - 4px)',
-        maxWidth: 'calc(50% - 4px)',
+        flex: `1 1 ${basis}`,
+        minWidth: basis,
+        maxWidth: basis,
         textAlign: 'left',
         border: 'none',
         p: '10px 11px',
@@ -400,8 +593,16 @@ function MenuTile({ label, value, tone = 'default', active, onClick }: MenuTileP
         '&:hover': active ? undefined : { bgcolor: T.bgHover },
       }}
     >
-      <Typography sx={{ fontSize: 13, color: active ? 'rgba(255,255,255,0.8)' : T.textSec, lineHeight: 1.4 }}>{label}</Typography>
-      <Typography sx={{ fontSize: 16, fontWeight: 400, color: valueColor, lineHeight: 1.3, minHeight: 21 }}>{value ?? ''}</Typography>
+      <Typography
+        sx={{ fontSize: 13, color: active ? 'rgba(255,255,255,0.8)' : T.textSec, lineHeight: 1.4 }}
+      >
+        {label}
+      </Typography>
+      <Typography
+        sx={{ fontSize: 16, fontWeight: 400, color: valueColor, lineHeight: 1.3, minHeight: 21 }}
+      >
+        {value ?? ''}
+      </Typography>
     </Box>
   );
 }
@@ -470,7 +671,9 @@ function NodeCombo({ nodes, activeNode, online, onSelect }: NodeComboProps) {
             }}
           >
             <StatusDot online={nOnline} />
-            <Box sx={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <Box
+              sx={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+            >
               {option.id}
             </Box>
           </Box>
@@ -528,5 +731,94 @@ function NodeCombo({ nodes, activeNode, online, onSelect }: NodeComboProps) {
         },
       }}
     />
+  );
+}
+
+// ----------------------------------------------------------------------
+// NodeStepper — compact-rail node switcher: status dot + node id + up/down
+// steppers that cycle through the node list (the combo is too wide at 140px).
+// ----------------------------------------------------------------------
+
+function NodeStepper({ nodes, activeNode, online, onSelect }: NodeComboProps) {
+  const idx = nodes.findIndex((n) => n.id === activeNode);
+
+  const step = useCallback(
+    (dir: 1 | -1) => {
+      if (!nodes.length) return;
+      const base = idx < 0 ? 0 : idx;
+      const next = (base + dir + nodes.length) % nodes.length;
+      onSelect(nodes[next].id);
+    },
+    [nodes, idx, onSelect]
+  );
+
+  const disabled = nodes.length <= 1;
+
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '7px',
+        bgcolor: T.bgCard,
+        border: `1px solid ${T.border}`,
+        borderRadius: '5px',
+        pl: '13px',
+        pr: '7px',
+        py: '6px',
+      }}
+    >
+      <StatusDot online={online} glow />
+      <Box
+        sx={{
+          flex: 1,
+          minWidth: 0,
+          fontSize: 14,
+          fontWeight: 500,
+          color: T.textPrim,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {activeNode || '—'}
+      </Box>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1px', flexShrink: 0 }}>
+        <StepBtn up disabled={disabled} onClick={() => step(-1)} />
+        <StepBtn disabled={disabled} onClick={() => step(1)} />
+      </Box>
+    </Box>
+  );
+}
+
+function StepBtn({
+  up,
+  disabled,
+  onClick,
+}: {
+  up?: boolean;
+  disabled?: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <Box
+      onClick={disabled ? undefined : onClick}
+      sx={{
+        width: 22,
+        height: 16,
+        borderRadius: '3px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: T.textSec,
+        opacity: disabled ? 0.25 : 1,
+        cursor: disabled ? 'default' : 'pointer',
+        '&:hover': disabled ? undefined : { bgcolor: T.bgHover, color: T.textPrim },
+      }}
+    >
+      <Box sx={{ display: 'flex', transform: up ? 'rotate(180deg)' : 'none' }}>
+        <KIcon name="chevronDown" size={13} />
+      </Box>
+    </Box>
   );
 }
