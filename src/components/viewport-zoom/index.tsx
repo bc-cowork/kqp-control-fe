@@ -5,14 +5,14 @@ import { useState, useEffect } from 'react';
 // ----------------------------------------------------------------------
 // Replicates k-control-fe-ui's viewport scaler: the design is fixed to a
 // 1536×864 desktop baseline, so we zoom the root proportionally to fit smaller
-// viewports (never upscaling, floor 0.7). The zoom is continuous across ALL
+// viewports (never upscaling, floor 0.8). The zoom is continuous across ALL
 // widths — including below the sidebar breakpoint — so shrinking the window
 // scales the whole app smoothly instead of snapping back to 1:1 at 1200px.
 // ----------------------------------------------------------------------
 
 const BASE_W = 1536;
 const BASE_H = 864;
-const MIN = 0.7;
+const MIN = 0.8;
 
 // Viewport width (px) at/above which the sidebar uses its full desktop layout;
 // below it, the sidebar swaps to the compact 140px rail. This only drives the
