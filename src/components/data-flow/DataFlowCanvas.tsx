@@ -102,11 +102,17 @@ function DataFlowCanvasInner({ definition, fileName }: DataFlowCanvasProps) {
   // prop runs before dynamic-height nodes are sized, so it mis-centers on load.
   // Force zoom to 95% (min=max) so we start centred on the graph's middle,
   // showing only part of it rather than the whole (which would shrink to ~25%).
+  //
+  // The counter-zoom decouples React Flow from the root zoom (so edges stay
+  // aligned), which also means the graph would NOT shrink with the responsive
+  // layout. Fold docScale into the graph's zoom so it scales down in step with
+  // the rest of the app (and re-fit when the viewport scale changes).
   useEffect(() => {
     if (!nodesInitialized) return;
-    fitView({ padding: 0.08, minZoom: 0.95, maxZoom: 0.95 });
-    setZoom(95);
-  }, [nodesInitialized, fitView]);
+    const z = 0.95 * docScale;
+    fitView({ padding: 0.08, minZoom: z, maxZoom: z });
+    setZoom(Math.round((z * 100) / 5) * 5);
+  }, [nodesInitialized, fitView, docScale]);
 
   useEffect(() => {
     const handleChange = () => setIsFullscreen(!!document.fullscreenElement);
@@ -191,8 +197,8 @@ function DataFlowCanvasInner({ definition, fileName }: DataFlowCanvasProps) {
             position: 'absolute',
             top: 0,
             left: 0,
-            width: `${docScale * 100}%`,
-            height: `${docScale * 100}%`,
+            width: '100%',
+            height: '100%',
           }}
         >
           <ReactFlow
@@ -201,10 +207,8 @@ function DataFlowCanvasInner({ definition, fileName }: DataFlowCanvasProps) {
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
             nodeTypes={nodeTypes}
-            fitView
             minZoom={0.1}
             maxZoom={2}
-            fitViewOptions={{ padding: 0.08, maxZoom: 0.7 }}
             proOptions={{ hideAttribution: true }}
             nodesDraggable
             nodesConnectable={false}
@@ -225,12 +229,14 @@ function DataFlowCanvasInner({ definition, fileName }: DataFlowCanvasProps) {
               color={GRID_LINE_COLOR}
             />
 
-            {/* Help text */}
+            {/* Help text — the counter-zoom decouples this panel from the root
+                zoom, so scale the font by docScale to keep it in step with the
+                responsive layout. */}
             <Panel position="top-left">
               <Typography
                 sx={{
                   color: HELP_TEXT_COLOR,
-                  fontSize: 17,
+                  fontSize: 17 * docScale,
                   fontFamily: "'Spoqa Han Sans Neo'",
                   fontWeight: 400,
                 }}
