@@ -191,20 +191,21 @@ export function Memory({ selectedNodeId }: Props) {
                   <CartesianGrid stroke={T.border} strokeWidth={0.5} />
                   <XAxis
                     dataKey="timestamp"
-                    tick={{ fontSize: 12, fill: T.textDim }}
+                    tick={{ fontSize: 12, fill: T.textDim, fontFamily: 'Roboto' }}
                     tickLine={false}
                     axisLine={{ stroke: T.border }}
                     minTickGap={20}
                   />
                   <YAxis
                     domain={[0, 100]}
-                    tick={{ fontSize: 12, fill: T.textDim }}
+                    tick={{ fontSize: 12, fill: T.textDim, fontFamily: 'Roboto' }}
                     tickLine={false}
                     axisLine={{ stroke: T.border }}
                     width={34}
                   />
                   <Tooltip
                     contentStyle={{
+                      fontFamily: 'Roboto',
                       backgroundColor: T.bgPanel,
                       border: `1px solid ${T.border}`,
                       borderRadius: 5,

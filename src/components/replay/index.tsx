@@ -1,15 +1,18 @@
-import {
-    Box, Typography, FormControl, Select, MenuItem, TextField, IconButton, InputAdornment, Button,
-} from "@mui/material";
-import { DesktopTimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
+
+import { DesktopTimePicker } from "@mui/x-date-pickers";
 import {
-    KeyboardArrowDown as SelectIcon,
+    Box, Select, Button, MenuItem, TextField, Typography, IconButton, FormControl, InputAdornment,
+} from "@mui/material";
+import {
     Cancel as CancelIcon,
-    ArrowDropUp as ArrowUpwardIcon, ArrowDropDown as ArrowDownwardIcon,
+    ArrowDropUp as ArrowUpwardIcon,
+    KeyboardArrowDown as SelectIcon, ArrowDropDown as ArrowDownwardIcon,
     KeyboardArrowDownOutlined as KeyboardArrowDownIcon,
 } from '@mui/icons-material';
+
 import { useTranslate } from "src/locales";
+
 import { LogTag } from "./Logtag";
 
 export const darkColors = {

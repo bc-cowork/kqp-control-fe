@@ -4,10 +4,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import { T } from 'src/theme/tokens';
 import { useTranslate } from 'src/locales';
 import { useGetNodeInfo } from 'src/actions/nodes';
-
-import { T } from 'src/theme/tokens';
 
 import { NodeStatusBig } from '../node-dashboard/NodeStatusBig';
 import { NodeGraphsBig } from '../node-dashboard/NodeGraphsBig';

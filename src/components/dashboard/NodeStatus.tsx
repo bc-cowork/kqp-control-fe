@@ -9,9 +9,9 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import { useTranslate } from 'src/locales';
+import { T, ACCENT2, FONT_MONO } from 'src/theme/tokens';
 import { useGetDiskMetrics } from 'src/actions/dashboard';
 
-import { T, ACCENT2, FONT_MONO } from 'src/theme/tokens';
 import { StatusBadge } from 'src/components/v5';
 
 // ----------------------------------------------------------------------

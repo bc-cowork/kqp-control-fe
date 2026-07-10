@@ -1,6 +1,8 @@
 import React from 'react';
-import { Grid, Box, Typography, Button } from '@mui/material';
-import { PlayArrowOutlined, ChevronRight, ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
+
+import { Box, Grid, Button, Typography } from '@mui/material';
+import { ArrowDropUp, ChevronRight, ArrowDropDown, PlayArrowOutlined } from '@mui/icons-material';
+
 import { CONFIG } from 'src/config-global';
 
 const Time = (props: any) => <Box component="img" src={`${CONFIG.assetsDir}/assets/icons/custom/time.svg`} alt="time" {...props} />;

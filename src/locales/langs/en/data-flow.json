@@ -27,6 +27,9 @@
   "editor": {
     "title": "JSON Definition"
   },
+  "canvas": {
+    "zoom_help": "Hold Ctrl and scroll the mouse wheel up/down to zoom in/out."
+  },
   "sandbox": {
     "title": "Test Environment (SANDBOX)",
     "horizontal_view": "horizontal View",

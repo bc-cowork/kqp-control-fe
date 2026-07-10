@@ -14,8 +14,8 @@ import { paths } from 'src/routes/paths';
 import { formatBytes } from 'src/utils/helper';
 import { fetcher, endpoints } from 'src/utils/axios';
 
-import { useTranslate } from 'src/locales';
 import { T } from 'src/theme/tokens';
+import { useTranslate } from 'src/locales';
 
 import { SpecChip, DataTable, PageShell } from 'src/components/v5';
 

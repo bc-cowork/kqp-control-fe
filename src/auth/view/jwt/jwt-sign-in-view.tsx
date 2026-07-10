@@ -13,12 +13,12 @@ import { useRouter } from 'src/routes/hooks';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
+import { T } from 'src/theme/tokens';
+
 import { Logo } from 'src/components/logo';
 import { Iconify } from 'src/components/iconify';
 
 import { signInWithPassword } from 'src/auth/context/jwt';
-
-import { T } from 'src/theme/tokens';
 
 import { useAuthContext } from '../../hooks';
 

@@ -7,7 +7,6 @@ import DialogContent from '@mui/material/DialogContent';
 import { ErrorOutline as ErrorOutlineIcon } from '@mui/icons-material';
 
 import { T } from 'src/theme/tokens';
-
 import { useTranslate } from 'src/locales';
 
 // ----------------------------------------------------------------------

@@ -10,9 +10,8 @@ import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
-import { T, FONT_CODE } from 'src/theme/tokens';
-
 import { useTranslate } from 'src/locales';
+import { T, FONT_CODE } from 'src/theme/tokens';
 
 
 // Lazy load Monaco to avoid SSR issues
@@ -109,7 +108,7 @@ export function DataFlowJsonEditor({ value, onChange }: DataFlowJsonEditorProps)
         sx={{
           flex: 1,
           position: 'relative',
-          backgroundColor: '#1E1E1E',
+          backgroundColor: T.bgPanel,
           borderBottomLeftRadius: '8px',
           borderBottomRightRadius: '8px',
           overflow: 'hidden',
@@ -139,8 +138,18 @@ export function DataFlowJsonEditor({ value, onChange }: DataFlowJsonEditorProps)
         <Editor
           height="100%"
           language="json"
-          theme="vs-dark"
+          theme="kqp-json-dark"
           defaultValue={value}
+          beforeMount={(monaco) => {
+            monaco.editor.defineTheme('kqp-json-dark', {
+              base: 'vs-dark',
+              inherit: true,
+              rules: [],
+              colors: {
+                'editor.background': T.bgPanel,
+              },
+            });
+          }}
           onMount={(ed) => {
             editorRef.current = ed;
             ed.onDidBlurEditorText(() => setIsActive(false));

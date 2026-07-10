@@ -1,14 +1,16 @@
+import React from 'react';
+
 import {
     Box,
-    Typography,
     TextField,
+    Typography,
     InputAdornment,
 } from "@mui/material";
 import {
     ArrowDropUp as ArrowUpwardIcon,
     ArrowDropDown as ArrowDownwardIcon
 } from '@mui/icons-material';
-import React from 'react';
+
 import { useTranslate } from "src/locales";
 
 const inputColors = {

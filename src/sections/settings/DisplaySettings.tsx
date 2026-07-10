@@ -1,14 +1,16 @@
 import React from 'react';
+
+import { KeyboardArrowDown } from '@mui/icons-material';
 import {
     Box,
-    Typography,
     Select,
     MenuItem,
-    FormControl,
     useTheme,
+    Typography,
+    FormControl,
     useColorScheme,
 } from '@mui/material';
-import { KeyboardArrowDown } from '@mui/icons-material';
+
 import { grey } from 'src/theme/core';
 import { useTranslate } from 'src/locales';
 

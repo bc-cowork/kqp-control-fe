@@ -3,11 +3,11 @@
 import type { Theme, SxProps, Breakpoint } from '@mui/material/styles';
 
 import Box from '@mui/material/Box';
+import { useTheme } from '@mui/material';
 
 import { stylesMode } from 'src/theme/styles';
 
 import { Logo } from 'src/components/logo';
-import { useTheme } from '@mui/material';
 
 import { Main } from './main';
 import { HeaderSection } from '../core/header-section';

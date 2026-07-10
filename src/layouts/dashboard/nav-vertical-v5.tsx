@@ -1,6 +1,7 @@
 'use client';
 
 import type { INodeItem } from 'src/types/dashboard';
+import type { KIconName } from 'src/components/k-icons';
 
 import useSWR from 'swr';
 import { useMemo, useState, useEffect, useCallback } from 'react';
@@ -11,22 +12,20 @@ import Typography from '@mui/material/Typography';
 import Autocomplete from '@mui/material/Autocomplete';
 
 import { paths } from 'src/routes/paths';
-import { usePathname, useRouter } from 'src/routes/hooks';
+import { useRouter, usePathname } from 'src/routes/hooks';
 
 import { formatBytes } from 'src/utils/helper';
 import { fetcher, endpoints } from 'src/utils/axios';
 
+import { T } from 'src/theme/tokens';
 import { useTranslate } from 'src/locales';
-import { signOut } from 'src/auth/context/jwt/action';
-import { useAuthContext } from 'src/auth/hooks';
-import { useGetProcesses, useGetMemoryMetrics } from 'src/actions/dashboard';
 import { useAuditLogList, useGetChannelList } from 'src/actions/nodes';
+import { useGetProcesses, useGetMemoryMetrics } from 'src/actions/dashboard';
 
 import { KIcon } from 'src/components/k-icons';
 
-import type { KIconName } from 'src/components/k-icons';
-
-import { T } from 'src/theme/tokens';
+import { useAuthContext } from 'src/auth/hooks';
+import { signOut } from 'src/auth/context/jwt/action';
 
 // ----------------------------------------------------------------------
 

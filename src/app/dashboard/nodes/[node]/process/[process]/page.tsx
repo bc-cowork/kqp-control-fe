@@ -12,8 +12,8 @@ import { paths } from 'src/routes/paths';
 
 import { fetcher, endpoints } from 'src/utils/axios';
 
-import { useTranslate } from 'src/locales';
 import { T } from 'src/theme/tokens';
+import { useTranslate } from 'src/locales';
 
 import { PageShell, DataTable, CodeBlock } from 'src/components/v5';
 

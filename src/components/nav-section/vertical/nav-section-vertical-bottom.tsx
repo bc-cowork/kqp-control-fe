@@ -7,11 +7,11 @@ import { Box, Avatar, Button, Divider, Popover, SvgIcon, Typography } from '@mui
 import { useRouter } from 'src/routes/hooks';
 
 import { CONFIG } from 'src/config-global';
+import { useTranslate } from 'src/locales';
 import { getBottomNavData } from 'src/layouts/config-nav-dashboard';
 
 import { useAuthContext } from 'src/auth/hooks';
 import { signOut } from 'src/auth/context/jwt/action';
-import { useTranslate } from 'src/locales';
 
 import { NavList } from './nav-list';
 import { NavUl, NavLi } from '../styles';

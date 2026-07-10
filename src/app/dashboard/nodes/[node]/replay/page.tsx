@@ -1,24 +1,24 @@
 'use client';
 
 import type { ReactNode } from 'react';
+import type { Column } from 'src/components/v5';
 
-import React, { useEffect } from 'react';
 import useSWR from 'swr';
+import React, { useEffect } from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 
+import { fetcher, endpoints } from 'src/utils/axios';
+
 import { CONFIG } from 'src/config-global';
-import { endpoints, fetcher } from 'src/utils/axios';
-
 import { useTranslate } from 'src/locales';
-import { Iconify } from 'src/components/iconify';
 import { T, ACCENT2, FONT_MONO } from 'src/theme/tokens';
-import { Panel, BtnGhost, PageShell, DataTable, StatusBadge } from 'src/components/v5';
 
-import type { Column } from 'src/components/v5';
+import { Iconify } from 'src/components/iconify';
+import { Panel, BtnGhost, PageShell, DataTable, StatusBadge } from 'src/components/v5';
 
 // ----------------------------------------------------------------------
 

@@ -8,9 +8,9 @@ import { useRouter } from 'src/routes/hooks';
 
 import { fetcher, endpoints } from 'src/utils/axios';
 
+import { T } from 'src/theme/tokens';
 import { useTranslate } from 'src/locales';
 
-import { T } from 'src/theme/tokens';
 import { DataTable } from 'src/components/v5';
 
 // ----------------------------------------------------------------------

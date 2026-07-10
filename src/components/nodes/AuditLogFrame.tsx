@@ -20,9 +20,9 @@ import {
 import { formatBytes } from 'src/utils/helper';
 import { formatDateCustom } from 'src/utils/format-time';
 
-import { T, FONT_MONO } from 'src/theme/tokens';
 import { error } from 'src/theme/core';
 import { useTranslate } from 'src/locales';
+import { T, FONT_MONO } from 'src/theme/tokens';
 import { useGetAuditLogFrame } from 'src/actions/nodes';
 
 import { SpecChip, DataTable, CodeBlock } from 'src/components/v5';

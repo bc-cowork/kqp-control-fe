@@ -7,10 +7,10 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import { T } from 'src/theme/tokens';
 import { useTranslate } from 'src/locales';
 import { useGetDiskMetrics } from 'src/actions/dashboard';
 
-import { T } from 'src/theme/tokens';
 import { DiskUsage } from 'src/components/dashboard/DiskUsage';
 
 // ----------------------------------------------------------------------
@@ -74,7 +74,6 @@ export function NodeStatusBig({
               p: '2px 8px',
               borderRadius: '3px',
               letterSpacing: '0.04em',
-              fontFamily: 'Roboto',
               background: `${sc}26`,
               color: sc,
               border: `1px solid ${sc}55`,
@@ -102,13 +101,13 @@ export function NodeStatusBig({
         <Box sx={{ p: '12px 16px', bgcolor: T.bgCard, display: 'flex', flexDirection: 'column', gap: '9px' }}>
           <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ fontSize: 15 }}>
             <Typography sx={{ fontSize: 15, color: T.textSec }}>{t('left_side.emitable')}</Typography>
-            <Typography sx={{ fontSize: 15, fontWeight: 500, fontFamily: 'Roboto', color: selectedNode.emittable ? T.on : T.off }}>
+            <Typography sx={{ fontSize: 15, fontWeight: 500, color: selectedNode.emittable ? T.on : T.off }}>
               {selectedNode.emittable ? t('left_side.true') : t('left_side.false')}
             </Typography>
           </Stack>
           <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ fontSize: 15 }}>
             <Typography sx={{ fontSize: 15, color: T.textSec }}>{t('left_side.emit_count')}</Typography>
-            <Typography sx={{ fontSize: 15, fontWeight: 500, fontFamily: 'Roboto', color: T.textSec }}>
+            <Typography sx={{ fontSize: 15, fontWeight: 500, color: T.textSec }}>
               {selectedNode.emit_count.toLocaleString()}
             </Typography>
           </Stack>

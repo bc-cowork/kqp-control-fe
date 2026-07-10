@@ -7,11 +7,11 @@ import { Avatar, Button, Popover, SvgIcon } from '@mui/material';
 import { useRouter } from 'src/routes/hooks';
 
 import { CONFIG } from 'src/config-global';
+import { useTranslate } from 'src/locales';
 import { getBottomNavData } from 'src/layouts/config-nav-dashboard';
 
 import { signOut } from 'src/auth/context/jwt';
 import { useAuthContext } from 'src/auth/hooks';
-import { useTranslate } from 'src/locales';
 
 import { NavList } from './nav-list';
 import { NavUl, NavLi } from '../styles';

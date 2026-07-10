@@ -1,7 +1,8 @@
-import { Box, Button, TextField, IconButton, Typography } from "@mui/material";
 import {
     Cancel as CancelIcon,
 } from '@mui/icons-material';
+import { Box, Button, TextField, IconButton, Typography } from "@mui/material";
+
 import { useTranslate } from "src/locales";
 
 const customColors = {

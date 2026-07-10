@@ -134,12 +134,12 @@ export function ChartArea({
             <CartesianGrid stroke={CHART.grid} />
             <XAxis
               dataKey="timestamp"
-              tick={{ fontSize: 13, fill: T.textDim }}
+              tick={{ fontSize: 13, fill: T.textDim, fontFamily: 'Roboto' }}
               tickLine={false}
               axisLine={{ stroke: CHART.grid }}
             />
             <YAxis
-              tick={{ fontSize: 13, fill: T.textDim }}
+              tick={{ fontSize: 13, fill: T.textDim, fontFamily: 'Roboto' }}
               tickLine={false}
               axisLine={{ stroke: CHART.grid }}
               domain={[minValue, maxValue]}
@@ -147,6 +147,7 @@ export function ChartArea({
             />
             <Tooltip
               contentStyle={{
+                fontFamily: 'Roboto',
                 backgroundColor: T.bgPanel,
                 borderColor: T.border,
                 borderRadius: 4,

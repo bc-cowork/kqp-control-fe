@@ -8,12 +8,12 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from 'recharts';
-import { useGetMemoryMetrics } from 'src/actions/dashboard';
 
 import { useTheme } from '@mui/material/styles';
 import { Box, Stack, Typography, CircularProgress } from '@mui/material';
 
 import { varAlpha } from 'src/theme/styles';
+import { useGetMemoryMetrics } from 'src/actions/dashboard';
 
 import { SegmentedButtonGroupChart } from './SegmentedButtonGroupChart';
 
@@ -115,18 +115,19 @@ export function ChartAreaDark({
               />
               <XAxis
                 dataKey="timestamp"
-                tick={{ fontSize: 12, fill: theme.palette.grey[100] }}
+                tick={{ fontSize: 12, fill: theme.palette.grey[100], fontFamily: 'Roboto' }}
                 tickLine={false}
                 axisLine={{ stroke: theme.palette.grey[500] }}
               />
               <YAxis
-                tick={{ fontSize: 12, fill: theme.palette.grey[100] }}
+                tick={{ fontSize: 12, fill: theme.palette.grey[100], fontFamily: 'Roboto' }}
                 tickLine={false}
                 axisLine={{ stroke: theme.palette.grey[500] }}
                 domain={[minValue, maxValue]}
               />
               <Tooltip
                 contentStyle={{
+                  fontFamily: 'Roboto',
                   backgroundColor: '#373F4E',
                   borderColor: theme.palette.grey[600],
                   borderRadius: 4,

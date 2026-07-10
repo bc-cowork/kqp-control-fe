@@ -9,9 +9,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { T, ACCENT2, FONT_CODE, FONT_MONO } from 'src/theme/tokens';
-
 import { useTranslate } from 'src/locales';
+import { T, ACCENT2, FONT_CODE, FONT_MONO } from 'src/theme/tokens';
 
 // Lazy load Monaco to avoid SSR issues
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), { ssr: false });

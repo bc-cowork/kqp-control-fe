@@ -27,6 +27,9 @@
   "editor": {
     "title": "JSON Definition"
   },
+  "canvas": {
+    "zoom_help": "Ctrl 키를 누른 채 마우스 휠을 위/아래로 움직이면 확대/축소됩니다."
+  },
   "sandbox": {
     "title": "테스트 환경 (SANDBOX)",
     "horizontal_view": "horizontal View",

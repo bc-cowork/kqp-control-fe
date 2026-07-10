@@ -1,8 +1,9 @@
 import { CONFIG } from 'src/config-global';
 import { DashboardLayout } from 'src/layouts/dashboard';
 
-import { AuthGuard } from 'src/auth/guard';
 import ErrorBoundaryWithRouter from 'src/components/ErrorBoundary';
+
+import { AuthGuard } from 'src/auth/guard';
 
 // ----------------------------------------------------------------------
 

@@ -17,9 +17,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { T, ACCENT2, FONT_MONO } from 'src/theme/tokens';
-
 import { useTranslate } from 'src/locales';
+import { T, ACCENT2, FONT_MONO } from 'src/theme/tokens';
 
 import { RevertIcon } from './icons';
 import { DataFlowNode } from '../nodes/DataFlowNode';

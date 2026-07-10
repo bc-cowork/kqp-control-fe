@@ -19,7 +19,6 @@ import {
   Typography,
 } from '@mui/material';
 
-import { grey } from 'src/theme/core';
 import { useTranslate } from 'src/locales';
 
 // Styled components (unchanged)

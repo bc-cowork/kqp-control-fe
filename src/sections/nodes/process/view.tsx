@@ -4,12 +4,11 @@ import { Trans } from 'react-i18next';
 
 import Typography from '@mui/material/Typography';
 
-import { useGetProcesses } from 'src/actions/dashboard';
-
 import { useTranslate } from 'src/locales';
 import { ACCENT2, FONT_MONO } from 'src/theme/tokens';
-import { PageShell } from 'src/components/v5';
+import { useGetProcesses } from 'src/actions/dashboard';
 
+import { PageShell } from 'src/components/v5';
 import { ProcessDetail } from 'src/components/nodes/ProcessDetail';
 
 // ----------------------------------------------------------------------

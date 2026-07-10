@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
-import { ToggleButton, SvgIcon, useTheme } from "@mui/material";
+
+import { SvgIcon, useTheme, ToggleButton } from "@mui/material";
 
 const StyledToggleButton = styled(ToggleButton)(({ theme }: any) => ({
     fontSize: 15,

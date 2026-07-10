@@ -7,10 +7,10 @@ import { useRouter } from 'next/navigation';
 
 import { paths } from 'src/routes/paths';
 
+import { T } from 'src/theme/tokens';
+import { useTranslate } from 'src/locales';
 import { useGetProcesses } from 'src/actions/dashboard';
 
-import { useTranslate } from 'src/locales';
-import { T } from 'src/theme/tokens';
 import { DataTable } from 'src/components/v5';
 
 // ----------------------------------------------------------------------

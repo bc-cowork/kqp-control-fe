@@ -66,7 +66,7 @@ export function BigMetric({ m, data, compact = false, offline = false, loading =
   return (
     <Box sx={{ bgcolor: T.bgCard, p: compact ? '8px 12px 6px' : '12px 14px 10px', display: 'flex', flexDirection: 'column', gap: 0.5, overflow: 'hidden', minHeight: 0 }}>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', minHeight: 22 }}>
-        <Typography sx={{ fontSize: 16, color: T.textSec }}>{m.title}</Typography>
+        <Typography sx={{ fontSize: 16, fontWeight: 400, color: T.textSec }}>{m.title}</Typography>
         {m.variants.length > 1 ? (
           <Box sx={{ display: 'flex', border: `1px solid ${T.border}`, borderRadius: '5px', overflow: 'hidden', opacity: offline ? 0.4 : 1, pointerEvents: offline ? 'none' : 'auto' }}>
             {m.variants.map((vv, i) => (
@@ -88,7 +88,7 @@ export function BigMetric({ m, data, compact = false, offline = false, loading =
       </Box>
 
       {!compact && (
-        <Typography sx={{ fontSize: 22, fontWeight: 500, color: offline ? T.textDim : m.color, letterSpacing: '-0.02em', lineHeight: 1.3, mb: 0.5 }}>
+        <Typography sx={{ fontSize: 22, fontWeight: 500, fontFamily: 'Roboto', color: offline ? T.textDim : m.color, letterSpacing: '-0.02em', lineHeight: 1.3, mb: 0.5 }}>
           {offline || loading || !data.length ? '—' : fmtValue(lastVal, v.fmt)}
         </Typography>
       )}
@@ -97,9 +97,9 @@ export function BigMetric({ m, data, compact = false, offline = false, loading =
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data} margin={{ top: 4, right: 8, left: -12, bottom: 0 }} style={{ opacity: offline ? 0.6 : 1 }}>
             <CartesianGrid stroke={T.border} strokeWidth={0.5} />
-            <XAxis dataKey="timestamp" tick={{ fontSize: 13, fill: T.textDim }} tickLine={false} axisLine={{ stroke: T.border }} minTickGap={28} />
+            <XAxis dataKey="timestamp" tick={{ fontSize: 13, fill: T.textDim, fontFamily: 'Roboto' }} tickLine={false} axisLine={{ stroke: T.border }} minTickGap={28} />
             <YAxis
-              tick={{ fontSize: 13, fill: T.textDim }}
+              tick={{ fontSize: 13, fill: T.textDim, fontFamily: 'Roboto' }}
               tickLine={false}
               axisLine={{ stroke: T.border }}
               width={42}

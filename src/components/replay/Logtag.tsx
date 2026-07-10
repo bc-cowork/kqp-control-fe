@@ -33,7 +33,6 @@ export const LogTag = ({ text = '수신로그', onClose }: { text?: string, onCl
             sx={{
                 color: customTagColors.textPrimary,
                 fontSize: 15,
-                fontFamily: 'Roboto',
                 fontWeight: 400,
                 lineHeight: '22.50px',
                 // Your original styles for text:
