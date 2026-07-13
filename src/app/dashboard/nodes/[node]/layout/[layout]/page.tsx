@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import type { DataFlowDefinition } from 'src/components/data-flow';
 
@@ -7,7 +7,9 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
 import { paths } from 'src/routes/paths';
@@ -36,532 +38,480 @@ const MOON_HLJS_STYLE: Record<string, React.CSSProperties> = {
 };
 
 const demoLayoutDefinifinition: DataFlowDefinition = {
-  "KSKQ_def": {
-    "desc": "구조화증권 기본/기타 라우터",
-    "recv2r": [
-      216,
-      224,
-      225,
-      226,
-      230,
-      238,
-      239,
-      261,
-      260
+  KSKQ_def: {
+    desc: '구조화증권 기본/기타 라우터',
+    recv2r: [216, 224, 225, 226, 230, 238, 239, 261, 260],
+    actions: [
+      {
+        act: 'log',
+        param: {
+          to: 'rcv0',
+        },
+      },
+      {
+        act: 'route',
+        param: {
+          to: 'KSKQ_def_emit',
+        },
+      },
+      {
+        act: 'kpass',
+        param: {
+          app: 'kqp',
+          inst: '1',
+          fnid: 10,
+        },
+      },
     ],
-    "actions": [
-      {
-        "act": "log",
-        "param": {
-          "to": "rcv0"
-        }
-      },
-      {
-        "act": "route",
-        "param": {
-          "to": "KSKQ_def_emit"
-        }
-      },
-      {
-        "act": "kpass",
-        "param": {
-          "app": "kqp",
-          "inst": "1",
-          "fnid": 10
-        }
-      }
-    ]
   },
-  "KSKQ_def_emit": {
-    "desc": "구조화증권 기본/기타 송출",
-    "actions": [
+  KSKQ_def_emit: {
+    desc: '구조화증권 기본/기타 송출',
+    actions: [
       {
-        "act": "destinate",
-        "param": {
-          "rule": "route_map"
-        }
+        act: 'destinate',
+        param: {
+          rule: 'route_map',
+        },
       },
       {
-        "act": "modify",
-        "param": {
-          "rule": "wrsec1"
-        }
+        act: 'modify',
+        param: {
+          rule: 'wrsec1',
+        },
       },
       {
-        "act": "emit",
-        "param": {}
+        act: 'emit',
+        param: {},
       },
       {
-        "act": "log",
-        "param": {
-          "to": "dist0"
-        }
-      }
-    ]
-  },
-  "kqp.1": {
-    "desc": "통합시세 기본",
-    "actions": []
-  },
-  "KS_q": {
-    "desc": "KOSPI 주식 호가",
-    "recv2r": [
-      222,
-      223,
-      258
+        act: 'log',
+        param: {
+          to: 'dist0',
+        },
+      },
     ],
-    "actions": [
-      {
-        "act": "log",
-        "param": {
-          "to": "rcv0"
-        }
-      },
-      {
-        "act": "route",
-        "param": {
-          "to": "KS_q_emit"
-        }
-      },
-      {
-        "act": "kpass",
-        "param": {
-          "app": "kqp",
-          "inst": "ksp_q",
-          "fnid": 10
-        }
-      },
-      {
-        "act": "route",
-        "param": {
-          "to": "KS_q_qos"
-        }
-      }
-    ]
   },
-  "KS_q_emit": {
-    "desc": "KOSPI 주식 호가 송출",
-    "actions": [
-      {
-        "act": "destinate",
-        "param": {
-          "rule": "route_map"
-        }
-      },
-      {
-        "act": "modify",
-        "param": {
-          "rule": "wrsec1"
-        }
-      },
-      {
-        "act": "emit",
-        "param": {}
-      },
-      {
-        "act": "log",
-        "param": {
-          "to": "dist0"
-        }
-      }
-    ]
+  'kqp.1': {
+    desc: '통합시세 기본',
+    actions: [],
   },
-  "KS_q_qos": {
-    "desc": "KOSPI 주식 호가 QoS",
-    "actions": [
+  KS_q: {
+    desc: 'KOSPI 주식 호가',
+    recv2r: [222, 223, 258],
+    actions: [
       {
-        "act": "qos",
-        "param": {
-          "rule": "qos_wrsec",
-          "time_ms": 200,
-          "head": "B6"
-        }
+        act: 'log',
+        param: {
+          to: 'rcv0',
+        },
       },
       {
-        "act": "destinate",
-        "param": {
-          "rule": "rtm_code_route",
-          "offset": [18, 12],
-          "dest": [2611, 2612, 2613, 2614, 2615]
-        }
+        act: 'route',
+        param: {
+          to: 'KS_q_emit',
+        },
       },
       {
-        "act": "modify",
-        "param": {
-          "rule": "wrsec1"
-        }
+        act: 'kpass',
+        param: {
+          app: 'kqp',
+          inst: 'ksp_q',
+          fnid: 10,
+        },
       },
       {
-        "act": "emit",
-        "param": {}
+        act: 'route',
+        param: {
+          to: 'KS_q_qos',
+        },
       },
-      {
-        "act": "log",
-        "param": {
-          "to": "qos"
-        }
-      }
-    ]
-  },
-  "kqp.ksp_q": {
-    "desc": "통합시세 KOSPI 호가",
-    "actions": []
-  },
-  "KS_f": {
-    "desc": "KOSPI 주식 체결",
-    "recv2r": [
-      217,
-      218,
-      219,
-      220,
-      221,
-      256
     ],
-    "actions": [
-      {
-        "act": "log",
-        "param": {
-          "to": "rcv0"
-        }
-      },
-      {
-        "act": "route",
-        "param": {
-          "to": "KS_f_emit"
-        }
-      },
-      {
-        "act": "kpass",
-        "param": {
-          "app": "kqp",
-          "inst": "ksp_f",
-          "fnid": 10
-        }
-      },
-      {
-        "act": "route",
-        "param": {
-          "to": "KS_f_qos"
-        }
-      }
-    ]
   },
-  "KS_f_emit": {
-    "desc": "KOSPI 주식 체결 송출",
-    "actions": [
+  KS_q_emit: {
+    desc: 'KOSPI 주식 호가 송출',
+    actions: [
       {
-        "act": "destinate",
-        "param": {
-          "rule": "route_map"
-        }
+        act: 'destinate',
+        param: {
+          rule: 'route_map',
+        },
       },
       {
-        "act": "modify",
-        "param": {
-          "rule": "wrsec1"
-        }
+        act: 'modify',
+        param: {
+          rule: 'wrsec1',
+        },
       },
       {
-        "act": "emit",
-        "param": {}
+        act: 'emit',
+        param: {},
       },
       {
-        "act": "log",
-        "param": {
-          "to": "dist0"
-        }
-      }
-    ]
-  },
-  "KS_f_qos": {
-    "desc": "KOSPI 주식 체결 QoS",
-    "actions": [
-      {
-        "act": "qos",
-        "param": {
-          "rule": "qos_wrsec_A3",
-          "time_ms": 200
-        }
+        act: 'log',
+        param: {
+          to: 'dist0',
+        },
       },
-      {
-        "act": "destinate",
-        "param": {
-          "rule": "rtm_code_route",
-          "offset": [18, 12],
-          "dest": [2621, 2622, 2623, 2624, 2625]
-        }
-      },
-      {
-        "act": "modify",
-        "param": {
-          "rule": "wrsec1"
-        }
-      },
-      {
-        "act": "emit",
-        "param": {}
-      },
-      {
-        "act": "log",
-        "param": {
-          "to": "qos"
-        }
-      }
-    ]
-  },
-  "kqp.ksp_f": {
-    "desc": "통합시세 KOSPI 체결",
-    "actions": []
-  },
-  "KQ_q": {
-    "desc": "KOSDAQ 주식 호가",
-    "recv2r": [
-      236,
-      237,
-      259
     ],
-    "actions": [
-      {
-        "act": "log",
-        "param": {
-          "to": "rcv0"
-        }
-      },
-      {
-        "act": "route",
-        "param": {
-          "to": "KQ_q_emit"
-        }
-      },
-      {
-        "act": "kpass",
-        "param": {
-          "app": "kqp",
-          "inst": "ksq_q",
-          "fnid": 10
-        }
-      },
-      {
-        "act": "route",
-        "param": {
-          "to": "KQ_q_qos"
-        }
-      }
-    ]
   },
-  "KQ_q_emit": {
-    "desc": "KOSDAQ 주식 호가 송출",
-    "actions": [
+  KS_q_qos: {
+    desc: 'KOSPI 주식 호가 QoS',
+    actions: [
       {
-        "act": "destinate",
-        "param": {
-          "rule": "route_map"
-        }
+        act: 'qos',
+        param: {
+          rule: 'qos_wrsec',
+          time_ms: 200,
+          head: 'B6',
+        },
       },
       {
-        "act": "modify",
-        "param": {
-          "rule": "wrsec1"
-        }
+        act: 'destinate',
+        param: {
+          rule: 'rtm_code_route',
+          offset: [18, 12],
+          dest: [2611, 2612, 2613, 2614, 2615],
+        },
       },
       {
-        "act": "emit",
-        "param": {}
+        act: 'modify',
+        param: {
+          rule: 'wrsec1',
+        },
       },
       {
-        "act": "log",
-        "param": {
-          "to": "dist0"
-        }
-      }
-    ]
-  },
-  "KQ_q_qos": {
-    "desc": "KOSDAQ 주식 호가 QoS",
-    "actions": [
-      {
-        "act": "qos",
-        "param": {
-          "rule": "qos_wrsec",
-          "time_ms": 200,
-          "head": "B6"
-        }
+        act: 'emit',
+        param: {},
       },
       {
-        "act": "destinate",
-        "param": {
-          "rule": "rtm_code_route",
-          "offset": [18, 12],
-          "dest": [2651, 2652, 2653, 2654, 2655]
-        }
+        act: 'log',
+        param: {
+          to: 'qos',
+        },
       },
-      {
-        "act": "modify",
-        "param": {
-          "rule": "wrsec1"
-        }
-      },
-      {
-        "act": "emit",
-        "param": {}
-      },
-      {
-        "act": "log",
-        "param": {
-          "to": "qos"
-        }
-      }
-    ]
-  },
-  "kqp.ksq_q": {
-    "desc": "통합시세 KOSDAQ 호가",
-    "actions": []
-  },
-  "KQ_f": {
-    "desc": "KOSDAQ 주식 체결",
-    "recv2r": [
-      231,
-      232,
-      233,
-      234,
-      235,
-      257
     ],
-    "actions": [
-      {
-        "act": "log",
-        "param": {
-          "to": "rcv0"
-        }
-      },
-      {
-        "act": "route",
-        "param": {
-          "to": "KQ_f_emit"
-        }
-      },
-      {
-        "act": "kpass",
-        "param": {
-          "app": "kqp",
-          "inst": "ksq_f",
-          "fnid": 10
-        }
-      },
-      {
-        "act": "route",
-        "param": {
-          "to": "KQ_f_qos"
-        }
-      }
-    ]
   },
-  "KQ_f_emit": {
-    "desc": "KOSDAQ 주식 체결 송출",
-    "actions": [
-      {
-        "act": "destinate",
-        "param": {
-          "rule": "route_map"
-        }
-      },
-      {
-        "act": "modify",
-        "param": {
-          "rule": "wrsec1"
-        }
-      },
-      {
-        "act": "emit",
-        "param": {}
-      },
-      {
-        "act": "log",
-        "param": {
-          "to": "dist0"
-        }
-      }
-    ]
+  'kqp.ksp_q': {
+    desc: '통합시세 KOSPI 호가',
+    actions: [],
   },
-  "KQ_f_qos": {
-    "desc": "KOSDAQ 주식 체결 QoS",
-    "actions": [
+  KS_f: {
+    desc: 'KOSPI 주식 체결',
+    recv2r: [217, 218, 219, 220, 221, 256],
+    actions: [
       {
-        "act": "qos",
-        "param": {
-          "rule": "qos_wrsec_A3",
-          "time_ms": 200
-        }
+        act: 'log',
+        param: {
+          to: 'rcv0',
+        },
       },
       {
-        "act": "destinate",
-        "param": {
-          "rule": "rtm_code_route",
-          "offset": [18, 12],
-          "dest": [2661, 2662, 2663, 2664, 2665]
-        }
+        act: 'route',
+        param: {
+          to: 'KS_f_emit',
+        },
       },
       {
-        "act": "modify",
-        "param": {
-          "rule": "wrsec1"
-        }
+        act: 'kpass',
+        param: {
+          app: 'kqp',
+          inst: 'ksp_f',
+          fnid: 10,
+        },
       },
       {
-        "act": "emit",
-        "param": {}
+        act: 'route',
+        param: {
+          to: 'KS_f_qos',
+        },
       },
-      {
-        "act": "log",
-        "param": {
-          "to": "qos"
-        }
-      }
-    ]
+    ],
   },
-  "kqp.ksq_f": {
-    "desc": "통합시세 KOSDAQ 체결",
-    "actions": []
+  KS_f_emit: {
+    desc: 'KOSPI 주식 체결 송출',
+    actions: [
+      {
+        act: 'destinate',
+        param: {
+          rule: 'route_map',
+        },
+      },
+      {
+        act: 'modify',
+        param: {
+          rule: 'wrsec1',
+        },
+      },
+      {
+        act: 'emit',
+        param: {},
+      },
+      {
+        act: 'log',
+        param: {
+          to: 'dist0',
+        },
+      },
+    ],
   },
-  "relations": {
-    "KSKQ_def": {
-      "to": [
-        "KSKQ_def_emit",
-        "kqp.1"
-      ]
+  KS_f_qos: {
+    desc: 'KOSPI 주식 체결 QoS',
+    actions: [
+      {
+        act: 'qos',
+        param: {
+          rule: 'qos_wrsec_A3',
+          time_ms: 200,
+        },
+      },
+      {
+        act: 'destinate',
+        param: {
+          rule: 'rtm_code_route',
+          offset: [18, 12],
+          dest: [2621, 2622, 2623, 2624, 2625],
+        },
+      },
+      {
+        act: 'modify',
+        param: {
+          rule: 'wrsec1',
+        },
+      },
+      {
+        act: 'emit',
+        param: {},
+      },
+      {
+        act: 'log',
+        param: {
+          to: 'qos',
+        },
+      },
+    ],
+  },
+  'kqp.ksp_f': {
+    desc: '통합시세 KOSPI 체결',
+    actions: [],
+  },
+  KQ_q: {
+    desc: 'KOSDAQ 주식 호가',
+    recv2r: [236, 237, 259],
+    actions: [
+      {
+        act: 'log',
+        param: {
+          to: 'rcv0',
+        },
+      },
+      {
+        act: 'route',
+        param: {
+          to: 'KQ_q_emit',
+        },
+      },
+      {
+        act: 'kpass',
+        param: {
+          app: 'kqp',
+          inst: 'ksq_q',
+          fnid: 10,
+        },
+      },
+      {
+        act: 'route',
+        param: {
+          to: 'KQ_q_qos',
+        },
+      },
+    ],
+  },
+  KQ_q_emit: {
+    desc: 'KOSDAQ 주식 호가 송출',
+    actions: [
+      {
+        act: 'destinate',
+        param: {
+          rule: 'route_map',
+        },
+      },
+      {
+        act: 'modify',
+        param: {
+          rule: 'wrsec1',
+        },
+      },
+      {
+        act: 'emit',
+        param: {},
+      },
+      {
+        act: 'log',
+        param: {
+          to: 'dist0',
+        },
+      },
+    ],
+  },
+  KQ_q_qos: {
+    desc: 'KOSDAQ 주식 호가 QoS',
+    actions: [
+      {
+        act: 'qos',
+        param: {
+          rule: 'qos_wrsec',
+          time_ms: 200,
+          head: 'B6',
+        },
+      },
+      {
+        act: 'destinate',
+        param: {
+          rule: 'rtm_code_route',
+          offset: [18, 12],
+          dest: [2651, 2652, 2653, 2654, 2655],
+        },
+      },
+      {
+        act: 'modify',
+        param: {
+          rule: 'wrsec1',
+        },
+      },
+      {
+        act: 'emit',
+        param: {},
+      },
+      {
+        act: 'log',
+        param: {
+          to: 'qos',
+        },
+      },
+    ],
+  },
+  'kqp.ksq_q': {
+    desc: '통합시세 KOSDAQ 호가',
+    actions: [],
+  },
+  KQ_f: {
+    desc: 'KOSDAQ 주식 체결',
+    recv2r: [231, 232, 233, 234, 235, 257],
+    actions: [
+      {
+        act: 'log',
+        param: {
+          to: 'rcv0',
+        },
+      },
+      {
+        act: 'route',
+        param: {
+          to: 'KQ_f_emit',
+        },
+      },
+      {
+        act: 'kpass',
+        param: {
+          app: 'kqp',
+          inst: 'ksq_f',
+          fnid: 10,
+        },
+      },
+      {
+        act: 'route',
+        param: {
+          to: 'KQ_f_qos',
+        },
+      },
+    ],
+  },
+  KQ_f_emit: {
+    desc: 'KOSDAQ 주식 체결 송출',
+    actions: [
+      {
+        act: 'destinate',
+        param: {
+          rule: 'route_map',
+        },
+      },
+      {
+        act: 'modify',
+        param: {
+          rule: 'wrsec1',
+        },
+      },
+      {
+        act: 'emit',
+        param: {},
+      },
+      {
+        act: 'log',
+        param: {
+          to: 'dist0',
+        },
+      },
+    ],
+  },
+  KQ_f_qos: {
+    desc: 'KOSDAQ 주식 체결 QoS',
+    actions: [
+      {
+        act: 'qos',
+        param: {
+          rule: 'qos_wrsec_A3',
+          time_ms: 200,
+        },
+      },
+      {
+        act: 'destinate',
+        param: {
+          rule: 'rtm_code_route',
+          offset: [18, 12],
+          dest: [2661, 2662, 2663, 2664, 2665],
+        },
+      },
+      {
+        act: 'modify',
+        param: {
+          rule: 'wrsec1',
+        },
+      },
+      {
+        act: 'emit',
+        param: {},
+      },
+      {
+        act: 'log',
+        param: {
+          to: 'qos',
+        },
+      },
+    ],
+  },
+  'kqp.ksq_f': {
+    desc: '통합시세 KOSDAQ 체결',
+    actions: [],
+  },
+  relations: {
+    KSKQ_def: {
+      to: ['KSKQ_def_emit', 'kqp.1'],
     },
-    "KS_q": {
-      "to": [
-        "KS_q_emit",
-        "kqp.ksp_q",
-        "KS_q_qos"
-      ]
+    KS_q: {
+      to: ['KS_q_emit', 'kqp.ksp_q', 'KS_q_qos'],
     },
-    "KS_f": {
-      "to": [
-        "KS_f_emit",
-        "kqp.ksp_f",
-        "KS_f_qos"
-      ]
+    KS_f: {
+      to: ['KS_f_emit', 'kqp.ksp_f', 'KS_f_qos'],
     },
-    "KQ_q": {
-      "to": [
-        "KQ_q_emit",
-        "kqp.ksq_q",
-        "KQ_q_qos"
-      ]
+    KQ_q: {
+      to: ['KQ_q_emit', 'kqp.ksq_q', 'KQ_q_qos'],
     },
-    "KQ_f": {
-      "to": [
-        "KQ_f_emit",
-        "kqp.ksq_f",
-        "KQ_f_qos"
-      ]
-    }
-  }
-}
+    KQ_f: {
+      to: ['KQ_f_emit', 'kqp.ksq_f', 'KQ_f_qos'],
+    },
+  },
+};
 
-  ;
 const demoJSONValue = JSON.stringify(demoLayoutDefinifinition, null, 2);
 
 type Props = {
@@ -589,7 +539,9 @@ export default function Page({ params }: Props) {
 
   // State for JSON editor text and parsed definition
   const [jsonValue, setJsonValue] = useState(demoJSONValue);
-  const [dataFlowDefinition, setDataFlowDefinition] = useState<DataFlowDefinition | null>(demoLayoutDefinifinition);
+  const [dataFlowDefinition, setDataFlowDefinition] = useState<DataFlowDefinition | null>(
+    demoLayoutDefinifinition
+  );
 
   // Initialize from API data
   useEffect(() => {
@@ -614,14 +566,57 @@ export default function Page({ params }: Props) {
     }, 1000);
   }, []);
 
+  // Copy the .moon layout definition to the clipboard (mirrors DataFlowJsonEditor)
+  const handleCopyMoon = useCallback(() => {
+    const text = layoutDefinition;
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(text);
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    }
+  }, [layoutDefinition]);
+
   return (
     <PageShell
       node={node}
       crumbs={[
-        { label: t('top.layout_list'), onClick: () => router.push(paths.dashboard.nodes.layoutList(node)) },
+        {
+          label: t('top.layout_list'),
+          onClick: () => router.push(paths.dashboard.nodes.layoutList(node)),
+        },
         { label: decodedLayout },
       ]}
       title={`${t('top.title_prefix')} : ${decodedLayout}`}
+      actions={
+        dataFlowDefinition ? (
+          <Button
+            disableRipple
+            onClick={testEnvModal.onTrue}
+            sx={{
+              height: 32,
+              px: '14px',
+              minWidth: 0,
+              background: `linear-gradient(to top, ${ACCENT2}55, ${ACCENT2}14)`,
+              border: `1px solid ${T.border}`,
+              borderRadius: '6px',
+              color: ACCENT2,
+              fontSize: 15,
+              fontWeight: 500,
+              textTransform: 'none',
+              '&:hover': { background: `linear-gradient(to top, ${ACCENT2}77, ${ACCENT2}22)` },
+            }}
+          >
+            {tFlow('toolbar.test_env')}
+          </Button>
+        ) : undefined
+      }
     >
       {/* Layout Detail (single-row summary table) — normal flow, scrolls away.
           flexShrink: 0 is required — PageShell's body is a fixed-height flex column,
@@ -647,78 +642,70 @@ export default function Page({ params }: Props) {
         />
       </Box>
 
-      {/* Test-environment button — home position sits right above the Data Flow
-          section. position: sticky keeps it here at rest and pins it to the top of
-          the scrolling body once you scroll down to it. The row is a transparent,
-          click-through strip (no full-width background band — that would clip the
-          Data Flow card's top border/corners as it scrolls underneath); only the
-          button floats, and it carries its own opaque base so content doesn't show
-          through its translucent accent gradient. */}
-      <Box
-        sx={{
-          flexShrink: 0,
-          position: 'sticky',
-          top: 0,
-          zIndex: 3,
-          display: 'flex',
-          justifyContent: 'flex-end',
-          pt: 1,
-          pb: 0,
-          pointerEvents: 'none',
-        }}
-      >
-        <Button
-          disableRipple
-          onClick={testEnvModal.onTrue}
-          sx={{
-            pointerEvents: 'auto',
-            height: 32,
-            px: '14px',
-            minWidth: 0,
-            background: `linear-gradient(to top, ${ACCENT2}55, ${ACCENT2}14), ${T.bg}`,
-            border: `1px solid ${T.border}`,
-            borderRadius: '6px',
-            color: ACCENT2,
-            fontSize: 15,
-            fontWeight: 500,
-            textTransform: 'none',
-            '&:hover': { background: `linear-gradient(to top, ${ACCENT2}77, ${ACCENT2}22), ${T.bg}` },
-          }}
-        >
-          {tFlow('toolbar.test_env')}
-        </Button>
-      </Box>
-
       {/* Data Flow Visualization */}
       {/* flexShrink: 0 on all sections below — PageShell's body is a fixed-height
           flex column, so any child without it gets compressed to fit the viewport */}
       {dataFlowDefinition && (
         <Box sx={{ mb: 3, flexShrink: 0 }}>
-          <DataFlowCanvas
-            definition={dataFlowDefinition}
-            fileName={`${decodedLayout}.moon`}
-          />
+          <DataFlowCanvas definition={dataFlowDefinition} fileName={`${decodedLayout}.moon`} />
         </Box>
       )}
 
       {/* JSON Definition Editor */}
       {jsonValue && (
         <Box sx={{ mb: 3, flexShrink: 0 }}>
-          <DataFlowJsonEditor
-            value={jsonValue}
-            onChange={handleJsonChange}
-          />
+          <DataFlowJsonEditor value={jsonValue} onChange={handleJsonChange} />
         </Box>
       )}
 
       {/* Layout Definition (.moon) — section label + Monokai/moon code block */}
-      <Box sx={{ mb: 3, flexShrink: 0, borderRadius: '8px', overflow: 'hidden', border: `1px solid ${T.border}` }}>
-        {/* Header bar — matches Data Flow / JSON Definition */}
-        <Box sx={{ p: 1.5, backgroundColor: T.bgPanel, borderBottom: `1px solid ${T.border}` }}>
-          <Typography sx={{ fontSize: 17, fontWeight: 400, lineHeight: '22.5px', color: T.textSec }}>
+      <Box
+        sx={{
+          mb: 3,
+          flexShrink: 0,
+          borderRadius: '8px',
+          overflow: 'hidden',
+          border: `1px solid ${T.border}`,
+        }}
+      >
+        {/* Header bar — matches Data Flow / JSON Definition (with copy button) */}
+        <Stack
+          direction="row"
+          alignItems="center"
+          sx={{ p: 1.5, backgroundColor: T.bgPanel, borderBottom: `1px solid ${T.border}` }}
+        >
+          <Typography
+            sx={{ flex: 1, fontSize: 17, fontWeight: 400, lineHeight: '22.5px', color: T.textSec }}
+          >
             {t('detail_table.script_title')}
           </Typography>
-        </Box>
+          <IconButton
+            onClick={handleCopyMoon}
+            size="small"
+            sx={{ color: T.textSec, '&:hover': { color: T.textPrim } }}
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M4.1333 5.33346C4.1333 4.67072 4.67056 4.13346 5.3333 4.13346H12.8C13.4627 4.13346 14 4.67072 14 5.33346V12.8001C14 13.4629 13.4627 14.0001 12.8 14.0001H5.3333C4.67056 14.0001 4.1333 13.4629 4.1333 12.8001V5.33346ZM5.3333 5.20013C5.25966 5.20013 5.19997 5.25983 5.19997 5.33346V12.8001C5.19997 12.8738 5.25966 12.9335 5.3333 12.9335H12.8C12.8736 12.9335 12.9333 12.8738 12.9333 12.8001V5.33346C12.9333 5.25982 12.8736 5.20013 12.8 5.20013H5.3333Z"
+                fill="currentColor"
+              />
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M2.00049 3.2C2.00049 2.53726 2.53775 2 3.20049 2H12.1333C12.4279 2 12.6666 2.23878 12.6666 2.53333C12.6666 2.82789 12.4279 3.06667 12.1333 3.06667H3.20049C3.12685 3.06667 3.06715 3.12636 3.06715 3.2V12.1335C3.06715 12.428 2.82837 12.6668 2.53382 12.6668C2.23927 12.6668 2.00049 12.428 2.00049 12.1335V3.2Z"
+                fill="currentColor"
+              />
+            </svg>
+          </IconButton>
+        </Stack>
         <Box
           sx={{
             backgroundColor: T.bgCard,
@@ -758,7 +745,6 @@ export default function Page({ params }: Props) {
           layout={decodedLayout}
         />
       )}
-
     </PageShell>
   );
 }

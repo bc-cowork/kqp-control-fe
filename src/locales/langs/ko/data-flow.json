@@ -32,6 +32,7 @@
   },
   "sandbox": {
     "title": "테스트 환경 (SANDBOX)",
+    "editing": "작성중...",
     "horizontal_view": "horizontal View",
     "vertical_view": "vertical View",
     "horizontal": "horizontal",

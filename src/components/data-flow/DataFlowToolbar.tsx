@@ -28,13 +28,16 @@ export function DataFlowToolbar({ fileName }: DataFlowToolbarProps) {
         borderBottom: `1px solid ${T.border}`,
       }}
     >
-      {/* Title */}
-      <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textSec }}>
-        {t('toolbar.title')}
-      </Typography>
+      {/* Title (left) — flex:1 spacer balances the right one so the center stays
+          truly centered on the full toolbar width while the row keeps its height. */}
+      <Box sx={{ flex: 1, minWidth: 0 }}>
+        <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textSec }}>
+          {t('toolbar.title')}
+        </Typography>
+      </Box>
 
-      {/* Filename + preview-mode chip (centered) */}
-      <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
+      {/* Filename + preview-mode chip (centered, in-flow) */}
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         <Typography sx={{ fontSize: 15, color: T.textDim, fontFamily: FONT_MONO }}>
           {fileName}
         </Typography>
@@ -53,6 +56,9 @@ export function DataFlowToolbar({ fileName }: DataFlowToolbarProps) {
           {t('toolbar.preview')}
         </Box>
       </Box>
+
+      {/* Right spacer — equal width to the title box, keeps the center centered */}
+      <Box sx={{ flex: 1, minWidth: 0 }} />
     </Stack>
   );
 }
