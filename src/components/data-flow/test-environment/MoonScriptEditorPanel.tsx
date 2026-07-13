@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { useTranslate } from 'src/locales';
-import { T, ACCENT2, FONT_CODE, FONT_MONO } from 'src/theme/tokens';
+import { T, FONT_CODE } from 'src/theme/tokens';
 
 // Lazy load Monaco to avoid SSR issues
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
@@ -79,16 +79,14 @@ export function MoonScriptEditorPanel({
         >
           <Box
             sx={{
-              fontSize: 13,
+              fontSize: 14,
               fontWeight: 500,
-              px: '9px',
-              py: '2px',
-              borderRadius: '5px',
-              backgroundColor: 'transparent',
+              px: '10px',
+              py: '3px',
+              borderRadius: '6px',
+              backgroundColor: T.bgHover,
               border: `1px solid ${T.border}`,
               color: T.textSec,
-              fontFamily: FONT_MONO,
-              letterSpacing: '0.3px',
             }}
           >
             MOON DSL
@@ -107,15 +105,15 @@ export function MoonScriptEditorPanel({
             height: 32,
             px: '14px',
             minWidth: 0,
-            background: `linear-gradient(to top, ${ACCENT2}55, ${ACCENT2}14)`,
+            backgroundColor: T.bgCard,
             border: `1px solid ${T.border}`,
             borderRadius: '6px',
-            color: ACCENT2,
+            color: T.textSec,
             fontSize: 15,
             fontWeight: 500,
             textTransform: 'none',
-            '&:hover': { background: `linear-gradient(to top, ${ACCENT2}77, ${ACCENT2}22)` },
-            '&.Mui-disabled': { color: T.textDim },
+            '&:hover': { backgroundColor: T.bgHover, color: T.textPrim },
+            '&.Mui-disabled': { color: T.textDim, backgroundColor: T.bgCard },
           }}
         >
           {t('sandbox.preview_btn')}

@@ -28,7 +28,6 @@ export function DataFlowJsonEditor({ value, onChange }: DataFlowJsonEditorProps)
   const { t } = useTranslate('data-flow');
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const [isActive, setIsActive] = useState(false);
-  const [copied, setCopied] = useState(false);
 
   const handleCopy = useCallback(() => {
     const text = editorRef.current?.getValue() || value;
@@ -44,8 +43,6 @@ export function DataFlowJsonEditor({ value, onChange }: DataFlowJsonEditorProps)
       document.execCommand('copy');
       document.body.removeChild(ta);
     }
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
   }, [value]);
 
   // Push external value changes (e.g. API data) into the editor imperatively
@@ -98,9 +95,6 @@ export function DataFlowJsonEditor({ value, onChange }: DataFlowJsonEditorProps)
           </svg>
 
         </IconButton>
-        {copied && (
-          <Typography sx={{ fontSize: 12, color: T.on, ml: 0.5 }}>Copied!</Typography>
-        )}
       </Stack>
 
       {/* Monaco Editor */}

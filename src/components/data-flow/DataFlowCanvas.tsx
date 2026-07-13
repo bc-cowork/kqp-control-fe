@@ -236,6 +236,7 @@ function DataFlowCanvasInner({ definition, fileName }: DataFlowCanvasProps) {
               <Typography
                 sx={{
                   color: HELP_TEXT_COLOR,
+                  opacity: 0.65,
                   fontSize: 17 * docScale,
                   fontFamily: "'Spoqa Han Sans Neo'",
                   fontWeight: 400,

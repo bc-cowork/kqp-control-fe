@@ -32,6 +32,7 @@
   },
   "sandbox": {
     "title": "Test Environment (SANDBOX)",
+    "editing": "Editing…",
     "horizontal_view": "horizontal View",
     "vertical_view": "Vertical View",
     "horizontal": "horizontal",
