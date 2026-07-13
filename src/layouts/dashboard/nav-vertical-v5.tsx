@@ -127,7 +127,9 @@ export function NavVerticalV5({ nodes }: NavVerticalV5Props) {
     { label: t('tab_option.alerts_list'), path: paths.dashboard.nodes.alertsList(activeNode) },
   ];
 
-  const dashActive = pathname === paths.dashboard.root;
+  // trailingSlash is enabled, so pathname comes as "/dashboard/" — strip the
+  // trailing slash before the exact match, otherwise the dashboard never lights up.
+  const dashActive = pathname.replace(/\/+$/, '') === paths.dashboard.root;
 
   return (
     <Box
@@ -475,7 +477,7 @@ type NavRowProps = {
 function NavRow({ label, icon, indent = 0, active, expandable, open, onClick }: NavRowProps) {
   const fontSize = indent === 0 ? 16 : indent === 1 ? 15 : 14;
   const isLeaf = !expandable;
-  const color = active ? (isLeaf ? '#FFFFFF' : T.onFill) : indent === 2 ? T.textDim : T.textSec;
+  const color = active ? '#FFFFFF' : indent === 2 ? T.textDim : T.textSec;
   const background = active ? (isLeaf ? T.primary : T.deep) : 'transparent';
 
   return (
@@ -490,7 +492,7 @@ function NavRow({ label, icon, indent = 0, active, expandable, open, onClick }: 
         py: 1,
         borderRadius: 1,
         fontSize,
-        fontWeight: active ? 500 : 400,
+        fontWeight: 400,
         color,
         background,
         cursor: 'pointer',
