@@ -600,7 +600,8 @@ export function FilterField({
           borderRadius: '5px',
           px: 1.25,
           fontSize: 15,
-          fontFamily: FONT_MONO,
+          fontFamily: "'Spoqa Han Sans Neo'",
+          fontWeight: 300,
           color: T.textPrim,
           display: 'flex',
           alignItems: 'center',
@@ -649,7 +650,8 @@ export function FilterField({
               p: '7px 10px',
               borderRadius: '4px',
               fontSize: 15,
-              fontFamily: FONT_MONO,
+              fontFamily: "'Spoqa Han Sans Neo'",
+              fontWeight: o.value === value ? 400 : 300,
               color: o.value === value ? accent : T.textPrim,
               bgcolor: o.value === value ? `${accent}1f` : 'transparent',
               cursor: 'pointer',
@@ -818,32 +820,44 @@ export function Pager({
       }}
     >
       <Stack direction="row" alignItems="center" spacing={1}>
-        <Typography sx={{ fontSize: 14, color: T.textSec }}>{t('table.rows_per_page')}:</Typography>
+        <Typography sx={{ fontSize: 15, color: T.textSec }}>{t('table.rows_per_page')}</Typography>
         {onPerPageChange && (
           <>
             <Box
               onClick={(e) => setAnchor(e.currentTarget)}
               sx={{
-                height: 30,
-                px: 1,
+                height: 32,
+                px: 1.25,
+                boxSizing: 'border-box',
                 display: 'flex',
                 alignItems: 'center',
                 gap: 0.5,
-                bgcolor: T.bgPanel,
-                border: `1px solid ${T.border}`,
+                bgcolor: T.bgCard,
+                border: `1px solid ${anchor ? T.primary : T.border}`,
                 borderRadius: '5px',
-                fontSize: 14,
+                fontSize: 15,
+                fontFamily: "'Spoqa Han Sans Neo'",
+                fontWeight: 300,
                 color: T.textPrim,
                 cursor: 'pointer',
               }}
             >
               {perPage}
-              <Iconify icon="eva:chevron-down-fill" width={14} sx={{ color: T.textSec }} />
+              <Iconify
+                icon="eva:chevron-down-fill"
+                width={16}
+                sx={{
+                  color: T.textSec,
+                  transform: anchor ? 'rotate(180deg)' : 'none',
+                  transition: 'transform .15s',
+                }}
+              />
             </Box>
             <Popover
               open={!!anchor}
               anchorEl={anchor}
               onClose={() => setAnchor(null)}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
               slotProps={{
                 paper: {
                   sx: {
@@ -851,6 +865,7 @@ export function Pager({
                     bgcolor: T.bgCard,
                     border: `1px solid ${T.border}`,
                     borderRadius: '6px',
+                    boxShadow: '0 10px 28px rgba(0,0,0,0.4)',
                     p: 0.5,
                   },
                 },
@@ -864,13 +879,15 @@ export function Pager({
                     setAnchor(null);
                   }}
                   sx={{
-                    px: 1.5,
-                    py: 0.75,
+                    p: '7px 10px',
                     borderRadius: '4px',
-                    fontSize: 14,
+                    fontSize: 15,
+                    fontFamily: "'Spoqa Han Sans Neo'",
+                    fontWeight: n === perPage ? 400 : 300,
                     color: n === perPage ? T.primary : T.textPrim,
+                    bgcolor: n === perPage ? `${T.primary}1f` : 'transparent',
                     cursor: 'pointer',
-                    '&:hover': { bgcolor: T.bgHover },
+                    '&:hover': { bgcolor: n === perPage ? `${T.primary}1f` : T.bgHover },
                   }}
                 >
                   {n}

@@ -39,7 +39,8 @@
     "data_definition": "데이터 정의",
     "title": "증적 로그 프레임 상세",
     "frame_info": "프레임 정보",
-    "frame_seq": "프레임 번호"
+    "frame_seq": "프레임 번호",
+    "frame_nav": "프레임 이동"
   },
   "filter_bar": {
     "cond": "조건",

@@ -39,7 +39,8 @@
     "data_definition": "Data Definition",
     "title": "Audit Log Frame Detail",
     "frame_info": "Frame Info",
-    "frame_seq": "Frame Seq"
+    "frame_seq": "Frame Seq",
+    "frame_nav": "Frame Navigation"
   },
   "filter_bar": {
     "cond": "Cond",
