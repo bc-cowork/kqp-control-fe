@@ -124,6 +124,7 @@ export function MoonScriptEditorPanel({
       <Box
         sx={{
           flex: 1,
+          minHeight: 0,
           position: 'relative',
           overflow: 'hidden',
           backgroundColor: T.bgPanel,
@@ -149,62 +150,64 @@ export function MoonScriptEditorPanel({
             sx={{ position: 'absolute', inset: 0, zIndex: 10, cursor: 'text' }}
           />
         )}
-        <MonacoEditor
-          height="100%"
-          language="lua"
-          theme="moon-dark"
-          defaultValue={layoutDefinition}
-          beforeMount={(monaco) => {
-            // .moon (Monokai-family) theme on the app surface (T.bgPanel)
-            // (text #f8f8f2 / str #abe338 / num #f5ab35 / key #ffa07a).
-            monaco.editor.defineTheme('moon-dark', {
-              base: 'vs-dark',
-              inherit: true,
-              rules: [
-                { token: '', foreground: 'f8f8f2' },
-                { token: 'string', foreground: 'abe338' },
-                { token: 'number', foreground: 'f5ab35' },
-                { token: 'keyword', foreground: 'ffa07a' },
-                { token: 'type', foreground: 'ffa07a' },
-                { token: 'identifier', foreground: 'f8f8f2' },
-              ],
-              colors: { 'editor.background': T.bgPanel },
-            });
-          }}
-          onMount={(ed) => {
-            editorRef.current = ed;
-            ed.onDidBlurEditorText(() => setIsActive(false));
-          }}
-          onChange={(v) => onCodeChange(v || '')}
-          options={{
-            minimap: { enabled: false },
-            fontSize: 15.5,
-            fontFamily: FONT_CODE,
-            lineHeight: 23,
-            padding: { top: 12 },
-            scrollBeyondLastLine: false,
-            automaticLayout: true,
-            tabSize: 2,
-            insertSpaces: true,
-            wordWrap: 'on',
-            scrollbar: {
-              verticalScrollbarSize: 8,
-              horizontalScrollbarSize: 8,
-              verticalSliderSize: 8,
-              horizontalSliderSize: 8,
-            },
-            lineNumbers: 'off',
-            glyphMargin: false,
-            guides: {
-              bracketPairs: false,
-              indentation: false,
-              highlightActiveBracketPair: false,
-            },
-            folding: false,
-            lineDecorationsWidth: 0,
-            lineNumbersMinChars: 0,
-          }}
-        />
+        <Box sx={{ position: 'absolute', inset: 0 }}>
+          <MonacoEditor
+            height="100%"
+            language="lua"
+            theme="moon-dark"
+            defaultValue={layoutDefinition}
+            beforeMount={(monaco) => {
+              // .moon (Monokai-family) theme on the app surface (T.bgPanel)
+              // (text #f8f8f2 / str #abe338 / num #f5ab35 / key #ffa07a).
+              monaco.editor.defineTheme('moon-dark', {
+                base: 'vs-dark',
+                inherit: true,
+                rules: [
+                  { token: '', foreground: 'f8f8f2' },
+                  { token: 'string', foreground: 'abe338' },
+                  { token: 'number', foreground: 'f5ab35' },
+                  { token: 'keyword', foreground: 'ffa07a' },
+                  { token: 'type', foreground: 'ffa07a' },
+                  { token: 'identifier', foreground: 'f8f8f2' },
+                ],
+                colors: { 'editor.background': T.bgPanel },
+              });
+            }}
+            onMount={(ed) => {
+              editorRef.current = ed;
+              ed.onDidBlurEditorText(() => setIsActive(false));
+            }}
+            onChange={(v) => onCodeChange(v || '')}
+            options={{
+              minimap: { enabled: false },
+              fontSize: 15.5,
+              fontFamily: FONT_CODE,
+              lineHeight: 23,
+              padding: { top: 12 },
+              scrollBeyondLastLine: false,
+              automaticLayout: true,
+              tabSize: 2,
+              insertSpaces: true,
+              wordWrap: 'on',
+              scrollbar: {
+                verticalScrollbarSize: 8,
+                horizontalScrollbarSize: 8,
+                verticalSliderSize: 8,
+                horizontalSliderSize: 8,
+              },
+              lineNumbers: 'off',
+              glyphMargin: false,
+              guides: {
+                bracketPairs: false,
+                indentation: false,
+                highlightActiveBracketPair: false,
+              },
+              folding: false,
+              lineDecorationsWidth: 0,
+              lineNumbersMinChars: 0,
+            }}
+          />
+        </Box>
       </Box>
     </Box>
   );
