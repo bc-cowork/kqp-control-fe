@@ -54,6 +54,23 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html lang={lang ?? 'en'} suppressHydrationWarning>
       <body>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function () {
+  if (typeof Node !== 'function' || !Node.prototype) return;
+  var origRemove = Node.prototype.removeChild;
+  Node.prototype.removeChild = function (child) {
+    if (child && child.parentNode !== this) { return child; }
+    return origRemove.apply(this, arguments);
+  };
+  var origInsert = Node.prototype.insertBefore;
+  Node.prototype.insertBefore = function (newNode, referenceNode) {
+    if (referenceNode && referenceNode.parentNode !== this) { return newNode; }
+    return origInsert.apply(this, arguments);
+  };
+})();`,
+          }}
+        />
         <InitColorSchemeScript
           defaultMode={schemeConfig.defaultMode}
           modeStorageKey={schemeConfig.modeStorageKey}
