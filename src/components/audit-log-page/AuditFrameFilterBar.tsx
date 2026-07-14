@@ -85,7 +85,7 @@ const AuditFrameFilterBar: React.FC<Props> = ({ filters, setFilters, onApply, on
     gap: 0.875,
     cursor: 'pointer',
     color: buttonText,
-    '&:hover': { bgcolor: T.bgHover, color: T.textPrim },
+    '&:hover': { bgcolor: T.bgHover, color: buttonText },
   } as const;
 
   // Explicit CSS sizing so the icon never grows as a flex child.
@@ -161,8 +161,8 @@ const AuditFrameFilterBar: React.FC<Props> = ({ filters, setFilters, onApply, on
           <IconButton
             onClick={() => handleChange('side', 'prev')}
             sx={{
-              width: 32,
-              height: 32,
+              width: 28,
+              height: 28,
               p: 0.5,
               borderRadius: '4px',
               bgcolor: side === 'prev' ? arrowSelectedBg : 'transparent',
@@ -170,8 +170,8 @@ const AuditFrameFilterBar: React.FC<Props> = ({ filters, setFilters, onApply, on
           >
             <Box
               component="svg"
-              width="16"
-              height="16"
+              width="14"
+              height="14"
               viewBox="0 0 16 16"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -187,8 +187,8 @@ const AuditFrameFilterBar: React.FC<Props> = ({ filters, setFilters, onApply, on
           <IconButton
             onClick={() => handleChange('side', 'next')}
             sx={{
-              width: 32,
-              height: 32,
+              width: 28,
+              height: 28,
               p: 0.5,
               borderRadius: '4px',
               bgcolor: side === 'next' ? arrowSelectedBg : 'transparent',
@@ -196,8 +196,8 @@ const AuditFrameFilterBar: React.FC<Props> = ({ filters, setFilters, onApply, on
           >
             <Box
               component="svg"
-              width="16"
-              height="16"
+              width="14"
+              height="14"
               viewBox="0 0 16 16"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"

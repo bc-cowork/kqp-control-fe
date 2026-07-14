@@ -29,7 +29,7 @@ import { SpecChip, DataTable, CodeBlock } from 'src/components/v5';
 
 import { Iconify } from '../iconify';
 import AuditFrameFilterBar from '../audit-log-page/AuditFrameFilterBar';
-import TablePaginationCustomShort from '../common/TablePaginationCustomShort';
+import { FrameTimeline } from './FrameTimeline';
 import { AuditFrameLayoutFlow } from '../audit-log-page/AuditFrameLayoutFlow';
 
 import type { Filter } from '../common/AddFilter';
@@ -144,31 +144,11 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
     setPage(0);
   }, []);
 
-  const onNext = () => {
+  // Seek to an arbitrary frame (timeline drag / click). One API call per seek.
+  const onSeek = (target: number) => {
     resetSearch();
-    const newSeq = seq + 1;
-    setSeq(newSeq);
-    setApiSeq(newSeq);
-  };
-
-  const onPrev = () => {
-    resetSearch();
-    const newSeq = seq - 1;
-    setSeq(newSeq);
-    setApiSeq(newSeq);
-  };
-
-  const onFirst = () => {
-    resetSearch();
-    setSeq(1);
-    setApiSeq(1);
-  };
-
-  const onLast = () => {
-    resetSearch();
-    setSeq(0);
-    setApiSeq(0);
-    resetCache();
+    setSeq(target);
+    setApiSeq(target);
   };
 
   const onApply = () => {
@@ -325,7 +305,20 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
               fontWeight: 500,
             }}
           >
-            <Iconify icon="eva:file-add-outline" width={18} sx={{ color: T.textDim }} />
+            <Box
+              component="svg"
+              width={20}
+              height={20}
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              sx={{ color: T.textSec, flexShrink: 0, display: 'block' }}
+            >
+              <path
+                d="M8.60767 3.32129C8.78817 3.32095 8.96134 3.39402 9.08716 3.52344L10.2795 4.75H16.8323C17.6607 4.75001 18.3323 5.42158 18.3323 6.25V15.167C18.3321 15.9952 17.6606 16.667 16.8323 16.667H3.16431C2.33609 16.6669 1.66453 15.9952 1.66431 15.167L1.66333 4.83203C1.66324 4.00468 2.33306 3.33267 3.1604 3.33106L8.60767 3.32129ZM3.16333 4.66504C3.07156 4.66521 2.99658 4.73934 2.99634 4.83106L2.99731 15.167C2.99753 15.2588 3.07246 15.3329 3.16431 15.333H16.8323C16.9242 15.333 16.999 15.2589 16.9993 15.167V6.25C16.9993 6.15796 16.9243 6.08301 16.8323 6.08301H9.99829C9.81823 6.08301 9.64529 6.00997 9.51978 5.88086L8.32739 4.65527L3.16333 4.66504ZM12.5002 8.08301C12.8684 8.08301 13.1672 8.38181 13.1672 8.75V10.167H14.5823C14.9504 10.167 15.2491 10.4649 15.2493 10.833C15.2493 11.2012 14.9505 11.5 14.5823 11.5H13.1672V12.917C13.167 13.285 12.8683 13.583 12.5002 13.583C12.1323 13.5828 11.8344 13.2849 11.8342 12.917V11.5H10.4163C10.0481 11.5 9.74927 11.2012 9.74927 10.833C9.7494 10.4649 10.0482 10.167 10.4163 10.167H11.8342V8.75C11.8342 8.38192 12.1322 8.08318 12.5002 8.08301Z"
+                fill="currentColor"
+              />
+            </Box>
             <span>{t('audit_log_frame_detail.frame_info')}</span>
           </Box>
 
@@ -333,14 +326,13 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
           <Box sx={{ flex: 1, minHeight: 0, p: '18px 16px', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
             {/* File name */}
             <Box sx={{ mb: '18px' }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: '7px', color: T.textDim, fontSize: 14 }}>
-                <Iconify icon="eva:file-outline" width={14} />
-                {t('right_side_audit_log_list.filename')}
-              </Box>
-              <Box sx={{ color: T.textPrim, fontSize: 20, fontWeight: 400, mt: '6px', wordBreak: 'break-all' }}>
+              <Box sx={{ color: T.textPrim, fontSize: 20, fontWeight: 400, wordBreak: 'break-all' }}>
                 {selectedFile}
               </Box>
             </Box>
+
+            {/* Divider */}
+            <Box sx={{ borderBottom: `1px solid ${T.border}`, mb: '18px' }} />
 
             {/* Audit log list group */}
             <PanelSectionLabel>{t('right_side_audit_log_list.audit_log_list')}</PanelSectionLabel>
@@ -369,8 +361,11 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
             />
             <InfoBox label={t('right_side_audit_log_list.desc')} value={auditFrame?.desc || '—'} />
 
+            {/* Divider */}
+            <Box sx={{ borderBottom: `1px solid ${T.border}`, mt: '18px', mb: '18px' }} />
+
             {/* Frame detail group */}
-            <PanelSectionLabel sx={{ mt: '14px' }}>
+            <PanelSectionLabel sx={{ mt: 0 }}>
               {t('audit_log_frame_detail.title')}
             </PanelSectionLabel>
             <InfoBox
@@ -423,25 +418,18 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
 
         {/* Right — filter bar + frame nav + fragment table */}
         <Box sx={{ flex: 1, minWidth: 0, minHeight: 0, display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-          <TablePaginationCustomShort
-            rowsPerPage={count || 40}
-            page={5}
-            count={auditFrame?.max_frame || 0}
-            onPrev={onPrev}
-            onNext={onNext}
-            onFirst={onFirst}
-            onLast={onLast}
-            firstDisabled={apiSeq === 1}
-            lastDisabled={false}
-            prevDisabled={apiSeq === 1}
-            nextDisabled={apiSeq === 0 || apiSeq === auditFrame.max_frame}
-          />
-
           <AuditFrameFilterBar
             filters={filters}
             setFilters={setFilters}
             onApply={handleSearch}
             onResetClick={handleResetClick}
+          />
+
+          <FrameTimeline
+            label={t('audit_log_frame_detail.frame_nav')}
+            current={seq === 0 ? auditFrame?.max_frame || 1 : seq}
+            total={auditFrame?.max_frame || 1}
+            onSeek={onSeek}
           />
 
           <Box

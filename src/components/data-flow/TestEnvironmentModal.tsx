@@ -114,6 +114,8 @@ function ModalContent({
   // Preview handler
   const handlePreview = useCallback(async () => {
     setIsPreviewing(true);
+    // 스피너가 눈에 보이도록 최소 노출 시간 확보
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     try {
       const response = await axiosInstance.post(endpoints.layouts.preview(node), {
         layout_definition: moonCode,
@@ -425,10 +427,22 @@ function ModalContent({
 
           {/* Scrollable body — everything below the fixed toolbar scrolls here.
           Scrollbar deferred to the global hover-reveal rule. */}
-          <Box sx={{ flex: 1, minHeight: 0, overflowY: 'auto', pt: 3, px: 4.5, pb: 6 }}>
+          <Box
+            sx={{
+              flex: 1,
+              minHeight: 0,
+              overflowY: 'auto',
+              pt: 3,
+              px: 4.5,
+              pb: 3,
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
             {/* ========== Panels Container ========== */}
             <Box
               sx={{
+                flex: 1,
                 display: 'flex',
                 flexDirection: isHorizontal ? 'row' : 'column',
                 gap: 3,

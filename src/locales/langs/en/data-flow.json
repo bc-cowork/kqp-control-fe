@@ -28,7 +28,7 @@
     "title": "JSON Definition"
   },
   "canvas": {
-    "zoom_help": "Hold Ctrl and scroll the mouse wheel up/down to zoom in/out."
+    "zoom_help": "Hold Ctrl and scroll the mouse wheel up/down to zoom in or out."
   },
   "sandbox": {
     "title": "Test Environment (SANDBOX)",
@@ -40,7 +40,7 @@
     "save": "Save",
     "revert": "Revert",
     "layout_definition": "Layout Definition",
-    "preview_btn": "Apply Preview",
+    "preview_btn": "Apply Node",
     "view_screen": "View Screen",
     "interface_scale": "Interface Scale",
     "enter_fullscreen": "Enter Full Screen",

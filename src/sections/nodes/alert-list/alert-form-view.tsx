@@ -199,7 +199,7 @@ function GhostBtn({
         border: `1px solid ${on ? c : T.border}`,
         color: on ? '#fff' : T.textSec,
         transition: 'all .12s',
-        '&:hover': on ? undefined : { bgcolor: T.bgHover, color: T.textPrim },
+        '&:hover': on ? undefined : { bgcolor: T.bgHover, color: T.textSec },
       }}
     >
       {children}

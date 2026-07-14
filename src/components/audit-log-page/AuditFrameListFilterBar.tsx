@@ -58,7 +58,7 @@ const AuditFrameListFilterBar: React.FC<Props> = ({ value, setValue, onSearch, o
     fontWeight: 500,
     fontFamily: 'inherit',
     cursor: 'pointer',
-    '&:hover': { bgcolor: T.bgHover, color: T.textPrim },
+    '&:hover': { bgcolor: T.bgHover, color: T.textSec },
   } as const;
 
   const iconSx = { width: 16, height: 16, flexShrink: 0 } as const;

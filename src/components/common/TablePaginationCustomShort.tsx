@@ -3,7 +3,7 @@
 import type { SxProps } from '@mui/material';
 import type { Theme } from 'src/theme/types';
 
-import { Box, Stack } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 
 import { T } from 'src/theme/tokens';
 
@@ -15,6 +15,7 @@ type Props = {
   page: number;
   count: number;
   rowsPerPage: number;
+  label?: string;
   onFirst: () => void;
   onLast: () => void;
   onPrev: () => void;
@@ -47,13 +48,13 @@ function NavArrow({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        border: 'none',
-        bgcolor: 'transparent',
-        borderRadius: '4px',
+        border: `1px solid ${T.border}`,
+        bgcolor: T.bgCard,
+        borderRadius: '6px',
         color: T.textSec,
         opacity: disabled ? 0.5 : 1,
         cursor: disabled ? 'default' : 'pointer',
-        '&:hover': disabled ? undefined : { bgcolor: T.bgHover, color: T.textPrim },
+        '&:hover': disabled ? undefined : { bgcolor: T.bgHover, color: T.textPrim, borderColor: T.textDim },
       }}
     >
       <Iconify icon={icon} width={16} />
@@ -65,6 +66,7 @@ const TablePaginationCustomShort = ({
   page,
   count,
   rowsPerPage,
+  label,
   onFirst,
   onLast,
   onPrev,
@@ -78,8 +80,15 @@ const TablePaginationCustomShort = ({
   const lastPage = Math.ceil(count / rowsPerPage) - 1;
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', ...sx }}>
-      <Stack direction="row" alignItems="center" spacing={0.5}>
+    <Box sx={{ display: 'flex', alignItems: 'center', ...sx }}>
+      {/* Left region — label stays left-aligned */}
+      <Box sx={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center' }}>
+        {label && (
+          <Typography sx={{ fontSize: 16, color: T.textDim, whiteSpace: 'nowrap' }}>{label}</Typography>
+        )}
+      </Box>
+      {/* Center region — arrows centered in the row */}
+      <Stack direction="row" alignItems="center" spacing={1.5}>
         <NavArrow
           icon="eva:arrowhead-left-fill"
           disabled={firstDisabled || page === 0}
@@ -101,6 +110,8 @@ const TablePaginationCustomShort = ({
           onClick={onLast}
         />
       </Stack>
+      {/* Right region — balances the left so arrows stay centered */}
+      <Box sx={{ flex: 1, minWidth: 0 }} />
     </Box>
   );
 };
