@@ -29,7 +29,7 @@ import { SpecChip, DataTable, CodeBlock } from 'src/components/v5';
 
 import { Iconify } from '../iconify';
 import AuditFrameFilterBar from '../audit-log-page/AuditFrameFilterBar';
-import TablePaginationCustomShort from '../common/TablePaginationCustomShort';
+import { FrameTimeline } from './FrameTimeline';
 import { AuditFrameLayoutFlow } from '../audit-log-page/AuditFrameLayoutFlow';
 
 import type { Filter } from '../common/AddFilter';
@@ -144,31 +144,11 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
     setPage(0);
   }, []);
 
-  const onNext = () => {
+  // Seek to an arbitrary frame (timeline drag / click). One API call per seek.
+  const onSeek = (target: number) => {
     resetSearch();
-    const newSeq = seq + 1;
-    setSeq(newSeq);
-    setApiSeq(newSeq);
-  };
-
-  const onPrev = () => {
-    resetSearch();
-    const newSeq = seq - 1;
-    setSeq(newSeq);
-    setApiSeq(newSeq);
-  };
-
-  const onFirst = () => {
-    resetSearch();
-    setSeq(1);
-    setApiSeq(1);
-  };
-
-  const onLast = () => {
-    resetSearch();
-    setSeq(0);
-    setApiSeq(0);
-    resetCache();
+    setSeq(target);
+    setApiSeq(target);
   };
 
   const onApply = () => {
@@ -445,19 +425,11 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
             onResetClick={handleResetClick}
           />
 
-          <TablePaginationCustomShort
+          <FrameTimeline
             label={t('audit_log_frame_detail.frame_nav')}
-            rowsPerPage={count || 40}
-            page={5}
-            count={auditFrame?.max_frame || 0}
-            onPrev={onPrev}
-            onNext={onNext}
-            onFirst={onFirst}
-            onLast={onLast}
-            firstDisabled={apiSeq === 1}
-            lastDisabled={false}
-            prevDisabled={apiSeq === 1}
-            nextDisabled={apiSeq === 0 || apiSeq === auditFrame.max_frame}
+            current={seq === 0 ? auditFrame?.max_frame || 1 : seq}
+            total={auditFrame?.max_frame || 1}
+            onSeek={onSeek}
           />
 
           <Box
