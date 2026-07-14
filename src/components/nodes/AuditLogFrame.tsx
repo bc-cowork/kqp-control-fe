@@ -438,6 +438,13 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
 
         {/* Right — filter bar + frame nav + fragment table */}
         <Box sx={{ flex: 1, minWidth: 0, minHeight: 0, display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+          <AuditFrameFilterBar
+            filters={filters}
+            setFilters={setFilters}
+            onApply={handleSearch}
+            onResetClick={handleResetClick}
+          />
+
           <TablePaginationCustomShort
             label={t('audit_log_frame_detail.frame_nav')}
             rowsPerPage={count || 40}
@@ -451,13 +458,6 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
             lastDisabled={false}
             prevDisabled={apiSeq === 1}
             nextDisabled={apiSeq === 0 || apiSeq === auditFrame.max_frame}
-          />
-
-          <AuditFrameFilterBar
-            filters={filters}
-            setFilters={setFilters}
-            onApply={handleSearch}
-            onResetClick={handleResetClick}
           />
 
           <Box

@@ -80,11 +80,15 @@ const TablePaginationCustomShort = ({
   const lastPage = Math.ceil(count / rowsPerPage) - 1;
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: 1.25, ...sx }}>
-      {label && (
-        <Typography sx={{ fontSize: 16, color: T.textDim, whiteSpace: 'nowrap' }}>{label}</Typography>
-      )}
-      <Stack direction="row" alignItems="center" spacing={1}>
+    <Box sx={{ display: 'flex', alignItems: 'center', ...sx }}>
+      {/* Left region — label stays left-aligned */}
+      <Box sx={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center' }}>
+        {label && (
+          <Typography sx={{ fontSize: 16, color: T.textDim, whiteSpace: 'nowrap' }}>{label}</Typography>
+        )}
+      </Box>
+      {/* Center region — arrows centered in the row */}
+      <Stack direction="row" alignItems="center" spacing={1.5}>
         <NavArrow
           icon="eva:arrowhead-left-fill"
           disabled={firstDisabled || page === 0}
@@ -106,6 +110,8 @@ const TablePaginationCustomShort = ({
           onClick={onLast}
         />
       </Stack>
+      {/* Right region — balances the left so arrows stay centered */}
+      <Box sx={{ flex: 1, minWidth: 0 }} />
     </Box>
   );
 };
