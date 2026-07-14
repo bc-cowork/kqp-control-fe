@@ -85,7 +85,7 @@ const AuditFrameFilterBar: React.FC<Props> = ({ filters, setFilters, onApply, on
     gap: 0.875,
     cursor: 'pointer',
     color: buttonText,
-    '&:hover': { bgcolor: T.bgHover, color: T.textPrim },
+    '&:hover': { bgcolor: T.bgHover, color: buttonText },
   } as const;
 
   // Explicit CSS sizing so the icon never grows as a flex child.

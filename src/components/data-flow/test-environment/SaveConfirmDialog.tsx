@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
+import CircularProgress from '@mui/material/CircularProgress';
 import { ErrorOutline as ErrorOutlineIcon } from '@mui/icons-material';
 
 import { T } from 'src/theme/tokens';
@@ -33,7 +34,7 @@ export function SaveConfirmDialog({ open, onClose, onConfirm, isSaving }: SaveCo
           color: T.textPrim,
           width: '100%',
           maxWidth: 470,
-          p: '18px',
+          p: '20px',
           boxShadow: '0 18px 50px rgba(0,0,0,0.5)',
         },
       }}
@@ -45,17 +46,16 @@ export function SaveConfirmDialog({ open, onClose, onConfirm, isSaving }: SaveCo
           display: 'flex',
           alignItems: 'center',
           gap: '8px',
-          height: 32,
         }}
       >
-        <ErrorOutlineIcon sx={{ color: T.textSec }} />
+        <ErrorOutlineIcon sx={{ color: T.textSec, fontSize: 18, display: 'block' }} />
         <Typography
           variant="body1"
           sx={{
-            color: T.textPrim,
-            fontSize: 17,
+            color: T.textSec,
+            fontSize: 16,
             fontWeight: 400,
-            lineHeight: '22.50px',
+            lineHeight: '20px',
           }}
         >
           {t('sandbox.save_confirm_title')}
@@ -65,7 +65,7 @@ export function SaveConfirmDialog({ open, onClose, onConfirm, isSaving }: SaveCo
       <DialogContent
         sx={{
           p: 0,
-          mt: '8px',
+          mt: '18px',
           minHeight: 108,
           backgroundColor: T.bgCard,
           borderRadius: '8px',
@@ -80,9 +80,9 @@ export function SaveConfirmDialog({ open, onClose, onConfirm, isSaving }: SaveCo
         <Typography
           variant="body1"
           sx={{
-            color: T.textDim,
+            color: T.link,
             fontSize: 15,
-            fontWeight: 400,
+            fontWeight: 300,
             lineHeight: '22.50px',
             textAlign: 'center',
           }}
@@ -94,10 +94,12 @@ export function SaveConfirmDialog({ open, onClose, onConfirm, isSaving }: SaveCo
       <DialogActions
         sx={{
           p: 0,
-          mt: '20px',
+          mt: '18px',
           justifyContent: 'flex-end',
           alignItems: 'center',
-          gap: '10px',
+          gap: '11px',
+          // Theme's MuiDialogActions adds marginLeft to non-first children — reset so gap alone controls spacing.
+          '& > :not(:first-of-type)': { ml: 0 },
         }}
       >
         <Button
@@ -114,7 +116,7 @@ export function SaveConfirmDialog({ open, onClose, onConfirm, isSaving }: SaveCo
             fontSize: 15,
             fontWeight: 500,
             textTransform: 'none',
-            '&:hover': { backgroundColor: T.bgHover, color: T.textPrim },
+            '&:hover': { backgroundColor: T.bgHover, color: T.textSec },
           }}
         >
           {t('sandbox.save_cancel_btn')}
@@ -123,17 +125,20 @@ export function SaveConfirmDialog({ open, onClose, onConfirm, isSaving }: SaveCo
           onClick={onConfirm}
           disabled={isSaving}
           disableRipple
+          startIcon={isSaving ? <CircularProgress size={14} color="inherit" /> : undefined}
           sx={{
             height: 32,
             px: '14px',
             minWidth: 0,
-            backgroundColor: T.primary,
+            backgroundColor: T.bgCard,
+            border: `1px solid ${T.border}`,
             borderRadius: '6px',
-            color: '#fff',
+            color: T.link,
             fontSize: 15,
             fontWeight: 500,
             textTransform: 'none',
-            '&:hover': { backgroundColor: T.primaryHov },
+            '&:hover': { backgroundColor: T.bgHover, color: T.link },
+            '&.Mui-disabled': { color: T.textDim, backgroundColor: T.bgCard },
           }}
         >
           {isSaving ? t('sandbox.saving') : t('sandbox.save_confirm_btn')}

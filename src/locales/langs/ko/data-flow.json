@@ -28,7 +28,7 @@
     "title": "JSON Definition"
   },
   "canvas": {
-    "zoom_help": "Ctrl 키를 누른 채 마우스 휠을 위/아래로 움직이면 확대/축소됩니다."
+    "zoom_help": "Ctrl 키를 누른 채 마우스 휠을 위/아래로 움직이면 확대 또는 축소됩니다."
   },
   "sandbox": {
     "title": "테스트 환경 (SANDBOX)",
@@ -40,7 +40,7 @@
     "save": "저장",
     "revert": "되돌리기",
     "layout_definition": "Layout Definition",
-    "preview_btn": "미리보기 적용",
+    "preview_btn": "노드 적용",
     "view_screen": "화면 보기",
     "interface_scale": "인터페이스 크기",
     "enter_fullscreen": "전체화면",

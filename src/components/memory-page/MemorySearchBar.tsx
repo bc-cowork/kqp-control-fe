@@ -163,7 +163,7 @@ export function MemorySearchBar({ value, onChange, onReset }: Props) {
           fontWeight: 500,
           fontFamily: 'inherit',
           cursor: 'pointer',
-          '&:hover': { bgcolor: T.bgHover, color: T.textPrim },
+          '&:hover': { bgcolor: T.bgHover, color: T.textSec },
         }}
       >
         <Iconify icon="eva:close-circle-outline" width={14} />

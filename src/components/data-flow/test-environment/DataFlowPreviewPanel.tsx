@@ -186,11 +186,11 @@ export function DataFlowPreviewPanel({
     <Box
       ref={containerRef}
       sx={{
-        minHeight: isHorizontal ? 600 : 832,
+        minHeight: isHorizontal ? 780 : 832,
         width: isHorizontal ? '50%' : '100%',
         borderRadius: '8px',
         overflow: 'hidden',
-        border: `1px solid ${T.border}`,
+        border: `1px solid ${T.link}`,
         backgroundColor: T.bgPanel,
         display: 'flex',
         flexDirection: 'column',
@@ -208,7 +208,7 @@ export function DataFlowPreviewPanel({
           borderBottom: `1px solid ${T.border}`,
         }}
       >
-        <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.textSec }}>Data Flow</Typography>
+        <Typography sx={{ fontSize: 17, fontWeight: 400, color: T.link }}>Data Flow</Typography>
 
         {/* Centered filename + status chip */}
         <Box
@@ -233,8 +233,8 @@ export function DataFlowPreviewPanel({
               px: '10px',
               py: '3px',
               borderRadius: '5px',
-              backgroundColor: `${T.primary}26`,
-              color: T.accent,
+              backgroundColor: `${T.link}26`,
+              color: T.link,
             }}
           >
             미리보기 중
@@ -258,7 +258,7 @@ export function DataFlowPreviewPanel({
             fontSize: 15,
             fontWeight: 500,
             textTransform: 'none',
-            '&:hover': { backgroundColor: T.bgHover, color: T.textPrim },
+            '&:hover': { backgroundColor: T.bgHover, color: T.textSec },
           }}
         >
           <RevertIcon />
@@ -276,14 +276,15 @@ export function DataFlowPreviewPanel({
             height: 32,
             px: '14px',
             minWidth: 0,
-            backgroundColor: T.primary,
+            backgroundColor: T.bgCard,
+            border: `1px solid ${T.border}`,
             borderRadius: '6px',
-            color: '#fff',
+            color: T.link,
             fontSize: 15,
             fontWeight: 500,
             textTransform: 'none',
-            '&:hover': { backgroundColor: T.primaryHov },
-            '&.Mui-disabled': { color: T.textDim, backgroundColor: T.primary },
+            '&:hover': { backgroundColor: T.bgHover, color: T.link },
+            '&.Mui-disabled': { color: T.textDim, backgroundColor: T.bgCard },
           }}
         >
           {isSaving ? t('sandbox.saving') : t('sandbox.save')}

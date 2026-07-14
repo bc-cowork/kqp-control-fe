@@ -529,7 +529,7 @@ export function BtnGhost({ children, icon, onClick, disabled, type = 'button' }:
         bgcolor: T.bgCard,
         border: `1px solid ${T.border}`,
         color: T.textSec,
-        '&:hover': { bgcolor: T.bgHover, color: T.textPrim },
+        '&:hover': { bgcolor: T.bgHover, color: T.textSec },
         '&:disabled': { bgcolor: '#373F4E', color: '#667085', cursor: 'default' },
       }}
     >
