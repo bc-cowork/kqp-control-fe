@@ -37,6 +37,7 @@
   },
   "item": {
     "refresh": "Refresh",
+    "search_placeholder": "Search item",
     "table": {
       "no": "No",
       "price": "Price",

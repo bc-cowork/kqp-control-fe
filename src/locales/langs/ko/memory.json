@@ -37,6 +37,7 @@
   },
   "item": {
     "refresh": "새로고침",
+    "search_placeholder": "종목명 검색",
     "table": {
       "no": "No",
       "price": "가격",
