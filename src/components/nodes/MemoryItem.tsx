@@ -2,17 +2,18 @@
 
 import type { ReactNode } from 'react';
 
-import { useCallback } from 'react';
+import { useMemo, useCallback } from 'react';
 
-import { Box, Stack, CircularProgress } from '@mui/material';
+import { Box, Stack, TextField, Autocomplete, CircularProgress } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
+import { T } from 'src/theme/tokens';
 import { useTranslate } from 'src/locales';
-import { T, FONT_MONO } from 'src/theme/tokens';
-import { useGetIssueItemInfo, useGetIssueItemQuotes } from 'src/actions/nodes';
+import { useGetIssues, useGetIssueItemInfo, useGetIssueItemQuotes } from 'src/actions/nodes';
 
+import { Iconify } from 'src/components/iconify';
 import { BtnGhost, PageShell } from 'src/components/v5';
 
 import { MemoryItemInfo } from '../memory-page/MemoryItemInfo';
@@ -47,6 +48,17 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
     onRefresh: onRefreshQuote,
   } = useGetIssueItemQuotes(selectedNodeId, code);
 
+  // Memory-list items (previous screen) → options for the header search dropdown
+  const { issues } = useGetIssues(selectedNodeId, 1, 500);
+  const itemOptions = useMemo(
+    () =>
+      (issues?.issueList || []).map((it: any) => ({
+        label: it.name ? `${it.name} (${it.code})` : String(it.code),
+        code: it.code,
+      })),
+    [issues]
+  );
+
   const rowKeysAsk = Object.keys(issueQuotesAsk)
     .filter((key) => key !== 'sum')
     .sort((a, b) => Number(b) - Number(a));
@@ -80,9 +92,69 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
       title={issueInfo.name || '-'}
       scroll={false}
       actions={
-        <BtnGhost icon="eva:refresh-fill" onClick={handleRefresh}>
-          {t('item.refresh')}
-        </BtnGhost>
+        <Stack direction="row" spacing={1.5} alignItems="center">
+          {/* Header search — item names from the memory list (previous screen).
+              Selecting an item navigates to its memory detail page. */}
+          <Autocomplete
+            size="small"
+            options={itemOptions}
+            getOptionLabel={(o) => (typeof o === 'string' ? o : (o.label ?? ''))}
+            isOptionEqualToValue={(o, v) => o.code === v.code}
+            onChange={(_, val) => {
+              if (val && typeof val !== 'string' && val.code != null) {
+                router.push(`/dashboard/nodes/${selectedNodeId}/memory/${String(val.code)}`);
+              }
+            }}
+            popupIcon={<Iconify icon="eva:arrow-forward-fill" width={18} />}
+            sx={{
+              width: 240,
+              '& .MuiAutocomplete-popupIndicator': {
+                color: T.textSec,
+                '&:hover': { color: T.link },
+              },
+              '& .MuiAutocomplete-popupIndicatorOpen': { transform: 'none' },
+              '& .MuiOutlinedInput-root': {
+                height: 34,
+                py: 0,
+                pl: '12px',
+                bgcolor: T.bgCard,
+                borderRadius: '6px',
+                '& fieldset': { borderColor: T.border },
+                '&:hover fieldset': { borderColor: T.border },
+                '&.Mui-focused fieldset': { borderColor: T.link },
+              },
+              '& .MuiOutlinedInput-input': {
+                color: T.textPrim,
+                fontSize: 15,
+                fontFamily: "'Spoqa Han Sans Neo'",
+                '&::placeholder': { color: T.textFaint, opacity: 1 },
+              },
+            }}
+            slotProps={{
+              paper: {
+                sx: {
+                  bgcolor: T.bgPanel,
+                  border: `1px solid ${T.border}`,
+                  borderRadius: '8px',
+                  mt: 0.5,
+                  '& .MuiAutocomplete-option': {
+                    fontSize: 15,
+                    color: T.textSec,
+                    fontFamily: "'Spoqa Han Sans Neo'",
+                    '&[aria-selected="true"], &.Mui-focused': {
+                      bgcolor: T.bgHover,
+                      color: T.textPrim,
+                    },
+                  },
+                },
+              },
+            }}
+            renderInput={(params) => (
+              <TextField {...params} placeholder={t('item.search_placeholder')} />
+            )}
+          />
+          <BtnGhost icon="eva:refresh-fill" onClick={handleRefresh} />
+        </Stack>
       }
     >
       <Stack direction="row" spacing={2} sx={{ flex: 1, minHeight: 0 }}>
@@ -130,8 +202,8 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
                       zIndex: 1,
                       bgcolor: T.bgPanel,
                       color: T.textSec,
-                      fontWeight: 500,
-                      fontSize: 16,
+                      fontWeight: 400,
+                      fontSize: 17,
                       textAlign: 'right',
                       p: '9px 14px',
                       borderBottom: `1px solid ${T.border}`,
@@ -219,9 +291,9 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
 const bodyCellSx = {
   p: '7px 14px',
   textAlign: 'right' as const,
-  fontFamily: FONT_MONO,
+  fontFamily: "'Spoqa Han Sans Neo'",
   fontSize: 16,
-  fontWeight: 400,
+  fontWeight: 300,
   color: T.textPrim,
   whiteSpace: 'nowrap' as const,
 };

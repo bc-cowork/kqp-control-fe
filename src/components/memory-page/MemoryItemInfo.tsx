@@ -5,8 +5,8 @@ import { Box, Stack, Typography } from '@mui/material';
 import { formatNumber } from 'src/utils/helper';
 import { formatDateCustom } from 'src/utils/format-time';
 
+import { T } from 'src/theme/tokens';
 import { useTranslate } from 'src/locales';
-import { T, FONT_MONO } from 'src/theme/tokens';
 
 // ----------------------------------------------------------------------
 
@@ -17,7 +17,7 @@ type LabelValueRowProps = {
 
 const LabelValueRow = ({ label, value }: LabelValueRowProps) => (
   <Stack direction="row" spacing="14px" alignItems="flex-start">
-    <Typography sx={{ color: T.textSec, fontSize: 16, width: 96, flexShrink: 0 }}>
+    <Typography sx={{ color: T.textSec, fontSize: 17, width: 96, flexShrink: 0 }}>
       {label}
     </Typography>
     <Typography
@@ -25,7 +25,7 @@ const LabelValueRow = ({ label, value }: LabelValueRowProps) => (
         color: T.textPrim,
         fontSize: 16,
         fontWeight: 300,
-        fontFamily: FONT_MONO,
+        fontFamily: "'Spoqa Han Sans Neo'",
         wordBreak: 'break-all',
         minWidth: 0,
       }}

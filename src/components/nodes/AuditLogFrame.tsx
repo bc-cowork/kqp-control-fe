@@ -11,6 +11,7 @@ import {
   Stack,
   Dialog,
   SvgIcon,
+  Collapse,
   IconButton,
   Typography,
   DialogTitle,
@@ -28,8 +29,8 @@ import { useGetAuditLogFrame } from 'src/actions/nodes';
 import { SpecChip, DataTable, CodeBlock } from 'src/components/v5';
 
 import { Iconify } from '../iconify';
-import AuditFrameFilterBar from '../audit-log-page/AuditFrameFilterBar';
 import { FrameTimeline } from './FrameTimeline';
+import AuditFrameFilterBar from '../audit-log-page/AuditFrameFilterBar';
 import { AuditFrameLayoutFlow } from '../audit-log-page/AuditFrameLayoutFlow';
 
 import type { Filter } from '../common/AddFilter';
@@ -43,45 +44,29 @@ type Props = {
   head: string;
 };
 
-function InfoBox({
+// Plain label/value field (no background box) — matches the redesigned panel
+// (InfoField in Figma: label 14 / value 17, 6px gap, no fill).
+function InfoField({
   label,
   value,
-  action,
-  highlight,
   mono,
-  sx,
+  valueDim,
 }: {
   label: string;
   value: ReactNode;
-  action?: ReactNode;
-  highlight?: boolean;
   mono?: boolean;
-  sx?: object;
+  valueDim?: boolean;
 }) {
   return (
-    <Box
-      sx={{
-        bgcolor: highlight ? `${T.primary}26` : T.bgHover,
-        border: highlight ? `1px solid ${T.primary}55` : 'none',
-        borderRadius: '8px',
-        p: '8px 12px',
-        mb: 1,
-        ...sx,
-      }}
-    >
-      <Stack direction="row" alignItems="center" justifyContent="space-between">
-        <Typography sx={{ color: highlight ? T.textSec : T.textDim, fontSize: 14 }}>
-          {label}
-        </Typography>
-        {action}
-      </Stack>
+    <Box>
+      <Typography sx={{ color: T.textDim, fontSize: 14, mb: '6px' }}>{label}</Typography>
       <Typography
         sx={{
-          color: T.textPrim,
+          color: valueDim ? T.textSec : T.textPrim,
           fontSize: 17,
           fontWeight: 400,
-          mt: '2px',
           fontFamily: mono ? FONT_MONO : 'inherit',
+          wordBreak: 'break-all',
         }}
       >
         {value}
@@ -90,10 +75,58 @@ function InfoBox({
   );
 }
 
-// Section sub-heading inside the frame-info panel ("증적 로그 목록" / "증적 로그 프레임 상세").
-function PanelSectionLabel({ children, sx }: { children: ReactNode; sx?: object }) {
+const FOLDER_ICON_PATH =
+  'M8.60767 3.32129C8.78817 3.32095 8.96134 3.39402 9.08716 3.52344L10.2795 4.75H16.8323C17.6607 4.75001 18.3323 5.42158 18.3323 6.25V15.167C18.3321 15.9952 17.6606 16.667 16.8323 16.667H3.16431C2.33609 16.6669 1.66453 15.9952 1.66431 15.167L1.66333 4.83203C1.66324 4.00468 2.33306 3.33267 3.1604 3.33106L8.60767 3.32129ZM3.16333 4.66504C3.07156 4.66521 2.99658 4.73934 2.99634 4.83106L2.99731 15.167C2.99753 15.2588 3.07246 15.3329 3.16431 15.333H16.8323C16.9242 15.333 16.999 15.2589 16.9993 15.167V6.25C16.9993 6.15796 16.9243 6.08301 16.8323 6.08301H9.99829C9.81823 6.08301 9.64529 6.00997 9.51978 5.88086L8.32739 4.65527L3.16333 4.66504ZM12.5002 8.08301C12.8684 8.08301 13.1672 8.38181 13.1672 8.75V10.167H14.5823C14.9504 10.167 15.2491 10.4649 15.2493 10.833C15.2493 11.2012 14.9505 11.5 14.5823 11.5H13.1672V12.917C13.167 13.285 12.8683 13.583 12.5002 13.583C12.1323 13.5828 11.8344 13.2849 11.8342 12.917V11.5H10.4163C10.0481 11.5 9.74927 11.2012 9.74927 10.833C9.7494 10.4649 10.0482 10.167 10.4163 10.167H11.8342V8.75C11.8342 8.38192 12.1322 8.08318 12.5002 8.08301Z';
+
+// Panel section header — folder icon + title + collapse toggle (accordion).
+function SectionHead({
+  title,
+  open,
+  onToggle,
+}: {
+  title: string;
+  open: boolean;
+  onToggle: () => void;
+}) {
   return (
-    <Typography sx={{ color: T.textSec, fontSize: 15, mb: 1, ...sx }}>{children}</Typography>
+    <Box
+      onClick={onToggle}
+      sx={{
+        p: '12px 16px',
+        borderBottom: `1px solid ${T.border}`,
+        display: 'flex',
+        alignItems: 'center',
+        gap: 1,
+        flexShrink: 0,
+        cursor: 'pointer',
+        userSelect: 'none',
+        '&:hover': { bgcolor: T.bgHover },
+      }}
+    >
+      <Box
+        component="svg"
+        width={20}
+        height={20}
+        viewBox="0 0 20 20"
+        fill="none"
+        sx={{ color: T.textSec, flexShrink: 0, display: 'block' }}
+      >
+        <path d={FOLDER_ICON_PATH} fill="currentColor" />
+      </Box>
+      <Box component="span" sx={{ flex: 1, fontSize: 16, fontWeight: 500, color: T.textSec }}>
+        {title}
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          color: T.textDim,
+          transition: 'transform .2s',
+          transform: open ? 'rotate(180deg)' : 'none',
+        }}
+      >
+        <Iconify icon="eva:arrow-ios-downward-fill" width={18} />
+      </Box>
+    </Box>
   );
 }
 
@@ -111,6 +144,9 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
   const [page, setPage] = useState<number>(0);
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [dialogMessage, setDialogMessage] = useState<string>('');
+  // Frame-detail page → open only "프레임 정보" on first load; "로그 정보" starts collapsed.
+  const [logOpen, setLogOpen] = useState<boolean>(false);
+  const [frameOpen, setFrameOpen] = useState<boolean>(true);
 
   const { auditFrame, auditFrameLayoutFlow, auditFrameError, auditFrameLoading, auditFrameFragsEmpty } =
     useGetAuditLogFrame(selectedNodeId, selectedFile, apiSeq, side, count, cond, refreshKey);
@@ -277,106 +313,136 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
         }}
       >
         <Box sx={{ display: 'flex', gap: '14px', flexShrink: 0, height: '100%' }}>
-        {/* Left — Frame Info panel */}
+        {/* Left column — info panel + data-flow square below it */}
         <Box
           sx={{
             width: 300,
             flexShrink: 0,
-            alignSelf: 'stretch',
-            maxHeight: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '14px',
+            minHeight: 0,
+          }}
+        >
+        <Box
+          sx={{
+            flex: 1,
+            minHeight: 0,
             bgcolor: T.bgCard,
             border: `1px solid ${T.border}`,
             borderRadius: '8px',
             display: 'flex',
             flexDirection: 'column',
-            overflow: 'hidden',
+            overflowY: 'auto',
+            '&::-webkit-scrollbar': { display: 'none' },
+            scrollbarWidth: 'none',
           }}
         >
-          {/* Header */}
-          <Box
-            sx={{
-              p: '12px 16px',
-              borderBottom: `1px solid ${T.border}`,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 1,
-              fontSize: 16,
-              color: T.textSec,
-              fontWeight: 500,
-            }}
-          >
-            <Box
-              component="svg"
-              width={20}
-              height={20}
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              sx={{ color: T.textSec, flexShrink: 0, display: 'block' }}
-            >
-              <path
-                d="M8.60767 3.32129C8.78817 3.32095 8.96134 3.39402 9.08716 3.52344L10.2795 4.75H16.8323C17.6607 4.75001 18.3323 5.42158 18.3323 6.25V15.167C18.3321 15.9952 17.6606 16.667 16.8323 16.667H3.16431C2.33609 16.6669 1.66453 15.9952 1.66431 15.167L1.66333 4.83203C1.66324 4.00468 2.33306 3.33267 3.1604 3.33106L8.60767 3.32129ZM3.16333 4.66504C3.07156 4.66521 2.99658 4.73934 2.99634 4.83106L2.99731 15.167C2.99753 15.2588 3.07246 15.3329 3.16431 15.333H16.8323C16.9242 15.333 16.999 15.2589 16.9993 15.167V6.25C16.9993 6.15796 16.9243 6.08301 16.8323 6.08301H9.99829C9.81823 6.08301 9.64529 6.00997 9.51978 5.88086L8.32739 4.65527L3.16333 4.66504ZM12.5002 8.08301C12.8684 8.08301 13.1672 8.38181 13.1672 8.75V10.167H14.5823C14.9504 10.167 15.2491 10.4649 15.2493 10.833C15.2493 11.2012 14.9505 11.5 14.5823 11.5H13.1672V12.917C13.167 13.285 12.8683 13.583 12.5002 13.583C12.1323 13.5828 11.8344 13.2849 11.8342 12.917V11.5H10.4163C10.0481 11.5 9.74927 11.2012 9.74927 10.833C9.7494 10.4649 10.0482 10.167 10.4163 10.167H11.8342V8.75C11.8342 8.38192 12.1322 8.08318 12.5002 8.08301Z"
-                fill="currentColor"
-              />
-            </Box>
-            <span>{t('audit_log_frame_detail.frame_info')}</span>
-          </Box>
-
-          {/* Body */}
-          <Box sx={{ flex: 1, minHeight: 0, p: '18px 16px', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
-            {/* File name */}
-            <Box sx={{ mb: '18px' }}>
-              <Box sx={{ color: T.textPrim, fontSize: 20, fontWeight: 400, wordBreak: 'break-all' }}>
+          {/* ── Log Info ── */}
+          <SectionHead title="로그 정보" open={logOpen} onToggle={() => setLogOpen((v) => !v)} />
+          <Collapse in={logOpen} sx={{ flexShrink: 0 }}>
+          <Box sx={{ p: '18px 16px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+              <Box
+                sx={{
+                  flex: 1,
+                  minWidth: 0,
+                  color: T.textPrim,
+                  fontSize: 22,
+                  fontWeight: 400,
+                  wordBreak: 'break-all',
+                }}
+              >
                 {selectedFile}
+              </Box>
+              <Box
+                sx={{
+                  flexShrink: 0,
+                  px: '10px',
+                  py: '3px',
+                  bgcolor: T.bgHover,
+                  border: `1px solid ${T.border}`,
+                  borderRadius: '5px',
+                  fontSize: 14,
+                  fontWeight: 500,
+                  color: T.link,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                수신 로그
               </Box>
             </Box>
 
-            {/* Divider */}
-            <Box sx={{ borderBottom: `1px solid ${T.border}`, mb: '18px' }} />
-
-            {/* Audit log list group */}
-            <PanelSectionLabel>{t('right_side_audit_log_list.audit_log_list')}</PanelSectionLabel>
-            <InfoBox
-              label={t('right_side_audit_log_list.max_frame_seq')}
-              mono
-              value={auditFrame?.max_frame ?? '—'}
-              action={
+            <Box>
+              <Stack direction="row" alignItems="center" spacing="6px" sx={{ mb: '6px' }}>
+                <Typography sx={{ fontSize: 14, color: T.textDim }}>프레임 수 실시간</Typography>
+                <Typography sx={{ fontSize: 12, fontWeight: 700, color: T.primary }}>MAX</Typography>
+              </Stack>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  p: '8px 12px',
+                  bgcolor: T.bg,
+                  border: `1px solid ${T.border}`,
+                  borderRadius: '6px',
+                }}
+              >
+                <Box sx={{ flex: 1, fontSize: 16, color: T.textPrim, fontFamily: FONT_MONO }}>
+                  {auditFrame?.max_frame ?? '—'}
+                </Box>
                 <Box
                   onClick={onMaxFrameRefresh}
                   sx={{ display: 'flex', cursor: 'pointer', color: T.textDim, '&:hover': { color: T.textPrim } }}
                 >
                   <Iconify icon="eva:refresh-fill" width={16} />
                 </Box>
-              }
-            />
-            <InfoBox
-              label={t('right_side_audit_log_list.file_size')}
-              mono
-              value={formatBytes(auditFrame?.file_size)}
-            />
-            <InfoBox
-              label={t('right_side_audit_log_list.date')}
-              mono
-              value={formatDateCustom(auditFrame?.date?.toString())}
-            />
-            <InfoBox label={t('right_side_audit_log_list.desc')} value={auditFrame?.desc || '—'} />
+              </Box>
+            </Box>
 
-            {/* Divider */}
-            <Box sx={{ borderBottom: `1px solid ${T.border}`, mt: '18px', mb: '18px' }} />
+            <InfoField label="크기" mono value={formatBytes(auditFrame?.file_size)} />
+            <InfoField label="날짜" mono value={formatDateCustom(auditFrame?.date?.toString())} />
+            <InfoField label="설명" valueDim value={auditFrame?.desc || '—'} />
+          </Box>
+          </Collapse>
 
-            {/* Frame detail group */}
-            <PanelSectionLabel sx={{ mt: 0 }}>
-              {t('audit_log_frame_detail.title')}
-            </PanelSectionLabel>
-            <InfoBox
-              label={t('audit_log_frame_detail.seq')}
-              mono
-              value={auditFrame?.seq ?? '—'}
-              highlight
-            />
+          {/* ── Frame Info ── */}
+          <SectionHead title="프레임 정보" open={frameOpen} onToggle={() => setFrameOpen((v) => !v)} />
+          <Collapse in={frameOpen} sx={{ flexShrink: 0 }}>
+          <Box sx={{ p: '18px 16px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+              <Box
+                sx={{
+                  flex: 1,
+                  minWidth: 0,
+                  color: T.textPrim,
+                  fontSize: 22,
+                  fontWeight: 400,
+                  fontFamily: FONT_MONO,
+                }}
+              >
+                {auditFrame?.seq ?? '—'}
+              </Box>
+              <Box
+                sx={{
+                  flexShrink: 0,
+                  px: '10px',
+                  py: '3px',
+                  bgcolor: T.bgHover,
+                  border: `1px solid ${T.border}`,
+                  borderRadius: '5px',
+                  fontSize: 14,
+                  fontWeight: 500,
+                  color: T.textSec,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                수신 로그
+              </Box>
+            </Box>
 
-            <InfoBox
-              label={t('audit_log_frame_detail.time')}
+            <InfoField
+              label="시간"
               mono
               value={
                 <Box component="span">
@@ -393,27 +459,15 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                 </Box>
               }
             />
-            <InfoBox
-              label={t('audit_log_frame_detail.size')}
-              mono
-              value={formatBytes(auditFrame?.size)}
-            />
-
-            <Stack direction="row" spacing={1}>
-              <InfoBox
-                label={t('audit_log_frame_detail.head')}
-                mono
-                value={auditFrame?.head ?? '—'}
-                sx={{ flex: 1, mb: 0 }}
-              />
-              <InfoBox
-                label={t('audit_log_frame_detail.rid')}
-                mono
-                value={auditFrame?.rid ?? '—'}
-                sx={{ flex: 1, mb: 0 }}
-              />
-            </Stack>
+            <InfoField label="크기" mono value={formatBytes(auditFrame?.size)} />
+            <InfoField label="전문 유형" mono value={auditFrame?.head ?? '—'} />
+            <InfoField label="채널" mono value={auditFrame?.rid ?? '—'} />
           </Box>
+          </Collapse>
+        </Box>
+
+        {/* Data-flow square below the panel — click to enlarge */}
+        {!auditFrameLoading && <AuditFrameLayoutFlow layoutFlow={auditFrameLayoutFlow} square />}
         </Box>
 
         {/* Right — filter bar + frame nav + fragment table */}
@@ -456,10 +510,6 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
           </Box>
         </Box>
       </Box>
-
-      {/* Full-width layout-flow visualization for the selected frame.
-          Renders only when the frame API returns `layout_flow` (renders null otherwise). */}
-        {!auditFrameLoading && <AuditFrameLayoutFlow layoutFlow={auditFrameLayoutFlow} />}
       </Box>
 
       <Dialog

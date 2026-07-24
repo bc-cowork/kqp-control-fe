@@ -2,8 +2,8 @@
 
 import { Box } from '@mui/material';
 
+import { T } from 'src/theme/tokens';
 import { useTranslate } from 'src/locales';
-import { T, FONT_MONO } from 'src/theme/tokens';
 
 // ----------------------------------------------------------------------
 
@@ -25,8 +25,8 @@ type QuoteRow = {
 
 const sTh = {
   color: T.textSec,
-  fontSize: 16,
-  fontWeight: 500,
+  fontSize: 17,
+  fontWeight: 400,
   textAlign: 'right' as const,
   p: '8px 10px',
   width: '24%',
@@ -43,8 +43,8 @@ const sLabel = {
 const sVal = {
   color: T.textPrim,
   fontSize: 16,
-  fontWeight: 400,
-  fontFamily: FONT_MONO,
+  fontWeight: 300,
+  fontFamily: "'Spoqa Han Sans Neo'",
   textAlign: 'right' as const,
   p: '8px 10px',
   wordBreak: 'break-all' as const,

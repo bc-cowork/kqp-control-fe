@@ -462,7 +462,7 @@ export function StatusBadge({
 // ----------------------------------------------------------------------
 
 type BtnProps = {
-  children: ReactNode;
+  children?: ReactNode;
   icon?: string;
   onClick?: () => void;
   disabled?: boolean;
@@ -687,7 +687,8 @@ export function SpecChip({
         py: '2px',
         borderRadius: '5px',
         fontSize: 14,
-        fontFamily: FONT_MONO,
+        fontWeight: 300,
+        fontFamily: "'Spoqa Han Sans Neo'",
         bgcolor: c.bg,
         color: c.text,
         border: `1px solid ${c.text}40`,
