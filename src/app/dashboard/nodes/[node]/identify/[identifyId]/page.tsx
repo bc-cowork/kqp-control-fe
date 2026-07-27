@@ -188,8 +188,8 @@ export default function Page({ params }: Props) {
                 <BarChart data={todayCountData} margin={{ top: 6, right: 10, left: 0, bottom: 0 }}>
                   <defs>
                     <linearGradient id="todayCountBar" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0" stopColor={ACCENT2} stopOpacity={0.2} />
-                      <stop offset="1" stopColor={ACCENT2} stopOpacity={0.5} />
+                      <stop offset="0" stopColor={ACCENT2} stopOpacity={1} />
+                      <stop offset="1" stopColor={ACCENT2} stopOpacity={1} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid stroke={T.border} strokeWidth={0.5} vertical={false} />

@@ -274,6 +274,7 @@ export function Memory({ selectedNodeId }: Props) {
         loading={issuesLoading}
         error={!!issuesError}
         emptyLabel={t('table.empty')}
+        scrollbarAlways
         onRowClick={(row) =>
           router.push(`/dashboard/nodes/${selectedNodeId}/memory/${String(row.code)}`)
         }

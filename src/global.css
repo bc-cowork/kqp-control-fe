@@ -156,6 +156,17 @@ input[type='number']::-webkit-inner-spin-button {
   scrollbar-width: none;
 }
 
+/* Opt-in: keep the scrollbar thumb visible at rest (overrides the hover-reveal
+   default above). Direct-thumb hover still darkens via the rules above. */
+.scrollbar-always::-webkit-scrollbar-thumb,
+.scrollbar-always:hover::-webkit-scrollbar-thumb {
+  background-color: #33343f;
+}
+
+.scrollbar-always {
+  scrollbar-color: #33343f transparent;
+}
+
 /** **************************************
 * App baseline (v5 dark design)
 *************************************** */

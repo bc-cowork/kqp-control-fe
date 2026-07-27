@@ -174,6 +174,7 @@ export function MemoryItem({ selectedNodeId, code }: Props) {
 
         {/* RIGHT — order-book (호가) ladder */}
         <Box
+          className="scrollbar-always"
           sx={{
             flex: 1,
             minWidth: 0,

@@ -44,29 +44,46 @@ type Props = {
   head: string;
 };
 
-// Plain label/value field (no background box) — matches the redesigned panel
-// (InfoField in Figma: label 14 / value 17, 6px gap, no fill).
-function InfoField({
+// Boxed label/value row (legacy panel style — tinted box, label 14 / value 17).
+function InfoBox({
   label,
   value,
+  action,
+  highlight,
   mono,
-  valueDim,
+  sx,
 }: {
   label: string;
   value: ReactNode;
+  action?: ReactNode;
+  highlight?: boolean;
   mono?: boolean;
-  valueDim?: boolean;
+  sx?: object;
 }) {
   return (
-    <Box>
-      <Typography sx={{ color: T.textDim, fontSize: 14, mb: '6px' }}>{label}</Typography>
+    <Box
+      sx={{
+        bgcolor: highlight ? `${T.primary}26` : T.bgHover,
+        border: highlight ? `1px solid ${T.primary}55` : 'none',
+        borderRadius: '8px',
+        p: '8px 12px',
+        mb: 1,
+        ...sx,
+      }}
+    >
+      <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Typography sx={{ color: highlight ? T.textSec : T.textDim, fontSize: 14 }}>
+          {label}
+        </Typography>
+        {action}
+      </Stack>
       <Typography
         sx={{
-          color: valueDim ? T.textSec : T.textPrim,
+          color: T.textPrim,
           fontSize: 17,
           fontWeight: 400,
+          mt: '2px',
           fontFamily: mono ? FONT_MONO : 'inherit',
-          wordBreak: 'break-all',
         }}
       >
         {value}
@@ -361,108 +378,61 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
           {/* ── Log Info ── */}
           <SectionHead title="로그 정보" open={logOpen} onToggle={() => setLogOpen((v) => !v)} />
           <Collapse in={logOpen} sx={{ flexShrink: 0 }}>
-          <Box sx={{ p: '18px 16px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-              <Box
-                sx={{
-                  flex: 1,
-                  minWidth: 0,
-                  color: T.textPrim,
-                  fontSize: 22,
-                  fontWeight: 400,
-                  wordBreak: 'break-all',
-                }}
-              >
-                {selectedFile}
-              </Box>
-              <Box
-                sx={{
-                  flexShrink: 0,
-                  px: '10px',
-                  py: '3px',
-                  bgcolor: T.bgHover,
-                  border: `1px solid ${T.border}`,
-                  borderRadius: '5px',
-                  fontSize: 14,
-                  fontWeight: 500,
-                  color: T.link,
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                수신 로그
-              </Box>
+          <Box sx={{ p: '18px 16px', display: 'flex', flexDirection: 'column' }}>
+            <Box
+              sx={{
+                mb: '18px',
+                color: T.textPrim,
+                fontSize: 20,
+                fontWeight: 400,
+                wordBreak: 'break-all',
+              }}
+            >
+              {selectedFile}
             </Box>
-
-            <Box>
-              <Stack direction="row" alignItems="center" spacing="6px" sx={{ mb: '6px' }}>
-                <Typography sx={{ fontSize: 14, color: T.textDim }}>프레임 수 실시간</Typography>
-                <Typography sx={{ fontSize: 12, fontWeight: 700, color: T.primary }}>MAX</Typography>
-              </Stack>
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  p: '8px 12px',
-                  bgcolor: T.bg,
-                  border: `1px solid ${T.border}`,
-                  borderRadius: '6px',
-                }}
-              >
-                <Box sx={{ flex: 1, fontSize: 16, color: T.textPrim, fontFamily: FONT_MONO }}>
-                  {auditFrame?.max_frame ?? '—'}
-                </Box>
+            <InfoBox
+              label={t('right_side_audit_log_list.max_frame_seq')}
+              mono
+              value={auditFrame?.max_frame ?? '—'}
+              action={
                 <Box
                   onClick={onMaxFrameRefresh}
                   sx={{ display: 'flex', cursor: 'pointer', color: T.textDim, '&:hover': { color: T.textPrim } }}
                 >
                   <Iconify icon="eva:refresh-fill" width={16} />
                 </Box>
-              </Box>
-            </Box>
-
-            <InfoField label="크기" mono value={formatBytes(auditFrame?.file_size)} />
-            <InfoField label="날짜" mono value={formatDateCustom(auditFrame?.date?.toString())} />
-            <InfoField label="설명" valueDim value={auditFrame?.desc || '—'} />
+              }
+            />
+            <InfoBox
+              label={t('right_side_audit_log_list.file_size')}
+              mono
+              value={formatBytes(auditFrame?.file_size)}
+            />
+            <InfoBox
+              label={t('right_side_audit_log_list.date')}
+              mono
+              value={formatDateCustom(auditFrame?.date?.toString())}
+            />
+            <InfoBox
+              label={t('right_side_audit_log_list.desc')}
+              value={auditFrame?.desc || '—'}
+              sx={{ mb: 0 }}
+            />
           </Box>
           </Collapse>
 
           {/* ── Frame Info ── */}
           <SectionHead title="프레임 정보" open={frameOpen} onToggle={() => setFrameOpen((v) => !v)} />
           <Collapse in={frameOpen} sx={{ flexShrink: 0 }}>
-          <Box sx={{ p: '18px 16px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-              <Box
-                sx={{
-                  flex: 1,
-                  minWidth: 0,
-                  color: T.textPrim,
-                  fontSize: 22,
-                  fontWeight: 400,
-                  fontFamily: FONT_MONO,
-                }}
-              >
-                {auditFrame?.seq ?? '—'}
-              </Box>
-              <Box
-                sx={{
-                  flexShrink: 0,
-                  px: '10px',
-                  py: '3px',
-                  bgcolor: T.bgHover,
-                  border: `1px solid ${T.border}`,
-                  borderRadius: '5px',
-                  fontSize: 14,
-                  fontWeight: 500,
-                  color: T.textSec,
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                수신 로그
-              </Box>
-            </Box>
-
-            <InfoField
-              label="시간"
+          <Box sx={{ p: '18px 16px', display: 'flex', flexDirection: 'column' }}>
+            <InfoBox
+              label={t('audit_log_frame_detail.seq')}
+              mono
+              value={auditFrame?.seq ?? '—'}
+              highlight
+            />
+            <InfoBox
+              label={t('audit_log_frame_detail.time')}
               mono
               value={
                 <Box component="span">
@@ -479,9 +449,25 @@ export function AuditLogFrame({ selectedNodeId, selectedFile, selectedSeq, head 
                 </Box>
               }
             />
-            <InfoField label="크기" mono value={formatBytes(auditFrame?.size)} />
-            <InfoField label="전문 유형" mono value={auditFrame?.head ?? '—'} />
-            <InfoField label="채널" mono value={auditFrame?.rid ?? '—'} />
+            <InfoBox
+              label={t('audit_log_frame_detail.size')}
+              mono
+              value={formatBytes(auditFrame?.size)}
+            />
+            <Stack direction="row" spacing={1}>
+              <InfoBox
+                label={t('audit_log_frame_detail.head')}
+                mono
+                value={auditFrame?.head ?? '—'}
+                sx={{ flex: 1, mb: 0 }}
+              />
+              <InfoBox
+                label={t('audit_log_frame_detail.rid')}
+                mono
+                value={auditFrame?.rid ?? '—'}
+                sx={{ flex: 1, mb: 0 }}
+              />
+            </Stack>
           </Box>
           </Collapse>
         </Box>

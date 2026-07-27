@@ -165,6 +165,7 @@ type DataTableProps<R = any> = {
   error?: boolean;
   emptyLabel?: string;
   maxHeight?: number | string;
+  scrollbarAlways?: boolean;
 };
 
 export function DataTable<R = any>({
@@ -182,6 +183,7 @@ export function DataTable<R = any>({
   error,
   emptyLabel = 'No data',
   maxHeight,
+  scrollbarAlways,
 }: DataTableProps<R>) {
   const light = headerVariant === 'light';
   const showPlaceholder = loading || error || rows.length === 0;
@@ -189,6 +191,7 @@ export function DataTable<R = any>({
 
   return (
     <Box
+      className={scrollbarAlways ? 'scrollbar-always' : undefined}
       sx={{
         border: flush ? 'none' : `1px solid ${T.border}`,
         borderRadius: flush ? 0 : '6px',
