@@ -1,0 +1,1 @@
+- [Process table body-text style](process-table-body-text-style.md) — 프로세스 테이블 바디 텍스트 스타일(400/16px/#A8AABA), 다른 테이블 정렬 기준

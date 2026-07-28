@@ -37,3 +37,6 @@ build
 .unimportedrc.json
 tsconfig.tsbuildinfo
 .qodo
+
+# Claude Code — 개인 로컬 권한 설정만 무시 (프로젝트 메모리는 공유)
+.claude/settings.local.json
