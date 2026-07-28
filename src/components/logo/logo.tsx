@@ -43,7 +43,7 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
       <Box
         alt="Single logo"
         component="img"
-        src={`${CONFIG.assetsDir}/logo/${isWhite ? 'PMR-logo' : 'PMR-logo'}.svg`}
+        src={`${CONFIG.assetsDir}/logo/symbol.svg`}
         sx={{
           width: 39,
           minWidth: 39,
@@ -60,10 +60,14 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
       <Box
         alt="Full logo"
         component="img"
-        src={`${CONFIG.assetsDir}/logo/${isWhite ? 'PMR-logo-white' : 'PMR-logo-light'}.svg`}
-        width="123px"
-        height="28px"
-        marginLeft={theme.spacing(-1)}
+        src={`${CONFIG.assetsDir}/logo/logo.svg`}
+        sx={{
+          height: 28,
+          width: 'auto',
+          flexShrink: 0,
+          objectFit: 'contain',
+          marginLeft: theme.spacing(-1),
+        }}
       />
     );
 
@@ -120,9 +124,9 @@ export const LogoAnimated = forwardRef<HTMLDivElement, LogoProps>(
       <Box
         alt="Single logo"
         component="img"
-        src={`${CONFIG.assetsDir}/logo/animated-logo-PMR.svg`}
+        src={`${CONFIG.assetsDir}/logo/symbol-animated.svg`}
         sx={{
-          width: 70,
+          width: 'auto',
           height: 40,
           flexShrink: 0,
           objectFit: 'contain',

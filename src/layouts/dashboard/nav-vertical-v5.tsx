@@ -156,7 +156,7 @@ export function NavVerticalV5({ nodes }: NavVerticalV5Props) {
       >
         <Box
           component="img"
-          src="/logo/pmr-butterfly.png"
+          src="/logo/logo.svg"
           alt="PMR"
           sx={{ height: 24, width: 'auto', display: 'block' }}
         />
