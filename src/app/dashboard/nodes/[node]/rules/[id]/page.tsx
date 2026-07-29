@@ -124,7 +124,7 @@ export default function Page({ params }: Props) {
               error={!!error}
               emptyLabel={t('detail_table.empty_layouts')}
               onRowClick={(row) =>
-                router.push(paths.dashboard.nodes.layoutDetail(node, lastSeg(row.url)))
+                router.push(paths.dashboard.nodes.layoutDetail(node, String(row.name)))
               }
             />
           </Box>
