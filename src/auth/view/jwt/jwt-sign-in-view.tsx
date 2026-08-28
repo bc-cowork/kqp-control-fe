@@ -115,7 +115,7 @@ export function JwtSignInView() {
         }}
       >
         <Box component="h1" sx={{ fontSize: 18, fontWeight: 600, color: T.textPrim, m: 0 }}>
-          Sign in to your account (check 1)
+          Sign in to your account
         </Box>
 
         {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
