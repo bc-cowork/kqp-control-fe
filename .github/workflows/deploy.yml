@@ -2,7 +2,7 @@ name: Build & Deploy + Package Offline (to S3)
 
 on:
   push:
-    branches: [main]
+    branches: [prob]
   release:
     types: [published]
 

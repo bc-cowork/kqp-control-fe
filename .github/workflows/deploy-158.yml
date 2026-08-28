@@ -1,4 +1,4 @@
-name: Deploy to 141 server
+name: Deploy to 158 server
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: deploy-141
+  group: deploy-158
   cancel-in-progress: false
 
 jobs:
