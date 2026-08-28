@@ -46,4 +46,22 @@ jobs:
             # -d puts repo contents inside kqp-control-fe/ (zip has no top-level folder)
             unzip -o kqp-control-fe.zip -d kqp-control-fe
             ./ci-build.sh
-            ./ci-start.sh
+            # ci-start.sh ends with `sudo pm2 startup`, one-time root setup that cannot
+            # prompt for a password over non-interactive SSH. That is not part of a
+            # deploy, so it must not fail the deploy - the health check below is what
+            # decides success.
+            ./ci-start.sh || echo "ci-start.sh exited non-zero (likely the sudo pm2 startup step); verifying app health instead"
+
+            PORT="$(grep -E "^PORT=" kqp-control-fe/.env | tail -n1 | cut -d= -f2)"
+            PORT="${PORT:-8083}"
+            for i in $(seq 1 15); do
+              code="$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:$PORT/" || true)"
+              if [ "$code" = "200" ]; then
+                echo "app healthy on port $PORT (HTTP 200)"
+                exit 0
+              fi
+              sleep 2
+            done
+            echo "ERROR: app did not return HTTP 200 on port $PORT after 30s"
+            pm2 logs kuanta-frontend --lines 50 --nostream || true
+            exit 1
